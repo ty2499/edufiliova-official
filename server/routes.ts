@@ -2717,15 +2717,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         age: userData.age || 25, // Default age for freelancers
         grade: userData.grade || 12, // Add required grade field with default
         educationLevel: userData.educationLevel || "other", // Default education level
-        country: userData.country,
-        countryId: countryRecord.length > 0 ? countryRecord[0].id : null,
-        location: locationStr, // Save detected location
-        locationLat: detectedLocation?.latitude ? String(detectedLocation.latitude) : null,
-        locationLng: detectedLocation?.longitude ? String(detectedLocation.longitude) : null,
-        role: userData.skills ? "freelancer" : "student" // Set role based on registration type
-      }).returning();
-
-
+      // Send welcome email with login credentials
+      const loginEmail = userData.email;
+      const loginPhone = userData.phone || undefined;
+      const welcomeHtml = `
+        ${getEmailTemplate('blue', {})}
+        <div class="content">
+          <h2 class="title">Welcome to EduFiliova!</h2>
+          <p class="message">Hi ${userData.name},<br><br>Thank you for joining EduFiliova! We're excited to have you as part of our learning community.</p>
+          <div class="alert-success" style="text-align: center; padding: 30px;"><div style="margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div style="color: #065f46; font-size: 18px; font-weight: bold; margin-bottom: 8px;">Account Created Successfully</div><div style="color: #047857; font-size: 14px;">You're all set to start your journey with us!</div></div>
+          <div style="background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 25px 0;"><div style="color: #1f2937; font-size: 16px; font-weight: 600; margin-bottom: 15px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Your Login Credentials</div><div style="background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; padding: 15px; margin-bottom: 12px;"><div style="color: #6b7280; font-size: 12px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">Email</div><div style="color: #1f2937; font-size: 14px; font-family: 'Monaco', 'Courier New', monospace; word-break: break-all;">${loginEmail}</div></div>${loginPhone ? `<div style="background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; padding: 15px; margin-bottom: 12px;"><div style="color: #6b7280; font-size: 12px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">Phone</div><div style="color: #1f2937; font-size: 14px; font-family: 'Monaco', 'Courier New', monospace;">${loginPhone}</div></div>` : ''}<div style="background-color: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; padding: 12px; margin-top: 12px;"><div style="color: #92400e; font-size: 13px; line-height: 1.6;"><strong>🔒 Security Reminder:</strong> Please keep your login credentials safe and secure. Never share them with anyone, including EduFiliova staff members. Always use the official login page to sign in.</div></div></div><div style="text-align: center; margin: 30px 0;"><a href="${req.protocol}://${req.get('host')}/login" class="button">Go to Dashboard</a></div><p class="message" style="font-size: 14px;">Need help? Check out our <a href="${req.protocol}://${req.get('host')}/help" style="color: #2d5ddd; text-decoration: none;">Help Center</a> or contact us at support@edufiliova.com</p>
+        </div>
+      `;
+      await sendEmail(
+        userData.email,
+        'Welcome to EduFiliova - Your Account is Ready!',
+        welcomeHtml
+      );
       // Send welcome email
       await sendEmail(
         userData.email,
