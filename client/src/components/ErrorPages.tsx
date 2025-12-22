@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, WifiOff, Wrench, Unplug, Lock, Package, Home, RefreshCw, Search } from "lucide-react";
+import { useNavigate } from "wouter";
+import { useAuth } from "@/hooks/useAuth";
 
 export type ErrorType = 'offline' | 'server-error' | 'not-found' | 'access-denied' | 'empty-search';
 
@@ -70,13 +72,19 @@ export function ErrorPage({
 }: ErrorPageProps) {
   const config = errorConfig[type];
   const IconComponent = config.icon;
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const navigateHome = () => {
     if (onGoHome) {
       onGoHome();
     } else {
-      window.history.pushState(null, '', '/');
-      window.dispatchEvent(new PopStateEvent('popstate'));
+      // If authenticated, go to dashboard; otherwise go to home
+      if (user?.id) {
+        navigate('/?page=student-dashboard');
+      } else {
+        navigate('/');
+      }
     }
   };
 
@@ -93,8 +101,7 @@ export function ErrorPage({
         navigateHome();
         break;
       case 'login':
-        window.history.pushState(null, '', '/login');
-        window.dispatchEvent(new PopStateEvent('popstate'));
+        navigate('/?page=login');
         break;
       case 'clear':
         if (onClearSearch) onClearSearch();
