@@ -96,10 +96,10 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
   
   // Initialize DodoPayments overlay checkout SDK
   const [dodoInitialized, setDodoInitialized] = useState(false);
-  const [pendingDodoPurchaseId, setPendingDodoPurchaseId] = useState<number | null>(null);
+  const [pendingDodoPurchaseId, setPendingDodoPurchaseId] = useState<string | null>(null);
   
   // Confirm DodoPay voucher purchase on backend
-  const confirmDodoVoucherPurchase = async (purchaseIdVal: number, paymentId: string) => {
+  const confirmDodoVoucherPurchase = async (purchaseIdVal: string, paymentId: string) => {
     try {
       const response = await fetch('/api/gift-vouchers/confirm-dodopay', {
         method: 'POST',
@@ -160,11 +160,11 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
               console.log("🎟️ Voucher payment success - confirming...", { paymentId, storedPurchaseId });
               
               if (storedPurchaseId && paymentId) {
-                await confirmDodoVoucherPurchase(parseInt(storedPurchaseId), paymentId);
+                await confirmDodoVoucherPurchase(storedPurchaseId, paymentId);
                 sessionStorage.removeItem('pendingVoucherPurchaseId');
               } else if (storedPurchaseId) {
                 // Payment ID might not be in the event data, try to confirm anyway
-                await confirmDodoVoucherPurchase(parseInt(storedPurchaseId), 'dodopay_checkout');
+                await confirmDodoVoucherPurchase(storedPurchaseId, 'dodopay_checkout');
                 sessionStorage.removeItem('pendingVoucherPurchaseId');
               } else {
                 console.error("Missing purchaseId for voucher confirmation");
