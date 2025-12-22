@@ -150,7 +150,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
               onClick={() => setActiveTab('portfolio')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'portfolio'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-[#42fa76] text-[#42fa76]'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
               data-testid="tab-portfolio"
@@ -161,7 +161,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
               onClick={() => setActiveTab('analytics')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'analytics'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-[#42fa76] text-[#42fa76]'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
               data-testid="tab-analytics"
@@ -276,8 +276,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                         </div>
                         <Badge 
                           variant={work.visibility === 'public' ? 'default' : 'secondary'}
-                          className={work.visibility === 'public' ? 'text-white border-0' : ''}
-                          style={work.visibility === 'public' ? { backgroundColor: '#2d5ddd' } : {}}
+                          className={work.visibility === 'public' ? 'text-gray-900 border-0' : ''}
+                          style={work.visibility === 'public' ? { backgroundColor: '#42fa76' } : {}}
                         >
                           {work.visibility}
                         </Badge>
@@ -369,8 +369,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                               <h3 className="font-semibold text-lg truncate">{work.title}</h3>
                               <Badge 
                                 variant={work.visibility === 'public' ? 'default' : 'secondary'}
-                                className={work.visibility === 'public' ? 'text-white border-0' : ''}
-                                style={work.visibility === 'public' ? { backgroundColor: '#2d5ddd' } : {}}
+                                className={work.visibility === 'public' ? 'text-gray-900 border-0' : ''}
+                                style={work.visibility === 'public' ? { backgroundColor: '#42fa76' } : {}}
                               >
                                 {work.visibility}
                               </Badge>
@@ -458,9 +458,9 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Total Works</p>
-                    <p className="text-2xl font-bold text-blue-600">{works.length}</p>
+                    <p className="text-2xl font-bold text-[#42fa76]">{works.length}</p>
                   </div>
-                  <FileText className="h-8 w-8 text-blue-600" />
+                  <FileText className="h-8 w-8 text-[#42fa76]" />
                 </div>
               </CardContent>
             </Card>
@@ -470,11 +470,11 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Total Views</p>
-                    <p className="text-2xl font-bold text-green-600">
+                    <p className="text-2xl font-bold text-[#42fa76]">
                       {works.reduce((sum, work) => sum + work.viewsCount, 0)}
                     </p>
                   </div>
-                  <Eye className="h-8 w-8 text-green-600" />
+                  <Eye className="h-8 w-8 text-[#42fa76]" />
                 </div>
               </CardContent>
             </Card>
@@ -484,11 +484,11 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Total Likes</p>
-                    <p className="text-2xl font-bold text-pink-600">
+                    <p className="text-2xl font-bold text-[#42fa76]">
                       {works.reduce((sum, work) => sum + work.likesCount, 0)}
                     </p>
                   </div>
-                  <Heart className="h-8 w-8 text-pink-600" />
+                  <Heart className="h-8 w-8 text-[#42fa76]" />
                 </div>
               </CardContent>
             </Card>
@@ -498,11 +498,11 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Total Comments</p>
-                    <p className="text-2xl font-bold text-purple-600">
+                    <p className="text-2xl font-bold text-[#42fa76]">
                       {works.reduce((sum, work) => sum + work.commentsCount, 0)}
                     </p>
                   </div>
-                  <MessageCircle className="h-8 w-8 text-purple-600" />
+                  <MessageCircle className="h-8 w-8 text-[#42fa76]" />
                 </div>
               </CardContent>
             </Card>
@@ -573,8 +573,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                     <div key={visibility} className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className={`w-3 h-3 rounded-full ${
-                          visibility === 'public' ? 'bg-green-500' :
-                          visibility === 'unlisted' ? 'bg-yellow-500' : 'bg-red-500'
+                          visibility === 'public' ? 'bg-[#42fa76]' :
+                          visibility === 'unlisted' ? 'bg-[#42fa76]/60' : 'bg-[#42fa76]/30'
                         }`}></div>
                         <span className="text-sm capitalize">{visibility}</span>
                       </div>
