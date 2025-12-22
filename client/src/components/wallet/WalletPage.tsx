@@ -523,11 +523,18 @@ export function WalletPage({ userRole = 'customer' }: WalletPageProps) {
   // Fetch enabled payment gateways from admin config
   const { data: adminGateways = [] } = usePaymentGateways();
   
-  // For wallet top-up: PayPal always available (can't pay with wallet to top up wallet)
-  // Only add PayPal if not already in admin gateways
-  const alwaysAvailableGateways: PaymentGateway[] = adminGateways.some(g => g.gatewayId === 'paypal')
-    ? []
-    : [{ gatewayId: 'paypal', gatewayName: 'PayPal', isPrimary: false, supportedCurrencies: ['USD'], features: [], testMode: false }];
+  // For wallet top-up: PayPal and DodoPay always available (can't pay with wallet to top up wallet)
+  // Only add them if not already in admin gateways
+  const alwaysAvailableGateways: PaymentGateway[] = [
+    // Add DodoPay (Card) if not already configured
+    ...(!adminGateways.some(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo')
+      ? [{ gatewayId: 'dodopay', gatewayName: 'Card', isPrimary: true, supportedCurrencies: ['USD'], features: [], testMode: true }]
+      : []),
+    // Add PayPal if not already configured
+    ...(!adminGateways.some(g => g.gatewayId === 'paypal')
+      ? [{ gatewayId: 'paypal', gatewayName: 'PayPal', isPrimary: false, supportedCurrencies: ['USD'], features: [], testMode: false }]
+      : [])
+  ];
   
   // Merge: Start with admin-configured gateways (sorted by primary first), then add fallback gateways
   // Exclude system_wallet as you can't top up wallet using wallet
@@ -540,6 +547,10 @@ export function WalletPage({ userRole = 'customer' }: WalletPageProps) {
   const filteredGateways = mergedGateways.filter(gateway => {
     // Always show PayPal
     if (gateway.gatewayId === 'paypal') {
+      return true;
+    }
+    // DodoPay/Dodo - always show if enabled (card payments)
+    if (gateway.gatewayId === 'dodopay' || gateway.gatewayId === 'dodo') {
       return true;
     }
     // Stripe - only show if enabled in admin

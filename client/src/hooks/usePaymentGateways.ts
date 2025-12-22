@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 export interface PaymentGateway {
   gatewayId: string;
@@ -7,12 +8,35 @@ export interface PaymentGateway {
   supportedCurrencies: string[];
   features: string[];
   testMode: boolean;
+  isEnabled?: boolean;
 }
+
+// DodoPay is always available as the primary card payment method
+const DODOPAY_GATEWAY: PaymentGateway = {
+  gatewayId: 'dodopay',
+  gatewayName: 'Card',
+  isPrimary: true,
+  supportedCurrencies: ['USD'],
+  features: ['card'],
+  testMode: true,
+  isEnabled: true
+};
 
 export function usePaymentGateways() {
   return useQuery<PaymentGateway[]>({
     queryKey: ['/api/payment-gateways/enabled'],
-    select: (data: any) => data?.data || [],
+    queryFn: async () => {
+      const response = await apiRequest('/api/payment-gateways/enabled');
+      const gateways: PaymentGateway[] = Array.isArray(response) ? response : response?.data || [];
+      
+      // Always include DodoPay if not already in the list
+      const hasDodoPay = gateways.some(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
+      if (!hasDodoPay) {
+        return [DODOPAY_GATEWAY, ...gateways];
+      }
+      
+      return gateways;
+    },
     staleTime: 5 * 60 * 1000,
   });
 }
