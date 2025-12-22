@@ -1401,6 +1401,22 @@ const Index = () => {
   };
 
   const renderPage = () => {
+    // For /app path users: show loading screen while auth is being validated
+    // This prevents the flash of landing page before redirect to dashboard
+    if (loading && isAppPath() && LANDING_ONLY_PAGES.includes(currentState)) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 mx-auto relative">
+              <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-800"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 font-medium">Loading your dashboard...</p>
+          </div>
+        </div>
+      );
+    }
+    
     // If on auth-only domain (edufiliova.click), show auth page for home
     if (isAuthOnlyDomain && currentState === "home") {
       return (
@@ -1449,6 +1465,21 @@ const Index = () => {
     
     switch (currentState) {
       case "home":
+        // For /app path users who are authenticated, show loading while auto-routing kicks in
+        // This is a fallback in case the initial loading check above didn't catch it
+        if (isAppPath() && user && profile && LANDING_ONLY_PAGES.includes(currentState)) {
+          return (
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 mx-auto relative">
+                  <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-800"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 font-medium">Redirecting to dashboard...</p>
+              </div>
+            </div>
+          );
+        }
         return (
           <PageTransition 
             isActive={currentPage === "home"} 
