@@ -19,11 +19,30 @@ import { useLocation } from "wouter";
 import { useDomainDetection } from "@/hooks/useDomainDetection";
 
 const AppContent = () => {
-  const { user, profile } = useAuth();
+  const { user, profile, loading } = useAuth();
   const [location] = useLocation();
   const { isAuthOnlyDomain } = useDomainDetection();
   
   useInactivityLogout();
+
+  // Check if user has a stored session (indicates they were logged in)
+  const hasStoredSession = typeof window !== 'undefined' && localStorage.getItem('sessionId');
+  
+  // Show loading screen while auth is being validated for users with a session
+  // This prevents flash of landing page and prevents queries from firing before auth is ready
+  if (loading && hasStoredSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 mx-auto relative">
+            <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-800"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
+          </div>
+          <p className="text-gray-600 dark:text-gray-300 font-medium">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   // List of auth page routes where chat widget should be hidden
   const authRoutes = [
