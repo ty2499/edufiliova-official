@@ -179,11 +179,13 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     console.log(`📦 Auto-creating product in DodoPay: ${itemId}...`);
     try {
       await dodo.products.create({
+        product_id: itemId, // Explicitly set the product ID
         name: itemName,
         description: `${productType} - ${itemName}`,
         price: {
           currency: currency || 'USD',
           amount: Math.round(amount * 100), // Price in cents
+          type: 'one_time', // Required field inside price object
         },
         tax_category: 'no_tax', // Default to no tax
         type: 'digital', // Required field
@@ -226,11 +228,11 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       return_url: successReturnUrl,
     } as any)) as any;
 
-    console.log('✅ DoDo Pay checkout session created:', checkoutSession.id);
+    console.log('✅ DoDo Pay checkout session created:', checkoutSession.checkout_session_id || checkoutSession.id);
 
     // Step 3: Build checkout URL
-    const checkoutUrl = checkoutSession.url || `https://checkout.dodopayments.com/${checkoutSession.id}`;
-    const sessionId = checkoutSession.id;
+    const checkoutUrl = checkoutSession.checkout_url || checkoutSession.url || `https://checkout.dodopayments.com/${checkoutSession.checkout_session_id || checkoutSession.id}`;
+    const sessionId = checkoutSession.checkout_session_id || checkoutSession.id;
 
     const result: PaymentResult = {
       success: true,
