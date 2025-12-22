@@ -3,7 +3,7 @@ import DodoPayments from 'dodopayments';
 import { Webhook } from 'standardwebhooks';
 import { storage } from './storage.js';
 import { db } from './db.js';
-import { userSubscriptions, profiles, pricingPlans, users, orders, orderItems, downloads } from '../shared/schema.js';
+import { userSubscriptions, profiles, pricingPlans, users, orders, orderItems, downloads, shopCustomers, shopPurchases, products } from '../shared/schema.js';
 import { eq, and } from 'drizzle-orm';
 import { ReceiptService } from './services/receipts.js';
 import { emailService } from './utils/email.js';
@@ -619,6 +619,53 @@ router.get('/verify/:paymentId', async (req: Request, res: Response) => {
                   console.log('⚠️ Error creating download entry:', e.message);
                 }
               }
+            }
+
+            // Create shop_purchases entries for the purchases page
+            try {
+              // Get or find shop customer
+              const [customer] = await db.select().from(shopCustomers)
+                .where(eq(shopCustomers.userId, order.userId!))
+                .limit(1);
+              
+              if (customer) {
+                for (const item of items) {
+                  if (item.productId) {
+                    // Check if purchase already exists
+                    const existingPurchase = await db.select().from(shopPurchases)
+                      .where(and(
+                        eq(shopPurchases.customerId, customer.id),
+                        eq(shopPurchases.orderId, orderId)
+                      ))
+                      .limit(1);
+                    
+                    if (existingPurchase.length === 0) {
+                      // Get product details
+                      const [product] = await db.select().from(products)
+                        .where(eq(products.id, item.productId))
+                        .limit(1);
+                      
+                      await db.insert(shopPurchases).values({
+                        customerId: customer.id,
+                        itemName: item.productName || product?.name || 'Product',
+                        itemType: product?.type || 'digital',
+                        downloadUrl: product?.fileUrl || null,
+                        thumbnailUrl: product?.images?.[0] || null,
+                        price: String(item.priceAtPurchase || product?.price || '0'),
+                        orderId: orderId,
+                        status: 'completed',
+                      });
+                      console.log('✅ Created shop_purchase entry for:', item.productName);
+                    } else {
+                      console.log('ℹ️ Shop purchase already exists for order:', orderId);
+                    }
+                  }
+                }
+              } else {
+                console.log('⚠️ No shop customer found for user:', order.userId);
+              }
+            } catch (purchaseError: any) {
+              console.error('⚠️ Error creating shop_purchase entry:', purchaseError.message);
             }
 
             // Send order confirmation email (only if order was just marked as paid)
