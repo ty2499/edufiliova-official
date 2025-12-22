@@ -1190,47 +1190,7 @@ export default function SubscriptionPaymentModal({
                   )}
                   
                   <Button
-                    onClick={async () => {
-                      setProcessing(true);
-                      setError('');
-                      try {
-                        const response = await fetch('/api/dodopay/checkout-session', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({
-                            amount: plan.price,
-                            currency: 'USD',
-                            courseId: `subscription_${plan.tier}`,
-                            courseName: `${plan.name} Subscription`,
-                            productName: `${plan.name} Subscription`,
-                            productType: 'subscription',
-                            userEmail: user?.email || '',
-                            userName: profile?.name || user?.email || '',
-                            returnUrl: `${window.location.origin}/payment-success?gateway=dodopay&plan=${plan.tier}`,
-                          }),
-                        });
-
-                        const data = await response.json();
-                        
-                        if (data.success && data.checkoutUrl) {
-                          // Use embedded overlay checkout instead of redirect
-                          if (dodoInitialized && DodoPayments.Checkout) {
-                            DodoPayments.Checkout.open({
-                              checkoutUrl: data.checkoutUrl
-                            });
-                          } else {
-                            // Fallback to redirect if overlay not available
-                            window.location.href = data.checkoutUrl;
-                          }
-                        } else {
-                          throw new Error(data.error || 'Failed to initialize payment');
-                        }
-                      } catch (err: any) {
-                        console.error('DodoPay payment error:', err);
-                        setError(err.message || 'Payment failed. Please try again.');
-                        setProcessing(false);
-                      }
-                    }}
+                    onClick={handleDodoPayment}
                     disabled={processing}
                     className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white py-6 text-base font-semibold rounded-xl"
                     data-testid="button-dodopay-checkout"
