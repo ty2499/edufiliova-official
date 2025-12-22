@@ -100,12 +100,10 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
   };
 
   const renderCleanContent = (content: string) => {
-    // Remove all # and * characters, and clean up extra spaces
+    // Remove all # and * characters only, preserve spacing
     let cleanContent = content
       .replace(/#+/g, '') // Remove all # characters
-      .replace(/\*/g, '')  // Remove all * characters
-      .replace(/\s+/g, ' ') // Replace multiple spaces with single space
-      .trim();
+      .replace(/\*/g, ''); // Remove all * characters
     
     // Split into paragraphs (double newline)
     const paragraphs = cleanContent.split(/\n\n+/).filter(p => p.trim());
