@@ -110,4 +110,9 @@ vite.config.ts.*
 *.tsbuildinfo
 
 # Local development files
-.replit.nix
+.replit.nixnode_modules/
+.local/
+.cache/
+dist/
+build/
+*.log
