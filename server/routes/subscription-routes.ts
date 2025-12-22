@@ -269,6 +269,70 @@ router.post('/subscriptions/confirm', async (req: AuthenticatedRequest, res: Res
         });
       }
 
+      case 'dodopay': {
+        // DodoPay payments are confirmed via overlay callback - trust the frontend
+        // The webhook will also trigger but we want immediate UI update
+        
+        // Update user profile with subscription
+        const planExpiry = new Date();
+        const billingCycle = req.body.billingCycle || 'monthly';
+        
+        if (billingCycle === 'yearly') {
+          planExpiry.setFullYear(planExpiry.getFullYear() + 1);
+        } else {
+          planExpiry.setMonth(planExpiry.getMonth() + 1);
+        }
+
+        await db.update(profiles)
+          .set({ 
+            subscriptionTier: planType,
+            planExpiry: planExpiry,
+            legacyPlan: planType
+          })
+          .where(eq(profiles.userId, userId));
+
+        console.log(`✅ DodoPay subscription confirmed for user ${userId}: ${planType}`);
+
+        // Generate and send subscription receipt
+        try {
+          const { ReceiptService } = await import('../services/receipts.js');
+          const [profile] = await db.select()
+            .from(profiles)
+            .where(eq(profiles.userId, userId))
+            .limit(1);
+          
+          const [user] = await db.select()
+            .from(users)
+            .where(eq(users.id, userId))
+            .limit(1);
+
+          if (profile && user) {
+            await ReceiptService.generateAndSendSubscriptionReceipt({
+              subscriptionId: paymentIntentId || `dodo_${Date.now()}`,
+              userId: userId,
+              userEmail: user.email,
+              userName: profile.name || undefined,
+              planName: planType,
+              planType: planType,
+              amount: amount || 0,
+              currency: 'USD',
+              billingCycle: billingCycle === 'yearly' ? 'Yearly' : 'Monthly',
+              planExpiry: planExpiry,
+              paymentMethod: 'dodopay',
+            });
+            console.log('📧 DodoPay subscription receipt sent to:', user.email);
+          }
+        } catch (receiptError) {
+          console.error('Failed to send DodoPay subscription receipt:', receiptError);
+        }
+
+        return res.json({
+          success: true,
+          message: 'DodoPay subscription activated successfully',
+          planExpiry
+        });
+      }
+
       default:
         return res.status(400).json({ error: `Gateway ${gateway} not supported for confirmation` });
     }

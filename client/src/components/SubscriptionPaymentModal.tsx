@@ -98,11 +98,32 @@ export default function SubscriptionPaymentModal({
         const dodoMode = isDodoTestMode ? "test" : "live";
         DodoPayments.Initialize({
           mode: dodoMode,
-          onEvent: (event: any) => {
+          onEvent: async (event: any) => {
             console.log("Dodo checkout event:", event);
             
             if (event.event_type === "checkout.redirect") {
-              // Payment successful - show success screen in modal
+              // Payment successful - confirm subscription in backend
+              try {
+                const confirmResponse = await fetch('/api/subscriptions/confirm', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  credentials: 'include',
+                  body: JSON.stringify({
+                    paymentIntentId: event.data?.payment_id || `dodo_${Date.now()}`,
+                    planType: plan.tier,
+                    amount: plan.price,
+                    gateway: 'dodopay',
+                    billingCycle: plan.interval,
+                  }),
+                });
+                
+                const confirmData = await confirmResponse.json();
+                console.log('DodoPay subscription confirmed:', confirmData);
+              } catch (err) {
+                console.error('Failed to confirm DodoPay subscription:', err);
+              }
+              
+              // Show success screen in modal
               setPaymentDetails({
                 transactionId: event.data?.payment_id || 'Completed',
                 date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
