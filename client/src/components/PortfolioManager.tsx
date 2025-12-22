@@ -467,55 +467,35 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Total Works</p>
-                    <p className="text-2xl font-bold text-[#42fa76]">{works.length}</p>
-                  </div>
-                  <FileText className="h-8 w-8 text-[#42fa76]" />
-                </div>
+                <p className="text-sm font-medium text-gray-600">Total Works</p>
+                <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">{works.length}</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Total Views</p>
-                    <p className="text-2xl font-bold text-[#42fa76]">
-                      {works.reduce((sum, work) => sum + work.viewsCount, 0)}
-                    </p>
-                  </div>
-                  <Eye className="h-8 w-8 text-[#42fa76]" />
-                </div>
+                <p className="text-sm font-medium text-gray-600">Total Views</p>
+                <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+                  {works.reduce((sum, work) => sum + work.viewsCount, 0)}
+                </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Total Likes</p>
-                    <p className="text-2xl font-bold text-[#42fa76]">
-                      {works.reduce((sum, work) => sum + work.likesCount, 0)}
-                    </p>
-                  </div>
-                  <Heart className="h-8 w-8 text-[#42fa76]" />
-                </div>
+                <p className="text-sm font-medium text-gray-600">Total Likes</p>
+                <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+                  {works.reduce((sum, work) => sum + work.likesCount, 0)}
+                </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Total Comments</p>
-                    <p className="text-2xl font-bold text-[#42fa76]">
-                      {works.reduce((sum, work) => sum + work.commentsCount, 0)}
-                    </p>
-                  </div>
-                  <MessageCircle className="h-8 w-8 text-[#42fa76]" />
-                </div>
+                <p className="text-sm font-medium text-gray-600">Total Comments</p>
+                <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+                  {works.reduce((sum, work) => sum + work.commentsCount, 0)}
+                </p>
               </CardContent>
             </Card>
           </div>
