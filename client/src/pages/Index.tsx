@@ -677,6 +677,36 @@ const Index = () => {
     }
   }, [isAuthOnlyDomain, location, navigate, navigateToPage]);
 
+  // Auto-redirect authenticated users from home page (instant, no screen shown)
+  useEffect(() => {
+    // Skip if still loading
+    if (loading) return;
+    
+    // Only if user is authenticated and on home page
+    if (!user || !profile || currentState !== 'home') return;
+    
+    // Check if user intentionally went home
+    const intentionallyWentHome = localStorage.getItem('force_home_navigation') === 'true';
+    if (intentionallyWentHome) return; // User intentionally wants to be on home
+    
+    // Auto-redirect to appropriate dashboard (no loading screen shown)
+    let targetPage: AppState = 'customer-dashboard'; // default
+    
+    if (['admin', 'accountant', 'customer_service'].includes(profile.role)) {
+      targetPage = 'admin-dashboard';
+    } else if (profile.role === 'teacher') {
+      targetPage = 'teacher-dashboard';
+    } else if (profile.role === 'freelancer') {
+      targetPage = 'freelancer-dashboard';
+    } else if (profile.role === 'general') {
+      targetPage = 'customer-dashboard';
+    }
+    
+    // Instantly redirect without showing anything
+    setCurrentState(targetPage);
+    navigateToPage(targetPage, 'instant');
+  }, [loading, user, profile, currentState, navigateToPage]);
+
   // /app path auth bypass: Authenticated users on /app should never see landing pages
   // They should be redirected to their dashboard or last visited in-app page
   useEffect(() => {
@@ -1495,21 +1525,6 @@ const Index = () => {
       case "home":
         // Check if user intentionally clicked logo to go home
         const intentionallyWentHome = localStorage.getItem('force_home_navigation') === 'true';
-        
-        // If user logged in and is on home (not intentional), redirect to dashboard
-        if (user && profile && !intentionallyWentHome) {
-          return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto relative">
-                  <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-800"></div>
-                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 font-medium">Redirecting to dashboard...</p>
-              </div>
-            </div>
-          );
-        }
         
         // Clear the flag once we've checked it
         if (intentionallyWentHome) {
