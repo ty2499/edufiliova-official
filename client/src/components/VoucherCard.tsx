@@ -80,7 +80,7 @@ export function VoucherCard({
       className
     )}>
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-0 right-0 w-2/5 h-full bg-gradient-to-br from-orange-500 to-orange-600" 
+        <div className="absolute top-0 right-0 w-2/5 h-full bg-gradient-to-br from-primary to-primary" 
              style={{ clipPath: 'polygon(20% 0, 100% 0, 100% 100%, 0% 100%)' }} 
         />
       </div>
@@ -145,7 +145,7 @@ export function VoucherCard({
           </div>
           <div className="flex gap-1">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="w-1.5 h-1.5 bg-orange-500 transform rotate-45" />
+              <div key={i} className="w-1.5 h-1.5 bg-primary transform rotate-45" />
             ))}
           </div>
         </div>
@@ -187,7 +187,7 @@ export function generateVoucherEmailHTML(
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
     .header {
-      background: linear-gradient(135deg, #0C332C 0%, #ff4520 100%);
+      background: linear-gradient(135deg, #0C332C 0%, #0C332C 100%);
       padding: 40px 30px;
       text-align: center;
       color: white;

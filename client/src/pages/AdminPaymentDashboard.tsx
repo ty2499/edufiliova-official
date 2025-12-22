@@ -1045,7 +1045,7 @@ const UserCard = ({
             disabled={isTogglingFeatured}
             data-testid={`toggle-featured-${user.userId}`}
             className={`h-8 px-2.5 sm:px-3 text-xs flex-1 sm:flex-initial min-w-[70px] ${user.isFeatured ? 'text-white' : ''}`}
-            style={user.isFeatured ? { backgroundColor: '#ff5834' } : { borderColor: '#ff5834', color: '#ff5834' }}
+            style={user.isFeatured ? { backgroundColor: '#0C332C' } : { borderColor: '#0C332C', color: '#0C332C' }}
           >
             {isTogglingFeatured ? (
               <>
@@ -2602,7 +2602,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
   return (
     <div className="min-h-screen bg-background flex flex-col md:block" data-testid="admin-payment-dashboard">
       {/* Mobile Top Navbar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#ff5834] flex items-center justify-between px-4 z-50 border-b border-white/10 pt-safe">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#0C332C] flex items-center justify-between px-4 z-50 border-b border-white/10 pt-safe">
         <Button
           variant="ghost"
           size="icon"
@@ -2619,12 +2619,12 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
       {/* Left Sidebar - Slide-in on mobile, fixed on desktop */}
       <div className={`${
         (isMobile && isChatOpen) ? "hidden" : ""
-      } w-64 fixed left-0 top-0 h-full border-r border-sidebar-border bg-[#ff5834] z-50 overflow-y-auto transition-transform duration-300 ${
+      } w-64 fixed left-0 top-0 h-full border-r border-sidebar-border bg-[#0C332C] z-50 overflow-y-auto transition-transform duration-300 ${
         showMobileMenu ? 'translate-x-0' : '-translate-x-full'
       } md:translate-x-0 ${
         isChatOpen ? "hidden" : "block"
       }`}>
-        <div className="flex flex-col py-4 px-3 bg-[#ff5834] min-h-full">
+        <div className="flex flex-col py-4 px-3 bg-[#0C332C] min-h-full">
           {/* Header */}
           <div className="flex items-center justify-between mb-6" data-testid="sidebar-header">
             <h2 className="text-white font-bold text-xl">Admin</h2>
@@ -3198,7 +3198,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
             </Button>
             <Button
               size="sm"
-              className="w-full bg-[#ff5834] hover:bg-[#e64d2e] text-white"
+              className="w-full bg-[#0C332C] hover:bg-[#e64d2e] text-white"
               onClick={handleLogout}
               disabled={isLoggingOut}
               data-testid="button-logout"
@@ -3282,12 +3282,12 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Mod */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#ff5834] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#ff5834]" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C]" 
                     data-testid="card-mod"
                     onClick={() => setSelectedTab("moderation")}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 md:p-3 bg-[#ff5834]/10 dark:bg-[#ff5834]/20 rounded-lg">
+                      <div className="p-2 md:p-3 bg-[#0C332C]/10 dark:bg-[#0C332C]/20 rounded-lg">
                         <Shield className="h-5 w-5 md:h-6 md:w-6 text-gray-900 dark:text-white" />
                       </div>
                       <div>
@@ -3333,12 +3333,12 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Support */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#ff5834] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#ff5834]" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C]" 
                     data-testid="card-support"
                     onClick={() => setSelectedTab("help-chat")}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 md:p-3 bg-[#ff5834]/10 dark:bg-[#ff5834]/20 rounded-lg">
+                      <div className="p-2 md:p-3 bg-[#0C332C]/10 dark:bg-[#0C332C]/20 rounded-lg">
                         <MessageCircle className="h-5 w-5 md:h-6 md:w-6 text-gray-900 dark:text-white" />
                       </div>
                       <div>
@@ -5186,10 +5186,10 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Pending Approval</CardTitle>
-                    <Clock className="h-4 w-4" style={{ color: '#ff5834' }} />
+                    <Clock className="h-4 w-4" style={{ color: '#0C332C' }} />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold" style={{ color: '#ff5834' }}>
+                    <div className="text-2xl font-bold" style={{ color: '#0C332C' }}>
                       {allProducts.filter(p => p.status === 'pending').length}
                     </div>
                     <p className="text-xs text-muted-foreground">Awaiting review</p>
@@ -5290,7 +5290,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 <TabsContent value="pending">
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-base" style={{ color: '#ff5834' }}>Pending Products - Require Your Approval</CardTitle>
+                      <CardTitle className="text-base" style={{ color: '#0C332C' }}>Pending Products - Require Your Approval</CardTitle>
                       <p className="text-sm text-muted-foreground">
                         Review and approve or reject products submitted by freelancers and teachers
                       </p>

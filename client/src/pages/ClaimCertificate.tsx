@@ -187,10 +187,10 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
         {certificate ? (
           <div className="max-w-4xl mx-auto">
             {/* Certificate Already Generated - Success View */}
-            <div className="bg-gradient-to-r from-[#ff5834] to-[#ff7854] rounded-t-2xl p-4 sm:p-8 text-white shadow-xl">
+            <div className="bg-gradient-to-r from-[#0C332C] to-[#ff7854] rounded-t-2xl p-4 sm:p-8 text-white shadow-xl">
               <div className="flex items-center gap-3 sm:gap-4">
                 <div className="bg-white rounded-full p-2 sm:p-4 flex-shrink-0">
-                  <CheckCircle2 className="h-10 w-10 sm:h-16 sm:w-16 text-[#ff5834]" />
+                  <CheckCircle2 className="h-10 w-10 sm:h-16 sm:w-16 text-[#0C332C]" />
                 </div>
                 <div>
                   <h2 className="text-xl sm:text-3xl md:text-4xl font-bold">Congratulations!</h2>
@@ -271,7 +271,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
         ) : purchaseStatus?.purchased ? (
           <div className="max-w-4xl mx-auto">
             {/* Already Purchased View */}
-            <div className="bg-[#ff5834] rounded-t-2xl p-4 sm:p-8 text-white shadow-xl">
+            <div className="bg-[#0C332C] rounded-t-2xl p-4 sm:p-8 text-white shadow-xl">
               <div>
                 <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-white">Certificate Already Claimed!</h2>
                 <p className="text-white/90 mt-1 sm:mt-2 text-sm sm:text-lg">Your {certificateType} is Ready</p>

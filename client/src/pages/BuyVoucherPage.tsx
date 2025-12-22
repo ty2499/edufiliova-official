@@ -178,7 +178,7 @@ export default function BuyVoucherPage() {
                 )}
                 <Button
                   onClick={handleBack}
-                  className="bg-gradient-to-r from-orange-500 to-green-500 text-white"
+                  className="bg-gradient-to-r from-primary to-green-500 text-white"
                   data-testid="button-go-home"
                 >
                   Go to Homepage
@@ -241,7 +241,7 @@ export default function BuyVoucherPage() {
                 <Button
                   onClick={handlePayNow}
                   disabled={whatsappCheckout.loading}
-                  className="w-full bg-gradient-to-r from-orange-500 to-green-500 hover:from-orange-600 hover:to-green-600 text-white py-6 text-lg"
+                  className="w-full bg-gradient-to-r from-primary to-green-500 hover:from-orange-600 hover:to-green-600 text-white py-6 text-lg"
                   data-testid="button-pay-now"
                 >
                   {whatsappCheckout.loading ? (

@@ -98,7 +98,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
   return (
     <div className="min-h-screen">
       {/* Epic Hero Section */}
-      <div className="relative bg-[#ff5834] dark:bg-[#ff5834] overflow-hidden pt-16 md:pt-20">
+      <div className="relative bg-[#0C332C] dark:bg-[#0C332C] overflow-hidden pt-16 md:pt-20">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Large glow orbs */}
@@ -144,7 +144,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
               <Button
                 onClick={() => onNavigate("teacher-signup-basic")}
                 size="lg"
-                className="bg-white text-[#ff5834] hover:bg-gray-100 text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
+                className="bg-white text-[#0C332C] hover:bg-gray-100 text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
                 data-testid="button-start-application"
               >
                 Start Your Application
@@ -181,7 +181,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
       {/* Why Teach With Us Section */}
       <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 max-w-7xl mx-auto">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <Badge className="mb-3 sm:mb-4 bg-[#ff5834]/10 text-[#ff5834] dark:bg-[#ff5834]/20 dark:text-[#ff5834] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
+          <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-[#0C332C] dark:bg-[#0C332C]/20 dark:text-[#0C332C] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
             Benefits
           </Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 px-2">
@@ -196,11 +196,11 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
           {benefits.map((benefit, index) => (
             <Card 
               key={index}
-              className="border-2 border-gray-200 dark:border-gray-700 hover:border-[#ff5834] dark:hover:border-[#ff5834] transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group"
+              className="border-2 border-gray-200 dark:border-gray-700 hover:border-[#0C332C] dark:hover:border-[#0C332C] transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group"
               data-testid={`benefit-card-${index}`}
             >
               <CardContent className="p-4 sm:p-6 md:p-8">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-[#ff5834] flex items-center justify-center mb-4 sm:mb-5 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-[#0C332C] flex items-center justify-center mb-4 sm:mb-5 md:mb-6 group-hover:scale-110 transition-transform duration-300">
                   <benefit.icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-white" />
                 </div>
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
@@ -219,7 +219,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
       <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <Badge className="mb-3 sm:mb-4 bg-[#ff5834]/10 text-[#ff5834] dark:bg-[#ff5834]/20 dark:text-[#ff5834] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
+            <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-[#0C332C] dark:bg-[#0C332C]/20 dark:text-[#0C332C] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
               Simple Process
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 px-2">
@@ -235,12 +235,12 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
               <div key={index} className="relative" data-testid={`step-card-${index}`}>
                 {/* Connector Line */}
                 {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-20 left-full w-full h-0.5 bg-[#ff5834] -z-10" />
+                  <div className="hidden lg:block absolute top-20 left-full w-full h-0.5 bg-[#0C332C] -z-10" />
                 )}
                 
-                <Card className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-[#ff5834] dark:hover:border-[#ff5834] transition-all duration-300 h-full">
+                <Card className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-[#0C332C] dark:hover:border-[#0C332C] transition-all duration-300 h-full">
                   <CardContent className="p-4 sm:p-6 md:p-8 text-center">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#ff5834] flex items-center justify-center mx-auto mb-4 sm:mb-5 md:mb-6 shadow-lg">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#0C332C] flex items-center justify-center mx-auto mb-4 sm:mb-5 md:mb-6 shadow-lg">
                       <span className="text-xl sm:text-2xl md:text-3xl font-bold text-white">{step.number}</span>
                     </div>
                     <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
@@ -260,7 +260,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
       {/* Requirements Section */}
       <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 max-w-7xl mx-auto">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <Badge className="mb-3 sm:mb-4 bg-[#ff5834]/10 text-[#ff5834] dark:bg-[#ff5834]/20 dark:text-[#ff5834] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
+          <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-[#0C332C] dark:bg-[#0C332C]/20 dark:text-[#0C332C] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
             Requirements
           </Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 px-2">
@@ -280,7 +280,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
                   className="flex items-start gap-2 sm:gap-3 md:gap-4 group"
                   data-testid={`requirement-${index}`}
                 >
-                  <CheckmarkIcon size="md" className="bg-[#ff5834] flex-shrink-0 mt-0.5 sm:mt-1 group-hover:scale-110 transition-transform" />
+                  <CheckmarkIcon size="md" className="bg-[#0C332C] flex-shrink-0 mt-0.5 sm:mt-1 group-hover:scale-110 transition-transform" />
                   <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base md:text-lg">
                     {requirement}
                   </p>
@@ -292,7 +292,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
       </div>
 
       {/* Final CTA Section */}
-      <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 bg-[#ff5834]">
+      <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 bg-[#0C332C]">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-5 md:mb-6 px-2">
             Ready to Make a Difference?
@@ -305,7 +305,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
             <Button
               onClick={() => onNavigate("teacher-signup-basic")}
               size="lg"
-              className="bg-white text-[#ff5834] hover:bg-gray-100 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
+              className="bg-white text-[#0C332C] hover:bg-gray-100 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
               data-testid="button-apply-now"
             >
               Apply Now

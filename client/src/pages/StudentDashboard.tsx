@@ -2875,7 +2875,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       <h2 className="text-xl font-semibold text-foreground mb-4">Continue Reading</h2>
                       <div className="flex gap-4 overflow-x-auto pb-4">
                         {inProgressLessons.map((lesson: any, index: number) => {
-                          const colors = ['#2d5ddd', '#c5f13c', '#151314', '#ff5834', '#a28ff9', '#a4f5a6'];
+                          const colors = ['#2d5ddd', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
                           const bgColor = colors[index % colors.length];
                           const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
                           const textColor = isLight ? '#000000' : '#ffffff';
@@ -3056,7 +3056,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
 
                         {/* Recent Progress Cards */}
                         {dailyProgress?.recentProgress?.slice(0, 5).map((day: any, index: number) => {
-                          const colors = ['#c5f13c', '#ff5834', '#a28ff9', '#a4f5a6', '#151314'];
+                          const colors = ['#c5f13c', '#0C332C', '#a28ff9', '#a4f5a6', '#151314'];
                           const bgColor = colors[index % colors.length];
                           const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
                           const textColor = isLight ? '#000000' : '#ffffff';
@@ -3124,7 +3124,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       
                       <div className="flex gap-4 overflow-x-auto pb-4">
                         {userNotes.slice(0, 6).map((note: any, index: number) => {
-                          const colors = ['#2d5ddd', '#c5f13c', '#151314', '#ff5834', '#a28ff9', '#a4f5a6'];
+                          const colors = ['#2d5ddd', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
                           const bgColor = colors[index % colors.length];
                           const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
                           const textColor = isLight ? '#000000' : '#ffffff';
@@ -3195,7 +3195,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                             <Button 
                               variant="default" 
                               size="sm" 
-                              className="inline-flex items-center justify-center whitespace-nowrap font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 shadow-sm hover:shadow-md focus-visible:ring-success h-9 px-3 sm:px-4 py-2 text-xs w-full rounded-full hover:bg-primary/90 bg-[#ff5834] text-[#ffffff]" 
+                              className="inline-flex items-center justify-center whitespace-nowrap font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 shadow-sm hover:shadow-md focus-visible:ring-success h-9 px-3 sm:px-4 py-2 text-xs w-full rounded-full hover:bg-primary/90 bg-[#0C332C] text-[#ffffff]" 
                               data-testid="request-help"
                               onClick={() => setActiveTab("messages")}
                             >
@@ -3388,7 +3388,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                             'from-blue-500 to-blue-600',
                             'from-purple-500 to-purple-600',
                             'from-green-500 to-green-600',
-                            'from-orange-500 to-orange-600',
+                            'from-primary to-primary',
                             'from-pink-500 to-pink-600',
                             'from-cyan-500 to-cyan-600',
                             'from-indigo-500 to-indigo-600',

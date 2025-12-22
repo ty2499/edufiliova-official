@@ -1412,7 +1412,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       <div className="w-full max-w-md mx-auto">
         <div className="text-center space-y-6">
           <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#fff5f2' }}>
-            <Mail className="h-10 w-10" style={{ color: '#ff5834' }} />
+            <Mail className="h-10 w-10" style={{ color: '#0C332C' }} />
           </div>
           
           <div className="space-y-2">
@@ -1457,7 +1457,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 onClick={() => handleResendCode("email")}
                 disabled={resendCooldown > 0 || loading}
                 className="font-medium hover:underline disabled:opacity-50"
-                style={{ color: '#ff5834' }}
+                style={{ color: '#0C332C' }}
                 data-testid="button-resend-email"
               >
                 {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code'}
@@ -1584,7 +1584,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 onClick={() => handleResendCode("phone")}
                 disabled={resendCooldown > 0 || loading}
                 className="font-medium hover:underline disabled:opacity-50"
-                style={{ color: '#ff5834' }}
+                style={{ color: '#0C332C' }}
                 data-testid="button-resend-phone"
               >
                 {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code'}

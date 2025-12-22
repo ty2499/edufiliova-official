@@ -67,7 +67,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
             {/* Introduction */}
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <BookOpen className="w-5 h-5" style={{ color: '#ff5834' }} />
+                <BookOpen className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Welcome to EduFiliova Teaching Platform</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
@@ -80,7 +80,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
             {/* Child Safety - PRIORITY SECTION */}
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Baby className="w-5 h-5" style={{ color: '#ff5834' }} />
+                <Baby className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Child Safety & Protection (HIGHEST PRIORITY)</h3>
               </div>
               <div className="space-y-3">
@@ -137,7 +137,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
             {/* Teaching Standards */}
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Users className="w-5 h-5" style={{ color: '#ff5834' }} />
+                <Users className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Teaching Standards & Responsibilities</h3>
               </div>
               <div className="space-y-3">
@@ -167,7 +167,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
             {/* Payment Terms */}
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <DollarSign className="w-5 h-5" style={{ color: '#ff5834' }} />
+                <DollarSign className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Payment & Commission Structure</h3>
               </div>
               <div className="space-y-3">
@@ -201,7 +201,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
             {/* Platform Usage */}
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Globe className="w-5 h-5" style={{ color: '#ff5834' }} />
+                <Globe className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Platform Usage Guidelines</h3>
               </div>
               <div className="space-y-3">
@@ -231,7 +231,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
             {/* Document Requirements */}
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <FileText className="w-5 h-5" style={{ color: '#ff5834' }} />
+                <FileText className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Document Requirements</h3>
               </div>
               <div className="p-3 bg-orange-50 rounded-lg">
@@ -254,7 +254,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
             {/* Communication */}
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <MessageCircle className="w-5 h-5" style={{ color: '#ff5834' }} />
+                <MessageCircle className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Communication Policy</h3>
               </div>
               <div className="p-3 bg-cyan-50 rounded-lg">
@@ -273,7 +273,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
             {/* Legal */}
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="w-5 h-5" style={{ color: '#ff5834' }} />
+                <AlertTriangle className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Legal & Compliance</h3>
               </div>
               <div className="space-y-3">

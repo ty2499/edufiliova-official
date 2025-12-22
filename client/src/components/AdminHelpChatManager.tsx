@@ -619,7 +619,7 @@ export default function AdminHelpChatManager() {
         <div className={cn(
           "flex items-center justify-between border-b border-gray-100 flex-shrink-0",
           isMobile ? "p-4" : "p-3"
-        )} style={{ backgroundColor: '#ff5834' }}>
+        )} style={{ backgroundColor: '#0C332C' }}>
           <div className="flex items-center gap-3 flex-1">
             {/* Back Button */}
             <Button
@@ -727,7 +727,7 @@ export default function AdminHelpChatManager() {
                     {/* Sender's Avatar - Left Side */}
                     {!isFromAdmin && (
                       <Avatar className="h-10 w-10 flex-shrink-0 rounded-full mb-1">
-                        <AvatarFallback className="text-white text-lg font-bold flex items-center justify-center h-full w-full" style={{ backgroundColor: '#ff5834' }}>
+                        <AvatarFallback className="text-white text-lg font-bold flex items-center justify-center h-full w-full" style={{ backgroundColor: '#0C332C' }}>
                           <User className="h-5 w-5" />
                         </AvatarFallback>
                       </Avatar>
@@ -739,7 +739,7 @@ export default function AdminHelpChatManager() {
                       isFromAdmin 
                         ? "text-white" 
                         : "bg-white text-black"
-                    )} style={isFromAdmin ? { backgroundColor: '#ff5834' } : {}}>
+                    )} style={isFromAdmin ? { backgroundColor: '#0C332C' } : {}}>
                       <div className="space-y-1">
                         {/* Text Content */}
                         <p className="text-[15px] leading-[20px] whitespace-pre-wrap break-words" style={{ fontFamily: 'Satoshi, sans-serif' }}>
@@ -876,7 +876,7 @@ export default function AdminHelpChatManager() {
               className={cn(
                 "h-10 w-10 p-0 rounded-full flex-shrink-0 flex items-center justify-center transition-colors shadow-sm",
                 newMessage.trim() && isConnected && !sendMessageMutation.isPending
-                  ? "bg-orange-500 hover:bg-orange-600 text-white" 
+                  ? "bg-primary hover:bg-primary text-white" 
                   : "bg-gray-200 text-gray-400 cursor-not-allowed"
               )}
               data-testid="send-admin-message"
@@ -970,7 +970,7 @@ export default function AdminHelpChatManager() {
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
                         <Avatar className="h-8 w-8">
-                          <AvatarFallback className="bg-gradient-to-br from-orange-400 to-orange-600 text-white text-xs">
+                          <AvatarFallback className="bg-gradient-to-br from-orange-400 to-primary text-white text-xs">
                             <User className="h-4 w-4" />
                           </AvatarFallback>
                         </Avatar>

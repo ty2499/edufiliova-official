@@ -126,12 +126,12 @@ export default function VerificationCodeInput({
                 : digit 
                   ? darkMode 
                     ? 'border-amber-400 text-white' 
-                    : 'border-[#ff5834] text-gray-900' 
+                    : 'border-[#0C332C] text-gray-900' 
                   : darkMode
                     ? 'border-gray-600 text-white focus:border-amber-400'
-                    : 'border-gray-200 text-gray-900 focus:border-[#ff5834]'
+                    : 'border-gray-200 text-gray-900 focus:border-[#0C332C]'
               }
-              ${focused && !error && !digit ? darkMode ? 'ring-2 ring-amber-400/30' : 'ring-2 ring-[#ff5834]/20' : ''}
+              ${focused && !error && !digit ? darkMode ? 'ring-2 ring-amber-400/30' : 'ring-2 ring-[#0C332C]/20' : ''}
             `}
             data-testid={`input-code-digit-${index}`}
             aria-label={`Digit ${index + 1}`}

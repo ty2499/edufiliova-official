@@ -811,9 +811,9 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                 initializeAudioContext();
               }}
               className="h-14 w-14 md:h-16 md:w-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 relative"
-              style={{ backgroundColor: '#ff5834' }}
+              style={{ backgroundColor: '#0C332C' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e04e2f'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff5834'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0C332C'}
               data-testid="help-chat-bubble"
               aria-label="Open help chat"
             >
@@ -849,7 +849,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
               <div className={cn(
                 "flex items-center justify-between border-b border-gray-100 flex-shrink-0",
                 isMobile ? "p-4" : "p-3 rounded-t-2xl"
-              )} style={{ backgroundColor: '#ff5834' }}>
+              )} style={{ backgroundColor: '#0C332C' }}>
                 <div className="flex items-center gap-3 flex-1">
                   {isMobile && (
                     <button 
@@ -1000,7 +1000,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                             isFromCurrentUser 
                               ? "text-white" 
                               : "bg-white text-black"
-                          )} style={isFromCurrentUser ? { backgroundColor: '#ff5834' } : {}}>
+                          )} style={isFromCurrentUser ? { backgroundColor: '#0C332C' } : {}}>
                             <div className="space-y-1">
                               {/* Text Content */}
                               <p className="text-[15px] leading-[20px] whitespace-pre-wrap break-words" style={{ fontFamily: 'Satoshi, sans-serif' }}>
@@ -1148,9 +1148,9 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                         <Button
                           type="submit"
                           className="w-full text-white"
-                          style={{ backgroundColor: '#ff5834' }}
+                          style={{ backgroundColor: '#0C332C' }}
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e04e2f'}
-                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff5834'}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0C332C'}
                           data-testid="button-submit-after-hours"
                         >
                           Submit
@@ -1198,12 +1198,12 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                         ? "text-white" 
                         : "bg-gray-200 text-gray-400 cursor-not-allowed"
                     )}
-                    style={newMessage.trim() ? { backgroundColor: '#ff5834' } : {}}
+                    style={newMessage.trim() ? { backgroundColor: '#0C332C' } : {}}
                     onMouseEnter={(e) => {
                       if (newMessage.trim()) e.currentTarget.style.backgroundColor = '#e04e2f';
                     }}
                     onMouseLeave={(e) => {
-                      if (newMessage.trim()) e.currentTarget.style.backgroundColor = '#ff5834';
+                      if (newMessage.trim()) e.currentTarget.style.backgroundColor = '#0C332C';
                     }}
                     data-testid="send-button"
                   >

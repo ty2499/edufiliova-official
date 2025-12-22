@@ -113,7 +113,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
                   setIsMobileMenuOpen(false);
                 }}
                 size="sm"
-                className="w-full bg-[#ff5834] hover:bg-[#e14a2b] text-white"
+                className="w-full bg-[#0C332C] hover:bg-[#e14a2b] text-white"
               >
                 Sign up
               </Button>

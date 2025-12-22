@@ -132,7 +132,7 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
       case 'urgent':
         return 'bg-red-500 text-white hover:bg-red-600';
       case 'high':
-        return 'bg-orange-500 text-white hover:bg-orange-600';
+        return 'bg-primary text-white hover:bg-primary';
       case 'normal':
         return 'bg-blue-500 text-white hover:bg-blue-600';
       case 'low':

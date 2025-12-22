@@ -224,7 +224,7 @@ export default function GetStarted({ onComplete }: GetStartedProps) {
           <Button
             onClick={handleGetStarted}
             size="lg"
-            className="group relative bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold px-16 py-4 rounded-full text-base shadow-2xl shadow-orange-500/30 hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105"
+            className="group relative bg-gradient-to-r from-primary to-red-500 hover:from-orange-600 hover:to-primary text-white font-semibold px-16 py-4 rounded-full text-base shadow-2xl shadow-orange-500/30 hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105"
             data-testid="button-get-started"
           >
             <span className="flex items-center gap-2">

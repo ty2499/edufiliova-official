@@ -594,7 +594,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-red-500 flex items-center justify-center">
                 <Mail className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -917,7 +917,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                 <Button
                   onClick={handleSendMessage}
                   disabled={(!messageInput.trim() && attachments.length === 0) || sendReplyMutation.isPending}
-                  className="bg-gradient-to-r from-orange-500 to-red-500 hover:opacity-90 text-white h-10 w-10 p-0 flex-shrink-0"
+                  className="bg-gradient-to-r from-primary to-red-500 hover:opacity-90 text-white h-10 w-10 p-0 flex-shrink-0"
                   data-testid="button-send"
                 >
                   {sendReplyMutation.isPending ? (
@@ -1128,7 +1128,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                 <Button
                   onClick={handleSendCompose}
                   disabled={!composeToValue.trim() || !composeSubject.trim() || !composeMessage.trim() || !composeAccountId || sendNewEmailMutation.isPending}
-                  className="bg-gradient-to-r from-orange-500 to-red-500 hover:opacity-90 text-white"
+                  className="bg-gradient-to-r from-primary to-red-500 hover:opacity-90 text-white"
                   data-testid="button-compose-send"
                 >
                   {sendNewEmailMutation.isPending ? (

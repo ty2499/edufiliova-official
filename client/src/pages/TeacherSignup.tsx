@@ -325,7 +325,7 @@ export default function TeacherSignup() {
           </p>
         </div>
 
-        <Progress value={progress} className="mb-6 h-1.5 [&>div]:bg-[#ff5834]" data-testid="progress-bar" />
+        <Progress value={progress} className="mb-6 h-1.5 [&>div]:bg-[#0C332C]" data-testid="progress-bar" />
 
         <Card>
           <CardHeader>

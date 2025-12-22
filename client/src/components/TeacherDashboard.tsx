@@ -2685,7 +2685,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <Button 
               size="lg"
               onClick={() => setActiveTab('meetings')}
-              className="mb-4 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
+              className="mb-4 bg-gradient-to-r from-primary to-red-500 hover:from-orange-600 hover:to-primary text-white"
               data-testid="button-view-meetings"
             >
               View & Manage Meetings

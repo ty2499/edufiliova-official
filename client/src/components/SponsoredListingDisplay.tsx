@@ -113,7 +113,7 @@ export function SponsoredListingDisplay({
             {/* Sponsored badge */}
             <Badge 
               variant="secondary" 
-              className="absolute top-3 right-3 bg-orange-600 text-white text-xs z-10"
+              className="absolute top-3 right-3 bg-primary text-white text-xs z-10"
               data-testid={`sponsored-badge-${listing.id}`}
             >
               Sponsored
@@ -169,7 +169,7 @@ export function SponsoredListingDisplay({
                   
                   <Button 
                     size="sm" 
-                    className="ml-auto bg-orange-600 hover:bg-orange-700 text-white"
+                    className="ml-auto bg-primary hover:bg-orange-700 text-white"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleSponsoredClick(listing);

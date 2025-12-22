@@ -405,7 +405,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
               </Button>
               <Button
                 size="sm"
-                className="w-full bg-[#ff5834] hover:bg-[#e64d2e] text-white"
+                className="w-full bg-[#0C332C] hover:bg-[#e64d2e] text-white"
                 onClick={handleLogout}
                 disabled={isLoggingOut}
                 data-testid="button-logout"
@@ -3533,7 +3533,7 @@ function SettingsPage() {
         {!isEditing && (
           <Button
             onClick={() => setIsEditing(true)}
-            className="bg-[#ff5834] hover:bg-[#e64d2e] text-white"
+            className="bg-[#0C332C] hover:bg-[#e64d2e] text-white"
             data-testid="button-edit-profile"
           >
             Edit Profile

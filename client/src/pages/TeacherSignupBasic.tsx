@@ -245,8 +245,8 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
         }}
       >
         <div className="text-center space-y-6">
-          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto bg-[#ff5834]/10">
-            <Mail className="h-10 w-10 text-[#ff5834]" />
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto bg-[#0C332C]/10">
+            <Mail className="h-10 w-10 text-[#0C332C]" />
           </div>
           
           <div className="space-y-2">
@@ -313,7 +313,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button
                 onClick={handleResendCode}
                 disabled={isResending}
-                className="font-medium text-[#ff5834] hover:underline disabled:opacity-50"
+                className="font-medium text-[#0C332C] hover:underline disabled:opacity-50"
                 data-testid="button-resend-code"
               >
                 {isResending ? "Sending..." : "Resend Code"}
@@ -350,7 +350,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 setSignupMethod('email');
                 setCurrentView('signup');
               }}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#ff5834] hover:bg-[#e54d2d] text-white font-medium rounded-xl transition-all"
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#0C332C] hover:bg-[#e54d2d] text-white font-medium rounded-xl transition-all"
               data-testid="button-signup-email"
             >
               <Mail className="h-5 w-5" />
@@ -376,7 +376,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button 
                 type="button"
                 onClick={() => setCurrentView('login')} 
-                className="font-semibold text-[#ff5834] hover:underline"
+                className="font-semibold text-[#0C332C] hover:underline"
                 data-testid="link-login"
               >
                 Log in
@@ -420,7 +420,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             <Input
               id="fullName"
               placeholder="e.g. Purity Johns"
-              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#ff5834] focus:ring-[#ff5834]/20"
+              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#0C332C] focus:ring-[#0C332C]/20"
               data-testid="input-full-name"
               {...form.register("fullName")}
             />
@@ -434,7 +434,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             <Input
               id="displayName"
               placeholder="e.g. Mrs. P Johns"
-              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#ff5834] focus:ring-[#ff5834]/20"
+              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#0C332C] focus:ring-[#0C332C]/20"
               data-testid="input-display-name"
               {...form.register("displayName")}
             />
@@ -449,7 +449,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               id="email"
               type="email"
               placeholder="e.g. teacher@example.com"
-              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#ff5834] focus:ring-[#ff5834]/20"
+              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#0C332C] focus:ring-[#0C332C]/20"
               data-testid="input-email"
               {...form.register("email")}
             />
@@ -479,7 +479,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               onValueChange={(value) => form.setValue("country", value)}
             >
               <SelectTrigger 
-                className="h-12 bg-gray-50 border-gray-200 text-gray-900 rounded-xl focus:border-[#ff5834] focus:ring-[#ff5834]/20"
+                className="h-12 bg-gray-50 border-gray-200 text-gray-900 rounded-xl focus:border-[#0C332C] focus:ring-[#0C332C]/20"
                 data-testid="select-country"
               >
                 <SelectValue placeholder="Select your country" className="text-gray-400" />
@@ -508,7 +508,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="At least 8 characters"
-                className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl pr-12 focus:border-[#ff5834] focus:ring-[#ff5834]/20"
+                className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl pr-12 focus:border-[#0C332C] focus:ring-[#0C332C]/20"
                 data-testid="input-password"
                 {...form.register("password")}
               />
@@ -533,7 +533,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Re-enter your password"
-                className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl pr-12 focus:border-[#ff5834] focus:ring-[#ff5834]/20"
+                className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl pr-12 focus:border-[#0C332C] focus:ring-[#0C332C]/20"
                 data-testid="input-confirm-password"
                 {...form.register("confirmPassword")}
               />
@@ -575,7 +575,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             <button 
               type="button"
               onClick={() => setCurrentView('login')} 
-              className="text-[#ff5834] font-semibold hover:underline"
+              className="text-[#0C332C] font-semibold hover:underline"
               data-testid="link-login-form"
             >
               Sign in here

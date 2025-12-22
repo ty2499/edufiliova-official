@@ -24,7 +24,7 @@ export default function Testimonials() {
             
             <div className="mx-auto max-w-6xl space-y-8 px-6 md:space-y-16 relative z-10">
                 <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center md:space-y-12">
-                    <h2 className="text-[40px] font-bold text-white">Built by <span style={{ color: '#ff5834' }}>Educators</span>, loved by thousands of <span style={{ color: '#ff5834' }}>Learners</span></h2>
+                    <h2 className="text-[40px] font-bold text-white">Built by <span style={{ color: '#0C332C' }}>Educators</span>, loved by thousands of <span style={{ color: '#0C332C' }}>Learners</span></h2>
                     <p className="text-gray-300">EduFiliova empowers students, teachers, and creators to achieve their goals. Here's what our community has to say about their experience.</p>
                 </div>
 

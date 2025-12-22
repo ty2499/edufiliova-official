@@ -398,7 +398,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                       variant={priceFilter === 'paid' ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setPriceFilter('paid')}
-                      className={priceFilter === 'paid' ? 'bg-[#ff5834] hover:bg-[#ff5834]/90 text-gray-900 border-[#ff5834]' : 'border-[#ff5834] text-gray-900 dark:text-gray-900 hover:bg-[#ff5834]/10'}
+                      className={priceFilter === 'paid' ? 'bg-[#0C332C] hover:bg-[#0C332C]/90 text-gray-900 border-[#0C332C]' : 'border-[#0C332C] text-gray-900 dark:text-gray-900 hover:bg-[#0C332C]/10'}
                       data-testid="filter-price-paid"
                     >
                       Paid
@@ -502,7 +502,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                                     isFree
                                       ? 'bg-[#c5f13c] hover:bg-[#c5f13c]/90 text-gray-900'
                                       : isPaid
-                                      ? 'bg-[#ff5834] hover:bg-[#ff5834]/90 text-white'
+                                      ? 'bg-[#0C332C] hover:bg-[#0C332C]/90 text-white'
                                       : 'bg-blue-600 hover:bg-blue-700 text-white'
                                   } border-0`}
                                   data-testid={`button-enroll-${course.id}`}
@@ -533,7 +533,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                               onNavigate(`course-detail-${course.id}`);
                             }}
                             data-testid={`button-view-${course.id}`}
-                            className="bg-[#ff5834] hover:bg-[#ff5834]/90 text-white border-0"
+                            className="bg-[#0C332C] hover:bg-[#0C332C]/90 text-white border-0"
                           >
                             View
                           </Button>
@@ -693,7 +693,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5Q0EzQUYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItaDJ2LTJoLTJ6bS0yIDBoLTJ2Mmgydi0yaC0yem0tMiAwdi0yaC0ydjJoMnptMC0yaDJ2LTJoLTJ2MnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
                       <Award className="h-16 w-16 text-blue-600 dark:text-blue-400 relative z-10" />
                       {course.hasCertificate && (
-                        <Badge className="absolute top-2 right-2 text-white" style={{ backgroundColor: '#ff5834' }}>
+                        <Badge className="absolute top-2 right-2 text-white" style={{ backgroundColor: '#0C332C' }}>
                           <CheckCircle2 className="h-3 w-3 mr-1" />
                           Claimed
                         </Badge>
@@ -744,7 +744,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                             </div>
                           </>
                         ) : (
-                          <div className="flex items-center gap-2 text-[#ff5834]">
+                          <div className="flex items-center gap-2 text-[#0C332C]">
                             <Trophy className="h-4 w-4" />
                             <span className="font-medium">Course Completed - 100%</span>
                           </div>
@@ -765,7 +765,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                         ) : (
                           <Button
                             onClick={() => handleClaimCertificate(course.courseId)}
-                            className="w-full bg-[#ff5834] hover:bg-[#ff5834]/90 text-white"
+                            className="w-full bg-[#0C332C] hover:bg-[#0C332C]/90 text-white"
                             data-testid={`button-claim-cert-${course.courseId}`}
                           >
                             <Award className="h-4 w-4 mr-2" />

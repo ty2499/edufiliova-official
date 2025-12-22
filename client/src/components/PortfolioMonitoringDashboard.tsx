@@ -402,7 +402,7 @@ export function PortfolioMonitoringDashboard() {
                 </Button>
                 <Button
                   variant={moderationAction === 'delete' ? 'destructive' : 'default'}
-                  className={`flex-1 ${moderationAction === 'suspend' ? 'bg-orange-600 hover:bg-orange-700' : ''}`}
+                  className={`flex-1 ${moderationAction === 'suspend' ? 'bg-primary hover:bg-orange-700' : ''}`}
                   onClick={handleModeration}
                   disabled={moderationMutation.isPending || !moderationReason.trim()}
                   data-testid="button-confirm-moderation"

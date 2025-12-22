@@ -239,7 +239,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
   return (
     <div className="min-h-screen bg-background flex flex-col md:block" data-testid="admin-applications-management">
       {/* Mobile Top Navbar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#ff5834] flex items-center justify-between px-4 z-50 border-b border-white/10 pt-safe">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#0C332C] flex items-center justify-between px-4 z-50 border-b border-white/10 pt-safe">
         <Button
           variant="ghost"
           size="icon"
@@ -256,12 +256,12 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
       {/* Left Sidebar - Slide-in on mobile, fixed on desktop */}
       <div className={`${
         (isMobile && isChatOpen) ? "hidden" : ""
-      } w-64 fixed left-0 top-0 h-full border-r border-sidebar-border bg-[#ff5834] z-50 overflow-y-auto transition-transform duration-300 ${
+      } w-64 fixed left-0 top-0 h-full border-r border-sidebar-border bg-[#0C332C] z-50 overflow-y-auto transition-transform duration-300 ${
         showMobileMenu ? 'translate-x-0' : '-translate-x-full'
       } md:translate-x-0 ${
         isChatOpen ? "hidden" : "block"
       }`}>
-        <div className="flex flex-col py-4 px-3 bg-[#ff5834] min-h-full">
+        <div className="flex flex-col py-4 px-3 bg-[#0C332C] min-h-full">
           {/* Header */}
           <div className="flex items-center justify-between mb-6" data-testid="sidebar-header">
             <h2 className="text-white font-bold text-xl">Admin</h2>

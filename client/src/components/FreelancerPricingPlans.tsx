@@ -45,7 +45,7 @@ export default function FreelancerPricingPlans({ onPlanSelect }: FreelancerPrici
       case 'green':
         return 'bg-green-500';
       case 'orange':
-        return 'bg-orange-500';
+        return 'bg-primary';
       default:
         return 'bg-gray-500';
     }

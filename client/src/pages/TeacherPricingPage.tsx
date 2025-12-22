@@ -13,7 +13,7 @@ const TeacherPricingPage = ({ onNavigate }: TeacherPricingPageProps) => {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-[#ff5834] text-white py-32 px-4">
+      <section className="bg-[#0C332C] text-white py-32 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Inspire the Next<br />Generation of Learners
@@ -25,7 +25,7 @@ const TeacherPricingPage = ({ onNavigate }: TeacherPricingPageProps) => {
             <Button 
               size="lg"
               onClick={() => onNavigate("teacher-application")}
-              className="bg-white text-[#ff5834] hover:bg-gray-100 font-semibold rounded-full px-8 py-6 text-lg"
+              className="bg-white text-[#0C332C] hover:bg-gray-100 font-semibold rounded-full px-8 py-6 text-lg"
             >
               Start Your Application →
             </Button>

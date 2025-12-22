@@ -803,7 +803,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
                         getCourseType(course) === 'free'
                           ? 'bg-[#c5f13c] hover:bg-[#c5f13c]/90 text-gray-900'
                           : getCourseType(course) === 'fixed_price'
-                          ? 'bg-[#ff5834] hover:bg-[#ff5834]/90'
+                          ? 'bg-[#0C332C] hover:bg-[#0C332C]/90'
                           : 'bg-[#0d3d6b] hover:bg-[#0d3d6b]/90'
                       }`}
                       onClick={handlePurchase}

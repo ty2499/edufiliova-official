@@ -41,7 +41,7 @@ export default function FAQ() {
       <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-4xl">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-[40px] font-bold text-gray-900 dark:text-white mb-4">
-            Frequently Asked <span className="dark:text-blue-400 text-[#ff5834]">Questions</span>
+            Frequently Asked <span className="dark:text-blue-400 text-[#0C332C]">Questions</span>
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg">
             Find answers to common questions about EduFiliova
@@ -53,10 +53,10 @@ export default function FAQ() {
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-6 transition-colors hover:border-[#ff5834]/50"
+              className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-6 transition-colors hover:border-[#0C332C]/50"
               data-testid={`accordion-item-${index}`}
             >
-              <AccordionTrigger className="text-left text-base md:text-lg font-semibold text-gray-900 dark:text-white transition-colors py-5" style={{ color: 'inherit' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ff5834'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
+              <AccordionTrigger className="text-left text-base md:text-lg font-semibold text-gray-900 dark:text-white transition-colors py-5" style={{ color: 'inherit' }} onMouseEnter={(e) => e.currentTarget.style.color = '#0C332C'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
                 {faq.question}
               </AccordionTrigger>
               <AccordionContent className="text-gray-600 dark:text-gray-400 text-sm md:text-base leading-relaxed pb-5">

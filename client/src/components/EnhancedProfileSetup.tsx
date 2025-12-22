@@ -1378,7 +1378,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                 </div>
               )}
               {!hasUnsavedChanges && !saveError && (
-                <div className="flex items-center gap-2 text-sm" style={{ color: '#ff5834' }}>
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#0C332C' }}>
                   <CheckCircle2 className="h-4 w-4" />
                   All changes saved
                 </div>

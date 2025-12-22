@@ -25,7 +25,7 @@ const userTypeContent = [
     ctaAction: 'teacher-signup-basic',
     secondaryCta: 'View Teaching Guide',
     secondaryAction: 'help',
-    color: '#ff5834'
+    color: '#0C332C'
   },
   {
     type: 'Freelancers',
@@ -45,7 +45,7 @@ const userTypeContent = [
     ctaAction: 'product-shop',
     secondaryCta: 'View Products',
     secondaryAction: 'product-shop',
-    color: '#ff5834'
+    color: '#0C332C'
   }
 ];
 

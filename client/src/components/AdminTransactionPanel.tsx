@@ -272,7 +272,7 @@ export default function AdminTransactionPanel() {
       case 'paypal':
         return <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center"><span className="text-white text-xs font-bold">PP</span></div>;
       case 'crypto':
-        return <div className="w-6 h-6 bg-orange-500 rounded flex items-center justify-center"><span className="text-white text-xs font-bold">₿</span></div>;
+        return <div className="w-6 h-6 bg-primary rounded flex items-center justify-center"><span className="text-white text-xs font-bold">₿</span></div>;
       default:
         return <CreditCard className="w-6 h-6 text-blue-600" />;
     }

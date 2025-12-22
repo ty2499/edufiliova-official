@@ -139,7 +139,7 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
       case 'urgent':
         return 'bg-red-500 text-white';
       case 'high':
-        return 'bg-orange-500 text-white';
+        return 'bg-primary text-white';
       case 'normal':
         return 'bg-blue-500 text-white';
       case 'low':

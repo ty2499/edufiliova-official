@@ -615,7 +615,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
       {/* Sidebar - Conversations */}
       <div className="w-80 border-r bg-gray-50 dark:bg-gray-900">
         {/* Header */}
-        <div className="p-4 border-b dark:bg-[#42fa76] text-black bg-[#ff5834]">
+        <div className="p-4 border-b dark:bg-[#42fa76] text-black bg-[#0C332C]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <h2 className="font-semibold text-[#ffffff]">EduFiliova Support</h2>
@@ -682,7 +682,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
         {selectedConversation && selectedUser ? (
           <>
             {/* Chat Header */}
-            <div className="p-4 border-b dark:bg-[#1f2937] text-white bg-[#ff5834]">
+            <div className="p-4 border-b dark:bg-[#1f2937] text-white bg-[#0C332C]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Button

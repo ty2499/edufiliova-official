@@ -373,7 +373,7 @@ export default function BillingPage() {
                 </div>
               </div>
               {cancelSuccess ? (
-                <Badge className="bg-orange-500 text-white" data-testid="badge-cancelled">
+                <Badge className="bg-primary text-white" data-testid="badge-cancelled">
                   <XCircle className="w-3 h-3 mr-1" />
                   Cancelled
                 </Badge>

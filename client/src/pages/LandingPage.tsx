@@ -244,7 +244,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       icon: Code, 
       name: "Web Development", 
       lessons: 320, 
-      color: "bg-orange-500", 
+      color: "bg-primary", 
       free: false, 
       image: webdevLessonImage,
       description: "Build websites with HTML, CSS, React, and more"
@@ -317,8 +317,8 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       gradeRange: "Grades 8-12",
       monthlyPrice: "9.99",
       yearlyPrice: "99.90",
-      bgColor: "bg-[#ff5834]",
-      borderColor: "border-[#ff5834]",
+      bgColor: "bg-[#0C332C]",
+      borderColor: "border-[#0C332C]",
       textColor: "text-white",
       popular: true,
       features: [
@@ -608,7 +608,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
             <div className="text-center mb-16 scroll-animate">
               <h2 className="text-[22px] font-bold mb-6 text-foreground">
                 Everything You Need in 
-                <span style={{ color: "#ff5834" }}> One Platform</span>
+                <span style={{ color: "#0C332C" }}> One Platform</span>
               </h2>
               <p className="text-lg sm:text-xl text-muted-foreground">
                 Learn, teach, create, and earn - all in one comprehensive educational marketplace
@@ -624,7 +624,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   data-testid={`card-feature-${index}`}
                 >
                   <CardHeader className="text-center pb-3 pt-4">
-                    <div className="w-12 h-12 bg-[#ff5834] rounded-2xl flex items-center justify-center mx-auto mb-3 scale-in">
+                    <div className="w-12 h-12 bg-[#0C332C] rounded-2xl flex items-center justify-center mx-auto mb-3 scale-in">
                       <feature.icon className="h-6 w-6 text-white" />
                     </div>
                     <CardTitle className="text-[14px] font-bold">{feature.title}</CardTitle>
@@ -762,7 +762,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                How It <span className="text-[#ff5834]">Works</span>
+                How It <span className="text-[#0C332C]">Works</span>
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Get started in just four simple steps. Whether you're here to learn or earn, we've made it easy.
@@ -779,7 +779,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                 >
                   <div className="text-center">
                     <div className="relative inline-flex mb-6">
-                      <div className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg bg-[#2F5A4E]" style={{ backgroundColor: '#ff5834' }}>
+                      <div className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg bg-[#2F5A4E]" style={{ backgroundColor: '#0C332C' }}>
                         <item.icon className="h-10 w-10 text-white" />
                       </div>
                       <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#c5f13c', color: '#1a1a1a' }}>
@@ -803,7 +803,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
             <div className="w-full">
               <div className="text-center mb-12">
                 <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                  Our <span className="text-[#ff5834]">Platform</span> Vision
+                  Our <span className="text-[#0C332C]">Platform</span> Vision
                 </h2>
                 <p className="text-base md:text-lg text-[#575757]">
                   We are committed to upholding the highest standards of educational excellence while ensuring each student feels valued and heard.
@@ -811,7 +811,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#ff5834' }} data-testid="card-vision-001">
+                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-001">
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">001</span>
                   </div>
@@ -821,7 +821,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   </p>
                 </div>
 
-                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#ff5834' }} data-testid="card-vision-002">
+                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-002">
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">002</span>
                   </div>
@@ -831,7 +831,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   </p>
                 </div>
 
-                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#ff5834' }} data-testid="card-vision-003">
+                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-003">
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">003</span>
                   </div>
@@ -841,7 +841,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   </p>
                 </div>
 
-                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#ff5834' }} data-testid="card-vision-004">
+                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-004">
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">004</span>
                   </div>
@@ -851,7 +851,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   </p>
                 </div>
 
-                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#ff5834' }} data-testid="card-vision-005">
+                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-005">
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">005</span>
                   </div>
@@ -861,7 +861,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   </p>
                 </div>
 
-                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#ff5834' }} data-testid="card-vision-006">
+                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-006">
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">006</span>
                   </div>
@@ -871,7 +871,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   </p>
                 </div>
 
-                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#ff5834' }} data-testid="card-vision-007">
+                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-007">
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">007</span>
                   </div>
@@ -881,7 +881,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   </p>
                 </div>
 
-                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#ff5834' }} data-testid="card-vision-008">
+                <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-008">
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">008</span>
                   </div>

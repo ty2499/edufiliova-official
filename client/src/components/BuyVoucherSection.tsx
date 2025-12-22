@@ -797,7 +797,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         )}
 
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-12 h-12 bg-gradient-to-br from-primary to-orange-600 rounded-xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary rounded-xl flex items-center justify-center">
             <Gift className="w-6 h-6 text-white" />
           </div>
           <div>

@@ -245,7 +245,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
       <div className="container mx-auto px-6 md:px-10 lg:px-14">
         {/* Impersonation Banner */}
         {isImpersonating && (
-          <div className="bg-orange-500 text-white py-2 text-center text-sm font-medium flex items-center justify-center gap-2">
+          <div className="bg-primary text-white py-2 text-center text-sm font-medium flex items-center justify-center gap-2">
             <Shield className="h-4 w-4" />
             <span>Admin Impersonation Mode</span>
             <Button 
@@ -497,7 +497,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <Button
                 size="sm"
                 onClick={() => onNavigate("auth")}
-                className="text-sm font-medium bg-[#ff5834] hover:bg-blue-700 text-white rounded-full px-8 pl-[52px] pr-[52px]"
+                className="text-sm font-medium bg-[#0C332C] hover:bg-blue-700 text-white rounded-full px-8 pl-[52px] pr-[52px]"
                 data-testid="button-signin"
               >
                 Sign In
@@ -550,7 +550,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("course-browse"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Search className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Search className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Browse Courses</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Explore our course catalog</div>
@@ -561,7 +561,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         onClick={() => {onNavigate("student-signup"); setIsMobileMenuOpen(false);}}
                         className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <UserPlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                        <UserPlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
                           <div className="font-medium text-gray-900 dark:text-gray-100">Create an Account</div>
                           <div className="text-gray-600 dark:text-gray-400 text-xs">Sign up and start learning</div>
@@ -573,7 +573,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         onClick={() => {onNavigate("student-dashboard"); setIsMobileMenuOpen(false);}}
                         className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <Library className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                        <Library className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
                           <div className="font-medium text-gray-900 dark:text-gray-100">My Subjects</div>
                           <div className="text-gray-600 dark:text-gray-400 text-xs">Access your enrolled courses</div>
@@ -584,7 +584,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("my-certificates"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Award className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Award className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">My Certificates</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">View your earned certificates</div>
@@ -595,7 +595,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         onClick={() => {onNavigate("claim-certificate"); setIsMobileMenuOpen(false);}}
                         className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <FileCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                        <FileCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
                           <div className="font-medium text-gray-900 dark:text-gray-100">Claim Certificate</div>
                           <div className="text-gray-600 dark:text-gray-400 text-xs">Get your course completion certificate</div>
@@ -622,7 +622,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         onClick={() => {onNavigate("teacher-application"); setIsMobileMenuOpen(false);}}
                         className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <UserPlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                        <UserPlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
                           <div className="font-medium text-gray-900 dark:text-gray-100">Join as Teacher</div>
                           <div className="text-gray-600 dark:text-gray-400 text-xs">Start your teaching journey</div>
@@ -632,7 +632,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         onClick={() => {onNavigate("teacher-pricing"); setIsMobileMenuOpen(false);}}
                         className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                       >
-                        <Wallet className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                        <Wallet className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
                           <div className="font-medium text-gray-900 dark:text-gray-100">Why Teach With Us</div>
                           <div className="text-gray-600 dark:text-gray-400 text-xs">Discover benefits and opportunities</div>
@@ -643,7 +643,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                           onClick={() => {onNavigate("teacher-status"); setIsMobileMenuOpen(false);}}
                           className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                         >
-                          <ClipboardCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                          <ClipboardCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                           <div>
                             <div className="font-medium text-gray-900 dark:text-gray-100">Application Status</div>
                             <div className="text-gray-600 dark:text-gray-400 text-xs">Check your application progress</div>
@@ -656,7 +656,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                             onClick={() => {onNavigate("course-creator"); setIsMobileMenuOpen(false);}}
                             className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                           >
-                            <FilePlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                            <FilePlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                             <div>
                               <div className="font-medium text-gray-900 dark:text-gray-100">Create Course</div>
                               <div className="text-gray-600 dark:text-gray-400 text-xs">Design and publish courses</div>
@@ -666,7 +666,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                             onClick={() => {onNavigate("subject-creator"); setIsMobileMenuOpen(false);}}
                             className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                           >
-                            <Layers className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                            <Layers className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                             <div>
                               <div className="font-medium text-gray-900 dark:text-gray-100">Subject Creator</div>
                               <div className="text-gray-600 dark:text-gray-400 text-xs">Build course subjects and lessons</div>
@@ -676,7 +676,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                             onClick={() => {onNavigate("teacher-meetings"); setIsMobileMenuOpen(false);}}
                             className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                           >
-                            <Video className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                            <Video className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                             <div>
                               <div className="font-medium text-gray-900 dark:text-gray-100">Teacher Meetings</div>
                               <div className="text-gray-600 dark:text-gray-400 text-xs">Schedule and host classes</div>
@@ -686,7 +686,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                             onClick={() => {onNavigate("earnings"); setIsMobileMenuOpen(false);}}
                             className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                           >
-                            <Wallet className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                            <Wallet className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                             <div>
                               <div className="font-medium text-gray-900 dark:text-gray-100">Earnings Dashboard</div>
                               <div className="text-gray-600 dark:text-gray-400 text-xs">Track your income and payments</div>
@@ -714,7 +714,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("freelancer-signup-basic"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Briefcase className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Briefcase className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Become a Freelancer</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Start your freelancing journey</div>
@@ -724,7 +724,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("freelancer-profile"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <IdCard className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <IdCard className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">My Portfolio</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">View and manage your portfolio</div>
@@ -734,7 +734,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("portfolio-create"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Upload className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Upload className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Create Portfolio</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Build your professional showcase</div>
@@ -744,7 +744,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("portfolio-gallery"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Users2 className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Users2 className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Find Talent</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Browse skilled freelancers</div>
@@ -769,7 +769,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("product-shop"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Store className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Store className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Design Marketplace</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Discover premium design resources</div>
@@ -779,7 +779,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("product-shop"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Tag className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Tag className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Browse Designs</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Templates, graphics & creative assets</div>
@@ -797,7 +797,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       }}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <FolderOpen className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <FolderOpen className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">My Purchases</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Access your downloaded design assets</div>
@@ -807,7 +807,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("product-creation"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <PlusCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <PlusCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Add Product</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">List your products for sale</div>
@@ -832,7 +832,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("education-pricing"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <GraduationCap className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <GraduationCap className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Student Pricing</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Affordable plans for learners</div>
@@ -842,7 +842,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("customer-pricing"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <ShoppingBag className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <ShoppingBag className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Customer Pricing</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Plans for buyers</div>
@@ -852,7 +852,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("creator-pricing"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Briefcase className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Briefcase className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Freelancer Pricing</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Plans for creators</div>
@@ -898,7 +898,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {handleNavigation("about"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Info className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Info className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">About Us</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Learn about our platform and mission</div>
@@ -908,7 +908,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {handleNavigation("contact"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Mail className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Mail className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Contact</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Get in touch with our team</div>
@@ -918,7 +918,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("advertise-with-us"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Megaphone className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Megaphone className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Advertise With Us</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Explore advertising opportunities</div>
@@ -928,7 +928,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {handleNavigation("help"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <HelpCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <HelpCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Help & Support</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Find answers and get support</div>
@@ -938,7 +938,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("privacy-policy"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Privacy Policy</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">How we protect your data</div>
@@ -948,7 +948,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("terms"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Terms of Service</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Our terms and conditions</div>
@@ -958,7 +958,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       onClick={() => {onNavigate("community-guidelines"); setIsMobileMenuOpen(false);}}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
-                      <Users className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                      <Users className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
                         <div className="font-medium text-gray-900 dark:text-gray-100">Community Guidelines</div>
                         <div className="text-gray-600 dark:text-gray-400 text-xs">Community standards and rules</div>
@@ -971,13 +971,13 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               {/* SIGN IN / ACCOUNT */}
               {authLoading ? (
                 <div className="m-4 w-[calc(100%-32px)] flex items-center justify-center py-3">
-                  <div className="w-5 h-5 border-2 border-gray-300 border-t-[#ff5834] rounded-full animate-spin"></div>
+                  <div className="w-5 h-5 border-2 border-gray-300 border-t-[#0C332C] rounded-full animate-spin"></div>
                 </div>
               ) : showLoginControls ? (
                 <Button
                   size="sm"
                   onClick={() => {onNavigate("auth"); setIsMobileMenuOpen(false);}}
-                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-blue-700 text-white rounded-full bg-[#ff5834]"
+                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-blue-700 text-white rounded-full bg-[#0C332C]"
                   data-testid="button-signin-mobile"
                 >
                   Sign In
@@ -1009,7 +1009,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         className="h-8 w-8 rounded-full object-cover border border-gray-200 flex-shrink-0"
                       />
                     ) : (
-                      <UserCircle className="h-8 w-8 flex-shrink-0" style={{ color: "#ff5834" }} />
+                      <UserCircle className="h-8 w-8 flex-shrink-0" style={{ color: "#0C332C" }} />
                     )}
                     <div>
                       <div className="font-medium text-gray-900 dark:text-gray-100 text-xs">My Account</div>

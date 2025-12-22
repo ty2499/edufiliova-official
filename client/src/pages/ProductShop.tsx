@@ -810,7 +810,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                 <Button
                   variant="default"
                   size="sm"
-                  className="flex items-center gap-2 px-5 py-2 rounded-full font-medium text-sm text-white transition-all duration-200 hover:scale-105 transform" style={{backgroundColor: '#ff5834'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#ff5834'}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full font-medium text-sm text-white transition-all duration-200 hover:scale-105 transform" style={{backgroundColor: '#0C332C'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#0C332C'}
                   onClick={() => onNavigate && onNavigate('shop-auth')}
                   data-testid="button-login"
                 >
@@ -901,7 +901,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                 <Button
                   variant="default"
                   size="sm"
-                  className="flex items-center gap-1 px-3 py-2 rounded-full font-medium text-sm text-white transition-all duration-200" style={{backgroundColor: '#ff5834'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#ff5834'}
+                  className="flex items-center gap-1 px-3 py-2 rounded-full font-medium text-sm text-white transition-all duration-200" style={{backgroundColor: '#0C332C'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#0C332C'}
                   onClick={() => onNavigate && onNavigate('shop-auth')}
                   data-testid="button-login-mobile"
                 >

@@ -164,7 +164,7 @@ export function TeacherMessagingDashboard() {
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case 'urgent': return <Badge variant="destructive" className="text-xs">Urgent</Badge>;
-      case 'high': return <Badge variant="default" className="text-xs bg-orange-500">High</Badge>;
+      case 'high': return <Badge variant="default" className="text-xs bg-primary">High</Badge>;
       case 'normal': return <Badge variant="secondary" className="text-xs">Normal</Badge>;
       case 'low': return <Badge variant="outline" className="text-xs">Low</Badge>;
       default: return null;
