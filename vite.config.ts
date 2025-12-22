@@ -28,4 +28,10 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
+  server: {
+    hmr: process.env.REPL_ID ? {
+      clientPort: 443,
+      protocol: 'wss',
+    } : true,
+  },
 });

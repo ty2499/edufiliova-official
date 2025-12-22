@@ -1401,9 +1401,12 @@ const Index = () => {
   };
 
   const renderPage = () => {
-    // For /app path users: show loading screen while auth is being validated
-    // This prevents the flash of landing page before redirect to dashboard
-    if (loading && isAppPath() && LANDING_ONLY_PAGES.includes(currentState)) {
+    // Check if user has a stored session (likely logged in)
+    const hasStoredSession = typeof window !== 'undefined' && localStorage.getItem('sessionId');
+    
+    // For ALL users with a session: show loading screen while auth is being validated
+    // This prevents the flash of landing page before redirect to dashboard on ANY domain
+    if (loading && hasStoredSession && LANDING_ONLY_PAGES.includes(currentState)) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
           <div className="text-center space-y-4">
@@ -1465,9 +1468,9 @@ const Index = () => {
     
     switch (currentState) {
       case "home":
-        // For /app path users who are authenticated, show loading while auto-routing kicks in
+        // For authenticated users on ANY domain, show loading while auto-routing kicks in
         // This is a fallback in case the initial loading check above didn't catch it
-        if (isAppPath() && user && profile && LANDING_ONLY_PAGES.includes(currentState)) {
+        if (user && profile) {
           return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
               <div className="text-center space-y-4">
