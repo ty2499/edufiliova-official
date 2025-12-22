@@ -175,20 +175,45 @@ export default function NewPaymentModal({
             console.log("Card checkout event:", event);
             
             if (event.event_type === "checkout.redirect") {
-              // Payment successful - show success screen in modal
-              setPaymentDetails({
-                transactionId: event.data?.payment_id || 'Completed',
-                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-                paymentMethod: 'Card',
-                total: finalPriceUSD,
-                currency: '$',
-                courseId: courseId,
-                courseName: courseTitle,
+              // Close the overlay to prevent page redirect
+              DodoPayments.Checkout.close();
+              
+              // Payment successful - confirm purchase on backend to enroll user
+              const paymentId = event.data?.payment_id || 'dodopay_checkout';
+              
+              // Call the confirmation endpoint to enroll the user
+              confirmPurchaseMutation.mutateAsync({
+                paymentIntentId: paymentId,
+                amount: finalPriceUSD,
+                paymentMethod: 'dodopay'
+              }).then(() => {
+                setPaymentDetails({
+                  transactionId: paymentId,
+                  date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                  paymentMethod: 'Card',
+                  total: finalPriceUSD,
+                  currency: '$',
+                  courseId: courseId,
+                  courseName: course.title,
+                });
+                setPaymentStatus('success');
+                setShowSuccess(true);
+                setProcessing(false);
+                queryClient.invalidateQueries({ queryKey: ['/api/courses', courseId, 'purchase-status'] });
+                queryClient.invalidateQueries({ queryKey: ['/api/course-creator/my-courses'] });
+              }).catch((error: any) => {
+                console.error("Course enrollment failed:", error);
+                setPaymentDetails({
+                  transactionId: paymentId,
+                  date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                  paymentMethod: 'Card',
+                  total: finalPriceUSD,
+                  errorMessage: error?.message || 'Failed to enroll in course',
+                });
+                setPaymentStatus('failed');
+                setShowSuccess(true);
+                setProcessing(false);
               });
-              setPaymentStatus('success');
-              setShowSuccess(true);
-              setProcessing(false);
-              queryClient.invalidateQueries({ queryKey: ['/api/courses', courseId, 'purchase-status'] });
             } else if (event.event_type === "checkout.closed") {
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
@@ -217,9 +242,9 @@ export default function NewPaymentModal({
           amount: finalPriceUSD,
           currency: 'USD',
           courseId: courseId,
-          courseName: courseTitle,
-          productName: courseTitle,
-          productDescription: `Course purchase - ${courseTitle}`,
+          courseName: course.title,
+          productName: course.title,
+          productDescription: `Course purchase - ${course.title}`,
           productType: 'course',
           userEmail: user?.email || '',
           userName: profile?.fullName || user?.email || '',
