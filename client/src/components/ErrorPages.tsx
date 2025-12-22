@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, WifiOff, Wrench, Unplug, Lock, Package, Home, RefreshCw, Search } from "lucide-react";
-import { useNavigate } from "wouter";
+import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
 
 export type ErrorType = 'offline' | 'server-error' | 'not-found' | 'access-denied' | 'empty-search';
@@ -72,7 +72,7 @@ export function ErrorPage({
 }: ErrorPageProps) {
   const config = errorConfig[type];
   const IconComponent = config.icon;
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
   const { user } = useAuth();
 
   const navigateHome = () => {
