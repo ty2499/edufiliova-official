@@ -707,13 +707,21 @@ const Index = () => {
     }
   }, [loading, user, profile, currentState, navigateToPage]);
 
-  // Auto-redirect authenticated users from home page (instant, no screen shown)
+  // Auto-redirect authenticated users from home page - ONLY on /app path (mobile app)
+  // On web browsers, users should be able to view home page intentionally
   useEffect(() => {
     // Skip if still loading
     if (loading) return;
     
     // Only if user is authenticated and on home page
     if (!user || !profile || currentState !== 'home') return;
+    
+    // Check if on /app path (mobile app only)
+    const pathname = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
+    const isOnAppPath = pathname === '/app' || pathname.startsWith('/app/') || pathname.startsWith('/app?');
+    
+    // Only redirect on /app path - web users can stay on home
+    if (!isOnAppPath) return;
     
     // Check if user intentionally went home
     const intentionallyWentHome = localStorage.getItem('force_home_navigation') === 'true';
