@@ -49,7 +49,7 @@ export default function NewPaymentModal({
   purchaseMutation, 
   confirmPurchaseMutation 
 }: NewPaymentModalProps) {
-  const { profile } = useAuth();
+  const { user, profile } = useAuth();
   
   // IP-based location detection + account registration country fallback for South Africa and Zimbabwe
   const { isSouthAfrican, isZimbabwean, countryCode, loading: locationLoading } = useIPLocation({ 
