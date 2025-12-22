@@ -124,43 +124,9 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     const itemName = productName || courseName || `Purchase ${itemId}`;
     const itemDescription = productDescription || `${productType} - ${itemName}`;
 
-    // Check if we're in test mode
+    // Check if we're in test mode (for logging purposes)
     const testMode = await isDodoPayTestMode();
-    
-    // In test mode, return a simulated checkout URL for development
-    if (testMode) {
-      const merchantReference = `dodopay_${itemId}_${Date.now()}`;
-      console.log('🧪 DodoPay test mode - simulating checkout session');
-      
-      let baseUrl = process.env.BASE_URL;
-      if (!baseUrl) {
-        const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
-        const host = req.headers['x-forwarded-host'] || req.headers.host;
-        baseUrl = `${protocol}://${host}`;
-      }
-      const testCheckoutUrl = `${baseUrl}/payment-success?gateway=dodopay&session_id=${merchantReference}&test=true&itemId=${itemId}&productType=${productType}`;
-      
-      const result: PaymentResult = {
-        success: true,
-        paymentId: merchantReference,
-        checkoutUrl: testCheckoutUrl,
-        redirectUrl: testCheckoutUrl,
-        sessionId: merchantReference,
-        amount: amount,
-        currency: currency,
-        metadata: {
-          courseId,
-          itemId,
-          productType,
-          userName,
-          userEmail,
-          testMode: true,
-        },
-      };
-
-      console.log('✅ DodoPay test checkout created:', merchantReference);
-      return res.json(result);
-    }
+    console.log(`💳 DodoPay mode: ${testMode ? 'TEST' : 'LIVE'}`);
 
     const dodo = await getDodoPayInstance();
     if (!dodo) {
