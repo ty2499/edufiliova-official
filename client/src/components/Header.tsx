@@ -171,6 +171,25 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
 
   const unreadMessagesCount = unreadMessagesData?.success ? unreadMessagesData.unreadCount : 0;
 
+  // Fetch claimable certificates count
+  const { data: claimableData } = useQuery({
+    queryKey: ['/api/certificates/claimable-count', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return { count: 0 };
+      try {
+        const response = await fetch(`/api/certificates/claimable-count`);
+        const result = await response.json();
+        return result;
+      } catch (error) {
+        return { count: 0 };
+      }
+    },
+    enabled: !!user?.id && isAuthenticated,
+    staleTime: 60 * 1000,
+  });
+
+  const claimableCertificatesCount = claimableData?.count || 0;
+
   // Check if admin is impersonating
   const isImpersonating = localStorage.getItem('isImpersonating') === 'true';
 
@@ -571,16 +590,18 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         <div className="text-gray-600 dark:text-gray-400 text-xs">View your earned certificates</div>
                       </div>
                     </button>
-                    <button 
-                      onClick={() => {onNavigate("claim-certificate"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <FileCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">Claim Certificate</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">Get your course completion certificate</div>
-                      </div>
-                    </button>
+                    {claimableCertificatesCount > 0 && (
+                      <button 
+                        onClick={() => {onNavigate("claim-certificate"); setIsMobileMenuOpen(false);}}
+                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      >
+                        <FileCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-gray-100">Claim Certificate</div>
+                          <div className="text-gray-600 dark:text-gray-400 text-xs">Get your course completion certificate</div>
+                        </div>
+                      </button>
+                    )}
                   </div>
                 )}
               </div>

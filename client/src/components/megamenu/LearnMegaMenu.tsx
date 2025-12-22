@@ -1,5 +1,7 @@
 import { MegaMenu, MegaMenuItem, MegaMenuSection } from "./MegaMenu";
 import { Search, Library, Award, FileCheck, GraduationCap, UserPlus, Sparkles, Zap } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LearnMegaMenuProps {
   isOpen: boolean;
@@ -9,6 +11,24 @@ interface LearnMegaMenuProps {
 }
 
 export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = false }: LearnMegaMenuProps) => {
+  const { user } = useAuth();
+  
+  // Fetch claimable certificates count
+  const { data: claimableData } = useQuery({
+    queryKey: ['/api/certificates/claimable-count', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return { count: 0 };
+      try {
+        const response = await fetch(`/api/certificates/claimable-count`);
+        return await response.json();
+      } catch {
+        return { count: 0 };
+      }
+    },
+    enabled: !!user?.id && isAuthenticated,
+  });
+
+  const claimableCertificatesCount = claimableData?.count || 0;
   const handleNavigate = (page: string) => {
     onNavigate(page);
     onClose();
@@ -68,7 +88,13 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
 
   const filteredGetStarted = getStarted.filter(item => !isAuthenticated && item.showWhenNotAuth);
   const filteredMyLearning = myLearning.filter(item => !item.requiresAuth || isAuthenticated);
-  const filteredCertificates = certificates.filter(item => !item.requiresAuth || isAuthenticated);
+  const filteredCertificates = certificates.filter(item => {
+    // Hide "Claim Certificate" if user has no claimable certificates
+    if (item.page === 'claim-certificate' && claimableCertificatesCount === 0) {
+      return false;
+    }
+    return !item.requiresAuth || isAuthenticated;
+  });
 
   return (
     <MegaMenu isOpen={isOpen}>

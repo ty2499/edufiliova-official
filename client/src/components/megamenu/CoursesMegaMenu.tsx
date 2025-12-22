@@ -1,5 +1,7 @@
 import { MegaMenu, MegaMenuItem, MegaMenuSection, MegaMenuHighlight } from "./MegaMenu";
 import { Search, Library, Award, ShieldCheck, FileCheck, FilePlus, Layers, BookOpen } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 
 interface CoursesMegaMenuProps {
   isOpen: boolean;
@@ -8,6 +10,24 @@ interface CoursesMegaMenuProps {
 }
 
 export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenuProps) => {
+  const { user } = useAuth();
+  
+  // Fetch claimable certificates count
+  const { data: claimableData } = useQuery({
+    queryKey: ['/api/certificates/claimable-count', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return { count: 0 };
+      try {
+        const response = await fetch(`/api/certificates/claimable-count`);
+        return await response.json();
+      } catch {
+        return { count: 0 };
+      }
+    },
+    enabled: !!user?.id,
+  });
+
+  const claimableCertificatesCount = claimableData?.count || 0;
   const handleNavigate = (page: string) => {
     onNavigate(page);
     onClose();
@@ -89,7 +109,12 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
         </MegaMenuSection>
 
         <MegaMenuSection title="Certificates" icon={<Award className="h-4 w-4 text-[#ff5833]" />}>
-          {certificates.map((item: any, index) => (
+          {certificates.filter((item: any) => {
+            if (item.page === 'claim-certificate' && claimableCertificatesCount === 0) {
+              return false;
+            }
+            return true;
+          }).map((item: any, index) => (
             <MegaMenuItem
               key={index}
               icon={item.icon}
