@@ -24,6 +24,7 @@ export const DB_CONFIG_KEYS = {
   PAYPAL_ENVIRONMENT: 'paypal_environment',
   PAYSTACK_SECRET_KEY: 'paystack_secret_key',
   DODO_PAYMENTS_API_KEY: 'dodo_api_key',
+  DODO_WEBHOOK_SECRET: 'dodo_webhook_secret',
 
   // Email
   SMTP_HOST: 'smtp_host',
@@ -89,6 +90,7 @@ export const SENSITIVE_KEYS = new Set([
   'paypal_client_secret',
   'paystack_secret_key',
   'dodo_api_key',
+  'dodo_webhook_secret',
   'smtp_pass',
   'edufiliova_email_password',
   'vonage_api_key',
