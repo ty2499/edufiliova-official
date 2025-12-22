@@ -259,22 +259,6 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
             {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
           </div>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={loading}
-            data-testid="button-teacher-login"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Signing In...
-              </>
-            ) : (
-              "Sign In as Teacher"
-            )}
-          </Button>
-
           <div className="text-center">
             <Button
               type="button"
