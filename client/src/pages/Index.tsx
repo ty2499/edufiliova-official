@@ -1493,21 +1493,8 @@ const Index = () => {
     
     switch (currentState) {
       case "home":
-        // For authenticated users on ANY domain, show loading while auto-routing kicks in
-        // This is a fallback in case the initial loading check above didn't catch it
-        if (user && profile) {
-          return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto relative">
-                  <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-800"></div>
-                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 font-medium">Redirecting to dashboard...</p>
-              </div>
-            </div>
-          );
-        }
+        // Show home page to all users - authenticated users can still view landing page
+        // Auto-routing is skipped when user intentionally clicks logo to go home
         return (
           <PageTransition 
             isActive={currentPage === "home"} 
