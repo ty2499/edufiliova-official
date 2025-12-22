@@ -439,28 +439,41 @@ export default function SubscriptionPaymentModal({
 
   const initializePaystack = usePaystackPayment(paystackConfig);
 
-  // Handle Dodo Payment
+  // Handle Dodo Payment - Dynamic product creation
   const handleDodoPayment = async () => {
     setProcessing(true);
+    setError('');
     try {
-      // Get the payment link ID for this plan/billing cycle
-      const planData = GRADE_SUBSCRIPTION_PLANS[plan.tier];
-      const paymentLinkId = planData.dodoPayProductIds[plan.interval];
+      // Create dynamic checkout session via API
+      const response = await fetch('/api/dodopay/checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: plan.price,
+          currency: 'USD',
+          courseId: `subscription_${plan.tier}_${plan.interval}`,
+          productName: `${plan.name} - ${plan.interval === 'yearly' ? 'Annual' : 'Monthly'}`,
+          productDescription: plan.description,
+          productType: 'subscription',
+          billingInterval: plan.interval,
+          userEmail: user?.email || '',
+          userName: profile?.name || user?.email || '',
+        }),
+      });
+
+      const data = await response.json();
       
-      if (!paymentLinkId) {
-        throw new Error(`No DodoPay product configured for ${plan.tier} - ${plan.interval}`);
-      }
-
-      // Direct checkout link to pre-created payment link
-      const checkoutUrl = `https://checkout.dodopayments.com/${paymentLinkId}`;
-
-      // Use Dodo overlay if initialized, otherwise redirect
-      if (dodoInitialized && DodoPayments.Checkout) {
-        DodoPayments.Checkout.open({
-          checkoutUrl: checkoutUrl
-        });
+      if (data.success && data.checkoutUrl) {
+        // Use embedded overlay checkout if initialized, otherwise redirect
+        if (dodoInitialized && DodoPayments.Checkout) {
+          DodoPayments.Checkout.open({
+            checkoutUrl: data.checkoutUrl
+          });
+        } else {
+          window.location.href = data.checkoutUrl;
+        }
       } else {
-        window.location.href = checkoutUrl;
+        throw new Error(data.error || 'Failed to initialize payment');
       }
     } catch (error: any) {
       console.error("DodoPay payment error:", error);

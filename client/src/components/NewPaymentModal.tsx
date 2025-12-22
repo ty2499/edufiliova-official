@@ -200,20 +200,56 @@ export default function NewPaymentModal({
     }
   }, [isDodoEnabled, dodoInitialized, finalPriceUSD, courseId]);
   
-  // Handle Dodo Payment - Course purchases not yet supported via DodoPay
+  // Handle Dodo Payment - Dynamic product creation for courses
   const handleDodoPayment = async () => {
-    // Show error in the payment details section
-    setPaymentDetails({
-      transactionId: 'N/A',
-      date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      paymentMethod: 'Card',
-      total: finalPriceUSD,
-      currency: '$',
-      courseId: courseId,
-      errorMessage: 'Course purchases via DodoPay are not yet available. Please use another payment method.'
-    });
-    setPaymentStatus('failed');
-    setShowSuccess(true);
+    setProcessing(true);
+    try {
+      // Create dynamic checkout session via API
+      const response = await fetch('/api/dodopay/checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: finalPriceUSD,
+          currency: 'USD',
+          courseId: courseId,
+          courseName: courseTitle,
+          productName: courseTitle,
+          productDescription: `Course purchase - ${courseTitle}`,
+          productType: 'course',
+          userEmail: user?.email || '',
+          userName: profile?.fullName || user?.email || '',
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success && data.checkoutUrl) {
+        // Use embedded overlay checkout if initialized, otherwise redirect
+        if (dodoInitialized && DodoPayments.Checkout) {
+          DodoPayments.Checkout.open({
+            checkoutUrl: data.checkoutUrl
+          });
+        } else {
+          window.location.href = data.checkoutUrl;
+        }
+      } else {
+        throw new Error(data.error || 'Failed to initialize payment');
+      }
+    } catch (error: any) {
+      console.error("DodoPay payment error:", error);
+      setPaymentDetails({
+        transactionId: 'N/A',
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        paymentMethod: 'Card',
+        total: finalPriceUSD,
+        currency: '$',
+        courseId: courseId,
+        errorMessage: error.message || 'Failed to initialize DodoPay payment. Please try again or use another payment method.'
+      });
+      setPaymentStatus('failed');
+      setShowSuccess(true);
+      setProcessing(false);
+    }
   };
   const coursePriceLocal = isSouthAfrican ? coursePrice * exchangeRate : coursePrice;
   const discountAmountLocal = isSouthAfrican ? discountAmount * exchangeRate : discountAmount;

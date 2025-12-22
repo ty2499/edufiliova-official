@@ -93,8 +93,8 @@ async function isDodoPayTestMode(): Promise<boolean> {
 }
 
 /**
- * Create DoDo Pay checkout session
- * Supports dynamic products - no need to pre-create products in Dodo dashboard
+ * Create DoDo Pay checkout session with dynamic product creation
+ * Creates a product first, then creates a checkout session
  * POST /api/dodopay/checkout-session
  */
 router.post('/checkout-session', async (req: Request, res: Response) => {
@@ -107,10 +107,10 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       userEmail, 
       userName, 
       returnUrl,
-      // Additional fields for dynamic products
       productName,
       productDescription,
-      productType = 'course', // course, product, membership, etc.
+      productType = 'course', // course, product, subscription, etc.
+      billingInterval, // 'monthly' or 'yearly' for subscriptions
     } = req.body;
 
     if (!amount) {
@@ -120,26 +120,25 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       } as PaymentResult);
     }
     
-    // Generate a unique item ID if not provided
     const itemId = courseId || `item_${Date.now()}`;
     const itemName = productName || courseName || `Purchase ${itemId}`;
+    const itemDescription = productDescription || `${productType} - ${itemName}`;
 
     // Check if we're in test mode
     const testMode = await isDodoPayTestMode();
     
     // In test mode, return a simulated checkout URL for development
     if (testMode) {
-      const merchantReference = `dodopay_${courseId}_${Date.now()}`;
+      const merchantReference = `dodopay_${itemId}_${Date.now()}`;
       console.log('🧪 DodoPay test mode - simulating checkout session');
       
-      // Use BASE_URL from env, or construct from request headers
       let baseUrl = process.env.BASE_URL;
       if (!baseUrl) {
         const protocol = req.headers['x-forwarded-proto'] || req.protocol || 'https';
         const host = req.headers['x-forwarded-host'] || req.headers.host;
         baseUrl = `${protocol}://${host}`;
       }
-      const testCheckoutUrl = `${baseUrl}/payment-success?gateway=dodopay&session_id=${merchantReference}&test=true`;
+      const testCheckoutUrl = `${baseUrl}/payment-success?gateway=dodopay&session_id=${merchantReference}&test=true&itemId=${itemId}&productType=${productType}`;
       
       const result: PaymentResult = {
         success: true,
@@ -151,6 +150,8 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         currency: currency,
         metadata: {
           courseId,
+          itemId,
+          productType,
           userName,
           userEmail,
           testMode: true,
@@ -176,57 +177,109 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       const host = req.headers['x-forwarded-host'] || req.headers.host;
       baseUrl = `${protocol}://${host}`;
     }
-    const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
+    const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay&itemId=${itemId}&productType=${productType}`;
 
-    // DodoPay checkout with automatic product creation 
-    // Note: Product creation must include all required fields per DodoPay API v2.x
-    console.log(`🛒 Creating checkout session in DodoPay for ${itemName}...`);
+    console.log(`🛒 Creating dynamic product in DodoPay for ${itemName}...`);
     
-    // Build inline checkout request - DodoPay supports direct payment without pre-created products
-    // Using line_items for inline product pricing (doesn't require pre-creating products)
-    const checkoutRequest: any = {
-      line_items: [
-        {
+    // Step 1: Create a dynamic product first
+    // DodoPay requires products to be created before checkout sessions
+    const isSubscription = productType === 'subscription' && billingInterval;
+    const priceInCents = Math.round(amount * 100);
+    
+    let product: any;
+    try {
+      // Normalize currency to uppercase for DodoPay
+      const normalizedCurrency = currency.toUpperCase() as any;
+      
+      if (isSubscription) {
+        // Create subscription product with recurring billing
+        // TimeInterval must be capitalized: 'Day', 'Week', 'Month', 'Year'
+        const intervalValue = billingInterval === 'yearly' ? 'Year' : 'Month';
+        
+        product = await dodo.products.create({
           name: itemName,
-          description: `${productType} - ${itemName}`,
-          amount: Math.round(amount * 100), // Amount in cents
-          currency: currency,
-          quantity: 1,
-        }
-      ],
-      customer_email: userEmail || 'customer@example.com',
-      customer_name: userName || 'Customer',
-      billing_address: {
-        city: 'Unknown',
-        country: 'US',
-        state: 'Unknown',
-        street: 'Unknown',
-        postal_code: '00000',
-      },
-      metadata: {
+          description: itemDescription,
+          price: {
+            currency: normalizedCurrency,
+            discount: 0,
+            price: priceInCents,
+            purchasing_power_parity: false,
+            type: 'recurring_price',
+            payment_frequency_count: 1,
+            payment_frequency_interval: intervalValue as any,
+            subscription_period_count: 1,
+            subscription_period_interval: intervalValue as any,
+          },
+          tax_category: 'edtech',
+        });
+      } else {
+        // Create one-time payment product
+        product = await dodo.products.create({
+          name: itemName,
+          description: itemDescription,
+          price: {
+            currency: normalizedCurrency,
+            discount: 0,
+            price: priceInCents,
+            purchasing_power_parity: false,
+            type: 'one_time_price',
+          },
+          tax_category: 'edtech',
+        });
+      }
+      console.log('✅ DodoPay product created:', product?.product_id);
+    } catch (productError: any) {
+      console.error('❌ DodoPay product creation error:', productError?.message, productError);
+      throw new Error(`Failed to create product: ${productError?.message}`);
+    }
+
+    // Step 2: Create checkout session with the product
+    const createdProductId = product?.product_id;
+    if (!createdProductId) {
+      throw new Error('Product was created but no product_id was returned');
+    }
+    
+    console.log(`🛒 Creating checkout session for product ${createdProductId}...`);
+    
+    let checkoutSession: any;
+    try {
+      const checkoutParams: any = {
+        product_cart: [
+          {
+            product_id: createdProductId,
+            quantity: 1,
+          }
+        ],
+        return_url: returnUrl || successReturnUrl,
+      };
+      
+      // Add customer info if provided
+      if (userEmail || userName) {
+        checkoutParams.customer = {};
+        if (userEmail) checkoutParams.customer.email = userEmail;
+        if (userName) checkoutParams.customer.name = userName;
+      }
+      
+      // Add metadata
+      checkoutParams.metadata = {
         itemId: itemId,
         itemName: itemName,
         productType: productType,
-        userId: userEmail,
         amount: String(amount),
         currency: currency,
         source: 'edufiliova_checkout',
-      },
-      return_url: successReturnUrl,
-    };
-
-    // Create checkout session with inline line items (no product pre-creation needed)
-    let checkoutSession: any;
-    try {
-      checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);
-    } catch (error: any) {
-      console.error(`❌ DoDo Pay checkout error:`, error?.message);
-      throw error;
+      };
+      
+      checkoutSession = await dodo.checkoutSessions.create(checkoutParams);
+    } catch (sessionError: any) {
+      console.error('❌ DodoPay checkout session error:', sessionError?.message, sessionError);
+      throw new Error(`Failed to create checkout session: ${sessionError?.message}`);
     }
 
-    // Handle different response formats from DodoPay SDK (session ID and URL)
-    const sessionId = checkoutSession?.checkout_session_id || checkoutSession?.id;
-    const checkoutUrl = checkoutSession?.checkout_url || checkoutSession?.url || (sessionId ? `https://checkout.dodopayments.com/${sessionId}` : null);
+    // Extract session details from response
+    const sessionId = checkoutSession?.session_id || checkoutSession?.checkout_session_id || checkoutSession?.id;
+    const checkoutUrl = checkoutSession?.url || checkoutSession?.checkout_url || 
+      (sessionId ? `https://checkout.dodopayments.com/session/${sessionId}` : null);
 
     if (!sessionId || !checkoutUrl) {
       console.error('❌ DodoPay response missing fields:', checkoutSession);
@@ -247,6 +300,7 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         itemId,
         itemName,
         productType,
+        productId: createdProductId,
         userName,
         userEmail,
       },
