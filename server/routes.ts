@@ -32019,6 +32019,295 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error('Error fetching course reviews:', error);
       res.status(500).json({ success: false, error: 'Failed to fetch course reviews' });
     }
+
+  // ========== COURSE COMMENTS SECTION ==========
+  
+  // Get course comments with pagination
+  app.get('/api/courses/:courseId/comments', async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 5;
+      const showAll = req.query.showAll === 'true';
+      
+      const offset = (page - 1) * limit;
+      
+      // Get total count
+      const totalResult = await db
+        .select({ count: count() })
+        .from(courseComments)
+        .where(eq(courseComments.courseId, courseId));
+      
+      const total = totalResult[0]?.count || 0;
+      
+      // Get comments with user info
+      const commentsQuery = db
+        .select({
+          id: courseComments.id,
+          courseId: courseComments.courseId,
+          userId: courseComments.userId,
+          comment: courseComments.comment,
+          likesCount: courseComments.likesCount,
+          repliesCount: courseComments.repliesCount,
+          createdAt: courseComments.createdAt,
+          userName: profiles.displayName,
+          userAvatar: profiles.avatarUrl
+        })
+        .from(courseComments)
+        .leftJoin(profiles, eq(courseComments.userId, profiles.userId))
+        .where(eq(courseComments.courseId, courseId))
+        .orderBy(desc(courseComments.createdAt));
+      
+      const commentsData = showAll 
+        ? await commentsQuery.limit(100)
+        : await commentsQuery.limit(limit).offset(offset);
+      
+      const comments = commentsData.map(c => ({
+        ...c,
+        userName: c.userName || 'Anonymous'
+      }));
+      
+      res.json({
+        comments,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+          hasMore: offset + comments.length < total
+        }
+      });
+    } catch (error: any) {
+      console.error('Error fetching course comments:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch course comments' });
+    }
+  });
+  
+  // Post a new comment
+  app.post('/api/courses/:courseId/comments', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { courseId } = req.params;
+      const { comment } = req.body;
+      const userId = req.user.id;
+      
+      if (!comment || !comment.trim()) {
+        return res.status(400).json({ success: false, error: 'Comment is required' });
+      }
+      
+      const [newComment] = await db
+        .insert(courseComments)
+        .values({
+          courseId,
+          userId,
+          comment: comment.trim()
+        })
+        .returning();
+      
+      // Get user info for the response
+      const userInfo = await db
+        .select({
+          displayName: profiles.displayName,
+          avatarUrl: profiles.avatarUrl
+        })
+        .from(profiles)
+        .where(eq(profiles.userId, userId))
+        .limit(1);
+      
+      res.json({
+        success: true,
+        comment: {
+          ...newComment,
+          userName: userInfo[0]?.displayName || 'Anonymous',
+          userAvatar: userInfo[0]?.avatarUrl || null
+        }
+      });
+    } catch (error: any) {
+      console.error('Error posting comment:', error);
+      res.status(500).json({ success: false, error: 'Failed to post comment' });
+    }
+  });
+  
+  // Like a comment
+  app.post('/api/comments/:commentId/like', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { commentId } = req.params;
+      const userId = req.user.id;
+      
+      // Check if already liked
+      const existingLike = await db
+        .select()
+        .from(courseCommentLikes)
+        .where(and(
+          eq(courseCommentLikes.commentId, commentId),
+          eq(courseCommentLikes.userId, userId)
+        ))
+        .limit(1);
+      
+      if (existingLike.length > 0) {
+        // Unlike
+        await db.delete(courseCommentLikes)
+          .where(and(
+            eq(courseCommentLikes.commentId, commentId),
+            eq(courseCommentLikes.userId, userId)
+          ));
+        
+        // Decrement likes count
+        await db.update(courseComments)
+          .set({ likesCount: sql`GREATEST(0, ${courseComments.likesCount} - 1)` })
+          .where(eq(courseComments.id, commentId));
+        
+        res.json({ success: true, liked: false });
+      } else {
+        // Like
+        await db.insert(courseCommentLikes).values({
+          commentId,
+          userId
+        });
+        
+        // Increment likes count
+        await db.update(courseComments)
+          .set({ likesCount: sql`${courseComments.likesCount} + 1` })
+          .where(eq(courseComments.id, commentId));
+        
+        res.json({ success: true, liked: true });
+      }
+    } catch (error: any) {
+      console.error('Error liking comment:', error);
+      res.status(500).json({ success: false, error: 'Failed to like comment' });
+    }
+  });
+  
+  // Get replies for a comment
+  app.get('/api/comments/:commentId/replies', async (req, res) => {
+    try {
+      const { commentId } = req.params;
+      
+      const replies = await db
+        .select({
+          id: courseCommentReplies.id,
+          commentId: courseCommentReplies.commentId,
+          userId: courseCommentReplies.userId,
+          reply: courseCommentReplies.reply,
+          likesCount: courseCommentReplies.likesCount,
+          createdAt: courseCommentReplies.createdAt,
+          userName: profiles.displayName,
+          userAvatar: profiles.avatarUrl
+        })
+        .from(courseCommentReplies)
+        .leftJoin(profiles, eq(courseCommentReplies.userId, profiles.userId))
+        .where(eq(courseCommentReplies.commentId, commentId))
+        .orderBy(asc(courseCommentReplies.createdAt));
+      
+      res.json(replies.map(r => ({
+        ...r,
+        userName: r.userName || 'Anonymous'
+      })));
+    } catch (error: any) {
+      console.error('Error fetching replies:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch replies' });
+    }
+  });
+  
+  // Post a reply to a comment
+  app.post('/api/comments/:commentId/replies', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { commentId } = req.params;
+      const { reply } = req.body;
+      const userId = req.user.id;
+      
+      if (!reply || !reply.trim()) {
+        return res.status(400).json({ success: false, error: 'Reply is required' });
+      }
+      
+      const [newReply] = await db
+        .insert(courseCommentReplies)
+        .values({
+          commentId,
+          userId,
+          reply: reply.trim()
+        })
+        .returning();
+      
+      // Increment replies count on parent comment
+      await db.update(courseComments)
+        .set({ repliesCount: sql`${courseComments.repliesCount} + 1` })
+        .where(eq(courseComments.id, commentId));
+      
+      // Get user info
+      const userInfo = await db
+        .select({
+          displayName: profiles.displayName,
+          avatarUrl: profiles.avatarUrl
+        })
+        .from(profiles)
+        .where(eq(profiles.userId, userId))
+        .limit(1);
+      
+      res.json({
+        success: true,
+        reply: {
+          ...newReply,
+          userName: userInfo[0]?.displayName || 'Anonymous',
+          userAvatar: userInfo[0]?.avatarUrl || null
+        }
+      });
+    } catch (error: any) {
+      console.error('Error posting reply:', error);
+      res.status(500).json({ success: false, error: 'Failed to post reply' });
+    }
+  });
+  
+  // Like a reply
+  app.post('/api/replies/:replyId/like', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { replyId } = req.params;
+      const userId = req.user.id;
+      
+      // Check if already liked
+      const existingLike = await db
+        .select()
+        .from(courseCommentReplyLikes)
+        .where(and(
+          eq(courseCommentReplyLikes.replyId, replyId),
+          eq(courseCommentReplyLikes.userId, userId)
+        ))
+        .limit(1);
+      
+      if (existingLike.length > 0) {
+        // Unlike
+        await db.delete(courseCommentReplyLikes)
+          .where(and(
+            eq(courseCommentReplyLikes.replyId, replyId),
+            eq(courseCommentReplyLikes.userId, userId)
+          ));
+        
+        // Decrement likes count
+        await db.update(courseCommentReplies)
+          .set({ likesCount: sql`GREATEST(0, ${courseCommentReplies.likesCount} - 1)` })
+          .where(eq(courseCommentReplies.id, replyId));
+        
+        res.json({ success: true, liked: false });
+      } else {
+        // Like
+        await db.insert(courseCommentReplyLikes).values({
+          replyId,
+          userId
+        });
+        
+        // Increment likes count
+        await db.update(courseCommentReplies)
+          .set({ likesCount: sql`${courseCommentReplies.likesCount} + 1` })
+          .where(eq(courseCommentReplies.id, replyId));
+        
+        res.json({ success: true, liked: true });
+      }
+    } catch (error: any) {
+      console.error('Error liking reply:', error);
+      res.status(500).json({ success: false, error: 'Failed to like reply' });
+    }
+  });
+
+  // ========== END COURSE COMMENTS SECTION ==========
   });
 
 
