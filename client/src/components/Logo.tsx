@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'wouter';
 import { apiRequest } from '@/lib/queryClient';
 import { openExternalUrl, isInCordovaApp, getBaseUrl } from '@/lib/utils';
 
@@ -16,6 +17,7 @@ interface LogoProps {
 }
 
 const Logo = ({ size = "md", variant = "default", type = "home", logoSize = "square", onClick, className = "", disableHomeNavigation = false }: LogoProps) => {
+  const [, navigate] = useLocation();
   // Fetch primary logo size (preferred)
   const { data: primaryLogo } = useQuery({
     queryKey: ['system-settings', 'logo', type, logoSize],
@@ -93,9 +95,9 @@ const Logo = ({ size = "md", variant = "default", type = "home", logoSize = "squ
         // In Cordova app - open main website in system browser (outside the app)
         openExternalUrl(getBaseUrl());
       } else {
-        // In web browser - navigate internally
+        // In web browser - use client-side navigation (instant, no page reload)
         localStorage.setItem('force_home_navigation', 'true');
-        window.location.href = '/?page=home';
+        navigate('/');
       }
     }
   };
