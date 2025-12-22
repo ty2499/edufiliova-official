@@ -2,6 +2,9 @@ import { Router, Request, Response } from 'express';
 import DodoPayments from 'dodopayments';
 import { Webhook } from 'standardwebhooks';
 import { storage } from './storage.js';
+import { db } from './db.js';
+import { userSubscriptions, profiles, pricingPlans, users } from '../shared/schema.js';
+import { eq, and } from 'drizzle-orm';
 
 const router = Router();
 
@@ -352,11 +355,138 @@ router.post('/webhook', async (req: Request, res: Response) => {
         // Payment failed, no action needed
         break;
 
-      case 'subscription.created':
-      case 'subscription.renew':
-      case 'subscription.cancelled':
-        console.log('ℹ️ Subscription event:', payload.event_type);
+      case 'subscription.created': {
+        const subscriptionData = payload.data;
+        console.log('📥 DoDo Pay subscription created:', subscriptionData.subscription_id);
+        
+        try {
+          const userEmail = subscriptionData.metadata?.userEmail || subscriptionData.customer_email;
+          const planTier = subscriptionData.metadata?.planType || subscriptionData.plan_id;
+          
+          if (!userEmail) {
+            console.error('❌ Subscription webhook missing user email');
+            break;
+          }
+
+          // Find user by email
+          const [user] = await db.select()
+            .from(users)
+            .where(eq(users.email, userEmail))
+            .limit(1);
+
+          if (!user) {
+            console.error('❌ User not found for email:', userEmail);
+            break;
+          }
+
+          // Get or create default pricing plan for this subscription
+          const [plan] = await db.select()
+            .from(pricingPlans)
+            .where(eq(pricingPlans.gradeTier, planTier as any))
+            .limit(1);
+
+          // Calculate subscription dates
+          const startDate = new Date(subscriptionData.start_date || Date.now());
+          const endDate = new Date(startDate);
+          if (subscriptionData.billing_period === 'yearly') {
+            endDate.setFullYear(endDate.getFullYear() + 1);
+          } else {
+            endDate.setMonth(endDate.getMonth() + 1);
+          }
+
+          // Save subscription to database
+          await db.insert(userSubscriptions).values({
+            userId: user.id,
+            planId: plan?.id || '00000000-0000-0000-0000-000000000000', // Fallback UUID
+            subscriptionStatus: 'approved' as any,
+            paymentMethod: 'dodopay',
+            startDate: startDate,
+            endDate: endDate,
+            stripeSubscriptionId: subscriptionData.subscription_id // Store DodoPay subscription ID here
+          });
+
+          // Update user profile with subscription tier
+          await db.update(profiles)
+            .set({
+              subscriptionTier: planTier,
+              planExpiry: endDate,
+              legacyPlan: planTier
+            })
+            .where(eq(profiles.userId, user.id));
+
+          console.log('✅ DoDo Pay subscription saved for user:', user.id);
+        } catch (error) {
+          console.error('❌ Failed to save DoDo Pay subscription:', error);
+        }
         break;
+      }
+
+      case 'subscription.renew': {
+        const renewalData = payload.data;
+        console.log('✅ DoDo Pay subscription renewed:', renewalData.subscription_id);
+        
+        try {
+          // Find subscription by DodoPay subscription ID and update end date
+          const [subscription] = await db.select()
+            .from(userSubscriptions)
+            .where(eq(userSubscriptions.stripeSubscriptionId, renewalData.subscription_id))
+            .limit(1);
+
+          if (subscription) {
+            const newEndDate = new Date(renewalData.next_billing_date || Date.now());
+            
+            await db.update(userSubscriptions)
+              .set({ endDate: newEndDate })
+              .where(eq(userSubscriptions.id, subscription.id));
+
+            // Also update user profile expiry
+            await db.update(profiles)
+              .set({ planExpiry: newEndDate })
+              .where(eq(profiles.userId, subscription.userId));
+
+            console.log('✅ DoDo Pay subscription renewed for user:', subscription.userId);
+          }
+        } catch (error) {
+          console.error('❌ Failed to renew DoDo Pay subscription:', error);
+        }
+        break;
+      }
+
+      case 'subscription.cancelled': {
+        const cancellationData = payload.data;
+        console.log('⚠️ DoDo Pay subscription cancelled:', cancellationData.subscription_id);
+        
+        try {
+          // Find and deactivate subscription
+          const [subscription] = await db.select()
+            .from(userSubscriptions)
+            .where(eq(userSubscriptions.stripeSubscriptionId, cancellationData.subscription_id))
+            .limit(1);
+
+          if (subscription) {
+            const now = new Date();
+            await db.update(userSubscriptions)
+              .set({ 
+                subscriptionStatus: 'rejected' as any,
+                endDate: now
+              })
+              .where(eq(userSubscriptions.id, subscription.id));
+
+            // Update user profile - set expiry to now
+            await db.update(profiles)
+              .set({ 
+                planExpiry: now,
+                subscriptionTier: null // Clear subscription tier
+              })
+              .where(eq(profiles.userId, subscription.userId));
+
+            console.log('✅ DoDo Pay subscription cancelled for user:', subscription.userId);
+          }
+        } catch (error) {
+          console.error('❌ Failed to cancel DoDo Pay subscription:', error);
+        }
+        break;
+      }
 
       default:
         console.log('ℹ️ Unhandled event type:', payload.event_type);
