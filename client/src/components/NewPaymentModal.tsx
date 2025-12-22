@@ -202,10 +202,20 @@ export default function NewPaymentModal({
   
   // Handle Dodo Payment - Course purchases not yet supported via DodoPay
   const handleDodoPayment = async () => {
-    setProcessing(true);
-    setError('Course purchases via DodoPay are not yet available. Please use another payment method.');
-    setProcessing(false);
+    // Show error in the payment details section
+    setPaymentDetails({
+      transactionId: 'N/A',
+      date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      paymentMethod: 'Card',
+      total: finalPriceUSD,
+      currency: '$',
+      courseId: courseId,
+      errorMessage: 'Course purchases via DodoPay are not yet available. Please use another payment method.'
+    });
+    setPaymentStatus('failed');
+    setShowSuccess(true);
   };
+  const coursePriceLocal = isSouthAfrican ? coursePrice * exchangeRate : coursePrice;
   const discountAmountLocal = isSouthAfrican ? discountAmount * exchangeRate : discountAmount;
   const finalPriceLocal = isSouthAfrican ? finalPriceUSD * exchangeRate : finalPriceUSD;
 
