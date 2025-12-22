@@ -218,12 +218,13 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       if (error?.message?.includes('does not exist')) {
         console.log(`⚠️ Product ${itemId} not found, attempting to create...`);
         try {
-          // Create product with just required fields
+          // Create product with all required fields
           await dodo.products.create({
             product_id: itemId,
             name: itemName,
             description: `${productType} - ${itemName}`,
             type: 'digital',
+            tax_category: 'no_tax',
           } as any);
           // Retry checkout session
           checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);
