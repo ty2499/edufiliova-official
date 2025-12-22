@@ -1,7 +1,8 @@
 import nodemailer from 'nodemailer';
 import type { Transporter } from 'nodemailer';
 import { db } from '../db';
-import { socialMediaLinks } from '@shared/schema';
+import { socialMediaLinks, emailAccounts } from '@shared/schema';
+import { eq } from 'drizzle-orm';
 
 interface EmailAttachment {
   filename: string;
@@ -48,34 +49,30 @@ class EmailService {
   }
 
   private initialize() {
-    try {
-      const smtpHost = process.env.SMTP_HOST;
-      const smtpPort = process.env.SMTP_PORT;
+    // Initialize asynchronously from database
+    this.initializeFromDatabase();
+  }
 
-      if (!smtpHost || !smtpPort) {
-        console.warn('⚠️ Email service not configured: Missing SMTP host/port');
+  private async initializeFromDatabase() {
+    try {
+      // Load email accounts from database
+      const accounts = await db.select().from(emailAccounts).where(eq(emailAccounts.isActive, true));
+      
+      if (accounts.length === 0) {
+        console.warn('⚠️ No active email accounts found in database');
         return;
       }
 
-      // Configure multiple email accounts
-      const emailAccounts = [
-        { email: 'orders@edufiliova.com', user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-        { email: 'verify@edufiliova.com', user: 'verify@edufiliova.com', pass: process.env.SMTP_PASS_VERIFY },
-        { email: 'support@edufiliova.com', user: 'support@edufiliova.com', pass: process.env.SMTP_PASS_SUPPORT },
-        { email: 'design@edufiliova.com', user: 'design@edufiliova.com', pass: process.env.SMTP_PASS_DESIGN },
-        { email: 'noreply@edufiliova.com', user: 'noreply@edufiliova.com', pass: process.env.SMTP_PASS_NOREPLY },
-      ];
-
       let configuredCount = 0;
-      for (const account of emailAccounts) {
-        if (account.user && account.pass) {
+      for (const account of accounts) {
+        if (account.smtpHost && account.smtpPort && account.smtpUsername && account.smtpPassword) {
           const transporter = nodemailer.createTransport({
-            host: smtpHost,
-            port: parseInt(smtpPort),
-            secure: parseInt(smtpPort) === 465,
+            host: account.smtpHost,
+            port: account.smtpPort,
+            secure: account.smtpSecure || account.smtpPort === 465,
             auth: {
-              user: account.user,
-              pass: account.pass,
+              user: account.smtpUsername,
+              pass: account.smtpPassword,
             },
           });
           this.transporters.set(account.email, transporter);
@@ -84,12 +81,12 @@ class EmailService {
       }
 
       if (configuredCount === 0) {
-        console.warn('⚠️ No email accounts configured');
+        console.warn('⚠️ No email accounts configured from database');
       } else {
-        console.log(`✅ Email service initialized with ${configuredCount} account(s)`);
+        console.log(`✅ Email service initialized with ${configuredCount} account(s) from database`);
       }
     } catch (error) {
-      console.error('❌ Failed to initialize email service:', error);
+      console.error('❌ Failed to initialize email service from database:', error);
     }
   }
 
