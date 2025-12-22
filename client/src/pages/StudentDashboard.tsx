@@ -681,7 +681,8 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
         const response = await fetch('/api/course-creator/public-courses');
         if (!response.ok) throw new Error('Failed to fetch courses');
         const data = await response.json();
-        return data.courses || [];
+        const coursesList = data.courses || data.data || [];
+        return Array.isArray(coursesList) ? coursesList : [];
       } catch (error) {
         console.error('Error fetching courses:', error);
         return [];
@@ -775,12 +776,12 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
     return colors[category] || colors.other;
   };
 
-  const filteredCourses = courses?.filter((course: Course) => {
+  const filteredCourses = Array.isArray(courses) ? courses.filter((course: Course) => {
     const matchesSearch = (course.title || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
                          (course.description || "").toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || (course.category || "other").toLowerCase() === selectedCategory.toLowerCase();
     return matchesSearch && matchesCategory;
-  });
+  }) : [];
 
   const renderStars = (rating: number) => {
     const stars = [];
