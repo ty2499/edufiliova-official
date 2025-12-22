@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { openExternalUrl } from '@/lib/utils';
 import { useLessonAccess, useSubjectProgress } from "@/hooks/useLessonAccess";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -2569,7 +2570,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
             <Button
               size="sm"
               className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium"
-              onClick={() => { window.open('https://edufiliova.com', '_blank', 'noopener,noreferrer'); setShowMobileMenu(false); }}
+              onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
               <Globe className="h-4 w-4 mr-2" />

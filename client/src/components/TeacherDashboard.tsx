@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
+import { openExternalUrl } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -2275,7 +2276,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <Button
               size="sm"
               className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium"
-              onClick={() => { window.open('https://edufiliova.com', '_blank', 'noopener,noreferrer'); setShowMobileMenu(false); }}
+              onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
               <FaGlobe className="h-4 w-4 mr-2" />

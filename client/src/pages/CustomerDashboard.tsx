@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { openExternalUrl } from '@/lib/utils';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { queryClient, apiRequest } from '@/lib/queryClient';
 import { useAjaxState } from '@/hooks/useAjaxState';
@@ -396,7 +397,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
               <Button
                 size="sm"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={() => window.open('https://edufiliova.com', '_blank', 'noopener,noreferrer')}
+                onClick={() => openExternalUrl('https://edufiliova.com')}
                 data-testid="button-browse-website"
               >
                 <Globe className="h-4 w-4 mr-2" />

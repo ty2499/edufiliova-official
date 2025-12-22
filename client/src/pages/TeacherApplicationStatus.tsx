@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import { openExternalUrl } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -283,7 +284,7 @@ export default function TeacherApplicationStatus() {
 
         <div className="mt-6 text-center">
           <Button
-            onClick={() => window.open('https://edufiliova.com', '_blank', 'noopener,noreferrer')}
+            onClick={() => openExternalUrl('https://edufiliova.com')}
             className="bg-primary hover:bg-primary/90"
             data-testid="button-explore-website"
           >

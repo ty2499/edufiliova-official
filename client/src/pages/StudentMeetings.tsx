@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
+import { openExternalUrl } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -412,7 +413,7 @@ export default function StudentMeetings() {
             <Button
               size="sm"
               className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium"
-              onClick={() => { window.open('https://edufiliova.com', '_blank', 'noopener,noreferrer'); setShowMobileMenu(false); }}
+              onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
               <Globe className="h-4 w-4 mr-2" />

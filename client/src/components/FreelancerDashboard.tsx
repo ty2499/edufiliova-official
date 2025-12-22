@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { openExternalUrl } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -2072,7 +2073,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
             <Button
               size="sm"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-              onClick={() => { window.open('https://edufiliova.com', '_blank', 'noopener,noreferrer'); setShowMobileMenu(false); }}
+              onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
               <FaGlobe className="h-4 w-4 mr-2" />

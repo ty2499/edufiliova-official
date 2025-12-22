@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
+import { openExternalUrl } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -172,7 +173,7 @@ export default function TeacherLayout({
               size="sm"
               className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium"
               onClick={() => { 
-                window.open('https://edufiliova.com', '_blank', 'noopener,noreferrer'); 
+                openExternalUrl('https://edufiliova.com'); 
                 setShowMobileMenu(false); 
               }}
               data-testid="nav-explore-website"
