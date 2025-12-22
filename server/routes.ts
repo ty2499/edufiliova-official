@@ -6479,7 +6479,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Confirm gift voucher purchase via DodoPay
   app.post("/api/gift-vouchers/confirm-dodopay", async (req, res) => {
     try {
-      const { purchaseId, paymentId, paymentMethod } = req.body;
+      const { purchaseId, paymentId, paymentMethod, userEmail, userName, sessionId } = req.body;
 
       if (!purchaseId) {
         return res.status(400).json({ error: "Purchase ID required" });
