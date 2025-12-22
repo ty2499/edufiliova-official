@@ -1147,7 +1147,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         worksShared: portfolioStatsMap[f.userId]?.worksCount || 0,
       }));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: transformedFreelancers,
         pagination: {
@@ -1204,7 +1204,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const profile = profileData[0];
       
       // Return the profile data in the format expected by the frontend
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           id: profile.id,
@@ -1303,7 +1303,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       );
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: worksWithMedia
       });
@@ -1519,14 +1519,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const location = req.userLocation;
       
       if (!location) {
-        return res.json({
+        return res.json({ success: true,
           country: 'Unknown',
           city: 'Unknown',
           region: 'Unknown'
         });
       }
 
-      res.json({
+      res.json({ success: true,
         country: location.country || 'Unknown',
         city: location.city || 'Unknown',
         region: location.region || 'Unknown',
@@ -1536,7 +1536,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error('Location detection error:', error);
-      res.json({
+      res.json({ success: true,
         country: 'Unknown',
         city: 'Unknown',
         region: 'Unknown'
@@ -1703,7 +1703,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         user: {
           id: user.id,
@@ -1785,7 +1785,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         availableHours: teacherProfile.availableHours
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         profile: teacherProfile
       });
@@ -1872,7 +1872,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Don't fail the entire request if teacher app table update fails
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Teacher profile updated successfully'
       });
@@ -2148,7 +2148,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('🔍 Found freelancers:', freelancers.length);
       console.log('🔍 Freelancer names:', freelancers.map(f => f.name));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: freelancers
       });
@@ -2185,7 +2185,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       if (freelancerProfile.approvalStatus === 'approved') {
-        return res.json({
+        return res.json({ success: true,
           success: true,
           message: 'Freelancer already approved'
         });
@@ -2221,7 +2221,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error('Failed to send approval email:', emailError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Freelancer approved successfully'
       });
@@ -2266,7 +2266,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       if (freelancerProfile.approvalStatus === 'rejected') {
-        return res.json({
+        return res.json({ success: true,
           success: true,
           message: 'Freelancer already rejected'
         });
@@ -2303,7 +2303,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error('Failed to send rejection email:', emailError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Freelancer rejected successfully'
       });
@@ -2323,7 +2323,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const limit = parseInt(req.query.limit as string) || 20;
       const featuredUsers = await storage.getFeaturedUsers(limit);
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: featuredUsers
       });
@@ -2364,7 +2364,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userUuid = user[0].id;
       const result = await storage.toggleFeaturedStatus(userUuid, adminUserId);
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: result,
         message: result.isFeatured ? 'User marked as featured' : 'User removed from featured'
@@ -2384,7 +2384,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const limit = parseInt(req.query.limit as string) || 10;
       const featuredUsers = await storage.getFeaturedUsers(limit);
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: featuredUsers
       });
@@ -2509,7 +2509,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userData: registrationData
         });
 
-        res.json({
+        res.json({ success: true,
           success: true,
           message: "WhatsApp verification code sent",
           requiresEmailVerification: false,
@@ -2527,7 +2527,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userData: registrationData
         });
 
-        res.json({
+        res.json({ success: true,
           success: true,
           message: "Email verification code sent",
           requiresEmailVerification: true,
@@ -2736,7 +2736,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       );
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: "Account created successfully!",
         user: {
@@ -2905,7 +2905,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         path: '/' 
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         user: {
           id: user[0].id,
@@ -3410,7 +3410,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userData: registrationData
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: "Verification code sent to your email",
         needsVerification: true,
@@ -3501,7 +3501,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         user: {
           id: user[0].id,
@@ -3579,7 +3579,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         verificationCode
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         needsVerification: true,
         message: "Please check your email for the verification code.",
@@ -3703,7 +3703,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Delete the pending signup after successful account creation
         await storage.deletePendingShopSignup(email);
 
-        res.json({
+        res.json({ success: true,
           success: true,
           user: {
             id: newUser[0].id,
@@ -3796,7 +3796,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         user: {
           id: user[0].id,
@@ -4043,13 +4043,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const limitCheck = await checkDownloadLimits(userId, [productId]);
       
       if (limitCheck.canDownload) {
-        return res.json({
+        return res.json({ success: true,
           canDownload: true,
           method: 'membership',
           reason: 'Can download with membership'
         });
       } else {
-        return res.json({
+        return res.json({ success: true,
           canDownload: false,
           method: 'purchase',
           reason: limitCheck.reason,
@@ -4282,7 +4282,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .leftJoin(products, eq(orderItems.productId, products.id))
         .where(eq(orderItems.orderId, orderId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           order,
@@ -4590,7 +4590,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         status: 'pending' // Always start as pending
       });
 
-      res.json({
+      res.json({ success: true,
         ...newAd,
         paidCampaign: !canCreateFreeCampaign
       });
@@ -4824,7 +4824,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Calculate upgrade cost
       const upgradeCost = Math.max(0, targetPlanPrice - credit);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           currentPlan: membership.plan,
@@ -6322,7 +6322,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         paymentStatus: 'pending'
       }).returning();
 
-      res.json({
+      res.json({ success: true,
         clientSecret: paymentIntent.client_secret,
         purchaseId: purchase.id
       });
@@ -6438,7 +6438,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Don't fail the request if email fails
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         voucherCode,
         amount: purchase.amount,
@@ -6469,7 +6469,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (purchase.paymentStatus === 'completed') {
         // Already completed - return existing data
         const [existingVoucher] = await db.select().from(shopVouchers).where(eq(shopVouchers.id, purchase.voucherId!));
-        return res.json({
+        return res.json({ success: true,
           success: true,
           voucherCode: existingVoucher?.code || 'UNKNOWN',
           amount: purchase.amount,
@@ -6554,7 +6554,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Don't fail the request if email fails
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         voucherCode,
         amount: purchase.amount,
@@ -6603,7 +6603,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         expiresAt
       }).returning();
 
-      res.json({
+      res.json({ success: true,
         purchaseId: purchase.id,
         voucherCode,
         amount: purchase.amount
@@ -6679,7 +6679,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error('Failed to send gift voucher email:', emailError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         voucherCode,
         amount: purchase.amount,
@@ -6789,7 +6789,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log(`✅ Course ${courseId} purchased with wallet by user ${userId}`);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         transactionId,
         enrollmentId: enrollment.id,
@@ -6844,7 +6844,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         code: voucher.code,
         amount: voucher.amount,
         recipientEmail: voucher.recipientEmail,
@@ -6955,7 +6955,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       if (voucher.paymentStatus === 'completed') {
-        return res.json({
+        return res.json({ success: true,
           success: true,
           amount: voucher.amount,
           recipientEmail: voucher.recipientEmail,
@@ -6985,7 +6985,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error('Failed to send gift voucher email:', emailError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         amount: voucher.amount,
         recipientEmail: voucher.recipientEmail
@@ -7084,7 +7084,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const referralLink = `${req.protocol}://${req.get('host')}?ref=${customer.referralCode}`;
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           referralCode: customer.referralCode,
@@ -7587,7 +7587,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       );
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: "Email verified successfully! Your freelancer account has been created.",
         user: {
@@ -7626,7 +7626,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(profiles.userId, userId))
         .limit(1);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: "Successfully converted to freelancer account",
         profile: updatedProfile[0]
@@ -9554,7 +9554,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         checkoutUrl: session.url,
         sessionId: session.id
@@ -9819,7 +9819,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
 
       });
-      res.json({
+      res.json({ success: true,
         success: true,
         clientSecret: paymentIntent.client_secret,
         paymentIntentId: paymentIntent.id,
@@ -9929,7 +9929,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .set(updateData)
           .where(eq(profiles.userId, userId));
 
-        res.json({
+        res.json({ success: true,
           success: true,
           message: 'Payment confirmed and plan updated',
           planName,
@@ -10040,7 +10040,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           })
           .where(eq(profiles.userId, userId));
 
-        res.json({
+        res.json({ success: true,
           success: true,
           message: 'Freelancer subscription confirmed',
           planId,
@@ -10159,7 +10159,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .where(eq(adsBanners.id, bannerId));
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Payment processed successfully',
         newBalance: newBalance.toFixed(2)
@@ -10245,7 +10245,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Calculate upgrade cost (what they need to pay)
       const upgradeCost = Math.max(0, targetPlanPrice - credit);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           currentTier,
@@ -10339,7 +10339,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .where(eq(profiles.userId, userId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Subscription upgraded successfully',
         data: {
@@ -10593,7 +10593,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         clientSecret: paymentIntent.client_secret,
         paymentIntentId: paymentIntent.id,
@@ -10643,7 +10643,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Return payment details
-      res.json({
+      res.json({ success: true,
         success: true,
         paymentIntent: {
           id: paymentIntent.id,
@@ -10949,7 +10949,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             .limit(1);
 
           if (duplicateCheck.length > 0) {
-            return res.json({
+            return res.json({ success: true,
               success: true,
               message: 'Order already processed',
               order: duplicateCheck[0],
@@ -11016,7 +11016,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               }
             }
 
-            res.json({
+            res.json({ success: true,
               success: true,
               message: 'Guest payment confirmed and order completed',
               order: updatedOrder,
@@ -11086,7 +11086,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               }
             }
 
-            res.json({
+            res.json({ success: true,
               success: true,
               message: 'Guest payment confirmed and order completed',
               order: newOrder,
@@ -11309,7 +11309,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
 
-        res.json({
+        res.json({ success: true,
           success: true,
           message: 'Payment confirmed and order completed',
           order: updatedOrder,
@@ -11356,13 +11356,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           })
           .returning();
 
-        return res.json({
+        return res.json({ success: true,
           success: true,
           balance: newBalance
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         balance: userBalance[0]
       });
@@ -11411,7 +11411,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .from(transactions)
         .where(eq(transactions.userId, userId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         transactions: userTransactions,
         pagination: {
@@ -11498,7 +11498,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .where(eq(userBalances.userId, userId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         transaction: newTransaction,
         message: 'Payout request submitted successfully'
@@ -11536,7 +11536,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(payoutAccounts.userId, userId))
         .orderBy(desc(payoutAccounts.isDefault), desc(payoutAccounts.createdAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         accounts: accounts
       });
@@ -11589,7 +11589,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         account: {
           ...newAccount,
@@ -11647,7 +11647,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .set({ isDefault: true })
         .where(eq(payoutAccounts.id, accountId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Default payout account updated successfully'
       });
@@ -11711,7 +11711,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .delete(payoutAccounts)
         .where(eq(payoutAccounts.id, accountId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Payout account deleted successfully'
       });
@@ -11772,7 +11772,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .select({ count: count() })
         .from(transactions);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         transactions: allTransactions,
         pagination: {
@@ -11929,7 +11929,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .where(eq(userBalances.userId, tx.userId));
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: `Payout ${action}d successfully`
       });
@@ -12059,7 +12059,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         transactionCount: Number(f.transactionCount || 0)
       }));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         stats: {
           totalTransactions,
@@ -12130,7 +12130,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       const totalCountResult = await countQuery;
 
-      res.json({
+      res.json({ success: true,
         success: true,
         transactions: allTransactions,
         pagination: {
@@ -12202,7 +12202,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const totalCountResult = await totalCountQuery;
       
-      res.json({
+      res.json({ success: true,
         success: true,
         accounts: allAccounts,
         pagination: {
@@ -12275,7 +12275,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         console.log('✅ Payout account approved successfully');
         
-        res.json({
+        res.json({ success: true,
           success: true,
           message: 'Payout account approved successfully'
         });
@@ -12321,7 +12321,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .where(eq(payoutAccounts.id, id));
           
         console.log('❌ Payout account declined and removed successfully');
-        res.json({
+        res.json({ success: true,
           success: true,
           message: 'Payout account declined and removed'
         });
@@ -12411,7 +12411,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .orderBy(desc(notifications.createdAt))
         .limit(50);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         notifications: userNotifications
       });
@@ -12456,7 +12456,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      return res.json({
+      return res.json({ success: true,
         success: true,
         notification: updatedNotification
       });
@@ -12506,7 +12506,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .where(eq(userBalances.userId, userId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         transaction: newTransaction,
         message: 'Account credited successfully'
@@ -12545,14 +12545,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ))
           .orderBy(asc(banks.bankName));
 
-        res.json({
+        res.json({ success: true,
           success: true,
           banks: countryBanks,
           count: countryBanks.length
         });
       } catch (dbError) {
         // Return empty array if table doesn't exist yet
-        res.json({
+        res.json({ success: true,
           success: true,
           banks: [],
           count: 0,
@@ -13279,13 +13279,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         await db.insert(banks).values(bankData);
 
         console.log(`✅ Successfully seeded ${bankData.length} comprehensive banks`);
-        res.json({
+        res.json({ success: true,
           success: true,
           message: `Successfully seeded ${bankData.length} banks across multiple countries`,
           count: bankData.length
         });
       } catch (dbError) {
-        res.json({
+        res.json({ success: true,
           success: true,
           message: 'Banks will be seeded once database schema is synced',
           pending: bankData.length
@@ -13308,7 +13308,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // For development, return a default location
       if (clientIP === '127.0.0.1' || clientIP === '::1' || clientIP.includes('127.0.0.1')) {
-        return res.json({
+        return res.json({ success: true,
           success: true,
           country: 'US',
           countryName: 'United States'
@@ -13317,7 +13317,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // In production, you would use an IP geolocation service
       // For now, return default US location
-      res.json({
+      res.json({ success: true,
         success: true,
         country: 'US',
         countryName: 'United States'
@@ -13325,7 +13325,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     } catch (error: any) {
       console.error('Error getting user location:', error);
-      res.json({
+      res.json({ success: true,
         success: true,
         country: 'US',
         countryName: 'United States'
@@ -13440,7 +13440,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           bankCount: country.bankCount || 0
         }));
 
-        res.json({
+        res.json({ success: true,
           success: true,
           countries: enrichedCountries,
           total: enrichedCountries.length
@@ -13563,7 +13563,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           { countryCode: 'LI', countryName: 'Liechtenstein', bankCount: 1 }
         ];
 
-        res.json({
+        res.json({ success: true,
           success: true,
           countries: fallbackCountries,
           total: fallbackCountries.length,
@@ -13822,7 +13822,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         countryPaymentInfo = createFallbackPaymentInfo(countryCode, countryName);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         countryCode: countryCode.toUpperCase(),
         ...countryPaymentInfo,
@@ -13909,7 +13909,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .where(eq(profiles.userId, userId))
           .limit(1);
 
-        res.json({
+        res.json({ success: true,
           success: true,
           user: {
             id: user[0].id,
@@ -13925,7 +13925,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         const storedProfile = profileStorage.get(userId);
         if (storedProfile) {
-          res.json({
+          res.json({ success: true,
             success: true,
             user: {
               id: userId,
@@ -13955,7 +13955,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           profileStorage.set(userId, defaultProfile);
           
-          res.json({
+          res.json({ success: true,
             success: true,
             user: {
               id: userId,
@@ -14024,7 +14024,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .where(eq(profiles.userId, userId))
           .limit(1);
 
-        res.json({
+        res.json({ success: true,
           success: true,
           message: "Profile updated successfully",
           profile: updatedProfile[0]
@@ -14067,7 +14067,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .from(users)
         .where(gt(users.createdAt, thirtyDaysAgo));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           totalUsers: totalUsers[0].count,
@@ -14095,7 +14095,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         db.select({ count: count() }).from(shopSupportTickets).where(eq(shopSupportTickets.status, 'resolved')),
       ]);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           total: totalResult[0]?.count || 0,
@@ -14289,7 +14289,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .orderBy(desc(payments.createdAt))
         .limit(20);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         stats: {
           totalRevenue,
@@ -14368,7 +14368,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       const totalCount = await countQuery;
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: usersData,
         pagination: {
@@ -15832,7 +15832,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .from(pricingPlans)
         .orderBy(asc(pricingPlans.sortOrder), asc(pricingPlans.createdAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: plans
       });
@@ -15864,7 +15864,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .values(validatedData)
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: newPlan,
         message: 'Pricing plan created successfully'
@@ -15928,7 +15928,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: updatedPlan,
         message: 'Pricing plan updated successfully'
@@ -15982,7 +15982,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Pricing plan deleted successfully'
       });
@@ -16023,7 +16023,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(pricingPlans.id, id))
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: updatedPlan,
         message: `Pricing plan ${updatedPlan.isActive ? 'activated' : 'deactivated'} successfully`
@@ -16065,7 +16065,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(pricingPlans.id, id))
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: updatedPlan,
         message: `Pricing plan marked as ${updatedPlan.isPopular ? 'popular' : 'not popular'} successfully`
@@ -16088,7 +16088,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(pricingPlans.isActive, true))
         .orderBy(asc(pricingPlans.sortOrder), asc(pricingPlans.createdAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: plans
       });
@@ -16344,7 +16344,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: "Teacher login successful",
         user: {
@@ -18120,7 +18120,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log('Final teachers with parsed availability:', teachersWithAvailability.length);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: teachersWithAvailability
       });
@@ -18611,7 +18611,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const hasActiveSubscription = profile.stripeSubscriptionId !== null;
 
       if (!hasActiveSubscription) {
-        return res.json({
+        return res.json({ success: true,
           success: true,
           hasActiveSubscription: false,
           subscriptionStatus: 'inactive',
@@ -18623,7 +18623,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (stripe && profile.stripeSubscriptionId) {
         try {
           const subscription = await stripe.subscriptions.retrieve(profile.stripeSubscriptionId);
-          return res.json({
+          return res.json({ success: true,
             success: true,
             hasActiveSubscription: subscription.status === 'active',
             subscriptionStatus: subscription.status,
@@ -18633,7 +18633,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         } catch (stripeError) {
           console.error('Stripe subscription fetch error:', stripeError);
-          return res.json({
+          return res.json({ success: true,
             success: true,
             hasActiveSubscription: false,
             subscriptionStatus: 'error',
@@ -18642,7 +18642,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      return res.json({
+      return res.json({ success: true,
         success: true,
         hasActiveSubscription: true,
         subscriptionStatus: 'active',
@@ -18741,7 +18741,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           }
 
-          return res.json({
+          return res.json({ success: true,
             success: true,
             message: 'Subscription will be cancelled at the end of your current billing period',
             cancelAtPeriodEnd: subscription.cancel_at_period_end,
@@ -18780,7 +18780,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           }
 
-          return res.json({
+          return res.json({ success: true,
             success: true,
             message: 'Your subscription has been cancelled successfully.',
             cancelAtPeriodEnd: true,
@@ -18862,7 +18862,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Profile updated successfully',
         profile: updatedProfile[0]
@@ -18911,7 +18911,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Survey completed successfully',
         profile: updatedProfile[0]
@@ -18987,7 +18987,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(profiles.userId, userId))
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Grade/education level updated successfully',
         profile: updatedProfile[0]
@@ -19032,7 +19032,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Cover image updated successfully',
         coverImageUrl: updatedProfile[0].coverImageUrl
@@ -19068,7 +19068,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Cover image removed successfully'
       });
@@ -19132,7 +19132,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Successfully upgraded to student account',
         profile: updatedProfile[0]
@@ -19209,7 +19209,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Successfully upgraded to freelancer account',
         profile: updatedProfile[0]
@@ -19261,7 +19261,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Plan updated successfully',
         profile: updatedProfile[0]
@@ -19376,7 +19376,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         description: `${planDetails.name} - ${billingCycle}`
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         clientSecret: paymentIntent.client_secret,
         type: 'subscription',
@@ -19494,7 +19494,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(profiles.userId, userId))
         .limit(1);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Subscription confirmed successfully',
         profile: updatedProfile[0]
@@ -19568,7 +19568,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .where(eq(profiles.userId, userId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Subscription activated via wallet',
         planExpiry,
@@ -19607,7 +19607,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: 'No pricing plan found for this education level' });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         plan: plan[0]
       });
@@ -19621,7 +19621,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/check-lesson-access/:userId/:subjectId/:lessonId', async (req, res) => {
     try {
       // Always return full access - no restrictions
-      return res.json({
+      return res.json({ success: true,
         success: true,
         hasAccess: true,
         reason: 'unrestricted_access'
@@ -19747,7 +19747,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/check-lesson-access/:userId/:subjectId/:lessonId", async (req, res) => {
     try {
       // Always return full access - no restrictions
-      return res.json({
+      return res.json({ success: true,
         success: true,
         hasAccess: true,
         reason: 'unrestricted_access'
@@ -19774,7 +19774,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const lessonsAccessed = accessedLessons[0]?.count || 0;
 
-      res.json({
+      res.json({ success: true,
         success: true,
         accessedLessons: lessonsAccessed
       });
@@ -19837,7 +19837,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .orderBy(desc(tasks.createdAt))
         .limit(10);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           profile: profile[0],
@@ -21315,7 +21315,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Invalidate messaging caches for both sender and receiver
       invalidateUserMessaging(senderProfileUuid);
       invalidateUserMessaging(receiverProfileUuid);
-      res.json({
+      res.json({ success: true,
         success: true,
         message: newMessage[0]
       });
@@ -21417,7 +21417,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
 
-        res.json({
+        res.json({ success: true,
           success: true,
           url: result.url,
           fileName: file.originalname,
@@ -21526,7 +21526,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
 
-        res.json({
+        res.json({ success: true,
           success: true,
           files: uploadedFiles
         });
@@ -21717,7 +21717,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log('WebSocket notification failed:', wsError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: {
           ...newMessage[0],
@@ -21825,7 +21825,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log('WebSocket notification failed:', wsError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: {
           ...newMessage[0],
@@ -21896,7 +21896,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log('WebSocket notification failed:', wsError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Message marked as delivered'
       });
@@ -21965,7 +21965,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log('WebSocket notification failed:', wsError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Message marked as read'
       });
@@ -22409,7 +22409,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         conversation: conversation.reverse(), // Oldest first for chat display
         pagination: {
@@ -22594,7 +22594,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log('WebSocket broadcast failed:', wsError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: newMessage[0]
       });
@@ -22738,7 +22738,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // IMPORTANT: Use freelancerProfileUuid (profile UUID) to match unified-conversations API
       const conversationId = `direct_${freelancerProfileUuid}`;
 
-      res.json({
+      res.json({ success: true,
         success: true,
         conversationId: conversationId,
         threadId: threadId,
@@ -23209,7 +23209,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: newAssignment[0],
         message: 'Assignment created successfully'
@@ -23255,7 +23255,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(assignments.id, assignmentId))
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: updatedAssignment[0],
         message: 'Assignment updated successfully'
@@ -23308,7 +23308,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Finally delete the assignment
       await db.delete(assignments).where(eq(assignments.id, assignmentId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Assignment deleted successfully'
       });
@@ -23348,7 +23348,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: updatedAssignment[0],
         message: 'Assignment published successfully'
@@ -23470,7 +23470,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: gradedSubmission[0],
         message: 'Submission graded successfully'
@@ -23504,7 +23504,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(assignments.teacherId, teacherUuid))
         .groupBy(assignments.subject);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: performanceData,
         summary: {
@@ -23547,7 +23547,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .orderBy(desc(assignmentSubmissions.submittedAt))
         .limit(limit);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: recentActivities,
         count: recentActivities.length
@@ -23754,7 +23754,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .where(eq(assignmentSubmissions.id, existingSubmission[0].id))
           .returning();
 
-        res.json({
+        res.json({ success: true,
           success: true,
           data: updatedSubmission[0],
           message: 'Assignment resubmitted successfully'
@@ -23775,7 +23775,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           })
           .returning();
 
-        res.json({
+        res.json({ success: true,
           success: true,
           data: newSubmission[0],
           message: 'Assignment submitted successfully'
@@ -23911,7 +23911,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: newComment[0],
         message: 'Comment added successfully'
@@ -24043,7 +24043,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const totalCount = totalCountResult[0]?.count || 0;
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: assignmentsList,
         pagination: {
@@ -24103,7 +24103,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .groupBy(sql`DATE_TRUNC('month', ${assignmentSubmissions.submittedAt})`)
         .orderBy(sql`DATE_TRUNC('month', ${assignmentSubmissions.submittedAt})`);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           overview: stats[0],
@@ -24429,7 +24429,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ))
         .orderBy(desc(communityGroups.createdAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: groupsData
       });
@@ -24477,7 +24477,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         role: 'admin'
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           ...newGroup,
@@ -24546,7 +24546,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .where(eq(communityGroups.id, groupId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Successfully joined group'
       });
@@ -24607,7 +24607,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .where(eq(communityGroups.id, groupId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Successfully left group'
       });
@@ -24693,7 +24693,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .where(eq(communityGroups.id, groupId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'User successfully removed from group'
       });
@@ -24746,7 +24746,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await db.delete(communityGroups)
         .where(eq(communityGroups.id, groupId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Group successfully deleted'
       });
@@ -24798,7 +24798,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(communityGroupMembers.groupId, groupId))
         .orderBy(desc(communityGroupMembers.joinedAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: members
       });
@@ -24854,7 +24854,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: existingReaction.length > 0 ? 'Reaction removed' : 'Reaction added'
       });
@@ -24943,7 +24943,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           id: newReply.id,
@@ -25227,7 +25227,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .where(eq(communityGroups.id, groupId));
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           id: newTopic.id,
@@ -25519,7 +25519,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Cache groups for 60 seconds
       cache.set(groupsCacheKey, enrichedGroups, CacheTTL.SHORT);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: enrichedGroups
       });
@@ -25577,7 +25577,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .limit(parseInt(limit as string))
         .offset((parseInt(page as string) - 1) * parseInt(limit as string));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: groupMessages.reverse() // Oldest first for chat display
       });
@@ -25662,7 +25662,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log('WebSocket broadcast failed:', wsError);
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           ...newMessage,
@@ -25733,7 +25733,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ success: false, error: 'Group not found' });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Group updated successfully',
         data: updatedGroup
@@ -25797,7 +25797,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ success: false, error: 'Group not found' });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Group avatar updated successfully',
         data: {
@@ -26104,7 +26104,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .orderBy(desc(payments.createdAt))
         .limit(10);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           subscription: subscription.length > 0 ? subscription[0] : null,
@@ -26468,7 +26468,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .limit(parseInt(limit as string))
         .offset(parseInt(offset as string));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: students
       });
@@ -26688,7 +26688,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ))
         .orderBy(desc(friendships.createdAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: friendRequests
       });
@@ -26730,7 +26730,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ))
         .orderBy(desc(profiles.lastSeen), asc(profiles.name));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: friends
       });
@@ -27476,7 +27476,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const rate = data.rates[currency] || 1;
       
-      res.json({
+      res.json({ success: true,
         success: true,
         currency,
         rate,
@@ -27486,7 +27486,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error('Currency conversion error:', error);
       // Fallback to USD if API fails
-      res.json({
+      res.json({ success: true,
         success: true,
         currency: 'USD',
         rate: 1,
@@ -27648,7 +27648,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(pricingPlans.isActive, true))
         .orderBy(asc(pricingPlans.sortOrder));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         plans: plans
       });
@@ -27671,7 +27671,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const mathBookData = await fs.readFile(mathBookPath, 'utf8');
       const mathBook = JSON.parse(mathBookData);
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: mathBook
       });
@@ -27733,7 +27733,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         course: newCourse[0],
         message: 'Course created successfully'
@@ -27756,7 +27756,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .from(courses)
         .orderBy(desc(courses.createdAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         courses: allCourses
       });
@@ -27792,7 +27792,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         course: updatedCourse[0],
         message: 'Course approved successfully'
@@ -27830,7 +27830,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         course: updatedCourse[0],
         message: 'Course rejected successfully'
@@ -27884,7 +27884,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     ];
 
-    return res.json({
+    return res.json({ success: true,
       success: true,
       plans: fallbackPlans
     });
@@ -27904,7 +27904,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ));
 
       if (existingPlans.length > 0) {
-        return res.json({
+        return res.json({ success: true,
           success: true,
           message: 'Grade-based subscription plans already exist',
           plans: existingPlans
@@ -28019,7 +28019,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .values(gradeBasedPlans)
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Grade-based subscription plans initialized successfully',
         plans: createdPlans
@@ -28117,7 +28117,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         course: newCourse[0],
         message: 'Course created successfully'
@@ -28182,7 +28182,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const userCourses = await coursesQuery.orderBy(desc(courses.createdAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         courses: userCourses
       });
@@ -28222,7 +28222,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         course: updatedCourse[0],
         message: `Course ${status} successfully`
@@ -28359,7 +28359,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       );
 
-      res.json({
+      res.json({ success: true,
         success: true,
         course: {
           ...course[0],
@@ -28455,7 +28455,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(courses.id, courseId))
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         course: updatedCourse[0],
         message: 'Course updated successfully'
@@ -28586,7 +28586,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // 6. Finally delete the course
       await db.delete(courses).where(eq(courses.id, courseId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Course deleted successfully'
       });
@@ -28672,7 +28672,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Finally delete the module
       await db.delete(modules).where(eq(modules.id, parseInt(moduleId)));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Module deleted successfully'
       });
@@ -28708,7 +28708,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         module: newModule[0],
         message: 'Module created successfully'
@@ -28748,7 +28748,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         lesson: newLesson[0],
         message: 'Lesson created successfully'
@@ -28790,7 +28790,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         media: newMedia[0],
         message: 'Media uploaded successfully'
@@ -28858,7 +28858,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(lessonMedia.lessonId, lessonId))
         .orderBy(desc(lessonMedia.createdAt));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         media: mediaFiles
       });
@@ -28959,7 +28959,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // and calling cloudinaryStorage.deleteFile(publicId)
       console.log('TODO: Clean up old file:', oldFileUrl);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         media: updatedMedia[0],
         message: 'Media updated successfully'
@@ -29033,7 +29033,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Extract public_id from fileUrl and delete from Cloudinary
       console.log('TODO: Clean up deleted file:', fileUrl);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Media deleted successfully'
       });
@@ -29095,7 +29095,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         media: mediaWithCourse[0].media
       });
@@ -29223,7 +29223,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const uploadedImages = await Promise.all(uploadPromises);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         images: uploadedImages,
         message: `${uploadedImages.length} image(s) uploaded successfully`
@@ -29278,7 +29278,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const uploadedFiles = await Promise.all(uploadPromises);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         files: uploadedFiles,
         message: `${uploadedFiles.length} file(s) uploaded successfully`
@@ -29345,7 +29345,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .values(insertData)
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         quiz: newQuiz[0],
         message: 'Quiz created successfully'
@@ -29442,7 +29442,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Lesson marked as complete'
       });
@@ -29547,7 +29547,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(quizzes.id, quizId))
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         quiz: updatedQuiz[0],
         message: 'Quiz updated successfully'
@@ -29621,7 +29621,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .delete(quizzes)
         .where(eq(quizzes.id, quizId));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Quiz deleted successfully'
       });
@@ -29683,7 +29683,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         quiz: quizWithCourse[0].quiz
       });
@@ -29768,7 +29768,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       );
 
-      res.json({
+      res.json({ success: true,
         success: true,
         courses: enrichedCourses
       });
@@ -29878,7 +29878,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         enrollment: newEnrollment[0],
         message: 'Successfully enrolled in course'
@@ -29963,7 +29963,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         clientSecret: paymentIntent.client_secret,
         course: {
@@ -30151,7 +30151,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.error('Failed to send course purchase email:', emailError);
         }
 
-        res.json({
+        res.json({ success: true,
           success: true,
           enrollment: newEnrollment,
           message: 'Course purchased and enrolled successfully!'
@@ -30228,7 +30228,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       );
 
-      res.json({
+      res.json({ success: true,
         success: true,
         courses: enrichedCourses
       });
@@ -30269,7 +30269,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(courseEnrollments.userId, user.id))
         .returning();
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: `Successfully unsubscribed from ${deletedEnrollments.length} courses`,
         unsubscribedCount: deletedEnrollments.length,
@@ -30340,7 +30340,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ));
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         progress: progress[0],
         message: 'Progress updated successfully'
@@ -30412,7 +30412,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Check if user has questions available for current day
       if (currentDay > totalDays) {
-        return res.json({
+        return res.json({ success: true,
           success: true,
           data: {
             dayNumber: totalDays,
@@ -30477,7 +30477,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         };
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           dayNumber: currentDay,
@@ -30578,7 +30578,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           isCorrect,
@@ -30636,7 +30636,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(dailyQuestionProgress.userId, userId))
         .groupBy(subjects.name);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           overview: {
@@ -30765,7 +30765,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return acc;
       }, {} as Record<string, { total: number; completed: number; timeSpent: number }>);
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           profile: {
@@ -30830,7 +30830,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const result = await storage.toggleProductLike(productId, userId);
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: result
       });
@@ -30889,7 +30889,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const likes = await storage.getProductLikes(productId, { limit, offset });
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: likes
       });
@@ -30910,7 +30910,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const stats = await storage.getProductLikeStats(productId, viewerUserId);
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: stats
       });
@@ -30945,7 +30945,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Use the UUID for storage operations
       const likedProducts = await storage.getUserLikedProducts(currentUserId, { limit, offset });
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: likedProducts
       });
@@ -30976,7 +30976,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Use UUID for storage operations
       const result = await storage.toggleProductFollow(sellerId, followerId);
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: result
       });
@@ -30999,7 +30999,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const followers = await storage.getProductFollows(sellerId, { limit, offset });
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: followers
       });
@@ -31020,7 +31020,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const stats = await storage.getSellerFollowStats(sellerId, viewerUserId);
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: stats
       });
@@ -31055,7 +31055,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Use the UUID for storage operations
       const followedSellers = await storage.getUserFollowedSellers(currentUserId, { limit, offset });
       
-      res.json({
+      res.json({ success: true,
         success: true,
         data: followedSellers
       });
@@ -31100,7 +31100,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         adminAvatar: msg.adminAvatar
       }));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         messages: formattedMessages
       });
@@ -31147,7 +31147,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         createdAt: helpChatMessages.createdAt
       });
 
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Message sent successfully',
         data: {
@@ -31221,7 +31221,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       );
 
-      res.json({
+      res.json({ success: true,
         success: true,
         conversations: enrichedConversations
       });
@@ -31264,7 +31264,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         adminAvatar: msg.adminAvatar
       }));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         guestId,
         messages: formattedMessages
@@ -31324,7 +31324,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else if (format === 'json') {
         res.setHeader('Content-Type', 'application/json');
         res.setHeader('Content-Disposition', `attachment; filename="help-chat-export-${Date.now()}.json"`);
-        res.json({
+        res.json({ success: true,
           exportDate: new Date().toISOString(),
           totalMessages: messages.length,
           messages: messages.map(msg => ({
@@ -32516,7 +32516,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         createdAt: category.createdAt.toISOString()
       }));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: transformedCategories
       });
@@ -32566,7 +32566,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         createdAt: category.createdAt.toISOString()
       };
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: transformedCategory
       });
@@ -32638,7 +32638,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         createdAt: category.createdAt.toISOString()
       }));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         data: transformedCategories
       });
@@ -32836,7 +32836,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .set(updateData)
         .where(eq(shopCategories.id, id))
         .returning();
-      res.json({
+      res.json({ success: true,
         success: true,
         data: {
           id: updatedCategory.id,
@@ -32875,7 +32875,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json(null);
       }
       
-      res.json({
+      res.json({ success: true,
         id: quiz.id,
         lessonId: quiz.lessonId,
         title: quiz.title,
@@ -32926,7 +32926,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .where(eq(lessonProgress.id, existing.id));
       }
       
-      res.json({
+      res.json({ success: true,
         success: true,
         passed,
         score,
@@ -32961,7 +32961,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const totalLessons = allLessons.length;
 
       if (totalLessons === 0) {
-        return res.json({
+        return res.json({ success: true,
           success: true,
           progressPercentage: 0,
           completedLessons: 0,
@@ -33001,7 +33001,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           eq(courseEnrollments.courseId, courseId)
         ));
 
-      res.json({
+      res.json({ success: true,
         success: true,
         progressPercentage,
         completedLessons: completedCount,
@@ -33180,7 +33180,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: 'Certificate not found' });
       }
       
-      res.json({
+      res.json({ success: true,
         id: certificate.id,
         userName: certificate.userName,
         courseTitle: certificate.courseTitle,
@@ -33248,7 +33248,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const totalLessons = allLessonIds.length;
       
       if (totalLessons === 0) {
-        return res.json({
+        return res.json({ success: true,
           completedLessons: 0,
           totalLessons: 0,
           progressPercentage: 0,
@@ -33267,7 +33267,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const completed = progress.filter(p => p.completedAt !== null);
       const progressPercentage = Math.round((completed.length / totalLessons) * 100);
       
-      res.json({
+      res.json({ success: true,
         completedLessons: completed.length,
         totalLessons,
         progressPercentage,
@@ -33356,7 +33356,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         isActive: true
       });
 
-      res.json({
+      res.json({ success: true,
         id: newKey.id,
         name: newKey.name,
         key: apiKey, // Return the raw key only once
@@ -33447,7 +33447,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Profile not found" });
       }
 
-      res.json({
+      res.json({ success: true,
         id: userProfile.id,
         name: userProfile.name,
         email: userProfile.email,
@@ -33474,7 +33474,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         limit: 100
       });
 
-      res.json({
+      res.json({ success: true,
         purchases: purchases.map(p => ({
           id: p.id,
           productId: p.productId,
@@ -33753,7 +33753,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Filter lessons without content
       const lessonsToGenerate = allLessons.filter(l => !l.content || l.content.trim() === '');
       
-      res.json({
+      res.json({ success: true,
         success: true,
         totalLessons: allLessons.length,
         lessonsNeedingContent: lessonsToGenerate.length,
@@ -33772,7 +33772,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       console.log('Starting Job Readiness Course image regeneration...');
       const stats = await regenerateJobReadinessImages();
-      res.json({
+      res.json({ success: true,
         success: true,
         message: 'Job Readiness Course images regenerated successfully',
         stats
