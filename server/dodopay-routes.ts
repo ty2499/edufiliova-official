@@ -175,41 +175,20 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     }
     const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
 
-    // Step 1: Auto-create the product in DodoPay if it doesn't exist
-    console.log(`📦 Auto-creating product in DodoPay: ${itemId}...`);
-    try {
-      await dodo.products.create({
-        product_id: itemId, // Explicitly set the product ID
-        name: itemName,
-        description: `${productType} - ${itemName}`,
-        price: {
-          currency: currency || 'USD',
-          amount: Math.round(amount * 100), // Price in cents
-          type: 'one_time_price', // CORRECT: variant name for one-time payments
-        },
-        tax_category: 'no_tax', // Default to no tax
-        type: 'digital', // Required field
-      } as any);
-      console.log(`✅ Product created: ${itemId}`);
-    } catch (productError: any) {
-      // Product might already exist or have different requirements
-      const errorMsg = productError?.message || String(productError);
-      console.warn(`⚠️ Product creation warning (may already exist): ${errorMsg}`);
-    }
-
-    // Step 2: Create checkout session with the product
+    // Step 1 & 2: Create checkout session directly with line items (skip product creation)
+    // DodoPay allows inline item creation in checkout sessions without pre-creating products
     console.log(`🛒 Creating checkout session in DodoPay for ${itemName}...`);
     const checkoutSession = (await dodo.checkoutSessions.create({
-      product_cart: [
+      line_items: [
         {
-          product_id: itemId,
+          description: `${productType} - ${itemName}`,
           quantity: 1,
+          price_in_cents: Math.round(amount * 100), // Price in cents
+          name: itemName,
         }
       ],
-      customer: {
-        email: userEmail || 'customer@example.com',
-        name: userName || 'Customer',
-      },
+      customer_email: userEmail || 'customer@example.com',
+      customer_name: userName || 'Customer',
       billing_address: {
         city: 'Unknown',
         country: 'US',
