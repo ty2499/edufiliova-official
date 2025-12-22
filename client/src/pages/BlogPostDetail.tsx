@@ -174,7 +174,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24 pb-12">
-      <div className="container mx-auto px-3 sm:px-4 lg:px-6">
+      <div className="w-full px-0">
         {/* Back Button and Share */}
         <div className="flex items-center justify-between mb-8">
           <Button
