@@ -965,16 +965,19 @@ const Index = () => {
       
       console.log('🔒 Wrong dashboard access check:', wrongDashboardAccess, 'for', profile.role, 'on', currentState);
       
-      // Only auto-redirect when on auth/home pages OR accessing wrong dashboard
-      // Teachers and freelancers should be routed from home to their dashboard after login/refresh
+      // Only auto-redirect when on auth/home/landing pages OR accessing wrong dashboard
+      // ALL authenticated users should be routed from home to their dashboard after login/refresh
       // But skip auto-routing if they're already on signup/status pages (prevents redirect loops)
       const creatorSpecialPages = ["teacher-signup", "teacher-application-status", "teacher-dashboard",
                                     "freelancer-signup", "freelancer-application-status", "freelancer-dashboard"];
       const isCreatorOnSpecialPage = creatorSpecialPages.includes(currentState);
-      const isCreatorOnHome = currentState === "home" && (profile.role === "teacher" || profile.role === "freelancer") && !isCreatorOnSpecialPage;
+      
+      // Redirect ALL users away from landing-only pages to their appropriate dashboard
+      const isOnLandingPage = LANDING_ONLY_PAGES.includes(currentState) && !isCreatorOnSpecialPage;
+      
       const shouldAutoRoute = currentState === "auth" || 
                               wrongDashboardAccess ||
-                              isCreatorOnHome;
+                              isOnLandingPage;
       
       if (shouldAutoRoute) {
         console.log('🔄 Current state requires auto-routing:', currentState);
