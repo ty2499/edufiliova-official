@@ -1051,20 +1051,14 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               
               {/* Stat Card 3 */}
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-500/20 to-purple-400/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(147, 51, 234, 0.15)' }}>
-                  <Users className="h-5 w-5" style={{ color: '#9333ea' }} />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-1">500+</h3>
-                <p className="text-sm text-slate-400">Active Creators</p>
+                <h3 className="text-2xl font-bold text-white mb-1">50K+</h3>
+                <p className="text-sm text-slate-400">Products Sold</p>
               </div>
               
               {/* Stat Card 4 */}
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300">
-                <div className="w-10 h-10 bg-gradient-to-br from-amber-500/20 to-amber-500/10 rounded-lg flex items-center justify-center mb-3">
-                  <Star className="h-5 w-5 text-amber-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-1">4.9/5</h3>
-                <p className="text-sm text-slate-400">Average Rating</p>
+                <h3 className="text-2xl font-bold text-white mb-1">25K+</h3>
+                <p className="text-sm text-slate-400">Happy Customers</p>
               </div>
             </div>
           </div>
