@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, isInCordovaApp, navigateOrOpenExternal } from "@/lib/utils";
 
 const studentsImage = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/getstarted/c61f5133-ed63-4a25-85ed-26bc7a91c2df.png";
 const teachersImage = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/getstarted/28a48c69-9c9a-4a76-850a-0c0c3d29389f.png";
@@ -54,6 +54,7 @@ export default function GetStarted({ onComplete }: GetStartedProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [direction, setDirection] = useState(1);
+  const isMobileApp = isInCordovaApp();
 
   const goToSlide = useCallback((index: number) => {
     setDirection(index > currentSlide ? 1 : -1);
@@ -218,7 +219,7 @@ export default function GetStarted({ onComplete }: GetStartedProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.4 }}
-          className="flex justify-center"
+          className="flex justify-center gap-4"
         >
           <Button
             onClick={handleGetStarted}
@@ -231,6 +232,21 @@ export default function GetStarted({ onComplete }: GetStartedProps) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
             </span>
           </Button>
+
+          {isMobileApp && (
+            <Button
+              onClick={() => navigateOrOpenExternal('/')}
+              size="lg"
+              variant="outline"
+              className="bg-white/10 backdrop-blur-sm border-white/30 hover:bg-white/20 text-white font-semibold px-12 py-4 rounded-full text-base hover:scale-105 transition-all duration-300"
+              data-testid="button-explore-website"
+            >
+              <span className="flex items-center gap-2">
+                Explore Website
+                <ExternalLink className="w-4 h-4" />
+              </span>
+            </Button>
+          )}
         </motion.div>
 
         <motion.p

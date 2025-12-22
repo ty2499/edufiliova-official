@@ -679,8 +679,9 @@ const Index = () => {
   }, [isAuthOnlyDomain, location, navigate, navigateToPage]);
 
   // Block mobile (Cordova) users from accessing website pages - they should only see dashboards
+  // Only applies to authenticated users - unauthenticated users can see auth pages
   useEffect(() => {
-    // Skip if not in Cordova app or still loading
+    // Skip if not in Cordova app, still loading, or not authenticated
     if (!isInCordovaApp() || loading || !user || !profile) return;
     
     // If user is on a website-only page on mobile, redirect to their dashboard
