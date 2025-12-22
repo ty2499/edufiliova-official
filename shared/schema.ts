@@ -171,8 +171,8 @@ export const getGradeFeatureRestrictions = (gradeLevel: string | number | null |
     return {
       canAccessCommunity: false,
       canAccessBilling: false,
-      canAccessPurchases: false,
-      canAccessDownloads: false,
+      canAccessPurchases: true, // All students can view their purchases
+      canAccessDownloads: true, // All students can access their downloads
       canAccessCreateAd: false,
       canAccessFreelancers: false,
       canAccessCourses: false,
@@ -186,8 +186,8 @@ export const getGradeFeatureRestrictions = (gradeLevel: string | number | null |
     return {
       canAccessCommunity: false,
       canAccessBilling: false,
-      canAccessPurchases: false,
-      canAccessDownloads: false,
+      canAccessPurchases: true, // All students can view their purchases
+      canAccessDownloads: true, // All students can access their downloads
       canAccessCreateAd: false,
       canAccessFreelancers: false,
       canAccessCourses: false,
@@ -201,8 +201,8 @@ export const getGradeFeatureRestrictions = (gradeLevel: string | number | null |
     return {
       canAccessCommunity: false,
       canAccessBilling: false,
-      canAccessPurchases: false,
-      canAccessDownloads: false,
+      canAccessPurchases: true, // All students can view their purchases
+      canAccessDownloads: true, // All students can access their downloads
       canAccessCreateAd: false,
       canAccessFreelancers: false, // Hidden for grades 8-11 (only grade 12+ can access)
       canAccessCourses: true,

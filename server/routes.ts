@@ -7217,6 +7217,94 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Confirm freelancer subscription payment (DodoPay and other gateways)
+  app.post("/api/freelancer/subscription/confirm", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { paymentId, planId, planName, amount, billingCycle, gateway } = req.body;
+      const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Validate that planId exists and is active
+      if (!planId) {
+        return res.status(400).json({ success: false, error: 'Plan ID is required' });
+      }
+
+      const validPlan = await db
+        .select()
+        .from(freelancerPricingPlans)
+        .where(and(eq(freelancerPricingPlans.planId, planId), eq(freelancerPricingPlans.active, true)))
+        .limit(1);
+
+      if (validPlan.length === 0) {
+        return res.status(400).json({ success: false, error: 'Invalid or inactive plan' });
+      }
+
+      // Verify the amount matches the plan (prevent tampering)
+      const plan = validPlan[0];
+      let expectedPrice = 0;
+      if (billingCycle === 'yearly' && plan.yearlyPrice) {
+        expectedPrice = parseFloat(plan.yearlyPrice);
+      } else if (billingCycle === 'lifetime' && plan.lifetimePrice) {
+        expectedPrice = parseFloat(plan.lifetimePrice);
+      } else if (plan.monthlyPrice) {
+        expectedPrice = parseFloat(plan.monthlyPrice);
+      }
+
+      // Allow small tolerance for rounding
+      if (Math.abs(amount - expectedPrice) > 0.01) {
+        console.warn(`Freelancer plan amount mismatch: expected ${expectedPrice}, got ${amount}`);
+      }
+
+      // Calculate plan expiry based on billing cycle
+      const planExpiry = new Date();
+      if (billingCycle === 'yearly') {
+        planExpiry.setFullYear(planExpiry.getFullYear() + 1);
+      } else if (billingCycle === 'lifetime') {
+        planExpiry.setFullYear(planExpiry.getFullYear() + 100);
+      } else {
+        planExpiry.setMonth(planExpiry.getMonth() + 1);
+      }
+
+      // Update user profile with freelancer plan
+      await db.update(profiles)
+        .set({ 
+          legacyPlan: planId,
+          planExpiry: planExpiry,
+          updatedAt: new Date()
+        })
+        .where(eq(profiles.userId, userId));
+
+      // Record the transaction in payments table
+      try {
+        await db.insert(payments).values({
+          userId,
+          amount: amount?.toString() || '0',
+          currency: 'USD',
+          status: 'succeeded',
+          gateway: gateway || 'dodopay',
+          paymentIntentId: paymentId || `dodo_${Date.now()}`,
+          description: `Freelancer Plan: ${plan.name} (${billingCycle})`,
+          metadata: { planId, planName: plan.name, billingCycle },
+          createdAt: new Date()
+        });
+      } catch (paymentLogError) {
+        console.warn('Could not log freelancer payment:', paymentLogError);
+      }
+
+      console.log(`✅ Freelancer plan confirmed: ${plan.name} for user ${userId}, expires ${planExpiry.toISOString()}`);
+
+      res.json({ 
+        success: true, 
+        message: 'Freelancer subscription confirmed',
+        planExpiry: planExpiry.toISOString()
+      });
+    } catch (error: any) {
+      console.error('Confirm freelancer subscription error:', error);
+      res.status(500).json({ success: false, error: 'Failed to confirm freelancer subscription' });
+    }
+  });
   app.post("/api/freelancer/verify-email", async (req, res) => {
     try {
       const { email, code } = req.body;

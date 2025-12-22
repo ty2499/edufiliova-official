@@ -3,11 +3,14 @@ import { Elements } from '@stripe/react-stripe-js';
 import { Stripe } from '@stripe/stripe-js';
 import { CheckoutForm } from './Checkout';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, CreditCard, Shield } from 'lucide-react';
+import { ArrowLeft, CreditCard, Shield, Wallet } from 'lucide-react';
 import { CheckmarkIcon } from "@/components/ui/checkmark-icon";
 import { queryClient } from '@/lib/queryClient';
 import Logo from '@/components/Logo';
 import { getStripePromise } from '@/lib/stripe';
+import { DodoPayments } from "dodopayments-checkout";
+import { useAuth } from '@/hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
 
 interface FreelancerCheckoutProps {
   onNavigate?: (page: string, transition?: string, data?: any) => void;
@@ -15,6 +18,10 @@ interface FreelancerCheckoutProps {
 
 export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutProps) {
   const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'stripe'>('card');
+  const [processing, setProcessing] = useState(false);
+  const [dodoInitialized, setDodoInitialized] = useState(false);
+  const { user, profile } = useAuth();
   
   // Get checkout data from URL params
   const urlParams = new URLSearchParams(window.location.search);
@@ -22,6 +29,71 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
   const amount = parseFloat(urlParams.get('amount') || '0');
   const planName = urlParams.get('planName') || 'Premium Plan';
   const billingCycle = urlParams.get('billingCycle') || 'monthly';
+  const planId = urlParams.get('planId') || '';
+
+  // Fetch enabled payment gateways
+  const { data: enabledGateways = [] } = useQuery<any[]>({
+    queryKey: ['/api/payment-gateways/enabled'],
+    staleTime: 5 * 60 * 1000,
+  });
+
+  // Check if Dodo Payments is enabled
+  const dodoGateway = enabledGateways.find((g: any) => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
+  const isDodoEnabled = !!dodoGateway;
+  const isDodoTestMode = dodoGateway?.testMode === true;
+
+  // Initialize DodoPayments overlay checkout SDK
+  useEffect(() => {
+    if (isDodoEnabled && !dodoInitialized) {
+      try {
+        const dodoMode = isDodoTestMode ? "test" : "live";
+        DodoPayments.Initialize({
+          mode: dodoMode,
+          onEvent: async (event: any) => {
+            console.log("Dodo checkout event (freelancer):", event);
+            
+            if (event.event_type === "checkout.redirect") {
+              // Confirm the freelancer plan upgrade with the backend
+              try {
+                const confirmResponse = await fetch('/api/freelancer/subscription/confirm', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  credentials: 'include',
+                  body: JSON.stringify({
+                    paymentId: event.data?.payment_id || `dodo_${Date.now()}`,
+                    planId: planId || 'premium',
+                    planName: planName,
+                    amount: amount,
+                    billingCycle: billingCycle,
+                    gateway: 'dodopay',
+                  }),
+                });
+                
+                const confirmData = await confirmResponse.json();
+                console.log('DodoPay freelancer plan confirmed:', confirmData);
+              } catch (err) {
+                console.error('Failed to confirm DodoPay freelancer plan:', err);
+              }
+              
+              queryClient.invalidateQueries({ queryKey: ['/api/me/profile'] });
+              queryClient.invalidateQueries({ queryKey: ['/api/freelancer/subscription'] });
+              setProcessing(false);
+              setTimeout(() => handleSuccess(), 1500);
+            } else if (event.event_type === "checkout.closed") {
+              setProcessing(false);
+            } else if (event.event_type === "checkout.error") {
+              console.error("Dodo checkout error:", event.data);
+              setProcessing(false);
+            }
+          }
+        });
+        setDodoInitialized(true);
+        console.log(`✅ Dodo Payments overlay SDK initialized (freelancer checkout) - mode: ${dodoMode}`);
+      } catch (error) {
+        console.warn("Failed to initialize Dodo overlay SDK:", error);
+      }
+    }
+  }, [isDodoEnabled, isDodoTestMode, dodoInitialized, planId, planName, amount, billingCycle]);
 
   // Load Stripe dynamically
   useEffect(() => {
@@ -32,14 +104,55 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
     });
   }, []);
 
-  // Redirect back if no checkout data
+  // Handle DodoPay payment for freelancer plans
+  const handleDodoPayment = async () => {
+    setProcessing(true);
+    try {
+      const response = await fetch('/api/dodopay/checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: amount,
+          currency: 'USD',
+          courseId: `freelancer_plan_${planId || 'premium'}_${billingCycle}`,
+          productName: planName,
+          productDescription: `Freelancer ${planName} - ${billingCycle === 'yearly' ? 'Annual' : billingCycle === 'lifetime' ? 'Lifetime' : 'Monthly'} subscription`,
+          productType: 'subscription',
+          billingInterval: billingCycle === 'lifetime' ? 'one_time' : billingCycle,
+          userEmail: user?.email || '',
+          userName: profile?.name || user?.email || '',
+          overlayMode: true,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success && data.checkoutUrl) {
+        if (dodoInitialized && DodoPayments.Checkout) {
+          DodoPayments.Checkout.open({
+            checkoutUrl: data.checkoutUrl
+          });
+        } else {
+          window.location.href = data.checkoutUrl;
+        }
+      } else {
+        console.error('DodoPay checkout error:', data.error);
+        setProcessing(false);
+      }
+    } catch (error) {
+      console.error('DodoPay payment error:', error);
+      setProcessing(false);
+    }
+  };
+
+  // Redirect back if no checkout data (amount is required, clientSecret only for Stripe)
   useEffect(() => {
-    if (!clientSecret || !amount) {
+    if (!amount) {
       setTimeout(() => {
         handleBack();
       }, 1500);
     }
-  }, [clientSecret, amount]);
+  }, [amount]);
 
   const handleBack = () => {
     if (onNavigate) {
@@ -56,7 +169,7 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
     }
   };
 
-  if (!clientSecret || !amount || !stripePromise) {
+  if (!amount) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
         <div className="text-center">
@@ -151,22 +264,38 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
             </div>
           </div>
 
-          {/* Payment Methods Badge */}
-          <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
-            <div className="flex items-center gap-3 mb-3">
-              <CreditCard className="h-5 w-5 text-gray-600" />
-              <h3 className="font-semibold text-gray-900">Accepted Payment Methods</h3>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <div className="bg-white px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-700">
-                Credit Card
-              </div>
-              <div className="bg-white px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-700">
-                Debit Card
-              </div>
-              <div className="bg-white px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-700">
-                Wallet
-              </div>
+          {/* Payment Method Selection */}
+          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-100">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Select Payment Method</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={() => setPaymentMethod('card')}
+                className={`p-4 rounded-xl border-2 transition-all ${
+                  paymentMethod === 'card'
+                    ? 'border-[#6366f1] bg-[#6366f1]/5'
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+                data-testid="payment-method-card"
+              >
+                <CreditCard className={`h-6 w-6 mx-auto mb-2 ${paymentMethod === 'card' ? 'text-[#6366f1]' : 'text-gray-600'}`} />
+                <span className={`text-sm font-medium ${paymentMethod === 'card' ? 'text-[#6366f1]' : 'text-gray-700'}`}>
+                  Pay with Card
+                </span>
+              </button>
+              <button
+                onClick={() => setPaymentMethod('stripe')}
+                className={`p-4 rounded-xl border-2 transition-all ${
+                  paymentMethod === 'stripe'
+                    ? 'border-[#6366f1] bg-[#6366f1]/5'
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+                data-testid="payment-method-stripe"
+              >
+                <Wallet className={`h-6 w-6 mx-auto mb-2 ${paymentMethod === 'stripe' ? 'text-[#6366f1]' : 'text-gray-600'}`} />
+                <span className={`text-sm font-medium ${paymentMethod === 'stripe' ? 'text-[#6366f1]' : 'text-gray-700'}`}>
+                  Other Methods
+                </span>
+              </button>
             </div>
           </div>
 
@@ -174,16 +303,48 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
           <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100">
             <h3 className="text-xl font-semibold text-gray-900 mb-6">Payment Details</h3>
             
-            <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <CheckoutForm
-                amount={amount}
-                planName={planName}
-                billingCycle={billingCycle}
-                clientSecret={clientSecret}
-                onSuccess={handleSuccess}
-                onCancel={handleBack}
-              />
-            </Elements>
+            {paymentMethod === 'card' ? (
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600 mb-4">
+                  Complete your payment securely using your credit or debit card.
+                </p>
+                <Button
+                  onClick={handleDodoPayment}
+                  disabled={processing}
+                  className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white py-6 text-base font-semibold rounded-xl"
+                  data-testid="button-dodopay-checkout"
+                >
+                  {processing ? (
+                    <span className="flex items-center gap-2 justify-center">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Processing...
+                    </span>
+                  ) : (
+                    `Pay $${amount} with Card`
+                  )}
+                </Button>
+                <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+                  <Shield className="w-4 h-4 text-green-600" />
+                  <span>Secure payment processing</span>
+                </div>
+              </div>
+            ) : clientSecret && stripePromise ? (
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <CheckoutForm
+                  amount={amount}
+                  planName={planName}
+                  billingCycle={billingCycle}
+                  clientSecret={clientSecret}
+                  onSuccess={handleSuccess}
+                  onCancel={handleBack}
+                />
+              </Elements>
+            ) : (
+              <div className="text-center py-8">
+                <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4" />
+                <p className="text-gray-600 text-sm">Loading payment form...</p>
+              </div>
+            )}
           </div>
         </div>
 
