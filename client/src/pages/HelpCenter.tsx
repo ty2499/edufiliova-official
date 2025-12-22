@@ -91,7 +91,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
       id: "getting-started",
       title: "Getting Started",
       icon: Play,
-      color: "bg-primary/10 text-primary",
+      color: "bg-primary/10 text-foreground",
       faqs: [
         {
           question: "How do I create my EduFiliova account?",
@@ -906,7 +906,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     <ol className="space-y-2">
                       {guide.steps.map((step, stepIndex) => (
                         <li key={stepIndex} className="flex items-start gap-3 text-sm">
-                          <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-medium flex-shrink-0 mt-0.5">
+                          <div className="w-6 h-6 rounded-full bg-primary/10 text-foreground flex items-center justify-center text-xs font-medium flex-shrink-0 mt-0.5">
                             {stepIndex + 1}
                           </div>
                           {step}

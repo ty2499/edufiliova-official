@@ -321,7 +321,7 @@ export default function SupportProfilesManagement() {
                             />
                             <label
                               htmlFor="avatar-upload"
-                              className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground cursor-pointer rounded-md text-sm transition-colors"
+                              className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-input bg-background hover:bg-accent hover:text-foreground-foreground cursor-pointer rounded-md text-sm transition-colors"
                             >
                               <Upload className="h-4 w-4" />
                               Upload Image

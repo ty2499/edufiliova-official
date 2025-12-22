@@ -689,7 +689,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                         )}
                       </div>
                       <CardHeader className="p-4">
-                        <CardTitle className="text-sm font-semibold line-clamp-2 group-hover:text-primary transition-colors">
+                        <CardTitle className="text-sm font-semibold line-clamp-2 group-hover:text-foreground transition-colors">
                           {product.name}
                         </CardTitle>
                       </CardHeader>
@@ -762,7 +762,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                How It <span className="text-[#0C332C]">Works</span>
+                How It <span className="text-foreground">Works</span>
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Get started in just four simple steps. Whether you're here to learn or earn, we've made it easy.
@@ -803,7 +803,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
             <div className="w-full">
               <div className="text-center mb-12">
                 <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                  Our <span className="text-[#0C332C]">Platform</span> Vision
+                  Our <span className="text-foreground">Platform</span> Vision
                 </h2>
                 <p className="text-base md:text-lg text-[#575757]">
                   We are committed to upholding the highest standards of educational excellence while ensuring each student feels valued and heard.

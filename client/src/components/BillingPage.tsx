@@ -581,7 +581,7 @@ export default function BillingPage() {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmCancelSubscription}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-primary hover:bg-red-700 text-white"
               data-testid="button-cancel-dialog-yes"
             >
               Yes, Cancel Plan

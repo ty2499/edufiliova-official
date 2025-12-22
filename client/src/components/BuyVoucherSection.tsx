@@ -704,7 +704,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
           <CardContent className="p-6 space-y-6">
             <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 text-center border-2 border-dashed border-gray-200 dark:border-gray-700">
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Voucher Code</p>
-              <p className="text-2xl font-mono font-bold text-primary tracking-wider">
+              <p className="text-2xl font-mono font-bold text-foreground tracking-wider">
                 {purchaseResult.voucherCode}
               </p>
               <p className="text-3xl font-bold text-gray-900 dark:text-white mt-4">
@@ -874,7 +874,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             {!sendToSelf && (
               <div className="space-y-4 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
                 <h3 className="font-medium flex items-center gap-2">
-                  <User className="w-4 h-4 text-primary" />
+                  <User className="w-4 h-4 text-foreground" />
                   Recipient Details
                 </h3>
                 <div className="space-y-3">
@@ -995,7 +995,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         <Card className="border-0">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-primary" />
+              <CreditCard className="w-5 h-5 text-foreground" />
               Payment Details
             </CardTitle>
             <CardDescription>
@@ -1040,7 +1040,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                       <p className="text-sm text-gray-500">${walletBalance.toFixed(2)} available</p>
                     </div>
                     {selectedPaymentMethod === 'system_wallet' && (
-                      <CheckCircle2 className="w-5 h-5 text-primary" />
+                      <CheckCircle2 className="w-5 h-5 text-foreground" />
                     )}
                   </button>
                 )}
@@ -1064,7 +1064,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                       <p className="text-sm text-gray-500">Visa, Mastercard, etc.</p>
                     </div>
                     {selectedPaymentMethod === 'card' && (
-                      <CheckCircle2 className="w-5 h-5 text-primary" />
+                      <CheckCircle2 className="w-5 h-5 text-foreground" />
                     )}
                   </button>
                 )}
@@ -1088,7 +1088,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                       <p className="text-sm text-gray-500">Pay with PayPal account</p>
                     </div>
                     {selectedPaymentMethod === 'paypal' && (
-                      <CheckCircle2 className="w-5 h-5 text-primary" />
+                      <CheckCircle2 className="w-5 h-5 text-foreground" />
                     )}
                   </button>
                 )}
@@ -1112,7 +1112,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                       <p className="text-sm text-gray-500">Pay with Paystack</p>
                     </div>
                     {selectedPaymentMethod === 'paystack' && (
-                      <CheckCircle2 className="w-5 h-5 text-primary" />
+                      <CheckCircle2 className="w-5 h-5 text-foreground" />
                     )}
                   </button>
                 )}
@@ -1136,7 +1136,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                       <p className="text-sm text-gray-500">Visa, Mastercard, Apple Pay</p>
                     </div>
                     {selectedPaymentMethod === 'dodopay' && (
-                      <CheckCircle2 className="w-5 h-5 text-primary" />
+                      <CheckCircle2 className="w-5 h-5 text-foreground" />
                     )}
                   </button>
                 )}

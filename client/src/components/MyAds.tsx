@@ -355,7 +355,7 @@ export default function MyAds({ userRole = 'customer' }: MyAdsProps) {
             <AlertDialogCancel data-testid="button-cancel-delete">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-primary hover:bg-red-700 text-white"
               data-testid="button-confirm-delete"
             >
               Delete

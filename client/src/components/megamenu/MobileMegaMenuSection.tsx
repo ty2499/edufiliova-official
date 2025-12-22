@@ -63,7 +63,7 @@ export const MobileMegaMenuItem = ({ icon, title, description, onClick, badge }:
               {title}
             </h4>
             {badge && (
-              <span className="px-2 py-0.5 text-xs font-medium bg-primary/10 text-primary rounded-full">
+              <span className="px-2 py-0.5 text-xs font-medium bg-primary/10 text-foreground rounded-full">
                 {badge}
               </span>
             )}

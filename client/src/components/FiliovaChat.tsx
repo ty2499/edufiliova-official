@@ -704,7 +704,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                     <p className="text-sm opacity-75">
                       {isUserRecording(selectedConversation) ? (
                         <span className="text-red-400 flex items-center gap-1">
-                          <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                          <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                           recording audio...
                         </span>
                       ) : isUserTyping(selectedConversation) ? (
@@ -807,7 +807,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
               <div className="px-4 py-3 bg-[#075e54] text-white">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-primary rounded-full"></div>
                     <span>{formatRecordingTime(recordingTime)}</span>
                   </div>
                   <div className="flex gap-2">

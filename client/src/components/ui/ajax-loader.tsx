@@ -145,9 +145,9 @@ export const AjaxButton: React.FC<AjaxButtonProps> = ({
     
     switch (variant) {
       case 'destructive':
-        return cn(base, 'bg-red-500 text-white hover:bg-red-600 disabled:bg-red-300');
+        return cn(base, 'bg-primary text-white hover:bg-primary disabled:bg-red-300');
       case 'outline':
-        return cn(base, 'border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:bg-muted');
+        return cn(base, 'border border-input bg-background hover:bg-accent hover:text-foreground-foreground disabled:bg-muted');
       case 'secondary':
         return cn(base, 'bg-secondary text-secondary-foreground hover:bg-secondary/80 disabled:bg-secondary/50');
       default:

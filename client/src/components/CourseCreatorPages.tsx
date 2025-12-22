@@ -533,7 +533,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
       
       {/* Progress indicators */}
       <div className="flex justify-center space-x-4 pt-4">
-        <div className={`flex items-center ${currentStep >= 1 ? 'text-primary' : 'text-muted-foreground'}`}>
+        <div className={`flex items-center ${currentStep >= 1 ? 'text-foreground' : 'text-muted-foreground'}`}>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
             currentStep >= 1 ? 'border-primary bg-primary text-white' : 'border-muted-foreground'
           }`}>
@@ -542,7 +542,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
           <span className="ml-2 text-sm font-medium">Course Info</span>
         </div>
         
-        <div className={`flex items-center ${currentStep >= 2 ? 'text-primary' : 'text-muted-foreground'}`}>
+        <div className={`flex items-center ${currentStep >= 2 ? 'text-foreground' : 'text-muted-foreground'}`}>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
             currentStep >= 2 ? 'border-primary bg-primary text-white' : 'border-muted-foreground'
           }`}>
@@ -551,7 +551,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
           <span className="ml-2 text-sm font-medium">Course Content</span>
         </div>
         
-        <div className={`flex items-center ${currentStep >= 3 ? 'text-primary' : 'text-muted-foreground'}`}>
+        <div className={`flex items-center ${currentStep >= 3 ? 'text-foreground' : 'text-muted-foreground'}`}>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
             currentStep >= 3 ? 'border-primary bg-primary text-white' : 'border-muted-foreground'
           }`}>

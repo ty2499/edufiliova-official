@@ -39,7 +39,7 @@ const TestPapers = ({ countryId, subject, gradeLevel, onBack }: TestPapersProps)
     return (
       <div key={index} className="mb-6 p-4 bg-slate-50 rounded-lg">
         <div className="flex items-center justify-between mb-3">
-          <h4 className="font-semibold text-primary">
+          <h4 className="font-semibold text-foreground">
             Question {question.number || index + 1}
           </h4>
           <Badge variant="secondary">{question.marks} marks</Badge>
@@ -72,7 +72,7 @@ const TestPapers = ({ countryId, subject, gradeLevel, onBack }: TestPapersProps)
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-2xl text-primary">{selectedPaper.title}</CardTitle>
+                    <CardTitle className="text-2xl text-foreground">{selectedPaper.title}</CardTitle>
                     <CardDescription className="text-lg mt-2">
                       {subject} • {gradeDisplay} • {country?.name}
                     </CardDescription>
@@ -97,7 +97,7 @@ const TestPapers = ({ countryId, subject, gradeLevel, onBack }: TestPapersProps)
                   {/* Section A Questions */}
                   {selectedPaper.questions.section_a && (
                     <div className="mb-8">
-                      <h3 className="text-xl font-bold text-primary mb-4">Section A</h3>
+                      <h3 className="text-xl font-bold text-foreground mb-4">Section A</h3>
                       {selectedPaper.questions.section_a.map((question: any, index: number) => 
                         renderQuestion(question, index)
                       )}
@@ -107,7 +107,7 @@ const TestPapers = ({ countryId, subject, gradeLevel, onBack }: TestPapersProps)
                   {/* Section B Questions */}
                   {selectedPaper.questions.section_b && (
                     <div className="mb-8">
-                      <h3 className="text-xl font-bold text-primary mb-4">Section B</h3>
+                      <h3 className="text-xl font-bold text-foreground mb-4">Section B</h3>
                       <p className="text-sm text-muted-foreground mb-4">Choose TWO questions from this section</p>
                       {selectedPaper.questions.section_b.map((question: any, index: number) => 
                         renderQuestion(question, index)
@@ -195,7 +195,7 @@ const TestPapers = ({ countryId, subject, gradeLevel, onBack }: TestPapersProps)
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <FileText className="h-8 w-8 text-primary group-hover:text-primary/80" />
+                      <FileText className="h-8 w-8 text-foreground group-hover:text-foreground/80" />
                       <div className="text-right">
                         <Badge variant={paper.paper_type === 'paper_1' ? 'default' : 'secondary'}>
                           {paper.paper_type.replace('_', ' ').toUpperCase()}

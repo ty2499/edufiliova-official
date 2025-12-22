@@ -138,7 +138,7 @@ export default function AdminSubjectApproval({ onNavigate }: AdminSubjectApprova
         )}
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <GraduationCap className="h-6 w-6 text-primary" />
+            <GraduationCap className="h-6 w-6 text-foreground" />
             Subject Approvals
           </h1>
           <p className="text-muted-foreground text-sm">Review and approve teacher-created subjects</p>
@@ -184,7 +184,7 @@ export default function AdminSubjectApproval({ onNavigate }: AdminSubjectApprova
         <TabsContent value={statusFilter} className="space-y-4">
           {isLoading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <Loader2 className="h-8 w-8 animate-spin text-foreground" />
             </div>
           ) : subjects.length === 0 ? (
             <Card>
@@ -209,7 +209,7 @@ export default function AdminSubjectApproval({ onNavigate }: AdminSubjectApprova
                         <img src={subject.iconUrl} alt={subject.name} className="w-12 h-12 rounded-lg object-cover" />
                       ) : (
                         <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                          <BookOpen className="h-6 w-6 text-primary" />
+                          <BookOpen className="h-6 w-6 text-foreground" />
                         </div>
                       )}
                       <div className="flex-1">

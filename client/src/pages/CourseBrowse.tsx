@@ -744,7 +744,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                             </div>
                           </>
                         ) : (
-                          <div className="flex items-center gap-2 text-[#0C332C]">
+                          <div className="flex items-center gap-2 text-foreground">
                             <Trophy className="h-4 w-4" />
                             <span className="font-medium">Course Completed - 100%</span>
                           </div>

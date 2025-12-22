@@ -164,7 +164,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
               <Button 
                 size="lg"
                 onClick={() => onNavigate("auth")}
-                className="bg-slate-900 text-primary hover:bg-slate-800 text-lg px-10 py-4"
+                className="bg-slate-900 text-foreground hover:bg-slate-800 text-lg px-10 py-4"
                 data-testid="button-start-journey"
               >
                 Start Your Journey Today
@@ -188,7 +188,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((stat, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex items-center justify-center text-primary mb-2">
+                <div className="flex items-center justify-center text-foreground mb-2">
                   {stat.icon}
                 </div>
                 <div className="text-4xl font-bold text-slate-900">{stat.number}</div>
@@ -216,7 +216,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
               <Card key={index} className="text-center hover:scale-105 transition-transform duration-300">
                 <CardHeader>
                   <div className="flex justify-center mb-4">
-                    <div className="p-3 bg-primary/10 rounded-full text-primary">
+                    <div className="p-3 bg-primary/10 rounded-full text-foreground">
                       {feature.icon}
                     </div>
                   </div>
@@ -348,7 +348,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
                   <p className="text-muted-foreground italic leading-relaxed">
                     "{testimonial.text}"
                   </p>
-                  <Badge variant="secondary" className="bg-primary/10 text-primary">
+                  <Badge variant="secondary" className="bg-primary/10 text-foreground">
                     {testimonial.achievement}
                   </Badge>
                 </CardContent>
@@ -437,7 +437,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
               <Button 
                 size="lg"
                 onClick={() => onNavigate("auth")}
-                className="bg-slate-900 text-primary hover:bg-slate-800 text-lg px-12 py-4"
+                className="bg-slate-900 text-foreground hover:bg-slate-800 text-lg px-12 py-4"
                 data-testid="button-start-final-cta"
               >
                 Get Premium Access

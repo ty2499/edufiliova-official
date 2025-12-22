@@ -245,7 +245,7 @@ export default function SimpleOptimizedInterface({
     return (
       <div className={`flex mb-3 ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
         {!isOwnMessage && (
-          <div className="w-8 h-8 bg-gradient-to-br from-primary/20 to-primary/30 rounded-full flex items-center justify-center text-primary text-xs font-semibold mr-2 mt-1 flex-shrink-0">
+          <div className="w-8 h-8 bg-gradient-to-br from-primary/20 to-primary/30 rounded-full flex items-center justify-center text-foreground text-xs font-semibold mr-2 mt-1 flex-shrink-0">
             {otherUserName?.charAt(0)?.toUpperCase() || 'U'}
           </div>
         )}

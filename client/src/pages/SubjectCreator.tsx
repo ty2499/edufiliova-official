@@ -515,7 +515,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
           )}
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
-              <GraduationCap className="h-6 w-6 text-primary" />
+              <GraduationCap className="h-6 w-6 text-foreground" />
               {viewMode === 'list' ? 'Subject Creator' : viewMode === 'create' ? 'Create Subject' : 'Manage Subject'}
             </h1>
             <p className="text-muted-foreground text-sm">
@@ -558,7 +558,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
                       <img src={subject.iconUrl} alt={subject.name} className="w-12 h-12 rounded-lg object-cover" />
                     ) : (
                       <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <BookOpen className="h-6 w-6 text-primary" />
+                        <BookOpen className="h-6 w-6 text-foreground" />
                       </div>
                     )}
                     <div className="flex-1">
@@ -722,7 +722,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
                     <img src={subjectForm.iconUrl} alt={subjectForm.name} className="w-16 h-16 rounded-lg object-cover" />
                   ) : (
                     <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <BookOpen className="h-8 w-8 text-primary" />
+                      <BookOpen className="h-8 w-8 text-foreground" />
                     </div>
                   )}
                   <div>

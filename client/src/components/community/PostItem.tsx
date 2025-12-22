@@ -140,7 +140,7 @@ export function PostItem({ post, currentUserId, onLike, onEdit, onDelete }: Post
           <div className="flex gap-3">
             <Avatar className="h-10 w-10 flex-shrink-0">
               <AvatarImage src={post.author.profilePic} />
-              <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
+              <AvatarFallback className="text-sm font-medium bg-primary/10 text-foreground">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -210,7 +210,7 @@ export function PostItem({ post, currentUserId, onLike, onEdit, onDelete }: Post
                     setShowRepliesDialog(true);
                     setShowReplyInput(true);
                   }}
-                  className="h-8 px-2 text-muted-foreground hover:text-primary"
+                  className="h-8 px-2 text-muted-foreground hover:text-foreground"
                   data-testid={`reply-button-${post.id}`}
                 >
                   <Reply className="h-4 w-4 mr-1" />
@@ -221,7 +221,7 @@ export function PostItem({ post, currentUserId, onLike, onEdit, onDelete }: Post
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowRepliesDialog(true)}
-                  className="h-8 px-2 text-primary hover:text-primary/80 font-medium"
+                  className="h-8 px-2 text-foreground hover:text-foreground/80 font-medium"
                   data-testid={`replies-post-${post.id}`}
                 >
                   <MessageCircle className="h-4 w-4 mr-1" />

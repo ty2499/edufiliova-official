@@ -192,7 +192,7 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
                         freelancerApplicationStatus?.status === 'approved'
                           ? 'bg-green-500'
                           : freelancerApplicationStatus?.status === 'rejected'
-                          ? 'bg-red-500'
+                          ? 'bg-primary'
                           : 'bg-gray-300 dark:bg-gray-600'
                       }`}>
                         <CheckmarkIcon size="sm" variant="default" className="bg-transparent" />

@@ -75,7 +75,7 @@ export default function TeacherVerifyEmail() {
           <CardContent className="space-y-4">
             {verifying ? (
               <div className="flex flex-col items-center justify-center py-8">
-                <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
+                <Loader2 className="h-12 w-12 animate-spin text-foreground mb-4" />
                 <p className="text-muted-foreground">Verifying your email...</p>
               </div>
             ) : verificationResult ? (

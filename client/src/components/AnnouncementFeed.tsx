@@ -137,7 +137,7 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'urgent':
-        return 'bg-red-500 text-white';
+        return 'bg-primary text-white';
       case 'high':
         return 'bg-primary text-white';
       case 'normal':
@@ -201,7 +201,7 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
         <div className="flex items-center justify-end">
           <Badge 
             variant="default" 
-            className="bg-red-500 text-white"
+            className="bg-primary text-white"
             data-testid="unread-count-badge"
           >
             {unreadData?.unreadCount} new

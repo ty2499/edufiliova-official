@@ -192,7 +192,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                         teacherApplicationStatus?.status === 'approved'
                           ? 'bg-green-500'
                           : teacherApplicationStatus?.status === 'rejected'
-                          ? 'bg-red-500'
+                          ? 'bg-primary'
                           : 'bg-gray-300 dark:bg-gray-600'
                       }`}>
                         <CheckmarkIcon size="sm" variant="default" className="bg-transparent" />

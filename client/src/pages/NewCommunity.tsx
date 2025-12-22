@@ -414,7 +414,7 @@ export default function NewCommunity() {
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Globe className="h-8 w-8 text-primary" />
+              <Globe className="h-8 w-8 text-foreground" />
               <div>
                 <h1 className="text-3xl font-bold">Community Hub</h1>
                 <p className="text-muted-foreground">

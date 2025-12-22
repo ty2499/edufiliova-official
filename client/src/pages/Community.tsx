@@ -345,7 +345,7 @@ export default function Community() {
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Globe className="h-8 w-8 text-primary" />
+              <Globe className="h-8 w-8 text-foreground" />
               <div>
                 <h1 className="text-3xl font-bold">Community</h1>
                 <p className="text-muted-foreground">
@@ -633,7 +633,7 @@ export default function Community() {
                                   ({post.authorPronouns})
                                 </span>
                               )}
-                              {post.isPinned && <Pin className="h-3 w-3 text-primary" />}
+                              {post.isPinned && <Pin className="h-3 w-3 text-foreground" />}
                               {post.groupName && (
                                 <Badge variant="secondary" className="text-xs">
                                   {post.groupName}

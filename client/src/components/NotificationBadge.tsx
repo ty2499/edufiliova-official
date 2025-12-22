@@ -15,7 +15,7 @@ export const NotificationBadge = ({ count, className, max = 99 }: NotificationBa
   return (
     <Badge 
       className={cn(
-        "absolute -top-1 -right-1 min-w-[18px] h-[18px] p-0 text-[10px] font-bold flex items-center justify-center rounded-full bg-red-500 text-white border-2 border-background",
+        "absolute -top-1 -right-1 min-w-[18px] h-[18px] p-0 text-[10px] font-bold flex items-center justify-center rounded-full bg-primary text-white border-2 border-background",
         className
       )}
       data-testid="notification-badge"

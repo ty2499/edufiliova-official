@@ -25,7 +25,7 @@ const TeacherPricingPage = ({ onNavigate }: TeacherPricingPageProps) => {
             <Button 
               size="lg"
               onClick={() => onNavigate("teacher-application")}
-              className="bg-white text-[#0C332C] hover:bg-gray-100 font-semibold rounded-full px-8 py-6 text-lg"
+              className="bg-white text-foreground hover:bg-gray-100 font-semibold rounded-full px-8 py-6 text-lg"
             >
               Start Your Application →
             </Button>

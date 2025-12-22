@@ -180,7 +180,7 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <User className="h-5 w-5 text-primary" />
+                <User className="h-5 w-5 text-foreground" />
                 <CardTitle>Profile Information</CardTitle>
               </div>
               <CardDescription>
@@ -301,7 +301,7 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Target className="h-5 w-5 text-primary" />
+                <Target className="h-5 w-5 text-foreground" />
                 <CardTitle>Study Goals</CardTitle>
               </div>
               <CardDescription>
@@ -365,7 +365,7 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-accent" />
+                <Clock className="h-5 w-5 text-foreground" />
                 <CardTitle>Notifications & Reminders</CardTitle>
               </div>
               <CardDescription>
@@ -599,7 +599,7 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-accent" />
+                <Zap className="h-5 w-5 text-foreground" />
                 <CardTitle>Learning Preferences</CardTitle>
               </div>
               <CardDescription>
@@ -637,7 +637,7 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
 
           {/* Save Button */}
           <div className="flex gap-4">
-            <Button variant="secondary" onClick={onBack} className="flex-1 bg-background/90 border-border hover:bg-accent hover:text-accent-foreground">
+            <Button variant="secondary" onClick={onBack} className="flex-1 bg-background/90 border-border hover:bg-accent hover:text-foreground-foreground">
               Cancel
             </Button>
             <Button onClick={handleSave} className="flex-1 bg-white text-primary-foreground hover:shadow-sm" disabled={loading}>

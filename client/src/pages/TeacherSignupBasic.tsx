@@ -246,7 +246,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
       >
         <div className="text-center space-y-6">
           <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto bg-[#0C332C]/10">
-            <Mail className="h-10 w-10 text-[#0C332C]" />
+            <Mail className="h-10 w-10 text-foreground" />
           </div>
           
           <div className="space-y-2">
@@ -313,7 +313,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button
                 onClick={handleResendCode}
                 disabled={isResending}
-                className="font-medium text-[#0C332C] hover:underline disabled:opacity-50"
+                className="font-medium text-foreground hover:underline disabled:opacity-50"
                 data-testid="button-resend-code"
               >
                 {isResending ? "Sending..." : "Resend Code"}
@@ -376,7 +376,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button 
                 type="button"
                 onClick={() => setCurrentView('login')} 
-                className="font-semibold text-[#0C332C] hover:underline"
+                className="font-semibold text-foreground hover:underline"
                 data-testid="link-login"
               >
                 Log in
@@ -575,7 +575,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             <button 
               type="button"
               onClick={() => setCurrentView('login')} 
-              className="text-[#0C332C] font-semibold hover:underline"
+              className="text-foreground font-semibold hover:underline"
               data-testid="link-login-form"
             >
               Sign in here

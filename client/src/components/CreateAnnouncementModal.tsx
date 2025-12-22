@@ -130,7 +130,7 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'urgent':
-        return 'bg-red-500 text-white hover:bg-red-600';
+        return 'bg-primary text-white hover:bg-primary';
       case 'high':
         return 'bg-primary text-white hover:bg-primary';
       case 'normal':

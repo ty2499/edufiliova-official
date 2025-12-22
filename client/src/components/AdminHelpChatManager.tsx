@@ -908,7 +908,7 @@ export default function AdminHelpChatManager() {
             <div className="flex items-center gap-2">
               <div className={cn(
                 "w-2 h-2 rounded-full",
-                isConnected ? "bg-green-500 animate-pulse" : "bg-red-500"
+                isConnected ? "bg-green-500 animate-pulse" : "bg-primary"
               )} />
               <span className="text-xs text-muted-foreground">
                 {isConnected ? 'Connected' : 'Disconnected'}

@@ -257,7 +257,7 @@ export default function CoverImageUpload({
           <Button
             variant="destructive"
             size="sm"
-            className="absolute top-2 right-20 bg-red-500/90 backdrop-blur-sm hover:bg-red-600"
+            className="absolute top-2 right-20 bg-primary/90 backdrop-blur-sm hover:bg-primary"
             onClick={handleRemoveCover}
           >
             <X className="h-4 w-4 mr-1" />

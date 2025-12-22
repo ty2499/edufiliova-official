@@ -2231,7 +2231,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                                   </Button>
                                 )}
                                 {contact.unreadCount > 0 && selectedConversation !== contact.userId && (
-                                  <span className="bg-red-500 text-white text-xs rounded-full px-2 py-0.5 min-w-[1.25rem] text-center font-semibold">
+                                  <span className="bg-primary text-white text-xs rounded-full px-2 py-0.5 min-w-[1.25rem] text-center font-semibold">
                                     {contact.unreadCount}
                                   </span>
                                 )}
@@ -2301,7 +2301,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                               {group.actualLastMessage || group.description || `Group • ${group.memberCount} members`}
                             </p>
                             {group.unreadCount > 0 && selectedConversation !== `group_${group.originalId || group.id.replace('group_', '')}` && (
-                              <span className="bg-red-500 text-white text-xs rounded-full px-2 py-0.5 min-w-[1.25rem] text-center font-semibold">
+                              <span className="bg-primary text-white text-xs rounded-full px-2 py-0.5 min-w-[1.25rem] text-center font-semibold">
                                 {group.unreadCount}
                               </span>
                             )}
@@ -2398,7 +2398,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                                   {contact.lastMessage || "Start a conversation"}
                                 </p>
                                 {contact.unreadCount > 0 && selectedConversation !== contact.userId && (
-                                  <span className="bg-red-500 text-white text-xs rounded-full px-2 py-0.5 min-w-[1.25rem] text-center font-semibold">
+                                  <span className="bg-primary text-white text-xs rounded-full px-2 py-0.5 min-w-[1.25rem] text-center font-semibold">
                                     {contact.unreadCount}
                                   </span>
                                 )}
@@ -2469,7 +2469,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                               </p>
                               <div className="flex items-center gap-2">
                                 {contact.unreadCount > 0 && selectedConversation !== contact.userId && (
-                                  <span className="bg-red-500 text-white text-xs rounded-full px-2 py-0.5 min-w-[1.25rem] text-center font-semibold">
+                                  <span className="bg-primary text-white text-xs rounded-full px-2 py-0.5 min-w-[1.25rem] text-center font-semibold">
                                     {contact.unreadCount}
                                   </span>
                                 )}
@@ -2583,7 +2583,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                       {selectedGroup ? `Group • ${selectedGroup.memberCount} members` : (selectedUser?.role === 'admin' ? 'EduFiliova 24/7 Support' : selectedUser?.role === 'user' ? 'Student' : selectedUser?.role)}
                     </span>
                     {selectedConversation && isUserTyping(selectedConversation) && (
-                      <span className="text-sm text-primary font-medium">typing...</span>
+                      <span className="text-sm text-foreground font-medium">typing...</span>
                     )}
                   </div>
                 </div>
@@ -2929,11 +2929,11 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               {isRecording && (
                 <div className="mb-3 px-4 py-2 bg-red-50 border border-red-200 rounded-xl backdrop-blur-sm">
                   <div className="flex items-center justify-center gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                     <span className="font-medium text-red-600 text-sm" style={{ fontFamily: 'Satoshi, sans-serif' }}>
                       Recording {formatRecordingTime(recordingTime)}
                     </span>
-                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                   </div>
                 </div>
               )}
@@ -2951,7 +2951,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                       }}
                       data-testid="attach-document"
                     >
-                      <FileText className="h-8 w-8 text-primary" />
+                      <FileText className="h-8 w-8 text-foreground" />
                       <span className="text-sm font-medium" style={{ fontFamily: 'Satoshi, sans-serif' }}>Document</span>
                     </Button>
                     <Button
@@ -2963,7 +2963,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                       }}
                       data-testid="attach-image"
                     >
-                      <ImageIcon className="h-8 w-8 text-primary" />
+                      <ImageIcon className="h-8 w-8 text-foreground" />
                       <span className="text-sm font-medium" style={{ fontFamily: 'Satoshi, sans-serif' }}>Photo</span>
                     </Button>
                   </div>
@@ -3137,7 +3137,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                           variant="ghost"
                           size="sm"
                           onClick={() => setPreviewFiles(prev => prev.filter(p => p.id !== fileData.id))}
-                          className="h-6 w-6 p-0 bg-red-500 text-white hover:bg-red-600 rounded-full"
+                          className="h-6 w-6 p-0 bg-primary text-white hover:bg-primary rounded-full"
                           data-testid={`remove-preview-${fileData.id}`}
                         >
                           <X className="h-3 w-3" />
@@ -3372,7 +3372,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               {/* Decline Button */}
               <Button
                 onClick={rejectCall}
-                className="h-14 w-14 rounded-full bg-red-500 hover:bg-red-600 text-white p-0 shadow-lg border-2 border-red-400 transition-all duration-200 hover:scale-105"
+                className="h-14 w-14 rounded-full bg-primary hover:bg-primary text-white p-0 shadow-lg border-2 border-red-400 transition-all duration-200 hover:scale-105"
                 data-testid="reject-call-button"
               >
                 <X className="h-6 w-6" />
@@ -3451,7 +3451,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                     onClick={toggleMute}
                     className={cn(
                       "h-12 w-12 rounded-full p-0",
-                      isMuted ? "bg-red-500 hover:bg-red-600 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                      isMuted ? "bg-primary hover:bg-primary text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                     )}
                   >
                     {isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
@@ -3462,7 +3462,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                       onClick={toggleVideo}
                       className={cn(
                         "h-12 w-12 rounded-full p-0",
-                        !isVideoEnabled ? "bg-red-500 hover:bg-red-600 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                        !isVideoEnabled ? "bg-primary hover:bg-primary text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-700"
                       )}
                     >
                       <Video className="h-5 w-5" />
@@ -3471,7 +3471,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                   
                   <Button
                     onClick={endCall}
-                    className="h-12 w-12 rounded-full bg-red-500 hover:bg-red-600 text-white p-0"
+                    className="h-12 w-12 rounded-full bg-primary hover:bg-primary text-white p-0"
                     data-testid="end-call-button"
                   >
                     <X className="h-6 w-6" />
@@ -3480,7 +3480,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               ) : (
                 <Button
                   onClick={endCall}
-                  className="h-12 w-12 rounded-full bg-red-500 hover:bg-red-600 text-white p-0"
+                  className="h-12 w-12 rounded-full bg-primary hover:bg-primary text-white p-0"
                   data-testid="end-call-button"
                 >
                   <X className="h-6 w-6" />

@@ -1665,7 +1665,7 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-2">
                     <CardTitle 
-                      className="text-lg line-clamp-2 cursor-pointer hover:text-primary transition-colors"
+                      className="text-lg line-clamp-2 cursor-pointer hover:text-foreground transition-colors"
                       onClick={() => handleEditCourse(course)}
                       data-testid={`course-title-${course.id}`}
                     >

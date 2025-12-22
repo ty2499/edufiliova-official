@@ -1268,7 +1268,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                     <Button 
                       type="button" 
                       onClick={handleConfirmDelete}
-                      className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                      className="flex-1 bg-primary hover:bg-red-700 text-white"
                       disabled={submitting}
                     >
                       {submitting ? (

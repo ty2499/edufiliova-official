@@ -74,7 +74,7 @@ export default function FreelancerVerifyEmail() {
           <CardContent className="space-y-4">
             {verifying ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <Loader2 className="w-8 h-8 animate-spin text-foreground" />
               </div>
             ) : (
               <div className="space-y-4">

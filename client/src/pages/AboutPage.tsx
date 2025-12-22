@@ -61,19 +61,19 @@ const AboutPage = ({ onNavigate }: AboutPageProps) => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="bg-white p-8 rounded-lg border border-gray-200" data-testid="serve-learners">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-4">For Learners</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4">For Learners</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Access thousands of courses, track your progress, earn certificates, and learn from verified expert teachers across all subjects.
                   </p>
                 </div>
                 <div className="bg-white p-8 rounded-lg border border-gray-200" data-testid="serve-teachers">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-4">For Teachers</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4">For Teachers</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Create and sell courses, build your professional reputation, manage learners, and earn income through our platform.
                   </p>
                 </div>
                 <div className="bg-white p-8 rounded-lg border border-gray-200" data-testid="serve-freelancers">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-4">For Freelancers</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4">For Freelancers</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Offer specialized courses, set your own pricing, reach a global audience, and grow your educational business.
                   </p>
@@ -141,37 +141,37 @@ const AboutPage = ({ onNavigate }: AboutPageProps) => {
               </h2>
               <div className="space-y-6">
                 <div className="bg-white p-6 md:p-8 rounded-lg border border-gray-200" data-testid="feature-0">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-3">Verified Teacher Profiles</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-3">Verified Teacher Profiles</h3>
                   <p className="text-gray-700 leading-relaxed">
                     All educators undergo thorough verification to ensure they meet professional standards and have proven expertise in their subject areas.
                   </p>
                 </div>
                 <div className="bg-white p-6 md:p-8 rounded-lg border border-gray-200" data-testid="feature-1">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-3">Comprehensive Course Creation</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-3">Comprehensive Course Creation</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Our advanced course builder empowers educators to create engaging, multimedia-rich content with quizzes, assignments, video lessons, and interactive elements.
                   </p>
                 </div>
                 <div className="bg-white p-6 md:p-8 rounded-lg border border-gray-200" data-testid="feature-2">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-3">Secure Platform</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-3">Secure Platform</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Enterprise-grade security with dual verification authentication, secure payment processing, and complete data protection for all users.
                   </p>
                 </div>
                 <div className="bg-white p-6 md:p-8 rounded-lg border border-gray-200" data-testid="feature-3">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-3">Analytics & Reporting</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-3">Analytics & Reporting</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Both educators and learners access detailed analytics including performance metrics, completion rates, time tracking, and comprehensive progress reports.
                   </p>
                 </div>
                 <div className="bg-white p-6 md:p-8 rounded-lg border border-gray-200" data-testid="feature-4">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-3">Global Accessibility</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-3">Global Accessibility</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Built for international audiences with multi-currency support, localized content, and accessibility features ensuring education reaches learners regardless of location.
                   </p>
                 </div>
                 <div className="bg-white p-6 md:p-8 rounded-lg border border-gray-200" data-testid="feature-5">
-                  <h3 className="text-xl font-bold text-[#0C332C] mb-3">Quality Assurance</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-3">Quality Assurance</h3>
                   <p className="text-gray-700 leading-relaxed">
                     Every course undergoes rigorous review by our quality assurance team. We maintain educational standards through instructor verification, content reviews, and continuous improvement protocols.
                   </p>
@@ -194,7 +194,7 @@ const AboutPage = ({ onNavigate }: AboutPageProps) => {
               <div className="flex flex-wrap justify-center gap-4">
                 <Button 
                   onClick={() => onNavigate("course-browse")}
-                  className="bg-white text-[#0C332C] hover:bg-gray-100 font-semibold px-8 py-3 rounded-full"
+                  className="bg-white text-foreground hover:bg-gray-100 font-semibold px-8 py-3 rounded-full"
                   data-testid="button-browse-courses"
                 >
                   Browse Courses

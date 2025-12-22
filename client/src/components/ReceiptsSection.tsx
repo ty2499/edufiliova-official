@@ -113,7 +113,7 @@ function ReceiptDetailModal({
       <DialogContent className="max-w-lg" data-testid="dialog-receipt-detail">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <TypeIcon className="h-5 w-5 text-primary" />
+            <TypeIcon className="h-5 w-5 text-foreground" />
             {typeConfig.label} Receipt
           </DialogTitle>
           <DialogDescription>
@@ -158,7 +158,7 @@ function ReceiptDetailModal({
             ))}
             <div className="p-3 flex justify-between items-center bg-gray-50 dark:bg-gray-800">
               <span className="font-bold">Total</span>
-              <span className="font-bold text-lg text-primary">{formatCurrency(receipt.amount, receipt.currency)}</span>
+              <span className="font-bold text-lg text-foreground">{formatCurrency(receipt.amount, receipt.currency)}</span>
             </div>
           </div>
 
@@ -411,7 +411,7 @@ export default function ReceiptsSection({ showTitle = true, maxItems, compact = 
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="font-bold text-primary">{formatCurrency(receipt.amount, receipt.currency)}</p>
+                    <p className="font-bold text-foreground">{formatCurrency(receipt.amount, receipt.currency)}</p>
                     {!compact && (
                       <div className="flex gap-1 mt-2">
                         <Button 

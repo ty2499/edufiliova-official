@@ -191,7 +191,7 @@ export default function OTPSentAnimation({
                     ${showCheck ? 'scale-100 opacity-100 rotate-0' : 'scale-0 opacity-0 rotate-45'}
                   `}
                 >
-                  <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+                  <Sparkles className="h-4 w-4 text-foreground animate-pulse" />
                 </div>
                 <div 
                   className={`
@@ -199,7 +199,7 @@ export default function OTPSentAnimation({
                     ${showCheck ? 'scale-100 opacity-100 rotate-0' : 'scale-0 opacity-0 rotate-45'}
                   `}
                 >
-                  <Sparkles className="h-3 w-3 text-primary/70 animate-pulse" />
+                  <Sparkles className="h-3 w-3 text-foreground/70 animate-pulse" />
                 </div>
               </div>
             </div>
@@ -251,7 +251,7 @@ export default function OTPSentAnimation({
               Verification code sent to
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 dark:bg-primary/20 rounded-lg border border-primary/20">
-              <p className="text-primary font-semibold text-sm">
+              <p className="text-foreground font-semibold text-sm">
                 {getMaskedContact()}
               </p>
             </div>
@@ -265,7 +265,7 @@ export default function OTPSentAnimation({
               ${showAnimation ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}
             `}
           >
-            <Clock className="h-4 w-4 text-primary" />
+            <Clock className="h-4 w-4 text-foreground" />
             <span className="font-medium">Valid for 10 minutes</span>
           </div>
 

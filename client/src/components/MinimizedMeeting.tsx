@@ -91,7 +91,7 @@ export function MinimizedMeeting() {
         {/* Meeting Info Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-between p-1 sm:p-3">
           <div className="flex items-center justify-between">
-            <Badge className="bg-red-500 text-white text-[8px] sm:text-xs px-1 py-0 sm:px-2 sm:py-1 h-4 sm:h-auto">Live</Badge>
+            <Badge className="bg-primary text-white text-[8px] sm:text-xs px-1 py-0 sm:px-2 sm:py-1 h-4 sm:h-auto">Live</Badge>
             <div className="opacity-0 group-hover:opacity-100 transition-opacity hidden sm:block">
               <Button
                 size="icon"
@@ -114,10 +114,10 @@ export function MinimizedMeeting() {
             <div className="flex items-center gap-0.5 sm:gap-2">
               {!isViewOnly && (
                 <div className="flex items-center gap-0.5 sm:gap-1">
-                  <div className={`h-4 w-4 sm:h-6 sm:w-6 rounded-full flex items-center justify-center ${videoEnabled ? 'bg-gray-700/80' : 'bg-red-600'}`}>
+                  <div className={`h-4 w-4 sm:h-6 sm:w-6 rounded-full flex items-center justify-center ${videoEnabled ? 'bg-gray-700/80' : 'bg-primary'}`}>
                     {videoEnabled ? <Video className="h-2 w-2 sm:h-3 sm:w-3 text-white" /> : <VideoOff className="h-2 w-2 sm:h-3 sm:w-3 text-white" />}
                   </div>
-                  <div className={`h-4 w-4 sm:h-6 sm:w-6 rounded-full flex items-center justify-center ${audioEnabled ? 'bg-gray-700/80' : 'bg-red-600'}`}>
+                  <div className={`h-4 w-4 sm:h-6 sm:w-6 rounded-full flex items-center justify-center ${audioEnabled ? 'bg-gray-700/80' : 'bg-primary'}`}>
                     {audioEnabled ? <Mic className="h-2 w-2 sm:h-3 sm:w-3 text-white" /> : <MicOff className="h-2 w-2 sm:h-3 sm:w-3 text-white" />}
                   </div>
                 </div>

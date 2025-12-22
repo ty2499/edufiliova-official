@@ -116,7 +116,7 @@ export function MeetingDetailDialog({
       case 'completed':
         return 'bg-gray-500 text-white';
       case 'cancelled':
-        return 'bg-red-500 text-white';
+        return 'bg-primary text-white';
       default:
         return 'bg-gray-400 text-white';
     }

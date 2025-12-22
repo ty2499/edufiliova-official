@@ -420,7 +420,7 @@ export default function QuickResponsesManagement() {
                     data-testid="submit-create-button"
                     className={`transition-all duration-300 ${
                       actionStates.create === 'success' ? 'bg-green-600 hover:bg-green-600' : 
-                      actionStates.create === 'error' ? 'bg-red-600 hover:bg-red-600' : ''
+                      actionStates.create === 'error' ? 'bg-primary hover:bg-primary' : ''
                     }`}
                   >
                     {actionStates.create === 'loading' && (
@@ -658,7 +658,7 @@ export default function QuickResponsesManagement() {
                               disabled={actionStates[`delete-${response.id}`] === 'loading'}
                               className={`transition-all duration-300 ${
                                 actionStates[`delete-${response.id}`] === 'success' ? 'bg-green-600 hover:bg-green-600' :
-                                actionStates[`delete-${response.id}`] === 'error' ? 'bg-red-600 hover:bg-red-600' :
+                                actionStates[`delete-${response.id}`] === 'error' ? 'bg-primary hover:bg-primary' :
                                 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
                               }`}
                             >
@@ -788,7 +788,7 @@ export default function QuickResponsesManagement() {
                   data-testid="submit-edit-button"
                   className={`transition-all duration-300 ${
                     editingResponse && actionStates[`edit-${editingResponse.id}`] === 'success' ? 'bg-green-600 hover:bg-green-600' : 
-                    editingResponse && actionStates[`edit-${editingResponse.id}`] === 'error' ? 'bg-red-600 hover:bg-red-600' : ''
+                    editingResponse && actionStates[`edit-${editingResponse.id}`] === 'error' ? 'bg-primary hover:bg-primary' : ''
                   }`}
                 >
                   {editingResponse && actionStates[`edit-${editingResponse.id}`] === 'loading' && (

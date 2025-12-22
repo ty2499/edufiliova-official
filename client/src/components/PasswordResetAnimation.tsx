@@ -184,7 +184,7 @@ export default function PasswordResetAnimation({
           {/* Action hint */}
           <div 
             className={`
-              flex items-center justify-center gap-2 text-sm text-primary font-medium
+              flex items-center justify-center gap-2 text-sm text-foreground font-medium
               transform transition-all duration-500 delay-1100 ease-out
               ${showEmailSent ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}

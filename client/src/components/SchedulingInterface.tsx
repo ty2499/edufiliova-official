@@ -360,8 +360,8 @@ export const SchedulingInterface: React.FC = () => {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Calendar className="h-4 w-4 md:h-5 md:w-5 text-primary" />
-          <Clock className="h-4 w-4 md:h-5 md:w-5 text-primary" />
+          <Calendar className="h-4 w-4 md:h-5 md:w-5 text-foreground" />
+          <Clock className="h-4 w-4 md:h-5 md:w-5 text-foreground" />
         </div>
       </div>
 
@@ -499,7 +499,7 @@ export const SchedulingInterface: React.FC = () => {
                           {appointment.meetingLink && (
                             <div className="flex items-center gap-2">
                               <Video className="h-3 w-3" />
-                              <a href={appointment.meetingLink} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                              <a href={appointment.meetingLink} target="_blank" rel="noopener noreferrer" className="text-foreground hover:underline">
                                 Join Meeting
                               </a>
                             </div>

@@ -753,7 +753,7 @@ export default function MessageComposer({
               className={cn(
                 'p-2 rounded-full transition-all duration-200',
                 isRecording
-                  ? 'bg-red-500 text-white hover:bg-red-600'
+                  ? 'bg-primary text-white hover:bg-primary'
                   : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700',
                 disabled && 'opacity-50 cursor-not-allowed'
               )}

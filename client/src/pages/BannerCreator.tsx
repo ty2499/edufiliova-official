@@ -129,7 +129,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries, isAdmi
       {isAdmin && (
         <div className="bg-primary/5 border border-primary/20 rounded-xl p-4">
           <div className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-primary" />
+            <MapPin className="h-4 w-4 text-foreground" />
             Quick Region Selection
           </div>
           <div className="flex flex-wrap gap-2 mb-3">
@@ -157,7 +157,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries, isAdmi
               Clear All ({selectedCountries.length})
             </Button>
             {selectedCountries.length > 0 && (
-              <Badge className="bg-primary/10 text-primary border-primary/20">
+              <Badge className="bg-primary/10 text-foreground border-primary/20">
                 {selectedCountries.length} selected
               </Badge>
             )}
@@ -202,7 +202,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries, isAdmi
                     className="h-3 w-3 md:h-4 md:w-4"
                   />
                   <span className="text-sm flex-1">{country.name}</span>
-                  {isSelected && <Check className="h-4 w-4 text-primary" />}
+                  {isSelected && <Check className="h-4 w-4 text-foreground" />}
                 </div>
               );
             })}
@@ -558,7 +558,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                     <div className="space-y-6">
                       <div className="flex items-center gap-3 pb-4 border-b">
                         <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <ImageIcon className="h-5 w-5 text-primary" />
+                          <ImageIcon className="h-5 w-5 text-foreground" />
                         </div>
                         <div>
                           <h2 className="text-xl font-semibold text-foreground">Campaign Details</h2>
@@ -589,11 +589,11 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                         <div className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all ${
                           selectedFile ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-primary/50 hover:bg-gray-50'
                         }`}>
-                          <Upload className={`mx-auto h-12 w-12 mb-4 ${selectedFile ? 'text-primary' : 'text-gray-400'}`} />
+                          <Upload className={`mx-auto h-12 w-12 mb-4 ${selectedFile ? 'text-foreground' : 'text-gray-400'}`} />
                           <div className="space-y-2">
                             <div className="text-sm">
                               {selectedFile ? (
-                                <p className="font-semibold text-primary">{selectedFile.name}</p>
+                                <p className="font-semibold text-foreground">{selectedFile.name}</p>
                               ) : (
                                 <p className="text-muted-foreground">Upload your banner image</p>
                               )}
@@ -617,7 +617,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                             />
                             <label
                               htmlFor="banner-image-upload"
-                              className="cursor-pointer inline-flex items-center px-6 py-2.5 border border-primary/20 rounded-lg shadow-sm text-sm font-semibold text-primary bg-primary/5 hover:bg-primary hover:text-white transition-all"
+                              className="cursor-pointer inline-flex items-center px-6 py-2.5 border border-primary/20 rounded-lg shadow-sm text-sm font-semibold text-foreground bg-primary/5 hover:bg-primary hover:text-white transition-all"
                             >
                               {selectedFile ? 'Change File' : 'Choose File'}
                             </label>
@@ -625,8 +625,8 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                           {uploadProgress && (
                             <div className="absolute inset-0 bg-white/90 flex items-center justify-center rounded-xl">
                               <div className="text-center">
-                                <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-2" />
-                                <p className="text-sm font-medium text-primary">Uploading...</p>
+                                <Loader2 className="h-8 w-8 animate-spin text-foreground mx-auto mb-2" />
+                                <p className="text-sm font-medium text-foreground">Uploading...</p>
                               </div>
                             </div>
                           )}
@@ -753,10 +753,10 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                                       className="h-3 w-3 md:h-4 md:w-4"
                                     />
                                     <div className="flex items-center gap-2 flex-1">
-                                      <Icon className="h-4 w-4 text-primary" />
+                                      <Icon className="h-4 w-4 text-foreground" />
                                       <span className="text-sm font-medium">{dashboard.label}</span>
                                     </div>
-                                    {isSelected && <Check className="h-4 w-4 text-primary" />}
+                                    {isSelected && <Check className="h-4 w-4 text-foreground" />}
                                   </div>
                                 );
                               })}
@@ -767,7 +767,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
 
                       <div>
                         <FormLabel className="flex items-center gap-2 mb-3">
-                          <MapPin className="h-4 w-4 text-primary" />
+                          <MapPin className="h-4 w-4 text-foreground" />
                           <span className="text-sm font-semibold">Geographic Targeting {profile?.role === 'admin' ? '' : '(Optional)'}</span>
                         </FormLabel>
                         <FormDescription className="mb-4 text-sm">
@@ -791,7 +791,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
 
                       <div>
                         <FormLabel className="flex items-center gap-2 mb-3">
-                          <BookOpen className="h-4 w-4 text-primary" />
+                          <BookOpen className="h-4 w-4 text-foreground" />
                           <span className="text-sm font-semibold">Grade Level Targeting (Optional)</span>
                         </FormLabel>
                         <FormDescription className="mb-4 text-sm">
@@ -849,7 +849,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                                       <div className="text-sm font-medium">{grade.label}</div>
                                       <div className="text-xs text-muted-foreground">{grade.ageRange}</div>
                                     </div>
-                                    {isSelected && <Check className="h-4 w-4 text-primary" />}
+                                    {isSelected && <Check className="h-4 w-4 text-foreground" />}
                                   </div>
                                 );
                               })}
@@ -861,7 +861,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                       <div className="space-y-4">
                         <div>
                           <FormLabel className="flex items-center gap-2 mb-3">
-                            <Shield className="h-4 w-4 text-primary" />
+                            <Shield className="h-4 w-4 text-foreground" />
                             <span className="text-sm font-semibold">Age Restrictions (Optional)</span>
                           </FormLabel>
                           <FormDescription className="mb-4 text-sm">
@@ -930,7 +930,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                         <div className="space-y-6">
                           <div className="flex items-center gap-3 pb-4 border-b">
                             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                              <Users className="h-5 w-5 text-primary" />
+                              <Users className="h-5 w-5 text-foreground" />
                             </div>
                             <div>
                               <h2 className="text-xl font-semibold text-foreground">Contact Information</h2>
@@ -1042,13 +1042,13 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                 <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 border-b border-gray-200/50">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
-                      <DollarSign className="h-5 w-5 text-primary" />
+                      <DollarSign className="h-5 w-5 text-foreground" />
                     </div>
                     <h3 className="text-xl font-bold text-foreground">Investment Summary</h3>
                   </div>
                   
                   <div className="bg-white rounded-xl p-6 shadow-sm">
-                    <div className="text-4xl font-bold text-primary mb-2">
+                    <div className="text-4xl font-bold text-foreground mb-2">
                       {profile?.role === 'admin' ? 'FREE' : <CurrencyDisplay amount={estimatedCost} />}
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -1085,7 +1085,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                   </div>
 
                   <div className="bg-primary/5 border border-primary/20 rounded-xl p-4">
-                    <h4 className="text-base font-semibold text-primary mb-3">Pricing Structure</h4>
+                    <h4 className="text-base font-semibold text-foreground mb-3">Pricing Structure</h4>
                     <div className="space-y-3 text-base text-muted-foreground">
                       <div className="flex items-start gap-2.5">
                         <CheckmarkIcon size="sm" className="bg-primary/20 mt-0.5" />

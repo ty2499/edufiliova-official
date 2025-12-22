@@ -144,7 +144,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
               <Button
                 onClick={() => onNavigate("teacher-signup-basic")}
                 size="lg"
-                className="bg-white text-[#0C332C] hover:bg-gray-100 text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
+                className="bg-white text-foreground hover:bg-gray-100 text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
                 data-testid="button-start-application"
               >
                 Start Your Application
@@ -181,7 +181,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
       {/* Why Teach With Us Section */}
       <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 max-w-7xl mx-auto">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-[#0C332C] dark:bg-[#0C332C]/20 dark:text-[#0C332C] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
+          <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-foreground dark:bg-[#0C332C]/20 dark:text-foreground px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
             Benefits
           </Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 px-2">
@@ -219,7 +219,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
       <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-[#0C332C] dark:bg-[#0C332C]/20 dark:text-[#0C332C] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
+            <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-foreground dark:bg-[#0C332C]/20 dark:text-foreground px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
               Simple Process
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 px-2">
@@ -260,7 +260,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
       {/* Requirements Section */}
       <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 max-w-7xl mx-auto">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-[#0C332C] dark:bg-[#0C332C]/20 dark:text-[#0C332C] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
+          <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-foreground dark:bg-[#0C332C]/20 dark:text-foreground px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
             Requirements
           </Badge>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 px-2">
@@ -305,7 +305,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
             <Button
               onClick={() => onNavigate("teacher-signup-basic")}
               size="lg"
-              className="bg-white text-[#0C332C] hover:bg-gray-100 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
+              className="bg-white text-foreground hover:bg-gray-100 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
               data-testid="button-apply-now"
             >
               Apply Now

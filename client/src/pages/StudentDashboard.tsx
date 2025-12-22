@@ -334,7 +334,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
               </CardTitle>
             </CardHeader>
             <CardContent className="text-center space-y-4">
-              <div className="text-3xl font-bold text-primary">{quizScore}%</div>
+              <div className="text-3xl font-bold text-foreground">{quizScore}%</div>
               <p className="text-muted-foreground">
                 You scored {Object.values(selectedAnswers).filter((answer, index) => 
                   answer === exercises[index]?.correctAnswer
@@ -562,10 +562,10 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                   .replace(/\*([^*]+)\*/g, '<em>$1</em>')
                   // Format topic headers (ALL CAPS lines or lines with colons)
                   .replace(/^(TOPIC|UNIT|CHAPTER|TERM|MODULE|SECTION)\s*(\d+[\.\:]?\d*)?:?\s*(.+)$/gim, 
-                    '<h2 class="text-lg sm:text-xl lg:text-2xl font-bold text-primary mt-6 mb-3 pb-2 border-b border-primary/20">$1 $2: $3</h2>')
+                    '<h2 class="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mt-6 mb-3 pb-2 border-b border-primary/20">$1 $2: $3</h2>')
                   // Format main section headers (Title Case with colon)
                   .replace(/^([A-Z][a-zA-Z\s&,]+):\s*$/gm, 
-                    '<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-primary/90 mt-4 mb-2">$1</h3>')
+                    '<h3 class="text-base sm:text-lg lg:text-xl font-semibold text-foreground/90 mt-4 mb-2">$1</h3>')
                   // Format inline headers (words before colon in content)
                   .replace(/([A-Z][a-zA-Z\s&]+):\s+/g, 
                     '<span class="font-semibold">$1:</span> ')
@@ -577,12 +577,12 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                     '<div class="mb-2 pl-4"><span class="font-medium mr-2">$1)</span>$2</div>')
                   // Convert bullet points with simple styling
                   .replace(/^[\•\-\–]\s*(.+)$/gm, 
-                    '<div class="mb-2 pl-2 flex gap-2"><span class="text-primary">•</span><span>$1</span></div>')
+                    '<div class="mb-2 pl-2 flex gap-2"><span class="text-foreground">•</span><span>$1</span></div>')
                   .replace(/\s+[\•\-\–]\s+/g, 
-                    '</p><div class="mb-2 pl-2 flex gap-2"><span class="text-primary">•</span><span>')
+                    '</p><div class="mb-2 pl-2 flex gap-2"><span class="text-foreground">•</span><span>')
                   // Format key terms and definitions
                   .replace(/Definition:\s*([^\n]+)/gi, 
-                    '<div class="bg-primary/5 border-l-4 border-primary p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-primary">Definition:</span> $1</div>')
+                    '<div class="bg-primary/5 border-l-4 border-primary p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-foreground">Definition:</span> $1</div>')
                   .replace(/Example:\s*([^\n]+)/gi, 
                     '<div class="bg-blue-500/5 border-l-4 border-blue-500 p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-blue-600 dark:text-blue-400">Example:</span> $1</div>')
                   .replace(/Note:\s*([^\n]+)/gi, 
@@ -3226,7 +3226,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                           <div className="space-y-3">
                             <div className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
                               <div className="flex items-center gap-2">
-                                <BookOpen className="w-4 h-4 text-primary" />
+                                <BookOpen className="w-4 h-4 text-foreground" />
                                 <span className="text-sm text-muted-foreground">In Progress</span>
                               </div>
                               <span className="font-semibold text-foreground">{inProgressLessons.length}</span>
@@ -3234,7 +3234,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                             
                             <div className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
                               <div className="flex items-center gap-2">
-                                <Bookmark className="w-4 h-4 text-primary" />
+                                <Bookmark className="w-4 h-4 text-foreground" />
                                 <span className="text-sm text-muted-foreground">Notes</span>
                               </div>
                               <span className="font-semibold text-foreground">{userNotes.length}</span>
@@ -3242,7 +3242,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                             
                             <div className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
                               <div className="flex items-center gap-2">
-                                <Flame className="w-4 h-4 text-primary" />
+                                <Flame className="w-4 h-4 text-foreground" />
                                 <span className="text-sm text-muted-foreground">Streak</span>
                               </div>
                               <span className="font-semibold text-foreground">{dailyQuestions?.dayNumber || 0} days</span>
@@ -3651,7 +3651,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                               <div className="flex-1 p-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                                 <div className="flex-1 min-w-0">
                                   <h3 
-                                    className="font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors text-base sm:text-lg line-clamp-1"
+                                    className="font-bold text-gray-900 dark:text-white group-hover:text-foreground transition-colors text-base sm:text-lg line-clamp-1"
                                     style={{ fontFamily: "'StackSans Headline', sans-serif" }}
                                   >
                                     {lesson.title}
@@ -4875,11 +4875,11 @@ const AssignmentsView = () => {
 
   const getStatusIcon = (assignment: any) => {
     if (assignment.submissionStatus === 'graded') {
-      return <CheckCircle2 className="w-4 h-4 text-primary" />;
+      return <CheckCircle2 className="w-4 h-4 text-foreground" />;
     } else if (assignment.submissionStatus === 'submitted') {
-      return <Clock className="w-4 h-4 text-primary" />;
+      return <Clock className="w-4 h-4 text-foreground" />;
     } else {
-      return <AlertCircle className="w-4 h-4 text-primary" />;
+      return <AlertCircle className="w-4 h-4 text-foreground" />;
     }
   };
 

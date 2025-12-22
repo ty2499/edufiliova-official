@@ -157,7 +157,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
   if (courseLoading || certLoading || purchaseLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     );
   }
@@ -190,7 +190,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
             <div className="bg-gradient-to-r from-[#0C332C] to-[#ff7854] rounded-t-2xl p-4 sm:p-8 text-white shadow-xl">
               <div className="flex items-center gap-3 sm:gap-4">
                 <div className="bg-white rounded-full p-2 sm:p-4 flex-shrink-0">
-                  <CheckCircle2 className="h-10 w-10 sm:h-16 sm:w-16 text-[#0C332C]" />
+                  <CheckCircle2 className="h-10 w-10 sm:h-16 sm:w-16 text-foreground" />
                 </div>
                 <div>
                   <h2 className="text-xl sm:text-3xl md:text-4xl font-bold">Congratulations!</h2>

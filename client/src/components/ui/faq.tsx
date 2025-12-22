@@ -41,7 +41,7 @@ export default function FAQ() {
       <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-4xl">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-[40px] font-bold text-gray-900 dark:text-white mb-4">
-            Frequently Asked <span className="dark:text-blue-400 text-[#0C332C]">Questions</span>
+            Frequently Asked <span className="dark:text-blue-400 text-foreground">Questions</span>
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg">
             Find answers to common questions about EduFiliova

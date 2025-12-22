@@ -339,7 +339,7 @@ const StudyNotes = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <BookOpen className="w-6 h-6 text-primary" />
+          <BookOpen className="w-6 h-6 text-foreground" />
           <h2 className="text-2xl font-bold text-foreground">Study Notes</h2>
           <Badge variant="outline" className="ml-2">
             {notes.length} notes

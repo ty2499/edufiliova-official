@@ -129,7 +129,7 @@ export const InfiniteScrollLoader = ({
       ) : (
         <button 
           onClick={onLoadMore}
-          className="text-primary hover:text-primary/80 text-sm"
+          className="text-foreground hover:text-foreground/80 text-sm"
         >
           Load more
         </button>

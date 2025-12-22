@@ -155,7 +155,7 @@ function StripeCardSection({
         </>
       ) : (
         <div className="flex justify-center py-8">
-          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+          <Loader2 className="h-6 w-6 animate-spin text-foreground" />
         </div>
       )}
     </div>
@@ -392,7 +392,7 @@ function CertificateCheckoutForm({
   if (gatewaysLoading) {
     return (
       <div className="flex justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     );
   }
@@ -432,7 +432,7 @@ function CertificateCheckoutForm({
                   <p className="text-sm text-gray-600">
                     Receive your certificate via email as a PDF. Instant delivery.
                   </p>
-                  <p className="text-lg font-bold text-primary mt-2">{formatPrice(CERTIFICATE_PRICES.soft_copy)}</p>
+                  <p className="text-lg font-bold text-foreground mt-2">{formatPrice(CERTIFICATE_PRICES.soft_copy)}</p>
                 </Label>
               </div>
             </div>
@@ -448,7 +448,7 @@ function CertificateCheckoutForm({
                   <p className="text-sm text-gray-600">
                     Receive a professionally printed certificate delivered to your address.
                   </p>
-                  <p className="text-lg font-bold text-primary mt-2">{formatPrice(CERTIFICATE_PRICES.hard_copy)}</p>
+                  <p className="text-lg font-bold text-foreground mt-2">{formatPrice(CERTIFICATE_PRICES.hard_copy)}</p>
                 </Label>
               </div>
             </div>
@@ -637,7 +637,7 @@ function CertificateCheckoutForm({
             </div>
             <div className="flex justify-between text-lg font-bold">
               <span>Total:</span>
-              <span className="text-primary">{formatPrice(amount)}</span>
+              <span className="text-foreground">{formatPrice(amount)}</span>
             </div>
           </div>
 

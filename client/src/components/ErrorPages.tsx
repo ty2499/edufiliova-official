@@ -128,7 +128,7 @@ export function ErrorPage({
       <div className="p-4 border-b border-border">
         <button 
           onClick={handleGoBack}
-          className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
+          className="flex items-center gap-2 text-foreground hover:text-foreground transition-colors"
           data-testid="button-go-back"
         >
           <ArrowLeft className="w-5 h-5" />

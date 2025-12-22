@@ -243,7 +243,7 @@ export default function Survey({ onComplete, userId }: SurveyProps) {
       <Card className="w-full max-w-2xl border-2 border-primary/20">
         <CardHeader className="text-center pb-6">
           <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-            <GraduationCap className="w-8 h-8 text-primary" />
+            <GraduationCap className="w-8 h-8 text-foreground" />
           </div>
           <CardTitle className="text-3xl font-bold text-foreground">Complete Your Profile</CardTitle>
           <p className="text-muted-foreground">Help us personalize your learning experience</p>
@@ -344,7 +344,7 @@ export default function Survey({ onComplete, userId }: SurveyProps) {
 
               {(formData.gradeGroup === "college" || formData.gradeGroup === "university") && (
                 <div className="text-center py-8">
-                  <GraduationCap className="w-16 h-16 text-primary mx-auto mb-4" />
+                  <GraduationCap className="w-16 h-16 text-foreground mx-auto mb-4" />
                   <p className="text-lg font-medium">Perfect! You're all set for higher education content.</p>
                   <p className="text-muted-foreground">We'll show you courses designed for your level.</p>
                 </div>
@@ -422,7 +422,7 @@ export default function Survey({ onComplete, userId }: SurveyProps) {
                 <Avatar className="w-24 h-24">
                   <AvatarImage src={formData.profilePictureUrl} />
                   <AvatarFallback className="bg-primary/10">
-                    <User className="w-8 h-8 text-primary" />
+                    <User className="w-8 h-8 text-foreground" />
                   </AvatarFallback>
                 </Avatar>
                 
