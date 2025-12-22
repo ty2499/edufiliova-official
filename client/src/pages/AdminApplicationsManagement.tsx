@@ -557,14 +557,14 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                     </div>
                     <div>
                       <Label>Phone</Label>
-                      <p className="text-sm mt-1">{selectedTeacherApp.phoneNumber}</p>
+                      <p className="text-sm mt-1">{selectedTeacherApp.phoneNumber || <span className="text-gray-400 italic">Not provided</span>}</p>
                     </div>
                     <div>
                       <Label>Country</Label>
-                      <p className="text-sm mt-1">{selectedTeacherApp.country}</p>
+                      <p className="text-sm mt-1">{selectedTeacherApp.country || <span className="text-gray-400 italic">Not provided</span>}</p>
                     </div>
                     <div>
-                      <Label>Experience</Label>
+                      <Label>Years of Experience</Label>
                       <p className="text-sm mt-1">{selectedTeacherApp.yearsOfExperience || <span className="text-gray-400 italic">Not provided</span>}</p>
                     </div>
                     <div className="col-span-2">
