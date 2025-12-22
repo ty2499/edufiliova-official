@@ -443,16 +443,16 @@ export default function SubscriptionPaymentModal({
   const handleDodoPayment = async () => {
     setProcessing(true);
     try {
-      // Get the product ID for this plan/billing cycle
+      // Get the payment link ID for this plan/billing cycle
       const planData = GRADE_SUBSCRIPTION_PLANS[plan.tier];
-      const productId = planData.dodoPayProductIds[plan.interval];
+      const paymentLinkId = planData.dodoPayProductIds[plan.interval];
       
-      if (!productId) {
+      if (!paymentLinkId) {
         throw new Error(`No DodoPay product configured for ${plan.tier} - ${plan.interval}`);
       }
 
-      // Direct checkout link to pre-created product
-      const checkoutUrl = `https://checkout.dodopayments.com/buy/${productId}?quantity=1`;
+      // Direct checkout link to pre-created payment link
+      const checkoutUrl = `https://checkout.dodopayments.com/${paymentLinkId}`;
 
       // Use Dodo overlay if initialized, otherwise redirect
       if (dodoInitialized && DodoPayments.Checkout) {
