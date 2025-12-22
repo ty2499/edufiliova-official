@@ -175,17 +175,19 @@ export default function NewPaymentModal({
             console.log("Dodo checkout event:", event);
             
             if (event.event_type === "checkout.redirect") {
-              // Payment successful - close modal and refresh
+              // Payment successful - show success screen in modal
               setPaymentDetails({
                 transactionId: event.data?.payment_id || 'Completed',
                 date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-                paymentMethod: 'Card',
+                paymentMethod: 'Card (DodoPay)',
                 total: finalPriceUSD,
                 currency: '$',
                 courseId: courseId,
+                courseName: courseTitle,
               });
               setPaymentStatus('success');
               setShowSuccess(true);
+              setProcessing(false);
               queryClient.invalidateQueries({ queryKey: ['/api/courses', courseId, 'purchase-status'] });
             } else if (event.event_type === "checkout.closed") {
               setProcessing(false);

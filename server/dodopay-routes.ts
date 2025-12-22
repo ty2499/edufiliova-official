@@ -111,6 +111,7 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       productDescription,
       productType = 'course', // course, product, subscription, etc.
       billingInterval, // 'monthly' or 'yearly' for subscriptions
+      overlayMode = true, // When true, return URL goes back to app (overlay handles success)
     } = req.body;
 
     if (!amount) {
@@ -143,7 +144,12 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       const host = req.headers['x-forwarded-host'] || req.headers.host;
       baseUrl = `${protocol}://${host}`;
     }
-    const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay&itemId=${itemId}&productType=${productType}`;
+    
+    // For overlay mode: Return to app home (overlay callback handles success display)
+    // For redirect mode: Go to payment-success page
+    const successReturnUrl = overlayMode 
+      ? `${baseUrl}/?paymentComplete=dodopay&productType=${productType}&itemId=${itemId}`
+      : `${baseUrl}/payment-success?gateway=dodopay&itemId=${itemId}&productType=${productType}`;
 
     console.log(`🛒 Creating dynamic product in DodoPay for ${itemName}...`);
     

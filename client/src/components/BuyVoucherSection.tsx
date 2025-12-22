@@ -107,8 +107,15 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             console.log("Dodo checkout event (voucher):", event);
             
             if (event.event_type === "checkout.redirect") {
-              // Payment successful
-              setPurchaseResult({ success: true });
+              // Payment successful - show success screen
+              setPurchaseResult({ 
+                success: true,
+                amount: effectiveAmount,
+                voucherCode: 'Processing...',
+                recipientEmail: sendToSelf ? (buyerEmail || user?.email) : recipientEmail,
+                paymentMethod: 'Card (DodoPay)',
+              });
+              setProcessing(false);
               setStep('success');
               onSuccess?.();
             } else if (event.event_type === "checkout.closed") {

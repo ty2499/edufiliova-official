@@ -102,8 +102,21 @@ export default function SubscriptionPaymentModal({
             console.log("Dodo checkout event:", event);
             
             if (event.event_type === "checkout.redirect") {
-              // Payment successful
-              onSuccess();
+              // Payment successful - show success screen in modal
+              setPaymentDetails({
+                transactionId: event.data?.payment_id || 'Completed',
+                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                paymentMethod: 'Card (DodoPay)',
+                total: plan.price,
+                currency: '$',
+                planName: plan.name,
+              });
+              setPaymentStatus('success');
+              setShowSuccess(true);
+              setProcessing(false);
+              
+              // Call onSuccess after showing success screen
+              setTimeout(() => onSuccess(), 2000);
             } else if (event.event_type === "checkout.closed") {
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
