@@ -91,7 +91,9 @@ export default function NewPaymentModal({
   const isPayPalEnabled = enabledGateways.some(g => g.gatewayId === 'paypal');
   
   // Check if Dodo Payments is enabled (should always show if enabled)
-  const isDodoEnabled = enabledGateways.some(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
+  const dodoGateway = enabledGateways.find(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
+  const isDodoEnabled = !!dodoGateway;
+  const isDodoTestMode = dodoGateway?.testMode === true;
   
   // Check if EcoCash is enabled (for Zimbabwean users)
   const isEcocashEnabled = enabledGateways.some(g => g.gatewayId === 'ecocash');
@@ -166,8 +168,9 @@ export default function NewPaymentModal({
   useEffect(() => {
     if (isDodoEnabled && !dodoInitialized) {
       try {
+        const dodoMode = isDodoTestMode ? "test" : "live";
         DodoPayments.Initialize({
-          mode: "live", // Using live mode since keys are live
+          mode: dodoMode,
           onEvent: (event: any) => {
             console.log("Dodo checkout event:", event);
             
@@ -193,12 +196,12 @@ export default function NewPaymentModal({
           }
         });
         setDodoInitialized(true);
-        console.log("✅ Dodo Payments overlay SDK initialized");
+        console.log(`✅ Dodo Payments overlay SDK initialized - mode: ${dodoMode}`);
       } catch (error) {
         console.warn("Failed to initialize Dodo overlay SDK:", error);
       }
     }
-  }, [isDodoEnabled, dodoInitialized, finalPriceUSD, courseId]);
+  }, [isDodoEnabled, isDodoTestMode, dodoInitialized, finalPriceUSD, courseId]);
   
   // Handle Dodo Payment - Dynamic product creation for courses
   const handleDodoPayment = async () => {

@@ -85,7 +85,9 @@ export default function SubscriptionPaymentModal({
   const isPayPalEnabled = enabledGateways.some(g => g.gatewayId === 'paypal');
   
   // Check if Dodo Payments is enabled (should always show if enabled)
-  const isDodoEnabled = enabledGateways.some(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
+  const dodoGateway = enabledGateways.find(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
+  const isDodoEnabled = !!dodoGateway;
+  const isDodoTestMode = dodoGateway?.testMode === true;
   
   // Initialize Dodo Payments overlay checkout SDK
   const [dodoInitialized, setDodoInitialized] = useState(false);
@@ -93,8 +95,9 @@ export default function SubscriptionPaymentModal({
   useEffect(() => {
     if (isDodoEnabled && !dodoInitialized) {
       try {
+        const dodoMode = isDodoTestMode ? "test" : "live";
         DodoPayments.Initialize({
-          mode: "live",
+          mode: dodoMode,
           onEvent: (event: any) => {
             console.log("Dodo checkout event:", event);
             
@@ -111,12 +114,12 @@ export default function SubscriptionPaymentModal({
           }
         });
         setDodoInitialized(true);
-        console.log("✅ Dodo Payments overlay SDK initialized (subscription)");
+        console.log(`✅ Dodo Payments overlay SDK initialized (subscription) - mode: ${dodoMode}`);
       } catch (error) {
         console.warn("Failed to initialize Dodo overlay SDK:", error);
       }
     }
-  }, [isDodoEnabled, dodoInitialized, onSuccess]);
+  }, [isDodoEnabled, isDodoTestMode, dodoInitialized, onSuccess]);
 
   // Fetch user's wallet balance from shop wallet
   const { data: wallet } = useQuery({
