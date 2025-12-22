@@ -202,7 +202,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
           </div>
 
           {/* Title */}
-          <h1 className="md:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-[26px] font-['StackSans_Headline']">
+          <h1 className="md:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-[28px] font-['StackSans_Headline']">
             {post.title}
           </h1>
 
@@ -234,7 +234,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
 
           {/* Content */}
           <div className="prose prose-lg dark:prose-invert max-w-none">
-            <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+            <div className="text-[16px] text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
               {post.content}
             </div>
           </div>
