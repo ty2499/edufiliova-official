@@ -175,26 +175,28 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     }
     const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
 
-    // Use DodoPay's checkout API with inline product data
-    // This approach automatically handles product creation without pre-registration
-    console.log(`📦 Creating checkout session in DodoPay for ${itemName}...`);
+    // Create a simple payment using the Dodo Payments API
+    // This works without pre-existing products when payment_link is not used
+    console.log(`📦 Creating payment in DodoPay for ${itemName}...`);
     
-    const checkout = await dodo.checkouts.create({
-      line_items: [
-        {
-          price_data: {
-            currency: currency || 'USD',
-            product_data: {
-              name: itemName,
-              description: `${productType} - ${itemName}`,
-            },
-            unit_amount: Math.round(amount * 100), // Price in cents
-          },
-          quantity: 1,
-        }
-      ],
-      customer_email: userEmail || 'customer@example.com',
-      customer_name: userName || 'Customer',
+    const payment = await dodo.payments.create({
+      // Use invoice approach instead of product cart
+      billing: {
+        city: 'Unknown',
+        country: 'US',
+        state: 'Unknown',
+        street: 'Unknown',
+        zipcode: '00000',
+      },
+      customer: {
+        email: userEmail || 'customer@example.com',
+        name: userName || 'Customer',
+      },
+      // Create payment WITHOUT product_cart - just a simple charge
+      amount: Math.round(amount * 100), // Price in cents
+      currency: currency || 'USD',
+      description: itemName,
+      payment_link: false, // Don't use payment_link to avoid product requirement
       metadata: {
         itemId: itemId,
         itemName: itemName,
@@ -204,15 +206,14 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         currency: currency,
         source: 'edufiliova_checkout',
       },
-      success_url: successReturnUrl,
-      cancel_url: successReturnUrl,
+      return_url: successReturnUrl,
     } as any);
 
-    console.log('✅ DoDo Pay checkout session created:', checkout.id || checkout.checkout_id);
+    console.log('✅ DoDo Pay payment created:', payment.payment_id);
 
-    // Get the checkout URL from the response
-    const checkoutUrl = checkout.url || checkout.checkout_url || `https://checkout.dodopayments.com/${checkout.id || checkout.checkout_id}`;
-    const sessionId = checkout.id || checkout.checkout_id;
+    // Generate a payment link directly from the payment ID
+    const checkoutUrl = `https://checkout.dodopayments.com/pay/${payment.payment_id}` || payment.payment_link;
+    const sessionId = payment.payment_id;
 
     const result: PaymentResult = {
       success: true,
