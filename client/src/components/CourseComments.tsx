@@ -64,9 +64,7 @@ export function CourseComments({ courseId }: CourseCommentsProps) {
       params.set('page', page.toString());
       params.set('limit', showAll ? '20' : '5');
       if (showAll) params.set('showAll', 'true');
-      const response = await fetch(`/api/courses/${courseId}/comments?${params.toString()}`);
-      if (!response.ok) throw new Error('Failed to fetch comments');
-      return response.json();
+      return await apiRequest(`/api/courses/${courseId}/comments?${params.toString()}`);
     },
   });
   
