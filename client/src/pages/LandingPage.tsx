@@ -779,7 +779,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                 >
                   <div className="text-center">
                     <div className="relative inline-flex mb-6">
-                      <div className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg" style={{ backgroundColor: '#ff5834' }}>
+                      <div className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg bg-[#2F5A4E]" style={{ backgroundColor: '#ff5834' }}>
                         <item.icon className="h-10 w-10 text-white" />
                       </div>
                       <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#c5f13c', color: '#1a1a1a' }}>
