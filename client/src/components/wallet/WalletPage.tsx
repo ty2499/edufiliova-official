@@ -12,10 +12,11 @@ import { CardElement, useStripe, useElements, Elements } from "@stripe/react-str
 import { Stripe } from "@stripe/stripe-js";
 import { AjaxStatus, type AjaxOperation } from "@/components/ui/ajax-loader";
 import { useAjaxState } from "@/hooks/useAjaxState";
-import { X, CreditCard, Shield, DollarSign, Wallet, Smartphone } from "lucide-react";
+import { X, CreditCard, Shield, DollarSign, Wallet, Smartphone, Loader2, CheckCircle2 } from "lucide-react";
 import { SiPaypal } from "react-icons/si";
 import { getStripePromise } from "@/lib/stripe";
 import { usePaymentGateways, type PaymentGateway, getGatewayDisplayName, isCardGateway } from "@/hooks/usePaymentGateways";
+import { DodoPayments } from "dodopayments-checkout";
 
 interface WalletPageProps {
   userRole?: 'student' | 'teacher' | 'freelancer' | 'customer';
@@ -182,6 +183,99 @@ function WalletPaymentModal({
     }
   };
 
+  // Initialize DodoPay SDK
+  const [dodoInitialized, setDodoInitialized] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const dodoGateway = enabledGateways.find(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
+  const isDodoEnabled = !!dodoGateway;
+  const isDodoTestMode = dodoGateway?.testMode === true;
+
+  useEffect(() => {
+    if (isDodoEnabled && !dodoInitialized) {
+      try {
+        const dodoMode = isDodoTestMode ? "test" : "live";
+        DodoPayments.Initialize({
+          mode: dodoMode,
+          onEvent: (event: any) => {
+            console.log("Dodo checkout event (wallet):", event);
+            
+            if (event.event_type === "checkout.redirect") {
+              setShowSuccess(true);
+              setProcessing(false);
+              queryClient.invalidateQueries({ queryKey: ['/api/shop/wallet'] });
+              queryClient.invalidateQueries({ queryKey: ['/api/shop/wallet/transactions'] });
+              setTimeout(() => {
+                onSuccess();
+              }, 2000);
+            } else if (event.event_type === "checkout.closed") {
+              setProcessing(false);
+            } else if (event.event_type === "checkout.error") {
+              console.error("Dodo checkout error:", event.data);
+              setProcessing(false);
+            }
+          }
+        });
+        setDodoInitialized(true);
+        console.log(`✅ Dodo Payments overlay SDK initialized (wallet) - mode: ${dodoMode}`);
+      } catch (error) {
+        console.warn("Failed to initialize Dodo overlay SDK:", error);
+      }
+    }
+  }, [isDodoEnabled, isDodoTestMode, dodoInitialized, onSuccess]);
+
+  const handleDodoPayment = async () => {
+    setProcessing(true);
+    setError('');
+    
+    try {
+      const response = await fetch('/api/dodopay/checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: parseFloat(amount),
+          currency: 'USD',
+          productName: 'Wallet Top-Up',
+          productDescription: `Add $${amount} to your wallet`,
+          productType: 'wallet_topup',
+          overlayMode: true,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success && data.checkoutUrl) {
+        if (dodoInitialized && DodoPayments.Checkout) {
+          DodoPayments.Checkout.open({
+            checkoutUrl: data.checkoutUrl
+          });
+        } else {
+          window.location.href = data.checkoutUrl;
+        }
+      } else {
+        throw new Error(data.error || 'Failed to initialize payment');
+      }
+    } catch (err: any) {
+      console.error("DodoPay wallet payment error:", err);
+      setError(err.message || 'Failed to initialize payment');
+      setProcessing(false);
+    }
+  };
+
+  // Show success screen
+  if (showSuccess) {
+    return (
+      <div className="fixed inset-0 md:bg-black/60 md:backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <Card className="rounded-2xl text-center p-8 bg-white max-w-md">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle2 className="w-10 h-10 text-green-600" />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Payment Successful!</h2>
+          <p className="text-gray-600 mb-4">${parseFloat(amount).toFixed(2)} has been added to your wallet.</p>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 md:bg-black/60 md:backdrop-blur-sm flex items-start justify-center z-50 overflow-y-auto md:py-8 md:px-4">
       <Card className="rounded-2xl text-[#1F1E30] border-gray-100 w-full md:max-w-5xl bg-gradient-to-br from-white via-white to-blue-50/30 md:shadow-2xl shadow-none border-0 md:border min-h-screen md:min-h-0">
@@ -244,6 +338,7 @@ function WalletPaymentModal({
                       data-testid={`button-payment-${gateway.gatewayId}`}
                     >
                       {gateway.gatewayId === 'stripe' && <CreditCard className="w-5 h-5 mx-auto" />}
+                      {(gateway.gatewayId === 'dodopay' || gateway.gatewayId === 'dodo') && <CreditCard className="w-5 h-5 mx-auto" />}
                       {gateway.gatewayId === 'paypal' && (
                         <img 
                           src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" 
@@ -251,7 +346,7 @@ function WalletPaymentModal({
                           className="h-6 mx-auto"
                         />
                       )}
-                      {!['stripe', 'paypal'].includes(gateway.gatewayId) && (
+                      {!['stripe', 'paypal', 'dodopay', 'dodo'].includes(gateway.gatewayId) && (
                         <Smartphone className="w-5 h-5 mx-auto" />
                       )}
                       <span className="text-xs mt-1 block">{getGatewayDisplayName(gateway)}</span>
@@ -340,7 +435,46 @@ function WalletPaymentModal({
                 </div>
               )}
 
-              {selectedGateway && !['stripe', 'paypal'].includes(selectedGateway) && (
+              {(selectedGateway === 'dodopay' || selectedGateway === 'dodo') && (
+                <div className="space-y-4">
+                  <div className="flex gap-2 mb-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" className="h-6" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
+                    Secure checkout will open to complete your payment.
+                  </div>
+
+                  {error && (
+                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                      {error}
+                    </div>
+                  )}
+
+                  <Button
+                    onClick={handleDodoPayment}
+                    disabled={processing}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    data-testid="button-dodopay-checkout"
+                  >
+                    {processing ? (
+                      <span className="flex items-center gap-2 justify-center">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Processing...
+                      </span>
+                    ) : (
+                      'Pay with Card'
+                    )}
+                  </Button>
+
+                  <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                    <Shield className="w-4 h-4 text-green-600" />
+                    <span>Secure payment processing</span>
+                  </div>
+                </div>
+              )}
+
+              {selectedGateway && !['stripe', 'paypal', 'dodopay', 'dodo'].includes(selectedGateway) && (
                 <div className="space-y-4">
                   <div className="bg-green-50 p-4 rounded-lg text-sm text-green-800">
                     You will be redirected to {getGatewayDisplayName(enabledGateways.find(g => g.gatewayId === selectedGateway) || { gatewayId: selectedGateway, gatewayName: selectedGateway } as PaymentGateway)} to complete your payment.

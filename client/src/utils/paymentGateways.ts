@@ -16,8 +16,8 @@ export function getGatewayDisplayName(gatewayId: string): string {
   const displayNames: Record<string, string> = {
     stripe: 'Card',
     vodapay: 'VodaPay',
-    dodopay: 'DodoPay',
-    dodo: 'DodoPay',
+    dodopay: 'Card',
+    dodo: 'Card',
     paypal: 'PayPal',
     'google-pay': 'Google Pay',
     'apple-pay': 'Apple Pay',

@@ -1071,7 +1071,7 @@ export default function NewPaymentModal({
                       </button>
                     )}
 
-                    {/* Dodo Payments - Always show when enabled (supports Google Pay, Apple Pay) */}
+                    {/* Card Payment - Always show when enabled (supports Google Pay, Apple Pay) */}
                     {isDodoEnabled && (
                       <button
                         onClick={() => setSelectedMethod('dodopay')}
@@ -1205,18 +1205,29 @@ export default function NewPaymentModal({
 
                 {selectedMethod === 'dodopay' && (
                   <div className="space-y-4">
-                    <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-4">
-                      <p className="text-sm text-yellow-800 dark:text-yellow-100">
-                        DodoPay for course purchases coming soon. Please use another payment method.
+                    <div className="flex gap-2 mb-4">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-6" />
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
+                    </div>
+                    <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+                      <p className="text-sm text-blue-800 dark:text-blue-100">
+                        Secure checkout will open to complete your purchase.
                       </p>
                     </div>
                     <Button
                       onClick={handleDodoPayment}
-                      disabled={true}
-                      className="w-full bg-gray-400 text-white h-12 text-base font-semibold rounded-xl opacity-50 cursor-not-allowed"
+                      disabled={processing}
+                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-12 text-base font-semibold rounded-xl"
                       data-testid="button-dodopay-checkout"
                     >
-                      Not Available for Courses
+                      {processing ? (
+                        <span className="flex items-center gap-2">
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Processing...
+                        </span>
+                      ) : (
+                        <>Pay ${finalPriceUSD.toFixed(2)} with Card</>
+                      )}
                     </Button>
                   </div>
                 )}

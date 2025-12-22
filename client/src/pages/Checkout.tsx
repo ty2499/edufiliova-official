@@ -628,7 +628,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                       ) : (gateway.gatewayId === 'dodo' || gateway.gatewayId === 'dodopay') ? (
                         <>
                           <CreditCard className="w-5 h-5 mx-auto" />
-                          <span className="text-xs mt-1 block">DodoPay</span>
+                          <span className="text-xs mt-1 block">Card</span>
                         </>
                       ) : gateway.gatewayId === 'paypal' ? (
                         <>
@@ -744,17 +744,17 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                 </div>
               )}
 
-              {/* DodoPay Payments Form */}
+              {/* Card Payment Form (DodoPay) */}
               {(paymentMethod === 'dodo' || paymentMethod === 'dodopay') && (
                 <div className="space-y-4">
                   <div>
-                    <h3 className="font-semibold text-base mb-3">DodoPay Payments</h3>
+                    <h3 className="font-semibold text-base mb-3">Card Payment</h3>
                     <div className="flex gap-2 mb-3">
                       <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" className="h-6" />
                       <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
                     </div>
                     <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800 mb-3">
-                      You will be redirected to DodoPay's secure checkout to complete your payment.
+                      Secure checkout will open to complete your payment.
                     </div>
                   </div>
 
@@ -764,12 +764,12 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
                     data-testid="button-complete-dodo-purchase"
                   >
-                    {isLoading ? 'Redirecting to DodoPay...' : `Continue with DodoPay`}
+                    {isLoading ? 'Processing...' : `Pay with Card`}
                   </Button>
 
                   <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                     <Shield className="w-4 h-4 text-green-600" />
-                    <span>Secure DodoPay payment processing</span>
+                    <span>Secure payment processing</span>
                   </div>
                 </div>
               )}

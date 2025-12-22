@@ -876,7 +876,7 @@ export default function SubscriptionPaymentModal({
                     </button>
                   )}
 
-                  {/* Dodo Payments - Always show when enabled (supports Google Pay, Apple Pay) */}
+                  {/* Card Payment - Always show when enabled (supports Google Pay, Apple Pay) */}
                   {isDodoEnabled && (
                     <button
                       onClick={() => setSelectedMethod('dodopay')}
@@ -1222,7 +1222,7 @@ export default function SubscriptionPaymentModal({
                 </div>
               )}
 
-              {/* DodoPay Payment - Embedded Overlay */}
+              {/* Card Payment - Embedded Overlay */}
               {selectedMethod === 'dodopay' && (
                 <div className="space-y-4">
                   <div className="flex gap-2 mb-2 items-center">
@@ -1231,7 +1231,7 @@ export default function SubscriptionPaymentModal({
                     <span className="text-xs text-muted-foreground ml-1">+ Google Pay, Apple Pay</span>
                   </div>
                   <div className="bg-blue-50 p-3 rounded-lg text-sm text-blue-800">
-                    Secure checkout powered by Dodo Payments. Payment form will appear in a popup.
+                    Secure checkout will open to complete your payment.
                   </div>
                   
                   {error && (
@@ -1258,7 +1258,7 @@ export default function SubscriptionPaymentModal({
 
                   <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                     <Shield className="w-4 h-4 text-green-600" />
-                    <span>Secure payment via Dodo Payments</span>
+                    <span>Secure payment processing</span>
                   </div>
                 </div>
               )}
