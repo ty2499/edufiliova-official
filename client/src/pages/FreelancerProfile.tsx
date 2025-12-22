@@ -486,8 +486,27 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
   // Close handler - different behavior for logged-in users vs guests
   const handleClose = () => {
     if (user && onClose) {
-      // Logged-in users: close the profile panel
+      // Logged-in users with explicit onClose: close the profile panel
       onClose();
+    } else if (user && profile && onNavigate) {
+      // Logged-in users: navigate back to their appropriate dashboard
+      const url = new URL(window.location.href);
+      url.searchParams.delete('freelancerId');
+      url.searchParams.delete('page');
+      window.history.pushState({}, '', url.pathname);
+      
+      // Route to appropriate dashboard based on role
+      if (profile.role === 'admin' || profile.role === 'accountant' || profile.role === 'customer_service') {
+        onNavigate('admin-dashboard', 'slide-right');
+      } else if (profile.role === 'teacher') {
+        onNavigate('teacher-dashboard', 'slide-right');
+      } else if (profile.role === 'freelancer') {
+        onNavigate('freelancer-dashboard', 'slide-right');
+      } else if (profile.role === 'general') {
+        onNavigate('customer-dashboard', 'slide-right');
+      } else {
+        onNavigate('student-dashboard', 'slide-right');
+      }
     } else if (onNavigate) {
       // Guests: navigate back to Find Talent page
       const url = new URL(window.location.href);
