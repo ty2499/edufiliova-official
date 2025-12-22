@@ -375,7 +375,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
     
     return (
       <Card 
-        className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 bg-white w-full"
+        className="group cursor-pointer transition-all duration-300 overflow-hidden border border-gray-100 bg-white w-full"
         data-testid={`product-card-${product.id}`}
       >
         {/* Product Image - Click to navigate to detail page */}
@@ -1532,7 +1532,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
 
               {/* Products Grid/List - Separated by Free and Paid */}
           {isLoading ? (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
               {[...Array(12)].map((_, i) => (
                 <Card key={i} className="animate-pulse">
                   <div className="aspect-[4/3] bg-gray-200" />
@@ -1560,7 +1560,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 font-['StackSans_Headline']">Free Products</h2>
                   <div className={
                     viewMode === 'grid'
-                      ? 'grid grid-cols-2 lg:grid-cols-4 gap-3'
+                      ? 'grid grid-cols-1 lg:grid-cols-4 gap-3'
                       : 'space-y-3 sm:space-y-4'
                   }>
                     {products.filter(p => parseFloat(p.price) === 0).map((product) => 
@@ -1578,7 +1578,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 font-['StackSans_Headline']">Premium Products</h2>
                   <div className={
                     viewMode === 'grid'
-                      ? 'grid grid-cols-2 lg:grid-cols-4 gap-3'
+                      ? 'grid grid-cols-1 lg:grid-cols-4 gap-3'
                       : 'space-y-3 sm:space-y-4'
                   }>
                     {products.filter(p => parseFloat(p.price) > 0).map((product) => 
