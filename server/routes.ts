@@ -6451,6 +6451,123 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Confirm gift voucher purchase via DodoPay
+  app.post("/api/gift-vouchers/confirm-dodopay", async (req, res) => {
+    try {
+      const { purchaseId, paymentId, paymentMethod } = req.body;
+
+      if (!purchaseId) {
+        return res.status(400).json({ error: "Purchase ID required" });
+      }
+
+      // Get the purchase record
+      const [purchase] = await db.select().from(giftVoucherPurchases).where(eq(giftVoucherPurchases.id, purchaseId));
+      if (!purchase) {
+        return res.status(404).json({ error: "Purchase not found" });
+      }
+
+      if (purchase.paymentStatus === 'completed') {
+        // Already completed - return existing data
+        const [existingVoucher] = await db.select().from(shopVouchers).where(eq(shopVouchers.id, purchase.voucherId!));
+        return res.json({
+          success: true,
+          voucherCode: existingVoucher?.code || 'UNKNOWN',
+          amount: purchase.amount,
+          recipientEmail: purchase.recipientEmail,
+          expiresAt: existingVoucher?.expiresAt?.toISOString()
+        });
+      }
+
+      // Generate voucher code (14 characters)
+      const generateCode = () => {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let code = 'GIFT-';
+        for (let i = 0; i < 10; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return code;
+      };
+
+      let voucherCode = generateCode();
+      
+      // Make sure code is unique
+      let attempts = 0;
+      while (attempts < 10) {
+        const existing = await db.select().from(shopVouchers).where(eq(shopVouchers.code, voucherCode));
+        if (existing.length === 0) break;
+        voucherCode = generateCode();
+        attempts++;
+      }
+
+      // Calculate expiry (1 year from now)
+      const expiresAt = new Date();
+      expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+
+      // Create the voucher
+      const [voucher] = await db.insert(shopVouchers).values({
+        code: voucherCode,
+        amount: purchase.amount,
+        description: purchase.personalMessage ? `Gift Voucher: ${purchase.personalMessage}` : 'Gift Voucher',
+        maxRedemptions: 1,
+        currentRedemptions: 0,
+        expiresAt,
+        isActive: true,
+        recipientName: purchase.recipientName,
+        recipientEmail: purchase.recipientEmail,
+        createdBy: purchase.buyerId || await ensureAdminUser()
+      }).returning();
+
+      // Update purchase record
+      await db.update(giftVoucherPurchases)
+        .set({
+          voucherId: voucher.id,
+          paymentStatus: 'completed',
+          paymentMethod: paymentMethod || 'dodopay',
+          paymentReference: paymentId || null
+        })
+        .where(eq(giftVoucherPurchases.id, purchaseId));
+
+      // Send email to recipient
+      try {
+        const { sendVoucherEmail } = await import('./utils/email.js');
+        await sendVoucherEmail({
+          recipientEmail: purchase.recipientEmail,
+          recipientName: purchase.recipientName || undefined,
+          voucherCode,
+          amount: parseFloat(purchase.amount),
+          personalMessage: purchase.personalMessage || undefined,
+          senderName: purchase.buyerName || 'Someone special',
+          expiresAt: expiresAt.toISOString()
+        });
+
+        // Mark email as sent
+        await db.update(giftVoucherPurchases)
+          .set({
+            emailSent: true,
+            emailSentAt: new Date()
+          })
+          .where(eq(giftVoucherPurchases.id, purchaseId));
+          
+        console.log(`✅ Voucher ${voucherCode} created and email sent to ${purchase.recipientEmail}`);
+      } catch (emailError) {
+        console.error('Failed to send voucher email:', emailError);
+        // Don't fail the request if email fails
+      }
+
+      res.json({
+        success: true,
+        voucherCode,
+        amount: purchase.amount,
+        recipientEmail: purchase.recipientEmail,
+        expiresAt: expiresAt.toISOString()
+      });
+    } catch (error: any) {
+      console.error('DodoPay gift voucher confirmation error:', error);
+      res.status(500).json({ error: error.message || "Failed to confirm purchase" });
+    }
+  });
+
+
 
   // Create gift voucher purchase record (for PayPal/Paystack - no Stripe intent)
   app.post("/api/gift-vouchers/create-purchase", optionalAuth, async (req, res) => {

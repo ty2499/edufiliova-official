@@ -94,11 +94,49 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
   const isDodoEnabled = !!dodoGateway;
   const isDodoTestMode = dodoGateway?.testMode === true;
   
-  console.log('🎫 BuyVoucherSection - enabledGateways:', enabledGateways.map(g => g.gatewayId));
-  console.log('🎫 BuyVoucherSection - isDodoEnabled:', isDodoEnabled);
-
   // Initialize DodoPayments overlay checkout SDK
   const [dodoInitialized, setDodoInitialized] = useState(false);
+  const [pendingDodoPurchaseId, setPendingDodoPurchaseId] = useState<number | null>(null);
+  
+  // Confirm DodoPay voucher purchase on backend
+  const confirmDodoVoucherPurchase = async (purchaseIdVal: number, paymentId: string) => {
+    try {
+      const response = await fetch('/api/gift-vouchers/confirm-dodopay', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          purchaseId: purchaseIdVal,
+          paymentId,
+          paymentMethod: 'dodopay'
+        })
+      });
+      
+      const data = await response.json();
+      console.log("DodoPay voucher confirmation:", data);
+      
+      if (data.success) {
+        setPurchaseResult({
+          success: true,
+          amount: data.amount,
+          voucherCode: data.voucherCode,
+          recipientEmail: data.recipientEmail,
+          expiresAt: data.expiresAt,
+          paymentMethod: 'Card',
+        });
+        setStep('success');
+        onSuccess?.();
+      } else {
+        setError(data.error || 'Failed to confirm voucher purchase');
+      }
+    } catch (err: any) {
+      console.error("DodoPay voucher confirmation error:", err);
+      setError('Failed to confirm voucher purchase. Please contact support.');
+    } finally {
+      setProcessing(false);
+      setPendingDodoPurchaseId(null);
+    }
+  };
   
   useEffect(() => {
     if (isDodoEnabled && !dodoInitialized) {
@@ -106,27 +144,44 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         const dodoMode = isDodoTestMode ? "test" : "live";
         DodoPayments.Initialize({
           mode: dodoMode,
-          onEvent: (event: any) => {
+          onEvent: async (event: any) => {
             console.log("Card checkout event (voucher):", event);
             
             if (event.event_type === "checkout.redirect") {
-              // Payment successful - show success screen
-              setPurchaseResult({ 
-                success: true,
-                amount: effectiveAmount,
-                voucherCode: 'Processing...',
-                recipientEmail: sendToSelf ? (buyerEmail || user?.email) : recipientEmail,
-                paymentMethod: 'Card',
-              });
-              setProcessing(false);
-              setStep('success');
-              onSuccess?.();
+              // Close the overlay to prevent page redirect
+              if (DodoPayments.Checkout?.close) {
+                DodoPayments.Checkout.close();
+              }
+              
+              // Payment successful - confirm on backend to create and send voucher
+              const paymentId = event.data?.payment_id;
+              const storedPurchaseId = sessionStorage.getItem('pendingVoucherPurchaseId');
+              
+              console.log("🎟️ Voucher payment success - confirming...", { paymentId, storedPurchaseId });
+              
+              if (storedPurchaseId && paymentId) {
+                await confirmDodoVoucherPurchase(parseInt(storedPurchaseId), paymentId);
+                sessionStorage.removeItem('pendingVoucherPurchaseId');
+              } else if (storedPurchaseId) {
+                // Payment ID might not be in the event data, try to confirm anyway
+                await confirmDodoVoucherPurchase(parseInt(storedPurchaseId), 'dodopay_checkout');
+                sessionStorage.removeItem('pendingVoucherPurchaseId');
+              } else {
+                console.error("Missing purchaseId for voucher confirmation");
+                setError('Payment succeeded but voucher confirmation failed. Please contact support.');
+                setProcessing(false);
+              }
             } else if (event.event_type === "checkout.closed") {
-              setProcessing(false);
+              // Only stop processing if we're not in the middle of confirming
+              const storedPurchaseId = sessionStorage.getItem('pendingVoucherPurchaseId');
+              if (!storedPurchaseId) {
+                setProcessing(false);
+              }
             } else if (event.event_type === "checkout.error") {
               console.error("Card checkout error:", event.data);
               setError(event.data?.message || "Payment failed");
               setProcessing(false);
+              sessionStorage.removeItem('pendingVoucherPurchaseId');
             }
           }
         });
@@ -136,7 +191,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         console.warn("Failed to initialize Dodo overlay SDK:", error);
       }
     }
-  }, [isDodoEnabled, isDodoTestMode, dodoInitialized, onSuccess]);
+  }, [isDodoEnabled, isDodoTestMode, dodoInitialized]);
 
   const { data: wallet } = useQuery({
     queryKey: ['/api/shop/wallet'],
@@ -528,9 +583,36 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
     setProcessing(true);
     setError(null);
     try {
+      // Step 1: Create purchase record first
+      const purchaseResponse = await fetch('/api/gift-vouchers/create-purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          amount: effectiveAmount,
+          recipientEmail: sendToSelf ? (buyerEmail || user?.email) : recipientEmail,
+          recipientName: sendToSelf ? buyerName : recipientName,
+          personalMessage: personalMessage || null,
+          sendToSelf,
+          buyerEmail: buyerEmail || user?.email || "",
+          buyerName
+        })
+      });
+      
+      const purchaseData = await purchaseResponse.json();
+      if (!purchaseData.success || !purchaseData.purchaseId) {
+        throw new Error(purchaseData.error || 'Failed to create purchase record');
+      }
+      
+      // Store purchaseId in sessionStorage for the callback to use
+      sessionStorage.setItem('pendingVoucherPurchaseId', purchaseData.purchaseId.toString());
+      setPendingDodoPurchaseId(purchaseData.purchaseId);
+      
+      // Step 2: Create DodoPay checkout session
       const response = await fetch('/api/dodopay/checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           amount: effectiveAmount,
           currency: 'USD',
@@ -539,8 +621,9 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
           productType: 'voucher',
           userEmail: buyerEmail || user?.email || '',
           userName: buyerName || profile?.name || '',
-          overlayMode: true, // Prevents redirect to success page - overlay handles success
+          overlayMode: true,
           metadata: {
+            purchaseId: purchaseData.purchaseId,
             recipientEmail: sendToSelf ? (buyerEmail || user?.email) : recipientEmail,
             recipientName: sendToSelf ? buyerName : recipientName,
             personalMessage: personalMessage || null,
@@ -568,6 +651,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
       console.error("Card voucher payment error:", err);
       setError(err.message || 'Failed to initialize Card payment');
       setProcessing(false);
+      sessionStorage.removeItem('pendingVoucherPurchaseId');
     }
   };
 
