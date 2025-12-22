@@ -347,13 +347,13 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
             </div>
 
             {errors.verification && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+              <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
                 {errors.verification}
               </div>
             )}
             
             {errors.general && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+              <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
                 {errors.general}
               </div>
             )}
@@ -445,7 +445,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
 
         <form onSubmit={handleSubmit} className="space-y-5" data-testid="form-shop-auth">
           {errors.general && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3 text-red-700 text-sm">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3 text-primary-700 text-sm">
               <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
               <span>{errors.general}</span>
             </div>
@@ -464,7 +464,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 disabled={isProcessing}
                 data-testid="input-name"
               />
-              {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
+              {errors.name && <p className="text-sm text-primary-600">{errors.name}</p>}
             </div>
           )}
 
@@ -480,7 +480,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
               disabled={isProcessing}
               data-testid="input-email"
             />
-            {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+            {errors.email && <p className="text-sm text-primary-600">{errors.email}</p>}
           </div>
 
           <div className="space-y-2">
@@ -506,7 +506,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+            {errors.password && <p className="text-sm text-primary-600">{errors.password}</p>}
           </div>
 
           {authMode === 'signup' && (
@@ -522,7 +522,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 disabled={isProcessing}
                 data-testid="input-confirm-password"
               />
-              {errors.confirmPassword && <p className="text-sm text-red-600">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && <p className="text-sm text-primary-600">{errors.confirmPassword}</p>}
             </div>
           )}
 
@@ -544,7 +544,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                   <a href="/privacy" target="_blank" className="text-blue-600 hover:underline font-medium">Privacy Policy</a>
                 </label>
               </div>
-              {errors.terms && <p className="text-sm text-red-600">{errors.terms}</p>}
+              {errors.terms && <p className="text-sm text-primary-600">{errors.terms}</p>}
             </div>
           )}
 

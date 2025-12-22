@@ -606,7 +606,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
       {notification.show && (
         <div 
           className={`fixed top-4 right-4 z-[9999] max-w-md animate-in slide-in-from-top-5 fade-in ${
-            notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            notification.type === 'success' ? 'bg-green-500' : 'bg-primary'
           } text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3`}
           data-testid="ajax-notification"
         >
@@ -778,7 +778,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                 <ShoppingCart className="h-4 w-4" />
                 Cart
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                  <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                     {cartCount > 99 ? '99+' : cartCount}
                   </span>
                 )}
@@ -868,7 +868,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               >
                 <ShoppingCart className="h-4 w-4" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                  <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                     {cartCount > 99 ? '99+' : cartCount}
                   </span>
                 )}
@@ -1559,7 +1559,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
             </div>
           ) : error ? (
             <div className="text-center py-16">
-              <Package className="h-16 w-16 mx-auto text-red-400 mb-4" />
+              <Package className="h-16 w-16 mx-auto text-primary-400 mb-4" />
               <h3 className="text-xl font-semibold text-gray-600 mb-2">Error loading products</h3>
               <p className="text-gray-500">Please try again later or contact support if the issue persists.</p>
             </div>

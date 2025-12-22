@@ -389,8 +389,8 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-md p-4">
                 <div className="flex items-center">
-                  <X className="h-5 w-5 text-red-400 mr-2" />
-                  <p className="text-sm text-red-700">{error}</p>
+                  <X className="h-5 w-5 text-primary-400 mr-2" />
+                  <p className="text-sm text-primary-700">{error}</p>
                 </div>
               </div>
             )}
@@ -586,7 +586,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
                         variant="outline"
                         size="sm"
                         onClick={() => handleDelete(category.id, category.displayName)}
-                        className="text-red-600 hover:text-red-700 hover:border-red-200"
+                        className="text-primary-600 hover:text-primary-700 hover:border-red-200"
                         data-testid={`button-delete-${category.id}`}
                         disabled={deleteCategoryMutation.isPending}
                       >
@@ -628,8 +628,8 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-md p-4">
                 <div className="flex items-center">
-                  <X className="h-5 w-5 text-red-400 mr-2" />
-                  <p className="text-sm text-red-700">{error}</p>
+                  <X className="h-5 w-5 text-primary-400 mr-2" />
+                  <p className="text-sm text-primary-700">{error}</p>
                 </div>
               </div>
             )}
@@ -858,7 +858,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
                               onClick={() => handleDeleteFilter(filterIndex)} 
                               variant="outline" 
                               size="sm"
-                              className="text-red-600 hover:text-red-700"
+                              className="text-primary-600 hover:text-primary-700"
                             >
                               <Trash2 className="h-3 w-3" />
                             </Button>
@@ -1107,7 +1107,7 @@ function FilterEditDialog({ filter, isOpen, onClose, onSave }: FilterEditDialogP
                       onClick={() => handleDeleteOption(index)}
                       variant="outline"
                       size="sm"
-                      className="text-red-600 hover:text-red-700"
+                      className="text-primary-600 hover:text-primary-700"
                     >
                       <Trash2 className="h-3 w-3" />
                     </Button>

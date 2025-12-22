@@ -209,7 +209,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
       <CardContent>
         <form onSubmit={handleTeacherLogin} className="space-y-4">
           {errors.general && (
-            <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-red-600">
+            <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
               <AlertCircle className="h-4 w-4 flex-shrink-0" />
               <span className="text-sm">{errors.general}</span>
             </div>
@@ -230,7 +230,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 data-testid="input-teacher-email"
               />
             </div>
-            {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+            {errors.email && <p className="text-sm text-primary-600">{errors.email}</p>}
           </div>
 
           <div className="space-y-2">
@@ -256,7 +256,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+            {errors.password && <p className="text-sm text-primary-600">{errors.password}</p>}
           </div>
 
           <div className="text-center">
@@ -296,7 +296,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
       <CardContent>
         <form onSubmit={handleTeacherApplication} className="space-y-6">
           {errors.general && (
-            <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-red-600">
+            <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
               <AlertCircle className="h-4 w-4 flex-shrink-0" />
               <span className="text-sm">{errors.general}</span>
             </div>
@@ -318,7 +318,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                   data-testid="input-full-name"
                 />
               </div>
-              {errors.fullName && <p className="text-sm text-red-600">{errors.fullName}</p>}
+              {errors.fullName && <p className="text-sm text-primary-600">{errors.fullName}</p>}
             </div>
 
             <div className="space-y-2">
@@ -336,7 +336,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                   data-testid="input-apply-email"
                 />
               </div>
-              {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+              {errors.email && <p className="text-sm text-primary-600">{errors.email}</p>}
             </div>
           </div>
 
@@ -373,7 +373,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                   data-testid="input-country"
                 />
               </div>
-              {errors.country && <p className="text-sm text-red-600">{errors.country}</p>}
+              {errors.country && <p className="text-sm text-primary-600">{errors.country}</p>}
             </div>
           </div>
 
@@ -391,7 +391,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 data-testid="textarea-qualifications"
               />
             </div>
-            {errors.qualifications && <p className="text-sm text-red-600">{errors.qualifications}</p>}
+            {errors.qualifications && <p className="text-sm text-primary-600">{errors.qualifications}</p>}
           </div>
 
           <div className="space-y-2">
@@ -408,7 +408,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 data-testid="textarea-experience"
               />
             </div>
-            {errors.experience && <p className="text-sm text-red-600">{errors.experience}</p>}
+            {errors.experience && <p className="text-sm text-primary-600">{errors.experience}</p>}
           </div>
 
           <div className="space-y-2">
@@ -425,7 +425,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 data-testid="textarea-available-hours"
               />
             </div>
-            {errors.availableHours && <p className="text-sm text-red-600">{errors.availableHours}</p>}
+            {errors.availableHours && <p className="text-sm text-primary-600">{errors.availableHours}</p>}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -529,7 +529,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         {errors.code && (
-          <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-red-600">
+          <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
             <AlertCircle className="h-4 w-4 flex-shrink-0" />
             <span className="text-sm">{errors.code}</span>
           </div>

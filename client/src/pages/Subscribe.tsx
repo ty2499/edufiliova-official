@@ -323,7 +323,7 @@ export default function Subscribe({ onNavigate }: SubscribeProps) {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md mx-auto">
           <CardHeader className="text-center">
-            <CardTitle className="text-red-600">Subscription Error</CardTitle>
+            <CardTitle className="text-primary-600">Subscription Error</CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-gray-600">{error}</p>

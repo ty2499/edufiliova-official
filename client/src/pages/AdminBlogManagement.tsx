@@ -357,7 +357,7 @@ function AdminBlogManagement() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleDelete(post.id)}
-                    className="text-red-600 hover:text-red-700"
+                    className="text-primary-600 hover:text-primary-700"
                     data-testid={`button-delete-${post.id}`}
                   >
                     <Trash2 className="h-4 w-4" />

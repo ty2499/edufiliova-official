@@ -645,7 +645,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
           </div>
         ) : error ? (
           <div className="text-center py-12">
-            <div className="text-red-600 mb-4">
+            <div className="text-primary-600 mb-4">
               <h3 className="text-lg font-medium mb-2">Error Loading Freelancers</h3>
               <p className="text-gray-600">Failed to fetch freelancer profiles. Please try again.</p>
             </div>

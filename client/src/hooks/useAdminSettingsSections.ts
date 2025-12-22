@@ -56,9 +56,9 @@ export function useAdminSettingsSections() {
   const [googlePlayUrl, setGooglePlayUrl] = useState("");
   const [uploadingCover, setUploadingCover] = useState(false);
   const [themeSettings, setThemeSettings] = useState({
-    primaryColor: "#ff5734",
+    primaryColor: "#0C332C",
     secondaryColor: "#e7ebee",
-    accentColor: "#ff5734",
+    accentColor: "#0C332C",
     primaryFont: "Satoshi",
     headingFont: "Satoshi"
   });
@@ -137,9 +137,9 @@ export function useAdminSettingsSections() {
     if (themeData) {
       const data = (themeData as any)?.data || themeData;
       setThemeSettings({
-        primaryColor: data.theme_primary_color ? hslToHex(data.theme_primary_color) : "#ff5734",
+        primaryColor: data.theme_primary_color ? hslToHex(data.theme_primary_color) : "#0C332C",
         secondaryColor: data.theme_secondary_color ? hslToHex(data.theme_secondary_color) : "#e7ebee",
-        accentColor: data.theme_accent_color ? hslToHex(data.theme_accent_color) : "#ff5734",
+        accentColor: data.theme_accent_color ? hslToHex(data.theme_accent_color) : "#0C332C",
         primaryFont: data.theme_primary_font || "Satoshi",
         headingFont: data.theme_heading_font || "Satoshi"
       });
@@ -284,9 +284,9 @@ export function useAdminSettingsSections() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/theme-settings"] });
       setThemeSettings({
-        primaryColor: "#ff5734",
+        primaryColor: "#0C332C",
         secondaryColor: "#e7ebee",
-        accentColor: "#ff5734",
+        accentColor: "#0C332C",
         primaryFont: "Satoshi",
         headingFont: "Satoshi"
       });

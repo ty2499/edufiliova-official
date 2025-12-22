@@ -88,7 +88,7 @@ export default function EmailVerification({ onNavigate }: EmailVerificationProps
           <>
             <div className="mb-6 flex justify-center">
               <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center">
-                <XCircle className="w-12 h-12 text-red-600" />
+                <XCircle className="w-12 h-12 text-primary-600" />
               </div>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Verification failed</h2>

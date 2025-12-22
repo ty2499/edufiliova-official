@@ -367,7 +367,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Card className="w-full max-w-md mx-auto">
           <CardContent className="text-center p-8">
-            <AlertCircle className="h-16 w-16 mx-auto text-red-400 mb-4" />
+            <AlertCircle className="h-16 w-16 mx-auto text-primary-400 mb-4" />
             <h3 className="text-xl font-semibold text-gray-600 mb-2">Error Loading Cart</h3>
             <p className="text-gray-500 mb-4">Please try again later.</p>
             <Button onClick={() => window.location.reload()} variant="outline">
@@ -469,7 +469,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                               size="sm"
                               onClick={() => handleRemoveItem(item.id)}
                               disabled={removeItemMutation.isPending}
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50 p-1 sm:p-2"
+                              className="text-primary-600 hover:text-primary-700 hover:bg-primary/50 p-1 sm:p-2"
                               data-testid={`button-remove-${item.id}`}
                             >
                               {removeItemMutation.isPending ? (
@@ -614,7 +614,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                             </div>
                           )}
                           {couponError && (
-                            <div className="flex items-center gap-2 text-red-600 text-sm" data-testid="text-coupon-error">
+                            <div className="flex items-center gap-2 text-primary-600 text-sm" data-testid="text-coupon-error">
                               <AlertCircle className="h-4 w-4" />
                               <span>{couponError}</span>
                             </div>

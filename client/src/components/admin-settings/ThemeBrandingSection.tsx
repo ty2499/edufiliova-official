@@ -40,7 +40,7 @@ export function ThemeBrandingSection() {
                   <Input
                     value={themeSettings.primaryColor}
                     onChange={(e) => setThemeSettings({ ...themeSettings, primaryColor: e.target.value })}
-                    placeholder="#ff5734"
+                    placeholder="#0C332C"
                     data-testid="input-primary-color"
                   />
                 </div>
@@ -72,7 +72,7 @@ export function ThemeBrandingSection() {
                   <Input
                     value={themeSettings.accentColor}
                     onChange={(e) => setThemeSettings({ ...themeSettings, accentColor: e.target.value })}
-                    placeholder="#ff5734"
+                    placeholder="#0C332C"
                     data-testid="input-accent-color"
                   />
                 </div>

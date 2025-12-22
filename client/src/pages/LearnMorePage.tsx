@@ -88,7 +88,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
       title: "Business & Economics",
       courses: ["Entrepreneurship", "Financial Literacy", "Marketing", "Economics", "Leadership"],
       icon: <TrendingUp className="h-6 w-6" />,
-      color: "bg-red-50 text-red-600"
+      color: "bg-red-50 text-primary-600"
     },
     {
       title: "Arts & Design",

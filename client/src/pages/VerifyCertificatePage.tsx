@@ -103,7 +103,7 @@ export default function VerifyCertificatePage() {
           <Card data-testid="card-certificate-invalid" className="border-red-200">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <XCircle className="w-8 h-8 text-red-600" />
+                <XCircle className="w-8 h-8 text-primary-600" />
                 <CardTitle>Certificate {data.revoked ? 'Revoked' : 'Invalid'}</CardTitle>
               </div>
             </CardHeader>

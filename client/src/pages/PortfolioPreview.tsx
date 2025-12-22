@@ -390,7 +390,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                   onClick={handleLike}
                   disabled={likeMutation.isPending}
                   data-testid="button-like-work"
-                  className="hover:bg-red-50 hover:text-red-600 px-2 sm:px-3"
+                  className="hover:bg-primary/50 hover:text-primary-600 px-2 sm:px-3"
                 >
                   <Heart className={`h-3 w-3 sm:h-4 sm:w-4 mr-1 ${likeMutation.isPending ? 'animate-pulse' : ''}`} />
                   <span className="text-sm">{work.likesCount}</span>

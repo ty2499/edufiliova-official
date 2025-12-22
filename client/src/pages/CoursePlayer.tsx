@@ -1115,7 +1115,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                                       </div>
                                     )}
                                     {showResult && isSelected && !isCorrect && (
-                                      <AlertCircle className="h-4 w-4 text-red-600" />
+                                      <AlertCircle className="h-4 w-4 text-primary-600" />
                                     )}
                                   </div>
                                 );

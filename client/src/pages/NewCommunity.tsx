@@ -489,7 +489,7 @@ export default function NewCommunity() {
               </div>
             ) : postsError ? (
               <div className="text-center py-8">
-                <div className="text-red-500">Error loading posts: {(postsError as Error).message}</div>
+                <div className="text-primary-500">Error loading posts: {(postsError as Error).message}</div>
               </div>
             ) : posts.length === 0 ? (
               <div className="text-center py-8">

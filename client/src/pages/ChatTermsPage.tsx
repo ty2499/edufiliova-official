@@ -109,29 +109,29 @@ const ChatTermsPage = ({ onNavigate }: ChatTermsPageProps) => {
 
             <div className="bg-red-50 border border-red-200 rounded-xl p-6">
               <div className="flex items-center gap-3 mb-4">
-                <AlertTriangle className="h-6 w-6 text-red-600" />
-                <h4 className="font-semibold text-red-900 text-lg">❌ Strictly Prohibited</h4>
+                <AlertTriangle className="h-6 w-6 text-primary-600" />
+                <h4 className="font-semibold text-primary-900 text-lg">❌ Strictly Prohibited</h4>
               </div>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-red-800"><strong>No abuse or harassment</strong> - Any form of bullying, threats, or intimidation</span>
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <span className="text-primary-800"><strong>No abuse or harassment</strong> - Any form of bullying, threats, or intimidation</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-red-800"><strong>No inappropriate content</strong> - Sexually explicit, violent, or disturbing material</span>
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <span className="text-primary-800"><strong>No inappropriate content</strong> - Sexually explicit, violent, or disturbing material</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-red-800"><strong>No dating or romantic pursuits</strong> - This platform is for education only</span>
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <span className="text-primary-800"><strong>No dating or romantic pursuits</strong> - This platform is for education only</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-red-800"><strong>No spam or commercial content</strong> - Unauthorized advertising or promotional messages</span>
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <span className="text-primary-800"><strong>No spam or commercial content</strong> - Unauthorized advertising or promotional messages</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-red-800"><strong>No sharing personal information</strong> - Phone numbers, addresses, or other private details</span>
+                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <span className="text-primary-800"><strong>No sharing personal information</strong> - Phone numbers, addresses, or other private details</span>
                 </li>
               </ul>
             </div>
@@ -199,8 +199,8 @@ const ChatTermsPage = ({ onNavigate }: ChatTermsPageProps) => {
                 <p className="text-orange-800 text-sm">Chat privileges suspended for 1-7 days</p>
               </div>
               <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <h4 className="font-semibold text-red-900 mb-2">Permanent Ban</h4>
-                <p className="text-red-800 text-sm">Complete removal from platform for serious violations</p>
+                <h4 className="font-semibold text-primary-900 mb-2">Permanent Ban</h4>
+                <p className="text-primary-800 text-sm">Complete removal from platform for serious violations</p>
               </div>
             </div>
           </div>

@@ -64,7 +64,7 @@ export function AuthCallback() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-6 sm:px-10 lg:px-14">
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center text-red-600">
+            <CardTitle className="text-2xl font-bold text-center text-primary-600">
               Authentication Error
             </CardTitle>
             <CardDescription className="text-center">

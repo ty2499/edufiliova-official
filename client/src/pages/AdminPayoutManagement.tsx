@@ -466,10 +466,10 @@ export default function AdminPayoutManagement({ isEmbedded = false }: AdminPayou
 
                         {request.request.rejectionReason && (
                           <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 rounded">
-                            <div className="text-xs text-red-600 dark:text-red-400 mb-1">
+                            <div className="text-xs text-primary-600 dark:text-primary-400 mb-1">
                               Rejection Reason
                             </div>
-                            <div className="text-sm text-red-700 dark:text-red-300">
+                            <div className="text-sm text-primary-700 dark:text-primary-300">
                               {request.request.rejectionReason}
                             </div>
                           </div>

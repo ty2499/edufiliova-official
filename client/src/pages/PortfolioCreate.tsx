@@ -478,8 +478,8 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
         {/* Error State for Edit Mode */}
         {isEditMode && loadingError && (
           <div className="text-center py-8">
-            <AlertCircle className="h-8 w-8 mx-auto mb-4 text-red-600" />
-            <p className="text-red-600 mb-4">Failed to load portfolio work details</p>
+            <AlertCircle className="h-8 w-8 mx-auto mb-4 text-primary-600" />
+            <p className="text-primary-600 mb-4">Failed to load portfolio work details</p>
             <Button onClick={() => window.location.reload()} variant="outline">
               Try Again
             </Button>
@@ -695,7 +695,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                         <button
                           type="button"
                           onClick={() => removeTag(tag)}
-                          className="ml-2 hover:text-red-500"
+                          className="ml-2 hover:text-primary-500"
                           data-testid={`button-remove-tag-${tag}`}
                         >
                           <X className="h-3 w-3" />
@@ -848,7 +848,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                       </Button>
                     </div>
                     {validationErrors.videoUrl && (
-                      <div className="text-red-500 text-sm animate-in slide-in-from-top-1 duration-200">
+                      <div className="text-primary-500 text-sm animate-in slide-in-from-top-1 duration-200">
                         {validationErrors.videoUrl}
                       </div>
                     )}
@@ -862,7 +862,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                 {/* Premium Feedback States */}
                 {(submitState === 'error' || errorMessage) && (
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4 animate-in slide-in-from-top-2 duration-300">
-                    <div className="flex items-center gap-2 text-red-800">
+                    <div className="flex items-center gap-2 text-primary-800">
                       <AlertCircle className="h-4 w-4" />
                       <span className="text-sm font-medium">{errorMessage}</span>
                     </div>

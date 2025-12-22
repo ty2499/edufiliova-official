@@ -296,7 +296,7 @@ export default function TransactionDashboard() {
                             {transaction.type === 'credit' ? '+' : '-'} {transaction.type}
                           </Badge>
                         </TableCell>
-                        <TableCell className={transaction.type === 'credit' ? 'text-green-600' : 'text-red-600'}>
+                        <TableCell className={transaction.type === 'credit' ? 'text-green-600' : 'text-primary-600'}>
                           {formatCurrency(transaction.amount)}
                         </TableCell>
                         <TableCell>{getStatusBadge(transaction.status)}</TableCell>
@@ -454,7 +454,7 @@ export default function TransactionDashboard() {
                         
                         {/* Status Messages */}
                         {error && (
-                          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm" data-testid="error-message">
+                          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-primary-700 dark:text-primary-400 text-sm" data-testid="error-message">
                             {error}
                           </div>
                         )}

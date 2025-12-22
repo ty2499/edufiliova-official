@@ -638,7 +638,7 @@ const AdminProfileSettings = () => {
         {/* Status Messages */}
         {uploadAvatarMutation.error && (
           <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-600">
+            <p className="text-sm text-primary-600">
               Avatar upload error: {uploadAvatarMutation.error.message}
             </p>
           </div>
@@ -646,7 +646,7 @@ const AdminProfileSettings = () => {
 
         {updateProfileMutation.error && (
           <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-600">
+            <p className="text-sm text-primary-600">
               Profile update error: {updateProfileMutation.error.message}
             </p>
           </div>
@@ -1259,7 +1259,7 @@ const ProductsList = ({
   const getStatusColor = (productStatus: string) => {
     switch (productStatus) {
       case 'approved': return 'text-green-600';
-      case 'rejected': return 'text-red-600';
+      case 'rejected': return 'text-primary-600';
       case 'pending': return 'text-yellow-600';
       default: return 'text-muted-foreground';
     }
@@ -1440,7 +1440,7 @@ const ProductsList = ({
                         </div>
                         {product.rejectionReason && (
                           <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded">
-                            <p className="text-sm text-red-700">
+                            <p className="text-sm text-primary-700">
                               <strong>Rejection Reason:</strong> {product.rejectionReason}
                             </p>
                           </div>
@@ -2831,7 +2831,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                       <MessageSquare className="w-5 h-5 mr-3" />
                       <span>Communication</span>
                       {unreadMessagesCount > 0 && (
-                        <div className="ml-auto w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                        <div className="ml-auto w-5 h-5 bg-primary rounded-full flex items-center justify-center">
                           <span className="text-xs font-bold text-white">{unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}</span>
                         </div>
                       )}
@@ -2846,7 +2846,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                       <Mail className="w-5 h-5 mr-3" />
                       <span>Email Inbox</span>
                       {unreadMessagesCount > 0 && (
-                        <Badge className="ml-auto bg-red-500 text-white hover:bg-red-600">
+                        <Badge className="ml-auto bg-primary text-white hover:bg-primary">
                           {unreadMessagesCount}
                         </Badge>
                       )}
@@ -2861,7 +2861,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                       <FileText className="w-5 h-5 mr-3" />
                       <span>Contact Messages</span>
                       {newContactMessagesCount > 0 && (
-                        <Badge className="ml-auto bg-red-500 text-white hover:bg-red-600">
+                        <Badge className="ml-auto bg-primary text-white hover:bg-primary">
                           {newContactMessagesCount}
                         </Badge>
                       )}
@@ -2991,7 +2991,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                       <Mail className="w-5 h-5 mr-3" />
                       <span>Email Inbox</span>
                       {unreadMessagesCount > 0 && (
-                        <Badge className="ml-auto bg-red-500 text-white hover:bg-red-600">
+                        <Badge className="ml-auto bg-primary text-white hover:bg-primary">
                           {unreadMessagesCount}
                         </Badge>
                       )}
@@ -3006,7 +3006,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                       <FileText className="w-5 h-5 mr-3" />
                       <span>Contact Messages</span>
                       {newContactMessagesCount > 0 && (
-                        <Badge className="ml-auto bg-red-500 text-white hover:bg-red-600">
+                        <Badge className="ml-auto bg-primary text-white hover:bg-primary">
                           {newContactMessagesCount}
                         </Badge>
                       )}
@@ -3134,7 +3134,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <FileText className="w-5 h-5 mr-3" />
               <span>Support Tickets</span>
               {newSupportTicketsCount > 0 && (
-                <Badge className="ml-auto bg-red-500 text-white hover:bg-red-600">
+                <Badge className="ml-auto bg-primary text-white hover:bg-primary">
                   {newSupportTicketsCount}
                 </Badge>
               )}
@@ -3668,7 +3668,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                     <TabsTrigger value="customer_service" data-testid="tab-customer-service" className="px-2.5 sm:px-3 md:px-4 py-1.5 text-[11px] sm:text-xs whitespace-nowrap">
                       <span>Customer Service ({users.filter((u: User) => u.role === 'customer_service').length})</span>
                     </TabsTrigger>
-                    <TabsTrigger value="banned" data-testid="tab-banned-users" className="px-2.5 sm:px-3 md:px-4 py-1.5 text-[11px] sm:text-xs text-red-600 whitespace-nowrap">
+                    <TabsTrigger value="banned" data-testid="tab-banned-users" className="px-2.5 sm:px-3 md:px-4 py-1.5 text-[11px] sm:text-xs text-primary-600 whitespace-nowrap">
                       <span>Banned ({users.filter((u: User) => u.status === 'banned').length})</span>
                     </TabsTrigger>
                   </TabsList>
@@ -3931,7 +3931,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TabsContent value="banned">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-red-600">
+                    <CardTitle className="flex items-center gap-2 text-primary-600">
                       <Ban className="h-5 w-5" />
                       Banned Users
                     </CardTitle>
@@ -4308,7 +4308,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                   <div className="flex gap-2">
                     <div className="flex-1">
                       <Label htmlFor="voucher-code" className="text-gray-900 dark:text-gray-100 mb-2 block">
-                        Voucher Code <span className="text-red-500">*</span>
+                        Voucher Code <span className="text-primary-500">*</span>
                         <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">(14 characters)</span>
                       </Label>
                       <Input
@@ -4343,7 +4343,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 </div>
                 <div>
                   <Label htmlFor="voucher-amount" className="text-gray-900 dark:text-gray-100">
-                    Amount ($) <span className="text-red-500">*</span>
+                    Amount ($) <span className="text-primary-500">*</span>
                   </Label>
                   <Input
                     id="voucher-amount"
@@ -4424,7 +4424,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="bulk-count" className="text-gray-900 dark:text-gray-100">
-                        Number of Vouchers <span className="text-red-500">*</span>
+                        Number of Vouchers <span className="text-primary-500">*</span>
                       </Label>
                       <Input
                         id="bulk-count"
@@ -4449,7 +4449,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                     </div>
                     <div>
                       <Label htmlFor="bulk-amount" className="text-gray-900 dark:text-gray-100">
-                        Amount per Voucher ($) <span className="text-red-500">*</span>
+                        Amount per Voucher ($) <span className="text-primary-500">*</span>
                       </Label>
                       <Input
                         id="bulk-amount"
@@ -4558,7 +4558,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                           </div>
                           <div>
                             <Label htmlFor="single-recipient-email" className="text-sm text-gray-700 dark:text-gray-300">
-                              Email <span className="text-red-500">*</span>
+                              Email <span className="text-primary-500">*</span>
                             </Label>
                             <Input
                               id="single-recipient-email"
@@ -4596,7 +4596,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                             </div>
                             <div>
                               <Label htmlFor={`recipient-email-${index}`} className="text-sm text-gray-700 dark:text-gray-300">
-                                Email <span className="text-red-500">*</span>
+                                Email <span className="text-primary-500">*</span>
                               </Label>
                               <Input
                                 id={`recipient-email-${index}`}
@@ -4837,7 +4837,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                 disabled={deleteVoucherMutation.isPending}
                                 data-testid={`button-delete-voucher-${voucher.id}`}
                               >
-                                <Trash2 className="h-4 w-4 text-red-600" />
+                                <Trash2 className="h-4 w-4 text-primary-600" />
                               </Button>
                             </div>
                           </div>
@@ -4902,7 +4902,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                 disabled={deleteVoucherMutation.isPending}
                                 data-testid={`button-delete-voucher-${voucher.id}`}
                               >
-                                <Trash2 className="h-4 w-4 text-red-600" />
+                                <Trash2 className="h-4 w-4 text-primary-600" />
                               </Button>
                             </div>
                           </div>
@@ -4968,7 +4968,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                 disabled={deleteVoucherMutation.isPending}
                                 data-testid={`button-delete-voucher-${voucher.id}`}
                               >
-                                <Trash2 className="h-4 w-4 text-red-600" />
+                                <Trash2 className="h-4 w-4 text-primary-600" />
                               </Button>
                             </div>
                           </div>
@@ -5212,10 +5212,10 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Rejected</CardTitle>
-                    <XCircle className="h-4 w-4 text-red-600" />
+                    <XCircle className="h-4 w-4 text-primary-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-red-600">
+                    <div className="text-2xl font-bold text-primary-600">
                       {allProducts.filter(p => p.status === 'rejected').length}
                     </div>
                     <p className="text-xs text-muted-foreground">Declined products</p>
@@ -5485,7 +5485,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                     <Badge 
                                       variant="outline"
                                       className={
-                                        ticket.priority === 'urgent' ? 'border-red-500 text-red-700' :
+                                        ticket.priority === 'urgent' ? 'border-red-500 text-primary-700' :
                                         ticket.priority === 'high' ? 'border-orange-500 text-orange-700' :
                                         ticket.priority === 'medium' ? 'border-yellow-500 text-yellow-700' :
                                         'border-gray-500 text-gray-700'
@@ -5576,7 +5576,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                     </div>
                                     <DialogFooter>
                                       {replyFormError && (
-                                        <p className="text-sm text-red-600 mb-2">{replyFormError}</p>
+                                        <p className="text-sm text-primary-600 mb-2">{replyFormError}</p>
                                       )}
                                       <AjaxButton
                                         operation={activeTicketId === ticket.id ? ticketAjaxOperation : 'idle'}
@@ -5642,7 +5642,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                 <AjaxButton
                                   operation={activeTicketId === ticket.id ? ticketAjaxOperation : 'idle'}
                                   variant="destructive"
-                                  className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1.5"
+                                  className="bg-primary hover:bg-primary/700 text-white text-sm px-3 py-1.5"
                                   onClick={() => {
                                     setTicketToDelete(ticket);
                                     setDeleteDialogOpen(true);

@@ -54,7 +54,7 @@ export default function FreelancerApplicationStatus() {
       case "approved":
         return "bg-green-500";
       case "rejected":
-        return "bg-red-500";
+        return "bg-primary";
       case "under_review":
         return "bg-yellow-500";
       default:
@@ -67,7 +67,7 @@ export default function FreelancerApplicationStatus() {
       case "approved":
         return <CheckmarkIcon size="md" variant="success" />;
       case "rejected":
-        return <XCircle className="w-5 h-5 text-red-500" />;
+        return <XCircle className="w-5 h-5 text-primary-500" />;
       case "under_review":
         return <Clock className="w-5 h-5 text-yellow-500" />;
       default:
@@ -121,7 +121,7 @@ export default function FreelancerApplicationStatus() {
         {isRejected && (
           <Card className="mb-6 border-red-500 bg-red-50 dark:bg-red-950/20">
             <CardContent className="pt-6 text-center">
-              <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+              <XCircle className="w-16 h-16 text-primary-500 mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Application Not Approved</h2>
               <p className="text-muted-foreground mb-4">
                 We're sorry, but your application was not approved at this time.

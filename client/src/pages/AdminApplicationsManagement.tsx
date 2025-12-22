@@ -1179,7 +1179,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                   {selectedFreelancerApp.rejectionReason && (
                     <div>
                       <Label>Rejection Reason</Label>
-                      <p className="text-sm mt-1 bg-red-50 dark:bg-red-900/20 p-3 rounded text-red-900 dark:text-red-200">
+                      <p className="text-sm mt-1 bg-red-50 dark:bg-red-900/20 p-3 rounded text-primary-900 dark:text-primary-200">
                         {selectedFreelancerApp.rejectionReason}
                       </p>
                     </div>
@@ -1237,7 +1237,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
             <div className={`flex items-center gap-2 p-3 rounded-lg ${
               ajaxStatus.type === 'loading' ? 'bg-blue-50 text-blue-700' :
               ajaxStatus.type === 'success' ? 'bg-green-50 text-green-700' :
-              'bg-red-50 text-red-700'
+              'bg-red-50 text-primary-700'
             }`} data-testid="ajax-status-inline">
               {ajaxStatus.type === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
               {ajaxStatus.type === 'success' && <CheckmarkIcon size="sm" variant="success" />}

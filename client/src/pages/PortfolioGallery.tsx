@@ -488,12 +488,12 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
               {formatNumber(project.viewCount)}
             </span>
             <button 
-              className="flex items-center gap-1 hover:text-red-500 transition-colors"
+              className="flex items-center gap-1 hover:text-primary-500 transition-colors"
               onClick={(e) => handleLikeToggle(e, project.id)}
               data-testid={`button-like-${project.id}`}
             >
               <Heart 
-                className={`h-3 w-3 ${likeStatusData?.[project.id] ? 'fill-red-500 text-red-500' : ''}`} 
+                className={`h-3 w-3 ${likeStatusData?.[project.id] ? 'fill-red-500 text-primary-500' : ''}`} 
               />
               {formatNumber(project.likeCount)}
             </button>
@@ -582,12 +582,12 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                   {formatNumber(project.viewCount)}
                 </span>
                 <button 
-                  className="flex items-center gap-1 hover:text-red-500 transition-colors"
+                  className="flex items-center gap-1 hover:text-primary-500 transition-colors"
                   onClick={(e) => handleLikeToggle(e, project.id)}
                   data-testid={`button-like-list-${project.id}`}
                 >
                   <Heart 
-                    className={`h-3 w-3 ${likeStatusData?.[project.id] ? 'fill-red-500 text-red-500' : ''}`} 
+                    className={`h-3 w-3 ${likeStatusData?.[project.id] ? 'fill-red-500 text-primary-500' : ''}`} 
                   />
                   {formatNumber(project.likeCount)}
                 </button>
@@ -889,7 +889,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
         {/* Error State */}
         {error && (
           <div className="text-center py-12">
-            <div className="text-red-500 mb-2">Failed to load projects</div>
+            <div className="text-primary-500 mb-2">Failed to load projects</div>
             <Button onClick={() => window.location.reload()}>
               Try Again
             </Button>
@@ -987,12 +987,12 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                       {formatNumber(selectedProject.viewCount)}
                     </span>
                     <button 
-                      className="flex items-center gap-1.5 hover:text-red-500 transition-colors"
+                      className="flex items-center gap-1.5 hover:text-primary-500 transition-colors"
                       onClick={(e) => handleLikeToggle(e, selectedProject.id)}
                       data-testid={`button-like-modal-${selectedProject.id}`}
                     >
                       <Heart 
-                        className={`h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 ${likeStatusData?.[selectedProject.id] ? 'fill-red-500 text-red-500' : ''}`} 
+                        className={`h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 ${likeStatusData?.[selectedProject.id] ? 'fill-red-500 text-primary-500' : ''}`} 
                       />
                       {formatNumber(selectedProject.likeCount)}
                     </button>

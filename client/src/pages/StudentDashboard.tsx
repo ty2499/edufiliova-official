@@ -429,7 +429,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                             <span className={`font-medium ${
                               isCorrect 
                                 ? 'text-green-600 dark:text-green-400' 
-                                : 'text-red-600 dark:text-red-400'
+                                : 'text-primary-600 dark:text-primary-400'
                             }`}>
                               {userAnswer || "Not answered"}
                               {isCorrect ? " ✓" : " ✗"}
@@ -588,7 +588,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                   .replace(/Note:\s*([^\n]+)/gi, 
                     '<div class="bg-amber-500/5 border-l-4 border-amber-500 p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-amber-600 dark:text-amber-400">Note:</span> $1</div>')
                   .replace(/Important:\s*([^\n]+)/gi, 
-                    '<div class="bg-red-500/5 border-l-4 border-red-500 p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-red-600 dark:text-red-400">Important:</span> $1</div>')
+                    '<div class="bg-primary/5 border-l-4 border-red-500 p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-primary-600 dark:text-primary-400">Important:</span> $1</div>')
                   // Clean up paragraph breaks
                   .replace(/\n\n+/g, '</p><p class="mb-3 text-sm sm:text-base">')
                   .replace(/\n/g, '<br/>')
@@ -769,7 +769,7 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
       marketing: 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200',
       photography: 'bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-200',
       music: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-200',
-      health: 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200',
+      health: 'bg-red-100 text-primary-800 dark:bg-red-900/50 dark:text-primary-200',
       language: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200',
       other: 'bg-gray-100 text-gray-800 dark:bg-gray-700/50 dark:text-gray-200'
     };
@@ -1204,7 +1204,7 @@ function OrderSlipViewer({
                   <div className="border-t-2 border-gray-900 dark:border-gray-100 pt-4">
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold text-gray-900 dark:text-white">Total Amount</span>
-                      <span className="text-2xl font-bold text-[#ff5734]" data-testid="text-total-amount">
+                      <span className="text-2xl font-bold text-[#A0FAB2]" data-testid="text-total-amount">
                         ${parseFloat(orderDetails.order.totalAmount).toFixed(2)}
                       </span>
                     </div>
@@ -2186,7 +2186,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
             </div>
             <div className="flex items-center space-x-2">
               {unreadMessagesCount > 0 && (
-                <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
                   <span className="text-xs font-bold text-white">{unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}</span>
                 </div>
               )}
@@ -2314,7 +2314,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               <MessageCircle className="w-5 h-5 mr-3" />
               <span className="text-sm font-medium">Messages</span>
               {unreadMessagesCount > 0 && (
-                <Badge className="ml-auto bg-red-500 text-white hover:bg-red-600">
+                <Badge className="ml-auto bg-primary text-white hover:bg-primary">
                   {unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}
                 </Badge>
               )}
@@ -2345,7 +2345,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               <Bell className="w-5 h-5 mr-3" />
               <span className="text-sm font-medium">Announcements</span>
               {unreadAnnouncementsCount > 0 && (
-                <Badge className="ml-auto bg-red-500 text-white hover:bg-red-600">
+                <Badge className="ml-auto bg-primary text-white hover:bg-primary">
                   {unreadAnnouncementsCount > 9 ? '9+' : unreadAnnouncementsCount}
                 </Badge>
               )}
@@ -4135,7 +4135,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                   ? isCorrect
                                     ? 'border-green-500 bg-green-50 text-green-700'
                                     : isSelected && !isCorrect
-                                    ? 'border-red-500 bg-red-50 text-red-700'
+                                    ? 'border-red-500 bg-red-50 text-primary-700'
                                     : 'border-gray-200 bg-gray-50'
                                   : isSelected
                                   ? 'border-primary bg-primary/10'
@@ -4158,7 +4158,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                   <CheckCircle2 className="w-4 h-4 text-green-600 ml-auto" />
                                 )}
                                 {showResult && isSelected && !isCorrect && (
-                                  <XCircle className="w-4 h-4 text-red-600 ml-auto" />
+                                  <XCircle className="w-4 h-4 text-primary-600 ml-auto" />
                                 )}
                               </div>
                             </button>
@@ -4571,20 +4571,20 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                                 {questionAnswers[question.id] === question.correctAnswer ? (
                                   <CheckCircle2 className="h-4 w-4 text-green-600" />
                                 ) : (
-                                  <X className="h-4 w-4 text-red-600" />
+                                  <X className="h-4 w-4 text-primary-600" />
                                 )}
                                 <span className="font-semibold text-sm">Your Answer:</span>
                                 <span className={`font-bold ${
                                   questionAnswers[question.id] === question.correctAnswer 
                                     ? 'text-green-700'
-                                    : 'text-red-700'
+                                    : 'text-primary-700'
                                 }`}>
                                   {questionAnswers[question.id]}
                                 </span>
                                 {questionAnswers[question.id] === question.correctAnswer ? (
                                   <Badge className="bg-green-100 text-green-800 text-xs ml-auto">Correct</Badge>
                                 ) : (
-                                  <Badge className="bg-red-100 text-red-800 text-xs ml-auto">Incorrect</Badge>
+                                  <Badge className="bg-red-100 text-primary-800 text-xs ml-auto">Incorrect</Badge>
                                 )}
                               </div>
                             </div>
@@ -4706,7 +4706,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                     <div className={`p-4 rounded-lg mb-4 ${
                       submissionMessage.type === 'success' 
                         ? 'bg-green-50 border border-green-200 text-green-800' 
-                        : 'bg-red-50 border border-red-200 text-red-800'
+                        : 'bg-red-50 border border-red-200 text-primary-800'
                     }`}>
                       <div className="flex items-center">
                         {submissionMessage.type === 'success' ? (
@@ -4909,7 +4909,7 @@ const AssignmentsView = () => {
       } else if (grade === 'C') {
         return 'bg-yellow-600 dark:bg-yellow-500 text-white font-bold';
       } else if (grade === 'D') {
-        return 'bg-red-600 dark:bg-red-500 text-white font-bold';
+        return 'bg-primary dark:bg-primary text-white font-bold';
       }
       return 'bg-primary text-primary-foreground';
     } else if (assignment.submissionStatus === 'submitted') {

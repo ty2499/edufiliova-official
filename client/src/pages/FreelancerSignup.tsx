@@ -455,7 +455,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
                 <div>
                   <Label htmlFor="primaryCategory" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    What do you mainly create? <span className="text-red-600">*</span>
+                    What do you mainly create? <span className="text-primary-600">*</span>
                   </Label>
                   <Select value={primaryCategory} onValueChange={(value) => { setPrimaryCategory(value); clearError('primaryCategory'); }}>
                     <SelectTrigger id="primaryCategory" className={errorMessages.primaryCategory ? 'border-red-500' : ''} data-testid="select-category">
@@ -470,7 +470,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     </SelectContent>
                   </Select>
                   {errorMessages.primaryCategory && (
-                    <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+                    <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {errorMessages.primaryCategory}
                     </p>
@@ -479,7 +479,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
                 <div>
                   <Label htmlFor="tagline" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    Short tagline <span className="text-red-600">*</span>
+                    Short tagline <span className="text-primary-600">*</span>
                   </Label>
                   <p className="text-xs text-gray-500 mb-2">Describe your work in one sentence (max 80 characters).</p>
                   <Input
@@ -494,7 +494,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   />
                   <p className="text-xs text-gray-500 mt-1">{tagline.length}/80</p>
                   {errorMessages.tagline && (
-                    <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+                    <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {errorMessages.tagline}
                     </p>
@@ -503,7 +503,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
                 <div>
                   <Label htmlFor="about" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    About you <span className="text-red-600">*</span>
+                    About you <span className="text-primary-600">*</span>
                   </Label>
                   <p className="text-xs text-gray-500 mb-2">Tell clients about your experience, style, and what you offer (300-500 characters).</p>
                   <Textarea
@@ -518,7 +518,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   />
                   <p className="text-xs text-gray-500 mt-1">{about.length}/500</p>
                   {errorMessages.about && (
-                    <p className="text-sm text-red-600 mt-1 flex items-center gap-1">
+                    <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {errorMessages.about}
                     </p>
@@ -545,7 +545,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
               <div className="space-y-6">
                 <div>
                   <Label className="text-sm font-medium text-gray-700 mb-3 block">
-                    Your skills <span className="text-red-600">*</span>
+                    Your skills <span className="text-primary-600">*</span>
                   </Label>
                   <div className="flex flex-wrap gap-2">
                     {SKILLS_OPTIONS.map((skill) => (
@@ -565,7 +565,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     ))}
                   </div>
                   {errorMessages.skills && (
-                    <p className="text-sm text-red-600 mt-2 flex items-center gap-1">
+                    <p className="text-sm text-primary-600 mt-2 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {errorMessages.skills}
                     </p>
@@ -574,7 +574,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
                 <div>
                   <Label className="text-sm font-medium text-gray-700 mb-3 block">
-                    What do you want to offer? <span className="text-red-600">*</span>
+                    What do you want to offer? <span className="text-primary-600">*</span>
                   </Label>
                   <div className="space-y-3">
                     {[
@@ -598,7 +598,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     ))}
                   </div>
                   {errorMessages.services && (
-                    <p className="text-sm text-red-600 mt-2 flex items-center gap-1">
+                    <p className="text-sm text-primary-600 mt-2 flex items-center gap-1">
                       <AlertCircle className="w-4 h-4" />
                       {errorMessages.services}
                     </p>
@@ -666,7 +666,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
               {errorMessages.portfolio && (
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-sm text-red-700 flex items-center gap-2">
+                  <p className="text-sm text-primary-700 flex items-center gap-2">
                     <AlertCircle className="w-5 h-5" />
                     {errorMessages.portfolio}
                   </p>
@@ -690,7 +690,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         data-testid="input-sample-title"
                       />
                       {errorMessages.sampleTitle && (
-                        <p className="text-sm text-red-600 mt-1">{errorMessages.sampleTitle}</p>
+                        <p className="text-sm text-primary-600 mt-1">{errorMessages.sampleTitle}</p>
                       )}
                     </div>
 
@@ -707,7 +707,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         </SelectContent>
                       </Select>
                       {errorMessages.sampleCategory && (
-                        <p className="text-sm text-red-600 mt-1">{errorMessages.sampleCategory}</p>
+                        <p className="text-sm text-primary-600 mt-1">{errorMessages.sampleCategory}</p>
                       )}
                     </div>
 
@@ -723,7 +723,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         data-testid="textarea-sample-description"
                       />
                       {errorMessages.sampleDescription && (
-                        <p className="text-sm text-red-600 mt-1">{errorMessages.sampleDescription}</p>
+                        <p className="text-sm text-primary-600 mt-1">{errorMessages.sampleDescription}</p>
                       )}
                     </div>
 
@@ -743,7 +743,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         <p className="text-xs text-gray-600 mt-1">{currentSample.files.length} file(s) selected</p>
                       )}
                       {errorMessages.sampleFiles && (
-                        <p className="text-sm text-red-600 mt-1">{errorMessages.sampleFiles}</p>
+                        <p className="text-sm text-primary-600 mt-1">{errorMessages.sampleFiles}</p>
                       )}
                     </div>
 
@@ -772,7 +772,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                               onClick={() => removePortfolioSample(index)}
                               variant="ghost"
                               size="sm"
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                              className="text-primary-600 hover:text-primary-700 hover:bg-primary/50"
                               data-testid={`button-remove-sample-${index}`}
                             >
                               <Trash2 className="w-4 h-4" />
@@ -853,7 +853,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   </span>
                 </label>
                 {errorMessages.terms && (
-                  <p className="text-sm text-red-600 flex items-center gap-1 ml-8">
+                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-8">
                     <AlertCircle className="w-4 h-4" />
                     {errorMessages.terms}
                   </p>
@@ -878,7 +878,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   </span>
                 </label>
                 {errorMessages.policy && (
-                  <p className="text-sm text-red-600 flex items-center gap-1 ml-8">
+                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-8">
                     <AlertCircle className="w-4 h-4" />
                     {errorMessages.policy}
                   </p>
@@ -896,7 +896,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   </span>
                 </label>
                 {errorMessages.review && (
-                  <p className="text-sm text-red-600 flex items-center gap-1 ml-8">
+                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-8">
                     <AlertCircle className="w-4 h-4" />
                     {errorMessages.review}
                   </p>
@@ -905,7 +905,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
               {errorMessages.submit && (
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-sm text-red-700 flex items-center gap-2">
+                  <p className="text-sm text-primary-700 flex items-center gap-2">
                     <AlertCircle className="w-5 h-5" />
                     {errorMessages.submit}
                   </p>

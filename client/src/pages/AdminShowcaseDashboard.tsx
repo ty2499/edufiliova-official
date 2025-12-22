@@ -15,8 +15,8 @@ export default function AdminShowcaseDashboard() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
-            <Shield className="h-12 w-12 text-red-500 mx-auto mb-2" />
-            <CardTitle className="text-red-600">Access Denied</CardTitle>
+            <Shield className="h-12 w-12 text-primary-500 mx-auto mb-2" />
+            <CardTitle className="text-primary-600">Access Denied</CardTitle>
           </CardHeader>
           <CardContent className="text-center">
             <p className="text-gray-600 mb-4">

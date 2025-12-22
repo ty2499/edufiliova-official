@@ -667,7 +667,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-6 w-6 opacity-0 group-hover:opacity-100 hover:bg-red-100 dark:hover:bg-red-900/30 hover:text-red-600 transition-opacity"
+                            className="h-6 w-6 opacity-0 group-hover:opacity-100 hover:bg-primary/100 dark:hover:bg-primary/900/30 hover:text-primary-600 transition-opacity"
                             onClick={(e) => handleDeleteThread(e, thread)}
                             disabled={deleteConversationMutation.isPending}
                             data-testid={`button-delete-thread-${idx}`}
@@ -831,7 +831,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                       <span className="truncate max-w-[200px]">{attachment.fileName}</span>
                       <button
                         onClick={() => setAttachments(attachments.filter((_, i) => i !== idx))}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-primary-500 hover:text-primary-700"
                       >
                         ×
                       </button>
@@ -1057,7 +1057,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                     <span className="text-sm truncate max-w-[200px]">{attachment.fileName}</span>
                     <button
                       onClick={() => setComposeAttachments(composeAttachments.filter((_, i) => i !== idx))}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-primary-500 hover:text-primary-700"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -1165,7 +1165,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={confirmDelete}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-primary hover:bg-primary/700"
               disabled={deleteConversationMutation.isPending}
               data-testid="button-delete-confirm"
             >

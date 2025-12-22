@@ -323,7 +323,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
       id: "technical",
       title: "Technical Support",
       icon: Settings,
-      color: "bg-red-100 text-red-600",
+      color: "bg-red-100 text-primary-600",
       faqs: [
         {
           question: "What devices and browsers are supported?",

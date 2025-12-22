@@ -118,7 +118,7 @@ export default function AdminSubjectApproval({ onNavigate }: AdminSubjectApprova
       case "approved":
         return <Badge variant="outline" className="bg-green-100 text-green-800"><Check className="w-3 h-3 mr-1" />Approved</Badge>;
       case "rejected":
-        return <Badge variant="outline" className="bg-red-100 text-red-800"><XCircle className="w-3 h-3 mr-1" />Rejected</Badge>;
+        return <Badge variant="outline" className="bg-red-100 text-primary-800"><XCircle className="w-3 h-3 mr-1" />Rejected</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -149,7 +149,7 @@ export default function AdminSubjectApproval({ onNavigate }: AdminSubjectApprova
         <div className={`mb-4 p-4 rounded-lg flex items-center gap-2 ${
           ajaxStatus.type === 'loading' ? 'bg-blue-50 text-blue-700' :
           ajaxStatus.type === 'success' ? 'bg-green-50 text-green-700' :
-          'bg-red-50 text-red-700'
+          'bg-red-50 text-primary-700'
         }`}>
           {ajaxStatus.type === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
           {ajaxStatus.type === 'success' && <Check className="h-4 w-4" />}

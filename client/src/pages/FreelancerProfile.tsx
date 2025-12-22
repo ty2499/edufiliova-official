@@ -585,7 +585,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
         {/* AJAX Notification */}
         {notification && (
           <div className="container mx-auto px-4 pt-4 max-w-6xl">
-            <div className={`rounded-lg p-4 ${notification.variant === 'destructive' ? 'bg-red-500' : 'bg-green-500'} text-white shadow-lg`}>
+            <div className={`rounded-lg p-4 ${notification.variant === 'destructive' ? 'bg-primary' : 'bg-green-500'} text-white shadow-lg`}>
               <h3 className="font-semibold mb-1">{notification.title}</h3>
               <p className="text-sm">{notification.description}</p>
             </div>
@@ -716,7 +716,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                       {likeMutation.isPending ? (
                         <Timer className="h-4 w-4 animate-spin" />
                       ) : (
-                        <Heart className={`h-4 w-4 ${profileStats?.likedByMe ? 'fill-red-500 text-red-500' : ''}`} />
+                        <Heart className={`h-4 w-4 ${profileStats?.likedByMe ? 'fill-red-500 text-primary-500' : ''}`} />
                       )}
                     </Button>
                   </div>
@@ -1035,7 +1035,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
       {/* AJAX Notification */}
       {notification && (
         <div className="container mx-auto px-4 sm:px-6 pt-4 max-w-6xl">
-          <div className={`rounded-lg p-4 ${notification.variant === 'destructive' ? 'bg-red-500' : 'bg-green-500'} text-white shadow-lg`}>
+          <div className={`rounded-lg p-4 ${notification.variant === 'destructive' ? 'bg-primary' : 'bg-green-500'} text-white shadow-lg`}>
             <h3 className="font-semibold mb-1">{notification.title}</h3>
             <p className="text-sm">{notification.description}</p>
           </div>
@@ -1503,8 +1503,8 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                         disabled={likeWorkMutation.isPending}
                         className={`flex items-center gap-1 transition-colors cursor-pointer ${
                           workLikeStatus[selectedProject.id] 
-                            ? 'text-red-500 hover:text-red-600' 
-                            : 'text-gray-500 hover:text-red-500'
+                            ? 'text-primary-500 hover:text-primary-600' 
+                            : 'text-gray-500 hover:text-primary-500'
                         }`}
                         data-testid="button-like-work"
                       >

@@ -490,7 +490,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
       {inlineMessage && (
         <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full mx-4 px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 ${
           inlineMessage.type === 'error' 
-            ? 'bg-red-500/90 text-white' 
+            ? 'bg-primary/90 text-white' 
             : 'bg-green-500/90 text-white'
         }`}>
           {inlineMessage.type === 'error' ? (
@@ -511,7 +511,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
             </h1>
             <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-2">
               {(joinMeetingMutation.data?.meeting.status === 'live' || meetingData?.meeting.status === 'live') && (
-                <Badge className="bg-red-500 text-white text-xs">Live</Badge>
+                <Badge className="bg-primary text-white text-xs">Live</Badge>
               )}
               <span>{participants.length} participant{participants.length !== 1 ? 's' : ''}</span>
             </div>
@@ -542,7 +542,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
               variant="outline"
               size="sm"
               onClick={() => setShowEndConfirmation(true)}
-              className="text-red-600 dark:text-red-400 border-red-300 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-900/20"
+              className="text-primary-600 dark:text-primary-400 border-red-300 dark:border-red-800 hover:bg-primary/50 dark:hover:bg-primary/900/20"
               data-testid="button-end-meeting"
             >
               End Meeting
@@ -566,7 +566,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
         <div className="flex-1 flex items-center justify-center p-4">
           <Card className="max-w-md w-full">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-red-600 dark:text-red-400">
+              <CardTitle className="flex items-center gap-2 text-primary-600 dark:text-primary-400">
                 <AlertCircle className="h-5 w-5" />
                 Failed to Join Meeting
               </CardTitle>
@@ -975,7 +975,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
             
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-between p-3">
               <div className="flex items-center justify-between">
-                <Badge className="bg-red-500 text-white text-xs">Live</Badge>
+                <Badge className="bg-primary text-white text-xs">Live</Badge>
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity">
                   <Button
                     size="icon"
@@ -998,10 +998,10 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
                 <div className="flex items-center gap-2">
                   {!meeting.isViewOnly && (
                     <div className="flex items-center gap-1">
-                      <div className={`h-6 w-6 rounded-full flex items-center justify-center ${meeting.videoEnabled ? 'bg-gray-700/80' : 'bg-red-600'}`}>
+                      <div className={`h-6 w-6 rounded-full flex items-center justify-center ${meeting.videoEnabled ? 'bg-gray-700/80' : 'bg-primary'}`}>
                         {meeting.videoEnabled ? <Video className="h-3 w-3 text-white" /> : <VideoOff className="h-3 w-3 text-white" />}
                       </div>
-                      <div className={`h-6 w-6 rounded-full flex items-center justify-center ${meeting.audioEnabled ? 'bg-gray-700/80' : 'bg-red-600'}`}>
+                      <div className={`h-6 w-6 rounded-full flex items-center justify-center ${meeting.audioEnabled ? 'bg-gray-700/80' : 'bg-primary'}`}>
                         {meeting.audioEnabled ? <Mic className="h-3 w-3 text-white" /> : <MicOff className="h-3 w-3 text-white" />}
                       </div>
                     </div>
@@ -1033,7 +1033,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleEndMeeting}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-primary hover:bg-primary/700 text-white"
               data-testid="confirm-end-meeting"
             >
               End Meeting

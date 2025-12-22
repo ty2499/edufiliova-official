@@ -187,7 +187,7 @@ export function generateVoucherEmailHTML(
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
     .header {
-      background: linear-gradient(135deg, #ff5734 0%, #ff4520 100%);
+      background: linear-gradient(135deg, #0C332C 0%, #ff4520 100%);
       padding: 40px 30px;
       text-align: center;
       color: white;
@@ -197,7 +197,7 @@ export function generateVoucherEmailHTML(
       margin: 30px;
       padding: 40px;
       border-radius: 12px;
-      border: 3px solid #ff5734;
+      border: 3px solid #0C332C;
       position: relative;
     }
     .voucher-code {
@@ -212,7 +212,7 @@ export function generateVoucherEmailHTML(
     .amount {
       font-size: 48px;
       font-weight: bold;
-      color: #ff5734;
+      color: #0C332C;
       text-align: center;
       margin: 20px 0;
     }
@@ -221,7 +221,7 @@ export function generateVoucherEmailHTML(
       padding: 20px;
       border-radius: 8px;
       margin: 20px 0;
-      border-left: 4px solid #ff5734;
+      border-left: 4px solid #0C332C;
     }
     .footer {
       text-align: center;
@@ -239,7 +239,7 @@ export function generateVoucherEmailHTML(
       left: 0;
       right: 0;
       height: 20px;
-      background-image: repeating-linear-gradient(90deg, #ff5734 0, #ff5734 10px, transparent 10px, transparent 20px);
+      background-image: repeating-linear-gradient(90deg, #0C332C 0, #0C332C 10px, transparent 10px, transparent 20px);
     }
   </style>
 </head>
@@ -270,7 +270,7 @@ export function generateVoucherEmailHTML(
       </div>
 
       <div style="background: #fff3e0; padding: 15px; border-radius: 6px; margin-top: 20px;">
-        <h4 style="margin-top: 0; color: #ff5734;">Terms & Conditions:</h4>
+        <h4 style="margin-top: 0; color: #0C332C;">Terms & Conditions:</h4>
         <ul style="color: #666; font-size: 13px; line-height: 1.6; margin: 0; padding-left: 20px;">
           <li>One-time use only per customer</li>
           <li>Cannot be combined with other offers</li>

@@ -472,7 +472,7 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
                         <Button size="sm" variant="ghost">
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button size="sm" variant="ghost" className="text-red-600">
+                        <Button size="sm" variant="ghost" className="text-primary-600">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>

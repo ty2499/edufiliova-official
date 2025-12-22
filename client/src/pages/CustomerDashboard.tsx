@@ -776,7 +776,7 @@ function OrderSlipViewer({
                   <div className="border-t-2 border-gray-900 pt-4">
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold text-gray-900">Total Amount</span>
-                      <span className="text-2xl font-bold text-[#ff5734]" data-testid="text-total-amount">
+                      <span className="text-2xl font-bold text-[#A0FAB2]" data-testid="text-total-amount">
                         ${parseFloat(orderDetails.order.totalAmount).toFixed(2)}
                       </span>
                     </div>
@@ -1761,14 +1761,14 @@ function MembershipPage() {
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               ) : (
-                <svg className="h-5 w-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="h-5 w-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
               )}
             </div>
             <div className="flex-1">
               <p className={`text-sm ${
-                message.type === 'success' ? 'text-blue-800' : 'text-red-800'
+                message.type === 'success' ? 'text-blue-800' : 'text-primary-800'
               }`}>
                 {message.text}
               </p>
@@ -1776,7 +1776,7 @@ function MembershipPage() {
             <button 
               onClick={() => setMessage(null)}
               className={`flex-shrink-0 ${
-                message.type === 'success' ? 'text-blue-600 hover:text-blue-800' : 'text-red-600 hover:text-red-800'
+                message.type === 'success' ? 'text-blue-600 hover:text-blue-800' : 'text-primary-600 hover:text-primary-800'
               }`}
             >
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
@@ -2024,7 +2024,7 @@ function MembershipPage() {
                       ? upgradeCosts[selectedPlan.planId].upgradeCost
                       : parseFloat(billingCycle === 'monthly' ? selectedPlan?.monthlyPrice || '0' : selectedPlan?.yearlyPrice || '0');
                     return parseFloat(wallet?.balance || '0') < actualCost && (
-                      <div className="mt-2 text-xs text-red-600">
+                      <div className="mt-2 text-xs text-primary-600">
                         Insufficient balance. You need ${actualCost.toFixed(2)} but have ${parseFloat(wallet?.balance || '0').toFixed(2)}. Please add funds to your wallet or pay with card.
                       </div>
                     );
@@ -2328,7 +2328,7 @@ function EmbeddedPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { am
                 </div>
 
                 {error && (
-                  <div className="bg-red-50 text-red-800 p-3 rounded-lg text-sm">
+                  <div className="bg-red-50 text-primary-800 p-3 rounded-lg text-sm">
                     {error}
                   </div>
                 )}
@@ -2607,7 +2607,7 @@ function MembershipPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { 
                 </div>
 
                 {error && (
-                  <div className="bg-red-50 text-red-800 p-3 rounded-lg text-sm">
+                  <div className="bg-red-50 text-primary-800 p-3 rounded-lg text-sm">
                     {error}
                   </div>
                 )}
@@ -3553,8 +3553,8 @@ function SettingsPage() {
       {updateMutation.isError && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4" data-testid="message-save-error">
           <div className="flex items-center gap-3">
-            <X className="h-5 w-5 text-red-600" />
-            <p className="text-sm text-red-800 font-medium">
+            <X className="h-5 w-5 text-primary-600" />
+            <p className="text-sm text-primary-800 font-medium">
               Failed to save changes. Please try again.
             </p>
           </div>

@@ -659,7 +659,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       </div>
 
       {errors.general && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />
           <span>{errors.general}</span>
         </div>
@@ -714,7 +714,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.loginIdentifier ? 'border-red-500' : ''}`}
             data-testid="input-login-identifier"
           />
-          {errors.loginIdentifier && <p className="text-sm text-red-500 mt-1">{errors.loginIdentifier}</p>}
+          {errors.loginIdentifier && <p className="text-sm text-primary-500 mt-1">{errors.loginIdentifier}</p>}
         </div>
 
         <div>
@@ -742,7 +742,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
           </div>
-          {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+          {errors.password && <p className="text-sm text-primary-500 mt-1">{errors.password}</p>}
         </div>
 
         <div className="flex items-center justify-between">
@@ -840,7 +840,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </div>
 
         {errors.general && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
             <AlertCircle className="h-4 w-4 flex-shrink-0" />
             <span>{errors.general}</span>
           </div>
@@ -868,7 +868,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     data-testid="input-name"
                   />
                 </div>
-                {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
+                {errors.name && <p className="text-sm text-primary-500 mt-1">{errors.name}</p>}
               </div>
 
               <div>
@@ -887,7 +887,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     data-testid="input-email"
                   />
                 </div>
-                {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+                {errors.email && <p className="text-sm text-primary-500 mt-1">{errors.email}</p>}
               </div>
 
               <div>
@@ -914,7 +914,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   </button>
                 </div>
                 <p className="text-xs text-gray-500 mt-1">Minimum 6-8 characters</p>
-                {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+                {errors.password && <p className="text-sm text-primary-500 mt-1">{errors.password}</p>}
               </div>
 
               <div>
@@ -930,7 +930,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.confirmPassword ? 'border-red-500' : ''}`}
                   data-testid="input-confirm-password"
                 />
-                {errors.confirmPassword && <p className="text-sm text-red-500 mt-1">{errors.confirmPassword}</p>}
+                {errors.confirmPassword && <p className="text-sm text-primary-500 mt-1">{errors.confirmPassword}</p>}
               </div>
             </div>
           </div>
@@ -953,7 +953,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 <p className="text-xs text-gray-500 mt-1">
                   This number is used for login codes, homework and learning updates on WhatsApp.
                 </p>
-                {errors.phoneNumber && <p className="text-sm text-red-500 mt-1">{errors.phoneNumber}</p>}
+                {errors.phoneNumber && <p className="text-sm text-primary-500 mt-1">{errors.phoneNumber}</p>}
               </div>
 
               <div>
@@ -974,7 +974,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     data-testid="input-age"
                   />
                 </div>
-                {errors.age && <p className="text-sm text-red-500 mt-1">{errors.age}</p>}
+                {errors.age && <p className="text-sm text-primary-500 mt-1">{errors.age}</p>}
               </div>
 
               <div className="flex items-start gap-2">
@@ -1017,7 +1017,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.country_id && <p className="text-sm text-red-500 mt-1">{errors.country_id}</p>}
+                {errors.country_id && <p className="text-sm text-primary-500 mt-1">{errors.country_id}</p>}
               </div>
 
               <div>
@@ -1038,7 +1038,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     <SelectItem value="Other" data-testid="option-other">Other</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.educationSystem && <p className="text-sm text-red-500 mt-1">{errors.educationSystem}</p>}
+                {errors.educationSystem && <p className="text-sm text-primary-500 mt-1">{errors.educationSystem}</p>}
               </div>
 
               <div>
@@ -1060,7 +1060,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.grade && <p className="text-sm text-red-500 mt-1">{errors.grade}</p>}
+                {errors.grade && <p className="text-sm text-primary-500 mt-1">{errors.grade}</p>}
               </div>
 
               <div>
@@ -1136,7 +1136,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-purple-600 hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-purple-600 hover:underline" data-testid="link-privacy-policy">Privacy Policy</button>
               </Label>
             </div>
-            {errors.agreeToTerms && <p className="text-sm text-red-500">{errors.agreeToTerms}</p>}
+            {errors.agreeToTerms && <p className="text-sm text-primary-500">{errors.agreeToTerms}</p>}
 
             <div className="flex items-start gap-2">
               <input
@@ -1151,7 +1151,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 I confirm I am a student or signing up on behalf of a student
               </Label>
             </div>
-            {errors.confirmStudent && <p className="text-sm text-red-500">{errors.confirmStudent}</p>}
+            {errors.confirmStudent && <p className="text-sm text-primary-500">{errors.confirmStudent}</p>}
           </div>
 
           <Button
@@ -1205,7 +1205,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       </div>
 
       {errors.general && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />
           <span>{errors.general}</span>
         </div>
@@ -1228,7 +1228,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               data-testid="input-teacher-name"
             />
           </div>
-          {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
+          {errors.name && <p className="text-sm text-primary-500 mt-1">{errors.name}</p>}
         </div>
 
         <div>
@@ -1247,7 +1247,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               data-testid="input-teacher-email"
             />
           </div>
-          {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+          {errors.email && <p className="text-sm text-primary-500 mt-1">{errors.email}</p>}
         </div>
 
         <div>
@@ -1292,7 +1292,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
-          {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+          {errors.password && <p className="text-sm text-primary-500 mt-1">{errors.password}</p>}
         </div>
 
         <div>
@@ -1311,7 +1311,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               data-testid="input-confirm-teacher-password"
             />
           </div>
-          {errors.confirmPassword && <p className="text-sm text-red-500 mt-1">{errors.confirmPassword}</p>}
+          {errors.confirmPassword && <p className="text-sm text-primary-500 mt-1">{errors.confirmPassword}</p>}
         </div>
 
         <Button
@@ -1424,7 +1424,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
 
           {errors.code && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
               {errors.code}
             </div>
           )}
@@ -1551,7 +1551,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
 
           {errors.code && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
               {errors.code}
             </div>
           )}
@@ -1625,7 +1625,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       </div>
 
       {errors.forgotPasswordEmail && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />
           <span>{errors.forgotPasswordEmail}</span>
         </div>
@@ -1648,7 +1648,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               data-testid="input-forgot-password-email"
             />
           </div>
-          {errors.forgotPasswordEmail && <p className="text-sm text-red-500 mt-1">{errors.forgotPasswordEmail}</p>}
+          {errors.forgotPasswordEmail && <p className="text-sm text-primary-500 mt-1">{errors.forgotPasswordEmail}</p>}
         </div>
 
         <Button

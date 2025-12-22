@@ -395,7 +395,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
       marketing: 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200',
       photography: 'bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-200',
       music: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-200',
-      health: 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200',
+      health: 'bg-red-100 text-primary-800 dark:bg-red-900/50 dark:text-primary-200',
       language: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200',
       other: 'bg-gray-100 text-gray-800 dark:bg-gray-700/50 dark:text-gray-200'
     };

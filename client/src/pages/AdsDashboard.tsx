@@ -163,7 +163,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries }: {
             variant="outline"
             size="sm"
             onClick={clearSelection}
-            className="text-xs bg-white hover:bg-red-100 border-white text-red-600"
+            className="text-xs bg-white hover:bg-primary/100 border-white text-primary-600"
           >
             Clear All ({selectedCountries.length})
           </Button>
@@ -774,10 +774,10 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
         {formErrors.length > 0 && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
             <div className="flex items-start">
-              <XCircle className="h-5 w-5 text-red-500 mr-2 mt-0.5" />
+              <XCircle className="h-5 w-5 text-primary-500 mr-2 mt-0.5" />
               <div className="flex-1">
-                <h3 className="text-sm font-medium text-red-800">Please fix the following issues:</h3>
-                <ul className="mt-1 list-disc list-inside text-sm text-red-700">
+                <h3 className="text-sm font-medium text-primary-800">Please fix the following issues:</h3>
+                <ul className="mt-1 list-disc list-inside text-sm text-primary-700">
                   {formErrors.map((error, index) => (
                     <li key={index}>{error}</li>
                   ))}
@@ -963,10 +963,10 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
       {formErrors.length > 0 && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
           <div className="flex items-start">
-            <XCircle className="h-5 w-5 text-red-500 mr-2 mt-0.5" />
+            <XCircle className="h-5 w-5 text-primary-500 mr-2 mt-0.5" />
             <div className="flex-1">
-              <h3 className="text-sm font-medium text-red-800">Error:</h3>
-              <ul className="mt-1 list-disc list-inside text-sm text-red-700">
+              <h3 className="text-sm font-medium text-primary-800">Error:</h3>
+              <ul className="mt-1 list-disc list-inside text-sm text-primary-700">
                 {formErrors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}
@@ -1033,7 +1033,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
           {isLoading ? (
             <div className="text-center py-8">Loading ads...</div>
           ) : error ? (
-            <div className="text-center py-8 text-red-600">Error loading ads</div>
+            <div className="text-center py-8 text-primary-600">Error loading ads</div>
           ) : ads.length === 0 ? (
             <div className="text-center py-8">No ads found. Create your first ad!</div>
           ) : (
@@ -1087,7 +1087,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
                             size="sm"
                             variant="ghost"
                             onClick={() => deleteAdMutation.mutate(ad.id)}
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            className="text-primary-600 hover:text-primary-700 hover:bg-primary/50"
                             data-testid={`button-delete-ad-${ad.id}`}
                             title="Delete Ad"
                           >
@@ -1109,7 +1109,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
                                 size="sm"
                                 variant="ghost"
                                 onClick={() => rejectAdMutation.mutate(ad.id)}
-                                className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                className="text-primary-600 hover:text-primary-700 hover:bg-primary/50"
                                 data-testid={`button-reject-ad-${ad.id}`}
                                 title="Reject Ad"
                               >

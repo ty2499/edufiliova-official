@@ -208,7 +208,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       icon: BookOpen, 
       name: "Literature", 
       lessons: 250, 
-      color: "bg-red-500", 
+      color: "bg-primary", 
       free: true, 
       image: literatureLessonImage,
       description: "Analyze classic and modern texts, improve writing"

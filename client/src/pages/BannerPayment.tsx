@@ -347,7 +347,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
             <div className="space-y-4 md:space-y-6">
               {/* Error Display */}
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-primary-700">
                   {error}
                 </div>
               )}
@@ -620,7 +620,7 @@ export default function BannerPayment({ onNavigate }: BannerPaymentProps) {
       <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
         <Card className="w-full max-w-md mx-auto">
           <CardHeader className="text-center">
-            <CardTitle className="text-red-600">Payment Error</CardTitle>
+            <CardTitle className="text-primary-600">Payment Error</CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-gray-600">Unable to load payment information.</p>

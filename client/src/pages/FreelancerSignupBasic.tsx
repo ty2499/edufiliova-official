@@ -234,7 +234,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               {errorMessage && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
                   {errorMessage}
                 </div>
               )}
@@ -315,7 +315,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
           <CardContent>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               {errorMessage && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-primary-700 text-sm">
                   {errorMessage}
                 </div>
               )}

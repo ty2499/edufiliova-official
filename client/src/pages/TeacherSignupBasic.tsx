@@ -258,7 +258,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
 
           {errorMessage && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-600 text-sm">
               {errorMessage}
             </div>
           )}
@@ -410,7 +410,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {errorMessage && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-600 text-sm">
               {errorMessage}
             </div>
           )}
@@ -425,7 +425,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               {...form.register("fullName")}
             />
             {form.formState.errors.fullName && (
-              <p className="text-sm text-red-500 mt-1">{form.formState.errors.fullName.message}</p>
+              <p className="text-sm text-primary-500 mt-1">{form.formState.errors.fullName.message}</p>
             )}
           </div>
 
@@ -439,7 +439,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               {...form.register("displayName")}
             />
             {form.formState.errors.displayName && (
-              <p className="text-sm text-red-500 mt-1">{form.formState.errors.displayName.message}</p>
+              <p className="text-sm text-primary-500 mt-1">{form.formState.errors.displayName.message}</p>
             )}
           </div>
 
@@ -454,7 +454,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               {...form.register("email")}
             />
             {form.formState.errors.email && (
-              <p className="text-sm text-red-500 mt-1">{form.formState.errors.email.message}</p>
+              <p className="text-sm text-primary-500 mt-1">{form.formState.errors.email.message}</p>
             )}
           </div>
 
@@ -468,7 +468,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               />
             </div>
             {form.formState.errors.phoneNumber && (
-              <p className="text-sm text-red-500 mt-1">{form.formState.errors.phoneNumber.message}</p>
+              <p className="text-sm text-primary-500 mt-1">{form.formState.errors.phoneNumber.message}</p>
             )}
           </div>
 
@@ -497,7 +497,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               </SelectContent>
             </Select>
             {form.formState.errors.country && (
-              <p className="text-sm text-red-500 mt-1">{form.formState.errors.country.message}</p>
+              <p className="text-sm text-primary-500 mt-1">{form.formState.errors.country.message}</p>
             )}
           </div>
 
@@ -522,7 +522,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               </button>
             </div>
             {form.formState.errors.password && (
-              <p className="text-sm text-red-500 mt-1">{form.formState.errors.password.message}</p>
+              <p className="text-sm text-primary-500 mt-1">{form.formState.errors.password.message}</p>
             )}
           </div>
 
@@ -547,7 +547,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               </button>
             </div>
             {form.formState.errors.confirmPassword && (
-              <p className="text-sm text-red-500 mt-1">{form.formState.errors.confirmPassword.message}</p>
+              <p className="text-sm text-primary-500 mt-1">{form.formState.errors.confirmPassword.message}</p>
             )}
           </div>
 

@@ -148,7 +148,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                       data-testid="input-name"
                     />
                     {form.formState.errors.name && (
-                      <p className="text-xs text-red-600">{form.formState.errors.name.message}</p>
+                      <p className="text-xs text-primary-600">{form.formState.errors.name.message}</p>
                     )}
                   </div>
 
@@ -165,7 +165,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                       data-testid="input-email"
                     />
                     {form.formState.errors.email && (
-                      <p className="text-xs text-red-600">{form.formState.errors.email.message}</p>
+                      <p className="text-xs text-primary-600">{form.formState.errors.email.message}</p>
                     )}
                   </div>
 
@@ -219,7 +219,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                       </SelectContent>
                     </Select>
                     {form.formState.errors.projectType && (
-                      <p className="text-xs text-red-600">{form.formState.errors.projectType.message}</p>
+                      <p className="text-xs text-primary-600">{form.formState.errors.projectType.message}</p>
                     )}
                   </div>
 
@@ -279,7 +279,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                       data-testid="textarea-message"
                     />
                     {form.formState.errors.message && (
-                      <p className="text-xs text-red-600">{form.formState.errors.message.message}</p>
+                      <p className="text-xs text-primary-600">{form.formState.errors.message.message}</p>
                     )}
                   </div>
 
@@ -312,7 +312,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                           <button
                             type="button"
                             onClick={() => setAttachedFile(null)}
-                            className="text-red-500 hover:text-red-700 text-xl"
+                            className="text-primary-500 hover:text-primary-700 text-xl"
                           >
                             ×
                           </button>
@@ -326,7 +326,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
 
                   {errorMessage && (
                     <div className="p-4 bg-red-100 border-2 border-red-500 rounded-lg" data-testid="error-message">
-                      <p className="text-red-700 font-medium text-sm">{errorMessage}</p>
+                      <p className="text-primary-700 font-medium text-sm">{errorMessage}</p>
                     </div>
                   )}
 

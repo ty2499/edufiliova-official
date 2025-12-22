@@ -182,7 +182,7 @@ export default function MeetingScheduler() {
       {inlineMessage && (
         <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full mx-4 px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 ${
           inlineMessage.type === 'error' 
-            ? 'bg-red-500/90 text-white' 
+            ? 'bg-primary/90 text-white' 
             : 'bg-green-500/90 text-white'
         }`}>
           {inlineMessage.type === 'error' ? (

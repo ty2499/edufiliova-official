@@ -186,7 +186,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
           <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4" data-testid="form-checkout-auth">
             {errors.general && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
                 <AlertCircle className="h-4 w-4 flex-shrink-0" />
                 <span>{errors.general}</span>
               </div>
@@ -205,7 +205,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   required
                   data-testid="input-name"
                 />
-                {errors.name && <p className="text-sm text-red-600">{errors.name}</p>}
+                {errors.name && <p className="text-sm text-primary-600">{errors.name}</p>}
               </div>
             )}
 
@@ -224,7 +224,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   data-testid="input-email"
                 />
               </div>
-              {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+              {errors.email && <p className="text-sm text-primary-600">{errors.email}</p>}
             </div>
 
             <div className="space-y-2">
@@ -250,7 +250,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+              {errors.password && <p className="text-sm text-primary-600">{errors.password}</p>}
             </div>
 
             {!isLogin && (
@@ -269,7 +269,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                     data-testid="input-confirm-password"
                   />
                 </div>
-                {errors.confirmPassword && <p className="text-sm text-red-600">{errors.confirmPassword}</p>}
+                {errors.confirmPassword && <p className="text-sm text-primary-600">{errors.confirmPassword}</p>}
               </div>
             )}
 
@@ -293,7 +293,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                     Privacy Policy
                   </a>
                 </label>
-                {errors.agreeToTerms && <p className="text-sm text-red-600">{errors.agreeToTerms}</p>}
+                {errors.agreeToTerms && <p className="text-sm text-primary-600">{errors.agreeToTerms}</p>}
               </div>
             )}
 
