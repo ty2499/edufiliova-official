@@ -135,6 +135,25 @@ export default function NewPaymentModal({
     }
   });
 
+  const coursePrice = parseFloat(course.price?.toString() || '0');
+  
+  // Calculate discount and final price in USD
+  const calculateDiscount = () => {
+    if (!appliedCoupon) return 0;
+    
+    const { discountType, discountValue, maxDiscount } = appliedCoupon.coupon;
+    
+    if (discountType === 'percentage') {
+      const discount = (coursePrice * discountValue) / 100;
+      return maxDiscount ? Math.min(discount, maxDiscount) : discount;
+    } else {
+      return Math.min(discountValue, coursePrice);
+    }
+  };
+  
+  const discountAmount = calculateDiscount();
+  const finalPriceUSD = Math.max(coursePrice - discountAmount, 0);
+
   // Initialize Dodo Payments overlay checkout SDK
   const [dodoInitialized, setDodoInitialized] = useState(false);
   
@@ -174,40 +193,6 @@ export default function NewPaymentModal({
       }
     }
   }, [isDodoEnabled, dodoInitialized, finalPriceUSD, courseId]);
-
-  // Set initial payment method based on available options
-  useEffect(() => {
-    if (!gatewaysLoading && primaryGateway && !selectedMethod) {
-      // Use the primary gateway as the default payment method
-      if (primaryGateway.gatewayId === 'vodapay') {
-        setSelectedMethod('vodapay');
-      } else if (primaryGateway.gatewayId === 'dodopay' || primaryGateway.gatewayId === 'dodo') {
-        setSelectedMethod('dodopay');
-      } else {
-        // For other gateways (paystack, paypal, etc.)
-        setSelectedMethod(primaryGateway.gatewayId as PaymentMethod);
-      }
-    }
-  }, [gatewaysLoading, primaryGateway, selectedMethod]);
-
-  const coursePrice = parseFloat(course.price?.toString() || '0');
-  
-  // Calculate discount and final price in USD
-  const calculateDiscount = () => {
-    if (!appliedCoupon) return 0;
-    
-    const { discountType, discountValue, maxDiscount } = appliedCoupon.coupon;
-    
-    if (discountType === 'percentage') {
-      const discount = (coursePrice * discountValue) / 100;
-      return maxDiscount ? Math.min(discount, maxDiscount) : discount;
-    } else {
-      return Math.min(discountValue, coursePrice);
-    }
-  };
-  
-  const discountAmount = calculateDiscount();
-  const finalPriceUSD = Math.max(coursePrice - discountAmount, 0);
   
   // Convert prices to local currency for South African users
   const coursePriceLocal = isSouthAfrican ? coursePrice * exchangeRate : coursePrice;
