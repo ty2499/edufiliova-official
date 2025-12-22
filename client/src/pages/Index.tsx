@@ -949,12 +949,16 @@ const Index = () => {
       return;
     }
     
-    // Check if user clicked logo to navigate home - skip auto-routing once
+    // Check if user clicked logo to navigate home - skip auto-routing while on home
     const forceHome = localStorage.getItem('force_home_navigation');
-    if (forceHome === 'true' && currentState === 'home') {
-      console.log('🔄 Skipping auto-routing - user clicked logo to go home');
-      localStorage.removeItem('force_home_navigation');
-      return;
+    if (forceHome === 'true') {
+      if (currentState === 'home') {
+        console.log('🔄 Skipping auto-routing - user clicked logo to go home');
+        return;
+      } else {
+        // User navigated away from home, clear the flag
+        localStorage.removeItem('force_home_navigation');
+      }
     }
     
     if (!loading && user && profile) {
