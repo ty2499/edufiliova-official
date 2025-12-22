@@ -121,8 +121,19 @@ interface ProductShopProps {
 }
 
 export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchChange, navigationData }: ProductShopProps = {}) {
-  const { user, loading: authLoading } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const queryClient = useQueryClient();
+  
+  // Helper function to get the appropriate dashboard based on user role
+  const getDashboardForRole = (): string => {
+    if (!profile) return 'customer-dashboard';
+    switch (profile.role) {
+      case 'teacher': return 'teacher-dashboard';
+      case 'freelancer': return 'freelancer-dashboard';
+      case 'student': return 'student-dashboard';
+      default: return 'customer-dashboard';
+    }
+  };
   
   // Only show login controls when auth is fully loaded and user is NOT logged in
   // This prevents showing login UI while auth is still checking the session
@@ -790,7 +801,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                   className="flex items-center justify-center px-3 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform"
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
-                  onClick={() => onNavigate && onNavigate('customer-dashboard')}
+                  onClick={() => onNavigate && onNavigate(getDashboardForRole())}
                   data-testid="button-profile"
                 >
                   <User className="h-4 w-4" />
@@ -881,7 +892,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                   className="flex items-center gap-1 px-2 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200"
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
-                  onClick={() => onNavigate && onNavigate('customer-dashboard')}
+                  onClick={() => onNavigate && onNavigate(getDashboardForRole())}
                   data-testid="button-profile-mobile"
                 >
                   <User className="h-4 w-4" />

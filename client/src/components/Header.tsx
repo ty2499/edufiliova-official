@@ -786,7 +786,15 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       </div>
                     </button>
                     <button 
-                      onClick={() => {onNavigate("customer-dashboard"); setIsMobileMenuOpen(false);}}
+                      onClick={() => {
+                        let dashboard = "customer-dashboard";
+                        if (profile?.role === 'admin') dashboard = "admin-dashboard";
+                        else if (profile?.role === 'teacher') dashboard = "teacher-dashboard";
+                        else if (profile?.role === 'freelancer') dashboard = "freelancer-dashboard";
+                        else if (profile?.role === 'student') dashboard = "student-dashboard";
+                        onNavigate(dashboard);
+                        setIsMobileMenuOpen(false);
+                      }}
                       className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                       <FolderOpen className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#ff5834" }} />
