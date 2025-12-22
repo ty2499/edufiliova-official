@@ -453,6 +453,13 @@ const getInitialState = (): AppState => {
       return "home"; // Temporary - useEffect will redirect
     }
     
+    // Cordova mobile app users WITHOUT session should see GetStarted onboarding
+    // They can click "Explore Website" to view the landing page externally
+    if (isInCordovaApp() && !sessionId) {
+      console.log('📱 Cordova app: unauthenticated user, showing GetStarted screen');
+      return "get-started";
+    }
+    
     // If path is root or /app, return home
     if (path === '/' || path === '/app' || path.startsWith('/app/')) {
       return "home";
