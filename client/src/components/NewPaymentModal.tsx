@@ -200,8 +200,55 @@ export default function NewPaymentModal({
     }
   }, [isDodoEnabled, dodoInitialized, finalPriceUSD, courseId]);
   
-  // Convert prices to local currency for South African users
-  const coursePriceLocal = isSouthAfrican ? coursePrice * exchangeRate : coursePrice;
+  // Handle Dodo Payment
+  const handleDodoPayment = async () => {
+    setProcessing(true);
+    try {
+      // Create DodoPay session
+      const response = await apiRequest('POST', '/api/dodopay/checkout-session', {
+        amount: finalPriceUSD,
+        currency: 'USD',
+        courseId: courseId,
+        courseName: course.title,
+        userEmail: profile?.email,
+        userName: profile?.name,
+        productName: course.title,
+        productDescription: course.description,
+        productType: 'course'
+      });
+
+      if (response.success && response.checkoutUrl) {
+        // Use Dodo overlay if initialized, otherwise redirect
+        if (dodoInitialized) {
+          DodoPayments.OpenCheckout({
+            url: response.checkoutUrl
+          });
+        } else {
+          window.location.href = response.checkoutUrl;
+        }
+      } else {
+        throw new Error(response.error || 'Failed to create payment session');
+      }
+    } catch (error: any) {
+      console.error("DodoPay payment error:", error);
+      setPaymentDetails({
+        transactionId: 'N/A',
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        paymentMethod: 'Card',
+        total: finalPriceUSD,
+        currency: '$',
+        courseId: courseId,
+        errorMessage: error?.message || 'Failed to create DodoPay payment session. Please try again or use another payment method.'
+      });
+      setPaymentStatus('failed');
+      setShowSuccess(true);
+    } finally {
+      // Note: processing is set to false in Dodo event handlers or here if session creation fails
+      if (!dodoInitialized) {
+        setProcessing(false);
+      }
+    }
+  };
   const discountAmountLocal = isSouthAfrican ? discountAmount * exchangeRate : discountAmount;
   const finalPriceLocal = isSouthAfrican ? finalPriceUSD * exchangeRate : finalPriceUSD;
 

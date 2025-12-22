@@ -177,7 +177,6 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
 
     // Step 1: Auto-create the product in DodoPay if it doesn't exist
     console.log(`📦 Auto-creating product in DodoPay: ${itemId}...`);
-    let productCreated = false;
     try {
       await dodo.products.create({
         name: itemName,
@@ -187,8 +186,8 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
           amount: Math.round(amount * 100), // Price in cents
         },
         tax_category: 'no_tax', // Default to no tax
+        type: 'digital', // Required field
       } as any);
-      productCreated = true;
       console.log(`✅ Product created: ${itemId}`);
     } catch (productError: any) {
       // Product might already exist or have different requirements
@@ -197,7 +196,7 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
 
     // Step 2: Create checkout session with the product
     console.log(`🛒 Creating checkout session in DodoPay for ${itemName}...`);
-    const checkoutSession = await dodo.checkoutSessions.create({
+    const checkoutSession = (await dodo.checkoutSessions.create({
       product_cart: [
         {
           product_id: itemId,
@@ -225,7 +224,7 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         source: 'edufiliova_checkout',
       },
       return_url: successReturnUrl,
-    } as any);
+    } as any)) as any;
 
     console.log('✅ DoDo Pay checkout session created:', checkoutSession.id);
 

@@ -439,6 +439,42 @@ export default function SubscriptionPaymentModal({
 
   const initializePaystack = usePaystackPayment(paystackConfig);
 
+  // Handle Dodo Payment
+  const handleDodoPayment = async () => {
+    setProcessing(true);
+    try {
+      // Create DodoPay session
+      const response = await apiRequest('POST', '/api/dodopay/checkout-session', {
+        amount: plan.price,
+        currency: 'USD',
+        courseId: `sub_${plan.id.toLowerCase().replace(/\s+/g, '_')}`,
+        courseName: `${plan.name} Subscription`,
+        userEmail: user?.email,
+        userName: user?.name,
+        productName: `${plan.name} Subscription`,
+        productDescription: plan.description,
+        productType: 'membership'
+      });
+
+      if (response.success && response.checkoutUrl) {
+        // Use Dodo overlay if initialized, otherwise redirect
+        if (dodoInitialized) {
+          DodoPayments.OpenCheckout({
+            url: response.checkoutUrl
+          });
+        } else {
+          window.location.href = response.checkoutUrl;
+        }
+      } else {
+        throw new Error(response.error || 'Failed to create payment session');
+      }
+    } catch (error: any) {
+      console.error("DodoPay payment error:", error);
+      setError(error.message || 'Failed to initialize DodoPay payment');
+      setProcessing(false);
+    }
+  };
+
   // Handle Saved Card Payment
   const handleSavedCardPayment = async () => {
     if (!selectedSavedCard || !stripe) return;
