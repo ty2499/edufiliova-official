@@ -180,14 +180,10 @@ const PATH_TO_STATE: Record<string, AppState> = {
   '/checkout/membership': 'subscribe',
 };
 
-// Pages that are landing/public only - authenticated /app users should bypass these
+// Pages that ALWAYS redirect to dashboard - only home/auth pages
+// Other public pages (about, help, contact, shop, etc.) are browsable by authenticated users
 const LANDING_ONLY_PAGES: AppState[] = [
-  'home', 'auth', 'premium', 'about', 'contact', 'help', 'learn-more',
-  'become-teacher', 'advertise-with-us', 'terms', 'privacy', 'privacy-policy',
-  'cookies-policy', 'refund-policy', 'student-terms', 'teacher-terms', 
-  'school-terms', 'chat-terms', 'whatsapp-policy', 'data-retention',
-  'copyright-dmca', 'community-guidelines', 'payment-billing', 'payout-policy',
-  'customer-pricing', 'creator-pricing', 'education-pricing', 'teacher-pricing'
+  'home', 'auth'
 ];
 
 // LocalStorage key for last visited in-app page (for /app path users)
