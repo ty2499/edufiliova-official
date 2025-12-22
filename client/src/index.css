@@ -133,107 +133,107 @@ All colors MUST be HSL.
     /* Mobile navigation height for bottom spacing */
     --mobile-nav-height: 64px;
     
-    /* Primary Orange-Red: #ff5734 */
-    --primary: 10 100% 60%;
+    /* Primary Forest Green: #0C332C */
+    --primary: 166 50% 15%;
     --primary-foreground: 0 0% 100%;
 
-    /* Accent Orange: #FF5734 */
-    --accent: 9 100% 60%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent Mint Green: #A0FAB2 */
+    --accent: 142 95% 67%;
+    --accent-foreground: 14 5% 8%;
 
     /* Dark text: #151313 */
     --foreground: 14 5% 8%;
     
-    /* Light background / card bg: #E3E6E9 */
-    --background: 214 17% 90%;
-    --card: 214 17% 90%;
+    /* Light background / card bg: Light Teal */
+    --background: 160 35% 85%;
+    --card: 160 35% 90%;
     --card-foreground: 14 5% 8%;
 
-    /* Accent Lime: #C4F03B */
-    --success: 75 84% 60%;
+    /* Success Mint: #A0FAB2 */
+    --success: 142 95% 67%;
     --success-foreground: 0 0% 0%;
 
-    --popover: 214 17% 90%;
+    --popover: 160 35% 90%;
     --popover-foreground: 14 5% 8%;
 
-    /* Text secondary */
-    --secondary: 220 13% 91%;
-    --secondary-foreground: 14 5% 8%;
+    /* Text secondary - Medium Green */
+    --secondary: 152 32% 50%;
+    --secondary-foreground: 0 0% 100%;
 
-    /* Border color */
-    --muted: 220 13% 91%;
+    /* Border color - Light teal */
+    --muted: 160 35% 85%;
     /* Muted text */
-    --muted-foreground: 215 16% 47%;
+    --muted-foreground: 166 50% 30%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     /* Border */
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 226 79% 53%;
+    --border: 160 35% 80%;
+    --input: 160 35% 92%;
+    --ring: 160 35% 60%;
 
-    /* Progress color - using accent orange */
-    --progress: 9 100% 60%;
+    /* Progress color - using forest green */
+    --progress: 166 50% 25%;
     --progress-foreground: 0 0% 100%;
-    --progress-light: 9 100% 95%;
+    --progress-light: 160 35% 90%;
 
     /* Math card colors */
-    --math-primary: 226 79% 53%;
-    --math-light: 226 79% 95%;
+    --math-primary: 166 50% 25%;
+    --math-light: 160 35% 92%;
 
     /* Biology card colors */
-    --biology-primary: 258 90% 66%;
-    --biology-light: 263 100% 95%;
+    --biology-primary: 152 32% 40%;
+    --biology-light: 160 35% 92%;
 
     /* Student card colors */
-    --student-card-primary: 217 91% 60%;
-    --student-card-light: 217 100% 95%;
-    --student-card-border: 217 100% 90%;
+    --student-card-primary: 166 50% 20%;
+    --student-card-light: 160 35% 92%;
+    --student-card-border: 160 35% 85%;
     --student-card-text: 0 0% 100%;
-    --student-card-secondary: 220 13% 91%;
+    --student-card-secondary: 142 95% 67%;
 
     /* Teacher card colors */
-    --teacher-card-primary: 168 85% 52%;
-    --teacher-card-light: 168 100% 95%;
-    --teacher-card-border: 168 100% 90%;
+    --teacher-card-primary: 152 32% 40%;
+    --teacher-card-light: 160 35% 92%;
+    --teacher-card-border: 160 35% 85%;
     --teacher-card-text: 0 0% 100%;
 
     /* Course card colors */
-    --course-card-primary: 262 83% 58%;
-    --course-card-light: 262 100% 95%;
-    --course-card-border: 262 100% 90%;
+    --course-card-primary: 166 50% 25%;
+    --course-card-light: 160 35% 92%;
+    --course-card-border: 160 35% 85%;
     --course-card-text: 0 0% 100%;
 
     /* Achievement card colors */
-    --achievement-card-primary: 45 93% 47%;
-    --achievement-card-light: 45 100% 95%;
-    --achievement-card-border: 45 100% 90%;
-    --achievement-card-text: 0 0% 100%;
+    --achievement-card-primary: 142 95% 67%;
+    --achievement-card-light: 142 95% 90%;
+    --achievement-card-border: 142 95% 80%;
+    --achievement-card-text: 14 5% 8%;
 
     /* Admin card colors */
-    --admin-card-primary: 0 84% 60%;
-    --admin-card-light: 0 100% 95%;
-    --admin-card-border: 0 100% 90%;
+    --admin-card-primary: 166 50% 20%;
+    --admin-card-light: 160 35% 92%;
+    --admin-card-border: 160 35% 85%;
     --admin-card-text: 0 0% 100%;
 
     /* Community card colors */
-    --community-card-primary: 142 71% 45%;
-    --community-card-light: 142 100% 95%;
-    --community-card-border: 142 100% 90%;
+    --community-card-primary: 152 32% 40%;
+    --community-card-light: 160 35% 92%;
+    --community-card-border: 160 35% 85%;
     --community-card-text: 0 0% 100%;
 
     --radius: 1rem;
 
-    /* Sidebar colors - using primary blue */
-    --sidebar-background: 226 79% 53%;
+    /* Sidebar colors - using forest green theme */
+    --sidebar-background: 166 50% 20%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 75 84% 60%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 51 93% 47%;
+    --sidebar-primary: 142 95% 67%;
+    --sidebar-primary-foreground: 14 5% 8%;
+    --sidebar-accent: 152 32% 45%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 226 79% 45%;
-    --sidebar-ring: 75 84% 60%;
+    --sidebar-border: 166 50% 15%;
+    --sidebar-ring: 142 95% 67%;
   }
 
   /* Modern Page Transitions */
@@ -664,41 +664,41 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 166 50% 8%;
+    --foreground: 160 35% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 166 50% 12%;
+    --card-foreground: 160 35% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 166 50% 12%;
+    --popover-foreground: 160 35% 95%;
 
-    --primary: 137 95% 62%;
-    --primary-foreground: 243 23% 15%;
+    --primary: 152 32% 50%;
+    --primary-foreground: 166 50% 8%;
 
-    --secondary: 217.2 32.6% 25%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 160 35% 60%;
+    --secondary-foreground: 166 50% 8%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 166 50% 20%;
+    --muted-foreground: 160 35% 70%;
 
-    --accent: 137 95% 62%;
-    --accent-foreground: 243 23% 15%;
+    --accent: 142 95% 67%;
+    --accent-foreground: 166 50% 8%;
 
     --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 243 23% 15%;
+    --destructive-foreground: 166 50% 8%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 137 95% 62%;
-    --sidebar-background: 243 23% 15%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 137 95% 62%;
-    --sidebar-primary-foreground: 243 23% 15%;
-    --sidebar-accent: 243 20% 20%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 243 15% 25%;
-    --sidebar-ring: 137 95% 62%;
+    --border: 166 50% 20%;
+    --input: 166 50% 20%;
+    --ring: 142 95% 67%;
+    --sidebar-background: 166 50% 12%;
+    --sidebar-foreground: 160 35% 95%;
+    --sidebar-primary: 142 95% 67%;
+    --sidebar-primary-foreground: 166 50% 8%;
+    --sidebar-accent: 152 32% 50%;
+    --sidebar-accent-foreground: 160 35% 95%;
+    --sidebar-border: 166 50% 8%;
+    --sidebar-ring: 142 95% 67%;
 
 
   }

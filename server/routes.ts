@@ -2718,6 +2718,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         grade: userData.grade || 12, // Add required grade field with default
         educationLevel: userData.educationLevel || "other", // Default education level
       // Send welcome email with login credentials
+      });
       const loginEmail = userData.email;
       const loginPhone = userData.phone || undefined;
       const welcomeHtml = `
