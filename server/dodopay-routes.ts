@@ -156,8 +156,11 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     
     // Step 1: Create a dynamic product first
     // DodoPay requires products to be created before checkout sessions
-    const isSubscription = productType === 'subscription' && billingInterval;
+    // Note: 'one_time' billing interval means lifetime/one-time purchase, not a subscription
+    const isSubscription = productType === 'subscription' && billingInterval && billingInterval !== 'one_time';
     const priceInCents = Math.round(amount * 100);
+    
+    console.log(`💳 DodoPay checkout params: amount=${amount}, priceInCents=${priceInCents}, billingInterval=${billingInterval}, isSubscription=${isSubscription}`);
     
     let product: any;
     try {
