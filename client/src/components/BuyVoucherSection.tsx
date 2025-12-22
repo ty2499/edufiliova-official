@@ -28,10 +28,11 @@ import { useEnabledGateways } from "@/hooks/useEnabledGateways";
 import { useQuery } from "@tanstack/react-query";
 import { SiPaypal } from "react-icons/si";
 import { useLocation } from "wouter";
+import { DodoPayments } from "dodopayments-checkout";
 
 const PRESET_AMOUNTS = [10, 25, 50, 100];
 
-type PaymentMethod = 'card' | 'paypal' | 'paystack' | 'system_wallet' | string;
+type PaymentMethod = 'card' | 'paypal' | 'paystack' | 'system_wallet' | 'dodopay' | string;
 
 interface BuyVoucherSectionProps {
   onBack?: () => void;
@@ -87,6 +88,45 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
   const isStripeEnabled = enabledGateways.some(g => g.gatewayId === 'stripe');
   const isPayPalEnabled = enabledGateways.some(g => g.gatewayId === 'paypal');
   const isPaystackEnabled = enabledGateways.some(g => g.gatewayId === 'paystack');
+  
+  // Check if Dodo Payments is enabled
+  const dodoGateway = enabledGateways.find(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
+  const isDodoEnabled = !!dodoGateway;
+  const isDodoTestMode = dodoGateway?.testMode === true;
+
+  // Initialize Dodo Payments overlay checkout SDK
+  const [dodoInitialized, setDodoInitialized] = useState(false);
+  
+  useEffect(() => {
+    if (isDodoEnabled && !dodoInitialized) {
+      try {
+        const dodoMode = isDodoTestMode ? "test" : "live";
+        DodoPayments.Initialize({
+          mode: dodoMode,
+          onEvent: (event: any) => {
+            console.log("Dodo checkout event (voucher):", event);
+            
+            if (event.event_type === "checkout.redirect") {
+              // Payment successful
+              setPurchaseResult({ success: true });
+              setStep('success');
+              onSuccess?.();
+            } else if (event.event_type === "checkout.closed") {
+              setProcessing(false);
+            } else if (event.event_type === "checkout.error") {
+              console.error("Dodo checkout error:", event.data);
+              setError(event.data?.message || "Payment failed");
+              setProcessing(false);
+            }
+          }
+        });
+        setDodoInitialized(true);
+        console.log(`✅ Dodo Payments overlay SDK initialized (voucher) - mode: ${dodoMode}`);
+      } catch (error) {
+        console.warn("Failed to initialize Dodo overlay SDK:", error);
+      }
+    }
+  }, [isDodoEnabled, isDodoTestMode, dodoInitialized, onSuccess]);
 
   const { data: wallet } = useQuery({
     queryKey: ['/api/shop/wallet'],
@@ -473,6 +513,53 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
     }
   };
 
+  // Handle Dodo Payment - Dynamic product creation for vouchers
+  const handleDodoPayment = async () => {
+    setProcessing(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/dodopay/checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: effectiveAmount,
+          currency: 'USD',
+          productName: `$${effectiveAmount} Gift Voucher`,
+          productDescription: `Gift voucher purchase - $${effectiveAmount}`,
+          productType: 'voucher',
+          userEmail: buyerEmail || user?.email || '',
+          userName: buyerName || profile?.name || '',
+          metadata: {
+            recipientEmail: sendToSelf ? (buyerEmail || user?.email) : recipientEmail,
+            recipientName: sendToSelf ? buyerName : recipientName,
+            personalMessage: personalMessage || null,
+            sendToSelf,
+            buyerEmail: buyerEmail || user?.email || "",
+            buyerName
+          }
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success && data.checkoutUrl) {
+        if (dodoInitialized && DodoPayments.Checkout) {
+          DodoPayments.Checkout.open({
+            checkoutUrl: data.checkoutUrl
+          });
+        } else {
+          window.location.href = data.checkoutUrl;
+        }
+      } else {
+        throw new Error(data.error || 'Failed to initialize payment');
+      }
+    } catch (err: any) {
+      console.error("DodoPay voucher payment error:", err);
+      setError(err.message || 'Failed to initialize DodoPay payment');
+      setProcessing(false);
+    }
+  };
+
   const handlePayment = () => {
     switch (selectedPaymentMethod) {
       case 'card':
@@ -486,6 +573,9 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         break;
       case 'system_wallet':
         handleSystemWalletPayment();
+        break;
+      case 'dodopay':
+        handleDodoPayment();
         break;
       default:
         setError("Please select a payment method");
@@ -927,6 +1017,30 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                       <p className="text-sm text-gray-500">Pay with Paystack</p>
                     </div>
                     {selectedPaymentMethod === 'paystack' && (
+                      <CheckCircle2 className="w-5 h-5 text-primary" />
+                    )}
+                  </button>
+                )}
+
+                {isDodoEnabled && (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPaymentMethod('dodopay')}
+                    className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${
+                      selectedPaymentMethod === 'dodopay' 
+                        ? 'border-primary bg-primary/5' 
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                    }`}
+                    data-testid="button-payment-dodopay"
+                  >
+                    <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">
+                      <CreditCard className="w-5 h-5 text-indigo-600" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="font-medium">Card Payment</p>
+                      <p className="text-sm text-gray-500">Visa, Mastercard, Apple Pay</p>
+                    </div>
+                    {selectedPaymentMethod === 'dodopay' && (
                       <CheckCircle2 className="w-5 h-5 text-primary" />
                     )}
                   </button>
