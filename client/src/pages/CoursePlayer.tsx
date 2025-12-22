@@ -1185,17 +1185,6 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                         <BadgeCheck className="h-4 w-4 mr-2" />
                         View Your {getCertificateType() === 'diploma' ? 'Diploma' : 'Certificate'}
                       </Button>
-                    ) : qualifiesForCertificate() ? (
-                      <Button 
-                        onClick={() => onNavigate('claim-certificate-' + courseId)}
-                        size="sm"
-                        className="text-white hover:opacity-90"
-                        style={{ backgroundColor: '#ff5834' }}
-                        data-testid="button-claim-certificate"
-                      >
-                        <Award className="h-4 w-4 mr-2" />
-                        Claim {getCertificateType() === 'diploma' ? 'Diploma' : 'Certificate'}
-                      </Button>
                     ) : shouldRetakeCourse() ? (
                       <Button 
                         onClick={() => {
