@@ -5058,7 +5058,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             amount: price.toFixed(2),
             type: 'membership_upgrade',
             description: `${isDowngrade ? 'Scheduled downgrade' : 'Upgraded'} to ${plan.name} (${billingCycle})`,
-            status: 'completed',
+            status: 'paid',
             paymentMethod: 'wallet'
           });
         } catch (updateError) {
@@ -5297,7 +5297,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         // Update transaction
         await db.update(shopTransactions)
-          .set({ status: 'completed', updatedAt: new Date() })
+          .set({ status: 'paid', updatedAt: new Date() })
           .where(eq(shopTransactions.id, transaction.id));
 
         // Create payment record for revenue tracking
@@ -5631,7 +5631,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount: amount.toString(),
         description: 'Wallet Top-Up (Card)',
         referenceId: referenceId,
-        status: 'completed',
+        status: 'paid',
         createdAt: new Date(),
       });
 
@@ -5732,7 +5732,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           amount: amount,
           type: 'add_funds',
           description: `Added $${amount} to wallet via Stripe`,
-          status: 'completed',
+          status: 'paid',
           referenceId: sessionId
         });
       } catch (dbError: any) {
@@ -6186,7 +6186,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           amount: voucher.amount,
           type: 'add_funds',
           description: `Voucher redeemed: ${normalizedCode}`,
-          status: 'completed',
+          status: 'paid',
           referenceId: `voucher_${voucher.id}`,
         });
 
@@ -6240,7 +6240,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           amount: giftVoucher.amount,
           type: 'add_funds',
           description: `Gift voucher redeemed: ${normalizedCode}`,
-          status: 'completed',
+          status: 'paid',
           referenceId: `gift_voucher_${giftVoucher.id}`,
         });
         
@@ -10131,7 +10131,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           amount: (-amount).toFixed(2), // Negative for deduction
           type: 'purchase',
           description: transactionDescription,
-          status: 'completed',
+          status: 'paid',
           referenceId: orderId || bannerId || `wallet-${Date.now()}`
         });
 
@@ -12490,7 +12490,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userId: userId,
           type: 'credit',
           amount: amount.toString(),
-          status: 'completed',
+          status: 'paid',
           description: description,
           reference: reference || null
         })
@@ -14816,7 +14816,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount: amount.toString(),
         type: 'add_funds',
         description: reason || `Manual fund addition by admin (Cash payment)`,
-        status: 'completed',
+        status: 'paid',
         referenceId: `admin-manual-${Date.now()}`
       });
 
@@ -33856,7 +33856,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         currency: 'USD',
         paymentMethod: 'dodopay',
         paymentStatus: 'completed',
-        status: 'completed',
+        status: 'paid',
         paymentId: paymentId || 'dodopay_checkout',
         createdAt: new Date(),
         updatedAt: new Date()
