@@ -175,24 +175,13 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     }
     const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
 
-    // Step 1: Create or get product in DodoPay
-    console.log(`📦 Creating product in DodoPay: ${itemId}...`);
-    try {
-      await dodo.products.create({
-        product_id: itemId,
-        name: itemName,
-        description: `${productType} - ${itemName}`,
-        type: 'digital',
-      } as any);
-      console.log(`✅ Product created: ${itemId}`);
-    } catch (productError: any) {
-      console.warn(`⚠️ Product creation warning: ${productError?.message || productError}`);
-      // Continue anyway - product may already exist
-    }
-
-    // Step 2: Create checkout session with product_cart
+    // DodoPay checkout with automatic product creation 
+    // Note: Product creation must include all required fields per DodoPay API v2.x
     console.log(`🛒 Creating checkout session in DodoPay for ${itemName}...`);
-    const checkoutSession = (await dodo.checkoutSessions.create({
+    
+    // Build request with product_cart (DodoPay requires product_id to already exist or be auto-created)
+    // Since product creation has issues with the API, we'll let DodoPay handle inline product logic
+    const checkoutRequest: any = {
       product_cart: [
         {
           product_id: itemId,
@@ -218,7 +207,34 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         source: 'edufiliova_checkout',
       },
       return_url: successReturnUrl,
-    } as any)) as any;
+    };
+
+    // Try to create checkout session
+    let checkoutSession: any;
+    try {
+      checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);
+    } catch (error: any) {
+      // If product doesn't exist, pre-create it with minimal fields
+      if (error?.message?.includes('does not exist')) {
+        console.log(`⚠️ Product ${itemId} not found, attempting to create...`);
+        try {
+          // Create product with just required fields
+          await dodo.products.create({
+            product_id: itemId,
+            name: itemName,
+            description: `${productType} - ${itemName}`,
+            type: 'digital',
+          } as any);
+          // Retry checkout session
+          checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);
+        } catch (createError: any) {
+          console.error(`Failed to create product: ${createError?.message}`);
+          throw error; // Throw original error
+        }
+      } else {
+        throw error;
+      }
+    }
 
     // Handle different response formats from DodoPay SDK (session ID and URL)
     const sessionId = checkoutSession?.checkout_session_id || checkoutSession?.id;
