@@ -93,6 +93,9 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
   const dodoGateway = enabledGateways.find(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
   const isDodoEnabled = !!dodoGateway;
   const isDodoTestMode = dodoGateway?.testMode === true;
+  
+  console.log('🎫 BuyVoucherSection - enabledGateways:', enabledGateways.map(g => g.gatewayId));
+  console.log('🎫 BuyVoucherSection - isDodoEnabled:', isDodoEnabled);
 
   // Initialize DodoPayments overlay checkout SDK
   const [dodoInitialized, setDodoInitialized] = useState(false);
