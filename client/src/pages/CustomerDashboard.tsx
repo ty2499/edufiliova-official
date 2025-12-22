@@ -17,7 +17,6 @@ import { BannerAdDisplay } from '@/components/BannerAdDisplay';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { useStripe, Elements, PaymentElement, CardElement, useElements, PaymentRequestButtonElement } from '@stripe/react-stripe-js';
 import { Stripe } from '@stripe/stripe-js';
-import invoiceLogoUrl from '@assets/Green_Modern_Marketing_Logo_-_5__1_-removebg-preview_1759503210777.png';
 import { getStripePromise } from '@/lib/stripe';
 import type { 
   ShopDashboardStats, 
@@ -646,11 +645,7 @@ function OrderSlipViewer({
             <div className="bg-white border-b-2 border-gray-200 px-8 py-6">
               <div className="flex justify-between items-start">
                 <div className="max-w-md">
-                  <img 
-                    src={invoiceLogoUrl}
-                    alt="EduFiliova" 
-                    className="h-24 w-auto mb-2"
-                  />
+                  <Logo variant="wide" context="customer" className="h-24 w-auto mb-2" />
                   <p className="text-gray-600 text-sm">Edufiliova — Creativity, Learning, and Growth in One Place.</p>
                 </div>
                 <div className="text-right">

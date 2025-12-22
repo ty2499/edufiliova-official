@@ -310,6 +310,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       console.log('🚪 Logout initiated');
       
+      // Set flag to indicate intentional logout - prevents auto-redirect back to dashboard
+      localStorage.setItem('intentional_logout', 'true');
+      
       // Clear local state and storage immediately for instant logout
       const sessionId = getSessionId();
       localStorage.removeItem('sessionId');

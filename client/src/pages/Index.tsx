@@ -941,7 +941,18 @@ const Index = () => {
   useEffect(() => {
     console.log('🔄 Auto-routing check - loading:', loading, 'user:', !!user, 'profile:', !!profile, 'currentState:', currentState);
     
+    // Check if user intentionally logged out - if so, skip auto-routing to dashboard
+    // This allows users to stay on landing/public pages after logout
+    const intentionalLogout = localStorage.getItem('intentional_logout');
+    if (intentionalLogout === 'true') {
+      console.log('🔄 Skipping auto-routing - user intentionally logged out');
+      return;
+    }
+    
     if (!loading && user && profile) {
+      // User logged in successfully - clear the intentional logout flag
+      localStorage.removeItem('intentional_logout');
+      
       console.log('🔄 Auto-routing check - User role:', profile.role);
       
       // Define public pages that customers can access while logged in
@@ -1403,10 +1414,12 @@ const Index = () => {
   const renderPage = () => {
     // Check if user has a stored session (likely logged in)
     const hasStoredSession = typeof window !== 'undefined' && localStorage.getItem('sessionId');
+    const intentionalLogout = typeof window !== 'undefined' && localStorage.getItem('intentional_logout') === 'true';
     
     // For ALL users with a session: show loading screen while auth is being validated
     // This prevents the flash of landing page before redirect to dashboard on ANY domain
-    if (loading && hasStoredSession && LANDING_ONLY_PAGES.includes(currentState)) {
+    // Skip this if user intentionally logged out (they should see the landing page)
+    if (loading && hasStoredSession && !intentionalLogout && LANDING_ONLY_PAGES.includes(currentState)) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
           <div className="text-center space-y-4">
