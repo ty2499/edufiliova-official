@@ -566,37 +566,62 @@ router.get('/verify/:paymentId', async (req: Request, res: Response) => {
           // Find the order
           const [order] = await db.select().from(orders).where(eq(orders.id, orderId)).limit(1);
           
-          if (order && order.status !== 'paid' && order.status !== 'delivered') {
-            console.log('📦 Updating order status to paid:', orderId);
-            
-            // Update order status - use 'paid' which is a valid order_status enum value
-            await db.update(orders)
-              .set({ 
-                status: 'paid',
-                paymentMethod: 'dodopay',
-                updatedAt: new Date()
-              })
-              .where(eq(orders.id, orderId));
+          if (order) {
+            // Update order status if not already paid
+            if (order.status !== 'paid' && order.status !== 'delivered') {
+              console.log('📦 Updating order status to paid:', orderId);
+              
+              // Update order status - use 'paid' which is a valid order_status enum value
+              await db.update(orders)
+                .set({ 
+                  status: 'paid',
+                  paymentMethod: 'dodopay',
+                  updatedAt: new Date()
+                })
+                .where(eq(orders.id, orderId));
+            }
 
+            // Always try to create digital downloads (even if order was already paid)
             // Get order items for digital downloads
             const items = await db.select().from(orderItems).where(eq(orderItems.orderId, orderId));
+            console.log('📦 Found', items.length, 'order items for digital downloads');
             
             // Create digital download entries for each item
             for (const item of items) {
               if (item.productId && order.userId) {
                 try {
-                  await db.insert(downloads).values({
-                    userId: order.userId,
-                    productId: item.productId,
-                    orderId: orderId,
-                  }).onConflictDoNothing();
-                } catch (e) {
-                  console.log('Digital download entry may already exist');
+                  // Check if download already exists
+                  const existingDownload = await db.select().from(downloads)
+                    .where(and(
+                      eq(downloads.userId, order.userId),
+                      eq(downloads.productId, item.productId)
+                    ))
+                    .limit(1);
+                  
+                  if (existingDownload.length === 0) {
+                    // Generate a secure download token
+                    const downloadToken = `dl_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+                    const expiresAt = new Date();
+                    expiresAt.setHours(expiresAt.getHours() + 24); // 24 hour expiry
+                    
+                    await db.insert(downloads).values({
+                      userId: order.userId,
+                      productId: item.productId,
+                      orderId: orderId,
+                      downloadToken: downloadToken,
+                      expiresAt: expiresAt,
+                    });
+                    console.log('✅ Created download entry for product:', item.productId);
+                  } else {
+                    console.log('ℹ️ Download already exists for product:', item.productId);
+                  }
+                } catch (e: any) {
+                  console.log('⚠️ Error creating download entry:', e.message);
                 }
               }
             }
 
-            // Send order confirmation email
+            // Send order confirmation email (only if order was just marked as paid)
             try {
               const [user] = await db.select().from(users).where(eq(users.id, order.userId!)).limit(1);
               if (user) {
