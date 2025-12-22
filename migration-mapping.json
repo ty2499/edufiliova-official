@@ -1,0 +1,399 @@
+{
+  "totalFiles": 78,
+  "successfulUploads": 78,
+  "failedUploads": 0,
+  "totalSize": 15516508,
+  "results": [
+    {
+      "oldPath": "/uploads/0a48acec9a9791b5af633beb2ed59998",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/a8cdd14a-02b8-4f61-944a-0eb25f428ba3",
+      "size": 3129
+    },
+    {
+      "oldPath": "/uploads/0f4f167ac95ee519b2c38f0179ede115",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/0beb5f2b-1752-4f69-adc6-f062813a3666",
+      "size": 11987
+    },
+    {
+      "oldPath": "/uploads/1b3d5923054fe746d66a76f6e38e10c4",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/0a7f9768-29b6-4355-943e-2e9191ec858a",
+      "size": 45630
+    },
+    {
+      "oldPath": "/uploads/2d6314840fe391e58a56dc4a5937404e",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/e319c05e-7ece-43c9-ae7c-c9cdf5d57d92",
+      "size": 3129
+    },
+    {
+      "oldPath": "/uploads/2e0822c76fe1f36f55df493e1cb7c660",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/edaf6dc3-2287-4c46-a8fb-8263955e536a",
+      "size": 626382
+    },
+    {
+      "oldPath": "/uploads/32e935a0860a33818fa1cace27ecd015",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/56424b1c-19f8-4b80-a972-822b7cdbf3f7",
+      "size": 3129
+    },
+    {
+      "oldPath": "/uploads/3b330d48cdc58bd2beecd8660ea92a1a",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/4a86d19e-c2f0-433c-9706-d6e27ca949f4",
+      "size": 13942
+    },
+    {
+      "oldPath": "/uploads/3b4d935e56f4028eccf68d98dffe1ffe",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/ebb799f6-50aa-4235-a3ef-dd03794331c4",
+      "size": 45630
+    },
+    {
+      "oldPath": "/uploads/3ea8372de35d1afd10974cfd3e456684",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/e88b1a16-d542-476a-9ef3-0069976152aa",
+      "size": 45630
+    },
+    {
+      "oldPath": "/uploads/4c64ec4163cc5e2f0468c4c5971c1698",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/4693eba6-4bfa-483c-9424-f9e2cd257ccc",
+      "size": 45630
+    },
+    {
+      "oldPath": "/uploads/5bfcd56ce979fc23dd4d92d0f488d786",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/d6ecb7cf-04dd-427e-a6e6-58f53345040c",
+      "size": 142312
+    },
+    {
+      "oldPath": "/uploads/71654e510ff4a0f84d06ed43331008c8",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/b3f978f2-12eb-4b43-a729-2435bb9e1293",
+      "size": 45630
+    },
+    {
+      "oldPath": "/uploads/882c0133689d22d075c42379e2ddbe5c",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/c8123bed-6438-4a0c-9a82-ef42e999c68d",
+      "size": 18830
+    },
+    {
+      "oldPath": "/uploads/952e2550875d65a8d1f1a0c4941be510",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/04248b0c-4a88-48bc-a132-1fa0a4633705",
+      "size": 3129
+    },
+    {
+      "oldPath": "/uploads/avatars/avatar_d9dca7ce-6e0c-44c9-bb2d-909d4e426799_1756515378216.jpeg",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/avatars/c9ec5dcd-50da-43b8-b948-1abbe2c69563.jpeg",
+      "size": 423707
+    },
+    {
+      "oldPath": "/uploads/avatars/avatar_d9dca7ce-6e0c-44c9-bb2d-909d4e426799_1756515590093.jpeg",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/avatars/6d3d0d12-fa16-46e1-bc52-a42caf71fff4.jpeg",
+      "size": 423707
+    },
+    {
+      "oldPath": "/uploads/avatars/avatar_d9dca7ce-6e0c-44c9-bb2d-909d4e426799_1756515612608.jpeg",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/avatars/3e2f2a86-8f0c-4a75-b8b8-404807669af1.jpeg",
+      "size": 423707
+    },
+    {
+      "oldPath": "/uploads/avatars/avatar_d9dca7ce-6e0c-44c9-bb2d-909d4e426799_1756515741674.jpeg",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/avatars/9059d3c3-bb70-46f0-af55-277943940ae8.jpeg",
+      "size": 423707
+    },
+    {
+      "oldPath": "/uploads/avatars/kiki-profile.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/avatars/d41f2ae8-4d8a-413b-96d1-f9cb65c57429.png",
+      "size": 1200749
+    },
+    {
+      "oldPath": "/uploads/avatars/pau-profile.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/avatars/6b732421-f53b-45be-8f32-25f1913b3fd9.png",
+      "size": 1200127
+    },
+    {
+      "oldPath": "/uploads/avatars/puro-profile.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/avatars/20d89e6a-f546-4373-a2cf-7065b61f3d82.png",
+      "size": 1206770
+    },
+    {
+      "oldPath": "/uploads/b498a4f473d28c8755c1ac5dc7cf8e00",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/747b7fb2-b8e1-4b44-9058-dda02968d04e",
+      "size": 3129
+    },
+    {
+      "oldPath": "/uploads/b641a2054cb75034749fe6a5e39763ce",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/21298cf9-3760-4c4b-b1e9-2c0e4acf9bdc",
+      "size": 142312
+    },
+    {
+      "oldPath": "/uploads/c1fc209d8d0433e97543080cdb85e0b8",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/94236b91-4143-463c-b5ce-9ff0d1d48020",
+      "size": 142312
+    },
+    {
+      "oldPath": "/uploads/c200214be84bbfefcda63ecf9190897f",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/4a659d9d-37e1-4d00-9474-cbe18b453a44",
+      "size": 45630
+    },
+    {
+      "oldPath": "/uploads/c4b3bc857e1c71311c6891fa3eabb7bc",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/0dd4995b-2492-4042-b9e8-7b47a240917b",
+      "size": 3129
+    },
+    {
+      "oldPath": "/uploads/cda5b4b588064e00086a034444759932",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/e6bc6331-6af4-4b83-98a3-e55ef5901a16",
+      "size": 218014
+    },
+    {
+      "oldPath": "/uploads/d27ce740bd64e4c54d34c842400d738a",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/c9e31d55-0c7e-4964-9059-55a3076b45a2",
+      "size": 3129
+    },
+    {
+      "oldPath": "/uploads/df9d95534553acd769ee39119dfbad8a",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/ca1bd3f8-6c30-4cb0-b1fa-b62c42c06e88",
+      "size": 142312
+    },
+    {
+      "oldPath": "/uploads/documents/5a20c8b1-7adf-4e17-a797-0885a143a479.txt",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/documents/c6505b4d-f639-412a-98b3-e5593a625a25.txt",
+      "size": 46
+    },
+    {
+      "oldPath": "/uploads/ec3f6ac4a215054e2b2df9aa996dfa28",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/general/4ec38b75-40e3-410a-be8b-80fd886eeda3",
+      "size": 3129
+    },
+    {
+      "oldPath": "/uploads/images/47bae1ea-12b4-4421-b706-faba03ad2f41.webp",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/images/81b685f5-8bcc-482d-ac30-df47a46dae74.webp",
+      "size": 33096
+    },
+    {
+      "oldPath": "/uploads/images/test-hero-image.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/images/f23035b8-a26c-490c-b4f3-bc74a4d81e2f.png",
+      "size": 162885
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/05bef5bad623487efcea0695de936782.jpg",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/298e95e2-a050-4702-a80c-d26b83a6174f.jpg",
+      "size": 33534
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/09ebd5cd7d9679ba15ad0a7a337ea7d0.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/39e49439-d42a-4049-88aa-e09d3142812a.png",
+      "size": 101018
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/111f9818a039e4492279c077005de7ba.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/c56cb294-f6be-4ffb-8a40-10ff817e08ea.png",
+      "size": 265005
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/13567d76da03c1208c0bc531e4106460.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/be690a9f-9e26-4473-bf96-95c4ef3ad8e2.png",
+      "size": 271379
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/1b3bdb9cf64c69077eca43b501b8ca4e.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/e3ccdaf9-a788-42ef-9afa-44633cd886e3.png",
+      "size": 101037
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/1cb41cb0779057a3081ceeda63022b30.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/bc3adf7d-51e0-4b47-a602-f575404ce4fb.png",
+      "size": 739905
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/1d54e780360bbd2b72d4ab4436ebcb67.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/0061ecfe-c8b8-4f3e-8fef-eba64d467e8c.png",
+      "size": 271379
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/1dca2d0107eae71c8ffa18c3c1143247.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/98ac8d6b-e6f7-4bba-ada4-06d719ab7ab7.png",
+      "size": 101322
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/1ed42def35c86c500da3f8b60aedcecf.jpeg",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/8a373b85-153f-4d70-b762-a20af3fe6a09.jpeg",
+      "size": 98794
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/2a68889cf4873663669686475fab1559.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/b80eae28-f708-42cd-9368-aa14c8f348c4.png",
+      "size": 224728
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/33d543b1738239a168d54bc5e2d971f5.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/9b2d3198-f42c-403f-baea-bd6927ac2d8a.png",
+      "size": 98492
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/33e709aad0b1056863153ec236b51555.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/91ffb87e-dcb0-4874-b972-60965735a1e1.png",
+      "size": 132630
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/3fcf8364311d421b0e36662b856e4bdc.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/584c078d-dd60-43c1-8417-2eafca1b4ac7.png",
+      "size": 67539
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/41453cc79e678597c85dde07bd4ff76d.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/29275975-f1d0-4908-a68d-73921481dcca.png",
+      "size": 116792
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/47f43cba4c70c47a7e94074fece5bfda.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/b6505520-7fac-421a-a2eb-286a2c8d225b.png",
+      "size": 289475
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/48e20fea5f764105b2f7fdfe972f0182.pdf",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/1bb5fdd3-a185-4fcc-8285-b749ab05f637.pdf",
+      "size": 6521
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/4d534874365639eb40c1e23a53668c6e.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/db6aaf40-2df4-4eae-a6fe-e3ff04c8efd6.png",
+      "size": 90508
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/50272505cc1ff3137c0fe0b0130ab923.PNG",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/1230c392-2a12-4534-b58a-05c2061e7ed7.PNG",
+      "size": 88131
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/513899d89cf8191cd63192ed1d2c875b.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/28b70d05-cd19-4868-b9e0-40c4207025d1.png",
+      "size": 285478
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/5232d61bd4a0c989802c2e38c1e57836.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/317c1b3d-05ad-43d4-9f44-78d1fb96b118.png",
+      "size": 143680
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/528dfdb6c5757927bb4a46f4f4aaeb44.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/87ef8a81-e4c2-43c3-8e4e-33e0e43e8bbe.png",
+      "size": 285478
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/59eda484adc8ec0f6c7c8bab97c47cb3.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/73c202fa-5b6b-41c8-967d-4f2ab866385a.png",
+      "size": 265005
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/5c691abac1a70820290329b65de064aa.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/80c521eb-56a7-487e-9d93-ae598a1fbeb3.png",
+      "size": 50386
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/5f0a4772eef9f31af6a5ac93d07aaf24.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/ecd4c72d-db03-41de-99be-37282a7ede8a.png",
+      "size": 98492
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/62ef7142d735c9dedcb0bc563ed3b738.pdf",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/9ab8c7c4-ce0d-4778-9359-442a17203eef.pdf",
+      "size": 137274
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/83bc5005e4c013abbb211e8eed0eb831.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/8e6ceb39-779c-4aaa-b573-4cce6c14d0ce.png",
+      "size": 49496
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/9282e8c25e05c57d546568717b31e840.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/5759e8ac-bbd9-4fbb-ac8f-4f6a15552241.png",
+      "size": 739905
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/92e173dbf543f1665c468b1fecb6877f.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/d77d2d2b-7800-417f-a47a-4a273ab4f85f.png",
+      "size": 105037
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/986fbc2bfdcac89c36016ed522f913a7.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/0cb61478-2446-418f-b353-6e142cb8c69b.png",
+      "size": 66373
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/ab85b3ec29b222efc61409de3fd6e4fe.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/85f8a5db-c2e2-484f-af60-9887926801bd.png",
+      "size": 117343
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/bb7bda77724f05287769e2c35b967168.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/8f19f1b5-80cf-4e43-9079-d9937e4ccfac.png",
+      "size": 117343
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/c2e7aecc30c6e0267c9c37cfbd31d451.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/50a8f88e-9fba-4c75-94f0-04482a01737c.png",
+      "size": 50386
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/d42d02ff3181df536101eb530e16d0b9.jpg",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/a5123399-1490-45a1-b040-11ca0b07a98a.jpg",
+      "size": 33534
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/d471c7bca584e685532cf1c5ef82d264.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/aa80a1ef-09cb-4e30-bace-dbb3b5f8f077.png",
+      "size": 50903
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/d81e69b2c61aafb2861e7415167fead3.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/9414f98b-76f2-45d9-a529-6e62a950f2e4.png",
+      "size": 115914
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/d85db41a9ac5ddc2976a6ed7e403559b.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/d8ef1f6e-8d8e-4b44-bf55-33f5a234c9a7.png",
+      "size": 828322
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/e0c44ef6207c66d5995ab4d53487e509.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/6fd467f7-d95a-4c0f-8f12-8d014755eafb.png",
+      "size": 310095
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/e34fd652fa7d9f891339e2b2fd7cd2bf.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/390824ab-21a6-4fe6-aea7-175936ac3d4d.png",
+      "size": 7817
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/e45fa4461c21c79f8bfaf3dabcc44df6.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/5b4bd2a4-2f82-4f1a-ace3-14f7e8afda14.png",
+      "size": 158576
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/eb0189e774c0d3c692525364a3ce3fa7.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/b1762b5e-c606-4006-bf2f-88a64b1f665c.png",
+      "size": 285478
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/f296e0c56f58e6d9ced2a0a72bc8bfc0.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/4a4851b8-0914-476b-82b7-ea358c659c38.png",
+      "size": 45831
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/f2cb6cadf7681f50798d8ca0cc0b8352.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/a71a381f-73ad-4564-bc3d-7aad36cf4e97.png",
+      "size": 90508
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/f65e9ab2dd26bf69c77b4a27aa95b501.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/2d77c4c8-dc07-42ba-bdf5-e966c2d27ae7.png",
+      "size": 265005
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/fd6621e546016ce584d266a9bd1ad089.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/c31b9d81-78ec-4616-80b5-2055cba7751b.png",
+      "size": 90508
+    },
+    {
+      "oldPath": "/uploads/portfolio-samples/fd7e6eda4d8ba66b6dbd8b11e0b8f0bd.png",
+      "newUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/uploads/portfolio-samples/d6b7a80e-1a0a-47c4-9b74-2c9f40f981b9.png",
+      "size": 368436
+    }
+  ],
+  "errors": []
+}

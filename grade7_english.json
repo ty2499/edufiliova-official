@@ -1,0 +1,76 @@
+{
+  "book": {
+    "title": "Grade 7 English Language Arts",
+    "grade": 7,
+    "language": "en",
+    "chapters": [
+      {
+        "id": "C01",
+        "title": "Reading Comprehension",
+        "lessons": [
+          {
+            "id": "ENG-7-RC-001",
+            "lessonNumber": 1,
+            "lessonOrder": 1,
+            "locked": false,
+            "title": "Main Ideas and Supporting Details",
+            "content": "Learning to identify the main idea and supporting details in a text is essential for understanding what you read. The main idea is the central message or theme of a passage, while supporting details provide evidence or examples that explain or prove the main idea.",
+            "examples": [
+              {"problem": "Identify the main idea in this passage: 'Dogs make wonderful pets. They are loyal companions who provide protection for their families. Dogs also encourage exercise through daily walks and playtime.'", "solution": ["Step 1: Look for the topic sentence or overall theme", "Step 2: The main idea is that dogs make wonderful pets", "Step 3: Supporting details include loyalty, protection, and encouraging exercise"]},
+              {"problem": "Find supporting details for the main idea 'Exercise is important for health'", "solution": ["Step 1: Look for specific examples or evidence", "Step 2: Supporting details might include: strengthens muscles, improves heart health, reduces stress", "Step 3: Each detail explains HOW or WHY exercise is important"]}
+            ],
+            "imagePrompt": "Create a colorful educational illustration showing a main idea at the center (represented as a bright sun or tree trunk) with supporting details branching out around it (represented as rays or branches). Use clear labels and icons. Style: professional, educational, appropriate for grade 7 students, vibrant colors, high quality.",
+            "mediaUrl": "",
+            "quiz": [
+              {"id": "Q1", "text": "What is the main idea of this passage: 'Libraries offer many resources including books, computers, and study spaces for students.'?", "options": ["Libraries have computers", "Libraries offer many resources", "Students need study spaces"], "correct": 1},
+              {"id": "Q2", "text": "Which is a supporting detail for the main idea 'Reading improves vocabulary'?", "options": ["Books are entertaining", "Readers encounter new words in context", "Libraries have many books"], "correct": 1},
+              {"id": "Q3", "text": "The main idea is usually found in which part of a paragraph?", "options": ["At the end", "In the middle", "At the beginning"], "correct": 2}
+            ]
+          },
+          {
+            "id": "ENG-7-RC-002",
+            "lessonNumber": 2,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Making Inferences",
+            "content": "Making inferences means reading between the lines and understanding information that isn't directly stated. Good readers use clues from the text along with their own knowledge to figure out what the author means.",
+            "examples": [
+              {"problem": "What can you infer from this text: 'Sarah grabbed her umbrella and hurried out the door, pulling her hood up over her head.'?", "solution": ["Step 1: Look for context clues about the weather", "Step 2: Umbrella and hood suggest protection from rain", "Step 3: Inference: It's raining or about to rain"]},
+              {"problem": "Make an inference: 'Tom's stomach growled loudly during the math test. He kept glancing at the clock.'", "solution": ["Step 1: Identify the clues - growling stomach, looking at clock", "Step 2: Connect to prior knowledge about hunger", "Step 3: Inference: Tom is hungry and probably thinking about lunch"]}
+            ],
+            "imagePrompt": "Create an educational illustration showing a detective with a magnifying glass examining text clues and thought bubbles showing inferences. Include icons representing 'what is said' versus 'what is meant'. Style: engaging, colorful, appropriate for grade 7 students, clear visual metaphors.",
+            "mediaUrl": "",
+            "quiz": [
+              {"id": "Q4", "text": "What can you infer from: 'The children put on their coats and grabbed their sleds'?", "options": ["It's winter and snowy", "They're going to school", "It's raining outside"], "correct": 0},
+              {"id": "Q5", "text": "Based on this clue: 'She studied her notes one more time before walking into the classroom', what can you infer?", "options": ["She's going to teach", "She's about to take a test", "She forgot her homework"], "correct": 1}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C02",
+        "title": "Writing Skills",
+        "lessons": [
+          {
+            "id": "ENG-7-WS-001",
+            "lessonNumber": 3,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Paragraph Structure",
+            "content": "A well-written paragraph has three main parts: a topic sentence that introduces the main idea, supporting sentences that develop the idea with details and examples, and a concluding sentence that wraps up the paragraph.",
+            "examples": [
+              {"problem": "Write a topic sentence for a paragraph about school libraries", "solution": ["Step 1: Identify the main point you want to make", "Step 2: Make it specific and interesting", "Step 3: Example: 'School libraries serve as vital learning centers that support student success.'"]},
+              {"problem": "Add supporting details to this topic sentence: 'Regular exercise benefits students in many ways.'", "solution": ["Step 1: Think of specific benefits", "Step 2: Add details like 'improves concentration in class'", "Step 3: Include 'reduces stress and anxiety', 'builds physical strength'"]}
+            ],
+            "imagePrompt": "Create a clean educational diagram showing the three parts of a paragraph structure: topic sentence at the top (highlighted in one color), supporting sentences in the middle (shown as building blocks), and concluding sentence at the bottom. Use clear labels and arrows. Style: professional, simple, educational, appropriate for middle school students.",
+            "mediaUrl": "",
+            "quiz": [
+              {"id": "Q6", "text": "Which sentence would make the best topic sentence?", "options": ["Pizza has cheese.", "There are many reasons why pizza is popular.", "I like pizza."], "correct": 1},
+              {"id": "Q7", "text": "What is the purpose of a concluding sentence?", "options": ["To introduce new ideas", "To wrap up the paragraph", "To ask questions"], "correct": 1}
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

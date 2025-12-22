@@ -1,0 +1,132 @@
+{
+  "subject": "English",
+  "grade": 7,
+  "system": "all",
+  "chapters": [
+    {
+      "title": "Reading Comprehension",
+      "lessons": [
+        {
+          "id": "ENG-7-011",
+          "lessonNumber": 1,
+          "lessonOrder": 11,
+          "locked": false,
+          "title": "Understanding Passages",
+          "content": "Learn how to read passages carefully to understand the main idea, details, and context.",
+          "examples":[
+            {"problem":"Passage: 'The sun rises in the east.' What is the main idea?","solution":["The sun rises in a particular direction, east"]},
+            {"problem":"Passage: 'Many birds migrate in winter.' What detail supports this?","solution":["Birds travel to warmer areas during winter"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q101","text":"What is the main idea of: 'Cats are playful animals.'","options":["Cats play","Dogs are playful","Cats sleep","Birds fly"],"correct":0},
+            {"id":"ENG-Q102","text":"Detail: 'She wore a red dress and a hat.' What color is the dress?","options":["Red","Blue","Green","Yellow"],"correct":0},
+            {"id":"ENG-Q103","text":"Infer: 'He ran to catch the bus.' What can you infer?","options":["He was late","He was early","He missed the bus","He slept"],"correct":0},
+            {"id":"ENG-Q104","text":"Main idea: 'Rainfall helps plants grow.'","options":["Rain is important for plants","Plants are colorful","Rain is harmful","Rain is rare"],"correct":0},
+            {"id":"ENG-Q105","text":"Detail: 'The cat slept on the sofa all day.' Where did the cat sleep?","options":["Sofa","Floor","Bed","Chair"],"correct":0},
+            {"id":"ENG-Q106","text":"Infer: 'She studied all night.' What can you infer?","options":["She was preparing for exam","She watched TV","She slept early","She cooked"],"correct":0},
+            {"id":"ENG-Q107","text":"Main idea: 'Recycling reduces waste.'","options":["Recycling is helpful","Waste is good","Recycling is bad","Waste is fun"],"correct":0},
+            {"id":"ENG-Q108","text":"Detail: 'He ate an apple and a banana.' Which fruits did he eat?","options":["Apple and banana","Orange and mango","Apple and orange","Banana and pear"],"correct":0},
+            {"id":"ENG-Q109","text":"Infer: 'She wore sunglasses.' What can you infer?","options":["It was sunny","It was raining","It was night","It was cold"],"correct":0},
+            {"id":"ENG-Q110","text":"Main idea: 'Dogs are loyal pets.'","options":["Dogs are loyal","Cats are loyal","Dogs are noisy","Dogs are dangerous"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-012",
+          "lessonNumber": 2,
+          "lessonOrder": 12,
+          "locked": true,
+          "title": "Main Idea & Details",
+          "content": "Learn how to identify the main idea and supporting details in a passage.",
+          "examples":[
+            {"problem":"Passage: 'Many students enjoy sports.' Main idea?","solution":["Sports are popular among students"]},
+            {"problem":"Supporting detail: 'Football, basketball, and tennis are popular.'","solution":["Examples of sports students enjoy"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q111","text":"Main idea: 'Rain helps plants grow.'","options":["Rain helps plants","Plants need sun","Rain is bad","Plants are small"],"correct":0},
+            {"id":"ENG-Q112","text":"Supporting detail: 'She wore a red dress.'","options":["Red color","Blue color","Green dress","Yellow dress"],"correct":0},
+            {"id":"ENG-Q113","text":"Main idea: 'Birds migrate in winter.'","options":["Birds move seasonally","Birds fly high","Birds eat seeds","Birds sleep"],"correct":0},
+            {"id":"ENG-Q114","text":"Supporting detail: 'The dog barked loudly.'","options":["Dog bark","Dog ran","Dog slept","Dog ate"],"correct":0},
+            {"id":"ENG-Q115","text":"Main idea: 'Exercise keeps us healthy.'","options":["Exercise is beneficial","Exercise is harmful","We sleep more","We eat less"],"correct":0},
+            {"id":"ENG-Q116","text":"Supporting detail: 'He runs every morning.'","options":["Runs daily","Runs weekly","Runs monthly","Runs never"],"correct":0},
+            {"id":"ENG-Q117","text":"Main idea: 'Trees provide shade.'","options":["Trees give shade","Trees are tall","Trees have leaves","Trees are green"],"correct":0},
+            {"id":"ENG-Q118","text":"Supporting detail: 'The tree is big.'","options":["Tree size","Tree color","Tree age","Tree type"],"correct":0},
+            {"id":"ENG-Q119","text":"Main idea: 'Reading improves knowledge.'","options":["Reading is beneficial","Reading is harmful","Reading is boring","Reading is hard"],"correct":0},
+            {"id":"ENG-Q120","text":"Supporting detail: 'He reads every evening.'","options":["Evening reading","Morning reading","Night watching","Afternoon sleep"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-013",
+          "lessonNumber": 3,
+          "lessonOrder": 13,
+          "locked": true,
+          "title": "Inference & Prediction",
+          "content": "Learn how to make logical guesses (inferences) and predict what happens next in a passage.",
+          "examples":[
+            {"problem":"Sentence: 'He packed an umbrella.' What can you infer?","solution":["It might rain"]},
+            {"problem":"Predict: 'She opened the gift.' What will she do?","solution":["She will see what's inside"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q121","text":"Infer: 'Clouds are dark.'","options":["Rain is coming","Sunny day","Snow","Hot weather"],"correct":0},
+            {"id":"ENG-Q122","text":"Predict: 'He studied hard.'","options":["He will pass","He will fail","He will sleep","He will play"],"correct":0},
+            {"id":"ENG-Q123","text":"Infer: 'The ground is wet.'","options":["It rained","It is sunny","It is hot","It is dry"],"correct":0},
+            {"id":"ENG-Q124","text":"Predict: 'She smiled happily.'","options":["Something good happened","Something bad happened","Nothing","She is sad"],"correct":0},
+            {"id":"ENG-Q125","text":"Infer: 'The boy wore a coat.'","options":["Cold weather","Hot weather","Rainy","Sunny"],"correct":0},
+            {"id":"ENG-Q126","text":"Predict: 'He packed his bag.'","options":["Going to school","Staying home","Sleeping","Playing"],"correct":0},
+            {"id":"ENG-Q127","text":"Infer: 'Smoke rises from chimney.'","options":["Fire burning","Water boiling","Rainy day","Snow"],"correct":0},
+            {"id":"ENG-Q128","text":"Predict: 'She opened her notebook.'","options":["Will start writing","Will sleep","Will eat","Will play"],"correct":0},
+            {"id":"ENG-Q129","text":"Infer: 'He is shivering.'","options":["It is cold","It is hot","It is raining","It is sunny"],"correct":0},
+            {"id":"ENG-Q130","text":"Predict: 'The team huddled together.'","options":["Discuss strategy","Play individually","Rest","Eat"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-014",
+          "lessonNumber": 4,
+          "lessonOrder": 14,
+          "locked": true,
+          "title": "Summarizing",
+          "content": "Learn to write brief summaries capturing the main idea and key details of a passage.",
+          "examples":[
+            {"problem":"Passage: 'Dogs bark, cats meow, and birds chirp.'","solution":["Summary: Different animals make different sounds"]},
+            {"problem":"Passage: 'She likes reading books every day.'","solution":["Summary: She enjoys daily reading"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q131","text":"Summarize: 'The sun rises in the east and sets in the west.'","options":["Sun rises and sets","Sun shines","Day and night","Sky is blue"],"correct":0},
+            {"id":"ENG-Q132","text":"Summarize: 'The boy ate an apple and a banana.'","options":["He ate fruits","He drank juice","He slept","He ran"],"correct":0},
+            {"id":"ENG-Q133","text":"Summarize: 'She studied all night for the test.'","options":["Studied hard","Slept","Played","Ate"],"correct":0},
+            {"id":"ENG-Q134","text":"Summarize: 'Birds migrate during winter.'","options":["Birds move seasonally","Birds fly high","Birds sleep","Birds eat"],"correct":0},
+            {"id":"ENG-Q135","text":"Summarize: 'He cleaned his room and washed dishes.'","options":["Did chores","Played games","Slept","Read"],"correct":0},
+            {"id":"ENG-Q136","text":"Summarize: 'Rain helps plants grow.'","options":["Rain is beneficial","Rain is harmful","Rain is hot","Rain is rare"],"correct":0},
+            {"id":"ENG-Q137","text":"Summarize: 'The teacher explained the lesson and gave homework.'","options":["Lesson taught and homework given","Lesson ignored","Homework skipped","Teacher absent"],"correct":0},
+            {"id":"ENG-Q138","text":"Summarize: 'He drank water and ate food.'","options":["He ate and drank","He slept","He ran","He played"],"correct":0},
+            {"id":"ENG-Q139","text":"Summarize: 'She smiled and waved at her friend.'","options":["Friendly gesture","Angry gesture","Ignored","Shouted"],"correct":0},
+            {"id":"ENG-Q140","text":"Summarize: 'The children played football and basketball.'","options":["Children played sports","Children studied","Children slept","Children ate"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-015",
+          "lessonNumber": 5,
+          "lessonOrder": 15,
+          "locked": true,
+          "title": "Answering Questions from Texts",
+          "content": "Learn how to answer comprehension questions based on a given passage, focusing on details and inference.",
+          "examples":[
+            {"problem":"Passage: 'Dogs bark at strangers to protect their home.' Question: 'Why do dogs bark at strangers?'","solution":["To protect their home."]},
+            {"problem":"Passage: 'The sun rises in the east.' Question: 'Where does the sun rise?'","solution":["In the east."]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q141","text":"Passage: 'The sun rises in the east.' Question: Where does it rise?","options":["East","West","North","South"],"correct":0},
+            {"id":"ENG-Q142","text":"Passage: 'Birds fly in the sky.' Question: What do birds do?","options":["Fly","Run","Swim","Sleep"],"correct":0},
+            {"id":"ENG-Q143","text":"Passage: 'He drank water.' Question: What did he drink?","options":["Water","Juice","Milk","Tea"],"correct":0},
+            {"id":"ENG-Q144","text":"Passage: 'She read a book.' Question: What did she read?","options":["Book","Magazine","Letter","Newspaper"],"correct":0},
+            {"id":"ENG-Q145","text":"Passage: 'It rained heavily.' Question: What happened?","options":["Rained","Sunny","Snowed","Windy"],"correct":0},
+            {"id":"ENG-Q146","text":"Passage: 'The boy plays football.' Question: What sport?","options":["Football","Cricket","Tennis","Basketball"],"correct":0},
+            {"id":"ENG-Q147","text":"Passage: 'She sang beautifully.' Question: How did she sing?","options":["Beautifully","Loudly","Angrily","Quietly"],"correct":0},
+            {"id":"ENG-Q148","text":"Passage: 'He is tall.' Question: How is he?","options":["Tall","Short","Fat","Thin"],"correct":0},
+            {"id":"ENG-Q149","text":"Passage: 'Dogs bark at strangers.' Question: Who barks?","options":["Dogs","Cats","Birds","Humans"],"correct":0},
+            {"id":"ENG-Q150","text":"Passage: 'She smiled and waved.' Question: What did she do?","options":["Smiled and waved","Cried","Shouted","Ran"],"correct":0}
+          ]
+        }
+      ]
+    }
+  ]
+}

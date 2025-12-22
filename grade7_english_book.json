@@ -1,0 +1,927 @@
+{
+  "book": {
+    "title": "Grade 7 English Language Arts",
+    "grade": 7,
+    "language": "en",
+    "chapters": [
+      {
+        "id": "C01",
+        "title": "Grammar & Sentence Structure",
+        "lessons": [
+          {
+            "id": "ENG-7-001",
+            "lessonNumber": 1,
+            "lessonOrder": 1,
+            "locked": false,
+            "title": "Parts of Speech",
+            "content": "Learn the main parts of speech: nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, and interjections. Understanding parts of speech helps us construct proper sentences and communicate effectively.",
+            "examples": [
+              {"problem":"Identify the noun: 'The cat sleeps.'","solution":["Step 1: Look for naming words","Step 2: 'cat' names an animal","Step 3: 'cat' is a noun"]},
+              {"problem":"Identify the verb: 'She runs fast.'","solution":["Step 1: Look for action words","Step 2: 'runs' shows action","Step 3: 'runs' is a verb"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"ENG-Q001","text":"Which is a noun?","options":["Apple","Run","Quickly","And"],"correct":0},
+              {"id":"ENG-Q002","text":"Which is a verb?","options":["Apple","Eat","Beautiful","Wow"],"correct":1},
+              {"id":"ENG-Q003","text":"Which is an adjective?","options":["Red","Run","Quickly","He"],"correct":0},
+              {"id":"ENG-Q004","text":"Which is an adverb?","options":["Slowly","Cat","Eat","Wow"],"correct":0},
+              {"id":"ENG-Q005","text":"Which is a pronoun?","options":["He","Apple","Run","Beautiful"],"correct":0},
+              {"id":"ENG-Q006","text":"Which is a preposition?","options":["On","Cat","Quickly","She"],"correct":0},
+              {"id":"ENG-Q007","text":"Which is a conjunction?","options":["And","Run","He","Beautiful"],"correct":0},
+              {"id":"ENG-Q008","text":"Which is an interjection?","options":["Wow","Run","Cat","He"],"correct":0},
+              {"id":"ENG-Q009","text":"Identify the noun in: 'The teacher writes.'","options":["teacher","writes","The","None"],"correct":0},
+              {"id":"ENG-Q010","text":"Identify the verb in: 'Birds fly high.'","options":["fly","Birds","high","None"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-002",
+            "lessonNumber": 2,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Tenses",
+            "content": "Learn the three main tenses: past, present, and future. Each tense shows when an action occurs. Understanding tenses helps us communicate clearly about time.",
+            "examples":[
+              {"problem":"Present tense: 'She walks to school.'","solution":["Step 1: Identify when action happens","Step 2: Action happening now","Step 3: Present tense"]},
+              {"problem":"Past tense: 'She walked to school.'","solution":["Step 1: Identify when action happened","Step 2: Action happened before now","Step 3: Past tense"]},
+              {"problem":"Future tense: 'She will walk to school.'","solution":["Step 1: Identify when action will happen","Step 2: Action will happen later","Step 3: Future tense"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q011","text":"Identify tense: 'He ate an apple.'","options":["Past","Present","Future","None"],"correct":0},
+              {"id":"ENG-Q012","text":"Identify tense: 'She is running.'","options":["Present","Past","Future","None"],"correct":0},
+              {"id":"ENG-Q013","text":"Identify tense: 'They will travel.'","options":["Future","Past","Present","None"],"correct":0},
+              {"id":"ENG-Q014","text":"Identify tense: 'I write a letter.'","options":["Present","Past","Future","None"],"correct":0},
+              {"id":"ENG-Q015","text":"Identify tense: 'I wrote a letter yesterday.'","options":["Past","Present","Future","None"],"correct":0},
+              {"id":"ENG-Q016","text":"Identify tense: 'She will sing tomorrow.'","options":["Future","Past","Present","None"],"correct":0},
+              {"id":"ENG-Q017","text":"Which is present continuous?","options":["She is reading","She read","She will read","None"],"correct":0},
+              {"id":"ENG-Q018","text":"Which is past continuous?","options":["She was reading","She reads","She will read","None"],"correct":0},
+              {"id":"ENG-Q019","text":"Which is future continuous?","options":["She will be reading","She reads","She read","None"],"correct":0},
+              {"id":"ENG-Q020","text":"Present perfect tense example?","options":["I have eaten","I eat","I ate","I will eat"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-003",
+            "lessonNumber": 3,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Subject-Verb Agreement",
+            "content": "Learn to make the subject and verb agree in number (singular or plural). This creates grammatically correct sentences that are clear and professional.",
+            "examples":[
+              {"problem":"He runs fast.","solution":["Step 1: Identify subject 'He' (singular)","Step 2: Choose singular verb 'runs'","Step 3: Subject and verb agree"]},
+              {"problem":"They run fast.","solution":["Step 1: Identify subject 'They' (plural)","Step 2: Choose plural verb 'run'","Step 3: Subject and verb agree"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q021","text":"Choose correct: She ___ happy.","options":["is","are","am","be"],"correct":0},
+              {"id":"ENG-Q022","text":"Choose correct: They ___ playing.","options":["are","is","am","be"],"correct":0},
+              {"id":"ENG-Q023","text":"Choose correct: I ___ a student.","options":["am","is","are","be"],"correct":0},
+              {"id":"ENG-Q024","text":"Choose correct: He ___ reading.","options":["is","are","am","be"],"correct":0},
+              {"id":"ENG-Q025","text":"Choose correct: We ___ friends.","options":["are","is","am","be"],"correct":0},
+              {"id":"ENG-Q026","text":"Choose correct: The dog ___ barking.","options":["is","are","am","be"],"correct":0},
+              {"id":"ENG-Q027","text":"Choose correct: Birds ___ flying.","options":["are","is","am","be"],"correct":0},
+              {"id":"ENG-Q028","text":"Choose correct: She ___ my sister.","options":["is","are","am","be"],"correct":0},
+              {"id":"ENG-Q029","text":"Choose correct: They ___ teachers.","options":["are","is","am","be"],"correct":0},
+              {"id":"ENG-Q030","text":"Choose correct: I ___ happy.","options":["am","is","are","be"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-004",
+            "lessonNumber": 4,
+            "lessonOrder": 4,
+            "locked": true,
+            "title": "Active and Passive Voice",
+            "content": "Learn to convert sentences from active to passive voice and vice versa. Active voice makes writing more direct and engaging, while passive voice emphasizes the action rather than the actor.",
+            "examples":[
+              {"problem":"Active: 'The cat chased the mouse.'","solution":["Step 1: Identify subject (cat), verb (chased), object (mouse)","Step 2: Move object to front: 'The mouse'","Step 3: Add 'was' + past participle: 'was chased by the cat'"]},
+              {"problem":"Passive: 'The book was read by her.'","solution":["Step 1: Identify subject (book), verb (was read), actor (her)","Step 2: Move actor to front: 'She'","Step 3: Use simple past: 'She read the book'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q031","text":"Active: 'He eats an apple.' Passive?","options":["An apple is eaten by him","He is eaten by an apple","He eaten an apple","None"],"correct":0},
+              {"id":"ENG-Q032","text":"Passive: 'The letter was written by me.' Active?","options":["I wrote the letter","Me wrote the letter","I was write the letter","None"],"correct":0},
+              {"id":"ENG-Q033","text":"Active: 'They play football.' Passive?","options":["Football is played by them","Football played by them","They played football","None"],"correct":0},
+              {"id":"ENG-Q034","text":"Passive: 'The cake was baked by John.' Active?","options":["John baked the cake","John was bake the cake","Baked John the cake","None"],"correct":0},
+              {"id":"ENG-Q035","text":"Active: 'She sings a song.' Passive?","options":["A song is sung by her","She is sung a song","Song sung by her","None"],"correct":0},
+              {"id":"ENG-Q036","text":"Passive: 'The room was cleaned by them.' Active?","options":["They cleaned the room","They was clean the room","Cleaned they the room","None"],"correct":0},
+              {"id":"ENG-Q037","text":"Active: 'I write a letter.' Passive?","options":["A letter is written by me","I am written a letter","Letter written by me","None"],"correct":0},
+              {"id":"ENG-Q038","text":"Passive: 'The homework was done by the students.' Active?","options":["The students did the homework","The students was do homework","Students done homework","None"],"correct":0},
+              {"id":"ENG-Q039","text":"Active: 'We watch TV.' Passive?","options":["TV is watched by us","We is watched TV","TV watched by us","None"],"correct":0},
+              {"id":"ENG-Q040","text":"Passive: 'The song was sung by the choir.' Active?","options":["The choir sang the song","Choir sung song","The choir was sing song","None"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-005",
+            "lessonNumber": 5,
+            "lessonOrder": 5,
+            "locked": true,
+            "title": "Punctuation",
+            "content": "Learn correct use of punctuation marks: period, comma, question mark, exclamation mark, colon, semicolon, quotation marks. Proper punctuation makes writing clear and professional.",
+            "examples":[
+              {"problem":"I like apples","solution":["Step 1: Identify sentence type (statement)","Step 2: Add period for statements","Step 3: 'I like apples.'"]},
+              {"problem":"Hello how are you","solution":["Step 1: Add comma after greeting","Step 2: Add question mark for questions","Step 3: 'Hello, how are you?'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q041","text":"Add punctuation: 'I am happy'","options":["I am happy.","I am happy!","I am happy?","All correct"],"correct":3},
+              {"id":"ENG-Q042","text":"Add punctuation: 'What is your name'","options":["What is your name?","What is your name.","What is your name!","All correct"],"correct":0},
+              {"id":"ENG-Q043","text":"Add punctuation: 'Wow that is great'","options":["Wow! That is great.","Wow, that is great.","Wow. That is great.","All correct"],"correct":3},
+              {"id":"ENG-Q044","text":"Add punctuation: 'She said I am coming'","options":["She said, 'I am coming.'","She said 'I am coming.'","She said 'I am coming'","All correct"],"correct":0},
+              {"id":"ENG-Q045","text":"Add punctuation: 'Are you ready'","options":["Are you ready?","Are you ready!","Are you ready.","All correct"],"correct":0},
+              {"id":"ENG-Q046","text":"Add punctuation: 'It is raining'","options":["It is raining.","It is raining!","It is raining?","All correct"],"correct":0},
+              {"id":"ENG-Q047","text":"Add punctuation: 'Stop doing that'","options":["Stop doing that!","Stop doing that.","Stop doing that?","All correct"],"correct":0},
+              {"id":"ENG-Q048","text":"Add punctuation: 'Yes I agree'","options":["Yes, I agree.","Yes I agree.","Yes! I agree.","All correct"],"correct":0},
+              {"id":"ENG-Q049","text":"Add punctuation: 'He asked where are you going'","options":["He asked, 'Where are you going?'","He asked 'Where are you going?'","He asked 'Where are you going'","All correct"],"correct":0},
+              {"id":"ENG-Q050","text":"Add punctuation: 'Congratulations you did it'","options":["Congratulations! You did it.","Congratulations, you did it.","Congratulations. You did it.","All correct"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C02",
+        "title": "Vocabulary & Word Usage",
+        "lessons": [
+          {
+            "id": "ENG-7-006",
+            "lessonNumber": 1,
+            "lessonOrder": 6,
+            "locked": false,
+            "title": "Synonyms & Antonyms",
+            "content": "Learn words with similar meanings (synonyms) and opposite meanings (antonyms). Building vocabulary through synonyms and antonyms helps express ideas more precisely and improves writing variety.",
+            "examples": [
+              {"problem":"Synonym of 'Happy'?","solution":["Step 1: Think of words with similar meaning","Step 2: Consider: Joyful, Cheerful, Glad","Step 3: All have similar meaning to 'happy'"]},
+              {"problem":"Antonym of 'Hot'?","solution":["Step 1: Think of words with opposite meaning","Step 2: Consider: Cold, Cool","Step 3: These are opposite to 'hot'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q051","text":"Synonym of 'Big'?","options":["Large","Small","Tiny","Short"],"correct":0},
+              {"id":"ENG-Q052","text":"Antonym of 'Fast'?","options":["Slow","Quick","Rapid","Swift"],"correct":0},
+              {"id":"ENG-Q053","text":"Synonym of 'Angry'?","options":["Furious","Calm","Peaceful","Happy"],"correct":0},
+              {"id":"ENG-Q054","text":"Antonym of 'Happy'?","options":["Sad","Joyful","Excited","Glad"],"correct":0},
+              {"id":"ENG-Q055","text":"Synonym of 'Smart'?","options":["Intelligent","Dumb","Lazy","Weak"],"correct":0},
+              {"id":"ENG-Q056","text":"Antonym of 'Strong'?","options":["Weak","Powerful","Mighty","Tough"],"correct":0},
+              {"id":"ENG-Q057","text":"Synonym of 'Beautiful'?","options":["Pretty","Ugly","Plain","Boring"],"correct":0},
+              {"id":"ENG-Q058","text":"Antonym of 'Hot'?","options":["Cold","Warm","Boiling","Fiery"],"correct":0},
+              {"id":"ENG-Q059","text":"Synonym of 'Quick'?","options":["Fast","Slow","Sluggish","Late"],"correct":0},
+              {"id":"ENG-Q060","text":"Antonym of 'Light'?","options":["Heavy","Bright","Shiny","Clear"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-007",
+            "lessonNumber": 2,
+            "lessonOrder": 7,
+            "locked": true,
+            "title": "Homophones & Homonyms",
+            "content": "Learn words that sound the same but have different meanings (homophones) and words that are spelled the same but have different meanings (homonyms). These can be tricky but understanding them improves spelling and comprehension.",
+            "examples":[
+              {"problem":"Homophones: 'Pair' and 'Pear'","solution":["Step 1: Both sound the same","Step 2: 'Pair' means two of something","Step 3: 'Pear' is a fruit"]},
+              {"problem":"Homonyms: 'Bat' (animal) and 'Bat' (sports)","solution":["Step 1: Same spelling 'bat'","Step 2: One is a flying animal","Step 3: Other is sports equipment"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q061","text":"Homophone of 'Sea'?","options":["See","Tree","Tea","Bee"],"correct":0},
+              {"id":"ENG-Q062","text":"Homonym: 'Bank' meaning riverside?","options":["Yes","No"],"correct":0},
+              {"id":"ENG-Q063","text":"Homophone of 'Right'?","options":["Write","Left","Bright","Fight"],"correct":0},
+              {"id":"ENG-Q064","text":"Homonym: 'Bark' of tree or dog?","options":["Both","Dog only","Tree only","None"],"correct":0},
+              {"id":"ENG-Q065","text":"Homophone: 'Flower'?","options":["Flour","Power","Tower","Shower"],"correct":0},
+              {"id":"ENG-Q066","text":"Homonym: 'Match' game or fire?","options":["Both","Game only","Fire only","None"],"correct":0},
+              {"id":"ENG-Q067","text":"Homophone: 'Two'?","options":["Too, To","Tree","Tall","Tea"],"correct":0},
+              {"id":"ENG-Q068","text":"Homonym: 'Spring' season or water source?","options":["Both","Season only","Water only","None"],"correct":0},
+              {"id":"ENG-Q069","text":"Homophone: 'Knight'?","options":["Night","Light","Right","Write"],"correct":0},
+              {"id":"ENG-Q070","text":"Homonym: 'Bat' animal or cricket tool?","options":["Both","Animal only","Tool only","None"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-008",
+            "lessonNumber": 3,
+            "lessonOrder": 8,
+            "locked": true,
+            "title": "Idioms & Phrases",
+            "content": "Learn common English idioms and phrases, and their meanings. Idioms make language colorful and help you understand native speakers better.",
+            "examples":[
+              {"problem":"Break a leg","solution":["Step 1: This is an idiom","Step 2: It doesn't mean literally break a leg","Step 3: It means 'Good luck'"]},
+              {"problem":"Piece of cake","solution":["Step 1: This is an idiom","Step 2: It doesn't mean actual cake","Step 3: It means 'Something very easy'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q071","text":"Meaning of 'Hit the sack'?","options":["Go to sleep","Fight","Sleepy","None"],"correct":0},
+              {"id":"ENG-Q072","text":"Meaning of 'Once in a blue moon'?","options":["Rarely","Often","Always","Never"],"correct":0},
+              {"id":"ENG-Q073","text":"Meaning of 'Spill the beans'?","options":["Reveal a secret","Cook","Hide","Forget"],"correct":0},
+              {"id":"ENG-Q074","text":"Meaning of 'Under the weather'?","options":["Sick","Sunny","Happy","Sad"],"correct":0},
+              {"id":"ENG-Q075","text":"Meaning of 'Break the ice'?","options":["Make people comfortable","Break something","Fight","Sleep"],"correct":0},
+              {"id":"ENG-Q076","text":"Meaning of 'Piece of cake'?","options":["Easy","Hard","Impossible","Complicated"],"correct":0},
+              {"id":"ENG-Q077","text":"Meaning of 'Bite the bullet'?","options":["Face difficulty bravely","Run away","Cry","Eat"],"correct":0},
+              {"id":"ENG-Q078","text":"Meaning of 'Cost an arm and a leg'?","options":["Very expensive","Cheap","Nothing","Moderate"],"correct":0},
+              {"id":"ENG-Q079","text":"Meaning of 'Let the cat out of the bag'?","options":["Reveal secret","Hide secret","Cook","Sleep"],"correct":0},
+              {"id":"ENG-Q080","text":"Meaning of 'Hit the nail on the head'?","options":["Exactly right","Wrong","Almost","Partly right"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-009",
+            "lessonNumber": 4,
+            "lessonOrder": 9,
+            "locked": true,
+            "title": "Word Formation",
+            "content": "Learn how new words are formed using prefixes, suffixes, and root words. Understanding word formation helps you figure out meanings of unfamiliar words and expand your vocabulary.",
+            "examples":[
+              {"problem":"Happy + ness = Happiness","solution":["Step 1: Start with root word 'Happy'","Step 2: Add suffix '-ness' to form noun","Step 3: Result: 'Happiness' (noun meaning state of being happy)"]},
+              {"problem":"Un + happy = Unhappy","solution":["Step 1: Start with root word 'happy'","Step 2: Add prefix 'Un-' to form opposite","Step 3: Result: 'Unhappy' (opposite of happy)"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q081","text":"Form noun: Kind + ?","options":["ness","ly","ful","ing"],"correct":0},
+              {"id":"ENG-Q082","text":"Form adjective: Care + ?","options":["ful","ness","ly","ing"],"correct":0},
+              {"id":"ENG-Q083","text":"Form opposite: Regular + ?","options":["Ir","Un","Re","In"],"correct":0},
+              {"id":"ENG-Q084","text":"Form verb: Soft + ?","options":["en","ness","ly","ful"],"correct":0},
+              {"id":"ENG-Q085","text":"Form adverb: Quick + ?","options":["ly","ness","ful","ing"],"correct":0},
+              {"id":"ENG-Q086","text":"Form noun: Brave + ?","options":["ry","ness","ly","ful"],"correct":1},
+              {"id":"ENG-Q087","text":"Form adjective: Hope + ?","options":["ful","ness","ly","ing"],"correct":0},
+              {"id":"ENG-Q088","text":"Form opposite: Possible + ?","options":["Im","Un","In","Ir"],"correct":0},
+              {"id":"ENG-Q089","text":"Form noun: Happy + ?","options":["ness","ly","ful","ing"],"correct":0},
+              {"id":"ENG-Q090","text":"Form adverb: Careful + ?","options":["ly","ness","ful","ing"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-010",
+            "lessonNumber": 5,
+            "lessonOrder": 10,
+            "locked": true,
+            "title": "Contextual Vocabulary",
+            "content": "Learn to choose the correct word based on context and sentence meaning. This skill helps you communicate more precisely and understand texts better.",
+            "examples":[
+              {"problem":"She felt very ____ after winning.","solution":["Step 1: Consider context (after winning)","Step 2: Think of positive emotions","Step 3: Options: happy, joyful, excited"]},
+              {"problem":"He entered the room ____ and quietly.","solution":["Step 1: Consider context (and quietly)","Step 2: Think of words that match 'quietly'","Step 3: Options: slowly, silently"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q091","text":"Fill: He is very ___ at football.","options":["good","well","bad","better"],"correct":0},
+              {"id":"ENG-Q092","text":"Choose: She ran ___ to catch the bus.","options":["quickly","quick","fast","fastly"],"correct":0},
+              {"id":"ENG-Q093","text":"Fill: The cake tastes ___","options":["delicious","delightful","sweetly","bitter"],"correct":0},
+              {"id":"ENG-Q094","text":"Choose: He speaks ___ English.","options":["fluent","fluently","fluency","flow"],"correct":1},
+              {"id":"ENG-Q095","text":"Fill: The movie was very ___","options":["interesting","interest","interested","interests"],"correct":0},
+              {"id":"ENG-Q096","text":"Choose: She sings ___","options":["beautifully","beautiful","beauty","beautify"],"correct":0},
+              {"id":"ENG-Q097","text":"Fill: The room was ___","options":["clean","cleanly","cleansing","cleaner"],"correct":0},
+              {"id":"ENG-Q098","text":"Choose: He did the work ___","options":["carefully","careful","caring","care"],"correct":0},
+              {"id":"ENG-Q099","text":"Fill: The story is very ___","options":["exciting","excite","excited","excitement"],"correct":0},
+              {"id":"ENG-Q100","text":"Choose: She dressed ___","options":["nicely","nice","nicer","nicest"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C03",
+        "title": "Reading Comprehension",
+        "lessons": [
+          {
+            "id": "ENG-7-011",
+            "lessonNumber": 1,
+            "lessonOrder": 11,
+            "locked": false,
+            "title": "Understanding Passages",
+            "content": "Learn how to read passages carefully to understand the main idea, details, and context. Good reading comprehension is essential for academic success and lifelong learning.",
+            "examples":[
+              {"problem":"Passage: 'The sun rises in the east.' What is the main idea?","solution":["Step 1: Read the passage carefully","Step 2: Identify key information","Step 3: Main idea: The sun rises in a particular direction, east"]},
+              {"problem":"Passage: 'Many birds migrate in winter.' What detail supports this?","solution":["Step 1: Look for supporting information","Step 2: Consider why birds migrate","Step 3: Detail: Birds travel to warmer areas during winter"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q101","text":"What is the main idea of: 'Cats are playful animals.'","options":["Cats play","Dogs are playful","Cats sleep","Birds fly"],"correct":0},
+              {"id":"ENG-Q102","text":"Detail: 'She wore a red dress and a hat.' What color is the dress?","options":["Red","Blue","Green","Yellow"],"correct":0},
+              {"id":"ENG-Q103","text":"Infer: 'He ran to catch the bus.' What can you infer?","options":["He was late","He was early","He missed the bus","He slept"],"correct":0},
+              {"id":"ENG-Q104","text":"Main idea: 'Rainfall helps plants grow.'","options":["Rain is important for plants","Plants are colorful","Rain is harmful","Rain is rare"],"correct":0},
+              {"id":"ENG-Q105","text":"Detail: 'The cat slept on the sofa all day.' Where did the cat sleep?","options":["Sofa","Floor","Bed","Chair"],"correct":0},
+              {"id":"ENG-Q106","text":"Infer: 'She studied all night.' What can you infer?","options":["She was preparing for exam","She watched TV","She slept early","She cooked"],"correct":0},
+              {"id":"ENG-Q107","text":"Main idea: 'Recycling reduces waste.'","options":["Recycling is helpful","Waste is good","Recycling is bad","Waste is fun"],"correct":0},
+              {"id":"ENG-Q108","text":"Detail: 'He ate an apple and a banana.' Which fruits did he eat?","options":["Apple and banana","Orange and mango","Apple and orange","Banana and pear"],"correct":0},
+              {"id":"ENG-Q109","text":"Infer: 'She wore sunglasses.' What can you infer?","options":["It was sunny","It was raining","It was night","It was cold"],"correct":0},
+              {"id":"ENG-Q110","text":"Main idea: 'Dogs are loyal pets.'","options":["Dogs are loyal","Cats are loyal","Dogs are noisy","Dogs are dangerous"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-012",
+            "lessonNumber": 2,
+            "lessonOrder": 12,
+            "locked": true,
+            "title": "Main Idea & Details",
+            "content": "Learn how to identify the main idea and supporting details in a passage. The main idea is the central point, while details provide evidence or examples to support it.",
+            "examples":[
+              {"problem":"Passage: 'Many students enjoy sports.' Main idea?","solution":["Step 1: Identify what the passage is mainly about","Step 2: Focus on the central point","Step 3: Main idea: Sports are popular among students"]},
+              {"problem":"Supporting detail: 'Football, basketball, and tennis are popular.'","solution":["Step 1: Identify how this relates to main idea","Step 2: These are specific examples","Step 3: Supporting detail: Examples of sports students enjoy"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q111","text":"Main idea: 'Rain helps plants grow.'","options":["Rain helps plants","Plants need sun","Rain is bad","Plants are small"],"correct":0},
+              {"id":"ENG-Q112","text":"Supporting detail: 'She wore a red dress.'","options":["Red color","Blue color","Green dress","Yellow dress"],"correct":0},
+              {"id":"ENG-Q113","text":"Main idea: 'Birds migrate in winter.'","options":["Birds move seasonally","Birds fly high","Birds eat seeds","Birds sleep"],"correct":0},
+              {"id":"ENG-Q114","text":"Supporting detail: 'The dog barked loudly.'","options":["Dog bark","Dog ran","Dog slept","Dog ate"],"correct":0},
+              {"id":"ENG-Q115","text":"Main idea: 'Exercise keeps us healthy.'","options":["Exercise is beneficial","Exercise is harmful","We sleep more","We eat less"],"correct":0},
+              {"id":"ENG-Q116","text":"Supporting detail: 'He runs every morning.'","options":["Runs daily","Runs weekly","Runs monthly","Runs never"],"correct":0},
+              {"id":"ENG-Q117","text":"Main idea: 'Trees provide shade.'","options":["Trees give shade","Trees are tall","Trees have leaves","Trees are green"],"correct":0},
+              {"id":"ENG-Q118","text":"Supporting detail: 'The tree is big.'","options":["Tree size","Tree color","Tree age","Tree type"],"correct":0},
+              {"id":"ENG-Q119","text":"Main idea: 'Reading improves knowledge.'","options":["Reading is beneficial","Reading is harmful","Reading is boring","Reading is hard"],"correct":0},
+              {"id":"ENG-Q120","text":"Supporting detail: 'He reads every evening.'","options":["Evening reading","Morning reading","Night watching","Afternoon sleep"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-013",
+            "lessonNumber": 3,
+            "lessonOrder": 13,
+            "locked": true,
+            "title": "Inference & Prediction",
+            "content": "Learn how to make logical guesses (inferences) and predict what happens next in a passage. These skills help you understand implied meanings and engage actively with texts.",
+            "examples":[
+              {"problem":"Sentence: 'He packed an umbrella.' What can you infer?","solution":["Step 1: Consider why someone packs umbrella","Step 2: Think about umbrella's purpose","Step 3: Inference: It might rain"]},
+              {"problem":"Predict: 'She opened the gift.' What will she do?","solution":["Step 1: Consider what happens after opening gift","Step 2: Think about normal sequence","Step 3: Prediction: She will see what's inside"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q121","text":"Infer: 'Clouds are dark.'","options":["Rain is coming","Sunny day","Snow","Hot weather"],"correct":0},
+              {"id":"ENG-Q122","text":"Predict: 'He studied hard.'","options":["He will pass","He will fail","He will sleep","He will play"],"correct":0},
+              {"id":"ENG-Q123","text":"Infer: 'The ground is wet.'","options":["It rained","It is sunny","It is hot","It is dry"],"correct":0},
+              {"id":"ENG-Q124","text":"Predict: 'She smiled happily.'","options":["Something good happened","Something bad happened","Nothing","She is sad"],"correct":0},
+              {"id":"ENG-Q125","text":"Infer: 'The boy wore a coat.'","options":["Cold weather","Hot weather","Rainy","Sunny"],"correct":0},
+              {"id":"ENG-Q126","text":"Predict: 'He packed his bag.'","options":["Going to school","Staying home","Sleeping","Playing"],"correct":0},
+              {"id":"ENG-Q127","text":"Infer: 'Smoke rises from chimney.'","options":["Fire burning","Water boiling","Rainy day","Snow"],"correct":0},
+              {"id":"ENG-Q128","text":"Predict: 'She opened her notebook.'","options":["Will start writing","Will sleep","Will eat","Will play"],"correct":0},
+              {"id":"ENG-Q129","text":"Infer: 'He is shivering.'","options":["It is cold","It is hot","It is raining","It is sunny"],"correct":0},
+              {"id":"ENG-Q130","text":"Predict: 'The team huddled together.'","options":["Discuss strategy","Play individually","Rest","Eat"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-014",
+            "lessonNumber": 4,
+            "lessonOrder": 14,
+            "locked": true,
+            "title": "Summarizing",
+            "content": "Learn to write brief summaries capturing the main idea and key details of a passage. Summarizing helps you understand and remember important information.",
+            "examples":[
+              {"problem":"Passage: 'Dogs bark, cats meow, and birds chirp.'","solution":["Step 1: Identify main point","Step 2: Combine key details","Step 3: Summary: Different animals make different sounds"]},
+              {"problem":"Passage: 'She likes reading books every day.'","solution":["Step 1: Identify main activity","Step 2: Note frequency","Step 3: Summary: She enjoys daily reading"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q131","text":"Summarize: 'The sun rises in the east and sets in the west.'","options":["Sun rises and sets","Sun shines","Day and night","Sky is blue"],"correct":0},
+              {"id":"ENG-Q132","text":"Summarize: 'The boy ate an apple and a banana.'","options":["He ate fruits","He drank juice","He slept","He ran"],"correct":0},
+              {"id":"ENG-Q133","text":"Summarize: 'She studied all night for the test.'","options":["Studied hard","Slept","Played","Ate"],"correct":0},
+              {"id":"ENG-Q134","text":"Summarize: 'Birds migrate during winter.'","options":["Birds move seasonally","Birds fly high","Birds sleep","Birds eat"],"correct":0},
+              {"id":"ENG-Q135","text":"Summarize: 'He cleaned his room and washed dishes.'","options":["Did chores","Played games","Slept","Read"],"correct":0},
+              {"id":"ENG-Q136","text":"Summarize: 'Rain helps plants grow.'","options":["Rain is beneficial","Rain is harmful","Rain is hot","Rain is rare"],"correct":0},
+              {"id":"ENG-Q137","text":"Summarize: 'The teacher explained the lesson and gave homework.'","options":["Lesson taught and homework given","Lesson ignored","Homework skipped","Teacher absent"],"correct":0},
+              {"id":"ENG-Q138","text":"Summarize: 'He drank water and ate food.'","options":["He ate and drank","He slept","He ran","He played"],"correct":0},
+              {"id":"ENG-Q139","text":"Summarize: 'She smiled and waved at her friend.'","options":["Friendly gesture","Angry gesture","Ignored","Shouted"],"correct":0},
+              {"id":"ENG-Q140","text":"Summarize: 'The children played football and basketball.'","options":["Children played sports","Children studied","Children slept","Children ate"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-015",
+            "lessonNumber": 5,
+            "lessonOrder": 15,
+            "locked": true,
+            "title": "Answering Questions from Texts",
+            "content": "Learn how to answer comprehension questions based on a given passage, focusing on details and inference. This skill is essential for academic success and standardized tests.",
+            "examples":[
+              {"problem":"Passage: 'She wore a red dress.' Question: What color?","solution":["Step 1: Locate relevant information in passage","Step 2: Find the color mentioned","Step 3: Answer: Red"]},
+              {"problem":"Passage: 'He ran fast.' Question: How did he run?","solution":["Step 1: Look for descriptive words","Step 2: Find the adverb","Step 3: Answer: Fast"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q141","text":"Passage: 'The sun rises in the east.' Question: Where does it rise?","options":["East","West","North","South"],"correct":0},
+              {"id":"ENG-Q142","text":"Passage: 'Birds fly in the sky.' Question: What do birds do?","options":["Fly","Run","Swim","Sleep"],"correct":0},
+              {"id":"ENG-Q143","text":"Passage: 'He drank water.' Question: What did he drink?","options":["Water","Juice","Milk","Tea"],"correct":0},
+              {"id":"ENG-Q144","text":"Passage: 'She read a book.' Question: What did she read?","options":["Book","Magazine","Letter","Newspaper"],"correct":0},
+              {"id":"ENG-Q145","text":"Passage: 'It rained heavily.' Question: What happened?","options":["Rained","Sunny","Snowed","Windy"],"correct":0},
+              {"id":"ENG-Q146","text":"Passage: 'The boy plays football.' Question: What sport?","options":["Football","Cricket","Tennis","Basketball"],"correct":0},
+              {"id":"ENG-Q147","text":"Passage: 'She sang beautifully.' Question: How did she sing?","options":["Beautifully","Loudly","Angrily","Quietly"],"correct":0},
+              {"id":"ENG-Q148","text":"Passage: 'He is tall.' Question: How is he?","options":["Tall","Short","Fat","Thin"],"correct":0},
+              {"id":"ENG-Q149","text":"Passage: 'Dogs bark at strangers.' Question: Who barks?","options":["Dogs","Cats","Birds","Humans"],"correct":0},
+              {"id":"ENG-Q150","text":"Passage: 'She smiled and waved.' Question: What did she do?","options":["Smiled and waved","Cried","Shouted","Ran"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C04",
+        "title": "Writing Skills",
+        "lessons": [
+          {
+            "id": "ENG-7-016",
+            "lessonNumber": 1,
+            "lessonOrder": 16,
+            "locked": false,
+            "title": "Sentence Construction",
+            "content": "Learn how to write correct and complete sentences using proper grammar and punctuation. Good sentence construction is the foundation of clear communication.",
+            "examples": [
+              {"problem":"Incorrect: 'went to school.'","solution":["Step 1: Identify missing element","Step 2: Add subject 'She'","Step 3: Correct: 'She went to school.'"]},
+              {"problem":"Incorrect: 'He play football'","solution":["Step 1: Check subject-verb agreement","Step 2: 'He' needs singular verb","Step 3: Correct: 'He plays football.'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q151","text":"Correct sentence: 'She (go/goes) to school.'","options":["go","goes"],"correct":1},
+              {"id":"ENG-Q152","text":"Correct sentence: '(I/Me) am happy.'","options":["I","Me"],"correct":0},
+              {"id":"ENG-Q153","text":"Add punctuation: 'Lets eat grandma'","options":["Let's eat, grandma.","Lets eat grandma.","Let's eat grandma.","Lets eat, grandma."],"correct":0},
+              {"id":"ENG-Q154","text":"Correct sentence: 'They (is/are) playing.'","options":["is","are"],"correct":1},
+              {"id":"ENG-Q155","text":"Correct sentence: '(He/Him) likes pizza.'","options":["He","Him"],"correct":0},
+              {"id":"ENG-Q156","text":"Correct sentence: 'She (run/runs) fast.'","options":["run","runs"],"correct":1},
+              {"id":"ENG-Q157","text":"Correct sentence: 'The dog (bark/barks) loudly.'","options":["bark","barks"],"correct":1},
+              {"id":"ENG-Q158","text":"Add punctuation: 'What a beautiful day'","options":["What a beautiful day!","What a beautiful day.","What a beautiful day?","What a beautiful day,"],"correct":0},
+              {"id":"ENG-Q159","text":"Correct sentence: 'We (was/were) happy.'","options":["was","were"],"correct":1},
+              {"id":"ENG-Q160","text":"Correct sentence: 'I (has/have) a book.'","options":["has","have"],"correct":1}
+            ]
+          },
+          {
+            "id": "ENG-7-017",
+            "lessonNumber": 2,
+            "lessonOrder": 17,
+            "locked": true,
+            "title": "Paragraph Writing",
+            "content": "Learn to write structured paragraphs with topic sentences, supporting details, and conclusions. Good paragraphs organize ideas clearly and help readers follow your thoughts.",
+            "examples": [
+              {"problem":"Topic: My Favorite Hobby","solution":["Step 1: Start with topic sentence about your hobby","Step 2: Add 2-3 supporting details explaining why you like it","Step 3: End with conclusion summarizing your feelings"]},
+              {"problem":"Topic: A Memorable Day","solution":["Step 1: Introduce the day and why it was memorable","Step 2: Describe the main events that happened","Step 3: Conclude with how you felt about the experience"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q161","text":"Paragraph starts with:","options":["Topic sentence","Conclusion","Detail","Random sentence"],"correct":0},
+              {"id":"ENG-Q162","text":"Paragraph ends with:","options":["Conclusion","Topic sentence","Introduction","Random sentence"],"correct":0},
+              {"id":"ENG-Q163","text":"Supporting details:","options":["Explain main idea","End paragraph","Start paragraph","Random"],"correct":0},
+              {"id":"ENG-Q164","text":"Paragraph structure:","options":["Topic, Details, Conclusion","Conclusion, Details, Topic","Random","Topic only"],"correct":0},
+              {"id":"ENG-Q165","text":"Topic sentence is:","options":["Main idea","Conclusion","Random sentence","Supporting detail"],"correct":0},
+              {"id":"ENG-Q166","text":"Concluding sentence is:","options":["Wrap up main idea","Add new idea","Random","Supporting detail"],"correct":0},
+              {"id":"ENG-Q167","text":"Supporting detail is:","options":["Evidence/examples","Main idea","Conclusion","Topic"],"correct":0},
+              {"id":"ENG-Q168","text":"Paragraph should be:","options":["Coherent","Random","Disorganized","Incomplete"],"correct":0},
+              {"id":"ENG-Q169","text":"Topic sentence appears at:","options":["Beginning","Middle","End","Random"],"correct":0},
+              {"id":"ENG-Q170","text":"Concluding sentence appears at:","options":["End","Beginning","Middle","Random"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-018",
+            "lessonNumber": 3,
+            "lessonOrder": 18,
+            "locked": true,
+            "title": "Letter Writing",
+            "content": "Learn how to write formal and informal letters, including proper greetings, body, and closing. Letter writing skills are useful for academic and professional communication.",
+            "examples":[
+              {"problem":"Formal letter: Complaint about late delivery","solution":["Step 1: Include sender and receiver addresses","Step 2: Add date and formal greeting","Step 3: Write body explaining the complaint","Step 4: End with formal closing and signature"]},
+              {"problem":"Informal letter: Letter to friend","solution":["Step 1: Add friendly greeting","Step 2: Write body sharing news or feelings","Step 3: End with casual closing"]} 
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q171","text":"Greeting in formal letter:","options":["Dear Sir/Madam","Hi friend","Yo","Hey"],"correct":0},
+              {"id":"ENG-Q172","text":"Closing in formal letter:","options":["Yours sincerely","See ya","Bye","Later"],"correct":0},
+              {"id":"ENG-Q173","text":"Greeting in informal letter:","options":["Hi/Hello","Dear Sir","Dear Madam","Respected"],"correct":0},
+              {"id":"ENG-Q174","text":"Closing in informal letter:","options":["Best wishes","Yours faithfully","Yours sincerely","Respected"],"correct":0},
+              {"id":"ENG-Q175","text":"Body of letter contains:","options":["Message/content","Greeting","Closing","Date"],"correct":0},
+              {"id":"ENG-Q176","text":"Formal letters are used for:","options":["Official matters","Friends","Family","Jokes"],"correct":0},
+              {"id":"ENG-Q177","text":"Informal letters are used for:","options":["Friends & family","Official work","Companies","Government"],"correct":0},
+              {"id":"ENG-Q178","text":"Date in letter appears:","options":["Top right","Bottom left","Middle","End"],"correct":0},
+              {"id":"ENG-Q179","text":"Sender address in formal letter:","options":["Top left","Bottom","Middle","Random"],"correct":0},
+              {"id":"ENG-Q180","text":"Receiver address in formal letter:","options":["Below sender address","Top right","Bottom","Middle"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-019",
+            "lessonNumber": 4,
+            "lessonOrder": 19,
+            "locked": true,
+            "title": "Essay Writing",
+            "content": "Learn to write structured essays with introduction, body paragraphs, and conclusion. Essay writing develops critical thinking and helps you express complex ideas clearly.",
+            "examples":[
+              {"problem":"Topic: Importance of Education","solution":["Step 1: Write introduction with thesis statement","Step 2: Add 2-3 body paragraphs with supporting arguments","Step 3: Write conclusion that reinforces main points"]},
+              {"problem":"Topic: My Favorite Season","solution":["Step 1: Introduce your favorite season","Step 2: Explain reasons with specific details","Step 3: Conclude with personal reflection"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q181","text":"Essay starts with:","options":["Introduction","Body","Conclusion","Random"],"correct":0},
+              {"id":"ENG-Q182","text":"Essay ends with:","options":["Conclusion","Body","Introduction","Random"],"correct":0},
+              {"id":"ENG-Q183","text":"Body paragraphs contain:","options":["Supporting details","Random","Greeting","Closing"],"correct":0},
+              {"id":"ENG-Q184","text":"Introduction includes:","options":["Topic sentence","Random","Conclusion","Greeting"],"correct":0},
+              {"id":"ENG-Q185","text":"Conclusion includes:","options":["Wrap up main idea","Random","Introduction","Greeting"],"correct":0},
+              {"id":"ENG-Q186","text":"Essay should be:","options":["Coherent & structured","Random","Incomplete","Disorganized"],"correct":0},
+              {"id":"ENG-Q187","text":"Number of body paragraphs:","options":["2-3","0","5-6","1"],"correct":0},
+              {"id":"ENG-Q188","text":"Introduction appears:","options":["Beginning","Middle","End","Random"],"correct":0},
+              {"id":"ENG-Q189","text":"Conclusion appears:","options":["End","Middle","Beginning","Random"],"correct":0},
+              {"id":"ENG-Q190","text":"Body paragraph supports:","options":["Main idea","Random","Greeting","Closing"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-020",
+            "lessonNumber": 5,
+            "lessonOrder": 20,
+            "locked": true,
+            "title": "Creative Writing",
+            "content": "Learn to write stories, poems, or descriptive passages using imagination and proper language. Creative writing develops imagination and self-expression skills.",
+            "examples":[
+              {"problem":"Story: A day at the beach","solution":["Step 1: Set the scene (beach setting)","Step 2: Introduce characters and their activities","Step 3: Describe events with sensory details","Step 4: Conclude with memorable moment"]},
+              {"problem":"Poem: My favorite season","solution":["Step 1: Choose rhythmic pattern","Step 2: Include descriptive imagery","Step 3: Consider rhyme scheme","Step 4: Express emotions about the season"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q191","text":"Creative writing includes:","options":["Stories, poems, descriptive passages","Math problems","Science experiments","Grammar only"],"correct":0},
+              {"id":"ENG-Q192","text":"A story should have:","options":["Setting, characters, events, conclusion","Random words","Numbers","Equations"],"correct":0},
+              {"id":"ENG-Q193","text":"Poem should have:","options":["Rhyme, rhythm, imagery","Calculation","Formula","Diagram"],"correct":0},
+              {"id":"ENG-Q194","text":"Descriptive passage should:","options":["Use sensory details","Ignore details","Use numbers","Use formula"],"correct":0},
+              {"id":"ENG-Q195","text":"Creative writing helps:","options":["Imagination and expression","Calculation","Copying","Memorization"],"correct":0},
+              {"id":"ENG-Q196","text":"Story's conclusion should:","options":["Wrap up events","Start story","Random","Middle"],"correct":0},
+              {"id":"ENG-Q197","text":"Characters are:","options":["People/animals in story","Numbers","Formula","Random"],"correct":0},
+              {"id":"ENG-Q198","text":"Setting refers to:","options":["Place and time","Character","Event","Mood only"],"correct":0},
+              {"id":"ENG-Q199","text":"Imagery means:","options":["Use of sensory language","Numbers","Equations","Formula"],"correct":0},
+              {"id":"ENG-Q200","text":"Creative writing should be:","options":["Interesting and clear","Boring","Random","Incomplete"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C05",
+        "title": "Grammar & Usage",
+        "lessons": [
+          {
+            "id": "ENG-7-021",
+            "lessonNumber": 1,
+            "lessonOrder": 21,
+            "locked": false,
+            "title": "Parts of Speech",
+            "content": "Learn about nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, and interjections. Mastering parts of speech helps you understand how words function in sentences.",
+            "examples": [
+              {"problem":"Identify the noun: 'The cat sleeps on the mat.'","solution":["Step 1: Look for naming words","Step 2: 'cat' names an animal, 'mat' names an object","Step 3: Nouns: cat, mat"]},
+              {"problem":"Identify the verb: 'She runs fast.'","solution":["Step 1: Look for action words","Step 2: 'runs' shows action","Step 3: Verb: runs"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q201","text":"Identify the noun: 'The dog barked.'","options":["dog","barked","the","all"],"correct":0},
+              {"id":"ENG-Q202","text":"Identify the verb: 'He plays football.'","options":["plays","He","football","all"],"correct":0},
+              {"id":"ENG-Q203","text":"Identify the adjective: 'The red ball is mine.'","options":["red","ball","mine","is"],"correct":0},
+              {"id":"ENG-Q204","text":"Identify the adverb: 'She runs quickly.'","options":["quickly","She","runs","all"],"correct":0},
+              {"id":"ENG-Q205","text":"Identify the pronoun: 'He is my friend.'","options":["He","my","friend","is"],"correct":0},
+              {"id":"ENG-Q206","text":"Identify the conjunction: 'I like tea and coffee.'","options":["and","I","like","tea"],"correct":0},
+              {"id":"ENG-Q207","text":"Identify the preposition: 'The book is on the table.'","options":["on","is","book","table"],"correct":0},
+              {"id":"ENG-Q208","text":"Identify the interjection: 'Wow! That's amazing.'","options":["Wow","That","amazing","is"],"correct":0},
+              {"id":"ENG-Q209","text":"Identify the noun: 'Birds fly in the sky.'","options":["Birds, sky","fly","in","all"],"correct":0},
+              {"id":"ENG-Q210","text":"Identify the verb: 'They eat lunch.'","options":["eat","They","lunch","all"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-022",
+            "lessonNumber": 2,
+            "lessonOrder": 22,
+            "locked": true,
+            "title": "Tenses",
+            "content": "Learn about past, present, and future tenses and how to use them correctly. Proper tense usage ensures clear communication about when actions occur.",
+            "examples":[
+              {"problem":"Past tense: 'I (go) to school yesterday.'","solution":["Step 1: Identify time indicator 'yesterday'","Step 2: Choose past tense form","Step 3: Answer: 'went'"]},
+              {"problem":"Future tense: 'She (will/walk) to the park tomorrow.'","solution":["Step 1: Identify time indicator 'tomorrow'","Step 2: Use future tense structure","Step 3: Answer: 'will walk'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q211","text":"Present tense: 'He (eat) an apple.'","options":["eats","ate","will eat"],"correct":0},
+              {"id":"ENG-Q212","text":"Past tense: 'She (play) football yesterday.'","options":["played","plays","will play"],"correct":0},
+              {"id":"ENG-Q213","text":"Future tense: 'They (will/go) to market tomorrow.'","options":["will go","go","went"],"correct":0},
+              {"id":"ENG-Q214","text":"Present tense: 'I (am/is) happy.'","options":["am","is","was"],"correct":0},
+              {"id":"ENG-Q215","text":"Past tense: 'He (run) fast yesterday.'","options":["ran","runs","will run"],"correct":0},
+              {"id":"ENG-Q216","text":"Future tense: 'She (will/study) for exam.'","options":["will study","studies","studied"],"correct":0},
+              {"id":"ENG-Q217","text":"Present tense: 'They (are/is) friends.'","options":["are","is","was"],"correct":0},
+              {"id":"ENG-Q218","text":"Past tense: 'I (write) a letter yesterday.'","options":["wrote","writes","will write"],"correct":0},
+              {"id":"ENG-Q219","text":"Future tense: 'He (will/travel) next week.'","options":["will travel","travels","traveled"],"correct":0},
+              {"id":"ENG-Q220","text":"Present tense: 'She (likes/liked) chocolate.'","options":["likes","liked","will like"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-023",
+            "lessonNumber": 3,
+            "lessonOrder": 23,
+            "locked": true,
+            "title": "Active & Passive Voice",
+            "content": "Learn how to convert sentences from active voice to passive voice and vice versa. Understanding both voices helps you vary your writing style and emphasize different elements.",
+            "examples":[
+              {"problem":"Active: 'The cat chased the mouse.'","solution":["Step 1: Identify subject (cat), object (mouse)","Step 2: Move object to front: 'The mouse'","Step 3: Add 'was' + past participle: 'The mouse was chased by the cat'"]},
+              {"problem":"Passive: 'The cake was baked by Mary.'","solution":["Step 1: Identify the actor (Mary)","Step 2: Move actor to front: 'Mary'","Step 3: Use active form: 'Mary baked the cake'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q221","text":"Active: 'He wrote a letter.' Passive?","options":["A letter was written by him.","He was written a letter.","Letter wrote he.","He writes a letter."],"correct":0},
+              {"id":"ENG-Q222","text":"Passive: 'The book was read by Tom.' Active?","options":["Tom read the book.","The book read Tom.","Tom was reading book.","Book was read by Tom."],"correct":0},
+              {"id":"ENG-Q223","text":"Active: 'She painted the wall.' Passive?","options":["The wall was painted by her.","The wall painted her.","She was painted wall.","Wall painted she."],"correct":0},
+              {"id":"ENG-Q224","text":"Passive: 'The homework was done by the students.' Active?","options":["The students did the homework.","Homework did students.","Students were done homework.","Homework done by students."],"correct":0},
+              {"id":"ENG-Q225","text":"Active: 'They built a house.' Passive?","options":["A house was built by them.","They was built house.","House built they.","They build a house."],"correct":0},
+              {"id":"ENG-Q226","text":"Passive: 'The song was sung by her.' Active?","options":["She sang the song.","Song sang her.","Her sang song.","She was sung song."],"correct":0},
+              {"id":"ENG-Q227","text":"Active: 'I cleaned the room.' Passive?","options":["The room was cleaned by me.","Room cleaned I.","I was cleaned room.","Room cleaned by I."],"correct":0},
+              {"id":"ENG-Q228","text":"Passive: 'The movie was watched by them.' Active?","options":["They watched the movie.","Movie watched they.","They was watched movie.","Movie watched by them."],"correct":0},
+              {"id":"ENG-Q229","text":"Active: 'She closed the door.' Passive?","options":["The door was closed by her.","Door closed she.","She was closed door.","Closed door she."],"correct":0},
+              {"id":"ENG-Q230","text":"Passive: 'The letter was written by John.' Active?","options":["John wrote the letter.","Letter wrote John.","John was wrote letter.","Letter written by John."],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-024",
+            "lessonNumber": 4,
+            "lessonOrder": 24,
+            "locked": true,
+            "title": "Punctuation & Capitalization",
+            "content": "Learn to use punctuation marks and capitalization correctly in sentences. Proper punctuation and capitalization make writing clear, professional, and easy to read.",
+            "examples":[
+              {"problem":"incorrect: 'lets eat grandma'","solution":["Step 1: Add apostrophe: 'let's'","Step 2: Add comma before address: 'Let's eat, grandma'","Step 3: Add exclamation: 'Let's eat, grandma!'"]},
+              {"problem":"incorrect: 'he went to school'","solution":["Step 1: Capitalize first word: 'He'","Step 2: Add period at end","Step 3: Correct: 'He went to school.'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q231","text":"Correct punctuation: 'What a beautiful day'","options":["What a beautiful day!","What a beautiful day.","What a beautiful day?","What a beautiful day,"],"correct":0},
+              {"id":"ENG-Q232","text":"Capitalization: 'london is a city.'","options":["London is a city.","london is a city.","LONDON is a city.","London Is a City."],"correct":0},
+              {"id":"ENG-Q233","text":"Punctuation: 'I like apples oranges and bananas'","options":["I like apples, oranges, and bananas.","I like apples oranges and bananas.","I like apples; oranges and bananas.","I like apples. Oranges and bananas."],"correct":0},
+              {"id":"ENG-Q234","text":"Capitalization: 'she is my friend.'","options":["She is my friend.","she is my friend.","SHE is my friend.","She Is My Friend."],"correct":0},
+              {"id":"ENG-Q235","text":"Correct punctuation: 'Stop right there'","options":["Stop right there!","Stop right there.","Stop right there?","Stop right there,"],"correct":0},
+              {"id":"ENG-Q236","text":"Capitalization: 'the river nile'","options":["The River Nile","the river nile","THE RIVER NILE","River Nile"],"correct":0},
+              {"id":"ENG-Q237","text":"Punctuation: 'He asked Where are you going'","options":["He asked, 'Where are you going?'","He asked 'Where are you going'.","He asked, Where are you going?","He asked Where are you going?"],"correct":0},
+              {"id":"ENG-Q238","text":"Capitalization: 'my favourite book'","options":["My favourite book","my favourite book","MY favourite book","My Favourite Book"],"correct":0},
+              {"id":"ENG-Q239","text":"Punctuation: 'Yes I can'","options":["Yes, I can.","Yes I can.","Yes, I can!","Yes I can!"],"correct":0},
+              {"id":"ENG-Q240","text":"Capitalization: 'i love coding'","options":["I love coding","i love coding","I Love Coding","i Love Coding"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-025",
+            "lessonNumber": 5,
+            "lessonOrder": 25,
+            "locked": true,
+            "title": "Common Errors & Usage",
+            "content": "Learn to identify and correct common grammar mistakes in writing and speaking. Avoiding these errors makes your communication more professional and effective.",
+            "examples":[
+              {"problem":"Incorrect: 'He dont like apples'","solution":["Step 1: Identify contraction error","Step 2: 'He' needs 'doesn't' not 'don't'","Step 3: Correct: 'He doesn't like apples.'"]},
+              {"problem":"Incorrect: 'She go to school'","solution":["Step 1: Check subject-verb agreement","Step 2: 'She' needs singular verb 'goes'","Step 3: Correct: 'She goes to school.'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q241","text":"Correct sentence: 'They (does/don't) like pizza.'","options":["don't","does"],"correct":0},
+              {"id":"ENG-Q242","text":"Correct sentence: 'He (go/goes) to school.'","options":["goes","go"],"correct":0},
+              {"id":"ENG-Q243","text":"Correct sentence: 'She (is/are) happy.'","options":["is","are"],"correct":0},
+              {"id":"ENG-Q244","text":"Correct sentence: 'We (was/were) late.'","options":["were","was"],"correct":0},
+              {"id":"ENG-Q245","text":"Correct sentence: 'I (has/have) a pen.'","options":["have","has"],"correct":0},
+              {"id":"ENG-Q246","text":"Correct sentence: 'He (didn't/don't) finish homework.'","options":["didn't","don't"],"correct":0},
+              {"id":"ENG-Q247","text":"Correct sentence: 'They (is/are) friends.'","options":["are","is"],"correct":0},
+              {"id":"ENG-Q248","text":"Correct sentence: 'She (was/were) tired.'","options":["was","were"],"correct":0},
+              {"id":"ENG-Q249","text":"Correct sentence: 'I (does/did) my homework.'","options":["did","does"],"correct":0},
+              {"id":"ENG-Q250","text":"Correct sentence: 'He (doesn't/don't) like tea.'","options":["doesn't","don't"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C06",
+        "title": "Vocabulary & Spelling",
+        "lessons": [
+          {
+            "id": "ENG-7-026",
+            "lessonNumber": 1,
+            "lessonOrder": 26,
+            "locked": false,
+            "title": "Synonyms & Antonyms",
+            "content": "Learn the meaning of words and identify synonyms (words with similar meanings) and antonyms (words with opposite meanings). This expands your vocabulary and improves your ability to express ideas precisely.",
+            "examples": [
+              {"problem":"Synonym of 'happy'","solution":["Step 1: Think of words with similar meaning","Step 2: Consider positive emotions","Step 3: Examples: Joyful, glad, cheerful"]},
+              {"problem":"Antonym of 'hot'","solution":["Step 1: Think of words with opposite meaning","Step 2: Consider temperature opposites","Step 3: Examples: Cold, cool, chilly"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q251","text":"Synonym of 'angry'?","options":["mad","calm","small","happy"],"correct":0},
+              {"id":"ENG-Q252","text":"Antonym of 'big'?","options":["small","huge","tall","long"],"correct":0},
+              {"id":"ENG-Q253","text":"Synonym of 'fast'?","options":["quick","slow","lazy","small"],"correct":0},
+              {"id":"ENG-Q254","text":"Antonym of 'happy'?","options":["sad","joyful","glad","excited"],"correct":0},
+              {"id":"ENG-Q255","text":"Synonym of 'smart'?","options":["intelligent","dull","slow","weak"],"correct":0},
+              {"id":"ENG-Q256","text":"Antonym of 'cold'?","options":["hot","cool","freezing","chilly"],"correct":0},
+              {"id":"ENG-Q257","text":"Synonym of 'begin'?","options":["start","end","stop","finish"],"correct":0},
+              {"id":"ENG-Q258","text":"Antonym of 'light'?","options":["dark","bright","heavy","shine"],"correct":0},
+              {"id":"ENG-Q259","text":"Synonym of 'difficult'?","options":["hard","easy","simple","smooth"],"correct":0},
+              {"id":"ENG-Q260","text":"Antonym of 'near'?","options":["far","close","beside","next"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-027",
+            "lessonNumber": 2,
+            "lessonOrder": 27,
+            "locked": true,
+            "title": "Homophones & Homonyms",
+            "content": "Learn words that sound the same but have different meanings (homophones) and words with multiple meanings (homonyms). Understanding these prevents common spelling and usage errors.",
+            "examples": [
+              {"problem":"Homophone: 'bare' vs 'bear'","solution":["Step 1: Both words sound identical","Step 2: 'Bare' means uncovered or naked","Step 3: 'Bear' is a large animal or means to carry"]},
+              {"problem":"Homonym: 'bat'","solution":["Step 1: Same spelling, different meanings","Step 2: 'Bat' can be a flying mammal","Step 3: 'Bat' can also be sports equipment"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q261","text":"Choose correct homophone: 'I (see/sea) a fish.'","options":["see","sea"],"correct":0},
+              {"id":"ENG-Q262","text":"Choose correct homophone: 'The (sun/son) is bright.'","options":["sun","son"],"correct":0},
+              {"id":"ENG-Q263","text":"Identify homonym meaning: 'bank'","options":["river edge / financial institution","river only","financial only","mountain"],"correct":0},
+              {"id":"ENG-Q264","text":"Homophone: 'flour / flower'","options":["Different meanings","Same meaning","Same spelling","None"],"correct":0},
+              {"id":"ENG-Q265","text":"Homonym: 'bark'","options":["tree covering / dog's sound","only tree","only dog","river"],"correct":0},
+              {"id":"ENG-Q266","text":"Homophone: 'to / two / too'","options":["All sound the same","All different","Some same","None same"],"correct":0},
+              {"id":"ENG-Q267","text":"Homonym: 'right'","options":["correct / direction","only correct","only direction","wrong"],"correct":0},
+              {"id":"ENG-Q268","text":"Homophone: 'pair / pear'","options":["Sound the same","Sound different","Same meaning","Same spelling"],"correct":0},
+              {"id":"ENG-Q269","text":"Homonym: 'light'","options":["illumination / not heavy","only illumination","only not heavy","dark"],"correct":0},
+              {"id":"ENG-Q270","text":"Homophone: 'here / hear'","options":["Sound the same","Sound different","Same meaning","Same spelling"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-028",
+            "lessonNumber": 3,
+            "lessonOrder": 28,
+            "locked": true,
+            "title": "Prefixes & Suffixes",
+            "content": "Learn how prefixes and suffixes change the meaning of base words. This knowledge helps you understand new vocabulary and build words systematically.",
+            "examples": [
+              {"problem":"Prefix 'un-' + happy","solution":["Step 1: Identify base word 'happy'","Step 2: Add prefix 'un-' meaning 'not'","Step 3: Result: 'Unhappy' meaning 'not happy'"]},
+              {"problem":"Suffix '-ful' + joy","solution":["Step 1: Identify base word 'joy'","Step 2: Add suffix '-ful' meaning 'full of'","Step 3: Result: 'Joyful' meaning 'full of joy'"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q271","text":"Prefix 'dis-' + agree","options":["disagree","agree","agreeful","disagreeful"],"correct":0},
+              {"id":"ENG-Q272","text":"Suffix '-less' + hope","options":["hopeless","hopeful","hoping","hopes"],"correct":0},
+              {"id":"ENG-Q273","text":"Prefix 're-' + write","options":["rewrite","write","writing","writer"],"correct":0},
+              {"id":"ENG-Q274","text":"Suffix '-ness' + kind","options":["kindness","kindful","kindly","kinder"],"correct":0},
+              {"id":"ENG-Q275","text":"Prefix 'pre-' + view","options":["preview","view","viewer","preving"],"correct":0},
+              {"id":"ENG-Q276","text":"Suffix '-ment' + enjoy","options":["enjoyment","enjoyful","enjoying","enjoys"],"correct":0},
+              {"id":"ENG-Q277","text":"Prefix 'mis-' + lead","options":["mislead","lead","leader","misleading"],"correct":0},
+              {"id":"ENG-Q278","text":"Suffix '-er' + teach","options":["teacher","teaching","teachful","teachly"],"correct":0},
+              {"id":"ENG-Q279","text":"Prefix 'non-' + sense","options":["nonsense","sense","senseless","nonsenseful"],"correct":0},
+              {"id":"ENG-Q280","text":"Suffix '-able' + read","options":["readable","reading","readful","reader"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-029",
+            "lessonNumber": 4,
+            "lessonOrder": 29,
+            "locked": true,
+            "title": "Spelling Rules",
+            "content": "Learn common spelling rules and patterns to improve accuracy in writing. Mastering these rules helps you spell unfamiliar words correctly and reduces spelling errors.",
+            "examples":[
+              {"problem":"i before e except after c: 'receive'","solution":["Step 1: Check if 'c' comes before 'ei'","Step 2: 'c' comes before, so use 'ei'","Step 3: Correct spelling: receive"]},
+              {"problem":"Double consonants: 'running'","solution":["Step 1: Check if word ends in consonant-vowel-consonant","Step 2: 'run' ends in CVC pattern","Step 3: Double the 'n': running"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q281","text":"Correct spelling: 'definately / definitely'","options":["definitely","definately"],"correct":0},
+              {"id":"ENG-Q282","text":"Correct spelling: 'occured / occurred'","options":["occurred","occured"],"correct":0},
+              {"id":"ENG-Q283","text":"Correct spelling: 'begining / beginning'","options":["beginning","begining"],"correct":0},
+              {"id":"ENG-Q284","text":"Correct spelling: 'accomodate / accommodate'","options":["accommodate","accomodate"],"correct":0},
+              {"id":"ENG-Q285","text":"Correct spelling: 'seperated / separated'","options":["separated","seperated"],"correct":0},
+              {"id":"ENG-Q286","text":"Correct spelling: 'beleive / believe'","options":["believe","beleive"],"correct":0},
+              {"id":"ENG-Q287","text":"Correct spelling: 'occassion / occasion'","options":["occasion","occassion"],"correct":0},
+              {"id":"ENG-Q288","text":"Correct spelling: 'wierd / weird'","options":["weird","wierd"],"correct":0},
+              {"id":"ENG-Q289","text":"Correct spelling: 'recieve / receive'","options":["receive","recieve"],"correct":0},
+              {"id":"ENG-Q290","text":"Correct spelling: 'untill / until'","options":["until","untill"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-030",
+            "lessonNumber": 5,
+            "lessonOrder": 30,
+            "locked": true,
+            "title": "Idioms & Phrases",
+            "content": "Learn common idioms and phrases, their meanings, and how to use them in sentences. Idioms add color to language and help you understand native speakers better.",
+            "examples":[
+              {"problem":"Idiom: 'Break the ice'","solution":["Step 1: This is a figurative expression","Step 2: It doesn't mean literally breaking ice","Step 3: Meaning: To initiate conversation in a social setting"]},
+              {"problem":"Idiom: 'Piece of cake'","solution":["Step 1: This is a figurative expression","Step 2: It doesn't refer to actual cake","Step 3: Meaning: A very easy task"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q291","text":"Meaning of 'Break the ice'?","options":["Start a conversation","Break physically","Fall ice","Sleep"],"correct":0},
+              {"id":"ENG-Q292","text":"Meaning of 'Piece of cake'?","options":["Very easy task","Cake slice","Difficult task","Eat cake"],"correct":0},
+              {"id":"ENG-Q293","text":"Meaning of 'Hit the sack'?","options":["Go to sleep","Punch sack","Play","Eat"],"correct":0},
+              {"id":"ENG-Q294","text":"Meaning of 'Under the weather'?","options":["Feeling sick","Below clouds","Rainy day","Sad"],"correct":0},
+              {"id":"ENG-Q295","text":"Meaning of 'Once in a blue moon'?","options":["Rarely","Often","Never","Always"],"correct":0},
+              {"id":"ENG-Q296","text":"Meaning of 'Let the cat out of the bag'?","options":["Reveal a secret","Free cat","Play with cat","Hide secret"],"correct":0},
+              {"id":"ENG-Q297","text":"Meaning of 'Bite the bullet'?","options":["Face a difficult situation","Bite something","Escape","Fight"],"correct":0},
+              {"id":"ENG-Q298","text":"Meaning of 'Cost an arm and a leg'?","options":["Very expensive","Cheap","Free","Normal price"],"correct":0},
+              {"id":"ENG-Q299","text":"Meaning of 'Back to square one'?","options":["Start over","Go back","Finish","Move forward"],"correct":0},
+              {"id":"ENG-Q300","text":"Meaning of 'Burn the midnight oil'?","options":["Work late at night","Sleep early","Eat at night","Read oil"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C07",
+        "title": "Reading Comprehension",
+        "lessons": [
+          {
+            "id": "ENG-7-031",
+            "lessonNumber": 1,
+            "lessonOrder": 31,
+            "locked": false,
+            "title": "Understanding the Main Idea",
+            "content": "Learn how to identify the main idea of a passage and summarize it. The main idea is the central message or most important point the author wants to communicate.",
+            "examples": [
+              {"problem":"Passage: 'Dogs are loyal animals. They are friendly and protect their owners.'","solution":["Step 1: Read the entire passage","Step 2: Identify what the passage is mainly about","Step 3: Main idea: Dogs are loyal and protective animals"]},
+              {"problem":"Passage: 'Trees produce oxygen and provide shade.'","solution":["Step 1: Identify the subject (trees)","Step 2: Note what they do (produce oxygen, provide shade)","Step 3: Main idea: Trees benefit the environment"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q301","text":"Main idea: 'The sun provides heat and light to the earth.'","options":["The sun is important for life","The earth is round","Heat is dangerous","Light is useless"],"correct":0},
+              {"id":"ENG-Q302","text":"Main idea: 'Cats are independent animals and can take care of themselves.'","options":["Cats are independent","Dogs are loyal","Cats are small","Cats are friendly"],"correct":0},
+              {"id":"ENG-Q303","text":"Main idea: 'Rain helps plants grow and fills rivers.'","options":["Rain is essential for plants and water bodies","Rain is dangerous","Rain is cold","Rain is unnecessary"],"correct":0},
+              {"id":"ENG-Q304","text":"Main idea: 'Reading improves vocabulary and imagination.'","options":["Reading benefits the mind","Reading is boring","Reading is hard","Reading is optional"],"correct":0},
+              {"id":"ENG-Q305","text":"Main idea: 'Exercise keeps the body healthy.'","options":["Exercise is important for health","Exercise is tiring","Exercise is optional","Exercise is boring"],"correct":0},
+              {"id":"ENG-Q306","text":"Main idea: 'Birds build nests to lay eggs.'","options":["Birds build nests for eggs","Birds fly high","Birds swim","Birds eat seeds"],"correct":0},
+              {"id":"ENG-Q307","text":"Main idea: 'Electricity powers homes and devices.'","options":["Electricity is essential","Electricity is dangerous","Electricity is optional","Electricity is cheap"],"correct":0},
+              {"id":"ENG-Q308","text":"Main idea: 'Water is needed for drinking and cooking.'","options":["Water is essential","Water is harmful","Water is expensive","Water is heavy"],"correct":0},
+              {"id":"ENG-Q309","text":"Main idea: 'The moon reflects sunlight.'","options":["The moon reflects light","The moon produces heat","The moon is hot","The moon is small"],"correct":0},
+              {"id":"ENG-Q310","text":"Main idea: 'Trees reduce pollution and provide oxygen.'","options":["Trees help the environment","Trees are tall","Trees are expensive","Trees are animals"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-032",
+            "lessonNumber": 2,
+            "lessonOrder": 32,
+            "locked": true,
+            "title": "Identifying Supporting Details",
+            "content": "Learn to identify supporting details that explain or reinforce the main idea. Supporting details provide evidence, examples, or specific information that backs up the central point.",
+            "examples": [
+              {"problem":"Passage: 'Birds migrate to warmer regions during winter. They look for food and a suitable climate.'","solution":["Step 1: Identify main idea (bird migration)","Step 2: Find details that support this","Step 3: Supporting details: migrate to warmer regions, look for food, suitable climate"]},
+              {"problem":"Passage: 'Exercise keeps us fit. Running and swimming are good examples.'","solution":["Step 1: Identify main idea (exercise keeps us fit)","Step 2: Look for specific examples","Step 3: Supporting details: Running and swimming are good examples of exercise"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q311","text":"Supporting detail: 'Cats are playful. They like chasing toys.'","options":["They like chasing toys","Cats are playful","Both","None"],"correct":0},
+              {"id":"ENG-Q312","text":"Supporting detail: 'Water is vital. It keeps our body hydrated.'","options":["It keeps our body hydrated","Water is vital","Both","None"],"correct":0},
+              {"id":"ENG-Q313","text":"Supporting detail: 'The sun rises in the east. It provides light and warmth.'","options":["Provides light and warmth","Sun rises in east","Both","None"],"correct":0},
+              {"id":"ENG-Q314","text":"Supporting detail: 'Reading books improves vocabulary. Reading novels helps imagination.'","options":["Reading novels helps imagination","Reading books improves vocabulary","Both","None"],"correct":2},
+              {"id":"ENG-Q315","text":"Supporting detail: 'Trees provide oxygen. They also give shade.'","options":["Provide oxygen","Give shade","Both","None"],"correct":2},
+              {"id":"ENG-Q316","text":"Supporting detail: 'Birds lay eggs. They also feed their chicks.'","options":["Lay eggs","Feed chicks","Both","None"],"correct":2},
+              {"id":"ENG-Q317","text":"Supporting detail: 'Exercise is important. Swimming and jogging are good examples.'","options":["Swimming and jogging","Exercise is important","Both","None"],"correct":0},
+              {"id":"ENG-Q318","text":"Supporting detail: 'Rainwater is collected in tanks. It is used for gardening.'","options":["Used for gardening","Collected in tanks","Both","None"],"correct":2},
+              {"id":"ENG-Q319","text":"Supporting detail: 'Electricity powers lights. It also powers fans and TVs.'","options":["Powers lights","Powers fans and TVs","Both","None"],"correct":2},
+              {"id":"ENG-Q320","text":"Supporting detail: 'Milk is nutritious. It contains calcium.'","options":["Contains calcium","Milk is nutritious","Both","None"],"correct":2}
+            ]
+          },
+          {
+            "id": "ENG-7-033",
+            "lessonNumber": 3,
+            "lessonOrder": 33,
+            "locked": true,
+            "title": "Making Inferences",
+            "content": "Learn to draw conclusions based on information that is implied but not directly stated. Inference skills help you understand deeper meanings and read between the lines.",
+            "examples":[
+              {"problem":"Passage: 'John came home with wet clothes.'","solution":["Step 1: Consider why clothes would be wet","Step 2: Think of logical reasons","Step 3: Inference: It was raining outside or he was in water"]},
+              {"problem":"Passage: 'The ground was covered with snow.'","solution":["Step 1: Consider when snow covers ground","Step 2: Think about weather conditions","Step 3: Inference: It is winter or very cold weather"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q321","text":"Infer: 'He was shivering and wearing a coat.'","options":["Cold weather","Hot weather","Summer","Rain"],"correct":0},
+              {"id":"ENG-Q322","text":"Infer: 'She has a cast on her leg.'","options":["She has an injury","She is dancing","She is healthy","She is running"],"correct":0},
+              {"id":"ENG-Q323","text":"Infer: 'The lights were off in the house.'","options":["Nobody is home","Party is on","House is broken","House is clean"],"correct":0},
+              {"id":"ENG-Q324","text":"Infer: 'He is carrying an umbrella.'","options":["It might rain","It is sunny","It is snowing","It is windy"],"correct":0},
+              {"id":"ENG-Q325","text":"Infer: 'The teacher is giving homework.'","options":["Class is ending","Teacher is teaching","Teacher is sleeping","No class"],"correct":0},
+              {"id":"ENG-Q326","text":"Infer: 'She is wearing sunglasses.'","options":["Sunny day","Rainy day","Night time","Cloudy day"],"correct":0},
+              {"id":"ENG-Q327","text":"Infer: 'The ice cream melted quickly.'","options":["It is hot","It is cold","It is raining","It is windy"],"correct":0},
+              {"id":"ENG-Q328","text":"Infer: 'The boy ran to the bus stop.'","options":["He wants to catch the bus","He is jogging","He is late for school","Both 1 and 3"],"correct":3},
+              {"id":"ENG-Q329","text":"Infer: 'The sky is dark and cloudy.'","options":["Rainy weather","Sunny weather","Snowy weather","Windy weather"],"correct":0},
+              {"id":"ENG-Q330","text":"Infer: 'She carried a heavy bag.'","options":["She has a lot of items","She is tired","Both","None"],"correct":2}
+            ]
+          },
+          {
+            "id": "ENG-7-034",
+            "lessonNumber": 4,
+            "lessonOrder": 34,
+            "locked": true,
+            "title": "Drawing Conclusions",
+            "content": "Learn to combine information from the passage and your knowledge to reach logical conclusions. This skill helps you understand texts more deeply and think critically.",
+            "examples":[
+              {"problem":"Passage: 'It is cloudy and the ground is wet.'","solution":["Step 1: Combine the clues (cloudy + wet ground)","Step 2: Use logical reasoning","Step 3: Conclusion: It rained recently"]},
+              {"problem":"Passage: 'She wore a raincoat and boots.'","solution":["Step 1: Consider why someone wears raincoat and boots","Step 2: Think about weather conditions","Step 3: Conclusion: The weather is rainy or wet"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q331","text":"Conclusion: 'He wore a hat and scarf.'","options":["Cold weather","Hot weather","Rainy","Windy"],"correct":0},
+              {"id":"ENG-Q332","text":"Conclusion: 'The boy is sweating and drinking water.'","options":["It is hot","It is cold","It is rainy","It is windy"],"correct":0},
+              {"id":"ENG-Q333","text":"Conclusion: 'The children are carrying umbrellas.'","options":["It is raining","It is sunny","It is snowy","It is windy"],"correct":0},
+              {"id":"ENG-Q334","text":"Conclusion: 'She wore sunglasses and shorts.'","options":["Sunny","Rainy","Snowy","Cold"],"correct":0},
+              {"id":"ENG-Q335","text":"Conclusion: 'The ground is muddy.'","options":["It rained recently","It is sunny","It snowed","It is dry"],"correct":0},
+              {"id":"ENG-Q336","text":"Conclusion: 'He wore gloves and a coat.'","options":["Cold","Hot","Rainy","Windy"],"correct":0},
+              {"id":"ENG-Q337","text":"Conclusion: 'The sky has many dark clouds.'","options":["It may rain","It is sunny","Snowy","Windy"],"correct":0},
+              {"id":"ENG-Q338","text":"Conclusion: 'The girl shivered and rubbed her hands.'","options":["Cold weather","Hot weather","Rainy","Windy"],"correct":0},
+              {"id":"ENG-Q339","text":"Conclusion: 'People are carrying umbrellas outside.'","options":["Raining","Sunny","Snowing","Windy"],"correct":0},
+              {"id":"ENG-Q340","text":"Conclusion: 'The ice is melting on the road.'","options":["It is warm","It is cold","It is raining","It is snowing"],"correct":0}
+            ]
+          },
+          {
+            "id": "ENG-7-035",
+            "lessonNumber": 5,
+            "lessonOrder": 35,
+            "locked": true,
+            "title": "Answering Questions from Passages",
+            "content": "Learn to answer direct and inferential questions based on reading passages. This skill is essential for academic success and standardized tests.",
+            "examples":[
+              {"problem":"Passage: 'Dogs bark at strangers to protect their home.' Question: 'Why do dogs bark at strangers?'","solution":["Step 1: Locate relevant information in passage","Step 2: Find the reason given","Step 3: Answer: To protect their home"]},
+              {"problem":"Passage: 'The sun rises in the east.' Question: 'Where does the sun rise?'","solution":["Step 1: Find the specific information asked","Step 2: Locate directional information","Step 3: Answer: In the east"]}
+            ],
+            "mediaUrl": "",
+            "quiz":[
+              {"id":"ENG-Q341","text":"Passage: 'The sun rises in the east.' Question: Where does it rise?","options":["East","West","North","South"],"correct":0},
+              {"id":"ENG-Q342","text":"Passage: 'Birds fly in the sky.' Question: What do birds do?","options":["Fly","Run","Swim","Sleep"],"correct":0},
+              {"id":"ENG-Q343","text":"Passage: 'He drank water.' Question: What did he drink?","options":["Water","Juice","Milk","Tea"],"correct":0},
+              {"id":"ENG-Q344","text":"Passage: 'She read a book.' Question: What did she read?","options":["Book","Magazine","Letter","Newspaper"],"correct":0},
+              {"id":"ENG-Q345","text":"Passage: 'It rained heavily.' Question: What happened?","options":["Rained","Sunny","Snowed","Windy"],"correct":0},
+              {"id":"ENG-Q346","text":"Passage: 'The boy plays football.' Question: What sport?","options":["Football","Cricket","Tennis","Basketball"],"correct":0},
+              {"id":"ENG-Q347","text":"Passage: 'She sang beautifully.' Question: How did she sing?","options":["Beautifully","Loudly","Angrily","Quietly"],"correct":0},
+              {"id":"ENG-Q348","text":"Passage: 'He is tall.' Question: How is he?","options":["Tall","Short","Fat","Thin"],"correct":0},
+              {"id":"ENG-Q349","text":"Passage: 'Dogs bark at strangers.' Question: Who barks?","options":["Dogs","Cats","Birds","Humans"],"correct":0},
+              {"id":"ENG-Q350","text":"Passage: 'She smiled and waved.' Question: What did she do?","options":["Smiled and waved","Cried","Shouted","Ran"],"correct":0}
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

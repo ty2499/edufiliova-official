@@ -1,0 +1,82 @@
+Starting logs stream.
+2025-12-21T11:30:34Z Cloning into '/repo'...
+2025-12-21T11:30:58Z INFO[0000] Resolved base name node:20-alpine to builder
+2025-12-21T11:30:58Z INFO[0000] Resolved base name node:20-alpine to runner
+2025-12-21T11:30:58Z INFO[0000] Using dockerignore file: /repo/.dockerignore
+2025-12-21T11:30:58Z INFO[0000] Retrieving image manifest node:20-alpine
+2025-12-21T11:30:58Z INFO[0000] Retrieving image node:20-alpine from registry index.docker.io
+2025-12-21T11:30:59Z INFO[0000] Retrieving image manifest node:20-alpine
+2025-12-21T11:30:59Z INFO[0000] Returning cached image manifest
+2025-12-21T11:30:59Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-21T11:30:59Z INFO[0001] Returning cached image manifest
+2025-12-21T11:30:59Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-21T11:30:59Z INFO[0001] Returning cached image manifest
+2025-12-21T11:30:59Z INFO[0001] Built cross stage deps: map[0:[/app/package.json /app/package-lock.json /app/node_modules /app/dist]]
+2025-12-21T11:30:59Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-21T11:30:59Z INFO[0001] Returning cached image manifest
+2025-12-21T11:30:59Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-21T11:30:59Z INFO[0001] Returning cached image manifest
+2025-12-21T11:30:59Z INFO[0001] Executing 0 build triggers
+2025-12-21T11:30:59Z INFO[0001] Building stage 'node:20-alpine' [idx: '0', base-idx: '-1']
+2025-12-21T11:30:59Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4891/hyperlift-4891/cache:65ea7b2f356f2a9e1bd343dd6718921168fe7eb9eb2b282df6b978bfddb7bd15...
+2025-12-21T11:30:59Z INFO[0001] Using caching version of cmd: RUN apk add --no-cache python3 make g++ gcc libc-dev
+2025-12-21T11:30:59Z INFO[0001] Resolving srcs [package*.json]...
+2025-12-21T11:30:59Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4891/hyperlift-4891/cache:6bff28f19317e59e080850045ba48b0c89e9615e4aa49848910bfe6d188010f9...
+2025-12-21T11:31:00Z INFO[0001] Using caching version of cmd: RUN npm ci --include=dev
+2025-12-21T11:31:00Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4891/hyperlift-4891/cache:10d71cc98302ca5cf156ad8a34e7f592e1c7a5f946b2079b341925b649bffaaa...
+2025-12-21T11:31:00Z INFO[0002] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4891/hyperlift-4891/cache:29efb77d1b87f3882efb6154a05e2a321ac3ec275b117ea1fb1e34fc3449d07b...
+2025-12-21T11:31:00Z INFO[0002] Using caching version of cmd: RUN npm prune --production && echo "✅ Dependencies pruned" || (echo "❌ Prune failed" && exit 1)
+2025-12-21T11:31:00Z INFO[0002] Unpacking rootfs as cmd COPY package*.json ./ requires it.
+2025-12-21T11:31:02Z INFO[0004] ARG BUILD_VERSION=20251218-v4
+2025-12-21T11:31:02Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-21T11:31:02Z INFO[0004] ENV BUILD_VERSION=${BUILD_VERSION}
+2025-12-21T11:31:02Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-21T11:31:02Z INFO[0004] ENV NODE_OPTIONS="--max-old-space-size=8192"
+2025-12-21T11:31:02Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-21T11:31:02Z INFO[0004] RUN apk add --no-cache python3 make g++ gcc libc-dev
+2025-12-21T11:31:02Z INFO[0004] Found cached layer, extracting to filesystem
+2025-12-21T11:31:16Z INFO[0017] WORKDIR /app
+2025-12-21T11:31:16Z INFO[0017] Cmd: workdir
+2025-12-21T11:31:16Z INFO[0017] Changed working directory to /app
+2025-12-21T11:31:16Z INFO[0017] Creating directory /app with uid -1 and gid -1
+2025-12-21T11:31:16Z INFO[0017] Taking snapshot of files...
+2025-12-21T11:31:16Z INFO[0017] Resolving srcs [package*.json]...
+2025-12-21T11:31:16Z INFO[0018] COPY package*.json ./
+2025-12-21T11:31:16Z INFO[0018] Resolving srcs [package*.json]...
+2025-12-21T11:31:16Z INFO[0018] Taking snapshot of files...
+2025-12-21T11:31:16Z INFO[0018] RUN npm ci --include=dev
+2025-12-21T11:31:16Z INFO[0018] Found cached layer, extracting to filesystem
+2025-12-21T11:32:02Z INFO[0063] COPY tsconfig.json ./
+2025-12-21T11:32:02Z INFO[0063] Taking snapshot of files...
+2025-12-21T11:32:02Z INFO[0063] COPY vite.config.ts ./
+2025-12-21T11:32:02Z INFO[0063] Taking snapshot of files...
+2025-12-21T11:32:02Z INFO[0063] COPY tailwind.config.ts ./
+2025-12-21T11:32:02Z INFO[0063] Taking snapshot of files...
+2025-12-21T11:32:02Z INFO[0063] COPY postcss.config.js ./
+2025-12-21T11:32:02Z INFO[0063] Taking snapshot of files...
+2025-12-21T11:32:02Z INFO[0063] COPY components.json ./
+2025-12-21T11:32:02Z INFO[0063] Taking snapshot of files...
+2025-12-21T11:32:02Z INFO[0063] COPY shared ./shared
+2025-12-21T11:32:02Z INFO[0063] Taking snapshot of files...
+2025-12-21T11:32:02Z INFO[0063] COPY client ./client
+2025-12-21T11:32:02Z INFO[0064] Taking snapshot of files...
+2025-12-21T11:32:03Z INFO[0064] COPY server ./server
+2025-12-21T11:32:03Z INFO[0064] Taking snapshot of files...
+2025-12-21T11:32:03Z INFO[0064] RUN echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"
+2025-12-21T11:32:03Z INFO[0064] Found cached layer, extracting to filesystem
+2025-12-21T11:32:04Z INFO[0065] RUN npm prune --production && echo "✅ Dependencies pruned" || (echo "❌ Prune failed" && exit 1)
+2025-12-21T11:32:04Z INFO[0065] Found cached layer, extracting to filesystem
+2025-12-21T11:32:04Z INFO[0065] Saving file app/package.json for later use
+2025-12-21T11:32:04Z INFO[0065] Saving file app/package-lock.json for later use
+2025-12-21T11:32:04Z INFO[0065] Saving file app/node_modules for later use
+2025-12-21T11:32:12Z INFO[0073] Saving file app/dist for later use
+2025-12-21T11:32:12Z INFO[0073] Deleting filesystem...
+2025-12-21T11:32:15Z INFO[0076] Retrieving image manifest node:20-alpine
+2025-12-21T11:32:15Z INFO[0076] Returning cached image manifest
+2025-12-21T11:32:15Z INFO[0076] Retrieving image manifest node:20-alpine
+2025-12-21T11:32:15Z INFO[0076] Returning cached image manifest
+2025-12-21T11:32:15Z INFO[0076] Executing 0 build triggers
+2025-12-21T11:32:15Z INFO[0076] Building stage 'node:20-alpine' [idx: '1', base-idx: '-1']
+2025-12-21T11:32:15Z INFO[0076] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4891/hyperlift-4891/cache:804939f4537729ca020bd6929707badbfea696334489bbf22229af3c23fb56e9...
+2025-12-21T11:32:15Z INFO[0077] Using caching version of cmd: RUN apk add --no-cache fontconfig ttf-dejavu ca-certificates curl
+2025-12-21T11:32:44Z error building image: error building stage: failed to optimize instructions: failed to get files used from context: when specifying multiple sources in a COPY command, destination must be a directory and end in '/'

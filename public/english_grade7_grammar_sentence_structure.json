@@ -1,0 +1,133 @@
+{
+  "subject": "English",
+  "grade": 7,
+  "system": "all",
+  "chapters": [
+    {
+      "title": "Grammar & Sentence Structure",
+      "lessons": [
+        {
+          "id": "ENG-7-001",
+          "lessonNumber": 1,
+          "lessonOrder": 1,
+          "locked": false,
+          "title": "Parts of Speech",
+          "content": "Learn the main parts of speech: nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, and interjections.",
+          "examples": [
+            {"problem":"Identify the noun: 'The cat sleeps.'","solution":["'cat' is a noun"]},
+            {"problem":"Identify the verb: 'She runs fast.'","solution":["'runs' is a verb"]}
+          ],
+          "quiz": [
+            {"id":"ENG-Q001","text":"Which is a noun?","options":["Apple","Run","Quickly","And"],"correct":0},
+            {"id":"ENG-Q002","text":"Which is a verb?","options":["Apple","Eat","Beautiful","Wow"],"correct":1},
+            {"id":"ENG-Q003","text":"Which is an adjective?","options":["Red","Run","Quickly","He"],"correct":0},
+            {"id":"ENG-Q004","text":"Which is an adverb?","options":["Slowly","Cat","Eat","Wow"],"correct":0},
+            {"id":"ENG-Q005","text":"Which is a pronoun?","options":["He","Apple","Run","Beautiful"],"correct":0},
+            {"id":"ENG-Q006","text":"Which is a preposition?","options":["On","Cat","Quickly","She"],"correct":0},
+            {"id":"ENG-Q007","text":"Which is a conjunction?","options":["And","Run","He","Beautiful"],"correct":0},
+            {"id":"ENG-Q008","text":"Which is an interjection?","options":["Wow","Run","Cat","He"],"correct":0},
+            {"id":"ENG-Q009","text":"Identify the noun in: 'The teacher writes.'","options":["teacher","writes","The","None"],"correct":0},
+            {"id":"ENG-Q010","text":"Identify the verb in: 'Birds fly high.'","options":["fly","Birds","high","None"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-002",
+          "lessonNumber": 2,
+          "lessonOrder": 2,
+          "locked": true,
+          "title": "Tenses",
+          "content": "Learn the three main tenses: past, present, and future. Each tense shows when an action occurs.",
+          "examples":[
+            {"problem":"Present tense: 'She walks to school.'","solution":["Action happening now"]},
+            {"problem":"Past tense: 'She walked to school.'","solution":["Action happened before now"]},
+            {"problem":"Future tense: 'She will walk to school.'","solution":["Action will happen later"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q011","text":"Identify tense: 'He ate an apple.'","options":["Past","Present","Future","None"],"correct":0},
+            {"id":"ENG-Q012","text":"Identify tense: 'She is running.'","options":["Present","Past","Future","None"],"correct":0},
+            {"id":"ENG-Q013","text":"Identify tense: 'They will travel.'","options":["Future","Past","Present","None"],"correct":0},
+            {"id":"ENG-Q014","text":"Identify tense: 'I write a letter.'","options":["Present","Past","Future","None"],"correct":0},
+            {"id":"ENG-Q015","text":"Identify tense: 'I wrote a letter yesterday.'","options":["Past","Present","Future","None"],"correct":0},
+            {"id":"ENG-Q016","text":"Identify tense: 'She will sing tomorrow.'","options":["Future","Past","Present","None"],"correct":0},
+            {"id":"ENG-Q017","text":"Which is present continuous?","options":["She is reading","She read","She will read","None"],"correct":0},
+            {"id":"ENG-Q018","text":"Which is past continuous?","options":["She was reading","She reads","She will read","None"],"correct":0},
+            {"id":"ENG-Q019","text":"Which is future continuous?","options":["She will be reading","She reads","She read","None"],"correct":0},
+            {"id":"ENG-Q020","text":"Present perfect tense example?","options":["I have eaten","I eat","I ate","I will eat"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-003",
+          "lessonNumber": 3,
+          "lessonOrder": 3,
+          "locked": true,
+          "title": "Subject-Verb Agreement",
+          "content": "Learn to make the subject and verb agree in number (singular or plural).",
+          "examples":[
+            {"problem":"He runs fast.","solution":["Singular subject 'He' matches singular verb 'runs'"]},
+            {"problem":"They run fast.","solution":["Plural subject 'They' matches plural verb 'run'"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q021","text":"Choose correct: She ___ happy.","options":["is","are","am","be"],"correct":0},
+            {"id":"ENG-Q022","text":"Choose correct: They ___ playing.","options":["are","is","am","be"],"correct":0},
+            {"id":"ENG-Q023","text":"Choose correct: I ___ a student.","options":["am","is","are","be"],"correct":0},
+            {"id":"ENG-Q024","text":"Choose correct: He ___ reading.","options":["is","are","am","be"],"correct":0},
+            {"id":"ENG-Q025","text":"Choose correct: We ___ friends.","options":["are","is","am","be"],"correct":0},
+            {"id":"ENG-Q026","text":"Choose correct: The dog ___ barking.","options":["is","are","am","be"],"correct":0},
+            {"id":"ENG-Q027","text":"Choose correct: Birds ___ flying.","options":["are","is","am","be"],"correct":0},
+            {"id":"ENG-Q028","text":"Choose correct: She ___ my sister.","options":["is","are","am","be"],"correct":0},
+            {"id":"ENG-Q029","text":"Choose correct: They ___ teachers.","options":["are","is","am","be"],"correct":0},
+            {"id":"ENG-Q030","text":"Choose correct: I ___ happy.","options":["am","is","are","be"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-004",
+          "lessonNumber": 4,
+          "lessonOrder": 4,
+          "locked": true,
+          "title": "Active and Passive Voice",
+          "content": "Learn to convert sentences from active to passive voice and vice versa.",
+          "examples":[
+            {"problem":"Active: 'The cat chased the mouse.'","solution":["Passive: 'The mouse was chased by the cat.'"]},
+            {"problem":"Passive: 'The book was read by her.'","solution":["Active: 'She read the book.'"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q031","text":"Active: 'He eats an apple.' Passive?","options":["An apple is eaten by him","He is eaten by an apple","He eaten an apple","None"],"correct":0},
+            {"id":"ENG-Q032","text":"Passive: 'The letter was written by me.' Active?","options":["I wrote the letter","Me wrote the letter","I was write the letter","None"],"correct":0},
+            {"id":"ENG-Q033","text":"Active: 'They play football.' Passive?","options":["Football is played by them","Football played by them","They played football","None"],"correct":0},
+            {"id":"ENG-Q034","text":"Passive: 'The cake was baked by John.' Active?","options":["John baked the cake","John was bake the cake","Baked John the cake","None"],"correct":0},
+            {"id":"ENG-Q035","text":"Active: 'She sings a song.' Passive?","options":["A song is sung by her","She is sung a song","Song sung by her","None"],"correct":0},
+            {"id":"ENG-Q036","text":"Passive: 'The room was cleaned by them.' Active?","options":["They cleaned the room","They was clean the room","Cleaned they the room","None"],"correct":0},
+            {"id":"ENG-Q037","text":"Active: 'I write a letter.' Passive?","options":["A letter is written by me","I am written a letter","Letter written by me","None"],"correct":0},
+            {"id":"ENG-Q038","text":"Passive: 'The homework was done by the students.' Active?","options":["The students did the homework","The students was do homework","Students done homework","None"],"correct":0},
+            {"id":"ENG-Q039","text":"Active: 'We watch TV.' Passive?","options":["TV is watched by us","We is watched TV","TV watched by us","None"],"correct":0},
+            {"id":"ENG-Q040","text":"Passive: 'The song was sung by the choir.' Active?","options":["The choir sang the song","Choir sung song","The choir was sing song","None"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-005",
+          "lessonNumber": 5,
+          "lessonOrder": 5,
+          "locked": true,
+          "title": "Punctuation",
+          "content": "Learn correct use of punctuation marks: period, comma, question mark, exclamation mark, colon, semicolon, quotation marks.",
+          "examples":[
+            {"problem":"I like apples","solution":["I like apples. (Add period)"]},
+            {"problem":"Hello how are you","solution":["Hello, how are you? (Add comma and question mark)"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q041","text":"Add punctuation: 'I am happy'","options":["I am happy.","I am happy!","I am happy?","All"],"correct":3},
+            {"id":"ENG-Q042","text":"Add punctuation: 'What is your name'","options":["What is your name?","What is your name.","What is your name!","All"],"correct":0},
+            {"id":"ENG-Q043","text":"Add punctuation: 'Wow that is great'","options":["Wow! That is great.","Wow, that is great.","Wow. That is great.","All"],"correct":3},
+            {"id":"ENG-Q044","text":"Add punctuation: 'She said I am coming'","options":["She said, 'I am coming.'","She said 'I am coming.'","She said 'I am coming'","All"],"correct":0},
+            {"id":"ENG-Q045","text":"Add punctuation: 'Are you ready'","options":["Are you ready?","Are you ready!","Are you ready.","All"],"correct":0},
+            {"id":"ENG-Q046","text":"Add punctuation: 'It is raining'","options":["It is raining.","It is raining!","It is raining?","All"],"correct":0},
+            {"id":"ENG-Q047","text":"Add punctuation: 'Stop doing that'","options":["Stop doing that!","Stop doing that.","Stop doing that?","All"],"correct":0},
+            {"id":"ENG-Q048","text":"Add punctuation: 'Yes I agree'","options":["Yes, I agree.","Yes I agree.","Yes! I agree.","All"],"correct":0},
+            {"id":"ENG-Q049","text":"Add punctuation: 'He asked where are you going'","options":["He asked, 'Where are you going?'","He asked 'Where are you going?'","He asked 'Where are you going'","All"],"correct":0},
+            {"id":"ENG-Q050","text":"Add punctuation: 'Congratulations you did it'","options":["Congratulations! You did it.","Congratulations, you did it.","Congratulations. You did it.","All"],"correct":0}
+          ]
+        }
+      ]
+    }
+  ]
+}

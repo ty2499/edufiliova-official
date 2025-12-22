@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    
+    <!-- Satoshi Font -->
+    <link href="/fonts/satoshi.css" rel="stylesheet">
+    
+    <!-- Great Vibes Font for Certificate Names -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- PWA Manifest - dynamically loaded based on route -->
+    <link rel="manifest" id="pwa-manifest" href="/manifest.json" />
+    <script>
+      // Use app-specific manifest for /app route (mobile PWA)
+      (function() {
+        var path = window.location.pathname.toLowerCase();
+        if (path === '/app' || path.startsWith('/app/') || path.startsWith('/app?')) {
+          document.getElementById('pwa-manifest').href = '/manifest-app.json';
+        }
+      })();
+    </script>
+    
+    <!-- Site title -->
+    <title>EduFiliova - Global Educational Platform</title>
+    
+    <!-- Meta description -->
+    <meta name="description" content="EduFiliova provides personalized learning experiences globally with interactive lessons, teacher-student chat, and comprehensive educational tools." />
+    
+    <!-- Theme color for browser UI -->
+    <meta name="theme-color" content="#d44472" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1a1a" />
+    
+    <!-- iOS/Safari optimizations -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="EduFiliova" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <!-- Android/Chrome optimizations -->
+    <meta name="application-name" content="EduFiliova" />
+    <meta name="msapplication-TileColor" content="#d44472" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    
+    <!-- Capacitor/Native app detection -->
+    <meta name="capacitor" content="true" />
+    
+    <!-- Open Graph for sharing -->
+    <meta property="og:title" content="EduFiliova - Global Educational Platform" />
+    <meta property="og:description" content="Personalized learning experiences globally with interactive lessons and comprehensive educational tools." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/apple-touch-icon.png" />
+    
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+  </body>
+</html>

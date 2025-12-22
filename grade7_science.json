@@ -1,0 +1,181 @@
+{
+  "book": {
+    "title": "Grade 7 Science",
+    "grade": 7,
+    "language": "en",
+    "chapters": [
+      {
+        "id": "C01",
+        "title": "Life Science",
+        "lessons": [
+          {
+            "id": "SCI-7-LS-001",
+            "lessonNumber": 1,
+            "lessonOrder": 1,
+            "locked": false,
+            "title": "Cell Structure and Function",
+            "content": "All living things are made up of cells, which are the basic structural and functional units of life. Cells contain specialized structures called organelles that work together to carry out essential life processes. Plant and animal cells share many common features but also have distinct differences in their structure and organization. Understanding cell structure is fundamental to biology as it helps explain how organisms grow, reproduce, and maintain homeostasis.",
+            "examples": [
+              {"problem": "Compare plant and animal cells", "solution": ["Step 1: Both have cell membrane, nucleus, and cytoplasm", "Step 2: Plant cells have cell wall, chloroplasts, and large vacuole", "Step 3: Animal cells have smaller vacuoles and no cell wall"]},
+              {"problem": "Explain the function of the nucleus", "solution": ["Step 1: The nucleus is the control center of the cell", "Step 2: It contains DNA which controls all cell activities", "Step 3: It regulates cell growth, reproduction, and metabolism"]}
+            ],
+            "mediaUrl": "attached_assets/generated_images/Plant_and_animal_cell_diagram_579226b9.png",
+            "quiz": [
+              {"id": "Q1", "text": "Which organelle is found in plant cells but not animal cells?", "options": ["Nucleus", "Chloroplast", "Cell membrane"], "correct": 1},
+              {"id": "Q2", "text": "What is the function of the cell membrane?", "options": ["Controls what enters and leaves the cell", "Makes food for the cell", "Stores water"], "correct": 0},
+              {"id": "Q3", "text": "Which part of the cell contains DNA?", "options": ["Cytoplasm", "Nucleus", "Cell wall"], "correct": 1}
+            ]
+          },
+          {
+            "id": "SCI-7-LS-002",
+            "lessonNumber": 2,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Photosynthesis",
+            "content": "Photosynthesis is a vital biological process by which green plants, algae, and some bacteria convert light energy, usually from the sun, into chemical energy stored in glucose molecules. During this process, plants absorb carbon dioxide from the atmosphere and water from their roots, using chlorophyll in chloroplasts to capture sunlight. The process produces glucose (sugar) for the plant's energy needs and releases oxygen as a byproduct, which is essential for most life on Earth. Photosynthesis consists of two main stages: light-dependent reactions and light-independent reactions (Calvin cycle).",
+            "examples": [
+              {"problem": "Write the equation for photosynthesis", "solution": ["Step 1: Identify the reactants: carbon dioxide + water + sunlight", "Step 2: Identify the products: glucose + oxygen", "Step 3: 6CO₂ + 6H₂O + sunlight → C₆H₁₂O₆ + 6O₂"]},
+              {"problem": "Explain why photosynthesis is important for life on Earth", "solution": ["Step 1: Plants produce oxygen that animals need to breathe", "Step 2: Plants are the base of food chains", "Step 3: Photosynthesis removes carbon dioxide from the atmosphere"]}
+            ],
+            "mediaUrl": "attached_assets/generated_images/Photosynthesis_process_diagram_9cbdbc71.png",
+            "quiz": [
+              {"id": "Q4", "text": "What do plants need for photosynthesis?", "options": ["Sunlight, carbon dioxide, water", "Oxygen, glucose, water", "Sunlight, oxygen, carbon dioxide"], "correct": 0},
+              {"id": "Q5", "text": "Where does photosynthesis mainly occur in plants?", "options": ["Roots", "Stems", "Leaves"], "correct": 2}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C02",
+        "title": "Physical Science",
+        "lessons": [
+          {
+            "id": "SCI-7-PS-001",
+            "lessonNumber": 3,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "States of Matter",
+            "content": "Matter exists in several states, with the three most common being solid, liquid, and gas. A fourth state, plasma, exists at extremely high temperatures. The state of matter depends on the kinetic energy of particles (how fast they move) and the strength of intermolecular forces between them. In solids, particles are tightly packed and vibrate in fixed positions. In liquids, particles are close together but can move past each other. In gases, particles are far apart and move freely in all directions. Temperature and pressure changes can cause matter to transition between states through processes like melting, freezing, evaporation, condensation, sublimation, and deposition.",
+            "examples": [
+              {"problem": "Describe what happens to water molecules when ice melts", "solution": ["Step 1: In ice, molecules are tightly packed and vibrate in place", "Step 2: As heat is added, molecules move faster", "Step 3: Molecules break free and slide past each other, forming liquid water"]},
+              {"problem": "Explain why gases expand when heated", "solution": ["Step 1: Heat gives molecules more energy", "Step 2: Faster-moving molecules spread out more", "Step 3: The gas takes up more space as molecules move farther apart"]}
+            ],
+            "mediaUrl": "attached_assets/generated_images/States_of_matter_transitions_c6086992.png",
+            "quiz": [
+              {"id": "Q6", "text": "In which state of matter are particles most tightly packed?", "options": ["Solid", "Liquid", "Gas"], "correct": 0},
+              {"id": "Q7", "text": "What happens when a liquid is heated enough?", "options": ["It freezes", "It evaporates", "It condenses"], "correct": 1}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C03",
+        "title": "Earth Science",
+        "lessons": [
+          {
+            "id": "SCI-7-ES-001",
+            "lessonNumber": 4,
+            "lessonOrder": 4,
+            "locked": true,
+            "title": "Earth's Structure and Layers",
+            "content": "Earth is composed of several distinct layers, each with unique properties and characteristics. The main layers are the crust (thin outer shell), mantle (hot, dense rock layer), outer core (liquid iron and nickel), and inner core (solid iron and nickel). Understanding Earth's structure helps explain geological processes like earthquakes, volcanoes, and plate tectonics. The temperature and pressure increase dramatically as we move toward Earth's center, reaching over 5,000°C in the inner core.",
+            "examples": [
+              {"problem": "Compare the thickness of Earth's crust on continents vs. oceans", "solution": ["Step 1: Continental crust is thicker, averaging 30-50 km", "Step 2: Oceanic crust is thinner, averaging 5-10 km", "Step 3: Continental crust is less dense than oceanic crust"]},
+              {"problem": "Explain how we know about Earth's internal structure", "solution": ["Step 1: Scientists study seismic waves from earthquakes", "Step 2: Different materials affect wave speed and direction", "Step 3: Wave patterns reveal layer boundaries and properties"]}
+            ],
+            "mediaUrl": "attached_assets/generated_images/Earth's_layers_structure_diagram_c49b8995.png",
+            "quiz": [
+              {"id": "Q8", "text": "Which layer of Earth is the thickest?", "options": ["Crust", "Mantle", "Outer core"], "correct": 1},
+              {"id": "Q9", "text": "What is the inner core made of?", "options": ["Liquid rock", "Solid iron and nickel", "Hot gas"], "correct": 1},
+              {"id": "Q10", "text": "How do scientists study Earth's interior?", "options": ["By drilling deep holes", "By studying seismic waves", "By using satellites"], "correct": 1}
+            ]
+          },
+          {
+            "id": "SCI-7-ES-002",
+            "lessonNumber": 5,
+            "lessonOrder": 5,
+            "locked": true,
+            "title": "Weather and Climate",
+            "content": "Weather refers to short-term atmospheric conditions in a specific place and time, while climate describes long-term weather patterns over many years. Weather is influenced by factors such as air pressure, temperature, humidity, wind patterns, and precipitation. The water cycle plays a crucial role in weather formation through evaporation, condensation, and precipitation. Climate zones are determined by latitude, altitude, distance from oceans, and geographical features. Understanding weather patterns helps us predict storms, plan agriculture, and prepare for extreme weather events.",
+            "examples": [
+              {"problem": "Explain the difference between weather and climate", "solution": ["Step 1: Weather is short-term atmospheric conditions (today's rain)", "Step 2: Climate is long-term average conditions (tropical rainforest)", "Step 3: Weather changes daily, climate changes over decades"]},
+              {"problem": "Describe how mountains affect local weather patterns", "solution": ["Step 1: Mountains force air masses to rise", "Step 2: Rising air cools and forms clouds", "Step 3: Windward side gets more precipitation than leeward side"]}
+            ],
+            "mediaUrl": "attached_assets/generated_images/Weather_vs_climate_comparison_3ba56ea4.png",
+            "quiz": [
+              {"id": "Q11", "text": "What is the main difference between weather and climate?", "options": ["Weather is hot, climate is cold", "Weather is short-term, climate is long-term", "Weather is dry, climate is wet"], "correct": 1},
+              {"id": "Q12", "text": "What drives the water cycle?", "options": ["Wind", "Solar energy", "Ocean currents"], "correct": 1},
+              {"id": "Q13", "text": "Which side of a mountain typically receives more rainfall?", "options": ["Windward side", "Leeward side", "Both sides equally"], "correct": 0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C04",
+        "title": "Chemistry Basics",
+        "lessons": [
+          {
+            "id": "SCI-7-CH-001",
+            "lessonNumber": 6,
+            "lessonOrder": 6,
+            "locked": true,
+            "title": "Atoms and Elements",
+            "content": "All matter is composed of tiny particles called atoms, which are the building blocks of elements. An atom consists of a nucleus containing protons (positive charge) and neutrons (no charge), surrounded by electrons (negative charge) in orbital shells. Elements are pure substances made of only one type of atom and are organized in the periodic table by atomic number. Each element has unique properties determined by the number of protons in its nucleus. Understanding atomic structure is fundamental to chemistry as it explains how elements combine to form compounds and how chemical reactions occur.",
+            "examples": [
+              {"problem": "Describe the structure of a carbon atom", "solution": ["Step 1: Carbon has 6 protons in its nucleus", "Step 2: It also has 6 neutrons and 6 electrons", "Step 3: The electrons orbit the nucleus in two shells (2 inner, 4 outer)"]},
+              {"problem": "Explain why elements have different properties", "solution": ["Step 1: Each element has a different number of protons", "Step 2: This affects how many electrons it has", "Step 3: Electron arrangement determines chemical behavior"]}
+            ],
+            "mediaUrl": "attached_assets/generated_images/Carbon_atom_structure_diagram_8055790b.png",
+            "quiz": [
+              {"id": "Q14", "text": "What are the three main parts of an atom?", "options": ["Protons, neutrons, electrons", "Nucleus, shell, orbit", "Positive, negative, neutral"], "correct": 0},
+              {"id": "Q15", "text": "What determines an element's identity?", "options": ["Number of neutrons", "Number of protons", "Number of electrons"], "correct": 1},
+              {"id": "Q16", "text": "Where are electrons located in an atom?", "options": ["In the nucleus", "Orbiting the nucleus", "Between protons and neutrons"], "correct": 1}
+            ]
+          },
+          {
+            "id": "SCI-7-CH-002",
+            "lessonNumber": 7,
+            "lessonOrder": 7,
+            "locked": true,
+            "title": "Chemical and Physical Changes",
+            "content": "Physical changes alter the appearance or state of matter without changing its chemical composition, while chemical changes result in the formation of new substances with different properties. Physical changes include melting, freezing, cutting, and dissolving, and are usually reversible. Chemical changes involve breaking and forming chemical bonds, resulting in new compounds with different properties than the original materials. Examples include burning, rusting, digestion, and photosynthesis. Signs of chemical change include color change, gas production, heat release or absorption, and formation of precipitates.",
+            "examples": [
+              {"problem": "Classify melting ice as physical or chemical change", "solution": ["Step 1: Ice (H₂O) melts to become liquid water (H₂O)", "Step 2: The chemical composition remains the same", "Step 3: This is a physical change - only the state changed"]},
+              {"problem": "Explain why burning wood is a chemical change", "solution": ["Step 1: Wood reacts with oxygen to form new substances", "Step 2: Products include carbon dioxide, water vapor, and ash", "Step 3: The original wood cannot be recovered - it's irreversible"]}
+            ],
+            "mediaUrl": "attached_assets/generated_images/Physical_vs_chemical_changes_4c9db7e7.png",
+            "quiz": [
+              {"id": "Q17", "text": "Which is an example of a physical change?", "options": ["Burning paper", "Rusting iron", "Melting chocolate"], "correct": 2},
+              {"id": "Q18", "text": "What happens to the chemical composition in a physical change?", "options": ["It stays the same", "It changes completely", "It becomes more complex"], "correct": 0},
+              {"id": "Q19", "text": "Which is a sign of chemical change?", "options": ["Change in shape", "Change in color", "Change in size"], "correct": 1}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C05",
+        "title": "Ecology and Environment",
+        "lessons": [
+          {
+            "id": "SCI-7-EC-001",
+            "lessonNumber": 8,
+            "lessonOrder": 8,
+            "locked": true,
+            "title": "Ecosystems and Food Chains",
+            "content": "An ecosystem is a community of living organisms interacting with their physical environment. Ecosystems include both biotic factors (living things like plants, animals, bacteria) and abiotic factors (non-living things like water, soil, temperature, sunlight). Energy flows through ecosystems via food chains and food webs, starting with producers (plants) that convert sunlight into chemical energy, then moving to primary consumers (herbivores), secondary consumers (carnivores), and decomposers (bacteria, fungi). This energy transfer follows the 10% rule, where only about 10% of energy is passed to the next trophic level.",
+            "examples": [
+              {"problem": "Create a simple food chain for a forest ecosystem", "solution": ["Step 1: Producer - Oak tree (makes food from sunlight)", "Step 2: Primary consumer - Rabbit (eats the oak leaves)", "Step 3: Secondary consumer - Fox (eats the rabbit)"]},
+              {"problem": "Explain why decomposers are important in ecosystems", "solution": ["Step 1: Decomposers break down dead organisms", "Step 2: They return nutrients to the soil", "Step 3: These nutrients are reused by producers to grow"]}
+            ],
+            "mediaUrl": "attached_assets/generated_images/Forest_ecosystem_food_chain_080551e7.png",
+            "quiz": [
+              {"id": "Q20", "text": "What do we call organisms that make their own food?", "options": ["Consumers", "Producers", "Decomposers"], "correct": 1},
+              {"id": "Q21", "text": "Which organisms are primary consumers?", "options": ["Plants", "Herbivores", "Carnivores"], "correct": 1},
+              {"id": "Q22", "text": "What role do decomposers play in ecosystems?", "options": ["They eat other animals", "They make food from sunlight", "They recycle nutrients"], "correct": 2}
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "subject": "English",
+  "grade": 7,
+  "system": "all",
+  "chapters": [
+    {
+      "title": "Writing Skills",
+      "lessons": [
+        {
+          "id": "ENG-7-016",
+          "lessonNumber": 1,
+          "lessonOrder": 16,
+          "locked": false,
+          "title": "Sentence Construction",
+          "content": "Learn how to write correct and complete sentences using proper grammar and punctuation.",
+          "examples": [
+            {"problem":"Incorrect: 'went to school.'","solution":["Add subject: 'She went to school.'"]},
+            {"problem":"Incorrect: 'He play football'","solution":["Correct verb: 'He plays football.'"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q151","text":"Correct sentence: 'She (go/goes) to school.'","options":["go","goes"],"correct":1},
+            {"id":"ENG-Q152","text":"Correct sentence: '(I/Me) am happy.'","options":["I","Me"],"correct":0},
+            {"id":"ENG-Q153","text":"Add punctuation: 'Lets eat grandma'","options":["Let's eat, grandma.","Lets eat grandma.","Let's eat grandma.","Lets eat, grandma."],"correct":0},
+            {"id":"ENG-Q154","text":"Correct sentence: 'They (is/are) playing.'","options":["is","are"],"correct":1},
+            {"id":"ENG-Q155","text":"Correct sentence: '(He/Him) likes pizza.'","options":["He","Him"],"correct":0},
+            {"id":"ENG-Q156","text":"Correct sentence: 'She (run/runs) fast.'","options":["run","runs"],"correct":1},
+            {"id":"ENG-Q157","text":"Correct sentence: 'The dog (bark/barks) loudly.'","options":["bark","barks"],"correct":1},
+            {"id":"ENG-Q158","text":"Add punctuation: 'What a beautiful day'","options":["What a beautiful day!","What a beautiful day.","What a beautiful day?","What a beautiful day,"],"correct":0},
+            {"id":"ENG-Q159","text":"Correct sentence: 'We (was/were) happy.'","options":["was","were"],"correct":1},
+            {"id":"ENG-Q160","text":"Correct sentence: 'I (has/have) a book.'","options":["has","have"],"correct":1}
+          ]
+        },
+        {
+          "id": "ENG-7-017",
+          "lessonNumber": 2,
+          "lessonOrder": 17,
+          "locked": true,
+          "title": "Paragraph Writing",
+          "content": "Learn to write structured paragraphs with topic sentences, supporting details, and conclusions.",
+          "examples": [
+            {"problem":"Topic: My Favorite Hobby","solution":["Start with topic sentence, add 2-3 supporting details, end with conclusion"]},
+            {"problem":"Topic: A Memorable Day","solution":["Introduce the day, describe events, conclude with feelings"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q161","text":"Paragraph starts with:","options":["Topic sentence","Conclusion","Detail","Random sentence"],"correct":0},
+            {"id":"ENG-Q162","text":"Paragraph ends with:","options":["Conclusion","Topic sentence","Introduction","Random sentence"],"correct":0},
+            {"id":"ENG-Q163","text":"Supporting details:","options":["Explain main idea","End paragraph","Start paragraph","Random"],"correct":0},
+            {"id":"ENG-Q164","text":"Paragraph structure:","options":["Topic, Details, Conclusion","Conclusion, Details, Topic","Random","Topic only"],"correct":0},
+            {"id":"ENG-Q165","text":"Topic sentence is:","options":["Main idea","Conclusion","Random sentence","Supporting detail"],"correct":0},
+            {"id":"ENG-Q166","text":"Concluding sentence is:","options":["Wrap up main idea","Add new idea","Random","Supporting detail"],"correct":0},
+            {"id":"ENG-Q167","text":"Supporting detail is:","options":["Evidence/examples","Main idea","Conclusion","Topic"],"correct":0},
+            {"id":"ENG-Q168","text":"Paragraph should be:","options":["Coherent","Random","Disorganized","Incomplete"],"correct":0},
+            {"id":"ENG-Q169","text":"Topic sentence appears at:","options":["Beginning","Middle","End","Random"],"correct":0},
+            {"id":"ENG-Q170","text":"Concluding sentence appears at:","options":["End","Beginning","Middle","Random"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-018",
+          "lessonNumber": 3,
+          "lessonOrder": 18,
+          "locked": true,
+          "title": "Letter Writing",
+          "content": "Learn how to write formal and informal letters, including proper greetings, body, and closing.",
+          "examples":[
+            {"problem":"Formal letter: Complaint about late delivery","solution":["Include sender/receiver address, date, greeting, body, closing"]},
+            {"problem":"Informal letter: Letter to friend","solution":["Include greeting, body, closing"]} 
+          ],
+          "quiz":[
+            {"id":"ENG-Q171","text":"Greeting in formal letter:","options":["Dear Sir/Madam","Hi friend","Yo","Hey"],"correct":0},
+            {"id":"ENG-Q172","text":"Closing in formal letter:","options":["Yours sincerely","See ya","Bye","Later"],"correct":0},
+            {"id":"ENG-Q173","text":"Greeting in informal letter:","options":["Hi/Hello","Dear Sir","Dear Madam","Respected"],"correct":0},
+            {"id":"ENG-Q174","text":"Closing in informal letter:","options":["Best wishes","Yours faithfully","Yours sincerely","Respected"],"correct":0},
+            {"id":"ENG-Q175","text":"Body of letter contains:","options":["Message/content","Greeting","Closing","Date"],"correct":0},
+            {"id":"ENG-Q176","text":"Formal letters are used for:","options":["Official matters","Friends","Family","Jokes"],"correct":0},
+            {"id":"ENG-Q177","text":"Informal letters are used for:","options":["Friends & family","Official work","Companies","Government"],"correct":0},
+            {"id":"ENG-Q178","text":"Date in letter appears:","options":["Top right","Bottom left","Middle","End"],"correct":0},
+            {"id":"ENG-Q179","text":"Sender address in formal letter:","options":["Top left","Bottom","Middle","Random"],"correct":0},
+            {"id":"ENG-Q180","text":"Receiver address in formal letter:","options":["Below sender address","Top right","Bottom","Middle"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-019",
+          "lessonNumber": 4,
+          "lessonOrder": 19,
+          "locked": true,
+          "title": "Essay Writing",
+          "content": "Learn to write structured essays with introduction, body paragraphs, and conclusion.",
+          "examples":[
+            {"problem":"Topic: Importance of Education","solution":["Introduction, 2-3 body paragraphs, conclusion"]},
+            {"problem":"Topic: My Favorite Season","solution":["Introduction, details, conclusion"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q181","text":"Essay starts with:","options":["Introduction","Body","Conclusion","Random"],"correct":0},
+            {"id":"ENG-Q182","text":"Essay ends with:","options":["Conclusion","Body","Introduction","Random"],"correct":0},
+            {"id":"ENG-Q183","text":"Body paragraphs contain:","options":["Supporting details","Random","Greeting","Closing"],"correct":0},
+            {"id":"ENG-Q184","text":"Introduction includes:","options":["Topic sentence","Random","Conclusion","Greeting"],"correct":0},
+            {"id":"ENG-Q185","text":"Conclusion includes:","options":["Wrap up main idea","Random","Introduction","Greeting"],"correct":0},
+            {"id":"ENG-Q186","text":"Essay should be:","options":["Coherent & structured","Random","Incomplete","Disorganized"],"correct":0},
+            {"id":"ENG-Q187","text":"Number of body paragraphs:","options":["2-3","0","5-6","1"],"correct":0},
+            {"id":"ENG-Q188","text":"Introduction appears:","options":["Beginning","Middle","End","Random"],"correct":0},
+            {"id":"ENG-Q189","text":"Conclusion appears:","options":["End","Middle","Beginning","Random"],"correct":0},
+            {"id":"ENG-Q190","text":"Body paragraph supports:","options":["Main idea","Random","Greeting","Closing"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-020",
+          "lessonNumber": 5,
+          "lessonOrder": 20,
+          "locked": true,
+          "title": "Creative Writing",
+          "content": "Learn to write stories, poems, or descriptive passages using imagination and proper language.",
+          "examples":[
+            {"problem":"Story: A day at the beach","solution":["Include setting, characters, events, conclusion"]},
+            {"problem":"Poem: My favorite season","solution":["Include rhyme, rhythm, imagery"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q191","text":"Creative writing includes:","options":["Stories, poems, descriptive passages","Math problems","Science experiments","Grammar only"],"correct":0},
+            {"id":"ENG-Q192","text":"A story should have:","options":["Setting, characters, events, conclusion","Random words","Numbers","Equations"],"correct":0},
+            {"id":"ENG-Q193","text":"Poem should have:","options":["Rhyme, rhythm, imagery","Calculation","Formula","Diagram"],"correct":0},
+            {"id":"ENG-Q194","text":"Descriptive passage should:","options":["Use sensory details","Ignore details","Use numbers","Use formula"],"correct":0},
+            {"id":"ENG-Q195","text":"Creative writing helps:","options":["Imagination and expression","Calculation","Copying","Memorization"],"correct":0},
+            {"id":"ENG-Q196","text":"Story's conclusion should:","options":["Wrap up events","Start story","Random","Middle"],"correct":0},
+            {"id":"ENG-Q197","text":"Characters are:","options":["People/animals in story","Numbers","Formula","Random"],"correct":0},
+            {"id":"ENG-Q198","text":"Setting refers to:","options":["Place and time","Character","Event","Mood only"],"correct":0},
+            {"id":"ENG-Q199","text":"Imagery means:","options":["Use of sensory language","Numbers","Equations","Formula"],"correct":0},
+            {"id":"ENG-Q200","text":"Creative writing should be:","options":["Interesting and clear","Boring","Random","Incomplete"],"correct":0}
+          ]
+        }
+      ]
+    }
+  ]
+}

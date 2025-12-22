@@ -1,0 +1,1176 @@
+{
+  "book": {
+    "title": "Grade 7 Mathematics",
+    "grade": 7,
+    "language": "en",
+    "chapters": [
+      {
+        "id": "C01",
+        "title": "Numbers & Operations",
+        "lessons": [
+          {
+            "id": "MATH-7-NO-001",
+            "lessonNumber": 1,
+            "lessonOrder": 1,
+            "locked": false,
+            "title": "Understanding Integers",
+            "content": "Integers are whole numbers that can be positive, negative, or zero. They are used to represent quantities that can be counted or measured.",
+            "examples": [
+              {"problem":"Represent 5 degrees above zero using an integer","solution":["Step 1: Understand that temperatures above zero are represented by positive integers","Step 2: Represent 5 degrees above zero as +5"]},
+              {"problem":"Represent 3 degrees below zero using an integer","solution":["Step 1: Understand that temperatures below zero are represented by negative integers","Step 2: Represent 3 degrees below zero as -3"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q1","text":"What is the integer representation of 2 degrees below zero?","options":["+2","-2","0"],"correct":1},
+              {"id":"Q2","text":"What is the integer representation of 10 degrees above zero?","options":["-10","+10","0"],"correct":1},
+              {"id":"Q3","text":"Which of the following is an integer?","options":["1.5","-7","2/3"],"correct":1}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-002",
+            "lessonNumber": 2,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Operations with Integers",
+            "content": "When performing operations with integers, we need to consider the rules for adding, subtracting, multiplying, and dividing positive and negative numbers.",
+            "examples": [
+              {"problem":"Calculate: -3 + 5","solution":["Step 1: Understand that adding a positive number is the same as moving to the right on the number line","Step 2: Start at -3 and move 5 steps to the right to get 2"]},
+              {"problem":"Calculate: 4 - (-2)","solution":["Step 1: Subtracting a negative is the same as adding a positive","Step 2: 4 - (-2) = 4 + 2 = 6"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q4","text":"What is the result of (-4) + 2?","options":["-6","-2","2"],"correct":1},
+              {"id":"Q5","text":"What is the result of 3 - (-5)?","options":["-2","8","-8"],"correct":1},
+              {"id":"Q6","text":"What is the result of 8 / (-4)?","options":["2","-2","4"],"correct":1}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-003",
+            "lessonNumber": 3,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Introduction to Fractions",
+            "content": "Fractions represent parts of a whole. The numerator shows how many parts we have, and the denominator shows how many parts make up the whole.",
+            "examples": [
+              {"problem":"Simplify 6/8","solution":["Step 1: Find the greatest common divisor of 6 and 8, which is 2","Step 2: Divide both numerator and denominator by 2: 6÷2 = 3, 8÷2 = 4","Step 3: The simplified fraction is 3/4"]},
+              {"problem":"Add 1/4 + 1/2","solution":["Step 1: Find common denominator: 4","Step 2: Convert 1/2 to fourths: 2/4","Step 3: Add: 1/4 + 2/4 = 3/4"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q7","text":"Simplify 4/8","options":["1/2","1/3","2/3"],"correct":0},
+              {"id":"Q8","text":"What is 1/3 + 1/6?","options":["1/2","2/9","1/4"],"correct":0},
+              {"id":"Q9","text":"Which fraction is equivalent to 3/6?","options":["1/2","1/3","2/3"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-004",
+            "lessonNumber": 4,
+            "lessonOrder": 4,
+            "locked": true,
+            "title": "Percentages – Calculations, Increase/Decrease, Discounts",
+            "content": "Percentages represent parts out of 100. We use them to calculate discounts, increases, and decreases in real-life scenarios.",
+            "examples": [
+              {"problem":"Find 20% of 150","solution":["Step 1: Convert % to fraction: 20/100","Step 2: Multiply: 150×20/100=30"]},
+              {"problem":"Price $200, 15% discount?","solution":["Step 1: Discount=200×15/100=30","Step 2: Final price=200-30=170"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q26","text":"10% of 50=?","options":["5","10","15","50"],"correct":0},
+              {"id":"Q27","text":"Increase $80 by 25%?","options":["100","90","95","105"],"correct":0},
+              {"id":"Q28","text":"Decrease 200 by 10%?","options":["180","190","185","200"],"correct":0},
+              {"id":"Q29","text":"Discount $120 at 20%=?","options":["24","100","96","30"],"correct":2},
+              {"id":"Q30","text":"50% of 60=?","options":["30","40","50","20"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-005",
+            "lessonNumber": 5,
+            "lessonOrder": 5,
+            "locked": true,
+            "title": "Factors & Multiples – LCM, HCF",
+            "content": "Factors are numbers that divide exactly into another number. Multiples are numbers you get by multiplying by integers. LCM is the smallest common multiple. HCF is the largest common factor.",
+            "examples": [
+              {"problem":"LCM of 12 & 18","solution":["Step 1: Multiples of 12:12,24,36,48...","Step 2: Multiples of 18:18,36,54...","Step 3: Smallest common multiple=36"]},
+              {"problem":"HCF of 12 & 18","solution":["Step 1: Factors of 12:1,2,3,4,6,12","Step 2: Factors of 18:1,2,3,6,9,18","Step 3: Largest common factor=6"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q36","text":"HCF of 8 & 12=?","options":["4","8","12","2"],"correct":0},
+              {"id":"Q37","text":"LCM of 4 & 6=?","options":["12","10","6","24"],"correct":0},
+              {"id":"Q38","text":"Factors of 15=?","options":["1,3,5,15","1,2,3,5,15","1,5,15","3,5,15"],"correct":0},
+              {"id":"Q39","text":"Multiple of 7 less than 50=?","options":["7,14,21,28,35,42,49","7,14,21,28,35,42,50","7,14,21,28,35,42,48","7,14,21,28,35,42,47"],"correct":0},
+              {"id":"Q40","text":"HCF of 9 & 12=?","options":["3","6","9","12"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-006",
+            "lessonNumber": 6,
+            "lessonOrder": 6,
+            "locked": true,
+            "title": "Square Numbers & Square Roots",
+            "content": "Square numbers are numbers multiplied by themselves. The square root is the inverse operation, finding a number that when squared gives the original number.",
+            "examples": [
+              {"problem":"Square of 7","solution":["7×7=49"]},
+              {"problem":"Square root of 49","solution":["√49=7"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q46","text":"√64=?","options":["8","6","7","9"],"correct":0},
+              {"id":"Q47","text":"Square of 9=?","options":["81","72","99","90"],"correct":0},
+              {"id":"Q48","text":"√36=?","options":["6","5","7","8"],"correct":0},
+              {"id":"Q49","text":"Square of 12=?","options":["144","124","132","154"],"correct":0},
+              {"id":"Q50","text":"√100=?","options":["10","12","9","11"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-007",
+            "lessonNumber": 7,
+            "lessonOrder": 7,
+            "locked": true,
+            "title": "Exponents / Powers – Basics",
+            "content": "Exponents represent repeated multiplication of a number by itself. a^n means multiply a by itself n times.",
+            "examples": [
+              {"problem":"2^3","solution":["2×2×2=8"]},
+              {"problem":"5^2","solution":["5×5=25"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q56","text":"3^3=?","options":["27","9","6","12"],"correct":0},
+              {"id":"Q57","text":"4^2=?","options":["16","8","12","20"],"correct":0},
+              {"id":"Q58","text":"2^5=?","options":["32","25","10","64"],"correct":0},
+              {"id":"Q59","text":"5^3=?","options":["125","15","50","75"],"correct":0},
+              {"id":"Q60","text":"1^10=?","options":["1","10","0","100"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-008",
+            "lessonNumber": 8,
+            "lessonOrder": 8,
+            "locked": true,
+            "title": "Fractions – Multiplying & Dividing",
+            "content": "Multiplying fractions: multiply numerators and denominators. Dividing fractions: multiply by reciprocal.",
+            "examples": [
+              {"problem":"2/3 × 3/4","solution":["2×3=6","3×4=12","6/12=1/2"]},
+              {"problem":"3/4 ÷ 2/5","solution":["3/4 × 5/2 = 15/8 = 1 7/8"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q66","text":"1/2 × 2/3=?","options":["1/3","1/2","2/5","3/4"],"correct":0},
+              {"id":"Q67","text":"3/5 ÷ 3/4=?","options":["4/5","1","3/4","5/4"],"correct":0},
+              {"id":"Q68","text":"2/7 × 7/2=?","options":["1","2","7","14"],"correct":0},
+              {"id":"Q69","text":"5/6 ÷ 1/2=?","options":["5/3","1","2","3/5"],"correct":0},
+              {"id":"Q70","text":"4/5 × 5/8=?","options":["1/2","1","1/3","4/8"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-009",
+            "lessonNumber": 9,
+            "lessonOrder": 9,
+            "locked": true,
+            "title": "Decimals – Advanced Operations",
+            "content": "Performing multiplication and division with decimals, and estimating results.",
+            "examples": [
+              {"problem":"3.6 × 0.5","solution":["Step 1: Multiply as integers:36×5=180","Step 2: Place decimal: 1 decimal in multiplicand + 1 in multiplier = 2","Result=1.80"]},
+              {"problem":"4.5 ÷ 0.9","solution":["Step 1: Remove decimals: 45 ÷ 9 = 5"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q76","text":"2.5 × 1.2=?","options":["3.0","2.7","3.2","3.5"],"correct":0},
+              {"id":"Q77","text":"6.4 ÷ 0.8=?","options":["8","7","6","9"],"correct":0},
+              {"id":"Q78","text":"3.75 × 0.4=?","options":["1.5","1.25","1.35","1.75"],"correct":0},
+              {"id":"Q79","text":"0.9 ÷ 0.3=?","options":["3","0.3","9","30"],"correct":0},
+              {"id":"Q80","text":"4.6 × 0.5=?","options":["2.3","2.6","2.0","2.5"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-010",
+            "lessonNumber": 10,
+            "lessonOrder": 10,
+            "locked": true,
+            "title": "Percentages – Real Life Applications",
+            "content": "Using percentages in discounts, tax, and profit/loss problems.",
+            "examples": [
+              {"problem":"Price $200, 15% discount?","solution":["Discount=200×15/100=30","Final price=200-30=170"]},
+              {"problem":"Increase $50 by 20%","solution":["Increase=50×20/100=10","New price=50+10=60"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q86","text":"20% of 50=?","options":["10","15","20","5"],"correct":0},
+              {"id":"Q87","text":"Price $80, 10% discount=?","options":["72","70","75","78"],"correct":0},
+              {"id":"Q88","text":"Increase 60 by 50%=?","options":["90","80","100","70"],"correct":0},
+              {"id":"Q89","text":"Decrease 120 by 25%=?","options":["90","100","80","85"],"correct":0},
+              {"id":"Q90","text":"Discount $75 at 20%=?","options":["60","55","65","50"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-011",
+            "lessonNumber": 11,
+            "lessonOrder": 11,
+            "locked": true,
+            "title": "Factors & Multiples – Advanced",
+            "content": "Learn to find HCF and LCM for three numbers and word problems.",
+            "examples": [
+              {"problem":"HCF of 12, 18, 24","solution":["Factors of 12:1,2,3,4,6,12","Factors of 18:1,2,3,6,9,18","Factors of 24:1,2,3,4,6,8,12,24","HCF=6"]},
+              {"problem":"LCM of 4,5,6","solution":["Multiples: 4:4,8,12,16,20,24... 5:5,10,15,20,25,30... 6:6,12,18,24,30...","LCM=60"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q96","text":"HCF of 8,12,20=?","options":["4","2","8","6"],"correct":0},
+              {"id":"Q97","text":"LCM of 3,4,5=?","options":["60","12","20","15"],"correct":0},
+              {"id":"Q98","text":"HCF of 15,25,35=?","options":["5","15","25","35"],"correct":0},
+              {"id":"Q99","text":"LCM of 2,3,6=?","options":["6","12","18","24"],"correct":0},
+              {"id":"Q100","text":"HCF of 9,12,15=?","options":["3","9","6","12"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-012",
+            "lessonNumber": 12,
+            "lessonOrder": 12,
+            "locked": true,
+            "title": "Square Numbers – Applications",
+            "content": "Using squares in real-life problems and calculating areas.",
+            "examples": [
+              {"problem":"Area of square side 5m","solution":["Area=side^2=5^2=25 m²"]},
+              {"problem":"Square of 12","solution":["12×12=144"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q106","text":"Square of 15=?","options":["225","150","120","135"],"correct":0},
+              {"id":"Q107","text":"Area square side 8=?","options":["64","16","32","56"],"correct":0},
+              {"id":"Q108","text":"Square of 20=?","options":["400","200","300","350"],"correct":0},
+              {"id":"Q109","text":"Square root of 121=?","options":["11","10","12","13"],"correct":0},
+              {"id":"Q110","text":"Area of square 7m side=?","options":["49","42","50","48"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-013",
+            "lessonNumber": 13,
+            "lessonOrder": 13,
+            "locked": true,
+            "title": "Square Roots – Advanced",
+            "content": "Finding square roots using factorization and approximation.",
+            "examples": [
+              {"problem":"√144","solution":["12×12=144","So √144=12"]},
+              {"problem":"√196","solution":["14×14=196","√196=14"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q116","text":"√225=?","options":["15","12","14","16"],"correct":0},
+              {"id":"Q117","text":"√81=?","options":["9","8","10","7"],"correct":0},
+              {"id":"Q118","text":"√100=?","options":["10","9","11","12"],"correct":0},
+              {"id":"Q119","text":"√49=?","options":["7","6","8","5"],"correct":0},
+              {"id":"Q120","text":"√64=?","options":["8","7","9","6"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-014",
+            "lessonNumber": 14,
+            "lessonOrder": 14,
+            "locked": true,
+            "title": "Exponents – Advanced",
+            "content": "Laws of exponents: multiplication, division, power of a power, zero exponent.",
+            "examples": [
+              {"problem":"2^3 × 2^4","solution":["2^(3+4)=2^7=128"]},
+              {"problem":"(3^2)^3","solution":["3^(2×3)=3^6=729"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q126","text":"5^0=?","options":["1","5","0","10"],"correct":0},
+              {"id":"Q127","text":"2^4 ÷ 2^2=?","options":["4","2","8","6"],"correct":0},
+              {"id":"Q128","text":"(2^3)^2=?","options":["64","16","8","32"],"correct":0},
+              {"id":"Q129","text":"3^3 × 3^2=?","options":["243","15","12","125"],"correct":0},
+              {"id":"Q130","text":"2^5 ÷ 2^3=?","options":["4","2","6","8"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-015",
+            "lessonNumber": 15,
+            "lessonOrder": 15,
+            "locked": true,
+            "title": "Mixed Numbers – Addition & Subtraction",
+            "content": "Adding and subtracting mixed numbers by converting to improper fractions.",
+            "examples": [
+              {"problem":"2 1/2 + 3 2/3","solution":["Convert: 2 1/2=5/2, 3 2/3=11/3","LCM=6","5/2=15/6, 11/3=22/6","Add: 15+22=37/6=6 1/6"]},
+              {"problem":"4 1/3 - 2 2/5","solution":["4 1/3=13/3, 2 2/5=12/5","LCM=15, 13/3=65/15, 12/5=36/15","Subtract:65-36=29/15=1 14/15"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q136","text":"1 1/2 + 2 1/4=?","options":["3 3/4","3 1/2","3 2/4","3 1/4"],"correct":0},
+              {"id":"Q137","text":"3 2/3 - 1 1/3=?","options":["2 1/3","2 1/2","2 2/3","2"],"correct":0},
+              {"id":"Q138","text":"5 1/4 + 2 3/4=?","options":["8","7 3/4","7 1/2","7 1/4"],"correct":0},
+              {"id":"Q139","text":"4 2/5 - 1 3/5=?","options":["2 4/5","2 1/2","2 3/5","2 2/5"],"correct":0},
+              {"id":"Q140","text":"6 1/3 + 3 2/3=?","options":["10","9","9 1/3","10 1/3"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-016",
+            "lessonNumber": 16,
+            "lessonOrder": 16,
+            "locked": true,
+            "title": "Fractions – Mixed & Improper",
+            "content": "Convert between mixed numbers and improper fractions, then perform operations.",
+            "examples": [
+              {"problem":"2 3/4 + 1 2/5","solution":["2 3/4 = 11/4, 1 2/5 = 7/5","LCM=20, 11/4=55/20, 7/5=28/20","Sum=83/20 = 4 3/20"]},
+              {"problem":"5 1/2 - 2 2/3","solution":["5 1/2=11/2, 2 2/3=8/3","LCM=6, 11/2=33/6, 8/3=16/6","Subtract=17/6=2 5/6"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q146","text":"1 1/3 + 2 2/3=?","options":["4","3","3 2/3","3 1/3"],"correct":0},
+              {"id":"Q147","text":"3 1/2 - 1 1/4=?","options":["2 1/4","2 1/2","2 1/3","2"],"correct":0},
+              {"id":"Q148","text":"2 2/5 + 3 1/5=?","options":["5 3/5","5 1/2","5 2/5","5 4/5"],"correct":0},
+              {"id":"Q149","text":"4 3/4 - 2 1/2=?","options":["2 1/4","2","2 1/2","2 3/4"],"correct":0},
+              {"id":"Q150","text":"1 2/3 + 2 1/3=?","options":["4","3","3 1/3","3 2/3"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-017",
+            "lessonNumber": 17,
+            "lessonOrder": 17,
+            "locked": true,
+            "title": "Decimals – Mixed Operations",
+            "content": "Combine addition, subtraction, multiplication, and division of decimals.",
+            "examples": [
+              {"problem":"2.5 + 1.75 × 2","solution":["Multiply first: 1.75×2=3.5","Add 2.5+3.5=6.0"]},
+              {"problem":"6.4 ÷ 0.8 - 2","solution":["6.4 ÷ 0.8 = 8","Subtract 8-2=6"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q156","text":"3.2 + 1.5 × 2=?","options":["6.2","5.2","5.5","6.5"],"correct":0},
+              {"id":"Q157","text":"4.5 ÷ 0.5 + 1=?","options":["10","9","11","12"],"correct":0},
+              {"id":"Q158","text":"2.4 × 0.5 + 1.2=?","options":["2.4","2.2","2.0","2.6"],"correct":0},
+              {"id":"Q159","text":"5.6 - 2.3 × 2=?","options":["1.0","1.1","1.2","1.3"],"correct":0},
+              {"id":"Q160","text":"3.5 ÷ 0.5 + 2=?","options":["9","8","10","7"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-018",
+            "lessonNumber": 18,
+            "lessonOrder": 18,
+            "locked": true,
+            "title": "Percentages – Advanced Problems",
+            "content": "Solve multi-step percentage problems including discounts, tax, and profit.",
+            "examples": [
+              {"problem":"Item $120, 10% off, add 5% tax","solution":["10% of 120=12, discounted=108","5% tax=108×0.05=5.4","Final price=108+5.4=113.4"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q166","text":"Price $200, 15% discount=?","options":["170","180","175","165"],"correct":0},
+              {"id":"Q167","text":"Increase 50 by 20%=?","options":["60","70","65","55"],"correct":0},
+              {"id":"Q168","text":"Decrease 120 by 25%=?","options":["90","95","100","85"],"correct":0},
+              {"id":"Q169","text":"Item $80, 10% discount, 5% tax=?","options":["75.6","70","76","74"],"correct":0},
+              {"id":"Q170","text":"Profit 20% on $150=?","options":["30","25","35","40"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-019",
+            "lessonNumber": 19,
+            "lessonOrder": 19,
+            "locked": true,
+            "title": "Factors & Multiples – Word Problems",
+            "content": "Apply LCM and HCF to solve real-life problems.",
+            "examples": [
+              {"problem":"Two buses arrive every 12 and 18 minutes. First at 8:00, next together?","solution":["LCM of 12,18=36","Next together at 8:36"]},
+              {"problem":"Boxes hold 24 and 36 items. Total items in each box same number?","solution":["HCF of 24,36=12","Each box contains 12 items"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q176","text":"LCM of 6 and 9=?","options":["18","12","24","15"],"correct":0},
+              {"id":"Q177","text":"HCF of 14 and 21=?","options":["7","14","21","1"],"correct":0},
+              {"id":"Q178","text":"LCM of 8 and 12=?","options":["24","20","16","36"],"correct":0},
+              {"id":"Q179","text":"HCF of 16 and 40=?","options":["8","4","16","6"],"correct":0},
+              {"id":"Q180","text":"LCM of 5 and 15=?","options":["15","20","10","5"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-020",
+            "lessonNumber": 20,
+            "lessonOrder": 20,
+            "locked": true,
+            "title": "Square Numbers – Word Problems",
+            "content": "Use squares to solve area and tiling problems.",
+            "examples": [
+              {"problem":"Floor 5m×5m tiles 1m² each","solution":["Total tiles=25"]},
+              {"problem":"Garden 12m×12m","solution":["Area=12²=144 m²"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q186","text":"Square of 11=?","options":["121","110","111","112"],"correct":0},
+              {"id":"Q187","text":"Area square 8m side=?","options":["64","60","68","72"],"correct":0},
+              {"id":"Q188","text":"Square of 13=?","options":["169","130","139","150"],"correct":0},
+              {"id":"Q189","text":"Tiles needed 6m×6m=?","options":["36","30","42","32"],"correct":0},
+              {"id":"Q190","text":"Square of 14=?","options":["196","140","184","160"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-021",
+            "lessonNumber": 21,
+            "lessonOrder": 21,
+            "locked": true,
+            "title": "Exponents – Word Problems",
+            "content": "Apply exponents to solve problems involving repeated multiplication.",
+            "examples": [
+              {"problem":"Growth 2 times each week for 4 weeks","solution":["2^4=16 times original"]},
+              {"problem":"Interest doubles 3 times","solution":["2^3=8 times original"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q196","text":"2^6=?","options":["64","32","128","48"],"correct":0},
+              {"id":"Q197","text":"Population triples twice=?","options":["9","6","27","18"],"correct":0},
+              {"id":"Q198","text":"4^3=?","options":["64","48","52","56"],"correct":0},
+              {"id":"Q199","text":"Growth doubles 5 times=?","options":["32","16","64","10"],"correct":0},
+              {"id":"Q200","text":"3^5=?","options":["243","125","225","200"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-022",
+            "lessonNumber": 22,
+            "lessonOrder": 22,
+            "locked": true,
+            "title": "Mixed Numbers – Multiplication & Division",
+            "content": "Multiply and divide mixed numbers by converting to improper fractions.",
+            "examples": [
+              {"problem":"2 1/3 × 1 1/2","solution":["Convert: 2 1/3 = 7/3, 1 1/2 = 3/2","Multiply: 7/3 × 3/2 = 21/6 = 3 1/2"]},
+              {"problem":"3 1/4 ÷ 1 3/8","solution":["Convert: 3 1/4 = 13/4, 1 3/8 = 11/8","Divide: 13/4 ÷ 11/8 = 13/4 × 8/11 = 104/44 = 2 16/44 = 2 4/11"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q206","text":"2 1/2 × 1 1/3=?","options":["3 1/3","3","3 1/2","3 2/3"],"correct":0},
+              {"id":"Q207","text":"1 1/2 ÷ 3/4=?","options":["2","1 1/2","1","2 1/2"],"correct":0},
+              {"id":"Q208","text":"3 1/4 × 2=?","options":["6 1/2","6","6 1/4","6 3/4"],"correct":0},
+              {"id":"Q209","text":"4 1/3 ÷ 2=?","options":["2 1/6","2","2 1/3","2 1/2"],"correct":0},
+              {"id":"Q210","text":"1 2/3 × 3=?","options":["5","4","4 1/2","5 1/3"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-023",
+            "lessonNumber": 23,
+            "lessonOrder": 23,
+            "locked": true,
+            "title": "Decimals – Word Problems",
+            "content": "Apply decimal operations to real-world problems.",
+            "examples": [
+              {"problem":"Gas 12.5L at $1.45/L","solution":["Cost = 12.5 × 1.45 = $18.125 ≈ $18.13"]},
+              {"problem":"Share $24.60 among 3 people","solution":["Each gets $24.60 ÷ 3 = $8.20"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q216","text":"5.5kg at $3.20/kg=?","options":["17.60","17.50","18.00","16.50"],"correct":0},
+              {"id":"Q217","text":"$45.50 ÷ 5=?","options":["9.10","9.00","9.50","8.50"],"correct":0},
+              {"id":"Q218","text":"2.5m at $4.80/m=?","options":["12.00","11.50","12.50","13.00"],"correct":0},
+              {"id":"Q219","text":"$72.50 ÷ 8=?","options":["9.06","9.50","8.75","9.25"],"correct":0},
+              {"id":"Q220","text":"3.6L at $2.25/L=?","options":["8.10","8.50","7.50","8.00"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-024",
+            "lessonNumber": 24,
+            "lessonOrder": 24,
+            "locked": true,
+            "title": "Real-World Number Problems",
+            "content": "Combine all number operations to solve complex real-world problems.",
+            "examples": [
+              {"problem":"Buy 3 items: $12.50, $8.75, $15.20. Pay with $50. Change?","solution":["Total: 12.50 + 8.75 + 15.20 = 36.45","Change: 50.00 - 36.45 = $13.55"]},
+              {"problem":"Recipe serves 4, need for 10. Ingredient 2.5 cups?","solution":["Scale factor: 10 ÷ 4 = 2.5","New amount: 2.5 × 2.5 = 6.25 cups"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q226","text":"Buy items $5.50, $3.25, $7.80. Total?","options":["16.55","16.50","17.00","16.00"],"correct":0},
+              {"id":"Q227","text":"Recipe for 6, need for 9. 2 cups becomes?","options":["3","2.5","3.5","4"],"correct":0},
+              {"id":"Q228","text":"15% tip on $45 bill=?","options":["6.75","7.00","6.50","7.25"],"correct":0},
+              {"id":"Q229","text":"Save 20% on $85 item=?","options":["17","15","18","20"],"correct":0},
+              {"id":"Q230","text":"Distance 45.6km in 3.8 hours. Speed?","options":["12 km/h","11 km/h","13 km/h","10 km/h"],"correct":0}
+            ]
+          },
+          {
+            "id": "MATH-7-NO-025",
+            "lessonNumber": 25,
+            "lessonOrder": 25,
+            "locked": true,
+            "title": "Chapter Review & Assessment",
+            "content": "Review all concepts from Numbers & Operations chapter and test your understanding.",
+            "examples": [
+              {"problem":"Review: Integer operations","solution":["Remember: Adding negative = subtracting positive","Multiplying: same signs = positive, different signs = negative"]},
+              {"problem":"Review: All operations","solution":["Order: Exponents, Multiplication/Division, Addition/Subtraction","Use parentheses to clarify order"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"Q236","text":"(-5) + 8 - 3=?","options":["0","1","-1","2"],"correct":0},
+              {"id":"Q237","text":"2^3 + 3^2=?","options":["17","16","18","15"],"correct":0},
+              {"id":"Q238","text":"3/4 × 2/3 + 1/6=?","options":["2/3","1/2","3/4","5/6"],"correct":0},
+              {"id":"Q239","text":"2.5 × 1.2 + 0.5=?","options":["3.5","3.0","3.2","4.0"],"correct":0},
+              {"id":"Q240","text":"25% of 80 + 15=?","options":["35","30","40","25"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C02",
+        "title": "Algebra",
+        "lessons": [
+          {
+            "id": "ALG-7-001",
+            "lessonNumber": 1,
+            "lessonOrder": 26,
+            "locked": false,
+            "title": "Introduction to Algebraic Expressions",
+            "content": "Algebraic expressions consist of variables, constants, and operations. They represent numbers in a generalized way.",
+            "examples": [
+              {"problem":"Simplify: 2x + 3x","solution":["Combine like terms: 2x + 3x = 5x"]},
+              {"problem":"Identify terms in 4y - 7","solution":["Terms are 4y and -7"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"ALG-Q001","text":"Simplify: x + 4x","options":["5x","4x","x","6x"],"correct":0},
+              {"id":"ALG-Q002","text":"Identify the constant in 3x + 5","options":["5","3x","x","3"],"correct":0},
+              {"id":"ALG-Q003","text":"Simplify: 7y - 2y","options":["5y","9y","-5y","7y"],"correct":0},
+              {"id":"ALG-Q004","text":"Simplify: 2a + 3b","options":["2a + 3b","5ab","5a","5b"],"correct":0},
+              {"id":"ALG-Q005","text":"Which is a variable?","options":["x","7","10","5"],"correct":0}
+            ]
+          },
+          {
+            "id": "ALG-7-002",
+            "lessonNumber": 2,
+            "lessonOrder": 27,
+            "locked": true,
+            "title": "Simplifying Algebraic Expressions",
+            "content": "Combine like terms and simplify expressions by addition, subtraction, and factoring.",
+            "examples": [
+              {"problem":"Simplify: 3x + 5x - 2","solution":["3x + 5x = 8x","Expression: 8x - 2"]},
+              {"problem":"Simplify: 4y - y + 7","solution":["4y - y = 3y","Expression: 3y + 7"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"ALG-Q011","text":"Simplify: 2a + 5a - 3","options":["7a - 3","7a + 3","10a - 3","2a + 5a"],"correct":0},
+              {"id":"ALG-Q012","text":"Simplify: 6x - 2x + 4","options":["4x + 4","8x + 4","4x - 4","6x"],"correct":0},
+              {"id":"ALG-Q013","text":"Simplify: 3y + y + 5","options":["4y + 5","3y + 5","y + 5","3y + y"],"correct":0},
+              {"id":"ALG-Q014","text":"Simplify: 5p - 3p + 2","options":["2p + 2","8p + 2","2p - 2","5p - 3p"],"correct":0},
+              {"id":"ALG-Q015","text":"Combine: 4m + 7 - 2m","options":["2m + 7","6m + 7","2m - 7","4m + 2m"],"correct":0}
+            ]
+          },
+          {
+            "id": "ALG-7-003",
+            "lessonNumber": 3,
+            "lessonOrder": 28,
+            "locked": true,
+            "title": "Substitution in Formulae",
+            "content": "Learn how to substitute numbers into algebraic expressions and formulae.",
+            "examples": [
+              {"problem":"Evaluate: 2x + 3 for x=4","solution":["2×4 + 3 = 8 + 3 = 11"]},
+              {"problem":"Evaluate: 5y - 2 for y=3","solution":["5×3 - 2 = 15 - 2 = 13"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"ALG-Q021","text":"Evaluate 3x + 2 for x=5","options":["17","15","18","16"],"correct":0},
+              {"id":"ALG-Q022","text":"Evaluate 4y - 3 for y=2","options":["5","4","3","6"],"correct":0},
+              {"id":"ALG-Q023","text":"Evaluate 2a + 5 for a=3","options":["11","12","10","9"],"correct":0},
+              {"id":"ALG-Q024","text":"Evaluate x - 2 for x=7","options":["5","6","4","7"],"correct":0},
+              {"id":"ALG-Q025","text":"Evaluate 3b + 1 for b=2","options":["7","6","8","5"],"correct":0}
+            ]
+          },
+          {
+            "id": "ALG-7-004",
+            "lessonNumber": 4,
+            "lessonOrder": 29,
+            "locked": true,
+            "title": "Solving Simple Linear Equations",
+            "content": "Solve equations like ax + b = c for x.",
+            "examples": [
+              {"problem":"Solve: 2x + 3 = 7","solution":["2x = 7 - 3 = 4","x = 4 / 2 = 2"]},
+              {"problem":"Solve: 5y - 2 = 13","solution":["5y = 13 + 2 = 15","y = 15 / 5 = 3"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"ALG-Q031","text":"Solve 3x + 4 = 10","options":["2","3","1","4"],"correct":0},
+              {"id":"ALG-Q032","text":"Solve x - 5 = 7","options":["12","10","13","11"],"correct":0},
+              {"id":"ALG-Q033","text":"Solve 4y + 1 = 9","options":["2","3","4","1"],"correct":0},
+              {"id":"ALG-Q034","text":"Solve 5a - 3 = 12","options":["3","2","4","5"],"correct":0},
+              {"id":"ALG-Q035","text":"Solve 2b + 7 = 15","options":["4","5","3","6"],"correct":0}
+            ]
+          },
+          {
+            "id": "ALG-7-005",
+            "lessonNumber": 5,
+            "lessonOrder": 30,
+            "locked": true,
+            "title": "Solving Inequalities",
+            "content": "Learn how to solve and graph inequalities.",
+            "examples": [
+              {"problem":"Solve: x + 3 > 7","solution":["x > 7 - 3","x > 4"]},
+              {"problem":"Solve: 2y - 5 ≤ 9","solution":["2y ≤ 9 + 5","2y ≤ 14","y ≤ 7"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"ALG-Q041","text":"Solve x - 2 ≥ 5","options":["x ≥ 7","x ≥ 3","x ≥ 5","x ≥ 6"],"correct":0},
+              {"id":"ALG-Q042","text":"Solve 3y + 1 < 10","options":["y < 3","y < 2","y < 4","y < 5"],"correct":0},
+              {"id":"ALG-Q043","text":"Solve 2x - 3 > 5","options":["x > 4","x > 3","x > 5","x > 6"],"correct":0},
+              {"id":"ALG-Q044","text":"Solve y + 7 ≤ 12","options":["y ≤ 5","y ≤ 4","y ≤ 6","y ≤ 3"],"correct":0},
+              {"id":"ALG-Q045","text":"Solve 4a - 1 ≥ 7","options":["a ≥ 2","a ≥ 3","a ≥ 1","a ≥ 4"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C03",
+        "title": "Geometry",
+        "lessons": [
+          {
+            "id": "GEO-7-001",
+            "lessonNumber": 1,
+            "lessonOrder": 31,
+            "locked": false,
+            "title": "Angles: Types and Measuring",
+            "content": "Angles are formed when two rays meet at a point called the vertex. Learn types of angles and how to measure them.",
+            "examples": [
+              {"problem":"Identify the type of angle 45°","solution":["45° is an acute angle"]},
+              {"problem":"Measure an angle using a protractor","solution":["Place the midpoint of the protractor on the vertex and read the degree where the other ray crosses the scale"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"GEO-Q001","text":"An angle of 90° is called?","options":["Right angle","Acute angle","Obtuse angle","Straight angle"],"correct":0},
+              {"id":"GEO-Q002","text":"An angle of 120° is called?","options":["Obtuse angle","Acute angle","Right angle","Straight angle"],"correct":0},
+              {"id":"GEO-Q003","text":"An angle of 180° is called?","options":["Straight angle","Right angle","Acute angle","Obtuse angle"],"correct":0},
+              {"id":"GEO-Q004","text":"An angle less than 90° is called?","options":["Acute angle","Right angle","Obtuse angle","Reflex angle"],"correct":0},
+              {"id":"GEO-Q005","text":"An angle greater than 90° but less than 180°?","options":["Obtuse angle","Acute angle","Right angle","Straight angle"],"correct":0}
+            ]
+          },
+          {
+            "id": "GEO-7-002",
+            "lessonNumber": 2,
+            "lessonOrder": 32,
+            "locked": true,
+            "title": "Triangles: Types and Properties",
+            "content": "Learn about different types of triangles and their properties including the basics of Pythagoras theorem.",
+            "examples": [
+              {"problem":"Classify a triangle with sides 3,4,5","solution":["It is a right-angled triangle"]},
+              {"problem":"Classify triangle with all equal sides","solution":["It is an equilateral triangle"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"GEO-Q011","text":"A triangle with two equal sides is called?","options":["Isosceles","Equilateral","Scalene","Right"],"correct":0},
+              {"id":"GEO-Q012","text":"Sum of interior angles of any triangle?","options":["180°","360°","90°","270°"],"correct":0},
+              {"id":"GEO-Q013","text":"A triangle with all unequal sides?","options":["Scalene","Isosceles","Equilateral","Right"],"correct":0},
+              {"id":"GEO-Q014","text":"A triangle with a 90° angle is?","options":["Right-angled","Obtuse","Acute","Equilateral"],"correct":0},
+              {"id":"GEO-Q015","text":"Pythagoras theorem applies to?","options":["Right-angled triangle","All triangles","Equilateral","Isosceles"],"correct":0}
+            ]
+          },
+          {
+            "id": "GEO-7-003",
+            "lessonNumber": 3,
+            "lessonOrder": 33,
+            "locked": true,
+            "title": "Quadrilaterals & Polygons",
+            "content": "Learn about different types of quadrilaterals and polygons and their properties.",
+            "examples": [
+              {"problem":"Identify a square","solution":["All sides equal, all angles 90°"]},
+              {"problem":"Identify a rectangle","solution":["Opposite sides equal, all angles 90°"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"GEO-Q021","text":"A quadrilateral with all sides equal?","options":["Square","Rectangle","Rhombus","Trapezium"],"correct":0},
+              {"id":"GEO-Q022","text":"A quadrilateral with only opposite sides equal?","options":["Rectangle","Square","Rhombus","Parallelogram"],"correct":0},
+              {"id":"GEO-Q023","text":"Polygon with 5 sides?","options":["Pentagon","Hexagon","Quadrilateral","Triangle"],"correct":0},
+              {"id":"GEO-Q024","text":"Polygon with 6 sides?","options":["Hexagon","Pentagon","Heptagon","Quadrilateral"],"correct":0},
+              {"id":"GEO-Q025","text":"Trapezium has?","options":["One pair of parallel sides","All sides equal","No parallel sides","Two pairs of parallel sides"],"correct":0}
+            ]
+          },
+          {
+            "id": "GEO-7-004",
+            "lessonNumber": 4,
+            "lessonOrder": 34,
+            "locked": true,
+            "title": "Circles: Radius, Diameter, Circumference, Area",
+            "content": "Understand the basic properties of circles and formulas for circumference and area.",
+            "examples": [
+              {"problem":"Radius = 7cm, find diameter","solution":["Diameter = 2 × radius = 14 cm"]},
+              {"problem":"Radius = 7cm, find circumference","solution":["Circumference = 2 × π × r = 44 cm approx"]},
+              {"problem":"Radius = 7cm, find area","solution":["Area = π × r² = 154 cm² approx"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"GEO-Q031","text":"Circumference formula?","options":["2πr","πr²","πd","r²"],"correct":0},
+              {"id":"GEO-Q032","text":"Area formula?","options":["πr²","2πr","πd","r²"],"correct":0},
+              {"id":"GEO-Q033","text":"Diameter formula?","options":["2r","r/2","r²","πr"],"correct":0},
+              {"id":"GEO-Q034","text":"Radius = 10, circumference?","options":["62.8","20","31.4","50"],"correct":2},
+              {"id":"GEO-Q035","text":"Radius = 5, area?","options":["78.5","25","50","31.4"],"correct":0}
+            ]
+          },
+          {
+            "id": "GEO-7-005",
+            "lessonNumber": 5,
+            "lessonOrder": 35,
+            "locked": true,
+            "title": "Perimeter and Area of Plane Shapes",
+            "content": "Learn formulas and calculation of perimeter and area of rectangles, squares, triangles, and parallelograms.",
+            "examples": [
+              {"problem":"Rectangle 5×10, find area","solution":["Area = length × width = 50"]},
+              {"problem":"Square side 6, find perimeter","solution":["Perimeter = 4 × side = 24"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id":"GEO-Q041","text":"Area of square with side 8?","options":["64","32","16","48"],"correct":0},
+              {"id":"GEO-Q042","text":"Perimeter of rectangle 4×7?","options":["22","11","28","20"],"correct":2},
+              {"id":"GEO-Q043","text":"Area of rectangle 6×5?","options":["30","35","11","25"],"correct":0},
+              {"id":"GEO-Q044","text":"Perimeter of square side 9?","options":["36","18","45","27"],"correct":0},
+              {"id":"GEO-Q045","text":"Area triangle base 5 height 6?","options":["15","30","25","12"],"correct":0}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C04",
+        "title": "Ratio, Proportion & Rates",
+        "lessons": [
+          {
+            "id": "ratio_proportion_lesson1",
+            "title": "Understanding Ratios",
+            "content": "A ratio is a way of comparing two or more quantities.",
+            "examples": [
+              "Simplify the ratio: 6:8 = 3:4 (divide by GCD of 2)",
+              "Express ratio as fraction: 3:4 = 3/4",
+              "Unit rate: 60 miles in 2 hours = 30 miles per hour"
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {
+                "id": "test101",
+                "text": "Simplify the ratio: 4:12",
+                "options": ["1:3", "2:6", "3:9"],
+                "correct": 0
+              },
+              {
+                "id": "test102",
+                "text": "What is the unit rate for 150 miles in 3 hours?",
+                "options": ["50 mph", "45 mph", "60 mph"],
+                "correct": 0
+              },
+              {
+                "id": "test103",
+                "text": "Simplify the ratio: 9:15",
+                "options": ["3:5", "2:3", "4:5"],
+                "correct": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C05",
+        "title": "Statistics & Probability",
+        "lessons": [
+          {
+            "id": "statistics_probability_lesson1",
+            "title": "Introduction to Statistics",
+            "content": "Statistics involves collecting, analyzing, and interpreting data.",
+            "examples": [
+              "Calculate the mean of 2, 4, 6: (2+4+6)/3 = 4",
+              "Find the median of 1, 3, 5, 7, 9: the middle value is 5",
+              "Mode is the most frequently occurring value in a dataset"
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {
+                "id": "test126",
+                "text": "What is the mean of the numbers: 1, 3, 5?",
+                "options": ["2", "3", "4"],
+                "correct": 1
+              },
+              {
+                "id": "test127",
+                "text": "What is the median of: 2, 4, 6, 8, 10?",
+                "options": ["4", "6", "8"],
+                "correct": 1
+              },
+              {
+                "id": "test128",
+                "text": "What is the mode of: 2, 3, 3, 4, 5?",
+                "options": ["2", "3", "4"],
+                "correct": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C06",
+        "title": "Coordinate Geometry",
+        "lessons": [
+          {
+            "id": "coordinate_geometry_lesson1",
+            "title": "Introduction to Coordinate Geometry",
+            "content": "Coordinate geometry involves the study of geometric figures using coordinate systems.",
+            "examples": [
+              "Plot the point (2,3): move 2 units right, 3 units up from origin",
+              "The origin is at coordinates (0,0)",
+              "The x-coordinate tells horizontal position, y-coordinate tells vertical position"
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {
+                "id": "test151",
+                "text": "What are the coordinates of the origin?",
+                "options": ["(0,0)", "(1,1)", "(2,2)"],
+                "correct": 0
+              },
+              {
+                "id": "test152",
+                "text": "What is the x-coordinate of the point (4,5)?",
+                "options": ["4", "5", "9"],
+                "correct": 0
+              },
+              {
+                "id": "test153",
+                "text": "In which quadrant is the point (-3, 2)?",
+                "options": ["I", "II", "III"],
+                "correct": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C07",
+        "title": "Word Problems / Applications",
+        "lessons": [
+          {
+            "id": "word_problems_lesson1",
+            "title": "Solving Word Problems",
+            "content": "Word problems involve applying mathematical concepts to real-world scenarios.",
+            "examples": [
+              "Tom has 15 pencils and gives 3 to his friend. Tom has 15 - 3 = 12 pencils left",
+              "A store has 24 apples and sells them in bags of 6. Number of bags = 24 ÷ 6 = 4",
+              "Sarah walks 2 miles per day for 5 days. Total distance = 2 × 5 = 10 miles"
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {
+                "id": "test176",
+                "text": "If Sara has 12 books and buys 4 more, how many books does Sara have now?",
+                "options": ["12", "16", "20"],
+                "correct": 1
+              },
+              {
+                "id": "test177",
+                "text": "A bakery sells 250 loaves of bread per day. How many loaves in 5 days?",
+                "options": ["1000", "1250", "1500"],
+                "correct": 1
+              },
+              {
+                "id": "test178",
+                "text": "If 3 notebooks cost $9, how much does 1 notebook cost?",
+                "options": ["$2", "$3", "$4"],
+                "correct": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C08",
+        "title": "Ratios, Proportions, and Percentages",
+        "lessons": [
+          {
+            "id": "MATH-7-RPP-001",
+            "lessonNumber": 1,
+            "lessonOrder": 1,
+            "locked": false,
+            "title": "Understanding Ratios",
+            "content": "A ratio compares two or more quantities showing how many times one value contains another. Ratios can be written in different forms: fraction form (a/b), colon form (a:b), or word form ('a to b'). Understanding ratios helps us compare quantities and solve real-world problems involving proportional relationships.",
+            "examples": [
+              {
+                "problem": "If a class has 12 boys and 8 girls, write the ratio of boys to girls in different forms",
+                "solution": [
+                  "Step 1: Identify the quantities - 12 boys and 8 girls",
+                  "Step 2: Fraction form: 12/8, simplified to 3/2",
+                  "Step 3: Colon form: 12:8, simplified to 3:2", 
+                  "Step 4: Word form: 3 to 2"
+                ]
+              },
+              {
+                "problem": "Simplify the ratio 18:24",
+                "solution": [
+                  "Step 1: Find the greatest common factor (GCF) of 18 and 24",
+                  "Step 2: GCF of 18 and 24 is 6",
+                  "Step 3: Divide both terms by 6: 18÷6 = 3, 24÷6 = 4",
+                  "Step 4: Simplified ratio is 3:4"
+                ]
+              },
+              {
+                "problem": "Divide 120 liters of juice in the ratio 2:3:5",
+                "solution": [
+                  "Step 1: Find total parts: 2 + 3 + 5 = 10 parts",
+                  "Step 2: First part = (2/10) × 120 = 24 liters",
+                  "Step 3: Second part = (3/10) × 120 = 36 liters",
+                  "Step 4: Third part = (5/10) × 120 = 60 liters"
+                ]
+              }
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {
+                "id": "RPP-Q001",
+                "text": "Simplify the ratio 12:16",
+                "options": ["3:4", "4:3", "6:8", "2:3"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q002", 
+                "text": "The ratio 15:5 simplified is?",
+                "options": ["3:1", "1:3", "5:3", "3:5"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q003",
+                "text": "Which is an equivalent ratio of 2:5?",
+                "options": ["4:10", "6:15", "8:20", "All of the above"],
+                "correct": 3
+              },
+              {
+                "id": "RPP-Q004",
+                "text": "Divide 90 kg in ratio 2:1. What is the first part?",
+                "options": ["30 kg", "60 kg", "45 kg", "20 kg"],
+                "correct": 1
+              },
+              {
+                "id": "RPP-Q005",
+                "text": "The ratio of 9 boys to 6 girls simplified is?",
+                "options": ["3:2", "2:3", "9:6", "1:2"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q006",
+                "text": "The ratio 8:12 is equivalent to?",
+                "options": ["2:3", "3:2", "4:5", "8:12"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q007",
+                "text": "In the ratio 3:4:5, the sum of parts is?",
+                "options": ["12", "10", "9", "7"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q008",
+                "text": "120 liters divided in ratio 1:2:3. What is the largest portion?",
+                "options": ["20", "40", "60", "30"],
+                "correct": 2
+              },
+              {
+                "id": "RPP-Q009",
+                "text": "The ratio 10:15 simplified is?",
+                "options": ["2:3", "3:2", "5:3", "3:5"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q010",
+                "text": "Which is an equivalent ratio of 4:7?",
+                "options": ["8:14", "12:21", "16:28", "All of the above"],
+                "correct": 3
+              }
+            ]
+          },
+          {
+            "id": "MATH-7-RPP-002",
+            "lessonNumber": 2,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Equivalent Ratios and Simplifying",
+            "content": "Equivalent ratios express the same relationship between quantities. To find equivalent ratios, multiply or divide both terms by the same number. Simplifying ratios means finding the smallest whole numbers that express the same relationship by dividing both terms by their greatest common factor (GCF).",
+            "examples": [
+              {
+                "problem": "Simplify the ratio 24:36",
+                "solution": [
+                  "Step 1: Find the GCF of 24 and 36",
+                  "Step 2: Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24",
+                  "Step 3: Factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36",
+                  "Step 4: GCF = 12",
+                  "Step 5: 24÷12 : 36÷12 = 2:3"
+                ]
+              },
+              {
+                "problem": "Find three equivalent ratios of 3:5",
+                "solution": [
+                  "Step 1: Multiply both terms by 2: 3×2 : 5×2 = 6:10",
+                  "Step 2: Multiply both terms by 3: 3×3 : 5×3 = 9:15",
+                  "Step 3: Multiply both terms by 4: 3×4 : 5×4 = 12:20",
+                  "Step 4: All ratios 3:5, 6:10, 9:15, 12:20 are equivalent"
+                ]
+              },
+              {
+                "problem": "Check if 4:6 and 10:15 are equivalent",
+                "solution": [
+                  "Step 1: Convert both ratios to fractions",
+                  "Step 2: 4:6 = 4/6 = 0.666...",
+                  "Step 3: 10:15 = 10/15 = 0.666...",
+                  "Step 4: Since both equal 0.666..., they are equivalent"
+                ]
+              }
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {
+                "id": "RPP-Q011",
+                "text": "Simplify the ratio 20:30",
+                "options": ["2:3", "3:2", "4:6", "5:6"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q012",
+                "text": "Which is an equivalent ratio of 3:7?",
+                "options": ["6:14", "9:21", "12:28", "All of the above"],
+                "correct": 3
+              },
+              {
+                "id": "RPP-Q013",
+                "text": "Simplify the ratio 18:27",
+                "options": ["2:3", "3:4", "6:9", "9:12"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q014",
+                "text": "Are 5:8 and 15:24 equivalent?",
+                "options": ["Yes", "No"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q015",
+                "text": "Simplify the ratio 40:50",
+                "options": ["4:5", "5:4", "8:10", "10:12"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q016",
+                "text": "Find equivalent ratio of 2:9 by multiplying by 3",
+                "options": ["6:27", "5:18", "4:27", "3:12"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q017",
+                "text": "The ratio 9:12 simplified is?",
+                "options": ["3:4", "4:3", "9:12", "6:8"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q018",
+                "text": "Which is an equivalent ratio of 7:10?",
+                "options": ["14:20", "21:30", "28:40", "All of the above"],
+                "correct": 3
+              },
+              {
+                "id": "RPP-Q019",
+                "text": "Are 6:9 and 2:3 equivalent?",
+                "options": ["Yes", "No"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q020",
+                "text": "Simplify the ratio 45:60",
+                "options": ["3:4", "4:5", "9:12", "15:20"],
+                "correct": 0
+              }
+            ]
+          },
+          {
+            "id": "MATH-7-RPP-003",
+            "lessonNumber": 3,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Solving Proportions",
+            "content": "A proportion is an equation that states that two ratios are equal. The general form is a/b = c/d (where b ≠ 0, d ≠ 0). We solve proportions using cross multiplication: multiply diagonally across and solve for the unknown. Proportions are useful for solving real-world problems involving rates, scale, and comparisons.",
+            "examples": [
+              {
+                "problem": "Solve x/5 = 3/10",
+                "solution": [
+                  "Step 1: Cross multiply: x × 10 = 5 × 3",
+                  "Step 2: Simplify: 10x = 15",
+                  "Step 3: Solve for x: x = 15 ÷ 10 = 1.5",
+                  "Step 4: Check: 1.5/5 = 0.3 and 3/10 = 0.3 ✓"
+                ]
+              },
+              {
+                "problem": "Solve 6/x = 3/4",
+                "solution": [
+                  "Step 1: Cross multiply: 6 × 4 = 3 × x",
+                  "Step 2: Simplify: 24 = 3x",
+                  "Step 3: Solve for x: x = 24 ÷ 3 = 8",
+                  "Step 4: Check: 6/8 = 0.75 and 3/4 = 0.75 ✓"
+                ]
+              },
+              {
+                "problem": "A car travels 150 km in 3 hours. How far will it travel in 5 hours at the same speed?",
+                "solution": [
+                  "Step 1: Set up proportion: distance/time = 150/3 = x/5",
+                  "Step 2: Cross multiply: 150 × 5 = 3 × x",
+                  "Step 3: Simplify: 750 = 3x",
+                  "Step 4: Solve: x = 750 ÷ 3 = 250 km"
+                ]
+              }
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {
+                "id": "RPP-Q021",
+                "text": "Solve x/6 = 2/3",
+                "options": ["3", "4", "5", "6"],
+                "correct": 1
+              },
+              {
+                "id": "RPP-Q022",
+                "text": "Solve 5/x = 10/8",
+                "options": ["4", "5", "6", "8"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q023",
+                "text": "Solve 7/2 = x/6",
+                "options": ["18", "20", "21", "24"],
+                "correct": 2
+              },
+              {
+                "id": "RPP-Q024",
+                "text": "Solve 9/x = 3/4",
+                "options": ["12", "10", "11", "9"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q025",
+                "text": "Solve 4/5 = x/15",
+                "options": ["12", "10", "15", "20"],
+                "correct": 0
+              },
+              {
+                "id": "RPP-Q026",
+                "text": "A car travels 120 km in 2 hours. How far in 5 hours?",
+                "options": ["250 km", "300 km", "280 km", "240 km"],
+                "correct": 1
+              },
+              {
+                "id": "RPP-Q027",
+                "text": "Solve 8/x = 12/18",
+                "options": ["10", "12", "8", "9"],
+                "correct": 1
+              },
+              {
+                "id": "RPP-Q028",
+                "text": "Solve 15/x = 5/2",
+                "options": ["5", "6", "7", "8"],
+                "correct": 1
+              },
+              {
+                "id": "RPP-Q029",
+                "text": "Solve 2/3 = x/9",
+                "options": ["4", "5", "6", "7"],
+                "correct": 2
+              },
+              {
+                "id": "RPP-Q030",
+                "text": "Solve x/7 = 5/14",
+                "options": ["2.5", "3", "4", "5"],
+                "correct": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

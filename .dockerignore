@@ -1,0 +1,117 @@
+# Node modules (reinstalled in Docker)
+node_modules
+npm-debug.log*
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Build outputs (rebuilt in Docker)
+dist
+build
+
+# Documentation
+*.md
+
+# Editor/IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+*.DS_Store
+
+# Replit files
+.replit
+.replit.nix
+replit.md
+.config
+.upm
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__
+coverage
+.nyc_output
+
+# Temp files
+tmp
+temp
+*.tmp
+*.temp
+
+# Cache
+.cache
+.parcel-cache
+*.tsbuildinfo
+
+# Backup files
+*.backup
+*.backup_*
+*.broken*
+*.corrupted
+*.fixed
+*.daily_backup
+
+# Heavy directories (not needed for build)
+uploads
+scripts
+
+# Large files
+*.pdf
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.mp4
+*.mp3
+*.wav
+*.mov
+*.avi
+
+# Data files not needed for build
+grade7_*.json
+*_book.json
+test-payout-data.sql
+migration-log.txt
+migration-mapping.json
+hero-section-sizes.pdf
+users-list.pdf
+sedvC84Sb
+
+# Unnecessary root files
+CERTIFICATE_INFO.md
+CERTIFIER_SETUP_GUIDE.md
+CLOUDFLARE_R2_SETUP.md
+DATABASE_EGRESS_OPTIMIZATION_COMPLETE.md
+DATABASE_EGRESS_OPTIMIZATION_SUMMARY.md
+DEPLOYMENT_CHECKLIST.md
+EGRESS_OPTIMIZATION_SUMMARY.md
+IMAGE_GENERATION_GUIDE.md
+IMPLEMENTATION_SUMMARY.md
+MIGRATION_COMPLETE.md
+NEON_EGRESS_FIXES.md
+PAYMENT_FLOW_CONSISTENCY.md
+PAYMENT_GATEWAYS_SETUP.md
+SUBSCRIPTION_ACCESS_CONTROL_GUIDE.md
+WHATSAPP_BOT_SETUP_GUIDE.md
+ZERO_EGRESS_IMPLEMENTATION.md
+generate-hero-sizes-pdf.ts
+railway.json
+render.yaml

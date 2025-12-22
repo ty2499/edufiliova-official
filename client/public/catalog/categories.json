@@ -1,0 +1,114 @@
+[
+  {
+    "id": "54af9c78-1a96-4a54-83d4-0d35cc7f220b",
+    "name": "Artificial Intelligence",
+    "displayName": "Artificial Intelligence",
+    "description": "Courses related to AI and Machine Learning",
+    "color": "blue",
+    "isActive": true
+  },
+  {
+    "id": "6c2c9fc6-e723-4eca-8df7-ad3c421b719e",
+    "name": "programming",
+    "displayName": "Programming",
+    "description": "Learn coding and software development",
+    "color": "blue",
+    "isActive": true
+  },
+  {
+    "id": "2e2afc85-d369-4ba1-b42a-5bfefd147988",
+    "name": "design",
+    "displayName": "Design",
+    "description": "Creative design and visual arts",
+    "color": "purple",
+    "isActive": true
+  },
+  {
+    "id": "b3c1dd1c-2359-48e0-b748-9278c8d057f2",
+    "name": "business",
+    "displayName": "Business",
+    "description": "Business, management, and entrepreneurship",
+    "color": "green",
+    "isActive": true
+  },
+  {
+    "id": "2e051ce5-fdb2-4bd8-a6a5-70f4a8dffd55",
+    "name": "marketing",
+    "displayName": "Marketing",
+    "description": "Digital marketing and advertising",
+    "color": "orange",
+    "isActive": true
+  },
+  {
+    "id": "3a0ad5cb-a474-48aa-9614-f6afac1d6f8d",
+    "name": "photography",
+    "displayName": "Photography",
+    "description": "Photography and visual storytelling",
+    "color": "pink",
+    "isActive": true
+  },
+  {
+    "id": "b9e3e492-516c-4992-9909-69cc50d32ce9",
+    "name": "music",
+    "displayName": "Music",
+    "description": "Music theory, production, and performance",
+    "color": "red",
+    "isActive": true
+  },
+  {
+    "id": "59c2ede3-abe6-488d-a2a6-195b08651ff7",
+    "name": "health",
+    "displayName": "Health & Fitness",
+    "description": "Health, wellness, and fitness",
+    "color": "teal",
+    "isActive": true
+  },
+  {
+    "id": "d2149b66-aa0d-4a58-ac93-deeed05152f6",
+    "name": "language",
+    "displayName": "Language",
+    "description": "Language learning and linguistics",
+    "color": "indigo",
+    "isActive": true
+  },
+  {
+    "id": "dad3180f-e811-4a51-b509-ea966c1b5d21",
+    "name": "other",
+    "displayName": "Other",
+    "description": "Miscellaneous courses",
+    "color": "gray",
+    "isActive": true
+  },
+  {
+    "id": "7a719314-f684-4857-80d1-1782eade5470",
+    "name": "data-science",
+    "displayName": "Data Science",
+    "description": "Data Science and Analytics courses",
+    "color": "purple",
+    "isActive": true
+  },
+  {
+    "id": "7b63dad5-3117-4992-bff5-82734710d277",
+    "name": "Business",
+    "displayName": "Business & Entrepreneurship",
+    "description": "Courses about business, entrepreneurship, and making money online",
+    "color": "green",
+    "isActive": true
+  },
+  {
+    "id": "33191cd9-18a6-43b8-9755-72a90adcf58e",
+    "name": "Technology",
+    "displayName": "Technology & Programming",
+    "description": "Courses about programming, software development, and technology",
+    "color": "blue",
+    "isActive": true
+  },
+  {
+    "id": "fc15e820-8cbc-43d0-bc1c-227d6ccc22ba",
+    "name": "Photography",
+    "displayName": "Photography & Visual Arts",
+    "description": "Courses about photography, videography, and visual storytelling",
+    "color": "purple",
+    "isActive": true
+  }
+]

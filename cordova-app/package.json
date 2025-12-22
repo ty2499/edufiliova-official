@@ -1,0 +1,35 @@
+{
+  "name": "edufiliova-app",
+  "displayName": "EduFiliova",
+  "version": "1.0.0",
+  "description": "EduFiliova - Personalized learning experiences globally",
+  "main": "index.js",
+  "scripts": {
+    "build:android": "cordova build android --release",
+    "build:android:debug": "cordova build android",
+    "run:android": "cordova run android",
+    "prepare": "cordova prepare"
+  },
+  "author": "EduFiliova Team",
+  "license": "MIT",
+  "devDependencies": {
+    "cordova-android": "^12.0.0",
+    "cordova-plugin-whitelist": "^1.3.5",
+    "cordova-plugin-statusbar": "^4.0.0",
+    "cordova-plugin-splashscreen": "^6.0.2",
+    "cordova-plugin-inappbrowser": "^6.0.0",
+    "cordova-plugin-network-information": "^3.0.0"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-network-information": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
+}

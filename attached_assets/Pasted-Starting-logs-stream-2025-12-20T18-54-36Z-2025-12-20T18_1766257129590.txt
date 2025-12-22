@@ -1,0 +1,1654 @@
+Starting logs stream.
+2025-12-20T18:54:36Z
+2025-12-20T18:54:36Z > rest-express@1.0.0 start
+2025-12-20T18:54:36Z > NODE_ENV=production node dist/index.js
+2025-12-20T18:54:36Z
+2025-12-20T18:54:40Z 📁 Created uploads directory: /app/uploads
+2025-12-20T18:54:40Z ⚠️ Email service not configured: Missing SMTP host/port
+2025-12-20T18:54:40Z ✅ Cloudflare R2 storage initialized for bucket: edufiliova-products
+2025-12-20T18:54:40Z
+2025-12-20T18:54:40Z 🚀 Starting Job Readiness Course image regeneration...
+2025-12-20T18:54:40Z
+2025-12-20T18:54:40Z 📧 EmailMarketingService constructor called
+2025-12-20T18:54:40Z 📧 EmailMarketingService initializeFromDatabase starting...
+2025-12-20T18:54:40Z 🔒 [KEEP-ALIVE] Process keep-alive initialized
+2025-12-20T18:54:40Z 🔧 [STARTUP] Starting async initialization...
+2025-12-20T18:54:40Z 🔧 [STARTUP] DATABASE_URL: ✓ Set
+2025-12-20T18:54:40Z 🔑 Loading API keys from database...
+2025-12-20T18:54:41Z ✅ WhatsApp integration initialized
+2025-12-20T18:54:41Z ✅ Cloudinary storage initialized for cloud: dl2lomrhp
+2025-12-20T18:54:41Z ✅ PayPal integration initialized
+2025-12-20T18:54:41Z ✅ OpenAI client initialized
+2025-12-20T18:54:41Z 📧 Found 1 active email accounts
+2025-12-20T18:54:41Z 📧 Email marketing service initialized from database with: verify@edufiliova.org
+2025-12-20T18:54:41Z 🔧 [STARTUP] ✅ API keys successfully loaded from database
+2025-12-20T18:54:41Z 🔄 Checking grade systems...
+2025-12-20T18:54:41Z 🌱 Seeding curricula data...
+2025-12-20T18:54:41Z 💎 Seeding membership plans...
+2025-12-20T18:54:41Z 🔑 Seeding ALL API keys to database (DB-first approach)...
+2025-12-20T18:54:41Z 📚 Starting Grade 3 English Language (Zimbabwe) seeding...
+2025-12-20T18:54:41Z 🔢 Starting Grade 3 Mathematics (Zimbabwe) seeding...
+2025-12-20T18:54:41Z ⚠️ EDUFILIOVA_EMAIL_PASSWORD not set, skipping email account seeding
+2025-12-20T18:54:41Z 📚 Found course: Job Readiness and Career Success (ID: 3f5953a0-fcaf-40e1-bbed-cce05a2ef933)
+2025-12-20T18:54:41Z ✅ Course thumbnail already on R2
+2025-12-20T18:54:41Z ℹ️ Membership plans already seeded (4 plans found)
+2025-12-20T18:54:41Z ℹ️ Grade systems already seeded (3100 grade systems found)
+2025-12-20T18:54:41Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:54:41Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:54:41Z ℹ️ Curricula already seeded
+2025-12-20T18:54:41Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:54:41Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:54:41Z
+2025-12-20T18:54:41Z 📦 Processing Module: Understanding Job Readiness and Career Foundations
+2025-12-20T18:54:41Z ✓ Mathematics Grade 3 subject already exists
+2025-12-20T18:54:41Z ✓ English Language Grade 3 subject already exists
+2025-12-20T18:54:41Z
+2025-12-20T18:54:41Z 📖 Lesson: Adaptability in the Workplace
+2025-12-20T18:54:41Z ⏭️ Unit "Reading and Comprehension" already exists, skipping...
+2025-12-20T18:54:41Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:41Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:41Z ✅ Image already on R2
+2025-12-20T18:54:41Z
+2025-12-20T18:54:41Z 📖 Lesson: Understanding Employer Expectations
+2025-12-20T18:54:41Z ⏭️ Unit "Addition and Subtraction" already exists, skipping...
+2025-12-20T18:54:41Z ⏭️ Unit "Grammar and Vocabulary" already exists, skipping...
+2025-12-20T18:54:41Z ✅ Image already on R2
+2025-12-20T18:54:41Z ✅ Image already on R2
+2025-12-20T18:54:41Z
+2025-12-20T18:54:41Z 📖 Lesson: Professional Attitude and Mindset
+2025-12-20T18:54:41Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z 📖 Lesson: Workplace Behavior and Etiquette
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ⏭️ Unit "Multiplication and Division" already exists, skipping...
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z 📖 Lesson: Time Management Basics
+2025-12-20T18:54:42Z ⏭️ Unit "Writing Skills" already exists, skipping...
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z 📖 Lesson: Responsibility and Accountability at Work
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ⏭️ Unit "Fractions" already exists, skipping...
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z ⏭️ Unit "Listening and Speaking" already exists, skipping...
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z 📖 Lesson: Personal Presentation and Appearance
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ⏭️ Unit "Measurement" already exists, skipping...
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z 📖 Lesson: Job Readiness Practice and Reflection
+2025-12-20T18:54:42Z ⏭️ Unit "Creative Writing and Poetry" already exists, skipping...
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z 📖 Lesson: What Job Readiness Means
+2025-12-20T18:54:42Z ⏭️ Unit "Geometry and Shapes" already exists, skipping...
+2025-12-20T18:54:42Z ⏭️ Unit "Revision and Practice Tests" already exists, skipping...
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z ✅ Image already on R2
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z 📦 Processing Module: Self-Assessment, Career Goals, and Job Planning
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:42Z 🎉 Grade 3 English Language (Zimbabwe) seeding completed!
+2025-12-20T18:54:42Z
+2025-12-20T18:54:42Z 📖 Lesson: Setting Realistic Career Goals
+2025-12-20T18:54:43Z ⏭️ Unit "Money" already exists, skipping...
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Understanding Personal Strengths and Skills
+2025-12-20T18:54:43Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Identifying Areas for Improvement
+2025-12-20T18:54:43Z ⏭️ Unit "Data Handling" already exists, skipping...
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Exploring Career Interests
+2025-12-20T18:54:43Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:43Z 🎉 Grade 3 Mathematics (Zimbabwe) seeding completed!
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Understanding Entry-Level Job Opportunities
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Understanding Job Requirements
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Planning a Job Search Strategy
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Using Feedback to Improve Career Direction
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Balancing Expectations and Reality
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z ✅ Image already on R2
+2025-12-20T18:54:43Z
+2025-12-20T18:54:43Z 📖 Lesson: Career Planning Practice and Reflection
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z
+2025-12-20T18:54:44Z 📦 Processing Module: Resume, Application, and Professional Profile Preparation
+2025-12-20T18:54:44Z
+2025-12-20T18:54:44Z 📖 Lesson: Creating a Professional Online Profile
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z
+2025-12-20T18:54:44Z 📖 Lesson: Providing Accurate and Honest Information
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z
+2025-12-20T18:54:44Z 📖 Lesson: Understanding Job Application Forms
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z
+2025-12-20T18:54:44Z 📖 Lesson: Understanding the Purpose of a Resume
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z
+2025-12-20T18:54:44Z 📖 Lesson: Identifying Information to Include in a Resume
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z ✅ Image already on R2
+2025-12-20T18:54:44Z
+2025-12-20T18:54:44Z 📖 Lesson: Writing Clear and Simple Resume Content
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z
+2025-12-20T18:54:45Z 📖 Lesson: Presenting Skills and Experience Effectively
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z
+2025-12-20T18:54:45Z 📖 Lesson: Avoiding Common Resume Mistakes
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z
+2025-12-20T18:54:45Z 📖 Lesson: Preparing Supporting Documents
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z
+2025-12-20T18:54:45Z 📖 Lesson: Resume and Application Practice and Reflection
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z
+2025-12-20T18:54:45Z 📦 Processing Module: Interview Preparation, Communication, and Performance
+2025-12-20T18:54:45Z
+2025-12-20T18:54:45Z 📖 Lesson: Asking Appropriate Questions to Employers
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z
+2025-12-20T18:54:45Z 📖 Lesson: Preparing Mentally and Emotionally for Interviews
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z ✅ Image already on R2
+2025-12-20T18:54:45Z
+2025-12-20T18:54:45Z 📖 Lesson: Interview Practice and Self-Reflection
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z
+2025-12-20T18:54:46Z 📖 Lesson: Understanding the Purpose of Job Interviews
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z
+2025-12-20T18:54:46Z 📖 Lesson: Researching the Employer and Job Role
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z
+2025-12-20T18:54:46Z 📖 Lesson: Common Interview Questions and How to Answer
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z 📖 Lesson: Communicating Clearly and Confidently
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z
+2025-12-20T18:54:46Z 📖 Lesson: Non-Verbal Communication in Interviews
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z
+2025-12-20T18:54:46Z 📖 Lesson: Handling Difficult Interview Questions
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z
+2025-12-20T18:54:46Z 📖 Lesson: Following Up After an Interview
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Receiving Feedback and Performance Reviews
+2025-12-20T18:54:47Z ⏭️ Template "Special Promotion" already exists, skipping...
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Maintaining Professional Ethics at Work
+2025-12-20T18:54:47Z ⏭️ Template "Course Completion Congratulations" already exists, skipping...
+2025-12-20T18:54:47Z ✅ Admin user ADMIN00002 already exists
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Time Management and Productivity at Work
+2025-12-20T18:54:48Z ⏭️ Template "Re-engagement Campaign" already exists, skipping...
+2025-12-20T18:54:48Z ✅ Updated ADMIN00002 profile with new name and logo
+2025-12-20T18:54:48Z ✅ Image already on R2
+2025-12-20T18:54:48Z ✅ Image already on R2
+2025-12-20T18:54:48Z
+2025-12-20T18:54:48Z 📖 Lesson: Maintaining Work-Life Balance
+2025-12-20T18:54:48Z ⏭️ Template "New Course Announcement" already exists, skipping...
+2025-12-20T18:54:48Z ✅ Image already on R2
+2025-12-20T18:54:48Z ✅ Image already on R2
+2025-12-20T18:54:48Z
+2025-12-20T18:54:48Z 📦 Processing Module: Workplace Communication, Teamwork, and Professional Conduct
+2025-12-20T18:54:48Z ⏭️ Template "Order Confirmation" already exists, skipping...
+2025-12-20T18:54:48Z
+2025-12-20T18:54:48Z 📖 Lesson: Understanding Workplace Communication
+2025-12-20T18:54:48Z ✅ Image already on R2
+2025-12-20T18:54:48Z ✅ Image already on R2
+2025-12-20T18:54:48Z
+2025-12-20T18:54:48Z 📖 Lesson: Active Listening Skills
+2025-12-20T18:54:48Z ⏭️ Template "Payment Receipt" already exists, skipping...
+2025-12-20T18:54:48Z ✅ Image already on R2
+2025-12-20T18:54:48Z
+2025-12-20T18:54:48Z ============================================================
+2025-12-20T18:54:48Z 📊 Job Readiness Course Image Regeneration Summary:
+2025-12-20T18:54:48Z Lessons Processed: 52
+2025-12-20T18:54:48Z Content Blocks Updated: 0
+2025-12-20T18:54:48Z Failed: 0
+2025-12-20T18:54:48Z ============================================================
+2025-12-20T18:54:48Z
+2025-12-20T18:54:48Z ✅ Regeneration completed successfully
+2025-12-20T18:54:48Z npm notice
+2025-12-20T18:54:48Z npm notice New major version of npm available! 10.8.2 -> 11.7.0
+2025-12-20T18:54:48Z npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+2025-12-20T18:54:48Z npm notice To update run: npm install -g npm@11.7.0
+2025-12-20T18:54:48Z npm notice
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z ✅ Image already on R2
+2025-12-20T18:54:46Z
+2025-12-20T18:54:46Z 📦 Processing Module: Workplace Success, Growth, and Long-Term Career Stability
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Career Growth and Advancement Awareness
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Career Success Reflection and Course Completion
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Understanding Workplace Culture
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 🔑 API key seeding complete:
+2025-12-20T18:54:47Z - 0 new keys seeded
+2025-12-20T18:54:47Z - 0 existing keys updated
+2025-12-20T18:54:47Z - 53 placeholders/skipped
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📝 All keys can now be managed from Admin Dashboard → API Keys
+2025-12-20T18:54:47Z 📧 Engagement notification service initialized
+2025-12-20T18:54:47Z 🔧 [STARTUP] registerRoutes completed
+2025-12-20T18:54:47Z 📧 Email marketing routes registered
+2025-12-20T18:54:47Z 🔧 [STARTUP] Email marketing routes registered
+2025-12-20T18:54:47Z 🔧 [STARTUP] Subscription routes registered
+2025-12-20T18:54:47Z 📧 Seeding email marketing templates...
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Building Positive Work Relationships
+2025-12-20T18:54:47Z ⏭️ Template "Welcome New User" already exists, skipping...
+2025-12-20T18:54:47Z 🧹 Cleaned up expired verification codes
+2025-12-20T18:54:47Z ✅ Admin user ADMIN00001 already exists
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Continuous Learning and Skill Improvement
+2025-12-20T18:54:47Z ⏭️ Template "Newsletter" already exists, skipping...
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z ✅ Image already on R2
+2025-12-20T18:54:47Z
+2025-12-20T18:54:47Z 📖 Lesson: Managing Workplace Challenges and Conflict
+2025-12-20T18:54:52Z
+2025-12-20T18:54:52Z > rest-express@1.0.0 start
+2025-12-20T18:54:52Z > NODE_ENV=production node dist/index.js
+2025-12-20T18:54:52Z
+2025-12-20T18:54:55Z 📁 Created uploads directory: /app/uploads
+2025-12-20T18:54:55Z ⚠️ Email service not configured: Missing SMTP host/port
+2025-12-20T18:54:55Z ✅ Cloudflare R2 storage initialized for bucket: edufiliova-products
+2025-12-20T18:54:55Z
+2025-12-20T18:54:55Z 🚀 Starting Job Readiness Course image regeneration...
+2025-12-20T18:54:55Z
+2025-12-20T18:54:55Z 📧 EmailMarketingService constructor called
+2025-12-20T18:54:55Z 📧 EmailMarketingService initializeFromDatabase starting...
+2025-12-20T18:54:55Z 🔒 [KEEP-ALIVE] Process keep-alive initialized
+2025-12-20T18:54:55Z 🔧 [STARTUP] Starting async initialization...
+2025-12-20T18:54:55Z 🔧 [STARTUP] DATABASE_URL: ✓ Set
+2025-12-20T18:54:55Z 🔑 Loading API keys from database...
+2025-12-20T18:54:56Z ✅ Cloudinary storage initialized for cloud: dl2lomrhp
+2025-12-20T18:54:56Z ✅ PayPal integration initialized
+2025-12-20T18:54:56Z ✅ WhatsApp integration initialized
+2025-12-20T18:54:56Z 📧 Found 1 active email accounts
+2025-12-20T18:54:56Z 📧 Email marketing service initialized from database with: verify@edufiliova.org
+2025-12-20T18:54:56Z ✅ OpenAI client initialized
+2025-12-20T18:54:56Z ✅ Loaded 41 API keys from database
+2025-12-20T18:54:56Z 🔧 [STARTUP] ✅ API keys successfully loaded from database
+2025-12-20T18:54:56Z 🔄 Checking grade systems...
+2025-12-20T18:54:56Z 🌱 Seeding curricula data...
+2025-12-20T18:54:56Z 💎 Seeding membership plans...
+2025-12-20T18:54:56Z 🔑 Seeding ALL API keys to database (DB-first approach)...
+2025-12-20T18:54:56Z 📚 Starting Grade 3 English Language (Zimbabwe) seeding...
+2025-12-20T18:54:56Z 🔢 Starting Grade 3 Mathematics (Zimbabwe) seeding...
+2025-12-20T18:54:56Z ⚠️ EDUFILIOVA_EMAIL_PASSWORD not set, skipping email account seeding
+2025-12-20T18:54:56Z 📚 Found course: Job Readiness and Career Success (ID: 3f5953a0-fcaf-40e1-bbed-cce05a2ef933)
+2025-12-20T18:54:56Z ✅ Course thumbnail already on R2
+2025-12-20T18:54:56Z ℹ️ Grade systems already seeded (3100 grade systems found)
+2025-12-20T18:54:56Z ℹ️ Membership plans already seeded (4 plans found)
+2025-12-20T18:54:57Z ℹ️ Countries already seeded (199 countries found)
+2025-12-20T18:54:57Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:54:57Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:54:57Z ℹ️ Curricula already seeded
+2025-12-20T18:54:57Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:54:57Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:54:57Z
+2025-12-20T18:54:57Z 📦 Processing Module: Understanding Job Readiness and Career Foundations
+2025-12-20T18:54:57Z ✓ Mathematics Grade 3 subject already exists
+2025-12-20T18:54:57Z ✓ English Language Grade 3 subject already exists
+2025-12-20T18:54:57Z ⏭️ Unit "Numbers and Place Value" already exists, skipping...
+2025-12-20T18:54:57Z
+2025-12-20T18:54:57Z 📖 Lesson: Adaptability in the Workplace
+2025-12-20T18:54:57Z ⏭️ Unit "Reading and Comprehension" already exists, skipping...
+2025-12-20T18:54:57Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z
+2025-12-20T18:54:57Z 📖 Lesson: Understanding Employer Expectations
+2025-12-20T18:54:57Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:57Z ⏭️ Unit "Addition and Subtraction" already exists, skipping...
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z
+2025-12-20T18:54:57Z 📖 Lesson: Professional Attitude and Mindset
+2025-12-20T18:54:57Z ⏭️ Unit "Grammar and Vocabulary" already exists, skipping...
+2025-12-20T18:54:57Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z
+2025-12-20T18:54:57Z 📖 Lesson: Workplace Behavior and Etiquette
+2025-12-20T18:54:57Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:57Z ⏭️ Unit "Writing Skills" already exists, skipping...
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z
+2025-12-20T18:54:57Z 📖 Lesson: Time Management Basics
+2025-12-20T18:54:57Z ⏭️ Unit "Multiplication and Division" already exists, skipping...
+2025-12-20T18:54:57Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z
+2025-12-20T18:54:57Z 📖 Lesson: Responsibility and Accountability at Work
+2025-12-20T18:54:57Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z ✅ Image already on R2
+2025-12-20T18:54:57Z
+2025-12-20T18:54:57Z 📖 Lesson: Following Instructions Correctly
+2025-12-20T18:54:57Z ⏭️ Unit "Listening and Speaking" already exists, skipping...
+2025-12-20T18:54:57Z ⏭️ Unit "Fractions" already exists, skipping...
+2025-12-20T18:54:57Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📖 Lesson: Personal Presentation and Appearance
+2025-12-20T18:54:58Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:58Z ⏭️ Unit "Creative Writing and Poetry" already exists, skipping...
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📖 Lesson: Job Readiness Practice and Reflection
+2025-12-20T18:54:58Z ⏭️ Unit "Measurement" already exists, skipping...
+2025-12-20T18:54:58Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📖 Lesson: What Job Readiness Means
+2025-12-20T18:54:58Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:58Z ⏭️ Unit "Revision and Practice Tests" already exists, skipping...
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📦 Processing Module: Self-Assessment, Career Goals, and Job Planning
+2025-12-20T18:54:58Z ⏭️ Unit "Geometry and Shapes" already exists, skipping...
+2025-12-20T18:54:58Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:58Z 🎉 Grade 3 English Language (Zimbabwe) seeding completed!
+2025-12-20T18:54:58Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📖 Lesson: Setting Realistic Career Goals
+2025-12-20T18:54:58Z ⏭️ Unit "Money" already exists, skipping...
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📖 Lesson: Understanding Personal Strengths and Skills
+2025-12-20T18:54:58Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📖 Lesson: Identifying Areas for Improvement
+2025-12-20T18:54:58Z ⏭️ Unit "Data Handling" already exists, skipping...
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📖 Lesson: Exploring Career Interests
+2025-12-20T18:54:58Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:54:58Z 🎉 Grade 3 Mathematics (Zimbabwe) seeding completed!
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z ✅ Image already on R2
+2025-12-20T18:54:58Z
+2025-12-20T18:54:58Z 📖 Lesson: Understanding Entry-Level Job Opportunities
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z
+2025-12-20T18:54:59Z 📖 Lesson: Understanding Job Requirements
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z
+2025-12-20T18:54:59Z 📖 Lesson: Planning a Job Search Strategy
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z
+2025-12-20T18:54:59Z 📖 Lesson: Using Feedback to Improve Career Direction
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z
+2025-12-20T18:54:59Z 📖 Lesson: Balancing Expectations and Reality
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z
+2025-12-20T18:54:59Z 📖 Lesson: Career Planning Practice and Reflection
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z
+2025-12-20T18:54:59Z 📦 Processing Module: Resume, Application, and Professional Profile Preparation
+2025-12-20T18:54:59Z
+2025-12-20T18:54:59Z 📖 Lesson: Creating a Professional Online Profile
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z ✅ Image already on R2
+2025-12-20T18:54:59Z
+2025-12-20T18:54:59Z 📖 Lesson: Providing Accurate and Honest Information
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📖 Lesson: Understanding Job Application Forms
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📖 Lesson: Understanding the Purpose of a Resume
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📖 Lesson: Identifying Information to Include in a Resume
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📖 Lesson: Writing Clear and Simple Resume Content
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📖 Lesson: Presenting Skills and Experience Effectively
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📖 Lesson: Avoiding Common Resume Mistakes
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📖 Lesson: Preparing Supporting Documents
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📖 Lesson: Resume and Application Practice and Reflection
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z ✅ Image already on R2
+2025-12-20T18:55:00Z
+2025-12-20T18:55:00Z 📦 Processing Module: Interview Preparation, Communication, and Performance
+2025-12-20T18:55:01Z
+2025-12-20T18:55:01Z 📖 Lesson: Asking Appropriate Questions to Employers
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z
+2025-12-20T18:55:01Z 📖 Lesson: Preparing Mentally and Emotionally for Interviews
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z
+2025-12-20T18:55:01Z 📖 Lesson: Interview Practice and Self-Reflection
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z
+2025-12-20T18:55:01Z 📖 Lesson: Understanding the Purpose of Job Interviews
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z
+2025-12-20T18:55:01Z 📖 Lesson: Researching the Employer and Job Role
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z
+2025-12-20T18:55:01Z 📖 Lesson: Common Interview Questions and How to Answer
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z
+2025-12-20T18:55:01Z 📖 Lesson: Communicating Clearly and Confidently
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z ✅ Image already on R2
+2025-12-20T18:55:01Z
+2025-12-20T18:55:01Z 📖 Lesson: Non-Verbal Communication in Interviews
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📖 Lesson: Handling Difficult Interview Questions
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📖 Lesson: Following Up After an Interview
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📦 Processing Module: Workplace Success, Growth, and Long-Term Career Stability
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📖 Lesson: Career Growth and Advancement Awareness
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📖 Lesson: Career Success Reflection and Course Completion
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 🔑 API key seeding complete:
+2025-12-20T18:55:02Z - 0 new keys seeded
+2025-12-20T18:55:02Z - 0 existing keys updated
+2025-12-20T18:55:02Z - 53 placeholders/skipped
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📝 All keys can now be managed from Admin Dashboard → API Keys
+2025-12-20T18:55:02Z 📧 Engagement notification service initialized
+2025-12-20T18:55:02Z 🔧 [STARTUP] registerRoutes completed
+2025-12-20T18:55:02Z 📧 Email marketing routes registered
+2025-12-20T18:55:02Z 🔧 [STARTUP] Email marketing routes registered
+2025-12-20T18:55:02Z 🔧 [STARTUP] Subscription routes registered
+2025-12-20T18:55:02Z 📧 Seeding email marketing templates...
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📖 Lesson: Understanding Workplace Culture
+2025-12-20T18:55:02Z ✅ Admin user ADMIN00001 already exists
+2025-12-20T18:55:02Z 🧹 Cleaned up expired verification codes
+2025-12-20T18:55:02Z ⏭️ Template "Welcome New User" already exists, skipping...
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📖 Lesson: Building Positive Work Relationships
+2025-12-20T18:55:02Z ⏭️ Template "Newsletter" already exists, skipping...
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z ✅ Image already on R2
+2025-12-20T18:55:02Z
+2025-12-20T18:55:02Z 📖 Lesson: Continuous Learning and Skill Improvement
+2025-12-20T18:55:03Z ⏭️ Template "Special Promotion" already exists, skipping...
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z 📖 Lesson: Managing Workplace Challenges and Conflict
+2025-12-20T18:55:03Z ⏭️ Template "Course Completion Congratulations" already exists, skipping...
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z 📖 Lesson: Receiving Feedback and Performance Reviews
+2025-12-20T18:55:03Z ✅ Admin user ADMIN00002 already exists
+2025-12-20T18:55:03Z ⏭️ Template "Re-engagement Campaign" already exists, skipping...
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z 📖 Lesson: Maintaining Professional Ethics at Work
+2025-12-20T18:55:03Z ✅ Updated ADMIN00002 profile with new name and logo
+2025-12-20T18:55:03Z ⏭️ Template "New Course Announcement" already exists, skipping...
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z 📖 Lesson: Time Management and Productivity at Work
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z 📖 Lesson: Maintaining Work-Life Balance
+2025-12-20T18:55:03Z ⏭️ Template "Order Confirmation" already exists, skipping...
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z 📦 Processing Module: Workplace Communication, Teamwork, and Professional Conduct
+2025-12-20T18:55:03Z ⏭️ Template "Payment Receipt" already exists, skipping...
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z 📖 Lesson: Understanding Workplace Communication
+2025-12-20T18:55:03Z ⏭️ Template "Teacher Welcome" already exists, skipping...
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z 📖 Lesson: Active Listening Skills
+2025-12-20T18:55:03Z ✅ Image already on R2
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z ============================================================
+2025-12-20T18:55:03Z 📊 Job Readiness Course Image Regeneration Summary:
+2025-12-20T18:55:03Z Lessons Processed: 52
+2025-12-20T18:55:03Z Images Generated: 0
+2025-12-20T18:55:03Z Content Blocks Updated: 0
+2025-12-20T18:55:03Z Failed: 0
+2025-12-20T18:55:03Z ============================================================
+2025-12-20T18:55:03Z
+2025-12-20T18:55:03Z ✅ Regeneration completed successfully
+2025-12-20T18:55:04Z npm notice
+2025-12-20T18:55:04Z npm notice New major version of npm available! 10.8.2 -> 11.7.0
+2025-12-20T18:55:04Z npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+2025-12-20T18:55:04Z npm notice To update run: npm install -g npm@11.7.0
+2025-12-20T18:55:04Z npm notice
+2025-12-20T18:55:19Z
+2025-12-20T18:55:19Z > rest-express@1.0.0 start
+2025-12-20T18:55:19Z > NODE_ENV=production node dist/index.js
+2025-12-20T18:55:19Z
+2025-12-20T18:55:23Z 📁 Created uploads directory: /app/uploads
+2025-12-20T18:55:23Z ⚠️ Email service not configured: Missing SMTP host/port
+2025-12-20T18:55:23Z ✅ Cloudflare R2 storage initialized for bucket: edufiliova-products
+2025-12-20T18:55:23Z
+2025-12-20T18:55:23Z 🚀 Starting Job Readiness Course image regeneration...
+2025-12-20T18:55:23Z
+2025-12-20T18:55:23Z 📧 EmailMarketingService constructor called
+2025-12-20T18:55:23Z 📧 EmailMarketingService initializeFromDatabase starting...
+2025-12-20T18:55:23Z 🔒 [KEEP-ALIVE] Process keep-alive initialized
+2025-12-20T18:55:23Z 🔧 [STARTUP] Starting async initialization...
+2025-12-20T18:55:23Z 🔧 [STARTUP] DATABASE_URL: ✓ Set
+2025-12-20T18:55:23Z 🔑 Loading API keys from database...
+2025-12-20T18:55:23Z ✅ WhatsApp integration initialized
+2025-12-20T18:55:24Z ✅ OpenAI client initialized
+2025-12-20T18:55:24Z ✅ Loaded 41 API keys from database
+2025-12-20T18:55:24Z 🔧 [STARTUP] ✅ API keys successfully loaded from database
+2025-12-20T18:55:24Z 🔄 Checking grade systems...
+2025-12-20T18:55:24Z 🌱 Seeding curricula data...
+2025-12-20T18:55:24Z 💎 Seeding membership plans...
+2025-12-20T18:55:24Z 🔑 Seeding ALL API keys to database (DB-first approach)...
+2025-12-20T18:55:24Z 📚 Starting Grade 3 English Language (Zimbabwe) seeding...
+2025-12-20T18:55:24Z 🔢 Starting Grade 3 Mathematics (Zimbabwe) seeding...
+2025-12-20T18:55:24Z ⚠️ EDUFILIOVA_EMAIL_PASSWORD not set, skipping email account seeding
+2025-12-20T18:55:24Z 📧 Found 1 active email accounts
+2025-12-20T18:55:24Z 📧 Email marketing service initialized from database with: verify@edufiliova.org
+2025-12-20T18:55:24Z ℹ️ Membership plans already seeded (4 plans found)
+2025-12-20T18:55:24Z 📚 Found course: Job Readiness and Career Success (ID: 3f5953a0-fcaf-40e1-bbed-cce05a2ef933)
+2025-12-20T18:55:24Z ✅ Course thumbnail already on R2
+2025-12-20T18:55:24Z ℹ️ Grade systems already seeded (3100 grade systems found)
+2025-12-20T18:55:24Z ✅ PayPal integration initialized
+2025-12-20T18:55:24Z ✅ Cloudinary storage initialized for cloud: dl2lomrhp
+2025-12-20T18:55:24Z ℹ️ Countries already seeded (199 countries found)
+2025-12-20T18:55:24Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:55:24Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:55:24Z ℹ️ Curricula already seeded
+2025-12-20T18:55:24Z
+2025-12-20T18:55:24Z 📦 Processing Module: Understanding Job Readiness and Career Foundations
+2025-12-20T18:55:24Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:55:24Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:55:24Z ✓ Mathematics Grade 3 subject already exists
+2025-12-20T18:55:24Z ✓ English Language Grade 3 subject already exists
+2025-12-20T18:55:24Z
+2025-12-20T18:55:24Z 📖 Lesson: Adaptability in the Workplace
+2025-12-20T18:55:24Z ⏭️ Unit "Numbers and Place Value" already exists, skipping...
+2025-12-20T18:55:24Z ⏭️ Unit "Reading and Comprehension" already exists, skipping...
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z
+2025-12-20T18:55:24Z 📖 Lesson: Understanding Employer Expectations
+2025-12-20T18:55:24Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:24Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:24Z ⏭️ Unit "Addition and Subtraction" already exists, skipping...
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z
+2025-12-20T18:55:24Z 📖 Lesson: Professional Attitude and Mindset
+2025-12-20T18:55:24Z ⏭️ Unit "Grammar and Vocabulary" already exists, skipping...
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z
+2025-12-20T18:55:24Z 📖 Lesson: Workplace Behavior and Etiquette
+2025-12-20T18:55:24Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:24Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:24Z ⏭️ Unit "Multiplication and Division" already exists, skipping...
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z
+2025-12-20T18:55:24Z 📖 Lesson: Time Management Basics
+2025-12-20T18:55:24Z ⏭️ Unit "Writing Skills" already exists, skipping...
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z ✅ Image already on R2
+2025-12-20T18:55:24Z
+2025-12-20T18:55:24Z 📖 Lesson: Responsibility and Accountability at Work
+2025-12-20T18:55:24Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📖 Lesson: Following Instructions Correctly
+2025-12-20T18:55:25Z ⏭️ Unit "Fractions" already exists, skipping...
+2025-12-20T18:55:25Z ⏭️ Unit "Listening and Speaking" already exists, skipping...
+2025-12-20T18:55:25Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📖 Lesson: Personal Presentation and Appearance
+2025-12-20T18:55:25Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📖 Lesson: Job Readiness Practice and Reflection
+2025-12-20T18:55:25Z ⏭️ Unit "Measurement" already exists, skipping...
+2025-12-20T18:55:25Z ⏭️ Unit "Creative Writing and Poetry" already exists, skipping...
+2025-12-20T18:55:25Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📖 Lesson: What Job Readiness Means
+2025-12-20T18:55:25Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📦 Processing Module: Self-Assessment, Career Goals, and Job Planning
+2025-12-20T18:55:25Z ⏭️ Unit "Geometry and Shapes" already exists, skipping...
+2025-12-20T18:55:25Z ⏭️ Unit "Revision and Practice Tests" already exists, skipping...
+2025-12-20T18:55:25Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📖 Lesson: Setting Realistic Career Goals
+2025-12-20T18:55:25Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z 🎉 Grade 3 English Language (Zimbabwe) seeding completed!
+2025-12-20T18:55:25Z ⏭️ Unit "Money" already exists, skipping...
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📖 Lesson: Understanding Personal Strengths and Skills
+2025-12-20T18:55:25Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📖 Lesson: Identifying Areas for Improvement
+2025-12-20T18:55:25Z ⏭️ Unit "Data Handling" already exists, skipping...
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z ✅ Image already on R2
+2025-12-20T18:55:25Z
+2025-12-20T18:55:25Z 📖 Lesson: Exploring Career Interests
+2025-12-20T18:55:26Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:55:26Z 🎉 Grade 3 Mathematics (Zimbabwe) seeding completed!
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z
+2025-12-20T18:55:26Z 📖 Lesson: Understanding Entry-Level Job Opportunities
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z
+2025-12-20T18:55:26Z 📖 Lesson: Understanding Job Requirements
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z
+2025-12-20T18:55:26Z 📖 Lesson: Planning a Job Search Strategy
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z
+2025-12-20T18:55:26Z 📖 Lesson: Using Feedback to Improve Career Direction
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z
+2025-12-20T18:55:26Z 📖 Lesson: Balancing Expectations and Reality
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z
+2025-12-20T18:55:26Z 📖 Lesson: Career Planning Practice and Reflection
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z ✅ Image already on R2
+2025-12-20T18:55:26Z
+2025-12-20T18:55:26Z 📦 Processing Module: Resume, Application, and Professional Profile Preparation
+2025-12-20T18:55:26Z
+2025-12-20T18:55:26Z 📖 Lesson: Creating a Professional Online Profile
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Providing Accurate and Honest Information
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Understanding Job Application Forms
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Understanding the Purpose of a Resume
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Identifying Information to Include in a Resume
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Writing Clear and Simple Resume Content
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Presenting Skills and Experience Effectively
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Avoiding Common Resume Mistakes
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Preparing Supporting Documents
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z ✅ Image already on R2
+2025-12-20T18:55:27Z
+2025-12-20T18:55:27Z 📖 Lesson: Resume and Application Practice and Reflection
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z
+2025-12-20T18:55:28Z 📦 Processing Module: Interview Preparation, Communication, and Performance
+2025-12-20T18:55:28Z
+2025-12-20T18:55:28Z 📖 Lesson: Asking Appropriate Questions to Employers
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z
+2025-12-20T18:55:28Z 📖 Lesson: Preparing Mentally and Emotionally for Interviews
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z
+2025-12-20T18:55:28Z 📖 Lesson: Interview Practice and Self-Reflection
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z
+2025-12-20T18:55:28Z 📖 Lesson: Understanding the Purpose of Job Interviews
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z
+2025-12-20T18:55:28Z 📖 Lesson: Researching the Employer and Job Role
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z ✅ Image already on R2
+2025-12-20T18:55:28Z
+2025-12-20T18:55:28Z 📖 Lesson: Common Interview Questions and How to Answer
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📖 Lesson: Communicating Clearly and Confidently
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📖 Lesson: Non-Verbal Communication in Interviews
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📖 Lesson: Handling Difficult Interview Questions
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📖 Lesson: Following Up After an Interview
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📦 Processing Module: Workplace Success, Growth, and Long-Term Career Stability
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📖 Lesson: Career Growth and Advancement Awareness
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📖 Lesson: Career Success Reflection and Course Completion
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 🔑 API key seeding complete:
+2025-12-20T18:55:29Z - 0 new keys seeded
+2025-12-20T18:55:29Z - 0 existing keys updated
+2025-12-20T18:55:29Z - 53 placeholders/skipped
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📝 All keys can now be managed from Admin Dashboard → API Keys
+2025-12-20T18:55:29Z 📧 Engagement notification service initialized
+2025-12-20T18:55:29Z 🔧 [STARTUP] registerRoutes completed
+2025-12-20T18:55:29Z 📧 Email marketing routes registered
+2025-12-20T18:55:29Z 🔧 [STARTUP] Email marketing routes registered
+2025-12-20T18:55:29Z 🔧 [STARTUP] Subscription routes registered
+2025-12-20T18:55:29Z 📧 Seeding email marketing templates...
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z ✅ Image already on R2
+2025-12-20T18:55:29Z
+2025-12-20T18:55:29Z 📖 Lesson: Understanding Workplace Culture
+2025-12-20T18:55:29Z ✅ Admin user ADMIN00001 already exists
+2025-12-20T18:55:29Z 🧹 Cleaned up expired verification codes
+2025-12-20T18:55:29Z ⏭️ Template "Welcome New User" already exists, skipping...
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📖 Lesson: Building Positive Work Relationships
+2025-12-20T18:55:30Z ⏭️ Template "Newsletter" already exists, skipping...
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📖 Lesson: Continuous Learning and Skill Improvement
+2025-12-20T18:55:30Z ⏭️ Template "Special Promotion" already exists, skipping...
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📖 Lesson: Managing Workplace Challenges and Conflict
+2025-12-20T18:55:30Z ⏭️ Template "Course Completion Congratulations" already exists, skipping...
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📖 Lesson: Receiving Feedback and Performance Reviews
+2025-12-20T18:55:30Z ✅ Admin user ADMIN00002 already exists
+2025-12-20T18:55:30Z ⏭️ Template "Re-engagement Campaign" already exists, skipping...
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📖 Lesson: Maintaining Professional Ethics at Work
+2025-12-20T18:55:30Z ✅ Updated ADMIN00002 profile with new name and logo
+2025-12-20T18:55:30Z ⏭️ Template "New Course Announcement" already exists, skipping...
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📖 Lesson: Time Management and Productivity at Work
+2025-12-20T18:55:30Z ⏭️ Template "Order Confirmation" already exists, skipping...
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📖 Lesson: Maintaining Work-Life Balance
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z ✅ Image already on R2
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📦 Processing Module: Workplace Communication, Teamwork, and Professional Conduct
+2025-12-20T18:55:30Z ⏭️ Template "Payment Receipt" already exists, skipping...
+2025-12-20T18:55:30Z ⏭️ Template "Teacher Welcome" already exists, skipping...
+2025-12-20T18:55:30Z
+2025-12-20T18:55:30Z 📖 Lesson: Understanding Workplace Communication
+2025-12-20T18:55:31Z ✅ Image already on R2
+2025-12-20T18:55:31Z ✅ Image already on R2
+2025-12-20T18:55:31Z
+2025-12-20T18:55:31Z 📖 Lesson: Active Listening Skills
+2025-12-20T18:55:31Z ⏭️ Template "Freelancer Welcome" already exists, skipping...
+2025-12-20T18:55:31Z ✅ Image already on R2
+2025-12-20T18:55:31Z
+2025-12-20T18:55:31Z ============================================================
+2025-12-20T18:55:31Z 📊 Job Readiness Course Image Regeneration Summary:
+2025-12-20T18:55:31Z Lessons Processed: 52
+2025-12-20T18:55:31Z Images Generated: 0
+2025-12-20T18:55:31Z Content Blocks Updated: 0
+2025-12-20T18:55:31Z Failed: 0
+2025-12-20T18:55:31Z ============================================================
+2025-12-20T18:55:31Z
+2025-12-20T18:55:31Z ✅ Regeneration completed successfully
+2025-12-20T18:55:31Z npm notice
+2025-12-20T18:55:31Z npm notice New major version of npm available! 10.8.2 -> 11.7.0
+2025-12-20T18:55:31Z npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+2025-12-20T18:55:31Z npm notice To update run: npm install -g npm@11.7.0
+2025-12-20T18:55:31Z npm notice
+2025-12-20T18:56:00Z
+2025-12-20T18:56:00Z > rest-express@1.0.0 start
+2025-12-20T18:56:00Z > NODE_ENV=production node dist/index.js
+2025-12-20T18:56:00Z
+2025-12-20T18:56:04Z 📁 Created uploads directory: /app/uploads
+2025-12-20T18:56:04Z ⚠️ Email service not configured: Missing SMTP host/port
+2025-12-20T18:56:04Z ✅ Cloudflare R2 storage initialized for bucket: edufiliova-products
+2025-12-20T18:56:04Z
+2025-12-20T18:56:04Z 🚀 Starting Job Readiness Course image regeneration...
+2025-12-20T18:56:04Z
+2025-12-20T18:56:04Z 📧 EmailMarketingService constructor called
+2025-12-20T18:56:04Z 📧 EmailMarketingService initializeFromDatabase starting...
+2025-12-20T18:56:04Z 🔒 [KEEP-ALIVE] Process keep-alive initialized
+2025-12-20T18:56:04Z 🔧 [STARTUP] Starting async initialization...
+2025-12-20T18:56:04Z 🔧 [STARTUP] DATABASE_URL: ✓ Set
+2025-12-20T18:56:04Z 🔑 Loading API keys from database...
+2025-12-20T18:56:05Z ✅ WhatsApp integration initialized
+2025-12-20T18:56:05Z ✅ OpenAI client initialized
+2025-12-20T18:56:05Z ✅ PayPal integration initialized
+2025-12-20T18:56:05Z ✅ Cloudinary storage initialized for cloud: dl2lomrhp
+2025-12-20T18:56:05Z 📧 Found 1 active email accounts
+2025-12-20T18:56:05Z 📧 Email marketing service initialized from database with: verify@edufiliova.org
+2025-12-20T18:56:05Z ✅ Loaded 41 API keys from database
+2025-12-20T18:56:05Z 🔧 [STARTUP] ✅ API keys successfully loaded from database
+2025-12-20T18:56:05Z 🔄 Checking grade systems...
+2025-12-20T18:56:05Z 🌱 Seeding curricula data...
+2025-12-20T18:56:05Z 💎 Seeding membership plans...
+2025-12-20T18:56:05Z 🔑 Seeding ALL API keys to database (DB-first approach)...
+2025-12-20T18:56:05Z 📚 Starting Grade 3 English Language (Zimbabwe) seeding...
+2025-12-20T18:56:05Z 🔢 Starting Grade 3 Mathematics (Zimbabwe) seeding...
+2025-12-20T18:56:05Z ⚠️ EDUFILIOVA_EMAIL_PASSWORD not set, skipping email account seeding
+2025-12-20T18:56:05Z 📚 Found course: Job Readiness and Career Success (ID: 3f5953a0-fcaf-40e1-bbed-cce05a2ef933)
+2025-12-20T18:56:05Z ✅ Course thumbnail already on R2
+2025-12-20T18:56:05Z ℹ️ Grade systems already seeded (3100 grade systems found)
+2025-12-20T18:56:05Z ℹ️ Membership plans already seeded (4 plans found)
+2025-12-20T18:56:05Z ℹ️ Curricula already seeded
+2025-12-20T18:56:05Z ℹ️ Countries already seeded (199 countries found)
+2025-12-20T18:56:05Z
+2025-12-20T18:56:05Z 📦 Processing Module: Understanding Job Readiness and Career Foundations
+2025-12-20T18:56:05Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:56:05Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:56:05Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:56:05Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:56:05Z
+2025-12-20T18:56:05Z 📖 Lesson: Adaptability in the Workplace
+2025-12-20T18:56:05Z ✓ English Language Grade 3 subject already exists
+2025-12-20T18:56:05Z ✓ Mathematics Grade 3 subject already exists
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z
+2025-12-20T18:56:05Z 📖 Lesson: Understanding Employer Expectations
+2025-12-20T18:56:05Z ⏭️ Unit "Reading and Comprehension" already exists, skipping...
+2025-12-20T18:56:05Z ⏭️ Unit "Numbers and Place Value" already exists, skipping...
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z
+2025-12-20T18:56:05Z 📖 Lesson: Professional Attitude and Mindset
+2025-12-20T18:56:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z
+2025-12-20T18:56:05Z 📖 Lesson: Workplace Behavior and Etiquette
+2025-12-20T18:56:05Z ⏭️ Unit "Grammar and Vocabulary" already exists, skipping...
+2025-12-20T18:56:05Z ⏭️ Unit "Addition and Subtraction" already exists, skipping...
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z
+2025-12-20T18:56:05Z 📖 Lesson: Time Management Basics
+2025-12-20T18:56:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:05Z ⏭️ Unit "Multiplication and Division" already exists, skipping...
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z ✅ Image already on R2
+2025-12-20T18:56:05Z
+2025-12-20T18:56:05Z 📖 Lesson: Responsibility and Accountability at Work
+2025-12-20T18:56:05Z ⏭️ Unit "Writing Skills" already exists, skipping...
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z
+2025-12-20T18:56:06Z 📖 Lesson: Following Instructions Correctly
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z
+2025-12-20T18:56:06Z 📖 Lesson: Personal Presentation and Appearance
+2025-12-20T18:56:06Z ⏭️ Unit "Listening and Speaking" already exists, skipping...
+2025-12-20T18:56:06Z ⏭️ Unit "Fractions" already exists, skipping...
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z
+2025-12-20T18:56:06Z 📖 Lesson: Job Readiness Practice and Reflection
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:06Z ⏭️ Unit "Creative Writing and Poetry" already exists, skipping...
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z
+2025-12-20T18:56:06Z 📖 Lesson: What Job Readiness Means
+2025-12-20T18:56:06Z ⏭️ Unit "Measurement" already exists, skipping...
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z
+2025-12-20T18:56:06Z 📦 Processing Module: Self-Assessment, Career Goals, and Job Planning
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:06Z ⏭️ Unit "Revision and Practice Tests" already exists, skipping...
+2025-12-20T18:56:06Z ⏭️ Unit "Geometry and Shapes" already exists, skipping...
+2025-12-20T18:56:06Z
+2025-12-20T18:56:06Z 📖 Lesson: Setting Realistic Career Goals
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:06Z 🎉 Grade 3 English Language (Zimbabwe) seeding completed!
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z
+2025-12-20T18:56:06Z 📖 Lesson: Understanding Personal Strengths and Skills
+2025-12-20T18:56:06Z ⏭️ Unit "Money" already exists, skipping...
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z ✅ Image already on R2
+2025-12-20T18:56:06Z
+2025-12-20T18:56:06Z 📖 Lesson: Identifying Areas for Improvement
+2025-12-20T18:56:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📖 Lesson: Exploring Career Interests
+2025-12-20T18:56:07Z ⏭️ Unit "Data Handling" already exists, skipping...
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📖 Lesson: Understanding Entry-Level Job Opportunities
+2025-12-20T18:56:07Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:56:07Z 🎉 Grade 3 Mathematics (Zimbabwe) seeding completed!
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📖 Lesson: Understanding Job Requirements
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📖 Lesson: Planning a Job Search Strategy
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📖 Lesson: Using Feedback to Improve Career Direction
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📖 Lesson: Balancing Expectations and Reality
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📖 Lesson: Career Planning Practice and Reflection
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z ✅ Image already on R2
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📦 Processing Module: Resume, Application, and Professional Profile Preparation
+2025-12-20T18:56:07Z
+2025-12-20T18:56:07Z 📖 Lesson: Creating a Professional Online Profile
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Providing Accurate and Honest Information
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Understanding Job Application Forms
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Understanding the Purpose of a Resume
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Identifying Information to Include in a Resume
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Writing Clear and Simple Resume Content
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Presenting Skills and Experience Effectively
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Avoiding Common Resume Mistakes
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Preparing Supporting Documents
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📖 Lesson: Resume and Application Practice and Reflection
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z ✅ Image already on R2
+2025-12-20T18:56:08Z
+2025-12-20T18:56:08Z 📦 Processing Module: Interview Preparation, Communication, and Performance
+2025-12-20T18:56:09Z
+2025-12-20T18:56:09Z 📖 Lesson: Asking Appropriate Questions to Employers
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z
+2025-12-20T18:56:09Z 📖 Lesson: Preparing Mentally and Emotionally for Interviews
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z
+2025-12-20T18:56:09Z 📖 Lesson: Interview Practice and Self-Reflection
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z
+2025-12-20T18:56:09Z 📖 Lesson: Understanding the Purpose of Job Interviews
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z
+2025-12-20T18:56:09Z 📖 Lesson: Researching the Employer and Job Role
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z
+2025-12-20T18:56:09Z 📖 Lesson: Common Interview Questions and How to Answer
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z
+2025-12-20T18:56:09Z 📖 Lesson: Communicating Clearly and Confidently
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z ✅ Image already on R2
+2025-12-20T18:56:09Z
+2025-12-20T18:56:09Z 📖 Lesson: Non-Verbal Communication in Interviews
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📖 Lesson: Handling Difficult Interview Questions
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📖 Lesson: Following Up After an Interview
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📦 Processing Module: Workplace Success, Growth, and Long-Term Career Stability
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📖 Lesson: Career Growth and Advancement Awareness
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📖 Lesson: Career Success Reflection and Course Completion
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📖 Lesson: Understanding Workplace Culture
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📖 Lesson: Building Positive Work Relationships
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z ✅ Image already on R2
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📖 Lesson: Continuous Learning and Skill Improvement
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 🔑 API key seeding complete:
+2025-12-20T18:56:10Z - 0 new keys seeded
+2025-12-20T18:56:10Z - 0 existing keys updated
+2025-12-20T18:56:10Z - 53 placeholders/skipped
+2025-12-20T18:56:10Z
+2025-12-20T18:56:10Z 📝 All keys can now be managed from Admin Dashboard → API Keys
+2025-12-20T18:56:11Z 📧 Engagement notification service initialized
+2025-12-20T18:56:11Z 🔧 [STARTUP] registerRoutes completed
+2025-12-20T18:56:11Z 📧 Email marketing routes registered
+2025-12-20T18:56:11Z 🔧 [STARTUP] Email marketing routes registered
+2025-12-20T18:56:11Z 🔧 [STARTUP] Subscription routes registered
+2025-12-20T18:56:11Z 📧 Seeding email marketing templates...
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z 📖 Lesson: Managing Workplace Challenges and Conflict
+2025-12-20T18:56:11Z ✅ Admin user ADMIN00001 already exists
+2025-12-20T18:56:11Z ⏭️ Template "Welcome New User" already exists, skipping...
+2025-12-20T18:56:11Z 🧹 Cleaned up expired verification codes
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z 📖 Lesson: Receiving Feedback and Performance Reviews
+2025-12-20T18:56:11Z ⏭️ Template "Newsletter" already exists, skipping...
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z 📖 Lesson: Maintaining Professional Ethics at Work
+2025-12-20T18:56:11Z ⏭️ Template "Special Promotion" already exists, skipping...
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z 📖 Lesson: Time Management and Productivity at Work
+2025-12-20T18:56:11Z ⏭️ Template "Course Completion Congratulations" already exists, skipping...
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z 📖 Lesson: Maintaining Work-Life Balance
+2025-12-20T18:56:11Z ✅ Admin user ADMIN00002 already exists
+2025-12-20T18:56:11Z ⏭️ Template "Re-engagement Campaign" already exists, skipping...
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z 📦 Processing Module: Workplace Communication, Teamwork, and Professional Conduct
+2025-12-20T18:56:11Z ✅ Updated ADMIN00002 profile with new name and logo
+2025-12-20T18:56:11Z ⏭️ Template "New Course Announcement" already exists, skipping...
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z 📖 Lesson: Understanding Workplace Communication
+2025-12-20T18:56:11Z ⏭️ Template "Order Confirmation" already exists, skipping...
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z 📖 Lesson: Active Listening Skills
+2025-12-20T18:56:11Z ⏭️ Template "Payment Receipt" already exists, skipping...
+2025-12-20T18:56:11Z ✅ Image already on R2
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z ============================================================
+2025-12-20T18:56:11Z 📊 Job Readiness Course Image Regeneration Summary:
+2025-12-20T18:56:11Z Lessons Processed: 52
+2025-12-20T18:56:11Z Images Generated: 0
+2025-12-20T18:56:11Z Content Blocks Updated: 0
+2025-12-20T18:56:11Z Failed: 0
+2025-12-20T18:56:11Z ============================================================
+2025-12-20T18:56:11Z
+2025-12-20T18:56:11Z ✅ Regeneration completed successfully
+2025-12-20T18:56:12Z npm notice
+2025-12-20T18:56:12Z npm notice New major version of npm available! 10.8.2 -> 11.7.0
+2025-12-20T18:56:12Z npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+2025-12-20T18:56:12Z npm notice To update run: npm install -g npm@11.7.0
+2025-12-20T18:56:12Z npm notice
+2025-12-20T18:56:59Z
+2025-12-20T18:56:59Z > rest-express@1.0.0 start
+2025-12-20T18:56:59Z > NODE_ENV=production node dist/index.js
+2025-12-20T18:56:59Z
+2025-12-20T18:57:03Z 📁 Created uploads directory: /app/uploads
+2025-12-20T18:57:03Z ⚠️ Email service not configured: Missing SMTP host/port
+2025-12-20T18:57:03Z ✅ Cloudflare R2 storage initialized for bucket: edufiliova-products
+2025-12-20T18:57:03Z
+2025-12-20T18:57:03Z 🚀 Starting Job Readiness Course image regeneration...
+2025-12-20T18:57:03Z
+2025-12-20T18:57:03Z 📧 EmailMarketingService constructor called
+2025-12-20T18:57:03Z 📧 EmailMarketingService initializeFromDatabase starting...
+2025-12-20T18:57:03Z 🔒 [KEEP-ALIVE] Process keep-alive initialized
+2025-12-20T18:57:03Z 🔧 [STARTUP] Starting async initialization...
+2025-12-20T18:57:03Z 🔧 [STARTUP] DATABASE_URL: ✓ Set
+2025-12-20T18:57:03Z 🔑 Loading API keys from database...
+2025-12-20T18:57:04Z ✅ OpenAI client initialized
+2025-12-20T18:57:04Z ✅ WhatsApp integration initialized
+2025-12-20T18:57:04Z ✅ PayPal integration initialized
+2025-12-20T18:57:04Z 📧 Found 1 active email accounts
+2025-12-20T18:57:04Z 📧 Email marketing service initialized from database with: verify@edufiliova.org
+2025-12-20T18:57:04Z ✅ Cloudinary storage initialized for cloud: dl2lomrhp
+2025-12-20T18:57:04Z ✅ Loaded 41 API keys from database
+2025-12-20T18:57:04Z 🔧 [STARTUP] ✅ API keys successfully loaded from database
+2025-12-20T18:57:04Z 🔄 Checking grade systems...
+2025-12-20T18:57:04Z 🌱 Seeding curricula data...
+2025-12-20T18:57:04Z 💎 Seeding membership plans...
+2025-12-20T18:57:04Z 🔑 Seeding ALL API keys to database (DB-first approach)...
+2025-12-20T18:57:04Z 📚 Starting Grade 3 English Language (Zimbabwe) seeding...
+2025-12-20T18:57:04Z 🔢 Starting Grade 3 Mathematics (Zimbabwe) seeding...
+2025-12-20T18:57:04Z ⚠️ EDUFILIOVA_EMAIL_PASSWORD not set, skipping email account seeding
+2025-12-20T18:57:04Z 📚 Found course: Job Readiness and Career Success (ID: 3f5953a0-fcaf-40e1-bbed-cce05a2ef933)
+2025-12-20T18:57:04Z ✅ Course thumbnail already on R2
+2025-12-20T18:57:04Z ℹ️ Grade systems already seeded (3100 grade systems found)
+2025-12-20T18:57:04Z ℹ️ Membership plans already seeded (4 plans found)
+2025-12-20T18:57:04Z ℹ️ Countries already seeded (199 countries found)
+2025-12-20T18:57:04Z ℹ️ Curricula already seeded
+2025-12-20T18:57:04Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:57:04Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:57:04Z ✅ Found existing admin user: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:57:04Z ✅ Using admin user ID: e1eadb8d-6e55-494c-9205-5bdba5730b91
+2025-12-20T18:57:04Z
+2025-12-20T18:57:04Z 📦 Processing Module: Understanding Job Readiness and Career Foundations
+2025-12-20T18:57:04Z ✓ Mathematics Grade 3 subject already exists
+2025-12-20T18:57:04Z ✓ English Language Grade 3 subject already exists
+2025-12-20T18:57:04Z
+2025-12-20T18:57:04Z 📖 Lesson: Adaptability in the Workplace
+2025-12-20T18:57:04Z ⏭️ Unit "Numbers and Place Value" already exists, skipping...
+2025-12-20T18:57:04Z ⏭️ Unit "Reading and Comprehension" already exists, skipping...
+2025-12-20T18:57:04Z ✅ Image already on R2
+2025-12-20T18:57:04Z ✅ Image already on R2
+2025-12-20T18:57:04Z
+2025-12-20T18:57:04Z 📖 Lesson: Understanding Employer Expectations
+2025-12-20T18:57:04Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:04Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:04Z ✅ Image already on R2
+2025-12-20T18:57:04Z ✅ Image already on R2
+2025-12-20T18:57:04Z
+2025-12-20T18:57:04Z 📖 Lesson: Professional Attitude and Mindset
+2025-12-20T18:57:04Z ⏭️ Unit "Addition and Subtraction" already exists, skipping...
+2025-12-20T18:57:04Z ⏭️ Unit "Grammar and Vocabulary" already exists, skipping...
+2025-12-20T18:57:04Z ✅ Image already on R2
+2025-12-20T18:57:04Z ✅ Image already on R2
+2025-12-20T18:57:04Z
+2025-12-20T18:57:04Z 📖 Lesson: Workplace Behavior and Etiquette
+2025-12-20T18:57:04Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:04Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:04Z ✅ Image already on R2
+2025-12-20T18:57:04Z ✅ Image already on R2
+2025-12-20T18:57:04Z
+2025-12-20T18:57:04Z 📖 Lesson: Time Management Basics
+2025-12-20T18:57:05Z ⏭️ Unit "Multiplication and Division" already exists, skipping...
+2025-12-20T18:57:05Z ⏭️ Unit "Writing Skills" already exists, skipping...
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📖 Lesson: Responsibility and Accountability at Work
+2025-12-20T18:57:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📖 Lesson: Following Instructions Correctly
+2025-12-20T18:57:05Z ⏭️ Unit "Fractions" already exists, skipping...
+2025-12-20T18:57:05Z ⏭️ Unit "Listening and Speaking" already exists, skipping...
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📖 Lesson: Personal Presentation and Appearance
+2025-12-20T18:57:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📖 Lesson: Job Readiness Practice and Reflection
+2025-12-20T18:57:05Z ⏭️ Unit "Measurement" already exists, skipping...
+2025-12-20T18:57:05Z ⏭️ Unit "Creative Writing and Poetry" already exists, skipping...
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📖 Lesson: What Job Readiness Means
+2025-12-20T18:57:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📦 Processing Module: Self-Assessment, Career Goals, and Job Planning
+2025-12-20T18:57:05Z ⏭️ Unit "Geometry and Shapes" already exists, skipping...
+2025-12-20T18:57:05Z ⏭️ Unit "Revision and Practice Tests" already exists, skipping...
+2025-12-20T18:57:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📖 Lesson: Setting Realistic Career Goals
+2025-12-20T18:57:05Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:05Z 🎉 Grade 3 English Language (Zimbabwe) seeding completed!
+2025-12-20T18:57:05Z ⏭️ Unit "Money" already exists, skipping...
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📖 Lesson: Understanding Personal Strengths and Skills
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z ✅ Image already on R2
+2025-12-20T18:57:05Z
+2025-12-20T18:57:05Z 📖 Lesson: Identifying Areas for Improvement
+2025-12-20T18:57:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z
+2025-12-20T18:57:06Z 📖 Lesson: Exploring Career Interests
+2025-12-20T18:57:06Z ⏭️ Unit "Data Handling" already exists, skipping...
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z
+2025-12-20T18:57:06Z 📖 Lesson: Understanding Entry-Level Job Opportunities
+2025-12-20T18:57:06Z ⏭️ Lessons already exist for this unit
+2025-12-20T18:57:06Z 🎉 Grade 3 Mathematics (Zimbabwe) seeding completed!
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z
+2025-12-20T18:57:06Z 📖 Lesson: Understanding Job Requirements
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z
+2025-12-20T18:57:06Z 📖 Lesson: Planning a Job Search Strategy
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z
+2025-12-20T18:57:06Z 📖 Lesson: Using Feedback to Improve Career Direction
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z
+2025-12-20T18:57:06Z 📖 Lesson: Balancing Expectations and Reality
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z
+2025-12-20T18:57:06Z 📖 Lesson: Career Planning Practice and Reflection
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z ✅ Image already on R2
+2025-12-20T18:57:06Z
+2025-12-20T18:57:06Z 📦 Processing Module: Resume, Application, and Professional Profile Preparation
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Creating a Professional Online Profile
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Providing Accurate and Honest Information
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Understanding Job Application Forms
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Understanding the Purpose of a Resume
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Identifying Information to Include in a Resume
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Writing Clear and Simple Resume Content
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Presenting Skills and Experience Effectively
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Avoiding Common Resume Mistakes
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z ✅ Image already on R2
+2025-12-20T18:57:07Z
+2025-12-20T18:57:07Z 📖 Lesson: Preparing Supporting Documents
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z
+2025-12-20T18:57:08Z 📖 Lesson: Resume and Application Practice and Reflection
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z
+2025-12-20T18:57:08Z 📦 Processing Module: Interview Preparation, Communication, and Performance
+2025-12-20T18:57:08Z
+2025-12-20T18:57:08Z 📖 Lesson: Asking Appropriate Questions to Employers
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z
+2025-12-20T18:57:08Z 📖 Lesson: Preparing Mentally and Emotionally for Interviews
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z
+2025-12-20T18:57:08Z 📖 Lesson: Interview Practice and Self-Reflection
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z
+2025-12-20T18:57:08Z 📖 Lesson: Understanding the Purpose of Job Interviews
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z
+2025-12-20T18:57:08Z 📖 Lesson: Researching the Employer and Job Role
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z ✅ Image already on R2
+2025-12-20T18:57:08Z
+2025-12-20T18:57:08Z 📖 Lesson: Common Interview Questions and How to Answer
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z
+2025-12-20T18:57:09Z 📖 Lesson: Communicating Clearly and Confidently
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z
+2025-12-20T18:57:09Z 📖 Lesson: Non-Verbal Communication in Interviews
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z
+2025-12-20T18:57:09Z 📖 Lesson: Handling Difficult Interview Questions
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z
+2025-12-20T18:57:09Z 📖 Lesson: Following Up After an Interview
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z
+2025-12-20T18:57:09Z 📦 Processing Module: Workplace Success, Growth, and Long-Term Career Stability
+2025-12-20T18:57:09Z
+2025-12-20T18:57:09Z 📖 Lesson: Career Growth and Advancement Awareness
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z
+2025-12-20T18:57:09Z 📖 Lesson: Career Success Reflection and Course Completion
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z ✅ Image already on R2
+2025-12-20T18:57:09Z
+2025-12-20T18:57:09Z 📖 Lesson: Understanding Workplace Culture
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📖 Lesson: Building Positive Work Relationships
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 🔑 API key seeding complete:
+2025-12-20T18:57:10Z - 0 new keys seeded
+2025-12-20T18:57:10Z - 0 existing keys updated
+2025-12-20T18:57:10Z - 53 placeholders/skipped
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📝 All keys can now be managed from Admin Dashboard → API Keys
+2025-12-20T18:57:10Z 📧 Engagement notification service initialized
+2025-12-20T18:57:10Z 🔧 [STARTUP] registerRoutes completed
+2025-12-20T18:57:10Z 📧 Email marketing routes registered
+2025-12-20T18:57:10Z 🔧 [STARTUP] Email marketing routes registered
+2025-12-20T18:57:10Z 🔧 [STARTUP] Subscription routes registered
+2025-12-20T18:57:10Z 📧 Seeding email marketing templates...
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📖 Lesson: Continuous Learning and Skill Improvement
+2025-12-20T18:57:10Z ⏭️ Template "Welcome New User" already exists, skipping...
+2025-12-20T18:57:10Z ✅ Admin user ADMIN00001 already exists
+2025-12-20T18:57:10Z 🧹 Cleaned up expired verification codes
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📖 Lesson: Managing Workplace Challenges and Conflict
+2025-12-20T18:57:10Z ⏭️ Template "Newsletter" already exists, skipping...
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📖 Lesson: Receiving Feedback and Performance Reviews
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📖 Lesson: Maintaining Professional Ethics at Work
+2025-12-20T18:57:10Z ⏭️ Template "Special Promotion" already exists, skipping...
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📖 Lesson: Time Management and Productivity at Work
+2025-12-20T18:57:10Z ✅ Admin user ADMIN00002 already exists
+2025-12-20T18:57:10Z ⏭️ Template "Course Completion Congratulations" already exists, skipping...
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📖 Lesson: Maintaining Work-Life Balance
+2025-12-20T18:57:10Z ✅ Updated ADMIN00002 profile with new name and logo
+2025-12-20T18:57:10Z ⏭️ Template "Re-engagement Campaign" already exists, skipping...
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z ✅ Image already on R2
+2025-12-20T18:57:10Z
+2025-12-20T18:57:10Z 📦 Processing Module: Workplace Communication, Teamwork, and Professional Conduct
+2025-12-20T18:57:10Z ⏭️ Template "New Course Announcement" already exists, skipping...
+2025-12-20T18:57:11Z
+2025-12-20T18:57:11Z 📖 Lesson: Understanding Workplace Communication
+2025-12-20T18:57:11Z ⏭️ Template "Order Confirmation" already exists, skipping...
+2025-12-20T18:57:11Z ✅ Image already on R2
+2025-12-20T18:57:11Z ✅ Image already on R2
+2025-12-20T18:57:11Z
+2025-12-20T18:57:11Z 📖 Lesson: Active Listening Skills
+2025-12-20T18:57:11Z ⏭️ Template "Payment Receipt" already exists, skipping...
+2025-12-20T18:57:11Z ✅ Image already on R2
+2025-12-20T18:57:11Z
+2025-12-20T18:57:11Z ============================================================
+2025-12-20T18:57:11Z 📊 Job Readiness Course Image Regeneration Summary:
+2025-12-20T18:57:11Z Lessons Processed: 52
+2025-12-20T18:57:11Z Images Generated: 0
+2025-12-20T18:57:11Z Content Blocks Updated: 0
+2025-12-20T18:57:11Z Failed: 0
+2025-12-20T18:57:11Z ============================================================
+2025-12-20T18:57:11Z
+2025-12-20T18:57:11Z ✅ Regeneration completed successfully
+2025-12-20T18:57:11Z npm notice
+2025-12-20T18:57:11Z npm notice New major version of npm available! 10.8.2 -> 11.7.0
+2025-12-20T18:57:11Z npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+2025-12-20T18:57:11Z npm notice To update run: npm install -g npm@11.7.0
+2025-12-20T18:57:11Z npm notice
