@@ -748,13 +748,6 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                     )}
                   </div>
 
-                  {/* Security Notice - only show for paid items */}
-                  {!isFreeCart && (
-                    <div className="flex items-center gap-2 text-sm text-gray-500 bg-green-50 p-3 rounded-lg">
-                      <CheckmarkIcon size="sm" variant="success" />
-                      <span>Secure checkout powered by Stripe</span>
-                    </div>
-                  )}
                 </CardContent>
               </Card>
             </div>
