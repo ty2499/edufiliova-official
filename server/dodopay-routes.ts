@@ -147,11 +147,9 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       baseUrl = `${protocol}://${host}`;
     }
     
-    // For overlay mode: Return to app home (overlay callback handles success display)
-    // For redirect mode: Go to payment-success page
-    const successReturnUrl = overlayMode 
-      ? `${baseUrl}/?paymentComplete=dodopay&productType=${productType}&itemId=${itemId}`
-      : `${baseUrl}/payment-success?gateway=dodopay&itemId=${itemId}&productType=${productType}`;
+    // For all modes: Return directly to dashboard with success indicator
+    // DodoPay already shows its own success page, so we just need to redirect back to the app
+    const successReturnUrl = `${baseUrl}/?page=customer-dashboard&paymentComplete=true&productType=${productType}&itemId=${itemId}`;
 
     console.log(`🛒 Creating dynamic product in DodoPay for ${itemName}...`);
     
@@ -568,14 +566,13 @@ router.get('/verify/:paymentId', async (req: Request, res: Response) => {
           // Find the order
           const [order] = await db.select().from(orders).where(eq(orders.id, orderId)).limit(1);
           
-          if (order && order.status !== 'completed') {
-            console.log('📦 Updating order status to completed:', orderId);
+          if (order && order.status !== 'paid' && order.status !== 'delivered') {
+            console.log('📦 Updating order status to paid:', orderId);
             
-            // Update order status
+            // Update order status - use 'paid' which is a valid order_status enum value
             await db.update(orders)
               .set({ 
-                status: 'completed',
-                paymentStatus: 'paid',
+                status: 'paid',
                 paymentMethod: 'dodopay',
                 updatedAt: new Date()
               })

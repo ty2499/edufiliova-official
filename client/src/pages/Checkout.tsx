@@ -359,7 +359,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
             courseName: isOrderPayment ? 'Order Payment' : (planName || 'Premium Subscription'),
             userEmail: user?.email || guestEmail,
             userName: guestEmail || user?.email || '',
-            returnUrl: `${window.location.origin}/payment-success?gateway=dodopay`,
+            returnUrl: `${window.location.origin}/?page=customer-dashboard&paymentComplete=true`,
           }),
         });
 
