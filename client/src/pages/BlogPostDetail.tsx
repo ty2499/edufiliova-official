@@ -202,7 +202,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
           </div>
 
           {/* Title */}
-          <h1 className="md:text-5xl font-bold text-gray-900 dark:text-white mb-8 text-[28px] font-['StackSans_Headline']">
+          <h1 className="md:text-5xl font-bold text-gray-900 dark:text-white mb-8 font-['StackSans_Headline'] text-[27px]">
             {post.title}
           </h1>
 
