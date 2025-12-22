@@ -1021,10 +1021,11 @@ const Index = () => {
           return;
         }
         
-        if (profile.role === "general" && (currentState === "auth" || wrongDashboardAccess)) {
+        if (profile.role === "general" && currentState !== "customer-dashboard") {
           console.log('🔀 Redirecting customer (general role) to customer dashboard');
           navigateToPage("customer-dashboard", 'instant');
           setCurrentState("customer-dashboard");
+          return;
         } else if ((profile.role === "student" || profile.role === "user") && currentState !== "student-dashboard") {
           console.log('🔀 Redirecting student/user to student dashboard');
           navigateToPage("student-dashboard", 'instant');
