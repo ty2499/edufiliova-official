@@ -2761,18 +2761,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ success: false, error: "Login ID and password are required" });
       }
 
-      // Find user by email or userId
-      const user = await db
+      // Find user by email, userId, or phone number (including profiles join)
+      let user = await db
         .select()
         .from(users)
         .where(or(
           eq(users.email, loginId),
-          eq(users.userId, loginId),
-          eq(users.phone, loginId),
-          eq(users.phone, `+${loginId}`),
-          eq(users.phone, loginId.replace(/\+/g, ''))
+          eq(users.userId, loginId)
         ))
         .limit(1);
+
+      // If not found by email or userId, search by phone in profiles
+      if (user.length === 0) {
+        const normalizedPhone = loginId.replace(/\+/g, '');
+        const profilesWithPhone = await db
+          .select({ userId: profiles.userId })
+          .from(profiles)
+          .where(or(
+            eq(profiles.phoneNumber, loginId),
+            eq(profiles.phoneNumber, `+${normalizedPhone}`),
+            eq(profiles.phoneNumber, normalizedPhone)
+          ))
+          .limit(1);
+
+        if (profilesWithPhone.length > 0) {
+          user = await db
+            .select()
+            .from(users)
+            .where(eq(users.id, profilesWithPhone[0].userId))
+            .limit(1);
+        }
+      }
 
       if (user.length === 0) {
         return res.status(401).json({ success: false, error: "Invalid credentials" });
