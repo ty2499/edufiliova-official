@@ -181,27 +181,39 @@ export default function NewPaymentModal({
               // Payment successful - confirm purchase on backend to enroll user
               const paymentId = event.data?.payment_id || 'dodopay_checkout';
               
-              // Call the confirmation endpoint to enroll the user
-              confirmPurchaseMutation.mutateAsync({
-                paymentIntentId: paymentId,
-                amount: finalPriceUSD,
-                paymentMethod: 'dodopay'
-              }).then(() => {
-                setPaymentDetails({
-                  transactionId: paymentId,
-                  date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-                  paymentMethod: 'Card',
-                  total: finalPriceUSD,
-                  currency: '$',
+              // Call the DodoPay-specific confirmation endpoint
+              fetch('/api/course-creator/confirm-dodopay-purchase', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                  paymentId: paymentId,
                   courseId: courseId,
-                  courseName: course.title,
-                });
-                setPaymentStatus('success');
-                setShowSuccess(true);
-                setProcessing(false);
-                queryClient.invalidateQueries({ queryKey: ['/api/courses', courseId, 'purchase-status'] });
-                queryClient.invalidateQueries({ queryKey: ['/api/course-creator/my-courses'] });
-              }).catch((error: any) => {
+                  amount: finalPriceUSD
+                })
+              })
+              .then(res => res.json())
+              .then(data => {
+                if (data.success) {
+                  setPaymentDetails({
+                    transactionId: paymentId,
+                    date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                    paymentMethod: 'Card',
+                    total: finalPriceUSD,
+                    currency: '$',
+                    courseId: courseId,
+                    courseName: course.title,
+                  });
+                  setPaymentStatus('success');
+                  setShowSuccess(true);
+                  setProcessing(false);
+                  queryClient.invalidateQueries({ queryKey: ['/api/courses', courseId, 'purchase-status'] });
+                  queryClient.invalidateQueries({ queryKey: ['/api/course-creator/my-courses'] });
+                } else {
+                  throw new Error(data.error || 'Failed to confirm purchase');
+                }
+              })
+              .catch((error: any) => {
                 console.error("Course enrollment failed:", error);
                 setPaymentDetails({
                   transactionId: paymentId,

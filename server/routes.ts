@@ -33782,6 +33782,132 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: error.message || 'Failed to regenerate images' });
     }
   });
+
+  // Confirm course purchase after DodoPay payment (separate from Stripe flow)
+  app.post('/api/course-creator/confirm-dodopay-purchase', requireAuth, async (req, res) => {
+    try {
+      const { paymentId, courseId, amount } = req.body;
+      const user = req.user;
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      if (!courseId) {
+        return res.status(400).json({
+          success: false,
+          error: 'Course ID is required'
+        });
+      }
+
+      // Verify course exists
+      const [course] = await db
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .limit(1);
+
+      if (!course) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      // Check if already enrolled
+      const [existingEnrollment] = await db
+        .select()
+        .from(courseEnrollments)
+        .where(and(
+          eq(courseEnrollments.courseId, courseId),
+          eq(courseEnrollments.userId, user.id)
+        ))
+        .limit(1);
+
+      if (existingEnrollment) {
+        return res.json({
+          success: true,
+          message: 'Already enrolled in this course',
+          enrollment: existingEnrollment
+        });
+      }
+
+      // Create enrollment
+      const [enrollment] = await db.insert(courseEnrollments).values({
+        courseId: courseId,
+        userId: user.id,
+        status: 'enrolled',
+        progress: 0,
+        enrolledAt: new Date()
+      }).returning();
+
+      // Update course total enrollments
+      await db.update(courses)
+        .set({ totalEnrollments: sql`COALESCE(total_enrollments, 0) + 1` })
+        .where(eq(courses.id, courseId));
+
+      // Record the payment
+      await db.insert(orders).values({
+        userId: user.id,
+        type: 'course',
+        itemId: courseId,
+        itemName: course.title,
+        amount: amount?.toString() || course.price?.toString() || '0',
+        currency: 'USD',
+        paymentMethod: 'dodopay',
+        paymentStatus: 'completed',
+        status: 'completed',
+        paymentId: paymentId || 'dodopay_checkout',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+
+      // Send confirmation email
+      const userEmail = user.email;
+      const userName = user.profile?.fullName || userEmail;
+      
+      if (userEmail) {
+        try {
+          const emailData = {
+            to: userEmail,
+            subject: `Course Enrollment Confirmed: ${course.title}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #42fa76;">Course Enrollment Confirmed!</h2>
+                <p>Dear ${userName},</p>
+                <p>Congratulations! You have successfully enrolled in:</p>
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h3 style="margin: 0 0 10px 0;">${course.title}</h3>
+                  <p style="margin: 0; color: #666;">${course.description?.substring(0, 150)}...</p>
+                </div>
+                <p>You can access your course from your dashboard under "My Courses".</p>
+                <p>Happy learning!</p>
+                <p>Best regards,<br>EduFiliova Team</p>
+              </div>
+            `
+          };
+          await sendEmailWithAccount(emailData, 'orders');
+          console.log('📧 Course purchase confirmation email sent to:', userEmail);
+        } catch (emailError) {
+          console.error('Failed to send course purchase email:', emailError);
+        }
+      }
+
+      console.log(`✅ Course enrollment confirmed via DodoPay: ${course.title} for user ${user.id}`);
+
+      res.json({
+        success: true,
+        message: 'Course purchased successfully',
+        enrollment: enrollment
+      });
+    } catch (error: any) {
+      console.error('DodoPay course purchase confirmation error:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message || 'Failed to confirm course purchase'
+      });
+    }
+  });
+
   return server;
 }
-
