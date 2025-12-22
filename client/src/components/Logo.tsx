@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
+import { openExternalUrl } from '@/lib/utils';
 
 type LogoType = 'home' | 'student' | 'teacher' | 'freelancer' | 'customer' | 'footer' | 'auth';
 type LogoSize = 'square' | 'wide';
@@ -88,7 +89,8 @@ const Logo = ({ size = "md", variant = "default", type = "home", logoSize = "squ
     if (onClick) {
       onClick();
     } else if (!disableHomeNavigation) {
-      window.location.href = '/?page=home';
+      const baseUrl = window.location.origin;
+      openExternalUrl(`${baseUrl}/?page=home`);
     }
   };
 
