@@ -175,12 +175,29 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     }
     const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
 
-    // Create a payment without requiring pre-existing products
-    // Using simple amount-based payment instead of product cart
+    // Auto-create the product in DodoPay if it doesn't exist
+    try {
+      console.log(`📦 Creating product ${itemId} in DodoPay...`);
+      await dodo.products.create({
+        product_id: itemId,
+        product_name: itemName,
+        product_price: Math.round(amount * 100), // Price in cents
+        product_description: `${productType} - ${itemName}`,
+        product_type: productType,
+      } as any);
+      console.log(`✅ Product ${itemId} created in DodoPay`);
+    } catch (productError: any) {
+      // Product might already exist, which is fine - continue
+      if (!productError.message?.includes('already exists')) {
+        console.warn(`⚠️ Could not create product (may already exist): ${productError.message}`);
+      }
+    }
+
+    // Create a payment with the product cart
     const payment = await dodo.payments.create({
+      payment_link: true, // Enable automatic payment link generation
       amount: Math.round(amount * 100), // Convert to cents
       currency: currency || 'USD',
-      description: itemName,
       billing: {
         city: 'Unknown',
         country: 'US',
@@ -192,6 +209,12 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         email: userEmail || 'customer@example.com',
         name: userName || 'Customer',
       },
+      product_cart: [
+        {
+          product_id: itemId,
+          quantity: 1,
+        }
+      ],
       metadata: {
         itemId: itemId,
         itemName: itemName,
