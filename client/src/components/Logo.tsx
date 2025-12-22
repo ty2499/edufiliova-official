@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
-import { openExternalUrl } from '@/lib/utils';
+import { openExternalUrl, isInCordovaApp, getBaseUrl } from '@/lib/utils';
 
 type LogoType = 'home' | 'student' | 'teacher' | 'freelancer' | 'customer' | 'footer' | 'auth';
 type LogoSize = 'square' | 'wide';
@@ -89,10 +89,14 @@ const Logo = ({ size = "md", variant = "default", type = "home", logoSize = "squ
     if (onClick) {
       onClick();
     } else if (!disableHomeNavigation) {
-      // Set flag to prevent auto-routing back to dashboard
-      localStorage.setItem('force_home_navigation', 'true');
-      // Navigate to home page, exiting any dashboard
-      window.location.href = '/?page=home';
+      if (isInCordovaApp()) {
+        // In Cordova app - open main website in system browser (outside the app)
+        openExternalUrl(getBaseUrl());
+      } else {
+        // In web browser - navigate internally
+        localStorage.setItem('force_home_navigation', 'true');
+        window.location.href = '/?page=home';
+      }
     }
   };
 
