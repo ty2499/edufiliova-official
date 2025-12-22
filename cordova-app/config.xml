@@ -25,8 +25,24 @@
     <platform name="android">
         <allow-intent href="market:*" />
         
+        <!-- App Icons - Different DPI densities -->
+        <icon src="res/icon/android/icon-ldpi.png" density="ldpi" />
+        <icon src="res/icon/android/icon-mdpi.png" density="mdpi" />
+        <icon src="res/icon/android/icon-hdpi.png" density="hdpi" />
+        <icon src="res/icon/android/icon-xhdpi.png" density="xhdpi" />
+        <icon src="res/icon/android/icon-xxhdpi.png" density="xxhdpi" />
+        <icon src="res/icon/android/icon-xxxhdpi.png" density="xxxhdpi" />
+        
+        <!-- Splash Screens - Portrait orientation -->
+        <splash src="res/screen/android/screen-ldpi-port.png" density="ldpi" />
+        <splash src="res/screen/android/screen-mdpi-port.png" density="mdpi" />
+        <splash src="res/screen/android/screen-hdpi-port.png" density="hdpi" />
+        <splash src="res/screen/android/screen-xhdpi-port.png" density="xhdpi" />
+        <splash src="res/screen/android/screen-xxhdpi-port.png" density="xxhdpi" />
+        <splash src="res/screen/android/screen-xxxhdpi-port.png" density="xxxhdpi" />
+        
         <!-- Android 12+ Splash Screen - uses default Cordova icon if not provided -->
-        <preference name="AndroidWindowSplashScreenBackground" value="#ffffff" />
+        <preference name="AndroidWindowSplashScreenBackground" value="#c5ff00" />
         
         <!-- Notification channel settings -->
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
