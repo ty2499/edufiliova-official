@@ -5,6 +5,7 @@ import { storage } from './storage.js';
 import { db } from './db.js';
 import { userSubscriptions, profiles, pricingPlans, users } from '../shared/schema.js';
 import { eq, and } from 'drizzle-orm';
+import { ReceiptService } from './services/receipts.js';
 
 const router = Router();
 
@@ -423,6 +424,29 @@ router.post('/webhook', async (req: Request, res: Response) => {
             .where(eq(profiles.userId, user.id));
 
           console.log('✅ DoDo Pay subscription saved for user:', user.id);
+          
+          // Send email receipt
+          try {
+            const amount = (subscriptionData.amount || subscriptionData.total_amount || 0) / 100;
+            const billingCycle = subscriptionData.billing_period === 'yearly' ? 'Yearly' : 'Monthly';
+            
+            await ReceiptService.generateAndSendSubscriptionReceipt({
+              subscriptionId: subscriptionData.subscription_id,
+              userId: user.id,
+              userEmail: userEmail,
+              userName: subscriptionData.metadata?.userName || user.email,
+              planName: planTier || 'Subscription',
+              planType: planTier || 'standard',
+              amount: amount,
+              currency: subscriptionData.currency || 'USD',
+              billingCycle: billingCycle,
+              planExpiry: endDate,
+              paymentMethod: 'dodopay',
+            });
+            console.log('📧 Subscription receipt email sent for user:', user.id);
+          } catch (emailError) {
+            console.error('❌ Failed to send subscription receipt email:', emailError);
+          }
         } catch (error) {
           console.error('❌ Failed to save DoDo Pay subscription:', error);
         }

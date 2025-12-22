@@ -510,6 +510,7 @@ export class ReceiptService {
     currency: string;
     billingCycle: string;
     planExpiry: Date;
+    paymentMethod?: string;
   }): Promise<void> {
     const { emailService } = await import('../utils/email.js');
 
@@ -532,7 +533,7 @@ export class ReceiptService {
       tax: 0,
       total: params.amount,
       currency: params.currency || 'USD',
-      paymentMethod: 'stripe',
+      paymentMethod: params.paymentMethod || 'stripe',
       issuedAt: new Date(),
       sourceId: params.subscriptionId,
       metadata: {
