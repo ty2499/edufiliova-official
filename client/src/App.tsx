@@ -17,6 +17,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { useLocation } from "wouter";
 import { useDomainDetection } from "@/hooks/useDomainDetection";
+import { isInCordovaApp } from "@/lib/utils";
 
 const AppContent = () => {
   const { user, profile, loading } = useAuth();
@@ -28,9 +29,16 @@ const AppContent = () => {
   // Check if user has a stored session (indicates they were logged in)
   const hasStoredSession = typeof window !== 'undefined' && localStorage.getItem('sessionId');
   
-  // Show loading screen while auth is being validated for users with a session
-  // This prevents flash of landing page and prevents queries from firing before auth is ready
-  if (loading && hasStoredSession) {
+  // Determine if we should show loading screen
+  // For Cordova mobile app: show loading during auth check to prevent home page flash
+  // For web users: only show loading if they have a stored session
+  const isCordova = isInCordovaApp();
+  const shouldShowLoadingScreen = isCordova ? loading : (loading && hasStoredSession);
+  
+  // Show loading screen while auth is being validated
+  // For Cordova apps: Always show during loading to prevent landing page flash
+  // For web: Only show if they have a stored session (previously logged in)
+  if (shouldShowLoadingScreen) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
         <div className="text-center space-y-4">
