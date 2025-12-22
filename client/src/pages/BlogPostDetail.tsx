@@ -100,36 +100,21 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
   };
 
   const renderCleanContent = (content: string) => {
-    // Split content by lines
-    const lines = content.split('\n');
+    // Remove all # and * characters, and clean up extra spaces
+    let cleanContent = content
+      .replace(/#+/g, '') // Remove all # characters
+      .replace(/\*/g, '')  // Remove all * characters
+      .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+      .trim();
     
-    return lines.map((line, idx) => {
-      // Remove markdown headers (##) and make them styled headings
-      if (line.startsWith('## ')) {
-        const heading = line.replace('## ', '').trim();
-        // Remove bold markers from heading
-        const cleanHeading = heading.replace(/\*\*/g, '');
-        return (
-          <h2 key={idx} className="text-2xl font-bold text-gray-900 dark:text-white mt-6 mb-3">
-            {cleanHeading}
-          </h2>
-        );
-      }
-      
-      // Remove bold markers (**text**) and render as normal text
-      const cleanLine = line.replace(/\*\*/g, '');
-      
-      // Skip empty lines
-      if (!cleanLine.trim()) {
-        return <br key={idx} />;
-      }
-      
-      return (
-        <p key={idx} className="mb-3">
-          {cleanLine}
-        </p>
-      );
-    });
+    // Split into paragraphs (double newline)
+    const paragraphs = cleanContent.split(/\n\n+/).filter(p => p.trim());
+    
+    return paragraphs.map((para, idx) => (
+      <p key={idx} className="mb-4 text-[16px] text-gray-700 dark:text-gray-300 leading-relaxed">
+        {para.trim()}
+      </p>
+    ));
   };
 
   const baseUrl = typeof window !== 'undefined' ? `${window.location.origin}` : '';
