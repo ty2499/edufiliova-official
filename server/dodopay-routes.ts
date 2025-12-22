@@ -175,28 +175,46 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     }
     const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
 
-    // Create a simple payment using the Dodo Payments API
-    // This works without pre-existing products when payment_link is not used
-    console.log(`📦 Creating payment in DodoPay for ${itemName}...`);
-    
-    const payment = await dodo.payments.create({
-      // Use invoice approach instead of product cart
-      billing: {
-        city: 'Unknown',
-        country: 'US',
-        state: 'Unknown',
-        street: 'Unknown',
-        zipcode: '00000',
-      },
+    // Step 1: Auto-create the product in DodoPay if it doesn't exist
+    console.log(`📦 Auto-creating product in DodoPay: ${itemId}...`);
+    let productCreated = false;
+    try {
+      await dodo.products.create({
+        name: itemName,
+        description: `${productType} - ${itemName}`,
+        price: {
+          currency: currency || 'USD',
+          amount: Math.round(amount * 100), // Price in cents
+        },
+        tax_category: 'no_tax', // Default to no tax
+      } as any);
+      productCreated = true;
+      console.log(`✅ Product created: ${itemId}`);
+    } catch (productError: any) {
+      // Product might already exist or have different requirements
+      console.warn(`⚠️ Product creation warning (may already exist): ${productError.message}`);
+    }
+
+    // Step 2: Create checkout session with the product
+    console.log(`🛒 Creating checkout session in DodoPay for ${itemName}...`);
+    const checkoutSession = await dodo.checkoutSessions.create({
+      product_cart: [
+        {
+          product_id: itemId,
+          quantity: 1,
+        }
+      ],
       customer: {
         email: userEmail || 'customer@example.com',
         name: userName || 'Customer',
       },
-      // Create payment WITHOUT product_cart - just a simple charge
-      amount: Math.round(amount * 100), // Price in cents
-      currency: currency || 'USD',
-      description: itemName,
-      payment_link: false, // Don't use payment_link to avoid product requirement
+      billing_address: {
+        city: 'Unknown',
+        country: 'US',
+        state: 'Unknown',
+        street: 'Unknown',
+        postal_code: '00000',
+      },
       metadata: {
         itemId: itemId,
         itemName: itemName,
@@ -209,11 +227,11 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       return_url: successReturnUrl,
     } as any);
 
-    console.log('✅ DoDo Pay payment created:', payment.payment_id);
+    console.log('✅ DoDo Pay checkout session created:', checkoutSession.id);
 
-    // Generate a payment link directly from the payment ID
-    const checkoutUrl = `https://checkout.dodopayments.com/pay/${payment.payment_id}` || payment.payment_link;
-    const sessionId = payment.payment_id;
+    // Step 3: Build checkout URL
+    const checkoutUrl = checkoutSession.url || `https://checkout.dodopayments.com/${checkoutSession.id}`;
+    const sessionId = checkoutSession.id;
 
     const result: PaymentResult = {
       success: true,
