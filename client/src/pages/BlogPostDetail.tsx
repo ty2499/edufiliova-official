@@ -99,6 +99,39 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
     }
   };
 
+  const renderCleanContent = (content: string) => {
+    // Split content by lines
+    const lines = content.split('\n');
+    
+    return lines.map((line, idx) => {
+      // Remove markdown headers (##) and make them styled headings
+      if (line.startsWith('## ')) {
+        const heading = line.replace('## ', '').trim();
+        // Remove bold markers from heading
+        const cleanHeading = heading.replace(/\*\*/g, '');
+        return (
+          <h2 key={idx} className="text-2xl font-bold text-gray-900 dark:text-white mt-6 mb-3">
+            {cleanHeading}
+          </h2>
+        );
+      }
+      
+      // Remove bold markers (**text**) and render as normal text
+      const cleanLine = line.replace(/\*\*/g, '');
+      
+      // Skip empty lines
+      if (!cleanLine.trim()) {
+        return <br key={idx} />;
+      }
+      
+      return (
+        <p key={idx} className="mb-3">
+          {cleanLine}
+        </p>
+      );
+    });
+  };
+
   const baseUrl = typeof window !== 'undefined' ? `${window.location.origin}` : '';
   const shareUrl = post?.slug ? `${baseUrl}/?page=blog-post-detail&slug=${post.slug}` : baseUrl;
   const shareTitle = post?.title || '';
@@ -188,7 +221,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
         </div>
 
         {/* Blog Post */}
-        <Card className="bg-white dark:bg-gray-800 p-8 md:p-12">
+        <Card className="bg-white dark:bg-gray-800 p-8 md:p-16 px-6 md:px-20">
           {/* Category & Date */}
           <div className="flex items-center gap-4 mb-6">
             <Badge 
@@ -234,8 +267,8 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
 
           {/* Content */}
           <div className="prose prose-lg dark:prose-invert max-w-none">
-            <div className="text-[16px] text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
-              {post.content}
+            <div className="text-[16px] text-gray-700 dark:text-gray-300 leading-relaxed">
+              {renderCleanContent(post.content)}
             </div>
           </div>
 
