@@ -67,7 +67,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
   const queryClient = useQueryClient();
 
   // Fetch portfolio works
-  const { data: works = [], isLoading: worksLoading, error: worksError } = useQuery<PortfolioWork[]>({
+  const { data: works = [], isLoading: worksLoading, error: worksError, refetch: refetchWorks } = useQuery<PortfolioWork[]>({
     queryKey: ['/api/portfolio/my/works'],
     queryFn: async () => {
       console.log('🎨 Fetching portfolio works...');
@@ -76,7 +76,11 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
       const data = response.data || response || [];
       console.log('🎨 Portfolio works data:', data, 'length:', data.length);
       return data;
-    }
+    },
+    retry: 3,
+    retryDelay: 1000,
+    staleTime: 30000,
+    refetchOnWindowFocus: true,
   });
 
   // Delete work mutation
@@ -208,8 +212,16 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
 
           {worksError && (
             <Card className="border-red-200 bg-red-50">
-              <CardContent className="p-4">
+              <CardContent className="p-4 flex items-center justify-between">
                 <p className="text-red-600">Error loading works: {(worksError as Error).message}</p>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => refetchWorks()}
+                  className="ml-4"
+                >
+                  Retry
+                </Button>
               </CardContent>
             </Card>
           )}
