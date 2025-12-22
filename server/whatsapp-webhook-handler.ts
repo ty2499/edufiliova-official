@@ -254,6 +254,12 @@ async function routeMessage(
       case 'login_email':
         await authHandler.handleLoginEmail(phone, conversation, message);
         break;
+      case 'login_phone':
+        await authHandler.handleLoginPhone(phone, conversation, message);
+        break;
+      case 'login_userid':
+        await authHandler.handleLoginUserID(phone, conversation, message);
+        break;
       case 'login_password':
         await authHandler.handleLoginPassword(phone, conversation, message);
         break;
@@ -468,8 +474,27 @@ async function handleMenuSelection(
 
   if (selection.startsWith('btn_')) {
     if (selection === 'btn_login') {
+      await chatbot.updateConversationFlow(conversation.id, 'main_menu', {});
+      await whatsappService.sendButtonMessage(
+        phone,
+        "How would you like to login?",
+        [
+          { id: 'btn_login_email', title: 'Email' },
+          { id: 'btn_login_phone', title: 'Phone' },
+          { id: 'btn_login_userid', title: 'User ID' }
+        ],
+        'EduFiliova',
+        'Select login method'
+      );
+    } else if (selection === 'btn_login_email') {
       await chatbot.updateConversationFlow(conversation.id, 'login_email', {});
-      await whatsappService.sendTextMessage(phone, "Please enter your email address:");
+      await whatsappService.sendTextMessage(phone, 'Please enter your email address:');
+    } else if (selection === 'btn_login_phone') {
+      await chatbot.updateConversationFlow(conversation.id, 'login_phone', {});
+      await whatsappService.sendTextMessage(phone, 'Please enter your phone number:');
+    } else if (selection === 'btn_login_userid') {
+      await chatbot.updateConversationFlow(conversation.id, 'login_userid', {});
+      await whatsappService.sendTextMessage(phone, 'Please enter your User ID:');
     } else if (selection === 'btn_register' || selection === 'btn_create_account') {
       await chatbot.updateConversationFlow(conversation.id, 'register_role', {});
       await whatsappService.sendButtonMessage(

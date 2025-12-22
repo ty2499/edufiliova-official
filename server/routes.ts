@@ -2765,7 +2765,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const user = await db
         .select()
         .from(users)
-        .where(or(eq(users.email, loginId), eq(users.userId, loginId)))
+        .where(or(
+          eq(users.email, loginId),
+          eq(users.userId, loginId),
+          eq(users.phone, loginId),
+          eq(users.phone, `+${loginId}`),
+          eq(users.phone, loginId.replace(/\+/g, ''))
+        ))
         .limit(1);
 
       if (user.length === 0) {

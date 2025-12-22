@@ -14,6 +14,8 @@ export type ConversationFlow =
   | 'idle'
   | 'main_menu'
   | 'login_email'
+  | 'login_phone'
+  | 'login_userid'
   | 'login_password'
   | 'register_role'
   | 'register_name'

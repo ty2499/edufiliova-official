@@ -794,3 +794,67 @@ export default {
   startRegisterFlow,
   startLinkFlow
 };
+
+export async function handleLoginPhone(phone: string, conversation: WhatsAppConversation, message: ParsedMessage): Promise<void> {
+  const state = conversation.flowState as FlowState | null;
+  
+  if (!state?.data.loginPhone) {
+    await whatsappService.sendTextMessage(
+      phone,
+      "Please enter your phone number (with or without +):"
+    );
+    
+    await chatbot.updateConversationFlow(conversation.id, 'login_phone', {
+      loginPhone: true
+    });
+  } else {
+    const normalizedPhone = message.text?.trim().replace(/\+/g, '') || '';
+    
+    if (!normalizedPhone) {
+      await whatsappService.sendTextMessage(phone, "Please enter a valid phone number");
+      return;
+    }
+    
+    await chatbot.updateConversationFlow(conversation.id, 'login_password', {
+      loginId: message.text?.trim() || '',
+      isPhoneLogin: true
+    });
+    
+    await whatsappService.sendTextMessage(
+      phone,
+      "Please enter your password:"
+    );
+  }
+}
+
+export async function handleLoginUserID(phone: string, conversation: WhatsAppConversation, message: ParsedMessage): Promise<void> {
+  const state = conversation.flowState as FlowState | null;
+  
+  if (!state?.data.loginUserID) {
+    await whatsappService.sendTextMessage(
+      phone,
+      "Please enter your User ID:"
+    );
+    
+    await chatbot.updateConversationFlow(conversation.id, 'login_userid', {
+      loginUserID: true
+    });
+  } else {
+    const userId = message.text?.trim() || '';
+    
+    if (!userId) {
+      await whatsappService.sendTextMessage(phone, "Please enter a valid User ID");
+      return;
+    }
+    
+    await chatbot.updateConversationFlow(conversation.id, 'login_password', {
+      loginId: userId,
+      isUserIDLogin: true
+    });
+    
+    await whatsappService.sendTextMessage(
+      phone,
+      "Please enter your password:"
+    );
+  }
+}
