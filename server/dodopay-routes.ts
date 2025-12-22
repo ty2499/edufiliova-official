@@ -175,46 +175,26 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     }
     const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
 
-    // Auto-create the product in DodoPay if it doesn't exist
-    try {
-      console.log(`📦 Creating product ${itemId} in DodoPay...`);
-      await dodo.products.create({
-        product_id: itemId,
-        product_name: itemName,
-        product_price: Math.round(amount * 100), // Price in cents
-        product_description: `${productType} - ${itemName}`,
-        product_type: productType,
-      } as any);
-      console.log(`✅ Product ${itemId} created in DodoPay`);
-    } catch (productError: any) {
-      // Product might already exist, which is fine - continue
-      if (!productError.message?.includes('already exists')) {
-        console.warn(`⚠️ Could not create product (may already exist): ${productError.message}`);
-      }
-    }
-
-    // Create a payment with the product cart
-    const payment = await dodo.payments.create({
-      payment_link: true, // Enable automatic payment link generation
-      amount: Math.round(amount * 100), // Convert to cents
-      currency: currency || 'USD',
-      billing: {
-        city: 'Unknown',
-        country: 'US',
-        state: 'Unknown',
-        street: 'Unknown',
-        zipcode: '00000',
-      },
-      customer: {
-        email: userEmail || 'customer@example.com',
-        name: userName || 'Customer',
-      },
-      product_cart: [
+    // Use DodoPay's checkout API with inline product data
+    // This approach automatically handles product creation without pre-registration
+    console.log(`📦 Creating checkout session in DodoPay for ${itemName}...`);
+    
+    const checkout = await dodo.checkouts.create({
+      line_items: [
         {
-          product_id: itemId,
+          price_data: {
+            currency: currency || 'USD',
+            product_data: {
+              name: itemName,
+              description: `${productType} - ${itemName}`,
+            },
+            unit_amount: Math.round(amount * 100), // Price in cents
+          },
           quantity: 1,
         }
       ],
+      customer_email: userEmail || 'customer@example.com',
+      customer_name: userName || 'Customer',
       metadata: {
         itemId: itemId,
         itemName: itemName,
@@ -222,17 +202,17 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         userId: userEmail,
         amount: String(amount),
         currency: currency,
-        returnUrl: successReturnUrl,
         source: 'edufiliova_checkout',
       },
-      return_url: successReturnUrl,
+      success_url: successReturnUrl,
+      cancel_url: successReturnUrl,
     } as any);
 
-    console.log('✅ DoDo Pay payment created:', payment.payment_id);
+    console.log('✅ DoDo Pay checkout session created:', checkout.id || checkout.checkout_id);
 
-    // Get the payment link from the response
-    const checkoutUrl = payment.payment_link || payment.checkout_url || undefined;
-    const sessionId = payment.payment_id;
+    // Get the checkout URL from the response
+    const checkoutUrl = checkout.url || checkout.checkout_url || `https://checkout.dodopayments.com/${checkout.id || checkout.checkout_id}`;
+    const sessionId = checkout.id || checkout.checkout_id;
 
     const result: PaymentResult = {
       success: true,
