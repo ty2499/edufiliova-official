@@ -175,10 +175,12 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     }
     const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
 
-    // Use payments.create() with payment_link: true for dynamic products
-    // This allows selling ANY product without pre-creating it in Dodo dashboard
+    // Create a payment without requiring pre-existing products
+    // Using simple amount-based payment instead of product cart
     const payment = await dodo.payments.create({
-      payment_link: true,
+      amount: Math.round(amount * 100), // Convert to cents
+      currency: currency || 'USD',
+      description: itemName,
       billing: {
         city: 'Unknown',
         country: 'US',
@@ -190,13 +192,6 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         email: userEmail || 'customer@example.com',
         name: userName || 'Customer',
       },
-      // Dynamic product info - no pre-registration needed
-      product_cart: [
-        {
-          product_id: itemId,
-          quantity: 1,
-        }
-      ],
       metadata: {
         itemId: itemId,
         itemName: itemName,
@@ -207,16 +202,21 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         returnUrl: successReturnUrl,
         source: 'edufiliova_checkout',
       },
+      return_url: successReturnUrl,
     } as any);
 
-    console.log('✅ DoDo Pay payment link created:', payment.payment_id);
+    console.log('✅ DoDo Pay payment created:', payment.payment_id);
+
+    // Get the payment link from the response
+    const checkoutUrl = payment.payment_link || payment.checkout_url || undefined;
+    const sessionId = payment.payment_id;
 
     const result: PaymentResult = {
       success: true,
-      paymentId: payment.payment_id,
-      checkoutUrl: payment.payment_link || undefined,
-      redirectUrl: payment.payment_link || undefined,
-      sessionId: payment.payment_id,
+      paymentId: sessionId,
+      checkoutUrl: checkoutUrl,
+      redirectUrl: checkoutUrl,
+      sessionId: sessionId,
       amount: amount,
       currency: currency,
       metadata: {
