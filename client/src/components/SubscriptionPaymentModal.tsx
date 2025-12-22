@@ -443,30 +443,24 @@ export default function SubscriptionPaymentModal({
   const handleDodoPayment = async () => {
     setProcessing(true);
     try {
-      // Create DodoPay session
-      const response = await apiRequest('POST', '/api/dodopay/checkout-session', {
-        amount: plan.price,
-        currency: 'USD',
-        courseId: `sub_${plan.id.toLowerCase().replace(/\s+/g, '_')}`,
-        courseName: `${plan.name} Subscription`,
-        userEmail: user?.email,
-        userName: user?.name,
-        productName: `${plan.name} Subscription`,
-        productDescription: plan.description,
-        productType: 'membership'
-      });
+      // Get the product ID for this plan/billing cycle
+      const planData = GRADE_SUBSCRIPTION_PLANS[plan.tier];
+      const productId = planData.dodoPayProductIds[plan.interval];
+      
+      if (!productId) {
+        throw new Error(`No DodoPay product configured for ${plan.tier} - ${plan.interval}`);
+      }
 
-      if (response.success && response.checkoutUrl) {
-        // Use Dodo overlay if initialized, otherwise redirect
-        if (dodoInitialized) {
-          DodoPayments.OpenCheckout({
-            url: response.checkoutUrl
-          });
-        } else {
-          window.location.href = response.checkoutUrl;
-        }
+      // Direct checkout link to pre-created product
+      const checkoutUrl = `https://checkout.dodopayments.com/buy/${productId}?quantity=1`;
+
+      // Use Dodo overlay if initialized, otherwise redirect
+      if (dodoInitialized && DodoPayments.Checkout) {
+        DodoPayments.Checkout.open({
+          checkoutUrl: checkoutUrl
+        });
       } else {
-        throw new Error(response.error || 'Failed to create payment session');
+        window.location.href = checkoutUrl;
       }
     } catch (error: any) {
       console.error("DodoPay payment error:", error);

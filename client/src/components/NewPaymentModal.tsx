@@ -200,54 +200,11 @@ export default function NewPaymentModal({
     }
   }, [isDodoEnabled, dodoInitialized, finalPriceUSD, courseId]);
   
-  // Handle Dodo Payment
+  // Handle Dodo Payment - Course purchases not yet supported via DodoPay
   const handleDodoPayment = async () => {
     setProcessing(true);
-    try {
-      // Create DodoPay session
-      const response = await apiRequest('POST', '/api/dodopay/checkout-session', {
-        amount: finalPriceUSD,
-        currency: 'USD',
-        courseId: courseId,
-        courseName: course.title,
-        userEmail: profile?.email,
-        userName: profile?.name,
-        productName: course.title,
-        productDescription: course.description,
-        productType: 'course'
-      });
-
-      if (response.success && response.checkoutUrl) {
-        // Use Dodo overlay if initialized, otherwise redirect
-        if (dodoInitialized) {
-          DodoPayments.OpenCheckout({
-            url: response.checkoutUrl
-          });
-        } else {
-          window.location.href = response.checkoutUrl;
-        }
-      } else {
-        throw new Error(response.error || 'Failed to create payment session');
-      }
-    } catch (error: any) {
-      console.error("DodoPay payment error:", error);
-      setPaymentDetails({
-        transactionId: 'N/A',
-        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-        paymentMethod: 'Card',
-        total: finalPriceUSD,
-        currency: '$',
-        courseId: courseId,
-        errorMessage: error?.message || 'Failed to create DodoPay payment session. Please try again or use another payment method.'
-      });
-      setPaymentStatus('failed');
-      setShowSuccess(true);
-    } finally {
-      // Note: processing is set to false in Dodo event handlers or here if session creation fails
-      if (!dodoInitialized) {
-        setProcessing(false);
-      }
-    }
+    setError('Course purchases via DodoPay are not yet available. Please use another payment method.');
+    setProcessing(false);
   };
   const discountAmountLocal = isSouthAfrican ? discountAmount * exchangeRate : discountAmount;
   const finalPriceLocal = isSouthAfrican ? finalPriceUSD * exchangeRate : finalPriceUSD;
@@ -1196,74 +1153,18 @@ export default function NewPaymentModal({
 
                 {selectedMethod === 'dodopay' && (
                   <div className="space-y-4">
-                    <div className="flex gap-2 mb-4 items-center">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-6" />
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
-                      <span className="text-xs text-muted-foreground ml-2">+ Google Pay, Apple Pay</span>
+                    <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-4">
+                      <p className="text-sm text-yellow-800 dark:text-yellow-100">
+                        DodoPay for course purchases coming soon. Please use another payment method.
+                      </p>
                     </div>
-                    <p className="text-sm text-muted-foreground">
-                      Secure checkout powered by Dodo Payments. Payment form will appear in a popup.
-                    </p>
                     <Button
-                      onClick={async () => {
-                        setProcessing(true);
-                        try {
-                          const response = await apiRequest('/api/dodopay/checkout-session', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                              amount: finalPriceUSD,
-                              currency: 'USD',
-                              courseId: courseId,
-                              courseName: course.title,
-                              userEmail: profile?.email,
-                              userName: profile?.name,
-                              productName: course.title,
-                              productType: 'course',
-                              returnUrl: `${window.location.origin}/payment-success?gateway=dodopay`,
-                            }),
-                          });
-
-                          if (response.success && response.checkoutUrl) {
-                            // Use embedded overlay checkout instead of redirect
-                            if (dodoInitialized && DodoPayments.Checkout) {
-                              DodoPayments.Checkout.open({
-                                checkoutUrl: response.checkoutUrl
-                              });
-                            } else {
-                              // Fallback to redirect if overlay not available
-                              window.location.href = response.checkoutUrl;
-                            }
-                          } else {
-                            throw new Error(response.error || 'Failed to initialize payment');
-                          }
-                        } catch (error: any) {
-                          console.error('Payment error:', error);
-                          setPaymentDetails({
-                            transactionId: 'N/A',
-                            date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-                            paymentMethod: 'Card',
-                            total: finalPriceUSD,
-                            currency: currencySymbol,
-                            courseId: courseId,
-                            errorMessage: error?.message || 'Payment failed. Please try again.'
-                          });
-                          setPaymentStatus('failed');
-                          setShowSuccess(true);
-                          setProcessing(false);
-                        }
-                      }}
-                      disabled={processing}
-                      className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl"
+                      onClick={handleDodoPayment}
+                      disabled={true}
+                      className="w-full bg-gray-400 text-white h-12 text-base font-semibold rounded-xl opacity-50 cursor-not-allowed"
                       data-testid="button-dodopay-checkout"
                     >
-                      {processing ? (
-                        <span className="flex items-center gap-2">
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          Processing...
-                        </span>
-                      ) : (
-                        <>Pay with Card</>
-                      )}
+                      Not Available for Courses
                     </Button>
                   </div>
                 )}

@@ -44,6 +44,10 @@ export const GRADE_SUBSCRIPTION_PLANS = {
       monthly: 5.99,
       yearly: 54.99
     },
+    dodoPayProductIds: {
+      monthly: "pdt_0NUcgx93GuWjSEwLFx6AB",
+      yearly: "pdt_0NUcirdzfxaSCFTN9DMVh"
+    },
     features: [
       "Access to all elementary courses (Grades 1-7)",
       "Interactive learning games and activities",
@@ -61,6 +65,10 @@ export const GRADE_SUBSCRIPTION_PLANS = {
     pricing: {
       monthly: 9.99,
       yearly: 99.90
+    },
+    dodoPayProductIds: {
+      monthly: "pdt_0NUcirdzfxaSCFTN9DMVh",
+      yearly: "pdt_0NUcj46lbet1s6JsO61kx"
     },
     features: [
       "Access to all high school courses (Grades 8-12)",
@@ -80,6 +88,10 @@ export const GRADE_SUBSCRIPTION_PLANS = {
     pricing: {
       monthly: 99.00,
       yearly: 799.00
+    },
+    dodoPayProductIds: {
+      monthly: "pdt_0NUcjcuCHDvZ9eGbuHY60",
+      yearly: "pdt_0NUcjFxIA8pPtPvNBfwQ1"
     },
     features: [
       "Access to all college and university courses",
