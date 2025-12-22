@@ -202,7 +202,7 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         itemName: itemName,
         productType: productType,
         userId: userEmail,
-        amount: amount,
+        amount: amount.toString(),
         currency: currency,
         returnUrl: successReturnUrl,
         source: 'edufiliova_checkout',
