@@ -474,6 +474,7 @@ export default function SubscriptionPaymentModal({
           billingInterval: plan.interval,
           userEmail: user?.email || '',
           userName: profile?.name || user?.email || '',
+          overlayMode: true, // Prevents redirect to success page - overlay handles success
         }),
       });
 

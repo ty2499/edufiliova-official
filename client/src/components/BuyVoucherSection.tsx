@@ -536,6 +536,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
           productType: 'voucher',
           userEmail: buyerEmail || user?.email || '',
           userName: buyerName || profile?.name || '',
+          overlayMode: true, // Prevents redirect to success page - overlay handles success
           metadata: {
             recipientEmail: sendToSelf ? (buyerEmail || user?.email) : recipientEmail,
             recipientName: sendToSelf ? buyerName : recipientName,

@@ -223,6 +223,7 @@ export default function NewPaymentModal({
           productType: 'course',
           userEmail: user?.email || '',
           userName: profile?.fullName || user?.email || '',
+          overlayMode: true, // Prevents redirect to success page - overlay handles success
         }),
       });
 
