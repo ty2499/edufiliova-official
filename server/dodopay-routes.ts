@@ -185,7 +185,7 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         price: {
           currency: currency || 'USD',
           amount: Math.round(amount * 100), // Price in cents
-          type: 'one_time_price', // Correct variant name for one-time payments
+          type: 'one_time_price', // CORRECT: variant name for one-time payments
         },
         tax_category: 'no_tax', // Default to no tax
         type: 'digital', // Required field
@@ -193,7 +193,8 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       console.log(`✅ Product created: ${itemId}`);
     } catch (productError: any) {
       // Product might already exist or have different requirements
-      console.warn(`⚠️ Product creation warning (may already exist): ${productError.message}`);
+      const errorMsg = productError?.message || String(productError);
+      console.warn(`⚠️ Product creation warning (may already exist): ${errorMsg}`);
     }
 
     // Step 2: Create checkout session with the product
@@ -228,11 +229,16 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       return_url: successReturnUrl,
     } as any)) as any;
 
-    const sessionId = checkoutSession.checkout_session_id || checkoutSession.id;
-    console.log('✅ DoDo Pay checkout session created:', sessionId);
+    // Handle different response formats from DodoPay SDK (session ID and URL)
+    const sessionId = checkoutSession?.checkout_session_id || checkoutSession?.id;
+    const checkoutUrl = checkoutSession?.checkout_url || checkoutSession?.url || (sessionId ? `https://checkout.dodopayments.com/${sessionId}` : null);
 
-    // Step 3: Build checkout URL
-    const checkoutUrl = checkoutSession.checkout_url || checkoutSession.url || `https://checkout.dodopayments.com/${sessionId}`;
+    if (!sessionId || !checkoutUrl) {
+      console.error('❌ DodoPay response missing fields:', checkoutSession);
+      throw new Error('Failed to retrieve session ID or checkout URL from DodoPay response');
+    }
+
+    console.log('✅ DoDo Pay checkout session created:', sessionId);
 
     const result: PaymentResult = {
       success: true,
