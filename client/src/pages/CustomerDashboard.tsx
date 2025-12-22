@@ -128,6 +128,49 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
     }
   }, [navigationOptions?.tab]);
 
+  // Handle DodoPay payment verification when returning from checkout
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paymentId = params.get('payment_id');
+    const paymentComplete = params.get('paymentComplete');
+    const status = params.get('status');
+    
+    if (paymentId && (paymentComplete === 'true' || status === 'succeeded')) {
+      console.log('🔄 Verifying DodoPay payment:', paymentId);
+      
+      // Call the verify endpoint to record the purchase
+      fetch(`/api/dodopay/verify/${paymentId}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log('✅ Payment verification result:', data);
+          if (data.success) {
+            // Refresh purchases and downloads data
+            queryClient.invalidateQueries({ queryKey: ['/api/shop/purchases'] });
+            queryClient.invalidateQueries({ queryKey: ['/api/digital-downloads'] });
+            queryClient.invalidateQueries({ queryKey: ['/api/shop/dashboard/stats'] });
+            queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
+            queryClient.invalidateQueries({ queryKey: ['/api/cart/count'] });
+            
+            // Navigate to downloads page to show the purchase
+            setActivePage('downloads');
+          }
+        })
+        .catch(err => {
+          console.error('❌ Payment verification error:', err);
+        })
+        .finally(() => {
+          // Clean up URL parameters
+          const url = new URL(window.location.href);
+          url.searchParams.delete('payment_id');
+          url.searchParams.delete('paymentComplete');
+          url.searchParams.delete('status');
+          url.searchParams.delete('productType');
+          url.searchParams.delete('itemId');
+          window.history.replaceState({}, '', url.toString());
+        });
+    }
+  }, []);
+
   const handleLogout = async () => {
     setIsLoggingOut(true);
     setTimeout(async () => {
