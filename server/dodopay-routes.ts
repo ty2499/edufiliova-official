@@ -3,9 +3,10 @@ import DodoPayments from 'dodopayments';
 import { Webhook } from 'standardwebhooks';
 import { storage } from './storage.js';
 import { db } from './db.js';
-import { userSubscriptions, profiles, pricingPlans, users } from '../shared/schema.js';
+import { userSubscriptions, profiles, pricingPlans, users, orders, orderItems, downloads } from '../shared/schema.js';
 import { eq, and } from 'drizzle-orm';
 import { ReceiptService } from './services/receipts.js';
+import { emailService } from './utils/email.js';
 
 const router = Router();
 
@@ -236,14 +237,17 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         if (userName) checkoutParams.customer.name = userName;
       }
       
-      // Add metadata
+      // Add metadata - include orderId for order lookup after payment
       checkoutParams.metadata = {
         itemId: itemId,
+        orderId: itemId, // For order-based payments, itemId is the orderId
         itemName: itemName,
         productType: productType,
         amount: String(amount),
         currency: currency,
         source: 'edufiliova_checkout',
+        userEmail: userEmail || '',
+        userName: userName || '',
       };
       
       checkoutSession = await dodo.checkoutSessions.create(checkoutParams);
@@ -535,7 +539,7 @@ router.post('/webhook', async (req: Request, res: Response) => {
 });
 
 /**
- * Verify DoDo Pay payment status
+ * Verify DoDo Pay payment status and record transaction
  * GET /api/dodopay/verify/:paymentId
  */
 router.get('/verify/:paymentId', async (req: Request, res: Response) => {
@@ -552,12 +556,86 @@ router.get('/verify/:paymentId', async (req: Request, res: Response) => {
 
     // Retrieve payment details from DoDo Pay
     const payment = await dodo.payments.retrieve(paymentId);
+    console.log('💳 DodoPay payment verification:', payment.payment_id, payment.status);
+
+    // If payment succeeded, update any pending orders
+    if (payment.status === 'succeeded' || payment.status === 'captured') {
+      const metadata = payment.metadata || {};
+      const orderId = metadata.orderId || metadata.itemId;
+      
+      if (orderId) {
+        try {
+          // Find the order
+          const [order] = await db.select().from(orders).where(eq(orders.id, orderId)).limit(1);
+          
+          if (order && order.status !== 'completed') {
+            console.log('📦 Updating order status to completed:', orderId);
+            
+            // Update order status
+            await db.update(orders)
+              .set({ 
+                status: 'completed',
+                paymentStatus: 'paid',
+                paymentMethod: 'dodopay',
+                updatedAt: new Date()
+              })
+              .where(eq(orders.id, orderId));
+
+            // Get order items for digital downloads
+            const items = await db.select().from(orderItems).where(eq(orderItems.orderId, orderId));
+            
+            // Create digital download entries for each item
+            for (const item of items) {
+              if (item.productId && order.userId) {
+                try {
+                  await db.insert(downloads).values({
+                    userId: order.userId,
+                    productId: item.productId,
+                    orderId: orderId,
+                  }).onConflictDoNothing();
+                } catch (e) {
+                  console.log('Digital download entry may already exist');
+                }
+              }
+            }
+
+            // Send order confirmation email
+            try {
+              const [user] = await db.select().from(users).where(eq(users.id, order.userId!)).limit(1);
+              if (user) {
+                const amount = (payment.total_amount || 0) / 100;
+                await ReceiptService.generateAndSendOrderReceipt({
+                  orderId: orderId,
+                  userId: order.userId!,
+                  userEmail: user.email,
+                  userName: user.name || user.email,
+                  amount: amount,
+                  currency: payment.currency || 'USD',
+                  items: items.map(item => ({
+                    name: item.productName || 'Product',
+                    quantity: item.quantity,
+                    unitPrice: Number(item.priceAtPurchase),
+                    totalPrice: Number(item.priceAtPurchase) * item.quantity
+                  })),
+                  paymentMethod: 'dodopay',
+                });
+                console.log('📧 Order receipt email sent for:', orderId);
+              }
+            } catch (emailError) {
+              console.error('❌ Failed to send order receipt:', emailError);
+            }
+          }
+        } catch (orderError) {
+          console.error('❌ Failed to update order:', orderError);
+        }
+      }
+    }
 
     const result: PaymentResult = {
       success: true,
       paymentId: payment.payment_id,
       status: payment.status || undefined,
-      amount: payment.total_amount / 100, // Convert from cents
+      amount: payment.total_amount / 100,
       currency: payment.currency,
       metadata: payment.metadata,
     };

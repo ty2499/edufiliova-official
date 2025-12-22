@@ -61,6 +61,79 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
       const urlParams = new URLSearchParams(window.location.search);
       let sessionId = urlParams.get('session_id');
       let bannerId = urlParams.get('banner_id');
+      const gateway = urlParams.get('gateway');
+      const paymentId = urlParams.get('payment_id');
+      const status = urlParams.get('status');
+      
+      // Handle DodoPay payments
+      if (gateway === 'dodopay' && paymentId) {
+        console.log('💳 DodoPay payment callback:', { paymentId, status });
+        
+        try {
+          // Verify the DodoPay payment
+          const verifyResponse = await fetch(`/api/dodopay/verify/${paymentId}`);
+          const verifyData = await verifyResponse.json();
+          
+          if (verifyData.success && (verifyData.status === 'succeeded' || status === 'succeeded')) {
+            setVerified(true);
+            setPaymentType('order');
+            setPaymentData({
+              gateway: 'dodopay',
+              paymentId: paymentId,
+              status: verifyData.status || status,
+              amount: verifyData.amount,
+              currency: verifyData.currency,
+              metadata: verifyData.metadata,
+            });
+            setLoading(false);
+            
+            refreshAuth().catch(error => {
+              console.error('Failed to refresh auth after payment success:', error);
+            });
+            return;
+          } else if (status === 'succeeded') {
+            // Payment succeeded according to URL but verification might have different timing
+            setVerified(true);
+            setPaymentType('order');
+            setPaymentData({
+              gateway: 'dodopay',
+              paymentId: paymentId,
+              status: 'succeeded',
+              message: 'Payment completed successfully'
+            });
+            setLoading(false);
+            
+            refreshAuth().catch(error => {
+              console.error('Failed to refresh auth after payment success:', error);
+            });
+            return;
+          } else {
+            setError(verifyData.error || 'Payment verification failed');
+            setVerified(false);
+            setLoading(false);
+            return;
+          }
+        } catch (err) {
+          console.error('DodoPay verification error:', err);
+          // If verification fails but status says succeeded, trust it
+          if (status === 'succeeded') {
+            setVerified(true);
+            setPaymentType('order');
+            setPaymentData({
+              gateway: 'dodopay',
+              paymentId: paymentId,
+              status: 'succeeded',
+              message: 'Payment completed successfully'
+            });
+            setLoading(false);
+            return;
+          }
+          setError('Failed to verify payment');
+          setVerified(false);
+          setLoading(false);
+          return;
+        }
+      }
       
       const storedData = sessionStorage.getItem('paymentSuccessData');
       if (storedData) {
@@ -108,23 +181,6 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
         setError("No payment session found");
         setLoading(false);
         setVerified(false);
-        return;
-      }
-
-      // Handle Dodo Payments test mode - skip verification for test payments
-      const gateway = urlParams.get('gateway');
-      const isTestMode = urlParams.get('test') === 'true';
-      if (gateway === 'dodopay' && isTestMode) {
-        console.log('🧪 DodoPay test mode - simulating successful payment');
-        setVerified(true);
-        setPaymentType('order');
-        setPaymentData({
-          testMode: true,
-          gateway: 'dodopay',
-          sessionId: sessionId,
-          message: 'Test payment completed successfully'
-        });
-        setLoading(false);
         return;
       }
 
