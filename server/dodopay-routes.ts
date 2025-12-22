@@ -214,17 +214,19 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     try {
       checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);
     } catch (error: any) {
-      // If product doesn't exist, pre-create it with minimal fields
+      // If product doesn't exist, pre-create it with all required fields
       if (error?.message?.includes('does not exist')) {
         console.log(`⚠️ Product ${itemId} not found, attempting to create...`);
         try {
-          // Create product with all required fields
+          // Create product with ALL required fields including price
           await dodo.products.create({
             product_id: itemId,
             name: itemName,
             description: `${productType} - ${itemName}`,
             type: 'digital',
             tax_category: 'digital_products',
+            price: Math.round(amount * 100), // Convert to cents (DodoPay expects integer in smallest currency unit)
+            currency: currency,
           } as any);
           // Retry checkout session
           checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);

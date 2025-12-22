@@ -1,11 +1,14 @@
 import { Router, type Request, type Response } from 'express';
 import { db } from '../db.js';
-import { profiles, users, walletTransactions, shopCustomers } from '../../shared/schema.js';
+import { profiles, users, shopCustomers } from '../../shared/schema.js';
 import { eq, sql } from 'drizzle-orm';
 import { GRADE_SUBSCRIPTION_PLANS } from '../../shared/schema.js';
 import { getPrimaryPaymentClient, getStripeInstance } from '../utils/payment-gateways.js';
-import type { AuthenticatedRequest } from '../types.js';
 import { requireAuth } from '../middleware/auth.js';
+
+interface AuthenticatedRequest extends Request {
+  user?: { id: string };
+}
 
 const router = Router();
 
@@ -133,29 +136,23 @@ router.post('/subscriptions/create', async (req: AuthenticatedRequest, res: Resp
       }
 
       case 'wallet': {
-        // Wallet payment - check BOTH profile wallet and shop wallet balance
-        const profileWalletBalance = parseFloat(profile.walletBalance?.toString() || '0');
-        
-        // Also check shop wallet balance
+        // Wallet payment - check shop wallet balance
         const [shopCustomer] = await db.select()
           .from(shopCustomers)
           .where(eq(shopCustomers.userId, userId))
           .limit(1);
         const shopWalletBalance = parseFloat(shopCustomer?.walletBalance?.toString() || '0');
         
-        // Use the maximum of both wallet balances (user may have funds in either)
-        const totalAvailable = Math.max(profileWalletBalance, shopWalletBalance);
-        
-        if (totalAvailable < planDetails.amount) {
+        if (shopWalletBalance < planDetails.amount) {
           return res.status(400).json({ 
             error: 'Insufficient wallet balance',
             required: planDetails.amount,
-            available: totalAvailable,
+            available: shopWalletBalance,
             gateway: 'wallet'
           });
         }
 
-        // Deduct from the wallet that has funds (prioritize shop wallet)
+        // Deduct from shop wallet
         const planExpiry = new Date();
         if (billingCycle === 'yearly') {
           planExpiry.setFullYear(planExpiry.getFullYear() + 1);
@@ -163,27 +160,18 @@ router.post('/subscriptions/create', async (req: AuthenticatedRequest, res: Resp
           planExpiry.setMonth(planExpiry.getMonth() + 1);
         }
         
-        if (shopWalletBalance >= planDetails.amount) {
-          // Deduct from shop wallet
-          const newShopBalance = shopWalletBalance - planDetails.amount;
-          await db.update(shopCustomers)
-            .set({ walletBalance: newShopBalance.toFixed(2) })
-            .where(eq(shopCustomers.userId, userId));
-        } else {
-          // Deduct from profile wallet
-          const newProfileBalance = profileWalletBalance - planDetails.amount;
-          await db.update(profiles)
-            .set({ walletBalance: newProfileBalance.toFixed(2) })
-            .where(eq(profiles.userId, userId));
-        }
+        const newShopBalance = shopWalletBalance - planDetails.amount;
+        await db.update(shopCustomers)
+          .set({ walletBalance: newShopBalance.toFixed(2) })
+          .where(eq(shopCustomers.userId, userId));
         
-        // Update subscription status (legacyPlan maps to 'plan' column in DB)
+        // Update subscription status
         await db.update(profiles)
           .set({
             legacyPlan: planType,
             subscriptionTier: planType,
             planExpiry: planExpiry
-          } as any)
+          })
           .where(eq(profiles.userId, userId));
 
         return res.json({
@@ -191,9 +179,7 @@ router.post('/subscriptions/create', async (req: AuthenticatedRequest, res: Resp
           gateway: 'wallet',
           message: 'Subscription activated via wallet',
           planExpiry,
-          newWalletBalance: shopWalletBalance >= planDetails.amount 
-            ? shopWalletBalance - planDetails.amount 
-            : profileWalletBalance - planDetails.amount,
+          newWalletBalance: newShopBalance,
           amount: planDetails.amount,
           planName: planDetails.name
         });
@@ -238,8 +224,7 @@ router.post('/subscriptions/confirm', async (req: AuthenticatedRequest, res: Res
 
         await db.update(profiles)
           .set({ 
-            plan: planType,
-            subscriptionTier: 'premium',
+            subscriptionTier: planType,
             planExpiry: planExpiry,
             legacyPlan: planType
           })
