@@ -14,6 +14,7 @@ import {
   canAccessState,
   isProtectedState,
 } from "@/lib/routesConfig";
+import { isInCordovaApp, isWebsiteOnlyPage } from "@/lib/utils";
 import LogoutAnimation from "@/components/LogoutAnimation";
 import TopProgressBar from "@/components/TopProgressBar";
 import Header from "@/components/Header";
@@ -676,6 +677,34 @@ const Index = () => {
       }
     }
   }, [isAuthOnlyDomain, location, navigate, navigateToPage]);
+
+  // Block mobile (Cordova) users from accessing website pages - they should only see dashboards
+  useEffect(() => {
+    // Skip if not in Cordova app or still loading
+    if (!isInCordovaApp() || loading || !user || !profile) return;
+    
+    // If user is on a website-only page on mobile, redirect to their dashboard
+    if (isWebsiteOnlyPage(currentState)) {
+      console.log('📱 Mobile user on website page, redirecting to dashboard:', currentState);
+      
+      // Get the appropriate dashboard based on role
+      let targetPage: AppState = 'customer-dashboard'; // default
+      
+      if (['admin', 'accountant', 'customer_service'].includes(profile.role)) {
+        targetPage = 'admin-dashboard';
+      } else if (profile.role === 'teacher') {
+        targetPage = 'teacher-dashboard';
+      } else if (profile.role === 'freelancer') {
+        targetPage = 'freelancer-dashboard';
+      } else if (profile.role === 'general') {
+        targetPage = 'customer-dashboard';
+      }
+      
+      // Redirect instantly
+      setCurrentState(targetPage);
+      navigateToPage(targetPage, 'instant');
+    }
+  }, [loading, user, profile, currentState, navigateToPage]);
 
   // Auto-redirect authenticated users from home page (instant, no screen shown)
   useEffect(() => {

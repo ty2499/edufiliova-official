@@ -13,6 +13,53 @@ export function isInCordovaApp(): boolean {
 }
 
 /**
+ * Pages that are website-only and should NOT be accessible on mobile (Cordova) apps
+ * Mobile users should only see dashboards, not marketing/landing pages
+ */
+export const WEBSITE_ONLY_PAGES = [
+  'home',
+  'premium',
+  'contact',
+  'privacy',
+  'terms',
+  'student-terms',
+  'teacher-terms',
+  'school-terms',
+  'refund-policy',
+  'privacy-policy',
+  'cookies-policy',
+  'whatsapp-policy',
+  'data-retention',
+  'community-guidelines',
+  'payment-billing',
+  'chat-terms',
+  'about',
+  'help',
+  'learn-more',
+  'advertise-with-us',
+  'design-team-contact',
+  'blog',
+  'blog-post-detail',
+  'community',
+  'networking',
+  'payout-policy',
+  'become-teacher',
+  'buy-voucher',
+  'customer-pricing',
+  'creator-pricing',
+  'education-pricing',
+  'teacher-pricing',
+  'get-started',
+];
+
+/**
+ * Check if a page is website-only (should be blocked on mobile apps)
+ */
+export function isWebsiteOnlyPage(page: string | undefined): boolean {
+  return page ? WEBSITE_ONLY_PAGES.includes(page) : false;
+}
+
+/**
  * Gets the base URL (protocol + hostname) for the main website
  */
 export function getBaseUrl(): string {
