@@ -276,10 +276,11 @@ async function sendVoucherAmountOptions(phone: string): Promise<void> {
     [{
       title: 'Voucher Amounts',
       rows: [
-        { id: 'voucher_10', title: '$10 Voucher', description: 'Perfect for trying out' },
+        { id: 'voucher_5', title: '$5 Voucher', description: 'Quick gift' },
         { id: 'voucher_25', title: '$25 Voucher', description: 'Great starter value' },
         { id: 'voucher_50', title: '$50 Voucher', description: 'Best value for courses' },
         { id: 'voucher_100', title: '$100 Voucher', description: 'Premium gift' },
+        { id: 'voucher_150', title: '$150 Voucher', description: 'Ultimate gift' },
         { id: 'voucher_custom', title: 'Custom Amount', description: 'Enter your own amount' }
       ]
     }],
@@ -299,10 +300,11 @@ export async function handleVoucherAmount(
   let amount: number | null = null;
   
   switch (selection) {
-    case 'voucher_10': amount = 10; break;
+    case 'voucher_5': amount = 5; break;
     case 'voucher_25': amount = 25; break;
     case 'voucher_50': amount = 50; break;
     case 'voucher_100': amount = 100; break;
+    case 'voucher_150': amount = 150; break;
     case 'voucher_custom':
       await chatbot.updateConversationFlow(conversation.id, 'voucher_custom_amount', existingData);
       await whatsappService.sendTextMessage(
@@ -385,7 +387,7 @@ async function confirmVoucherPurchase(
       title: 'Payment Options',
       rows: [
         { id: 'voucher_pay_wallet', title: 'Pay with Wallet', description: `Balance: $${walletBalance.toFixed(2)}` },
-        { id: 'voucher_pay_card', title: 'Pay with Card', description: 'Credit/Debit Card via Stripe' },
+        { id: 'voucher_pay_card', title: 'Pay with Card', description: 'Secure via Dodo Payments' },
         { id: 'voucher_cancel', title: 'Cancel', description: 'Return to menu' }
       ]
     }],
@@ -485,22 +487,11 @@ export async function handleVoucherConfirm(
     return;
   }
 
-  // Handle card payment (Stripe)
+  // Handle Dodo Payments for vouchers
   if (selection === 'voucher_pay' || selection === 'voucher_pay_card') {
-    const stripeKey = process.env.STRIPE_SECRET_KEY;
-    
-    if (!stripeKey) {
-      await whatsappService.sendTextMessage(
-        phone,
-        "Payment system is currently unavailable. Please try again later or purchase through our website."
-      );
-      await chatbot.updateConversationFlow(conversation.id, 'idle', {});
-      return;
-    }
-
     const { amount, isGift, recipientEmail, recipientName, personalMessage } = existingData;
     const voucherCode = generateVoucherCode();
-    
+
     const profile = await db.query.profiles.findFirst({
       where: eq(profiles.userId, conversation.userId!)
     });
@@ -515,83 +506,43 @@ export async function handleVoucherConfirm(
       amount: amount.toString(),
       personalMessage: personalMessage || null,
       sendToSelf: !isGift,
-      paymentMethod: 'stripe',
+      paymentMethod: 'dodo',
       paymentStatus: 'pending',
       expiresAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
     });
 
-    const baseUrl = process.env.REPLIT_DEV_DOMAIN 
-      ? `https://${process.env.REPLIT_DEV_DOMAIN}`
-      : process.env.BASE_URL || process.env.APP_URL || 'https://edufiliova.com';
-    
-    // Create real Stripe checkout session (stripeKey already checked above)
-    try {
-      const Stripe = (await import('stripe')).default;
-      const stripe = new Stripe(stripeKey, { apiVersion: '2025-08-27.basil' });
-      
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [{
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: `EduFiliova Gift Voucher - $${amount}`,
-              description: isGift 
-                ? `Gift voucher for ${recipientName || recipientEmail}`
-                : 'Gift voucher for yourself',
-            },
-            unit_amount: Math.round(amount * 100),
-          },
-          quantity: 1,
-        }],
-        mode: 'payment',
-        success_url: `${baseUrl}/checkout/voucher?code=${voucherCode}&success=true&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${baseUrl}/checkout/voucher?code=${voucherCode}&cancelled=true`,
-        customer_email: profile?.email || undefined,
-        metadata: {
-          type: 'gift_voucher',
-          voucherCode,
-          buyerId: conversation.userId || '',
-          recipientEmail: recipientEmail || '',
-          recipientName: recipientName || '',
-          amount: amount.toString()
-        }
-      });
-      
-      if (session.url) {
-        await whatsappService.sendPaymentLink(
-          phone,
-          session.url,
-          `$${amount.toFixed(2)}`,
-          'Gift Voucher'
-        );
-      } else {
-        // Fallback to landing page if no URL returned
-        const paymentUrl = `${baseUrl}/checkout/voucher?code=${voucherCode}&amount=${amount}`;
-        await whatsappService.sendPaymentLink(
-          phone,
-          paymentUrl,
-          `$${amount.toFixed(2)}`,
-          'Gift Voucher'
-        );
-      }
-    } catch (stripeError) {
-      console.error('Stripe checkout session error:', stripeError);
-      // Fallback to landing page
-      const paymentUrl = `${baseUrl}/checkout/voucher?code=${voucherCode}&amount=${amount}`;
-      await whatsappService.sendPaymentLink(
-        phone,
-        paymentUrl,
-        `$${amount.toFixed(2)}`,
-        'Gift Voucher'
-      );
+    // Dodo Payment Links provided by user
+    const dodoProductLinks: Record<number, string> = {
+      5: 'https://checkout.dodopayments.com/buy/pdt_0NUau2qZPELIXx6MEZCtH?quantity=1',
+      25: 'https://checkout.dodopayments.com/buy/pdt_0NUc4itV57TEkMx00ACtO?quantity=1',
+      50: 'https://checkout.dodopayments.com/buy/pdt_0NUc4pfcz2Z1ZJIODtnKU?quantity=1',
+      100: 'https://checkout.dodopayments.com/buy/pdt_0NUc505VRJcMBLRPjLib1?quantity=1',
+      150: 'https://checkout.dodopayments.com/buy/pdt_0NUc5A2ErZcUIAx36YcYb?quantity=1'
+    };
+
+    let paymentUrl = dodoProductLinks[amount];
+
+    // If no direct link exists, or for custom amounts, we'd ideally use the Dodo API
+    // For now, we use the provided links or a fallback if needed.
+    if (!paymentUrl) {
+      const baseUrl = process.env.REPLIT_DEV_DOMAIN
+        ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+        : process.env.BASE_URL || process.env.APP_URL || 'https://edufiliova.com';
+      paymentUrl = `${baseUrl}/checkout/voucher?code=${voucherCode}&amount=${amount}&gateway=dodo`;
     }
 
+    await whatsappService.sendPaymentLink(
+      phone,
+      paymentUrl,
+      `$${amount.toFixed(2)}`,
+      'Gift Voucher'
+    );
+
     await chatbot.updateConversationFlow(conversation.id, 'idle', {});
-    
+
     await whatsappService.sendTextMessage(
       phone,
-      "Once payment is complete, the voucher will be sent to " + 
+      "Once payment is complete, the voucher will be sent to " +
       (isGift ? `${recipientEmail}` : "your email") + ".\n\n" +
       "Type MENU to return to the main menu."
     );
