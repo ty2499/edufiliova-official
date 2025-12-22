@@ -182,12 +182,15 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     // Note: Product creation must include all required fields per DodoPay API v2.x
     console.log(`🛒 Creating checkout session in DodoPay for ${itemName}...`);
     
-    // Build request with product_cart (DodoPay requires product_id to already exist or be auto-created)
-    // Since product creation has issues with the API, we'll let DodoPay handle inline product logic
+    // Build inline checkout request - DodoPay supports direct payment without pre-created products
+    // Using line_items for inline product pricing (doesn't require pre-creating products)
     const checkoutRequest: any = {
-      product_cart: [
+      line_items: [
         {
-          product_id: itemId,
+          name: itemName,
+          description: `${productType} - ${itemName}`,
+          amount: Math.round(amount * 100), // Amount in cents
+          currency: currency,
           quantity: 1,
         }
       ],
@@ -212,34 +215,13 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       return_url: successReturnUrl,
     };
 
-    // Try to create checkout session
+    // Create checkout session with inline line items (no product pre-creation needed)
     let checkoutSession: any;
     try {
       checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);
     } catch (error: any) {
-      // If product doesn't exist, pre-create it with all required fields
-      if (error?.message?.includes('does not exist')) {
-        console.log(`⚠️ Product ${itemId} not found, attempting to create...`);
-        try {
-          // Create product with ALL required fields including price
-          await dodo.products.create({
-            product_id: itemId,
-            name: itemName,
-            description: `${productType} - ${itemName}`,
-            type: 'digital',
-            tax_category: 'digital_products',
-            price: Math.round(amount * 100), // Convert to cents (DodoPay expects integer in smallest currency unit)
-            currency: currency,
-          } as any);
-          // Retry checkout session
-          checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);
-        } catch (createError: any) {
-          console.error(`Failed to create product: ${createError?.message}`);
-          throw error; // Throw original error
-        }
-      } else {
-        throw error;
-      }
+      console.error(`❌ DoDo Pay checkout error:`, error?.message);
+      throw error;
     }
 
     // Handle different response formats from DodoPay SDK (session ID and URL)
