@@ -81,6 +81,9 @@ export default function NewPaymentModal({
   // Fetch enabled payment gateways
   const { data: enabledGateways = [], isLoading: gatewaysLoading } = useEnabledGateways();
 
+  // For debugging
+  console.log("Enabled Gateways from API:", enabledGateways);
+
   // Get primary gateway (fallback to first enabled if no primary set)
   const primaryGateway = enabledGateways.find(g => g.isPrimary) || enabledGateways[0];
   
@@ -93,6 +96,9 @@ export default function NewPaymentModal({
   // Check if EcoCash is enabled (for Zimbabwean users)
   const isEcocashEnabled = enabledGateways.some(g => g.gatewayId === 'ecocash');
   
+  // System wallet is always considered enabled if it exists in the gateways list
+  const isWalletEnabled = enabledGateways.some(g => g.gatewayId === 'system_wallet');
+
   // isZimbabwean now includes both IP detection AND account registration country check
   const isUserFromZimbabwe = isZimbabwean;
 
@@ -592,6 +598,8 @@ export default function NewPaymentModal({
 
   const initializePaystackPayment = usePaystackPayment(paystackConfig);
 
+  const hasNoMethods = !gatewaysLoading && !isPayPalEnabled && !isDodoEnabled && !isEcocashEnabled && (!wallet || parseFloat(wallet.balance) === 0);
+
   // Success/Failure state - Payment Receipt Screen
   if (showSuccess && paymentDetails) {
     const isSuccess = paymentStatus === 'success';
@@ -740,7 +748,7 @@ export default function NewPaymentModal({
   }
 
   // Error state - no payment methods available
-  if (!selectedMethod && !gatewaysLoading) {
+  if (!gatewaysLoading && !isPayPalEnabled && !isDodoEnabled && !isEcocashEnabled && !isWalletEnabled && !primaryGateway) {
     return (
       <div 
         className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60]"
