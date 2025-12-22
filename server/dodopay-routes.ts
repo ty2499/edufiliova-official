@@ -185,7 +185,7 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         price: {
           currency: currency || 'USD',
           amount: Math.round(amount * 100), // Price in cents
-          type: 'one_time', // Required field inside price object
+          type: 'one_time_price', // Correct variant name for one-time payments
         },
         tax_category: 'no_tax', // Default to no tax
         type: 'digital', // Required field
@@ -228,11 +228,11 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       return_url: successReturnUrl,
     } as any)) as any;
 
-    console.log('✅ DoDo Pay checkout session created:', checkoutSession.checkout_session_id || checkoutSession.id);
+    const sessionId = checkoutSession.checkout_session_id || checkoutSession.id;
+    console.log('✅ DoDo Pay checkout session created:', sessionId);
 
     // Step 3: Build checkout URL
-    const checkoutUrl = checkoutSession.checkout_url || checkoutSession.url || `https://checkout.dodopayments.com/${checkoutSession.checkout_session_id || checkoutSession.id}`;
-    const sessionId = checkoutSession.checkout_session_id || checkoutSession.id;
+    const checkoutUrl = checkoutSession.checkout_url || checkoutSession.url || `https://checkout.dodopayments.com/${sessionId}`;
 
     const result: PaymentResult = {
       success: true,
