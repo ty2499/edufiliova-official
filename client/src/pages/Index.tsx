@@ -2616,7 +2616,7 @@ const Index = () => {
           >
             <ProductDetail 
               onNavigate={handleNavigation}
-              productId={new URLSearchParams(window.location.search).get('productId') || ''}
+              productId={window.location.pathname.startsWith('/product/') ? window.location.pathname.replace('/product/', '') : (new URLSearchParams(window.location.search).get('productId') || '')}
             />
           </PageTransition>
         );
