@@ -176,10 +176,10 @@ export const createRateLimit = (windowMs: number, max: number, message?: string)
 };
 
 // Specific rate limits for different endpoints
-export const authRateLimit = createRateLimit(15 * 60 * 1000, 5, 'Too many authentication attempts'); // 5 attempts per 15 minutes
-export const messageRateLimit = createRateLimit(60 * 1000, 30, 'Too many messages sent'); // 30 messages per minute
-export const communityRateLimit = createRateLimit(60 * 1000, 10, 'Too many community posts'); // 10 posts per minute
-export const uploadRateLimit = createRateLimit(60 * 1000, 5, 'Too many file uploads'); // 5 uploads per minute
+export const authRateLimit = createRateLimit(15 * 60 * 1000, 20, 'Too many authentication attempts'); // 20 attempts per 15 minutes
+export const messageRateLimit = createRateLimit(60 * 1000, 60, 'Too many messages sent'); // 60 messages per minute
+export const communityRateLimit = createRateLimit(60 * 1000, 20, 'Too many community posts'); // 20 posts per minute
+export const uploadRateLimit = createRateLimit(60 * 1000, 10, 'Too many file uploads'); // 10 uploads per minute
 
 // File upload validation
 export const validateFileUpload = (file: Express.Multer.File): { isValid: boolean; reason?: string } => {
