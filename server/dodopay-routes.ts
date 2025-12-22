@@ -175,16 +175,28 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
     }
     const successReturnUrl = `${baseUrl}/payment-success?gateway=dodopay`;
 
-    // Step 1 & 2: Create checkout session directly with line items (skip product creation)
-    // DodoPay allows inline item creation in checkout sessions without pre-creating products
+    // Step 1: Create or get product in DodoPay
+    console.log(`📦 Creating product in DodoPay: ${itemId}...`);
+    try {
+      await dodo.products.create({
+        product_id: itemId,
+        name: itemName,
+        description: `${productType} - ${itemName}`,
+        type: 'digital',
+      } as any);
+      console.log(`✅ Product created: ${itemId}`);
+    } catch (productError: any) {
+      console.warn(`⚠️ Product creation warning: ${productError?.message || productError}`);
+      // Continue anyway - product may already exist
+    }
+
+    // Step 2: Create checkout session with product_cart
     console.log(`🛒 Creating checkout session in DodoPay for ${itemName}...`);
     const checkoutSession = (await dodo.checkoutSessions.create({
-      line_items: [
+      product_cart: [
         {
-          description: `${productType} - ${itemName}`,
+          product_id: itemId,
           quantity: 1,
-          price_in_cents: Math.round(amount * 100), // Price in cents
-          name: itemName,
         }
       ],
       customer_email: userEmail || 'customer@example.com',
