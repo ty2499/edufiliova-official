@@ -949,6 +949,14 @@ const Index = () => {
       return;
     }
     
+    // Check if user clicked logo to navigate home - skip auto-routing once
+    const forceHome = localStorage.getItem('force_home_navigation');
+    if (forceHome === 'true' && currentState === 'home') {
+      console.log('🔄 Skipping auto-routing - user clicked logo to go home');
+      localStorage.removeItem('force_home_navigation');
+      return;
+    }
+    
     if (!loading && user && profile) {
       // User logged in successfully - clear the intentional logout flag
       localStorage.removeItem('intentional_logout');

@@ -89,8 +89,10 @@ const Logo = ({ size = "md", variant = "default", type = "home", logoSize = "squ
     if (onClick) {
       onClick();
     } else if (!disableHomeNavigation) {
-      const baseUrl = window.location.origin;
-      openExternalUrl(`${baseUrl}/?page=home`);
+      // Set flag to prevent auto-routing back to dashboard
+      localStorage.setItem('force_home_navigation', 'true');
+      // Navigate to home page, exiting any dashboard
+      window.location.href = '/?page=home';
     }
   };
 
