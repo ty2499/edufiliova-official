@@ -647,6 +647,7 @@ function OrderSlipViewer({
               <div className="flex justify-between items-start">
                 <div className="max-w-md">
                   <img 
+                    src={invoiceLogoUrl}
                     alt="EduFiliova" 
                     className="h-24 w-auto mb-2"
                   />
