@@ -5577,6 +5577,99 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+
+  // DodoPay wallet top-up confirmation
+  app.post("/api/shop/wallet/confirm-dodopay", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const userId = req.user?.id;
+      const { amount, paymentId, sessionId } = req.body;
+
+      if (!userId) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      if (!amount || amount <= 0) {
+        return res.status(400).json({ success: false, error: 'Invalid amount' });
+      }
+
+      // Get or create shop customer
+      let customer = await storage.getShopCustomerByUserId(userId);
+      if (!customer) {
+        // Create shop customer if doesn't exist
+        const userProfile = await storage.getProfile(userId);
+        const authUser = await storage.getAuthUser(userId);
+        customer = await storage.createShopCustomer({
+          userId,
+          email: authUser?.email || '',
+          firstName: userProfile?.name?.split(' ')[0] || '',
+          lastName: userProfile?.name?.split(' ').slice(1).join(' ') || '',
+          walletBalance: '0.00',
+        });
+      }
+
+      // Check for duplicate transaction
+      const referenceId = paymentId || sessionId || `dodo_wallet_${Date.now()}`;
+      const existingTransaction = await db
+        .select()
+        .from(shopTransactions)
+        .where(eq(shopTransactions.referenceId, referenceId))
+        .limit(1);
+
+      if (existingTransaction.length > 0) {
+        // Already processed
+        return res.json({ 
+          success: true, 
+          alreadyProcessed: true,
+          newBalance: customer.walletBalance 
+        });
+      }
+
+      // Record the transaction
+      await db.insert(shopTransactions).values({
+        customerId: customer.id,
+        type: 'credit',
+        amount: amount.toString(),
+        description: 'Wallet Top-Up (Card)',
+        referenceId: referenceId,
+        status: 'completed',
+        createdAt: new Date(),
+      });
+
+      // Update wallet balance
+      const newBalance = (parseFloat(customer.walletBalance || '0') + parseFloat(amount)).toFixed(2);
+      await storage.updateShopCustomer(customer.id, {
+        walletBalance: newBalance
+      });
+
+      // Also record in payments table for admin visibility
+      try {
+        await db.insert(payments).values({
+          userId,
+          amount: amount.toString(),
+          currency: 'USD',
+          status: 'succeeded',
+          gateway: 'dodopay',
+          paymentIntentId: referenceId,
+          description: 'Wallet Top-Up (Card)',
+          metadata: { type: 'wallet_topup', sessionId },
+          createdAt: new Date()
+        });
+      } catch (paymentLogError) {
+        console.warn('Could not log wallet payment:', paymentLogError);
+      }
+
+      console.log(`✅ Card wallet top-up confirmed: $${amount} for user ${userId}, new balance: $${newBalance}`);
+
+      res.json({ 
+        success: true, 
+        newBalance,
+        message: 'Wallet topped up successfully'
+      });
+    } catch (error: any) {
+      console.error('Card wallet confirmation error:', error);
+      res.status(500).json({ success: false, error: 'Failed to confirm wallet payment' });
+    }
+  });
   // Verify and process successful payment
   app.post("/api/shop/wallet/verify-payment", requireAuth, async (req, res) => {
     try {

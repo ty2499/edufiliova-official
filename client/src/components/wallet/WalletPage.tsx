@@ -197,16 +197,42 @@ function WalletPaymentModal({
         DodoPayments.Initialize({
           mode: dodoMode,
           onEvent: (event: any) => {
-            console.log("Dodo checkout event (wallet):", event);
+            console.log("Card checkout event (wallet):", event);
             
             if (event.event_type === "checkout.redirect") {
-              setShowSuccess(true);
-              setProcessing(false);
-              queryClient.invalidateQueries({ queryKey: ['/api/shop/wallet'] });
-              queryClient.invalidateQueries({ queryKey: ['/api/shop/wallet/transactions'] });
-              setTimeout(() => {
-                onSuccess();
-              }, 2000);
+              // Confirm the wallet payment on the backend
+              fetch('/api/shop/wallet/confirm-dodopay', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                  amount: parseFloat(amount),
+                  paymentId: event.data?.payment_id,
+                  sessionId: event.data?.session_id
+                })
+              }).then(res => {
+                if (!res.ok) {
+                  throw new Error('Server returned error');
+                }
+                return res.json();
+              }).then(data => {
+                console.log("Wallet top-up confirmed:", data);
+                if (data.success) {
+                  setShowSuccess(true);
+                  setProcessing(false);
+                  queryClient.invalidateQueries({ queryKey: ['/api/shop/wallet'] });
+                  queryClient.invalidateQueries({ queryKey: ['/api/shop/wallet/transactions'] });
+                  setTimeout(() => {
+                    onSuccess();
+                  }, 2000);
+                } else {
+                  throw new Error(data.error || 'Payment confirmation failed');
+                }
+              }).catch(err => {
+                console.error("Failed to confirm wallet top-up:", err);
+                setError('Payment confirmation failed. Please contact support.');
+                setProcessing(false);
+              });
             } else if (event.event_type === "checkout.closed") {
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
@@ -216,7 +242,7 @@ function WalletPaymentModal({
           }
         });
         setDodoInitialized(true);
-        console.log(`✅ Dodo Payments overlay SDK initialized (wallet) - mode: ${dodoMode}`);
+        console.log(`✅ Card Payments SDK initialized (wallet) - mode: ${dodoMode}`);
       } catch (error) {
         console.warn("Failed to initialize Dodo overlay SDK:", error);
       }
@@ -255,7 +281,7 @@ function WalletPaymentModal({
         throw new Error(data.error || 'Failed to initialize payment');
       }
     } catch (err: any) {
-      console.error("DodoPay wallet payment error:", err);
+      console.error("Card wallet payment error:", err);
       setError(err.message || 'Failed to initialize payment');
       setProcessing(false);
     }

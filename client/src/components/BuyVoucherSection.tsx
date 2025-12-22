@@ -89,12 +89,12 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
   const isPayPalEnabled = enabledGateways.some(g => g.gatewayId === 'paypal');
   const isPaystackEnabled = enabledGateways.some(g => g.gatewayId === 'paystack');
   
-  // Check if Dodo Payments is enabled
+  // Check if DodoPayments is enabled
   const dodoGateway = enabledGateways.find(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
   const isDodoEnabled = !!dodoGateway;
   const isDodoTestMode = dodoGateway?.testMode === true;
 
-  // Initialize Dodo Payments overlay checkout SDK
+  // Initialize DodoPayments overlay checkout SDK
   const [dodoInitialized, setDodoInitialized] = useState(false);
   
   useEffect(() => {
@@ -104,7 +104,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         DodoPayments.Initialize({
           mode: dodoMode,
           onEvent: (event: any) => {
-            console.log("Dodo checkout event (voucher):", event);
+            console.log("Card checkout event (voucher):", event);
             
             if (event.event_type === "checkout.redirect") {
               // Payment successful - show success screen
@@ -113,7 +113,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                 amount: effectiveAmount,
                 voucherCode: 'Processing...',
                 recipientEmail: sendToSelf ? (buyerEmail || user?.email) : recipientEmail,
-                paymentMethod: 'Card (DodoPay)',
+                paymentMethod: 'Card',
               });
               setProcessing(false);
               setStep('success');
@@ -121,14 +121,14 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             } else if (event.event_type === "checkout.closed") {
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
-              console.error("Dodo checkout error:", event.data);
+              console.error("Card checkout error:", event.data);
               setError(event.data?.message || "Payment failed");
               setProcessing(false);
             }
           }
         });
         setDodoInitialized(true);
-        console.log(`✅ Dodo Payments overlay SDK initialized (voucher) - mode: ${dodoMode}`);
+        console.log(`✅ DodoPayments overlay SDK initialized (voucher) - mode: ${dodoMode}`);
       } catch (error) {
         console.warn("Failed to initialize Dodo overlay SDK:", error);
       }
@@ -520,8 +520,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
     }
   };
 
-  // Handle Dodo Payment - Dynamic product creation for vouchers
-  const handleDodoPayment = async () => {
+  // Handle Card Payment - Dynamic product creation for vouchers
+  const handleDodoCardPayment = async () => {
     setProcessing(true);
     setError(null);
     try {
@@ -562,8 +562,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         throw new Error(data.error || 'Failed to initialize payment');
       }
     } catch (err: any) {
-      console.error("DodoPay voucher payment error:", err);
-      setError(err.message || 'Failed to initialize DodoPay payment');
+      console.error("Card voucher payment error:", err);
+      setError(err.message || 'Failed to initialize Card payment');
       setProcessing(false);
     }
   };
@@ -583,7 +583,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         handleSystemWalletPayment();
         break;
       case 'dodopay':
-        handleDodoPayment();
+        handleDodoCardPayment();
         break;
       default:
         setError("Please select a payment method");

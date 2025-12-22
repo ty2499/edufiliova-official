@@ -172,14 +172,14 @@ export default function NewPaymentModal({
         DodoPayments.Initialize({
           mode: dodoMode,
           onEvent: (event: any) => {
-            console.log("Dodo checkout event:", event);
+            console.log("Card checkout event:", event);
             
             if (event.event_type === "checkout.redirect") {
               // Payment successful - show success screen in modal
               setPaymentDetails({
                 transactionId: event.data?.payment_id || 'Completed',
                 date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-                paymentMethod: 'Card (DodoPay)',
+                paymentMethod: 'Card',
                 total: finalPriceUSD,
                 currency: '$',
                 courseId: courseId,
@@ -192,7 +192,7 @@ export default function NewPaymentModal({
             } else if (event.event_type === "checkout.closed") {
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
-              console.error("Dodo checkout error:", event.data);
+              console.error("Card checkout error:", event.data);
               setProcessing(false);
             }
           }
@@ -206,7 +206,7 @@ export default function NewPaymentModal({
   }, [isDodoEnabled, isDodoTestMode, dodoInitialized, finalPriceUSD, courseId]);
   
   // Handle Dodo Payment - Dynamic product creation for courses
-  const handleDodoPayment = async () => {
+  const handleCardPayment = async () => {
     setProcessing(true);
     try {
       // Create dynamic checkout session via API
@@ -242,7 +242,7 @@ export default function NewPaymentModal({
         throw new Error(data.error || 'Failed to initialize payment');
       }
     } catch (error: any) {
-      console.error("DodoPay payment error:", error);
+      console.error("Card payment error:", error);
       setPaymentDetails({
         transactionId: 'N/A',
         date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
@@ -250,7 +250,7 @@ export default function NewPaymentModal({
         total: finalPriceUSD,
         currency: '$',
         courseId: courseId,
-        errorMessage: error.message || 'Failed to initialize DodoPay payment. Please try again or use another payment method.'
+        errorMessage: error.message || 'Failed to initialize Card payment. Please try again or use another payment method.'
       });
       setPaymentStatus('failed');
       setShowSuccess(true);
@@ -1215,7 +1215,7 @@ export default function NewPaymentModal({
                       </p>
                     </div>
                     <Button
-                      onClick={handleDodoPayment}
+                      onClick={handleCardPayment}
                       disabled={processing}
                       className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-12 text-base font-semibold rounded-xl"
                       data-testid="button-dodopay-checkout"

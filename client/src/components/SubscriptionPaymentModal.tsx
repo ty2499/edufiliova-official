@@ -84,12 +84,12 @@ export default function SubscriptionPaymentModal({
   // Check if PayPal is enabled (should always show if enabled)
   const isPayPalEnabled = enabledGateways.some(g => g.gatewayId === 'paypal');
   
-  // Check if Dodo Payments is enabled (should always show if enabled)
+  // Check if DodoPayments is enabled (should always show if enabled)
   const dodoGateway = enabledGateways.find(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
   const isDodoEnabled = !!dodoGateway;
   const isDodoTestMode = dodoGateway?.testMode === true;
   
-  // Initialize Dodo Payments overlay checkout SDK
+  // Initialize DodoPayments overlay checkout SDK
   const [dodoInitialized, setDodoInitialized] = useState(false);
   
   useEffect(() => {
@@ -99,7 +99,7 @@ export default function SubscriptionPaymentModal({
         DodoPayments.Initialize({
           mode: dodoMode,
           onEvent: async (event: any) => {
-            console.log("Dodo checkout event:", event);
+            console.log("Card checkout event:", event);
             
             if (event.event_type === "checkout.redirect") {
               // Payment successful - confirm subscription in backend
@@ -118,16 +118,16 @@ export default function SubscriptionPaymentModal({
                 });
                 
                 const confirmData = await confirmResponse.json();
-                console.log('DodoPay subscription confirmed:', confirmData);
+                console.log('Card subscription confirmed:', confirmData);
               } catch (err) {
-                console.error('Failed to confirm DodoPay subscription:', err);
+                console.error('Failed to confirm Card subscription:', err);
               }
               
               // Show success screen in modal
               setPaymentDetails({
                 transactionId: event.data?.payment_id || 'Completed',
                 date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-                paymentMethod: 'Card (DodoPay)',
+                paymentMethod: 'Card',
                 total: plan.price,
                 currency: '$',
                 planName: plan.name,
@@ -141,14 +141,14 @@ export default function SubscriptionPaymentModal({
             } else if (event.event_type === "checkout.closed") {
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
-              console.error("Dodo checkout error:", event.data);
+              console.error("Card checkout error:", event.data);
               setError(event.data?.message || "Payment failed");
               setProcessing(false);
             }
           }
         });
         setDodoInitialized(true);
-        console.log(`✅ Dodo Payments overlay SDK initialized (subscription) - mode: ${dodoMode}`);
+        console.log(`✅ DodoPayments overlay SDK initialized (subscription) - mode: ${dodoMode}`);
       } catch (error) {
         console.warn("Failed to initialize Dodo overlay SDK:", error);
       }
@@ -476,8 +476,8 @@ export default function SubscriptionPaymentModal({
 
   const initializePaystack = usePaystackPayment(paystackConfig);
 
-  // Handle Dodo Payment - Dynamic product creation
-  const handleDodoPayment = async () => {
+  // Handle Card Payment - Dynamic product creation
+  const handleDodoCardPayment = async () => {
     setProcessing(true);
     setError('');
     try {
@@ -514,8 +514,8 @@ export default function SubscriptionPaymentModal({
         throw new Error(data.error || 'Failed to initialize payment');
       }
     } catch (error: any) {
-      console.error("DodoPay payment error:", error);
-      setError(error.message || 'Failed to initialize DodoPay payment');
+      console.error("Card payment error:", error);
+      setError(error.message || 'Failed to initialize Card payment');
       setProcessing(false);
     }
   };
@@ -1241,7 +1241,7 @@ export default function SubscriptionPaymentModal({
                   )}
                   
                   <Button
-                    onClick={handleDodoPayment}
+                    onClick={handleDodoCardPayment}
                     disabled={processing}
                     className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white py-6 text-base font-semibold rounded-xl"
                     data-testid="button-dodopay-checkout"

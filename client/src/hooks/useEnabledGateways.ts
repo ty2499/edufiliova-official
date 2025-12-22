@@ -12,13 +12,14 @@ export interface PaymentGateway {
 }
 
 // DodoPay is always available as the primary card payment method
-const DODOPAY_GATEWAY: PaymentGateway = {
+// DodoPay will be added from admin settings, but as fallback if not configured
+const DODOPAY_FALLBACK: PaymentGateway = {
   gatewayId: 'dodopay',
   gatewayName: 'Card',
-  isPrimary: true,
+  isPrimary: false,
   supportedCurrencies: ['USD'],
   features: ['card'],
-  testMode: true,
+  testMode: true,  // Fallback only - admin settings take priority
   isEnabled: true
 };
 
@@ -33,7 +34,7 @@ export function useEnabledGateways() {
       const hasDodoPay = gateways.some(g => g.gatewayId === 'dodopay' || g.gatewayId === 'dodo');
       if (!hasDodoPay) {
         // Add DodoPay as the first (primary) gateway
-        return [DODOPAY_GATEWAY, ...gateways];
+        return [DODOPAY_FALLBACK, ...gateways];
       }
       
       return gateways;

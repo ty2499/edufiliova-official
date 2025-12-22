@@ -50,7 +50,7 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
         DodoPayments.Initialize({
           mode: dodoMode,
           onEvent: async (event: any) => {
-            console.log("Dodo checkout event (freelancer):", event);
+            console.log("Card checkout event (freelancer):", event);
             
             if (event.event_type === "checkout.redirect") {
               // Confirm the freelancer plan upgrade with the backend
@@ -70,9 +70,9 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
                 });
                 
                 const confirmData = await confirmResponse.json();
-                console.log('DodoPay freelancer plan confirmed:', confirmData);
+                console.log('Card freelancer plan confirmed:', confirmData);
               } catch (err) {
-                console.error('Failed to confirm DodoPay freelancer plan:', err);
+                console.error('Failed to confirm Card freelancer plan:', err);
               }
               
               queryClient.invalidateQueries({ queryKey: ['/api/me/profile'] });
@@ -82,7 +82,7 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
             } else if (event.event_type === "checkout.closed") {
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
-              console.error("Dodo checkout error:", event.data);
+              console.error("Card checkout error:", event.data);
               setProcessing(false);
             }
           }
@@ -104,8 +104,8 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
     });
   }, []);
 
-  // Handle DodoPay payment for freelancer plans
-  const handleDodoPayment = async () => {
+  // Handle Card payment for freelancer plans
+  const handleCardPayment = async () => {
     setProcessing(true);
     try {
       const response = await fetch('/api/dodopay/checkout-session', {
@@ -136,11 +136,11 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
           window.location.href = data.checkoutUrl;
         }
       } else {
-        console.error('DodoPay checkout error:', data.error);
+        console.error('Card checkout error:', data.error);
         setProcessing(false);
       }
     } catch (error) {
-      console.error('DodoPay payment error:', error);
+      console.error('Card payment error:', error);
       setProcessing(false);
     }
   };
@@ -309,7 +309,7 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
                   Complete your payment securely using your credit or debit card.
                 </p>
                 <Button
-                  onClick={handleDodoPayment}
+                  onClick={handleCardPayment}
                   disabled={processing}
                   className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white py-6 text-base font-semibold rounded-xl"
                   data-testid="button-dodopay-checkout"
