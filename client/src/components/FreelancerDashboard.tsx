@@ -1427,6 +1427,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
       checkoutUrl.searchParams.set('clientSecret', response.clientSecret);
       checkoutUrl.searchParams.set('amount', amount.toString());
       checkoutUrl.searchParams.set('planName', planName);
+      checkoutUrl.searchParams.set('planId', planId);
       checkoutUrl.searchParams.set('billingCycle', billingPeriod);
       window.history.pushState({}, '', checkoutUrl.toString());
       
