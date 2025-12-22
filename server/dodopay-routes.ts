@@ -224,7 +224,7 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
             name: itemName,
             description: `${productType} - ${itemName}`,
             type: 'digital',
-            tax_category: 'no_tax',
+            tax_category: 'digital_products',
           } as any);
           // Retry checkout session
           checkoutSession = await dodo.checkoutSessions.create(checkoutRequest);
