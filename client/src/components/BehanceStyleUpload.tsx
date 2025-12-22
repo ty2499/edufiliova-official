@@ -334,7 +334,7 @@ export default function BehanceStyleUpload({
         console.error('Upload error:', error);
       }
     },
-    [images, onImagesChange, maxImages, maxSizePerImage, compressionQuality, maxWidth, maxHeight, convertToWebP, toast]
+    [images, onImagesChange, maxImages, maxSizePerImage, compressionQuality, maxWidth, maxHeight, convertToWebP]
   );
 
   // Single file upload with progress
