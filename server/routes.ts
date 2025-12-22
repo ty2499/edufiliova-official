@@ -33847,17 +33847,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(eq(courses.id, courseId));
 
       // Record the payment
+      const orderAmount = amount?.toString() || course.price?.toString() || '0';
       await db.insert(orders).values({
         userId: user.id,
-        type: 'course',
-        itemId: courseId,
-        itemName: course.title,
-        amount: amount?.toString() || course.price?.toString() || '0',
+        totalAmount: orderAmount,
+        amount: orderAmount,
         currency: 'USD',
         paymentMethod: 'dodopay',
-        paymentStatus: 'completed',
         status: 'paid',
-        paymentId: paymentId || 'dodopay_checkout',
         createdAt: new Date(),
         updatedAt: new Date()
       });
