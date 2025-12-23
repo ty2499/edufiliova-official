@@ -27,15 +27,15 @@ export function CheckmarkIcon({ className, size = "md", variant = "default" }: C
   const variantClasses = {
     default: {
       bg: "bg-white",
-      check: "text-gray-900"
+      check: "text-[#a0fab2]"
     },
     success: {
       bg: "bg-green-500",
-      check: "text-white"
+      check: "text-[#a0fab2]"
     },
     primary: {
       bg: "bg-primary",
-      check: "text-white"
+      check: "text-[#a0fab2]"
     }
   };
 
