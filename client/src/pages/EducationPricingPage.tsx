@@ -234,7 +234,7 @@ const EducationPricingPage = ({ onNavigate }: EducationPricingPageProps) => {
                     <Button
                       onClick={() => onNavigate('auth')}
                       variant={tier.buttonVariant}
-                      className="w-full bg-[#a0fab2] text-[#2f5a4e] hover:bg-[#a0fab2] hover:text-[#2f5a4e] font-semibold"
+                      className="w-full bg-white/10 text-white hover:bg-[#a0fab2] hover:text-[#2f5a4e] font-semibold border border-white/20"
                       data-testid={`button-get-started-${tier.name.toLowerCase()}`}
                     >
                       {tier.buttonText}
