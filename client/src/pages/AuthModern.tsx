@@ -711,7 +711,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             value={formData.loginIdentifier}
             onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
             placeholder={`Enter your ${formData.loginMethod === 'email' ? 'email address' : formData.loginMethod === 'phone' ? 'phone number' : 'ID number'}`}
-            className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.loginIdentifier ? 'border-primary' : ''}`}
+            className="h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500"
             data-testid="input-login-identifier"
           />
           {errors.loginIdentifier && <p className="text-sm text-primary-500 mt-1">{errors.loginIdentifier}</p>}
@@ -728,7 +728,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Enter your password"
-              className={`h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-primary' : ''}`}
+              className="h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500"
               data-testid="input-password"
             />
             <Button
