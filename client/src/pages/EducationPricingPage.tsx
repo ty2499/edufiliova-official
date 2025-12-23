@@ -234,11 +234,7 @@ const EducationPricingPage = ({ onNavigate }: EducationPricingPageProps) => {
                     <Button
                       onClick={() => onNavigate('auth')}
                       variant={tier.buttonVariant}
-                      className={`w-full ${
-                        tier.highlighted
-                          ? 'bg-purple-500 text-white hover:bg-primary'
-                          : 'bg-white/10 text-white hover:bg-white/20 border-gray-600'
-                      }`}
+                      className="w-full bg-[#a0fab2] text-[#2f5a4e] hover:bg-[#a0fab2] hover:text-[#2f5a4e] font-semibold"
                       data-testid={`button-get-started-${tier.name.toLowerCase()}`}
                     >
                       {tier.buttonText}
@@ -282,7 +278,7 @@ const EducationPricingPage = ({ onNavigate }: EducationPricingPageProps) => {
                   {section.items.map((item, itemIndex) => (
                     <div
                       key={item.name}
-                      className="grid grid-cols-1 md:grid-cols-4 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors" transition-all duration-300
+                      className="grid grid-cols-1 md:grid-cols-4 gap-4 px-6 py-4"
                     >
                       <div className="font-medium text-gray-900 flex items-center">
                         {item.name}
