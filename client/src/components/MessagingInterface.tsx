@@ -2082,9 +2082,9 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                 className={cn(
                   "flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap",
                   activeTab === tab.key
-                    ? "bg-blue-500 text-white shadow-sm"
+                    ? "bg-[#2f5a4e] text-white shadow-sm"
                     : tab.key === 'chats' && tab.hasUnread
-                      ? "bg-blue-100 text-blue-600 hover:bg-blue-200" // Highlight chats tab when there are unreads
+                      ? "bg-[#2f5a4e]/20 text-[#2f5a4e] hover:bg-[#2f5a4e]/30" // Highlight chats tab when there are unreads
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 )}
                 data-testid={`tab-${tab.key}`}
