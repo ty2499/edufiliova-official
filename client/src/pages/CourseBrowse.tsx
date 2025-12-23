@@ -652,7 +652,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                 <p className="text-muted-foreground mb-4">
                   You haven't enrolled in any courses yet.
                 </p>
-                <Button onClick={() => setActiveTab('browse')}>
+                <Button onClick={() => setActiveTab('browse')} className="bg-[#2f5a4e] hover:bg-[#a0fab2] text-white hover:text-[#2f5a4e]">
                   Browse Courses
                 </Button>
               </div>
@@ -674,7 +674,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                 <p className="text-muted-foreground mb-4">
                   Complete courses to earn certificates. Once you finish a course with 100% progress, you can claim your certificate here!
                 </p>
-                <Button onClick={() => setActiveTab('browse')} data-testid="button-browse-from-certificates">
+                <Button onClick={() => setActiveTab('browse')} data-testid="button-browse-from-certificates" className="bg-[#2f5a4e] hover:bg-[#a0fab2] text-white hover:text-[#2f5a4e]">
                   <BookOpen className="h-4 w-4 mr-2" />
                   Browse Courses
                 </Button>
