@@ -115,61 +115,65 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
     const urlParams = new URLSearchParams(window.location.search);
     const appIdParam = urlParams.get('applicationId');
 
+    const loadApplication = async (id: string) => {
+      try {
+        const res = await fetch(resolveApiUrl(`/api/freelancer/applications/${id}`));
+        if (!res.ok) throw new Error(`Failed to fetch application: ${res.status}`);
+        
+        const data = await res.json();
+        if (data && data.success !== false) {
+          setFullName(data.fullName || '');
+          setDisplayName(data.displayName || '');
+          setEmail(data.email || '');
+          setCountry(data.country || '');
+          setPrimaryCategory(data.primaryCategory || '');
+          setTagline(data.tagline || '');
+          setAbout(data.about || '');
+          
+          if (data.skills) {
+            const skillsArray = typeof data.skills === 'string' ? JSON.parse(data.skills) : data.skills;
+            setSelectedSkills(Array.isArray(skillsArray) ? skillsArray : []);
+          }
+          
+          if (data.servicesOffered) {
+            const servicesArray = typeof data.servicesOffered === 'string' ? JSON.parse(data.servicesOffered) : data.servicesOffered;
+            setServicesOffered(Array.isArray(servicesArray) ? servicesArray : []);
+          }
+          
+          setBehanceUrl(data.behanceUrl || '');
+          setGithubUrl(data.githubUrl || '');
+          setWebsiteUrl(data.websiteUrl || '');
+          console.log('✅ Application data loaded successfully');
+        } else {
+          throw new Error(data.error || 'Invalid application data');
+        }
+      } catch (err) {
+        console.error('Failed to load application data:', err);
+        setErrorMessages({ submit: 'Failed to load your application. Please try again or contact support.' });
+      }
+    };
+
     if (appIdParam) {
       setApplicationId(appIdParam);
-      
-      fetch(resolveApiUrl(`/api/freelancer/applications/${appIdParam}`))
-        .then(res => {
-          if (!res.ok) {
-            throw new Error(`Failed to fetch application: ${res.status}`);
-          }
-          return res.json();
-        })
+      loadApplication(appIdParam);
+    } else if (user?.id) {
+      // No applicationId in URL - try to get or create one
+      fetch(resolveApiUrl('/api/freelancer/applications/user/current'))
+        .then(res => res.json())
         .then(data => {
-          if (data && data.success !== false) {
-            // Populate basic info fields (overrides profile data when editing)
-            setFullName(data.fullName || '');
-            setDisplayName(data.displayName || '');
-            setEmail(data.email || '');
-            setCountry(data.country || '');
-            
-            // Populate professional fields
-            setPrimaryCategory(data.primaryCategory || '');
-            setTagline(data.tagline || '');
-            setAbout(data.about || '');
-            
-            // Parse and populate skills array
-            if (data.skills) {
-              const skillsArray = typeof data.skills === 'string' 
-                ? JSON.parse(data.skills) 
-                : data.skills;
-              setSelectedSkills(Array.isArray(skillsArray) ? skillsArray : []);
-            }
-            
-            // Parse and populate services array
-            if (data.servicesOffered) {
-              const servicesArray = typeof data.servicesOffered === 'string' 
-                ? JSON.parse(data.servicesOffered) 
-                : data.servicesOffered;
-              setServicesOffered(Array.isArray(servicesArray) ? servicesArray : []);
-            }
-            
-            // Populate portfolio links
-            setBehanceUrl(data.behanceUrl || '');
-            setGithubUrl(data.githubUrl || '');
-            setWebsiteUrl(data.websiteUrl || '');
-            
-            console.log('✅ Application data loaded successfully');
-          } else {
-            throw new Error(data.error || 'Invalid application data');
+          if (data.success && data.application) {
+            const newAppId = data.application.id;
+            setApplicationId(newAppId);
+            window.history.replaceState({}, '', `?applicationId=${newAppId}`);
+            loadApplication(newAppId);
           }
         })
         .catch(err => {
-          console.error('Failed to load application data:', err);
-          setErrorMessages({ submit: 'Failed to load your application. Please try again or contact support.' });
+          console.error('Failed to get current application:', err);
+          setErrorMessages({ submit: 'Failed to initialize your application. Please try again.' });
         });
     }
-  }, []);
+  }, [user?.id]);
 
   const clearError = (field: string) => {
     if (errorMessages[field]) {

@@ -1084,4 +1084,79 @@ router.post('/applications/:id/resubmit', async (req, res) => {
   }
 });
 
+// Get or create freelancer application for authenticated user
+router.get('/applications/user/current', async (req, res) => {
+  try {
+    const userId = req.headers['x-user-id'] as string;
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        error: 'Unauthorized - Please log in'
+      });
+    }
+
+    // Try to find existing application for this user
+    const [existingApp] = await db
+      .select()
+      .from(freelancerApplications)
+      .where(eq(freelancerApplications.userId, userId))
+      .limit(1);
+
+    if (existingApp) {
+      return res.json({
+        success: true,
+        application: existingApp
+      });
+    }
+
+    // Create new application for authenticated user
+    const userRecord = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1);
+
+    if (userRecord.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    const userProf = await db
+      .select()
+      .from(profiles)
+      .where(eq(profiles.userId, userId))
+      .limit(1);
+
+    const profileData = userProf[0] || {};
+
+    const [newApp] = await db.insert(freelancerApplications).values({
+      userId,
+      fullName: profileData.name || '',
+      displayName: profileData.displayName || '',
+      email: userRecord[0].email,
+      phoneNumber: profileData.phoneNumber || '',
+      country: profileData.country || '',
+      primaryCategory: '',
+      tagline: '',
+      about: '',
+      skills: [],
+      servicesOffered: [],
+      status: 'pending'
+    }).returning();
+
+    res.json({
+      success: true,
+      application: newApp
+    });
+  } catch (error) {
+    console.error('Error getting/creating freelancer application:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to get or create application'
+    });
+  }
+});
+
 export default router;
