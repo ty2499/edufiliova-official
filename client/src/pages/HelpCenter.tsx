@@ -839,7 +839,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             </Card>
             
             {supportOptions.map((option, index) => (
-              <Card key={index} className={`hover-lift transition-all duration-200 ${option.primary ? 'ring-2 ring-primary' : ''}`}>
+              <Card key={index} className={`${option.primary ? 'border-2 border-primary' : ''}`}>
                 <CardHeader className="text-center">
                   <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 ${
                     option.primary ? 'bg-primary text-primary-foreground' : 'bg-muted'
@@ -932,7 +932,8 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             <div className="flex flex-wrap justify-center gap-3 mb-8">
               <Button
                 onClick={() => setSelectedCategory("all")}
-                className={`rounded-full ${selectedCategory === "all" ? 'bg-primary text-white' : 'bg-transparent text-foreground'}`}
+                style={selectedCategory === "all" ? { backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' } : { backgroundColor: 'transparent', color: 'inherit', border: '1px solid #2f5a4e' }}
+                className="rounded-full"
                 data-testid="button-category-all"
               >
                 All Categories
@@ -941,7 +942,8 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <Button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`rounded-full ${selectedCategory === category.id ? 'bg-primary text-white' : 'bg-transparent text-foreground'}`}
+                  style={selectedCategory === category.id ? { backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' } : { backgroundColor: 'transparent', color: 'inherit', border: '1px solid #2f5a4e' }}
+                  className="rounded-full"
                   data-testid={`button-category-${category.id}`}
                 >
                   <category.icon className="h-4 w-4 mr-2" style={{ color: selectedCategory === category.id ? '#ffffff' : '#2f5a4e' }} />
@@ -1015,7 +1017,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Privacy & Security */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
@@ -1041,7 +1043,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Terms of Service */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
@@ -1067,7 +1069,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Student Terms */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
@@ -1093,7 +1095,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Teacher Terms */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
@@ -1119,7 +1121,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* School/Institution Terms */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
@@ -1145,7 +1147,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Payment & Billing Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center flex-shrink-0">
@@ -1171,7 +1173,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Refund Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
@@ -1197,7 +1199,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Cookies Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-pink-100 flex items-center justify-center flex-shrink-0">
@@ -1223,7 +1225,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* WhatsApp Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center flex-shrink-0">
@@ -1249,7 +1251,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Data Retention Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
@@ -1275,7 +1277,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Community Guidelines */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
+              <Card className="border-2 border-primary/20">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
@@ -1306,29 +1308,29 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               <h3 className="text-xl font-semibold mb-4 text-center">Additional Resources</h3>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
                 <Button 
-                  variant="outline" 
-                  className="h-auto py-4 flex-col gap-2"
+                  style={{ backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' }}
+                  className="h-auto py-4 flex-col gap-2 rounded-lg"
                   data-testid="button-resource-mobile"
                 >
-                  <Download className="h-6 w-6" style={{ color: '#2f5a4e' }} />
+                  <Download className="h-6 w-6" style={{ color: '#ffffff' }} />
                   <span className="font-medium">Download Mobile App</span>
                 </Button>
                 <Button 
-                  variant="outline" 
-                  className="h-auto py-4 flex-col gap-2"
+                  style={{ backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' }}
+                  className="h-auto py-4 flex-col gap-2 rounded-lg"
                   onClick={() => onNavigate("contact")} 
                   data-testid="button-resource-contact"
                 >
-                  <MessageCircle className="h-6 w-6" style={{ color: '#2f5a4e' }} />
+                  <MessageCircle className="h-6 w-6" style={{ color: '#ffffff' }} />
                   <span className="font-medium">Contact Form</span>
                 </Button>
                 <Button 
-                  variant="outline" 
-                  className="h-auto py-4 flex-col gap-2"
+                  style={{ backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' }}
+                  className="h-auto py-4 flex-col gap-2 rounded-lg"
                   onClick={() => onNavigate("about")} 
                   data-testid="button-resource-about"
                 >
-                  <BookOpen className="h-6 w-6" style={{ color: '#2f5a4e' }} />
+                  <BookOpen className="h-6 w-6" style={{ color: '#ffffff' }} />
                   <span className="font-medium">About Us</span>
                 </Button>
               </div>
