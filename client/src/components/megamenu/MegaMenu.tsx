@@ -46,8 +46,8 @@ export const MegaMenuItem = ({ icon, title, description, onClick, badge, testId,
             <img src={image} alt={title} className="w-full h-full object-cover" />
           </div>
         ) : (
-          <div className={`flex-shrink-0 w-12 h-12 ${iconBg || 'bg-white/10'} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`} style={{backgroundColor: iconBg ? undefined : 'rgba(255, 255, 255, 0.1)'}}>
-            <div style={{color: iconColor || '#ffffff'}} className="text-lg">
+          <div className={`flex-shrink-0 w-12 h-12 ${iconBg || 'bg-[#a0fab2]'} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`} style={{backgroundColor: iconBg ? undefined : '#a0fab2'}}>
+            <div style={{color: iconColor || '#2f5a4e'}} className="text-lg">
               {icon}
             </div>
           </div>
