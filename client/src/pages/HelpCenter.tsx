@@ -784,7 +784,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             
             {/* Search Bar */}
             <div className="relative max-w-2xl mx-auto mb-4">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: '#0C332C' }} />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: '#2f5a4e' }} />
               <Input
                 type="text"
                 placeholder="Search for answers, guides, or topics..."
@@ -801,7 +801,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   onClick={() => setSearchQuery("")}
                   data-testid="button-clear-search"
                 >
-                  <XCircle className="h-5 w-5" style={{ color: '#0C332C' }} />
+                  <XCircle className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                 </Button>
               )}
             </div>
@@ -826,7 +826,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
               <CardHeader className="text-center">
                 <div className="w-16 h-16 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                  <Headphones className="h-8 w-8" style={{ color: '#0C332C' }} />
+                  <Headphones className="h-8 w-8" style={{ color: '#2f5a4e' }} />
                 </div>
                 <CardTitle className="text-lg">We're Here to Help</CardTitle>
                 <CardDescription>Multiple ways to reach our support team</CardDescription>
@@ -844,18 +844,18 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 ${
                     option.primary ? 'bg-primary text-primary-foreground' : 'bg-muted'
                   }`}>
-                    <option.icon className="h-8 w-8" style={{ color: '#0C332C' }} />
+                    <option.icon className="h-8 w-8" style={{ color: '#2f5a4e' }} />
                   </div>
                   <CardTitle className="text-lg">{option.method}</CardTitle>
                   <CardDescription>{option.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
                   <div className="text-sm text-muted-foreground mb-4">
-                    <Clock className="h-4 w-4 inline mr-1" style={{ color: '#0C332C' }} />
+                    <Clock className="h-4 w-4 inline mr-1" style={{ color: '#2f5a4e' }} />
                     {option.availability}
                   </div>
                   <Button 
-                    className={`w-full ${option.primary ? 'bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-[#ffffff]' : 'variant-outline'}`}
+                    className={`w-full ${option.primary ? 'bg-primary text-[#ffffff]' : 'variant-outline'}`}
                     onClick={() => {
                       if (option.method === "Live Chat Support") {
                         setIsChatOpen(true);
@@ -890,12 +890,12 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <guide.icon className="h-6 w-6" style={{ color: '#0C332C' }} />
+                        <guide.icon className="h-6 w-6" style={{ color: '#2f5a4e' }} />
                       </div>
                       <div>
                         <CardTitle className="text-lg">{guide.title}</CardTitle>
                         <div className="text-sm text-muted-foreground flex items-center gap-1">
-                          <Clock className="h-4 w-4" style={{ color: '#0C332C' }} />
+                          <Clock className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                           {guide.duration}
                         </div>
                       </div>
@@ -945,7 +945,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   className="rounded-full"
                   data-testid={`button-category-${category.id}`}
                 >
-                  <category.icon className="h-4 w-4 mr-2" style={{ color: '#0C332C' }} />
+                  <category.icon className="h-4 w-4 mr-2" style={{ color: '#2f5a4e' }} />
                   {category.title}
                 </Button>
               ))}
@@ -957,7 +957,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             {totalResults === 0 ? (
               <Card className="text-center py-12">
                 <CardContent>
-                  <HelpCircle className="h-16 w-16 mx-auto mb-4" style={{ color: '#0C332C' }} />
+                  <HelpCircle className="h-16 w-16 mx-auto mb-4" style={{ color: '#2f5a4e' }} />
                   <h3 className="text-xl font-semibold mb-2">No results found</h3>
                   <p className="text-muted-foreground mb-6">
                     Try different keywords or browse by category
@@ -973,7 +973,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded-lg ${category.color} flex items-center justify-center`}>
-                        <category.icon className="h-5 w-5" style={{ color: '#0C332C' }} />
+                        <category.icon className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                       </div>
                       {category.title}
                       <Badge variant="secondary">{faqs.length} {faqs.length === 1 ? 'question' : 'questions'}</Badge>
@@ -1008,7 +1008,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
           <section className="mb-16">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-3 flex items-center gap-2 justify-center">
-                <BookOpen className="h-7 w-7" style={{ color: '#0C332C' }} />
+                <BookOpen className="h-7 w-7" style={{ color: '#2f5a4e' }} />
                 Legal & Policy Resources
               </h2>
               <p className="text-muted-foreground">Browse our complete collection of policies, terms, and guidelines</p>
@@ -1020,7 +1020,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                      <Shield className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <Shield className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Privacy Policy</CardTitle>
@@ -1036,7 +1036,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-privacy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1046,7 +1046,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
-                      <FileText className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <FileText className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Terms of Service</CardTitle>
@@ -1062,7 +1062,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-terms"
                   >
                     View Terms
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1072,7 +1072,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
-                      <GraduationCap className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <GraduationCap className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Student Terms</CardTitle>
@@ -1088,7 +1088,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-student-terms"
                   >
                     View Terms
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1098,7 +1098,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
-                      <Users className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <Users className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Teacher Terms</CardTitle>
@@ -1114,7 +1114,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-teacher-terms"
                   >
                     View Terms
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1124,7 +1124,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                      <BookOpen className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <BookOpen className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">School Terms</CardTitle>
@@ -1140,7 +1140,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-school-terms"
                   >
                     View Terms
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1150,7 +1150,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center flex-shrink-0">
-                      <CreditCard className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <CreditCard className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Payment Policy</CardTitle>
@@ -1166,7 +1166,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-payment-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1176,7 +1176,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
-                      <DollarSign className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <DollarSign className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Refund Policy</CardTitle>
@@ -1192,7 +1192,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-refund-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1202,7 +1202,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-pink-100 flex items-center justify-center flex-shrink-0">
-                      <Eye className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <Eye className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Cookies Policy</CardTitle>
@@ -1218,7 +1218,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-cookies-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1228,7 +1228,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center flex-shrink-0">
-                      <MessageCircle className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <MessageCircle className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">WhatsApp Policy</CardTitle>
@@ -1244,7 +1244,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-whatsapp-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1254,7 +1254,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
-                      <Calendar className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <Calendar className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Data Retention</CardTitle>
@@ -1270,7 +1270,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-data-retention-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1280,7 +1280,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                      <Users className="h-5 w-5" style={{ color: '#0C332C' }} />
+                      <Users className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1">
                       <CardTitle className="text-base mb-1">Community Guidelines</CardTitle>
@@ -1296,7 +1296,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     data-testid="button-resource-community-guidelines"
                   >
                     View Guidelines
-                    <ArrowRight className="h-4 w-4" style={{ color: '#0C332C' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1311,7 +1311,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" transition-all duration-300 
                   data-testid="button-resource-mobile"
                 >
-                  <Download className="h-6 w-6" style={{ color: '#0C332C' }} />
+                  <Download className="h-6 w-6" style={{ color: '#2f5a4e' }} />
                   <span className="font-medium">Download Mobile App</span>
                 </Button>
                 <Button 
@@ -1320,7 +1320,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   onClick={() => onNavigate("contact")} 
                   data-testid="button-resource-contact"
                 >
-                  <MessageCircle className="h-6 w-6" style={{ color: '#0C332C' }} />
+                  <MessageCircle className="h-6 w-6" style={{ color: '#2f5a4e' }} />
                   <span className="font-medium">Contact Form</span>
                 </Button>
                 <Button 
@@ -1329,7 +1329,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   onClick={() => onNavigate("about")} 
                   data-testid="button-resource-about"
                 >
-                  <BookOpen className="h-6 w-6" style={{ color: '#0C332C' }} />
+                  <BookOpen className="h-6 w-6" style={{ color: '#2f5a4e' }} />
                   <span className="font-medium">About Us</span>
                 </Button>
               </div>
@@ -1354,7 +1354,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-[#ffffff]" transition-all duration-300
                   data-testid="button-contact-support"
                 >
-                  <MessageCircle className="h-5 w-5 mr-2" style={{color: "#0C332C"}} />
+                  <MessageCircle className="h-5 w-5 mr-2" style={{color: "#2f5a4e"}} />
                   Contact Support
                 </Button>
                 <Button 
@@ -1363,7 +1363,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   onClick={() => window.open("mailto:support@edufiliova.com", "_blank")}
                   data-testid="button-email-support"
                 >
-                  <Mail className="h-5 w-5 mr-2" style={{ color: '#0C332C' }} />
+                  <Mail className="h-5 w-5 mr-2" style={{ color: '#2f5a4e' }} />
                   Email Us
                 </Button>
               </div>
