@@ -1138,6 +1138,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                           onClick={handleQuizSubmit}
                           disabled={Object.keys(quizAnswers).length !== quiz.questions.length || submitQuizMutation.isPending}
                           size="sm"
+                          className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]/80"
                         >
                           {submitQuizMutation.isPending ? 'Submitting...' : 'Submit Quiz'}
                         </Button>
