@@ -1034,4 +1034,54 @@ router.get('/applications/status/:userId', async (req, res) => {
   }
 });
 
+// Resubmit rejected freelancer application
+router.post('/applications/:id/resubmit', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const [application] = await db
+      .select()
+      .from(freelancerApplications)
+      .where(eq(freelancerApplications.id, id))
+      .limit(1);
+
+    if (!application) {
+      return res.status(404).json({
+        error: 'Application not found',
+      });
+    }
+
+    if (application.status !== 'rejected') {
+      return res.status(400).json({
+        error: 'Only rejected applications can be resubmitted',
+      });
+    }
+
+    // Reset status to pending and clear rejection details
+    const [updatedApplication] = await db
+      .update(freelancerApplications)
+      .set({
+        status: 'pending',
+        rejectionReason: null,
+        adminNotes: null,
+        approvedBy: null,
+        approvedAt: null,
+        updatedAt: new Date(),
+      })
+      .where(eq(freelancerApplications.id, id))
+      .returning();
+
+    res.json({
+      success: true,
+      message: 'Application resubmitted successfully. Awaiting review.',
+      application: updatedApplication,
+    });
+  } catch (error) {
+    console.error('Resubmit freelancer application error:', error);
+    res.status(500).json({
+      error: 'Failed to resubmit application',
+    });
+  }
+});
+
 export default router;

@@ -872,4 +872,53 @@ router.get("/teacher-applications/status/:userId", async (req, res) => {
   }
 });
 
+// Resubmit rejected teacher application
+router.post("/teacher-applications/:id/resubmit", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const [application] = await db
+      .select()
+      .from(teacherApplications)
+      .where(eq(teacherApplications.id, id))
+      .limit(1);
+
+    if (!application) {
+      return res.status(404).json({
+        error: "Application not found",
+      });
+    }
+
+    if (application.status !== "rejected") {
+      return res.status(400).json({
+        error: "Only rejected applications can be resubmitted",
+      });
+    }
+
+    // Reset status to pending and clear admin notes
+    const [updatedApplication] = await db
+      .update(teacherApplications)
+      .set({
+        status: "pending",
+        adminNotes: null,
+        reviewedAt: null,
+        reviewedBy: null,
+        updatedAt: new Date(),
+      })
+      .where(eq(teacherApplications.id, id))
+      .returning();
+
+    res.json({
+      success: true,
+      message: "Application resubmitted successfully. Awaiting review.",
+      application: updatedApplication,
+    });
+  } catch (error) {
+    console.error("Resubmit teacher application error:", error);
+    res.status(500).json({
+      error: "Failed to resubmit application",
+    });
+  }
+});
+
 export default router;
