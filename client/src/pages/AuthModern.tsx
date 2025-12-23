@@ -1179,7 +1179,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               type="button"
               onClick={() => setCurrentStep("login")}
-              className="text-primary hover:text-purple-800 font-medium" transition-all duration-300
+              className="text-gray-900 hover:text-gray-700 font-medium" transition-all duration-300
               data-testid="link-login"
             >
               Sign in
@@ -1341,7 +1341,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-primary hover:text-purple-800 font-medium flex items-center justify-center gap-1" transition-all duration-300
+            className="text-gray-900 hover:text-gray-700 font-medium flex items-center justify-center gap-1" transition-all duration-300
             data-testid="link-back-to-login"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1647,7 +1647,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={forgotPasswordEmail}
               onChange={(e) => setForgotPasswordEmail(e.target.value)}
               placeholder="Enter your email"
-              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.forgotPasswordEmail ? 'border-primary' : ''}`}
+              className="h-11 pl-10 rounded-lg border-gray-300"
               data-testid="input-forgot-password-email"
             />
           </div>
