@@ -25,7 +25,7 @@ export default function FreelancerApplicationStatus() {
     setIsResubmitting(true);
     setResubmitError("");
     try {
-      const response = await fetch(`/api/applications/${applicationId}/resubmit`, {
+      const response = await fetch(`/api/freelancer/applications/${applicationId}/resubmit`, {
         method: 'POST',
       });
       const data = await response.json();
