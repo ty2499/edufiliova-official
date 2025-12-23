@@ -2,10 +2,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Clock, FileCheck, Mail } from 'lucide-react';
+import { Clock, FileCheck, Mail, RefreshCw, XCircle } from 'lucide-react';
 import { CheckmarkIcon } from "@/components/ui/checkmark-icon";
 import { useAuth } from '@/hooks/useAuth';
 import Logo from '@/components/Logo';
+import { useState } from 'react';
 
 interface FreelancerDashboardPendingProps {
   onNavigate?: (page: string, transition?: string) => void;
@@ -13,6 +14,29 @@ interface FreelancerDashboardPendingProps {
 
 export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPendingProps) {
   const { freelancerApplicationStatus, logout } = useAuth();
+  const [isResubmitting, setIsResubmitting] = useState(false);
+  const [resubmitError, setResubmitError] = useState("");
+
+  const handleResubmit = async () => {
+    if (!freelancerApplicationStatus?.id) return;
+    setIsResubmitting(true);
+    setResubmitError("");
+    try {
+      const response = await fetch(`/api/applications/${freelancerApplicationStatus.id}/resubmit`, {
+        method: 'POST',
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setResubmitError(data.error || "Failed to resubmit application");
+      } else {
+        window.location.reload();
+      }
+    } catch (error) {
+      setResubmitError("An error occurred while resubmitting");
+    } finally {
+      setIsResubmitting(false);
+    }
+  };
 
   const getStatusInfo = () => {
     const status = freelancerApplicationStatus?.status;
@@ -98,6 +122,38 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-6">
+          {freelancerApplicationStatus?.status === 'rejected' && (
+            <Card className="mb-6" style={{ backgroundColor: '#a0fab2', borderColor: '#2f5a4e' }}>
+              <CardContent className="pt-6 text-center">
+                <XCircle className="w-16 h-16 mx-auto mb-4" style={{ color: '#2f5a4e' }} />
+                <h2 className="text-2xl font-bold mb-2" style={{ color: '#2f5a4e' }}>Application Not Approved</h2>
+                <p className="mb-4" style={{ color: '#2f5a4e' }}>
+                  We're sorry, but your application was not approved at this time.
+                </p>
+                {freelancerApplicationStatus?.adminNotes && (
+                  <div className="bg-white/50 p-4 rounded-lg text-left mb-4 border" style={{ borderColor: '#2f5a4e' }}>
+                    <p className="font-medium mb-2" style={{ color: '#2f5a4e' }}>Feedback:</p>
+                    <p className="text-sm" style={{ color: '#2f5a4e' }}>{freelancerApplicationStatus.adminNotes}</p>
+                  </div>
+                )}
+                {resubmitError && (
+                  <div className="bg-red-100 border border-red-300 p-3 rounded-lg text-left mb-4">
+                    <p className="text-sm text-red-700">{resubmitError}</p>
+                  </div>
+                )}
+                <Button
+                  onClick={handleResubmit}
+                  disabled={isResubmitting}
+                  style={{ backgroundColor: '#2f5a4e' }}
+                  className="hover:opacity-90 text-white"
+                >
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  {isResubmitting ? "Resubmitting..." : "Resubmit Application"}
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Status Card */}
           <Card>
             <CardHeader>
