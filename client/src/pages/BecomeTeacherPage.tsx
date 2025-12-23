@@ -268,7 +268,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
           </p>
         </div>
 
-        <Card className="max-w-4xl mx-auto border-2 border-gray-200 dark:border-gray-700">
+        <Card className="max-w-4xl mx-auto border-2 border-gray-200 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-700">
           <CardContent className="p-4 sm:p-6 md:p-8 lg:p-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               {requirements.map((requirement, index) => (
@@ -277,7 +277,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
                   className="flex items-start gap-2 sm:gap-3 md:gap-4 group"
                   data-testid={`requirement-${index}`}
                 >
-                  <CheckmarkIcon size="md" className="bg-[#0C332C] flex-shrink-0 mt-0.5 sm:mt-1 transition-transform" transition-all duration-300 />
+                  <CheckmarkIcon size="md" className="bg-[#0C332C] flex-shrink-0 mt-0.5 sm:mt-1" />
                   <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base md:text-lg">
                     {requirement}
                   </p>
