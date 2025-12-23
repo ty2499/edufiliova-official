@@ -453,7 +453,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                Trending <span className="relative inline-block px-4 py-1 rounded-lg transform -rotate-1 bg-[#2f5a4e] text-[#a0fab2]">Courses</span>
+                Trending <span className="relative inline-block px-4 py-1 rounded-lg transform -rotate-1 bg-[#2f5a4e] text-[#ffffff]">Courses</span>
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Explore our most popular courses handpicked by our team of educators
