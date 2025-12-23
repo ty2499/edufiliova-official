@@ -1087,7 +1087,7 @@ router.post('/applications/:id/resubmit', async (req, res) => {
 // Get or create freelancer application for authenticated user
 router.get('/applications/user/current', async (req, res) => {
   try {
-    const userId = req.headers['x-user-id'] as string;
+    const userId = req.user?.id;
     if (!userId) {
       return res.status(401).json({
         success: false,
