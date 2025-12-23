@@ -2875,9 +2875,9 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       <h2 className="text-xl font-semibold text-foreground mb-4">Continue Reading</h2>
                       <div className="flex gap-4 overflow-x-auto pb-4">
                         {inProgressLessons.map((lesson: any, index: number) => {
-                          const colors = ['#0C332C', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
+                          const colors = ['#0C332C', '#A0FAB2', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
                           const bgColor = colors[index % colors.length];
-                          const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
+                          const isLight = ['#A0FAB2', '#a4f5a6'].includes(bgColor);
                           const textColor = isLight ? '#000000' : '#ffffff';
                           const progressPercent = lesson.progressPercent || 0;
                           
@@ -3056,9 +3056,9 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
 
                         {/* Recent Progress Cards */}
                         {dailyProgress?.recentProgress?.slice(0, 5).map((day: any, index: number) => {
-                          const colors = ['#c5f13c', '#0C332C', '#a28ff9', '#a4f5a6', '#151314'];
+                          const colors = ['#A0FAB2', '#0C332C', '#a28ff9', '#a4f5a6', '#151314'];
                           const bgColor = colors[index % colors.length];
-                          const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
+                          const isLight = ['#A0FAB2', '#a4f5a6'].includes(bgColor);
                           const textColor = isLight ? '#000000' : '#ffffff';
                           
                           return (
@@ -3124,9 +3124,9 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       
                       <div className="flex gap-4 overflow-x-auto pb-4">
                         {userNotes.slice(0, 6).map((note: any, index: number) => {
-                          const colors = ['#0C332C', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
+                          const colors = ['#0C332C', '#A0FAB2', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
                           const bgColor = colors[index % colors.length];
-                          const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
+                          const isLight = ['#A0FAB2', '#a4f5a6'].includes(bgColor);
                           const textColor = isLight ? '#000000' : '#ffffff';
                           
                           return (
@@ -3807,7 +3807,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                           <CardTitle className="text-base" data-testid={`meeting-title-${meeting.id}`}>
                                             {meeting.title}
                                           </CardTitle>
-                                          <Badge className="text-black" style={{ backgroundColor: '#c5f13c' }} data-testid={`meeting-live-${meeting.id}`}>
+                                          <Badge className="text-black" style={{ backgroundColor: '#A0FAB2' }} data-testid={`meeting-live-${meeting.id}`}>
                                             LIVE NOW
                                           </Badge>
                                         </div>

@@ -749,7 +749,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-sm text-purple-600 hover:text-purple-800 font-medium ml-auto"
+            className="text-sm text-primary hover:text-purple-800 font-medium ml-auto"
             data-testid="button-forgot-password"
           >
             Forgot password?
@@ -759,7 +759,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         <Button
           type="submit"
           className="w-full h-11 font-medium rounded-lg"
-          style={{ backgroundColor: '#c5f13c', color: '#1f2937' }}
+          style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
           disabled={loading}
           data-testid="button-login"
         >
@@ -784,8 +784,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
         <Button
           type="button"
-          className="w-full h-11 font-medium rounded-lg"
-          style={{ backgroundColor: '#c5f13c', color: '#1f2937' }}
+          className="w-full h-11 font-medium rounded-lg bg-accent text-foreground hover:bg-accent/90"
           disabled={loading}
           onClick={() => setCurrentStep("register")}
           data-testid="button-blue-action"
@@ -983,7 +982,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   id="whatsapp-opt-in"
                   checked={formData.whatsappOptIn}
                   onChange={(e) => handleCheckboxChange('whatsappOptIn', e.target.checked)}
-                  className="mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-purple-500"
                   data-testid="checkbox-whatsapp-opt-in"
                 />
                 <Label htmlFor="whatsapp-opt-in" className="text-sm text-gray-700 cursor-pointer">
@@ -1093,7 +1092,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     id={`pref-${pref}`}
                     checked={formData.learningPreferences.includes(pref)}
                     onChange={() => handleLearningPreferenceToggle(pref)}
-                    className="mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-purple-500"
                     data-testid={`checkbox-pref-${pref.toLowerCase().replace(/[\s\/]/g, '-')}`}
                   />
                   <Label htmlFor={`pref-${pref}`} className="text-sm text-gray-700 cursor-pointer">
@@ -1111,7 +1110,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               <p className="text-sm text-purple-800 mb-2">
                 <strong>Your level:</strong> {planTier}
               </p>
-              <div className="text-sm text-purple-700 space-y-1">
+              <div className="text-sm text-primary space-y-1">
                 <p className="font-medium">You can:</p>
                 <ul className="list-disc list-inside space-y-1 ml-2">
                   <li>Access 1 free lesson per subject</li>
@@ -1129,11 +1128,11 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 id="agree-terms"
                 checked={formData.agreeToTerms}
                 onChange={(e) => handleCheckboxChange('agreeToTerms', e.target.checked)}
-                className={`mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 ${errors.agreeToTerms ? 'border-primary' : ''}`}
+                className={`mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-purple-500 ${errors.agreeToTerms ? 'border-primary' : ''}`}
                 data-testid="checkbox-agree-terms"
               />
               <Label htmlFor="agree-terms" className="text-sm text-gray-700 cursor-pointer">
-                I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-purple-600 hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-purple-600 hover:underline" data-testid="link-privacy-policy">Privacy Policy</button>
+                I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-primary hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-primary hover:underline" data-testid="link-privacy-policy">Privacy Policy</button>
               </Label>
             </div>
             {errors.agreeToTerms && <p className="text-sm text-primary-500">{errors.agreeToTerms}</p>}
@@ -1144,7 +1143,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 id="confirm-student"
                 checked={formData.confirmStudent}
                 onChange={(e) => handleCheckboxChange('confirmStudent', e.target.checked)}
-                className={`mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 ${errors.confirmStudent ? 'border-primary' : ''}`}
+                className={`mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-purple-500 ${errors.confirmStudent ? 'border-primary' : ''}`}
                 data-testid="checkbox-confirm-student"
               />
               <Label htmlFor="confirm-student" className="text-sm text-gray-700 cursor-pointer">
@@ -1157,7 +1156,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <Button
             type="submit"
             className="w-full h-11 font-medium rounded-lg"
-            style={{ backgroundColor: '#c5f13c', color: '#1f2937' }}
+            style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
             disabled={loading}
             data-testid="button-register"
           >
@@ -1176,7 +1175,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               type="button"
               onClick={() => setCurrentStep("login")}
-              className="text-purple-600 hover:text-purple-800 font-medium"
+              className="text-primary hover:text-purple-800 font-medium"
               data-testid="link-login"
             >
               Sign in
@@ -1317,7 +1316,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         <Button
           type="submit"
           className="w-full h-11 font-medium rounded-lg"
-          style={{ backgroundColor: '#c5f13c', color: '#1f2937' }}
+          style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
           disabled={loading}
           data-testid="button-submit-teacher-application"
         >
@@ -1338,7 +1337,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-purple-600 hover:text-purple-800 font-medium flex items-center justify-center gap-1"
+            className="text-primary hover:text-purple-800 font-medium flex items-center justify-center gap-1"
             data-testid="link-back-to-login"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1411,7 +1410,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
     <div className="flex items-center justify-center py-8">
       <div className="w-full max-w-md mx-auto">
         <div className="text-center space-y-6">
-          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#fff5f2' }}>
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#e0f2fe' }}>
             <Mail className="h-10 w-10" style={{ color: '#0C332C' }} />
           </div>
           
@@ -1654,7 +1653,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         <Button
           type="submit"
           className="w-full h-11 font-medium rounded-lg"
-          style={{ backgroundColor: '#c5f13c', color: '#1f2937' }}
+          style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
           disabled={forgotPasswordLoading}
           data-testid="button-send-reset-link"
         >
@@ -1672,7 +1671,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-purple-600 hover:text-purple-800 font-medium flex items-center justify-center gap-1"
+            className="text-primary hover:text-purple-800 font-medium flex items-center justify-center gap-1"
             data-testid="link-back-to-login-from-forgot"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1688,7 +1687,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       <div className="mb-6 text-center">
         <div className="flex justify-center mb-4">
           <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
-            <Lock className="h-8 w-8 text-purple-600" />
+            <Lock className="h-8 w-8 text-primary" />
           </div>
         </div>
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -1731,7 +1730,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         <Button
           type="submit"
           className="w-full h-11 font-medium rounded-lg"
-          style={{ backgroundColor: '#c5f13c', color: '#1f2937' }}
+          style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
           disabled={loading || resetPin.length !== 6}
           data-testid="button-verify-reset-pin"
         >
@@ -1750,7 +1749,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-purple-600 hover:text-purple-800 font-medium"
+            className="text-primary hover:text-purple-800 font-medium"
             data-testid="button-resend-reset-code"
           >
             Request new code
@@ -1761,7 +1760,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-purple-600 hover:text-purple-800 font-medium text-sm flex items-center justify-center gap-1 mx-auto"
+            className="text-primary hover:text-purple-800 font-medium text-sm flex items-center justify-center gap-1 mx-auto"
             data-testid="link-back-to-login-from-reset"
           >
             <ArrowLeft className="h-3 w-3" />

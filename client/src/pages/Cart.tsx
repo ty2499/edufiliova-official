@@ -669,7 +669,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                           }, 500);
                         }}
                         disabled={claimStatus === 'loading' || claimStatus === 'success'}
-                        className="w-full hover:bg-[#a8cc32] py-3 text-base font-medium bg-[#c5f13c] text-[#151314]"
+                        className="w-full hover:bg-[#a8cc32] py-3 text-base font-medium bg-[#A0FAB2] text-[#151314]"
                         data-testid="button-claim-free"
                       >
                         <Download className="h-5 w-5 mr-2" />
@@ -720,7 +720,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                   <div className="text-center space-y-3">
                     <Button 
                       onClick={() => onNavigate('product-shop')}
-                      className="w-full bg-[#c5f13c] hover:bg-[#a8cc32] text-gray-900"
+                      className="w-full bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900"
                       data-testid="button-continue-shopping-summary"
                     >
                       Continue Shopping

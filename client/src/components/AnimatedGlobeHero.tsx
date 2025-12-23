@@ -15,7 +15,7 @@ const userTypeContent = [
     ctaAction: 'auth',
     secondaryCta: 'Browse Courses',
     secondaryAction: 'course-browse',
-    color: '#c5f13c'
+    color: '#A0FAB2'
   },
   {
     type: 'Teachers',
@@ -250,7 +250,7 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
                   }`}
                   style={activeIndex === index ? { 
                     backgroundColor: item.color, 
-                    color: item.color === '#c5f13c' ? '#000000' : '#ffffff' 
+                    color: item.color === '#A0FAB2' ? '#000000' : '#ffffff' 
                   } : {}}
                   data-testid={`tab-${item.type.toLowerCase()}`}
                 >
@@ -280,14 +280,14 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
                 <Button
                   size="lg"
                   onClick={() => onNavigate(currentContent.ctaAction)}
-                  className={`font-semibold px-8 py-6 text-lg rounded-full group ${currentContent.color === '#c5f13c' ? 'text-black' : 'text-white'}`}
+                  className={`font-semibold px-8 py-6 text-lg rounded-full group ${currentContent.color === '#A0FAB2' ? 'text-black' : 'text-white'}`}
                   style={{ 
                     backgroundColor: currentContent.color
                   }}
                   data-testid={`button-cta-${currentContent.type.toLowerCase()}`}
                 >
                   {currentContent.cta}
-                  <ArrowRight className={`ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform ${currentContent.color === '#c5f13c' ? 'text-black' : 'text-white'}`} />
+                  <ArrowRight className={`ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform ${currentContent.color === '#A0FAB2' ? 'text-black' : 'text-white'}`} />
                 </Button>
               </div>
             </div>
@@ -295,7 +295,7 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
         </div>
       </div>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-6 h-6" style={{ color: '#c5f13c' }} />
+        <ChevronDown className="w-6 h-6" style={{ color: '#A0FAB2' }} />
       </div>
     </section>
   );

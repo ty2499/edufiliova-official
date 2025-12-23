@@ -1415,7 +1415,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         }
                       }}
                       disabled={pendingAddIds.has(selectedProduct.id) || (selectedProduct.type === 'physical' && selectedProduct.stock === 0)}
-                      className="w-full h-12 font-medium transition-all bg-[#c5f13c] hover:bg-[#a8cc32] text-gray-900"
+                      className="w-full h-12 font-medium transition-all bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900"
                       data-testid="button-add-to-cart"
                     >
                       {pendingAddIds.has(selectedProduct.id) ? (
@@ -1520,7 +1520,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         setShowPricingModal(true);
                       }
                     }}
-                    className="w-full h-12 font-medium bg-[#c5f13c] hover:bg-[#a8cc32] text-gray-900 rounded-2xl"
+                    className="w-full h-12 font-medium bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900 rounded-2xl"
                     data-testid="button-subscribe-now"
                   >
                     <ShoppingCart className="h-4 w-4 mr-2" />
@@ -1661,13 +1661,13 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   onClick={() => setBillingCycle('annual')}
                   className={`px-3 sm:px-4 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all ${
                     billingCycle === 'annual'
-                      ? 'bg-purple-600 text-white shadow-sm'
+                      ? 'bg-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                   data-testid="button-billing-annual"
                 >
                   Annual
-                  <span className="ml-1.5 text-[10px] bg-purple-700 text-white px-1.5 py-0.5 rounded-full">Save 50%</span>
+                  <span className="ml-1.5 text-[10px] bg-primary/90 text-white px-1.5 py-0.5 rounded-full">Save 50%</span>
                 </button>
               </div>
             </div>
@@ -1690,7 +1690,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   >
                     {plan.popular && (
                       <div className="absolute top-0 right-0">
-                        <div className="bg-purple-600 text-white text-[10px] px-2 py-0.5 rounded-bl-lg font-medium">
+                        <div className="bg-primary text-white text-[10px] px-2 py-0.5 rounded-bl-lg font-medium">
                           Popular
                         </div>
                       </div>
@@ -1708,7 +1708,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         {upgradeCosts[plan.planId] && !isCurrentPlan ? (
                           <>
                             <div className="flex items-baseline gap-1">
-                              <span className="text-2xl font-bold text-purple-600">
+                              <span className="text-2xl font-bold text-primary">
                                 ${upgradeCosts[plan.planId].upgradeCost.toFixed(2)}
                               </span>
                               <span className="text-gray-500 text-xs">
@@ -1752,7 +1752,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                           disabled={upgradeMutation.isPending}
                           className={`w-full h-8 text-xs ${
                             plan.planId === 'pro'
-                              ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                              ? 'bg-primary hover:bg-primary/90 text-white'
                               : plan.planId === 'business'
                               ? 'bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white'
                               : ''
@@ -1771,7 +1771,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         <ul className="space-y-1.5">
                           {(plan.features || []).map((feature: string, idx: number) => (
                             <li key={idx} className="flex items-start gap-1.5 text-sm">
-                              <Check className="h-3.5 w-3.5 text-purple-600 mt-0.5 flex-shrink-0" />
+                              <Check className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
                               <span className="text-gray-700 text-[11px] leading-snug">{feature}</span>
                             </li>
                           ))}
@@ -1797,7 +1797,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   onClick={() => setPaymentMethod('wallet')}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${
                     paymentMethod === 'wallet'
-                      ? 'border-purple-600 bg-purple-50 text-purple-700'
+                      ? 'border-purple-600 bg-purple-50 text-primary'
                       : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
                   }`}
                   data-testid="option-payment-wallet"
@@ -1809,7 +1809,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   onClick={() => setPaymentMethod('card')}
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${
                     paymentMethod === 'card'
-                      ? 'border-purple-600 bg-purple-50 text-purple-700'
+                      ? 'border-purple-600 bg-purple-50 text-primary'
                       : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
                   }`}
                   data-testid="option-payment-card"
@@ -1881,7 +1881,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   onClick={handlePaymentMethodSubmit}
                   disabled={upgradeMutation.isPending || 
                     (paymentMethod === 'wallet' && parseFloat(wallet?.balance || '0') < (upgradeCosts[selectedPlan.planId]?.upgradeCost !== undefined ? upgradeCosts[selectedPlan.planId].upgradeCost : parseFloat(billingCycle === 'monthly' ? selectedPlan.monthlyPrice || '0' : selectedPlan.yearlyPrice || '0')))}
-                  className="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg text-base"
+                  className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg text-base"
                   data-testid="button-confirm-payment-selection"
                 >
                   {upgradeMutation.isPending ? 'Processing...' : 'Continue to Payment'}
@@ -1938,13 +1938,13 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   onClick={() => setStudentBillingCycle('yearly')}
                   className={`px-3 sm:px-4 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all ${
                     studentBillingCycle === 'yearly'
-                      ? 'bg-purple-600 text-white shadow-sm'
+                      ? 'bg-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                   data-testid="button-student-billing-yearly"
                 >
                   Yearly
-                  <span className="ml-1.5 text-[10px] bg-purple-700 text-white px-1.5 py-0.5 rounded-full">Save 50%</span>
+                  <span className="ml-1.5 text-[10px] bg-primary/90 text-white px-1.5 py-0.5 rounded-full">Save 50%</span>
                 </button>
               </div>
             </div>
@@ -1978,7 +1978,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         {studentUpgradeCosts[tier] && isUpgrade ? (
                           <>
                             <div className="flex items-baseline gap-1">
-                              <span className="text-2xl font-bold text-purple-600">
+                              <span className="text-2xl font-bold text-primary">
                                 ${studentUpgradeCosts[tier].upgradeCost.toFixed(2)}
                               </span>
                               <span className="text-gray-500 text-xs">
@@ -2020,7 +2020,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         <Button
                           onClick={() => studentPlanMutation.mutate({ tier: tier as keyof typeof GRADE_SUBSCRIPTION_PLANS, isUpgrade })}
                           disabled={studentPlanMutation.isPending}
-                          className="w-full h-8 text-xs bg-purple-600 hover:bg-purple-700 text-white"
+                          className="w-full h-8 text-xs bg-primary hover:bg-primary/90 text-white"
                           data-testid={`button-select-student-plan-${tier}`}
                         >
                           {studentPlanMutation.isPending ? 'Processing...' : 
@@ -2033,7 +2033,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         <ul className="space-y-1.5">
                           {plan.features.map((feature: string, idx: number) => (
                             <li key={idx} className="flex items-start gap-1.5 text-sm">
-                              <Check className="h-3.5 w-3.5 text-purple-600 mt-0.5 flex-shrink-0" />
+                              <Check className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
                               <span className="text-gray-700 text-[11px] leading-snug">{feature}</span>
                             </li>
                           ))}

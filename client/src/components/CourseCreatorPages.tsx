@@ -694,7 +694,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
             </SelectItem>
             <SelectItem value="diploma">
               <div className="flex items-center gap-2">
-                <GraduationCap className="h-4 w-4 text-purple-600" />
+                <GraduationCap className="h-4 w-4 text-primary" />
                 <div>
                   <div className="font-medium">Diploma</div>
                   <div className="text-xs text-muted-foreground">Comprehensive program diploma (recommended for full courses)</div>
@@ -713,7 +713,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
           }`}>
             <div className="flex items-start gap-3">
               {courseForm.certificationType === 'diploma' ? (
-                <GraduationCap className="h-5 w-5 text-purple-600 mt-0.5" />
+                <GraduationCap className="h-5 w-5 text-primary mt-0.5" />
               ) : (
                 <Award className="h-5 w-5 text-blue-600 mt-0.5" />
               )}
@@ -727,7 +727,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
                 </p>
                 <p className={`text-xs ${
                   courseForm.certificationType === 'diploma' 
-                    ? 'text-purple-600 dark:text-purple-300' 
+                    ? 'text-primary dark:text-purple-300' 
                     : 'text-blue-600 dark:text-blue-300'
                 }`}>
                   {courseForm.certificationType === 'diploma' 

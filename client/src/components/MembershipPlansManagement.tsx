@@ -161,7 +161,7 @@ export default function MembershipPlansManagement() {
                     <CreditCard className="w-5 h-5" />
                     {plan.name}
                     {plan.popular && (
-                      <Badge variant="default" className="bg-purple-600">Popular</Badge>
+                      <Badge variant="default" className="bg-primary">Popular</Badge>
                     )}
                     {!plan.active && (
                       <Badge variant="secondary">Inactive</Badge>

@@ -509,9 +509,9 @@ const StudyNotes = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredNotes.map((note, index) => {
-            const colors = ['#0C332C', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
+            const colors = ['#0C332C', '#A0FAB2', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
             const bgColor = colors[index % colors.length];
-            const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
+            const isLight = ['#A0FAB2', '#a4f5a6'].includes(bgColor);
             const textColor = isLight ? '#000000' : '#ffffff';
             
             return (

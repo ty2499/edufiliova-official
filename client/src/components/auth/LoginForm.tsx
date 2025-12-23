@@ -221,7 +221,7 @@ export default function LoginForm({
             <button
               type="button"
               onClick={onForgotPassword}
-              className="text-purple-600 hover:text-purple-800 font-medium"
+              className="text-primary hover:text-purple-800 font-medium"
               data-testid="button-forgot-password"
             >
               Forgot password?
@@ -232,7 +232,7 @@ export default function LoginForm({
         <Button
           type="submit"
           className="w-full h-11 font-medium rounded-lg"
-          style={{ backgroundColor: '#c5f13c', color: '#1f2937' }}
+          style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
           disabled={loading}
           data-testid="button-login"
         >
@@ -277,7 +277,7 @@ export default function LoginForm({
             <button
               type="button"
               onClick={onSwitchToRegister}
-              className="text-purple-600 hover:text-purple-800 font-medium"
+              className="text-primary hover:text-purple-800 font-medium"
               data-testid="link-register"
             >
               Sign up

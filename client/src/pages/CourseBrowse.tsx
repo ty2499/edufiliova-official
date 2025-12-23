@@ -224,7 +224,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
           icon: Briefcase,
           label: 'Freelancer',
           color: 'bg-purple-500 text-white border-purple-600',
-          hoverColor: 'group-hover:bg-purple-600'
+          hoverColor: 'group-hover:bg-primary'
         };
       default:
         return {
@@ -389,7 +389,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                       variant={priceFilter === 'free' ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setPriceFilter('free')}
-                      className={priceFilter === 'free' ? 'bg-[#c5f13c] hover:bg-[#c5f13c]/90 text-gray-900 border-[#c5f13c]' : 'border-[#c5f13c] text-gray-900 dark:text-gray-900 hover:bg-[#c5f13c]/10'}
+                      className={priceFilter === 'free' ? 'bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-gray-900 border-[#A0FAB2]' : 'border-[#A0FAB2] text-gray-900 dark:text-gray-900 hover:bg-[#A0FAB2]/10'}
                       data-testid="filter-price-free"
                     >
                       Free
@@ -470,7 +470,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                             /* Not Logged In */
                             <Button
                               onClick={() => onNavigate('auth')}
-                              className="flex-1 bg-[#c5f13c] hover:bg-[#c5f13c]/90 text-gray-900 border-0"
+                              className="flex-1 bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-gray-900 border-0"
                               data-testid={`button-login-${course.id}`}
                             >
                               <LogIn className="h-4 w-4 mr-2" />
@@ -500,7 +500,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                                   disabled={enrollingCourseId === course.id}
                                   className={`flex-1 ${
                                     isFree
-                                      ? 'bg-[#c5f13c] hover:bg-[#c5f13c]/90 text-gray-900'
+                                      ? 'bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-gray-900'
                                       : isPaid
                                       ? 'bg-[#0C332C] hover:bg-[#0C332C]/90 text-white'
                                       : 'bg-primary hover:bg-primary text-white'

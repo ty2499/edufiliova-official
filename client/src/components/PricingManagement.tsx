@@ -1018,7 +1018,7 @@ const PricingManagement: React.FC = () => {
           <Card key={plan.id} className={`relative ${plan.isPopular ? 'ring-2 ring-blue-500' : ''}`}>
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between mb-2">
-                <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
+                <Badge variant="outline" className="bg-purple-50 text-primary border-purple-200">
                   Subscription Plan
                 </Badge>
               </div>

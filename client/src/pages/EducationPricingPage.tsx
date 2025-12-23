@@ -149,7 +149,7 @@ const EducationPricingPage = ({ onNavigate }: EducationPricingPageProps) => {
 
   const renderFeatureValue = (value: boolean | string) => {
     if (value === true) {
-      return <CheckmarkIcon size="sm" className="mx-auto bg-[#c5f13c]" />;
+      return <CheckmarkIcon size="sm" className="mx-auto bg-[#A0FAB2]" />;
     } else if (value === false) {
       return <X className="h-5 w-5 text-gray-300 mx-auto" />;
     }
@@ -191,7 +191,7 @@ const EducationPricingPage = ({ onNavigate }: EducationPricingPageProps) => {
               </button>
               <span className={`text-sm font-medium ${billingCycle === 'yearly' ? 'text-white' : 'text-gray-400'}`}>
                 Yearly
-                <span className="ml-2 text-xs" style={{ color: '#c5f13c' }}>(Save up to 20%)</span>
+                <span className="ml-2 text-xs" style={{ color: '#A0FAB2' }}>(Save up to 20%)</span>
               </span>
             </div>
             
@@ -220,13 +220,13 @@ const EducationPricingPage = ({ onNavigate }: EducationPricingPageProps) => {
                       <span className="text-3xl md:text-5xl font-bold">${tier.price}</span>
                       <span className="text-sm md:text-base text-gray-400">{tier.period}</span>
                       {tier.savings && (
-                        <div className="mt-2 text-xs md:text-sm font-medium" style={{ color: '#c5f13c' }}>{tier.savings}</div>
+                        <div className="mt-2 text-xs md:text-sm font-medium" style={{ color: '#A0FAB2' }}>{tier.savings}</div>
                       )}
                     </div>
                     <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8">
                       {tier.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start gap-2 md:gap-3 text-xs md:text-sm">
-                          <CheckmarkIcon size="sm" className="mt-0.5 bg-[#c5f13c]" />
+                          <CheckmarkIcon size="sm" className="mt-0.5 bg-[#A0FAB2]" />
                           <span className="text-gray-200">{feature}</span>
                         </li>
                       ))}
@@ -236,7 +236,7 @@ const EducationPricingPage = ({ onNavigate }: EducationPricingPageProps) => {
                       variant={tier.buttonVariant}
                       className={`w-full ${
                         tier.highlighted
-                          ? 'bg-purple-500 text-white hover:bg-purple-600'
+                          ? 'bg-purple-500 text-white hover:bg-primary'
                           : 'bg-white/10 text-white hover:bg-white/20 border-gray-600'
                       }`}
                       data-testid={`button-get-started-${tier.name.toLowerCase()}`}

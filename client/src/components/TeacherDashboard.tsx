@@ -525,7 +525,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
     <Card className="relative overflow-hidden">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <CreditCard className="h-5 w-5 text-purple-600" />
+          <CreditCard className="h-5 w-5 text-primary" />
           Payment & Payout Settings
           {notifications.length > 0 && (
             <Button 
@@ -2361,7 +2361,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                 </CardContent>
               </Card>
 
-              <Card className="text-black border-0" style={{background: '#c5f13c'}}>
+              <Card className="text-black border-0" style={{background: '#A0FAB2'}}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>

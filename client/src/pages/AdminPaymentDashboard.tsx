@@ -983,7 +983,7 @@ const UserCard = ({
       case 'admin': return <Badge variant="destructive" className="text-xs">Admin</Badge>;
       case 'teacher': return <Badge variant="default" className="text-xs">Teacher</Badge>;
       case 'student': return <Badge variant="secondary" className="text-xs">Student</Badge>;
-      case 'moderator': return <Badge variant="outline" className="text-xs text-purple-600 border-purple-300">Moderator</Badge>;
+      case 'moderator': return <Badge variant="outline" className="text-xs text-primary border-purple-300">Moderator</Badge>;
       case 'freelancer': return <Badge variant="outline" className="text-xs text-blue-600 border-blue-300">Freelancer</Badge>;
       case 'accountant': return <Badge variant="outline" className="text-xs text-green-600 border-green-300">Accountant</Badge>;
       case 'customer_service': return <Badge variant="outline" className="text-xs text-primary border-orange-300">Customer Service</Badge>;
@@ -995,8 +995,8 @@ const UserCard = ({
     switch (status) {
       case 'banned': return <Badge variant="destructive" className="text-xs">Banned</Badge>;
       case 'suspended': return <Badge variant="outline" className="text-xs text-primary border-orange-300">Suspended</Badge>;
-      case 'active': return <Badge className="text-xs text-black" style={{ backgroundColor: '#c5f13c' }}>Active</Badge>;
-      default: return <Badge className="text-xs text-black" style={{ backgroundColor: '#c5f13c' }}>Active</Badge>;
+      case 'active': return <Badge className="text-xs text-black" style={{ backgroundColor: '#A0FAB2' }}>Active</Badge>;
+      default: return <Badge className="text-xs text-black" style={{ backgroundColor: '#A0FAB2' }}>Active</Badge>;
     }
   };
 
@@ -2571,7 +2571,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
       case 'admin': return <Badge variant="destructive" className="text-xs">Admin</Badge>;
       case 'teacher': return <Badge variant="default" className="text-xs">Teacher</Badge>;
       case 'student': return <Badge variant="secondary" className="text-xs">Student</Badge>;
-      case 'moderator': return <Badge variant="outline" className="text-xs text-purple-600 border-purple-300">Moderator</Badge>;
+      case 'moderator': return <Badge variant="outline" className="text-xs text-primary border-purple-300">Moderator</Badge>;
       case 'freelancer': return <Badge variant="outline" className="text-xs text-blue-600 border-blue-300">Freelancer</Badge>;
       case 'accountant': return <Badge variant="outline" className="text-xs text-green-600 border-green-300">Accountant</Badge>;
       case 'customer_service': return <Badge variant="outline" className="text-xs text-primary border-orange-300">Customer Service</Badge>;
@@ -2583,8 +2583,8 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
     switch (status) {
       case 'banned': return <Badge variant="destructive" className="text-xs">Banned</Badge>;
       case 'suspended': return <Badge variant="outline" className="text-xs text-primary border-orange-300">Suspended</Badge>;
-      case 'active': return <Badge className="text-xs text-black" style={{ backgroundColor: '#c5f13c' }}>Active</Badge>;
-      default: return <Badge className="text-xs text-black" style={{ backgroundColor: '#c5f13c' }}>Active</Badge>;
+      case 'active': return <Badge className="text-xs text-black" style={{ backgroundColor: '#A0FAB2' }}>Active</Badge>;
+      default: return <Badge className="text-xs text-black" style={{ backgroundColor: '#A0FAB2' }}>Active</Badge>;
     }
   };
 

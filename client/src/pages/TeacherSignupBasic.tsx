@@ -294,7 +294,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           <Button
             onClick={() => handleVerifyCode(verificationCode)}
             disabled={verificationCode.length !== 6 || isVerifying}
-            className="w-full h-12 bg-[#c5f13c] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base"
+            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base"
             data-testid="button-continue"
           >
             {isVerifying ? (
@@ -362,7 +362,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 setSignupMethod('phone');
                 setCurrentView('signup');
               }}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#c5f13c] hover:bg-[#b5e02c] text-black font-medium rounded-xl transition-all"
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-medium rounded-xl transition-all"
               data-testid="button-signup-phone"
             >
               <Phone className="h-5 w-5" />
@@ -553,7 +553,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
 
           <Button
             type="submit"
-            className="w-full h-12 bg-[#c5f13c] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base mt-6"
+            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base mt-6"
             disabled={submitMutation.isPending}
             data-testid="button-submit"
           >

@@ -76,7 +76,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
       title: "Science",
       courses: ["Physics", "Chemistry", "Biology", "Environmental Science", "Astronomy"],
       icon: <Lightbulb className="h-6 w-6" />,
-      color: "bg-purple-50 text-purple-600"
+      color: "bg-purple-50 text-primary"
     },
     {
       title: "Language Arts",

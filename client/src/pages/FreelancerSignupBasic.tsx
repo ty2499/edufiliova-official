@@ -221,7 +221,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
         <div className="flex items-center justify-center py-8">
           <div className="w-full max-w-md mx-auto">
             <div className="text-center space-y-6">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#fff5f2' }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#e0f2fe' }}>
                 <Mail className="h-10 w-10" style={{ color: '#0C332C' }} />
               </div>
               

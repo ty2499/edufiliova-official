@@ -115,7 +115,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
       icon: ShoppingBag,
       color: "bg-gradient-to-br from-purple-50 to-pink-50",
       iconBg: "bg-purple-100",
-      iconColor: "text-purple-600"
+      iconColor: "text-primary"
     },
     {
       id: "creator-pricing",

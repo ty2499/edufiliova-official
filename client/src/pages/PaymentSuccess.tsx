@@ -426,7 +426,7 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
         <div className="text-center">
           <Button 
             onClick={handleContinue}
-            className="bg-[#c5f13c] hover:bg-[#c5f13c]/90 text-[#151314] font-semibold px-8 py-6 text-base"
+            className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-[#151314] font-semibold px-8 py-6 text-base"
             data-testid="button-go-dashboard"
           >
             {paymentType === 'banner' ? 'View My Ads' : 'Go to Dashboard'}

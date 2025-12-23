@@ -461,7 +461,7 @@ export default function ShopMembershipManagement() {
             <Card key={plan.id} className={`relative ${plan.popular ? 'border-purple-500 border-2' : ''}`} data-testid={`card-plan-${plan.planId}`}>
               {plan.popular && (
                 <div className="absolute top-0 right-0">
-                  <div className="bg-purple-600 text-white text-xs px-3 py-1 rounded-bl-lg font-medium flex items-center gap-1">
+                  <div className="bg-primary text-white text-xs px-3 py-1 rounded-bl-lg font-medium flex items-center gap-1">
                     <Star className="h-3 w-3" />
                     Popular
                   </div>

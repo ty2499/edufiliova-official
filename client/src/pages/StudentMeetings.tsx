@@ -118,7 +118,7 @@ export default function StudentMeetings() {
                   {meeting.title}
                 </CardTitle>
                 {isLive && (
-                  <Badge className="text-black" style={{ backgroundColor: '#c5f13c' }} data-testid={`meeting-live-${meeting.id}`}>
+                  <Badge className="text-black" style={{ backgroundColor: '#A0FAB2' }} data-testid={`meeting-live-${meeting.id}`}>
                     LIVE NOW
                   </Badge>
                 )}

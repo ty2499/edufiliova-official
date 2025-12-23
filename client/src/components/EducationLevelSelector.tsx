@@ -105,7 +105,7 @@ export default function EducationLevelSelector({ onNavigate, userRole }: Educati
               <CardHeader>
                 <div className="flex items-center gap-3 mb-2">
                   <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-lg">
-                    <BookOpen className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                    <BookOpen className="h-8 w-8 text-primary dark:text-purple-400" />
                   </div>
                   <CardTitle className="text-2xl">Subjects</CardTitle>
                 </div>

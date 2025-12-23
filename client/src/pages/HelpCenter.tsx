@@ -227,7 +227,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
       id: "freelancers",
       title: "For Freelancers",
       icon: Award,
-      color: "bg-purple-100 text-purple-600",
+      color: "bg-purple-100 text-primary",
       faqs: [
         {
           question: "What is a freelancer on EduFiliova?",

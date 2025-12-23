@@ -46,7 +46,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
       iconBg: "bg-cyan-100",
     },
     {
-      icon: <Gift className="h-5 w-5 text-purple-600" />,
+      icon: <Gift className="h-5 w-5 text-primary" />,
       title: "Gift Vouchers",
       description: "Buy gift vouchers for friends",
       page: "buy-voucher",

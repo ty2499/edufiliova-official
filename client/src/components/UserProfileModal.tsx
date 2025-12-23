@@ -164,7 +164,7 @@ export const UserProfileModal = ({ isOpen, onClose, userProfile, onStartChat }: 
                     <GraduationCap className="h-4 w-4 text-white" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs font-medium text-purple-700 uppercase tracking-wide">Education Level</p>
+                    <p className="text-xs font-medium text-primary uppercase tracking-wide">Education Level</p>
                     <p className="text-sm font-semibold text-gray-900">{getGradeText(userProfile.grade, userProfile.role)}</p>
                   </div>
                 </div>

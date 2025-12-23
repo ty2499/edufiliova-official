@@ -34,7 +34,7 @@ interface BlogPost {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "DevOps Success": "bg-purple-100 text-purple-700 border-purple-200",
+  "DevOps Success": "bg-purple-100 text-primary border-purple-200",
   "QA": "bg-green-100 text-green-700 border-green-200",
   "Continuous Testing": "bg-pink-100 text-pink-700 border-pink-200",
   "AI Test Scripts": "bg-blue-100 text-blue-700 border-blue-200",

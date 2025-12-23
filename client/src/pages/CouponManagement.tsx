@@ -253,7 +253,7 @@ export function CouponManagement() {
                   <p className="text-sm text-gray-600">Total Uses</p>
                   <p className="text-2xl font-bold">{couponsData.stats.totalUsages}</p>
                 </div>
-                <Users className="h-8 w-8 text-purple-600" />
+                <Users className="h-8 w-8 text-primary" />
               </div>
             </CardContent>
           </Card>

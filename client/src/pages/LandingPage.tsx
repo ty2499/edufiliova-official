@@ -782,7 +782,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                       <div className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg bg-[#2F5A4E]" style={{ backgroundColor: '#0C332C' }}>
                         <item.icon className="h-10 w-10 text-white" />
                       </div>
-                      <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#c5f13c', color: '#1a1a1a' }}>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#A0FAB2', color: '#1a1a1a' }}>
                         {item.step}
                       </div>
                     </div>

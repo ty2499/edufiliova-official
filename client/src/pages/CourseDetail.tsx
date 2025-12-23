@@ -801,7 +801,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
                     <Button 
                       className={`w-full mb-4 text-white ${
                         getCourseType(course) === 'free'
-                          ? 'bg-[#c5f13c] hover:bg-[#c5f13c]/90 text-gray-900'
+                          ? 'bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-gray-900'
                           : getCourseType(course) === 'fixed_price'
                           ? 'bg-[#0C332C] hover:bg-[#0C332C]/90'
                           : 'bg-[#0d3d6b] hover:bg-[#0d3d6b]/90'

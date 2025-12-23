@@ -17,7 +17,7 @@ interface ErrorPageProps {
 const errorConfig = {
   'offline': {
     icon: WifiOff,
-    iconColor: 'text-purple-600',
+    iconColor: 'text-primary',
     title: "You're Offline—That's One Way to Disconnect",
     description: "Looks like we lost signal. You may be in a tunnel, or your end might be acting up. Either way, we're here to help.",
     primaryAction: 'refresh',
@@ -26,7 +26,7 @@ const errorConfig = {
   },
   'server-error': {
     icon: Wrench,
-    iconColor: 'text-purple-600',
+    iconColor: 'text-primary',
     title: "This is what happens when cats mess around.",
     description: "Something on our side went sideways. We're probably already on it—try refreshing in a moment.",
     primaryAction: 'retry',
@@ -35,7 +35,7 @@ const errorConfig = {
   },
   'not-found': {
     icon: Unplug,
-    iconColor: 'text-purple-600',
+    iconColor: 'text-primary',
     title: "A glitch in the matrix... or maybe just a broken link.",
     description: "We looked everywhere, but this page just doesn't seem to exist. Maybe it moved—or maybe it never did.",
     primaryAction: 'home',
@@ -44,7 +44,7 @@ const errorConfig = {
   },
   'access-denied': {
     icon: Lock,
-    iconColor: 'text-purple-600',
+    iconColor: 'text-primary',
     title: "This is kind of... top secret. Wanna try logging in?",
     description: "You're trying to view something that needs permission. We're just playing by the rules.",
     primaryAction: 'login',
@@ -53,7 +53,7 @@ const errorConfig = {
   },
   'empty-search': {
     icon: Package,
-    iconColor: 'text-purple-600',
+    iconColor: 'text-primary',
     title: "...That Turned Up Empty.",
     description: "Nothing's showing up—yet. Try changing your search terms or removing filters.",
     primaryAction: 'clear',
@@ -170,7 +170,7 @@ export function ErrorPage({
             )}
             
             <Button 
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+              className="w-full bg-primary hover:bg-primary/90 text-white"
               onClick={handlePrimaryAction}
               data-testid={`button-primary-action-${type}`}
             >

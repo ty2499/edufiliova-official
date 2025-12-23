@@ -135,7 +135,7 @@ const CustomerPricingPage = ({ onNavigate }: CustomerPricingPageProps) => {
               </span>
               <button
                 onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
-                className="relative inline-flex h-7 w-14 items-center rounded-full bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-[#c5f13c] focus:ring-offset-2 focus:ring-offset-gray-900"
+                className="relative inline-flex h-7 w-14 items-center rounded-full bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-[#A0FAB2] focus:ring-offset-2 focus:ring-offset-gray-900"
                 data-testid="billing-toggle"
               >
                 <span
@@ -146,7 +146,7 @@ const CustomerPricingPage = ({ onNavigate }: CustomerPricingPageProps) => {
               </button>
               <span className={`text-sm font-medium ${billingCycle === 'yearly' ? 'text-white' : 'text-gray-400'}`}>
                 Yearly
-                <span className="ml-2 text-xs" style={{ color: '#c5f13c' }}>(Save up to 20%)</span>
+                <span className="ml-2 text-xs" style={{ color: '#A0FAB2' }}>(Save up to 20%)</span>
               </span>
             </div>
             
@@ -160,11 +160,11 @@ const CustomerPricingPage = ({ onNavigate }: CustomerPricingPageProps) => {
                       ? 'bg-white/10 shadow-2xl transform scale-105'
                       : 'bg-white/5 border border-gray-700'
                   }`}
-                  style={tier.highlighted ? { borderWidth: '2px', borderColor: '#c5f13c' } : {}}
+                  style={tier.highlighted ? { borderWidth: '2px', borderColor: '#A0FAB2' } : {}}
                   data-testid={`pricing-card-${tier.name.toLowerCase()}`}
                 >
                   {tier.badge && (
-                    <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2" style={{ backgroundColor: '#c5f13c', color: '#1a1a1a' }}>
+                    <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2" style={{ backgroundColor: '#A0FAB2', color: '#1a1a1a' }}>
                       {tier.badge}
                     </Badge>
                   )}
@@ -175,13 +175,13 @@ const CustomerPricingPage = ({ onNavigate }: CustomerPricingPageProps) => {
                       <span className="text-5xl font-bold">${tier.price}</span>
                       <span className="text-gray-400">{tier.period}</span>
                       {tier.savings && (
-                        <div className="mt-2 text-sm font-medium" style={{ color: '#c5f13c' }}>{tier.savings}</div>
+                        <div className="mt-2 text-sm font-medium" style={{ color: '#A0FAB2' }}>{tier.savings}</div>
                       )}
                     </div>
                     <ul className="space-y-3 mb-8">
                       {tier.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start gap-3 text-sm">
-                          <Check className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: '#c5f13c' }} />
+                          <Check className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: '#A0FAB2' }} />
                           <span className="text-gray-200">{feature}</span>
                         </li>
                       ))}
@@ -194,7 +194,7 @@ const CustomerPricingPage = ({ onNavigate }: CustomerPricingPageProps) => {
                           ? 'hover:opacity-90'
                           : 'bg-white/10 text-white hover:bg-white/20 border-gray-600'
                       }`}
-                      style={tier.highlighted ? { backgroundColor: '#c5f13c', color: '#1a1a1a' } : {}}
+                      style={tier.highlighted ? { backgroundColor: '#A0FAB2', color: '#1a1a1a' } : {}}
                       data-testid={`button-get-started-${tier.name.toLowerCase()}`}
                     >
                       {tier.buttonText}

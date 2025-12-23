@@ -1829,13 +1829,13 @@ function MembershipPage() {
             onClick={() => setBillingCycle('annual')}
             className={`px-4 sm:px-6 py-2 rounded-md text-sm font-medium transition-all ${
               billingCycle === 'annual'
-                ? 'bg-purple-600 text-white shadow-sm'
+                ? 'bg-primary text-white shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
             data-testid="button-billing-annual"
           >
             Annual
-            <span className="ml-2 text-xs bg-purple-700 text-white px-2 py-0.5 rounded-full">Save 50%</span>
+            <span className="ml-2 text-xs bg-primary/90 text-white px-2 py-0.5 rounded-full">Save 50%</span>
           </button>
         </div>
       </div>
@@ -1857,7 +1857,7 @@ function MembershipPage() {
             >
               {plan.popular && (
                 <div className="absolute top-0 right-0">
-                  <div className="bg-purple-600 text-white text-xs px-3 py-1 rounded-bl-lg font-medium">
+                  <div className="bg-primary text-white text-xs px-3 py-1 rounded-bl-lg font-medium">
                     Popular
                   </div>
                 </div>
@@ -1875,7 +1875,7 @@ function MembershipPage() {
                   {upgradeCosts[plan.planId] && !isCurrentPlan ? (
                     <>
                       <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-bold text-purple-600">
+                        <span className="text-4xl font-bold text-primary">
                           ${upgradeCosts[plan.planId].upgradeCost.toFixed(2)}
                         </span>
                         <span className="text-gray-500 text-sm">
@@ -1921,7 +1921,7 @@ function MembershipPage() {
                     disabled={upgradeMutation.isPending}
                     className={`w-full ${
                       plan.planId === 'pro'
-                        ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                        ? 'bg-primary hover:bg-primary/90 text-white'
                         : plan.planId === 'business'
                         ? 'bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white'
                         : ''
@@ -1944,7 +1944,7 @@ function MembershipPage() {
                   <ul className="space-y-3">
                     {(plan.features || []).map((feature: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-2 text-sm">
-                        <Check className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                        <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                         <span className="text-gray-700 text-xs leading-relaxed">{feature}</span>
                       </li>
                     ))}
@@ -2006,7 +2006,7 @@ function MembershipPage() {
                         paymentMethod === 'wallet' ? 'border-purple-600' : 'border-gray-300'
                       }`}>
                         {paymentMethod === 'wallet' && (
-                          <div className="w-3 h-3 rounded-full bg-purple-600"></div>
+                          <div className="w-3 h-3 rounded-full bg-primary"></div>
                         )}
                       </div>
                       <div>
@@ -2047,7 +2047,7 @@ function MembershipPage() {
                         paymentMethod === 'card' ? 'border-purple-600' : 'border-gray-300'
                       }`}>
                         {paymentMethod === 'card' && (
-                          <div className="w-3 h-3 rounded-full bg-purple-600"></div>
+                          <div className="w-3 h-3 rounded-full bg-primary"></div>
                         )}
                       </div>
                       <div>
@@ -2470,7 +2470,7 @@ function MembershipPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { 
           
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-purple-600 text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="w-6 h-6 bg-primary text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
                 <Crown className="w-4 h-4" />
               </div>
               <div className="flex-1">
@@ -2495,7 +2495,7 @@ function MembershipPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { 
             <p className="text-sm text-purple-800">
               ✓ Access to all premium features
             </p>
-            <p className="text-xs text-purple-600 mt-2">
+            <p className="text-xs text-primary mt-2">
               Billed monthly • Cancel anytime
             </p>
           </div>
