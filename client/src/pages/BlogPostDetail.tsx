@@ -34,12 +34,12 @@ interface BlogPost {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "DevOps Success": "bg-purple-100 text-primary border-purple-200",
-  "QA": "bg-green-100 text-green-700 border-green-200",
-  "Continuous Testing": "bg-pink-100 text-pink-700 border-pink-200",
-  "AI Test Scripts": "bg-blue-100 text-blue-700 border-blue-200",
-  "Test Automation": "bg-indigo-100 text-indigo-700 border-indigo-200",
-  "Code Coverage": "bg-primary/15 text-orange-700 border-orange-200"
+  "DevOps Success": "text-white border-[#2f5a4e]",
+  "QA": "text-white border-[#2f5a4e]",
+  "Continuous Testing": "text-white border-[#2f5a4e]",
+  "AI Test Scripts": "text-white border-[#2f5a4e]",
+  "Test Automation": "text-white border-[#2f5a4e]",
+  "Code Coverage": "text-white border-[#2f5a4e]"
 };
 
 interface BlogPostDetailProps {
@@ -209,6 +209,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
           <div className="flex items-center gap-4 mb-6">
             <Badge 
               className={`${getCategoryColor(post.category)} border px-4 py-1.5 text-sm font-medium rounded-full`}
+              style={{ backgroundColor: '#2f5a4e' }}
             >
               {post.category}
             </Badge>
