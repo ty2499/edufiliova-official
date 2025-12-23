@@ -166,7 +166,7 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <Button variant="outline" size="sm" onClick={onBack} className="bg-white text-gray-800 border-gray-300 shadow-sm">
+          <Button variant="outline" size="sm" onClick={onBack} className="bg-white text-gray-800 border-gray-300">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
           </Button>
@@ -640,7 +640,7 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
             <Button variant="secondary" onClick={onBack} className="flex-1 bg-background/90 border-border hover:bg-accent hover:text-foreground-foreground" transition-all duration-300>
               Cancel
             </Button>
-            <Button onClick={handleSave} className="flex-1 bg-white text-primary-foreground hover:shadow-sm" transition-all duration-300 disabled={loading}>
+            <Button onClick={handleSave} className="flex-1 bg-white text-primary-foreground " transition-all duration-300 disabled={loading}>
               {loading ? "Saving..." : "Save Settings"}
             </Button>
           </div>

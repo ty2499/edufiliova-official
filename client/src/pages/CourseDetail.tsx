@@ -488,7 +488,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
                 variant={activeTab === 'overview' ? 'default' : 'ghost'}
                 onClick={() => setActiveTab('overview')}
                 data-testid="tab-overview"
-                className="text-xs md:text-sm whitespace-nowrap flex-1 md:flex-none"
+                className={`text-xs md:text-sm whitespace-nowrap flex-1 md:flex-none ${activeTab === 'overview' ? 'bg-[#2f5a4e] text-[#ffffff]' : ''}`}
               >
                 Overview
               </Button>

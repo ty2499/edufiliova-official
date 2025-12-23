@@ -9,14 +9,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-accent text-foreground hover:bg-accent/80 hover:shadow-xl hover:scale-105 active:scale-95 focus-visible:ring-accent",
-        orange: "bg-primary text-white hover:bg-primary/80 hover:shadow-xl hover:scale-105 active:scale-95 focus-visible:ring-primary",
-        destructive: "bg-primary text-white hover:bg-primary/80 hover:shadow-xl hover:scale-105 active:scale-95 focus-visible:ring-primary",
-        outline: "border-2 border-primary bg-transparent text-foreground hover:bg-primary/10 hover:border-primary hover:shadow-md hover:scale-105 active:scale-95 focus-visible:ring-primary transition-all",
-        secondary: "bg-secondary text-white hover:bg-secondary/80 hover:shadow-xl hover:scale-105 active:scale-95 focus-visible:ring-secondary",
-        ghost: "hover:bg-accent/15 text-foreground hover:shadow-md active:scale-95 hover:scale-105",
+        default: "bg-accent text-foreground hover:bg-accent/80 hover:scale-105 active:scale-95 focus-visible:ring-accent",
+        orange: "bg-primary text-white hover:bg-primary/80 hover:scale-105 active:scale-95 focus-visible:ring-primary",
+        destructive: "bg-primary text-white hover:bg-primary/80 hover:scale-105 active:scale-95 focus-visible:ring-primary",
+        outline: "border-2 border-primary bg-transparent text-foreground hover:bg-primary/10 hover:border-primary hover:scale-105 active:scale-95 focus-visible:ring-primary transition-all",
+        secondary: "bg-secondary text-white hover:bg-secondary/80 hover:scale-105 active:scale-95 focus-visible:ring-secondary",
+        ghost: "hover:bg-accent/15 text-foreground active:scale-95 hover:scale-105",
         link: "text-foreground underline-offset-4 hover:underline hover:opacity-80 hover:scale-105 active:scale-95",
-        dark: "bg-primary text-white hover:bg-primary/80 hover:shadow-xl hover:scale-105 active:scale-95 focus-visible:ring-primary",
+        dark: "bg-primary text-white hover:bg-primary/80 hover:scale-105 active:scale-95 focus-visible:ring-primary",
       },
       size: {
         default: "h-11 px-4 sm:px-6 py-2.5 text-sm",

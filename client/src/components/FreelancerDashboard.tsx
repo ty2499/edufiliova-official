@@ -719,7 +719,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               variant="outline" 
               size="sm" 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="text-white border-gray-300 hover:opacity-80 hover:shadow-lg hover:scale-105 w-full sm:w-auto sm:ml-auto" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
+              className="text-white border-gray-300 hover:opacity-80  hover:scale-105 w-full sm:w-auto sm:ml-auto" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
             >
               <AlertCircle className="h-4 w-4 mr-1" />
               {notifications.length} Alert{notifications.length > 1 ? 's' : ''}
@@ -761,7 +761,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <h4 className="font-medium text-base">Your Payment Account</h4>
             </div>
             {payoutAccounts.map((account) => (
-              <div key={account.id} className="border rounded-lg p-4 transition-all duration-200 hover:shadow-md" transition-all duration-300>
+              <div key={account.id} className="border rounded-lg p-4 transition-all duration-200 " transition-all duration-300>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   {/* Account Icon and Info */}
                   <div className="flex items-center gap-3 flex-1">
@@ -833,7 +833,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
             <p className="text-sm text-muted-foreground mb-4">
               Add a payment method to receive your earnings
             </p>
-            <Button onClick={handleShowAddForm} className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+            <Button onClick={handleShowAddForm} className="text-white hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
               <Plus className="h-4 w-4 mr-2" />
               Add Your First Payment Method
             </Button>
@@ -845,7 +845,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Add New Payment Method</h4>
-              <Button size="sm" onClick={handleHideAddForm} className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+              <Button size="sm" onClick={handleHideAddForm} className="text-white hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -1032,7 +1032,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <Button 
                 type="submit" 
                 disabled={submitting}
-                className="w-full text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
+                className="w-full text-white hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
               >
                 {submitting ? (
                   <>
@@ -1089,7 +1089,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <Button 
                 type="button" 
                 onClick={handleConfirmEdit}
-                className="flex-1 text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
+                className="flex-1 text-white hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                 disabled={submitting}
               >
                 Continue to Edit
@@ -1103,7 +1103,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Edit Payment Method</h4>
-              <Button size="sm" onClick={handleHideEditForm} className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+              <Button size="sm" onClick={handleHideEditForm} className="text-white hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -1225,7 +1225,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                 <Button 
                   type="submit" 
                   disabled={submitting || showUpdateWarning}
-                  className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 flex-1" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
+                  className="text-white hover:opacity-80  hover:scale-105 flex-1" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                 >
                   {submitting ? (
                     <>
@@ -2565,7 +2565,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                 {/* Earnings Overview Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Available Balance */}
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
+                  <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
                         <Banknote className="h-5 w-5 text-gray-900" />
@@ -2581,7 +2581,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   </div>
 
                   {/* Pending Balance */}
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
+                  <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
                         <Clock className="h-5 w-5 text-gray-900" />
@@ -2597,7 +2597,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   </div>
 
                   {/* Lifetime Earnings */}
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
+                  <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
                         <TrendingUp className="h-5 w-5 text-gray-900" />
@@ -2613,7 +2613,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   </div>
 
                   {/* Total Withdrawn */}
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
+                  <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
                         <CreditCard className="h-5 w-5 text-gray-900" />
@@ -2630,7 +2630,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                 </div>
 
                 {/* Download Statistics */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Product Download Statistics</h3>
                   <p className="text-sm text-gray-600 mb-4">Track how many people downloaded your content</p>
                   {downloadStatsLoading ? (
@@ -2672,7 +2672,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                 </div>
 
                 {/* Recent Earnings with Commission Breakdown */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Recent Earnings</h3>
                   <p className="text-sm text-gray-600 mb-4">Your earnings with commission breakdown</p>
                   {earningsLoading ? (
@@ -2765,7 +2765,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                 </div>
 
                 {/* Payment Methods */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Payment Methods</h3>
                   <p className="text-sm text-gray-600 mb-4">Manage your payout accounts to receive earnings</p>
                   

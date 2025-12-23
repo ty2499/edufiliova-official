@@ -532,7 +532,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               variant="outline" 
               size="sm" 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="ml-auto text-white border-gray-300 hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
+              className="ml-auto text-white border-gray-300 hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
             >
               <AlertCircle className="h-4 w-4 mr-1" />
               {notifications.length} Alert{notifications.length > 1 ? 's' : ''}
@@ -577,7 +577,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   variant="outline" 
                   size="sm" 
                   onClick={handleShowAddForm}
-                  className="text-white border-gray-300 hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
+                  className="text-white border-gray-300 hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                 >
                   <Plus className="h-4 w-4 mr-1" />
                   Add Method
@@ -585,7 +585,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               )}
             </div>
             {payoutAccounts.map((account) => (
-              <div key={account.id} className="border rounded-lg p-4 flex items-center justify-between transition-all duration-200 hover:shadow-md" transition-all duration-300>
+              <div key={account.id} className="border rounded-lg p-4 flex items-center justify-between transition-all duration-200 " transition-all duration-300>
                 <div className="flex items-center gap-3">
                   {account.type === 'paypal' ? (
                     <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
@@ -619,11 +619,11 @@ function PaymentMethodsCard({ user }: { user: any }) {
                 </div>
                 <div className="flex items-center gap-2">
                   {!account.isDefault && (
-                    <Button variant="outline" size="sm" onClick={() => handleSetDefault(account.id)} className="text-white border-gray-300 hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+                    <Button variant="outline" size="sm" onClick={() => handleSetDefault(account.id)} className="text-white border-gray-300 hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                       Set Default
                     </Button>
                   )}
-                  <Button variant="outline" size="sm" onClick={() => handleDeleteAccount(account.id)} className="text-white border-gray-300 hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+                  <Button variant="outline" size="sm" onClick={() => handleDeleteAccount(account.id)} className="text-white border-gray-300 hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                     Delete
                   </Button>
                 </div>
@@ -640,7 +640,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
             <p className="text-sm text-muted-foreground mb-4">
               Add a payment method to receive your earnings
             </p>
-            <Button onClick={handleShowAddForm} className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+            <Button onClick={handleShowAddForm} className="text-white hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
               <Plus className="h-4 w-4 mr-2" />
               Add Your First Payment Method
             </Button>
@@ -652,7 +652,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Add New Payment Method</h4>
-              <Button variant="outline" size="sm" onClick={handleHideAddForm} className="border-gray-300 text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+              <Button variant="outline" size="sm" onClick={handleHideAddForm} className="border-gray-300 text-white hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -669,7 +669,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   variant="outline" 
                   size="sm" 
                   onClick={() => window.open(window.location.origin + '?page=payout-policy', '_blank')}
-                  className="text-white border-gray-300 hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
+                  className="text-white border-gray-300 hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                 >
                   View Policy
                 </Button>
@@ -2568,7 +2568,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                 {students.map((student: Student) => (
                   <Card 
                     key={student.studentId} 
-                    className="hover:shadow-lg transition-all duration-200 cursor-pointer group" transition-all duration-300
+                    className=" transition-all duration-200 cursor-pointer group" transition-all duration-300
                     onClick={() => {
                       setSelectedStudent(student.studentId);
                       setActiveTab('messages');
@@ -2651,7 +2651,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                           </div>
                         )}
                         
-                        <Button size="sm" variant="outline" className="w-full mt-3 text-white border-gray-300 hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+                        <Button size="sm" variant="outline" className="w-full mt-3 text-white border-gray-300 hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                           <MessageCircle className="h-3 w-3 mr-2" />
                           Send Message
                         </Button>
@@ -2798,7 +2798,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             {/* Earnings Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Available Balance */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
+              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
                     <Banknote className="h-5 w-5 text-green-600" />
@@ -2814,7 +2814,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               </div>
 
               {/* Pending Balance */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
+              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
                     <Clock className="h-5 w-5 text-yellow-600" />
@@ -2830,7 +2830,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               </div>
 
               {/* Lifetime Earnings */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
+              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
                     <TrendingUp className="h-5 w-5 text-blue-600" />
@@ -2846,7 +2846,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               </div>
 
               {/* Total Withdrawn */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
+              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
                     <CreditCard className="h-5 w-5 text-gray-600" />
@@ -2863,7 +2863,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             </div>
 
             {/* Download Statistics */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Product Download Statistics</h3>
               <p className="text-sm text-gray-600 mb-4">Track how many people downloaded your content</p>
               {downloadStatsLoading ? (
@@ -2905,7 +2905,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             </div>
 
             {/* Recent Earnings with Commission Breakdown */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Recent Earnings</h3>
               <p className="text-sm text-gray-600 mb-4">Your earnings with commission breakdown</p>
               {earningsLoading ? (
@@ -2963,7 +2963,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             </div>
 
             {/* Payment Methods & Payout Request */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Payment Methods</h3>
               <p className="text-sm text-gray-600 mb-4">Manage your payout accounts to receive earnings</p>
               
@@ -3328,7 +3328,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                         appointments
                           .filter((appointment: Appointment) => appointment.status === 'pending')
                           .map((appointment: Appointment) => (
-                            <div key={appointment.id} className="p-4 border rounded-lg hover:shadow-md transition-shadow" transition-all duration-300 data-testid={`pending-appointment-${appointment.id}`}>
+                            <div key={appointment.id} className="p-4 border rounded-lg  transition-shadow" transition-all duration-300 data-testid={`pending-appointment-${appointment.id}`}>
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
                                   <div className="flex items-center gap-2 mb-2">
