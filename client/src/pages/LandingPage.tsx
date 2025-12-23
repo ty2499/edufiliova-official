@@ -452,7 +452,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                Trending <span className="relative inline-block px-4 py-1 rounded-lg transform -rotate-1 shadow-md bg-[#2f5a4e] text-[#a0fab2]">Courses</span>
+                Trending <span className="relative inline-block px-4 py-1 rounded-lg transform -rotate-1 bg-[#2f5a4e] text-[#a0fab2]">Courses</span>
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Explore our most popular courses handpicked by our team of educators
@@ -648,7 +648,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                Trending <span className="relative inline-block px-4 py-1 text-white bg-primary rounded-lg transform -rotate-1 shadow-md">Products</span>
+                Trending <span className="relative inline-block px-4 py-1 text-white bg-primary rounded-lg transform -rotate-1">Products</span>
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Discover what's hot right now from our community of talented creators
@@ -815,7 +815,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">001</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">For Students</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Students</h3>
                   <p className="text-sm text-white/90">
                     Empowering learners from grades 1-12 and university level with quality education, personalized support, and flexible learning options
                   </p>
@@ -825,7 +825,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">002</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">For Teachers</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Teachers</h3>
                   <p className="text-sm text-white/90">
                     Supporting professional educators with comprehensive teaching tools, curriculum resources, and opportunities to reach students globally
                   </p>
@@ -835,7 +835,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">003</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">For Freelancers</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Freelancers</h3>
                   <p className="text-sm text-white/90">
                     Enabling independent tutors and educators to build their business, create courses, and earn sustainable income on our platform
                   </p>
@@ -845,7 +845,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">004</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">For Customers</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Customers</h3>
                   <p className="text-sm text-white/90">
                     Providing access to premium educational content, study materials, and digital resources from verified creators worldwide
                   </p>
@@ -855,7 +855,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">005</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">For Parents</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Parents</h3>
                   <p className="text-sm text-white/90">
                     Helping families support their children's education with trusted tutors, progress tracking, and safe learning environments
                   </p>
@@ -865,7 +865,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">006</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">For Institutions</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Institutions</h3>
                   <p className="text-sm text-white/90">
                     Partnering with schools and educational organizations to deliver scalable, quality learning solutions for their communities
                   </p>
@@ -875,7 +875,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">007</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">For Creators</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Creators</h3>
                   <p className="text-sm text-white/90">
                     Supporting content creators in developing, publishing, and monetizing educational materials that benefit learners everywhere
                   </p>
@@ -885,7 +885,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <div className="mb-4">
                     <span className="text-sm font-medium text-white/80">008</span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-white">Global Community</h3>
+                  <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>Global Community</h3>
                   <p className="text-sm text-white/90">
                     Connecting learners, educators, and families across borders to create a worldwide network of educational excellence and opportunity
                   </p>
