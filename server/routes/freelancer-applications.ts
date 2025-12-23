@@ -10,6 +10,7 @@ import bcrypt from 'bcrypt';
 import { emailService } from '../utils/email.js';
 import { eq, desc, and, gt } from 'drizzle-orm';
 import { storage as dbStorage } from '../storage.js';
+import { requireAuth } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -1085,7 +1086,7 @@ router.post('/applications/:id/resubmit', async (req, res) => {
 });
 
 // Get or create freelancer application for authenticated user
-router.get('/applications/user/current', async (req, res) => {
+router.get('/applications/user/current', requireAuth, async (req, res) => {
   try {
     const userId = req.user?.id;
     if (!userId) {

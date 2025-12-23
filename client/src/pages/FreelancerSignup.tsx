@@ -23,7 +23,7 @@ import {
 import Logo from '@/components/Logo';
 import { countryCodes } from '@shared/countryCodes';
 import FreelancerTermsModal from '@/components/FreelancerTermsModal';
-import { resolveApiUrl } from '@/lib/queryClient';
+import { resolveApiUrl, apiRequest } from '@/lib/queryClient';
 import { useAuth } from '@/hooks/useAuth';
 
 interface FreelancerSignupProps {
@@ -158,10 +158,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
       loadApplication(appIdParam);
     } else if (user?.id) {
       // No applicationId in URL - try to get or create one
-      fetch(resolveApiUrl('/api/freelancer/applications/user/current'), {
-        credentials: 'include'
-      })
-        .then(res => res.json())
+      apiRequest('/api/freelancer/applications/user/current')
         .then(data => {
           if (data.success && data.application) {
             const newAppId = data.application.id;
@@ -342,25 +339,21 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
         });
       });
 
-      const response = await fetch(resolveApiUrl(`/api/freelancer/applications/${applicationId}`), {
+      await apiRequest(`/api/freelancer/applications/${applicationId}`, {
         method: 'PUT',
         body: formData,
-        credentials: 'include'
       });
 
-      if (response.ok) {
-        if (onNavigate) {
-          onNavigate('freelancer-application-status');
-        }
-        const statusUrl = `/?page=freelancer-application-status&id=${applicationId}`;
-        window.history.replaceState({}, '', statusUrl);
-        window.dispatchEvent(new PopStateEvent('popstate'));
-      } else {
-        const data = await response.json();
-        setErrorMessages({ submit: data.error || 'Failed to submit application. Please try again.' });
+      // Success - navigate to status page
+      if (onNavigate) {
+        onNavigate('freelancer-application-status');
       }
-    } catch (error) {
-      setErrorMessages({ submit: 'An error occurred while submitting your application. Please try again.' });
+      const statusUrl = `/?page=freelancer-application-status&id=${applicationId}`;
+      window.history.replaceState({}, '', statusUrl);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    } catch (error: any) {
+      const errorMsg = error?.message || 'An error occurred while submitting your application. Please try again.';
+      setErrorMessages({ submit: errorMsg });
     } finally {
       setIsSubmitting(false);
     }
