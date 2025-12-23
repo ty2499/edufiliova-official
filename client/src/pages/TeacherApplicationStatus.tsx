@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { openExternalUrl } from '@/lib/utils';
+import { apiRequest } from '@/lib/queryClient';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +19,7 @@ export default function TeacherApplicationStatus() {
 
   const { data: application, isLoading, refetch } = useQuery<any>({
     queryKey: [`/api/teacher-applications/${applicationId}`],
+    queryFn: () => apiRequest(`/api/teacher-applications/${applicationId}`),
     enabled: !!applicationId,
   });
 
@@ -25,17 +27,16 @@ export default function TeacherApplicationStatus() {
     setIsResubmitting(true);
     setResubmitError("");
     try {
-      const response = await fetch(`/api/teacher-applications/${applicationId}/resubmit`, {
+      const data = await apiRequest(`/api/teacher-applications/${applicationId}/resubmit`, {
         method: 'POST',
       });
-      const data = await response.json();
-      if (!response.ok) {
-        setResubmitError(data.error || "Failed to resubmit application");
-      } else {
+      if (data.success) {
         refetch();
+      } else {
+        setResubmitError(data.error || "Failed to resubmit application");
       }
-    } catch (error) {
-      setResubmitError("An error occurred while resubmitting");
+    } catch (error: any) {
+      setResubmitError(error.message || "An error occurred while resubmitting");
     } finally {
       setIsResubmitting(false);
     }
