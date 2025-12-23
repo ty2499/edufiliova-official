@@ -791,7 +791,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                       </div>
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-foreground">{item.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
+                    <p className="text-sm leading-relaxed" style={{ color: '#545454' }}>
                       {item.description}
                     </p>
                   </div>
