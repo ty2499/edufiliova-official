@@ -850,7 +850,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   <CardDescription>{option.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <div className="text-sm text-muted-foreground mb-4">
+                  <div className="text-sm mb-4" style={{ color: '#2f5a4e' }}>
                     <Clock className="h-4 w-4 inline mr-1" style={{ color: option.primary ? '#ffffff' : '#2f5a4e' }} />
                     {option.availability}
                   </div>
@@ -873,7 +873,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     {option.action}
                   </Button>
                   {option.contact && (
-                    <div className="text-sm text-muted-foreground mt-2">{option.contact}</div>
+                    <div className="text-sm mt-2" style={{ color: '#2f5a4e' }}>{option.contact}</div>
                   )}
                 </CardContent>
               </Card>
