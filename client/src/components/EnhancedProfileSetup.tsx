@@ -735,7 +735,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                     ) : (
                       <label 
                         htmlFor="cover-upload" 
-                        className="flex items-center justify-center h-32 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg cursor-pointer hover:from-gray-200 hover:to-gray-300 transition-colors border-2 border-dashed border-gray-300" transition-all duration-300
+                        className="flex items-center justify-center h-32 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg cursor-pointer hover:from-gray-200 hover:to-gray-300 transition-colors border-2 border-dashed" transition-all duration-300
                       >
                         <div className="text-center">
                           <Camera className="h-8 w-8 text-gray-400 mx-auto mb-2" />
@@ -812,7 +812,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                 <div className="space-y-2">
                   <Label htmlFor="tagline">Professional Tagline</Label>
                   {!isEditingTagline ? (
-                    <div className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-gray-50">
+                    <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                       <span className="text-gray-900" data-testid="text-tagline">
                         {profileForm.tagline || 'Add your professional tagline'}
                       </span>
@@ -868,7 +868,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
               <div className="space-y-2">
                 <Label htmlFor="bio">Short Bio *</Label>
                 {!isEditingBio ? (
-                  <div className="flex items-start justify-between p-3 border border-gray-200 rounded-lg bg-gray-50 min-h-[100px]">
+                  <div className="flex items-start justify-between p-3 rounded-lg bg-gray-50 min-h-[100px]">
                     <div className="flex-1">
                       <p className="text-gray-900 whitespace-pre-wrap" data-testid="text-bio">
                         {profileForm.bio || 'Add your short bio'}
@@ -930,7 +930,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
               <div className="space-y-2">
                 <Label htmlFor="professional-statement">Professional Statement</Label>
                 {!isEditingStatement ? (
-                  <div className="flex items-start justify-between p-3 border border-gray-200 rounded-lg bg-gray-50 min-h-[120px]">
+                  <div className="flex items-start justify-between p-3 rounded-lg bg-gray-50 min-h-[120px]">
                     <div className="flex-1">
                       <p className="text-gray-900 whitespace-pre-wrap" data-testid="text-professional-statement">
                         {profileForm.professionalStatement || 'Add your professional statement'}

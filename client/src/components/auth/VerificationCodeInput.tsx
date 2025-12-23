@@ -122,14 +122,10 @@ export default function VerificationCodeInput({
                   : 'bg-white'
               }
               ${error 
-                ? 'border-primary text-primary shake-animation' 
-                : digit 
-                  ? darkMode 
-                    ? 'border-amber-400 text-white' 
-                    : 'border-[#0C332C] text-gray-900' 
-                  : darkMode
-                    ? 'border-gray-600 text-white focus:border-amber-400'
-                    : 'border-gray-200 text-gray-900 focus:border-[#0C332C]'
+                ? 'text-primary shake-animation' 
+                : darkMode
+                  ? 'text-white'
+                  : 'text-gray-900'
               }
               ${focused && !error && !digit ? darkMode ? 'ring-2 ring-amber-400/30' : 'ring-2 ring-[#0C332C]/20' : ''}
             `}

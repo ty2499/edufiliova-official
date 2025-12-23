@@ -140,7 +140,7 @@ export default function LoginForm({
             value={formData.loginMethod} 
             onValueChange={(value: 'email' | 'phone' | 'id') => handleInputChange('loginMethod', value)}
           >
-            <SelectTrigger className="h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500" data-testid="select-login-method">
+            <SelectTrigger className="h-11 rounded-lg" data-testid="select-login-method">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -181,7 +181,7 @@ export default function LoginForm({
               value={formData.loginIdentifier}
               onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
               placeholder={getLoginPlaceholder()}
-              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.loginIdentifier ? 'border-primary' : ''}`}
+              className={`h-11 pl-10 rounded-lg ${errors.loginIdentifier ? 'border-primary' : ''}`}
               data-testid="input-login-identifier"
             />
           </div>
@@ -199,7 +199,7 @@ export default function LoginForm({
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Enter your password"
-              className={`h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-primary' : ''}`}
+              className={`h-11 pr-10 rounded-lg ${errors.password ? 'border-primary' : ''}`}
               data-testid="input-password"
             />
             <Button

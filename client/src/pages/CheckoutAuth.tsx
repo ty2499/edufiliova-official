@@ -201,7 +201,6 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  className={errors.name ? "border-primary" : ""}
                   required
                   data-testid="input-name"
                 />
@@ -219,7 +218,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className={`pl-10 ${errors.email ? "border-primary" : ""}`}
+                  className="pl-10"
                   required
                   data-testid="input-email"
                 />
@@ -237,7 +236,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   placeholder={isLogin ? "Enter your password" : "Create a password (min 8 characters)"}
                   value={formData.password}
                   onChange={(e) => handleInputChange("password", e.target.value)}
-                  className={`pl-10 pr-10 ${errors.password ? "border-primary" : ""}`}
+                  className="pl-10 pr-10"
                   required
                   data-testid="input-password"
                 />
@@ -264,7 +263,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                     placeholder="Confirm your password"
                     value={formData.confirmPassword}
                     onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                    className={`pl-10 ${errors.confirmPassword ? "border-primary" : ""}`}
+                    className="pl-10"
                     required
                     data-testid="input-confirm-password"
                   />
