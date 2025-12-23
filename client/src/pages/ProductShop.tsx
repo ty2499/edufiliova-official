@@ -990,7 +990,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-white break-words">
                 Discover Premium
                 <br />
-                <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(to right, #2f5a4e, #3d8f7a, #2f5a4e)' }}>
+                <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(to right, #a0fab2, #ffffff, #a0fab2)' }}>
                   Digital Products
                 </span>
               </h1>
