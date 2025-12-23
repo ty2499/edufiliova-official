@@ -270,7 +270,7 @@ export default function OptimizedMessagingInterface({
     return (
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-500 mb-2">Failed to load messages</p>
+          <p className="text-primary mb-2">Failed to load messages</p>
           <button
             onClick={() => window.location.reload()}
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"

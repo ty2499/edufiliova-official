@@ -886,7 +886,7 @@ export default function AdminHelpChatManager() {
           </form>
 
           {!isConnected && (
-            <p className="text-xs text-red-500 mt-2 text-center" style={{ fontFamily: 'Satoshi, sans-serif' }}>
+            <p className="text-xs text-primary mt-2 text-center" style={{ fontFamily: 'Satoshi, sans-serif' }}>
               Connection lost. Trying to reconnect...
             </p>
           )}
@@ -1027,7 +1027,7 @@ export default function AdminHelpChatManager() {
                 <p className="text-sm">Loading support agents...</p>
               </div>
             ) : supportAgentsError ? (
-              <div className="text-center py-8 text-red-500">
+              <div className="text-center py-8 text-primary">
                 <User className="h-12 w-12 mx-auto mb-3 text-red-300" />
                 <p className="text-sm">Error loading support agents</p>
                 <p className="text-xs mt-1">{supportAgentsError?.message}</p>

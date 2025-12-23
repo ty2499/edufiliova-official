@@ -324,10 +324,10 @@ function formatLessonContent(lessonContent: any, imageUrls: string[]): string {
   </section>
 
   <section class="common-mistakes" style="margin-bottom: 40px;">
-    <h2 style="color: #2d3748; font-size: 1.5rem; margin-bottom: 20px; border-bottom: 3px solid #ef4444; padding-bottom: 10px;">Common Mistakes to Avoid</h2>
+    <h2 style="color: #2d3748; font-size: 1.5rem; margin-bottom: 20px; border-bottom: 3px solid #0C332C; padding-bottom: 10px;">Common Mistakes to Avoid</h2>
     <div style="background: #fef2f2; padding: 25px; border-radius: 12px;">
       ${lessonContent.common_mistakes?.map((mistake: string) => `
-        <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #ef4444;">
+        <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #0C332C;">
           ${mistake}
         </div>
       `).join('') || ''}

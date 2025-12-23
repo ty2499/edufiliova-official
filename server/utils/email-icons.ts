@@ -5,7 +5,7 @@ export const EMAIL_ICONS = {
   </svg>`).toString('base64')}" alt="Approved" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   rejected: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <circle cx="24" cy="24" r="22" fill="#EF4444"/>
+    <circle cx="24" cy="24" r="22" fill="#0C332C"/>
     <path d="M16 16L32 32M32 16L16 32" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>`).toString('base64')}" alt="Rejected" style="width:48px;height:48px;vertical-align:middle;" />`,
 
@@ -27,7 +27,7 @@ export const EMAIL_ICONS = {
   </svg>`).toString('base64')}" alt="Under Review" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   celebration: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <rect x="3" y="3" width="42" height="42" rx="8" fill="#FF5834"/>
+    <rect x="3" y="3" width="42" height="42" rx="8" fill="#0C332C"/>
     <path d="M24 10L26.5 19.5L36 22L26.5 24.5L24 34L21.5 24.5L12 22L21.5 19.5L24 10Z" fill="white"/>
     <circle cx="36" cy="12" r="3" fill="#FCD34D"/>
     <circle cx="12" cy="36" r="3" fill="#FCD34D"/>
@@ -44,7 +44,7 @@ export const EMAIL_ICONS = {
   </svg>`).toString('base64')}" alt="Welcome" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   order: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <rect x="6" y="10" width="36" height="32" rx="4" fill="#FF5834"/>
+    <rect x="6" y="10" width="36" height="32" rx="4" fill="#0C332C"/>
     <rect x="10" y="6" width="28" height="8" rx="2" fill="#1A1A1A"/>
     <path d="M16 22H32M16 30H28" stroke="white" stroke-width="2" stroke-linecap="round"/>
     <circle cx="36" cy="36" r="8" fill="#10B981"/>
@@ -61,7 +61,7 @@ export const EMAIL_ICONS = {
   </svg>`).toString('base64')}" alt="Shipping" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   gift: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <rect x="6" y="18" width="36" height="26" rx="4" fill="#FF5834"/>
+    <rect x="6" y="18" width="36" height="26" rx="4" fill="#0C332C"/>
     <rect x="6" y="12" width="36" height="10" rx="2" fill="#E64A2A"/>
     <rect x="21" y="12" width="6" height="32" fill="#FCD34D"/>
     <path d="M24 12C24 12 18 6 14 10C10 14 16 18 24 12Z" fill="#FCD34D"/>
@@ -69,9 +69,9 @@ export const EMAIL_ICONS = {
   </svg>`).toString('base64')}" alt="Gift" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   bell: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <path d="M24 6C17.373 6 12 11.373 12 18V28L8 34H40L36 28V18C36 11.373 30.627 6 24 6Z" fill="#FF5834"/>
-    <path d="M20 38C20 40.209 21.791 42 24 42C26.209 42 28 40.209 28 38" stroke="#FF5834" stroke-width="3"/>
-    <circle cx="36" cy="12" r="6" fill="#EF4444"/>
+    <path d="M24 6C17.373 6 12 11.373 12 18V28L8 34H40L36 28V18C36 11.373 30.627 6 24 6Z" fill="#0C332C"/>
+    <path d="M20 38C20 40.209 21.791 42 24 42C26.209 42 28 40.209 28 38" stroke="#0C332C" stroke-width="3"/>
+    <circle cx="36" cy="12" r="6" fill="#0C332C"/>
   </svg>`).toString('base64')}" alt="Notification" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   clock: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -113,7 +113,7 @@ export const EMAIL_ICONS = {
   </svg>`).toString('base64')}" alt="Star" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   heart: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <path d="M24 42C24 42 6 30 6 18C6 12 10.477 6 17 6C21.5 6 24 10 24 10C24 10 26.5 6 31 6C37.523 6 42 12 42 18C42 30 24 42 24 42Z" fill="#EF4444"/>
+    <path d="M24 42C24 42 6 30 6 18C6 12 10.477 6 17 6C21.5 6 24 10 24 10C24 10 26.5 6 31 6C37.523 6 42 12 42 18C42 30 24 42 24 42Z" fill="#0C332C"/>
   </svg>`).toString('base64')}" alt="Heart" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   lightbulb: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -150,7 +150,7 @@ export const EMAIL_ICONS = {
   </svg>`).toString('base64')}" alt="Freelancer" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   rocket: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <path d="M24 4C24 4 16 12 16 26C16 34 20 40 24 44C28 40 32 34 32 26C32 12 24 4 24 4Z" fill="#FF5834"/>
+    <path d="M24 4C24 4 16 12 16 26C16 34 20 40 24 44C28 40 32 34 32 26C32 12 24 4 24 4Z" fill="#0C332C"/>
     <circle cx="24" cy="22" r="4" fill="white"/>
     <path d="M16 30C12 32 8 30 8 30C8 30 10 26 14 24" fill="#FCD34D"/>
     <path d="M32 30C36 32 40 30 40 30C40 30 38 26 34 24" fill="#FCD34D"/>
@@ -167,7 +167,7 @@ export const EMAIL_ICONS = {
 
   palette: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
     <path d="M24 4C12.954 4 4 12.954 4 24C4 35.046 12.954 44 24 44C25.657 44 27 42.657 27 41C27 40.209 26.679 39.497 26.167 38.985C25.666 38.484 25.357 37.787 25.357 37C25.357 35.343 26.7 34 28.357 34H32C38.627 34 44 28.627 44 22C44 11.507 35.046 4 24 4Z" fill="#E5E7EB"/>
-    <circle cx="16" cy="18" r="4" fill="#EF4444"/>
+    <circle cx="16" cy="18" r="4" fill="#0C332C"/>
     <circle cx="24" cy="12" r="4" fill="#FCD34D"/>
     <circle cx="32" cy="18" r="4" fill="#10B981"/>
     <circle cx="14" cy="28" r="4" fill="#3B82F6"/>
@@ -193,7 +193,7 @@ export const EMAIL_ICONS = {
   </svg>`).toString('base64')}" alt="Hello" style="width:48px;height:48px;vertical-align:middle;" />`,
 
   target: `<img src="data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-    <circle cx="24" cy="24" r="20" stroke="#EF4444" stroke-width="4"/>
+    <circle cx="24" cy="24" r="20" stroke="#0C332C" stroke-width="4"/>
     <circle cx="24" cy="24" r="12" stroke="#F59E0B" stroke-width="4"/>
     <circle cx="24" cy="24" r="4" fill="#10B981"/>
   </svg>`).toString('base64')}" alt="Target" style="width:48px;height:48px;vertical-align:middle;" />`,

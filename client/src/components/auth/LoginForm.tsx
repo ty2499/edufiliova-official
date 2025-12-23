@@ -125,7 +125,7 @@ export default function LoginForm({
       </div>
 
       {errors.general && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+        <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary text-sm">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />
           <span>{errors.general}</span>
         </div>
@@ -181,11 +181,11 @@ export default function LoginForm({
               value={formData.loginIdentifier}
               onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
               placeholder={getLoginPlaceholder()}
-              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.loginIdentifier ? 'border-red-500' : ''}`}
+              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.loginIdentifier ? 'border-primary' : ''}`}
               data-testid="input-login-identifier"
             />
           </div>
-          {errors.loginIdentifier && <p className="text-sm text-red-500 mt-1">{errors.loginIdentifier}</p>}
+          {errors.loginIdentifier && <p className="text-sm text-primary mt-1">{errors.loginIdentifier}</p>}
         </div>
 
         <div>
@@ -199,7 +199,7 @@ export default function LoginForm({
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Enter your password"
-              className={`h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-red-500' : ''}`}
+              className={`h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-primary' : ''}`}
               data-testid="input-password"
             />
             <Button
@@ -213,7 +213,7 @@ export default function LoginForm({
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
           </div>
-          {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+          {errors.password && <p className="text-sm text-primary mt-1">{errors.password}</p>}
         </div>
 
         <div className="flex items-center justify-between">

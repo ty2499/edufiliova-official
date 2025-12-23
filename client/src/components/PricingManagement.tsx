@@ -1139,7 +1139,7 @@ const PricingManagement: React.FC = () => {
                     variant="outline"
                     onClick={() => handleDeletePlan(plan.id)}
                     disabled={deletePlanMutation.isPending}
-                    className="text-red-600 hover:text-red-700"
+                    className="text-primary hover:text-primary"
                     data-testid={`button-delete-${plan.id}`}
                   >
                     <Trash2 className="h-3 w-3" />
@@ -1257,7 +1257,7 @@ const PricingManagement: React.FC = () => {
                               onClick={() => handleBannerPriceDelete(config.id, config.targetingType, config.durationDays)}
                               disabled={deleteBannerPricingMutation.isPending}
                               data-testid={`button-delete-banner-price-${config.id}`}
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                              className="text-primary hover:text-primary hover:bg-primary/10"
                             >
                               <Trash2 className="h-3 w-3" />
                             </Button>
@@ -1334,7 +1334,7 @@ const PricingManagement: React.FC = () => {
                       className={`${
                         plan.badgeColor === 'blue' ? 'bg-blue-50 text-blue-700 border-blue-200' :
                         plan.badgeColor === 'green' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                        plan.badgeColor === 'orange' ? 'bg-orange-50 text-orange-700 border-orange-200' :
+                        plan.badgeColor === 'orange' ? 'bg-primary/10 text-orange-700 border-orange-200' :
                         'bg-gray-50 text-gray-700 border-gray-200'
                       }`}
                     >
@@ -1421,7 +1421,7 @@ const PricingManagement: React.FC = () => {
                           }
                         }}
                         disabled={deleteFreelancerPlanMutation.isPending}
-                        className="text-red-600 hover:text-red-700"
+                        className="text-primary hover:text-primary"
                         data-testid={`button-delete-freelancer-plan-${plan.id}`}
                       >
                         <Trash2 className="h-3 w-3" />

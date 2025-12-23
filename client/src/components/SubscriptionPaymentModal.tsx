@@ -615,7 +615,7 @@ export default function SubscriptionPaymentModal({
                     </>
                   ) : (
                     <>
-                      <circle cx="80" cy="30" r="15" fill="#ef4444" />
+                      <circle cx="80" cy="30" r="15" fill="#0C332C" />
                       <path d="M 75 25 L 85 35 M 85 25 L 75 35" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
                     </>
                   )}
@@ -672,7 +672,7 @@ export default function SubscriptionPaymentModal({
                     Success
                   </span>
                 ) : (
-                  <span className="flex items-center gap-1 text-red-600 font-medium">
+                  <span className="flex items-center gap-1 text-primary font-medium">
                     <X className="w-4 h-4" />
                     Failed
                   </span>
@@ -743,7 +743,7 @@ export default function SubscriptionPaymentModal({
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
         <Card className="w-full max-w-md mx-4 bg-white dark:bg-gray-900">
           <CardContent className="p-8 text-center">
-            <X className="w-12 h-12 mx-auto text-red-500 mb-4" />
+            <X className="w-12 h-12 mx-auto text-primary mb-4" />
             <h3 className="text-lg font-semibold mb-2">No Payment Methods Available</h3>
             <p className="text-sm text-muted-foreground mb-4">
               No payment methods are currently configured. Please contact support or try again later.
@@ -993,7 +993,7 @@ export default function SubscriptionPaymentModal({
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -1056,7 +1056,7 @@ export default function SubscriptionPaymentModal({
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -1085,7 +1085,7 @@ export default function SubscriptionPaymentModal({
                   </div>
                   
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -1117,14 +1117,14 @@ export default function SubscriptionPaymentModal({
                       Available: ${walletBalance.toFixed(2)}
                     </p>
                     {!hasSufficientBalance && (
-                      <p className="text-sm text-red-600 mt-2">
+                      <p className="text-sm text-primary mt-2">
                         Insufficient balance. You need ${(plan.price - walletBalance).toFixed(2)} more.
                       </p>
                     )}
                   </div>
                   
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -1195,7 +1195,7 @@ export default function SubscriptionPaymentModal({
                   </div>
                   
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -1235,7 +1235,7 @@ export default function SubscriptionPaymentModal({
                   </div>
                   
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -1271,7 +1271,7 @@ export default function SubscriptionPaymentModal({
                   </div>
                   
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}

@@ -934,7 +934,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                             });
                           }}
                           variant="outline"
-                          className="flex-1 border-orange-500 text-orange-600 hover:bg-orange-50"
+                          className="flex-1 border-orange-500 text-primary hover:bg-primary/10"
                           disabled={updateTeacherStatus.isPending}
                           data-testid="btn-mark-under-review-teacher"
                         >
@@ -1179,7 +1179,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                   {selectedFreelancerApp.rejectionReason && (
                     <div>
                       <Label>Rejection Reason</Label>
-                      <p className="text-sm mt-1 bg-red-50 dark:bg-red-900/20 p-3 rounded text-primary-900 dark:text-primary-200">
+                      <p className="text-sm mt-1 bg-primary/10 dark:bg-red-900/20 p-3 rounded text-primary-900 dark:text-primary-200">
                         {selectedFreelancerApp.rejectionReason}
                       </p>
                     </div>
@@ -1237,7 +1237,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
             <div className={`flex items-center gap-2 p-3 rounded-lg ${
               ajaxStatus.type === 'loading' ? 'bg-blue-50 text-blue-700' :
               ajaxStatus.type === 'success' ? 'bg-green-50 text-green-700' :
-              'bg-red-50 text-primary-700'
+              'bg-primary/10 text-primary-700'
             }`} data-testid="ajax-status-inline">
               {ajaxStatus.type === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
               {ajaxStatus.type === 'success' && <CheckmarkIcon size="sm" variant="success" />}

@@ -1752,7 +1752,7 @@ function MembershipPage() {
         <div className={`mx-auto max-w-2xl rounded-lg p-4 ${
           message.type === 'success' 
             ? 'bg-blue-50 border border-blue-200' 
-            : 'bg-red-50 border border-red-200'
+            : 'bg-primary/10 border border-red-200'
         }`} data-testid={`message-${message.type}`}>
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0">
@@ -2328,7 +2328,7 @@ function EmbeddedPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { am
                 </div>
 
                 {error && (
-                  <div className="bg-red-50 text-primary-800 p-3 rounded-lg text-sm">
+                  <div className="bg-primary/10 text-primary-800 p-3 rounded-lg text-sm">
                     {error}
                   </div>
                 )}
@@ -2607,7 +2607,7 @@ function MembershipPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { 
                 </div>
 
                 {error && (
-                  <div className="bg-red-50 text-primary-800 p-3 rounded-lg text-sm">
+                  <div className="bg-primary/10 text-primary-800 p-3 rounded-lg text-sm">
                     {error}
                   </div>
                 )}
@@ -3551,7 +3551,7 @@ function SettingsPage() {
         </div>
       )}
       {updateMutation.isError && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4" data-testid="message-save-error">
+        <div className="bg-primary/10 border border-red-200 rounded-lg p-4" data-testid="message-save-error">
           <div className="flex items-center gap-3">
             <X className="h-5 w-5 text-primary-600" />
             <p className="text-sm text-primary-800 font-medium">

@@ -127,7 +127,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {errors.general && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+              <div className="p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary text-sm">
                 <AlertCircle className="h-4 w-4 flex-shrink-0" />
                 <span>{errors.general}</span>
               </div>
@@ -142,7 +142,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                   placeholder="Enter new password (6+ characters)"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className={`pr-10 ${errors.newPassword ? "border-red-500" : ""}`}
+                  className={`pr-10 ${errors.newPassword ? "border-primary" : ""}`}
                   disabled={loading}
                   data-testid="input-new-password"
                 />
@@ -155,7 +155,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              {errors.newPassword && <p className="text-sm text-red-600">{errors.newPassword}</p>}
+              {errors.newPassword && <p className="text-sm text-primary">{errors.newPassword}</p>}
             </div>
 
             <div className="space-y-2">
@@ -166,11 +166,11 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                 placeholder="Confirm your new password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={errors.confirmPassword ? "border-red-500" : ""}
+                className={errors.confirmPassword ? "border-primary" : ""}
                 disabled={loading}
                 data-testid="input-confirm-password"
               />
-              {errors.confirmPassword && <p className="text-sm text-red-600">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && <p className="text-sm text-primary">{errors.confirmPassword}</p>}
             </div>
 
             <Button 

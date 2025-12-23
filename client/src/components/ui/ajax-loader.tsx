@@ -18,11 +18,11 @@ const operationConfig = {
   loading: { icon: Loader2, color: 'text-blue-500', bgColor: 'bg-blue-50', message: 'Loading...' },
   adding: { icon: Loader2, color: 'text-gray-700', bgColor: 'bg-gray-100', message: 'Adding...' },
   updating: { icon: Edit, color: 'text-amber-500', bgColor: 'bg-amber-50', message: 'Updating...' },
-  deleting: { icon: Trash2, color: 'text-red-500', bgColor: 'bg-red-50', message: 'Deleting...' },
+  deleting: { icon: Trash2, color: 'text-primary', bgColor: 'bg-primary/10', message: 'Deleting...' },
   uploading: { icon: Loader2, color: 'text-blue-500', bgColor: 'bg-blue-50', message: 'Uploading...' },
   downloading: { icon: Download, color: 'text-indigo-500', bgColor: 'bg-indigo-50', message: 'Downloading...' },
   success: { icon: Check, color: 'text-blue-600', bgColor: 'bg-blue-50', message: 'Success!' },
-  error: { icon: X, color: 'text-red-600', bgColor: 'bg-red-50', message: 'Error occurred' },
+  error: { icon: X, color: 'text-primary', bgColor: 'bg-primary/10', message: 'Error occurred' },
   idle: { icon: null, color: '', bgColor: '', message: '' }
 };
 
@@ -145,7 +145,7 @@ export const AjaxButton: React.FC<AjaxButtonProps> = ({
     
     switch (variant) {
       case 'destructive':
-        return cn(base, 'bg-primary text-white hover:bg-primary disabled:bg-red-300');
+        return cn(base, 'bg-primary text-white hover:bg-primary disabled:bg-primary/30');
       case 'outline':
         return cn(base, 'border border-input bg-background hover:bg-accent hover:text-foreground-foreground disabled:bg-muted');
       case 'secondary':

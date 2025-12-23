@@ -153,8 +153,8 @@ export function TeacherMessagingDashboard() {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'urgent': return 'text-red-600 dark:text-red-400';
-      case 'high': return 'text-orange-600 dark:text-orange-400';
+      case 'urgent': return 'text-primary dark:text-red-400';
+      case 'high': return 'text-primary dark:text-orange-400';
       case 'normal': return 'text-blue-600 dark:text-blue-400';
       case 'low': return 'text-gray-600 dark:text-gray-400';
       default: return 'text-gray-600 dark:text-gray-400';

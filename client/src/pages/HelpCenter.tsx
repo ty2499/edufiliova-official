@@ -275,7 +275,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
       id: "course-creation",
       title: "Course Creation & Management",
       icon: Video,
-      color: "bg-orange-100 text-orange-600",
+      color: "bg-primary/15 text-primary",
       faqs: [
         {
           question: "What file formats are supported for course uploads?",
@@ -323,7 +323,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
       id: "technical",
       title: "Technical Support",
       icon: Settings,
-      color: "bg-red-100 text-primary-600",
+      color: "bg-primary/15 text-primary-600",
       faqs: [
         {
           question: "What devices and browsers are supported?",
@@ -1097,7 +1097,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
                       <Users className="h-5 w-5" style={{ color: '#0C332C' }} />
                     </div>
                     <div className="flex-1">
@@ -1175,7 +1175,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
                       <DollarSign className="h-5 w-5" style={{ color: '#0C332C' }} />
                     </div>
                     <div className="flex-1">

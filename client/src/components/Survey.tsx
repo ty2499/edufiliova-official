@@ -460,7 +460,7 @@ export default function Survey({ onComplete, userId }: SurveyProps) {
                 </Button>
 
                 {error && (
-                  <p className="text-sm text-red-500" data-testid="upload-error">
+                  <p className="text-sm text-primary" data-testid="upload-error">
                     {error}
                   </p>
                 )}

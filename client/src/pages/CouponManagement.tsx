@@ -287,7 +287,7 @@ export function CouponManagement() {
           ) : (
             <div className="space-y-4">
               {couponsData.coupons.map((coupon: Coupon) => (
-                <Card key={coupon.id} className="border-l-4" style={{ borderLeftColor: coupon.isActive ? '#10b981' : '#ef4444' }}>
+                <Card key={coupon.id} className="border-l-4" style={{ borderLeftColor: coupon.isActive ? '#10b981' : '#0C332C' }}>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">

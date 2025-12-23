@@ -258,7 +258,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
 
           {errorMessage && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-600 text-sm">
+            <div className="p-3 bg-primary/10 border border-red-200 rounded-xl text-primary-600 text-sm">
               {errorMessage}
             </div>
           )}
@@ -410,7 +410,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {errorMessage && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-600 text-sm">
+            <div className="p-3 bg-primary/10 border border-red-200 rounded-xl text-primary-600 text-sm">
               {errorMessage}
             </div>
           )}

@@ -138,7 +138,7 @@ export function PortfolioMonitoringDashboard() {
   };
 
   const getActionColor = (action: string) => {
-    return action === 'delete' ? 'text-red-600' : 'text-orange-600';
+    return action === 'delete' ? 'text-primary' : 'text-primary';
   };
 
   if (isLoading) {
@@ -157,7 +157,7 @@ export function PortfolioMonitoringDashboard() {
       <div className="flex items-center justify-center min-h-96">
         <Card className="max-w-md">
           <CardContent className="pt-6 text-center">
-            <AlertTriangle className="h-8 w-8 text-red-500 mx-auto mb-2" />
+            <AlertTriangle className="h-8 w-8 text-primary mx-auto mb-2" />
             <p className="text-gray-600">Failed to load portfolios. Please try again.</p>
           </CardContent>
         </Card>
@@ -324,7 +324,7 @@ export function PortfolioMonitoringDashboard() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 text-orange-600 hover:text-orange-700"
+                      className="flex-1 text-primary hover:text-orange-700"
                       onClick={() => openModerationDialog(portfolio, 'suspend')}
                       data-testid={`button-suspend-${portfolio.id}`}
                     >
@@ -334,7 +334,7 @@ export function PortfolioMonitoringDashboard() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 text-red-600 hover:text-red-700"
+                      className="flex-1 text-primary hover:text-primary"
                       onClick={() => openModerationDialog(portfolio, 'delete')}
                       data-testid={`button-delete-${portfolio.id}`}
                     >
@@ -378,7 +378,7 @@ export function PortfolioMonitoringDashboard() {
               {/* Reason Input */}
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Reason for {moderationAction} <span className="text-red-500">*</span>
+                  Reason for {moderationAction} <span className="text-primary">*</span>
                 </label>
                 <Textarea
                   placeholder={`Explain why you are ${moderationAction === 'delete' ? 'deleting' : 'suspending'} this portfolio...`}

@@ -38,8 +38,8 @@ interface ErrorStats {
 }
 
 const SEVERITY_COLORS = {
-  critical: "bg-red-100 text-red-800 border-red-200",
-  error: "bg-orange-100 text-orange-800 border-orange-200",
+  critical: "bg-primary/15 text-red-800 border-red-200",
+  error: "bg-primary/15 text-primary border-orange-200",
   warning: "bg-yellow-100 text-yellow-800 border-yellow-200",
   info: "bg-blue-100 text-blue-800 border-blue-200"
 };
@@ -125,7 +125,7 @@ export function SystemErrorsPanel() {
         <div className={`flex items-center gap-2 p-3 rounded-lg ${
           ajaxStatus.type === 'loading' ? 'bg-blue-50 text-blue-700' :
           ajaxStatus.type === 'success' ? 'bg-green-50 text-green-700' :
-          'bg-red-50 text-red-700'
+          'bg-primary/10 text-primary'
         }`} data-testid="ajax-status-inline">
           {ajaxStatus.type === 'loading' && <Loader2 className="h-4 w-4 animate-spin" />}
           {ajaxStatus.type === 'success' && <CheckmarkIcon size="sm" variant="success" />}
@@ -140,7 +140,7 @@ export function SystemErrorsPanel() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Unresolved</p>
-                <p className="text-2xl font-bold text-orange-600">{stats?.unresolved || 0}</p>
+                <p className="text-2xl font-bold text-primary">{stats?.unresolved || 0}</p>
               </div>
               <AlertTriangle className="h-8 w-8 text-orange-500" />
             </div>
@@ -152,9 +152,9 @@ export function SystemErrorsPanel() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Critical</p>
-                <p className="text-2xl font-bold text-red-600">{stats?.critical || 0}</p>
+                <p className="text-2xl font-bold text-primary">{stats?.critical || 0}</p>
               </div>
-              <XCircle className="h-8 w-8 text-red-500" />
+              <XCircle className="h-8 w-8 text-primary" />
             </div>
           </CardContent>
         </Card>

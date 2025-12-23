@@ -121,7 +121,7 @@ export default function CategoryAccessApprovalInterface() {
       case 'approved':
         return <CheckCircle2 className="h-4 w-4 text-green-600" />;
       case 'rejected':
-        return <XCircle className="h-4 w-4 text-red-600" />;
+        return <XCircle className="h-4 w-4 text-primary" />;
       default:
         return <Clock className="h-4 w-4 text-gray-600" />;
     }
@@ -134,7 +134,7 @@ export default function CategoryAccessApprovalInterface() {
       case 'approved':
         return 'bg-green-100 text-green-800';
       case 'rejected':
-        return 'bg-red-100 text-red-800';
+        return 'bg-primary/15 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
     }
@@ -174,7 +174,7 @@ export default function CategoryAccessApprovalInterface() {
     return (
       <Card>
         <CardContent className="p-6">
-          <div className="text-center text-red-600">
+          <div className="text-center text-primary">
             <XCircle className="h-12 w-12 mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">Failed to Load Requests</h3>
             <p className="text-sm">There was an error loading the category access requests.</p>
@@ -224,10 +224,10 @@ export default function CategoryAccessApprovalInterface() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Rejected</CardTitle>
-            <XCircle className="h-4 w-4 text-red-600" />
+            <XCircle className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.rejected}</div>
+            <div className="text-2xl font-bold text-primary">{stats.rejected}</div>
             <p className="text-xs text-muted-foreground">Denied access</p>
           </CardContent>
         </Card>

@@ -1465,7 +1465,7 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-primary-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary-700">
                       {error}
                     </div>
                   )}
@@ -1499,7 +1499,7 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
                   )}
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-primary-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary-700">
                       {error}
                     </div>
                   )}

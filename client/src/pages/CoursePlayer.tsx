@@ -1087,8 +1087,8 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                                     bgClass = 'bg-green-50 dark:bg-green-950';
                                   } else if (isSelected) {
                                     // Show wrong selected answer in red
-                                    borderClass = 'border-red-500';
-                                    bgClass = 'bg-red-50 dark:bg-red-950';
+                                    borderClass = 'border-primary';
+                                    bgClass = 'bg-primary/10 dark:bg-red-950';
                                   }
                                 } else if (isSelected) {
                                   // Before submission, show selected in blue
@@ -1200,7 +1200,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                         }}
                         size="sm"
                         variant="outline"
-                        className="border-orange-500 text-orange-600 hover:bg-orange-50"
+                        className="border-orange-500 text-primary hover:bg-primary/10"
                         data-testid="button-retake-course"
                       >
                         <Target className="h-4 w-4 mr-2" />

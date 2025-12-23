@@ -87,7 +87,7 @@ export default function MyAds({ userRole = 'customer' }: MyAdsProps) {
 
   const getStatusColor = (status: string, approvalStatus: string) => {
     if (approvalStatus === 'pending') return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-    if (approvalStatus === 'rejected') return 'bg-red-100 text-red-800 border-red-300';
+    if (approvalStatus === 'rejected') return 'bg-primary/15 text-red-800 border-red-300';
     if (status === 'approved') return 'bg-green-100 text-green-800 border-green-300';
     if (status === 'paused') return 'bg-gray-100 text-gray-800 border-gray-300';
     if (status === 'expired') return 'bg-blue-100 text-blue-800 border-blue-300';
@@ -326,7 +326,7 @@ export default function MyAds({ userRole = 'customer' }: MyAdsProps) {
                           size="sm"
                           onClick={() => handleDeleteClick(ad.id)}
                           disabled={deleteMutation.isPending}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          className="text-primary hover:text-primary hover:bg-primary/10"
                           data-testid={`button-delete-${ad.id}`}
                         >
                           <Trash2 className="w-4 h-4 mr-2" />

@@ -487,7 +487,7 @@ export function CreateAssignmentDialog({ open, onOpenChange, onSuccess }: Create
                             variant="ghost"
                             size="sm"
                             onClick={() => removeQuestion(question.id)}
-                            className="text-red-500 hover:text-red-700"
+                            className="text-primary hover:text-primary"
                             data-testid={`button-remove-question-${question.id}`}
                           >
                             <Trash2 className="h-4 w-4" />
@@ -624,7 +624,7 @@ export function CreateAssignmentDialog({ open, onOpenChange, onSuccess }: Create
                   )}
 
                   {uploadError && (
-                    <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
+                    <div className="text-primary text-sm bg-primary/10 p-3 rounded-lg">
                       {uploadError}
                     </div>
                   )}
@@ -645,7 +645,7 @@ export function CreateAssignmentDialog({ open, onOpenChange, onSuccess }: Create
                             variant="ghost"
                             size="sm"
                             onClick={() => removeAttachment(file.id)}
-                            className="text-red-500 hover:text-red-700"
+                            className="text-primary hover:text-primary"
                             data-testid={`button-remove-attachment-${file.id}`}
                           >
                             <X className="h-4 w-4" />

@@ -412,7 +412,7 @@ function WalletPaymentModal({
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -440,7 +440,7 @@ function WalletPaymentModal({
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -472,7 +472,7 @@ function WalletPaymentModal({
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}
@@ -507,7 +507,7 @@ function WalletPaymentModal({
                   </div>
 
                   {error && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                    <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary">
                       {error}
                     </div>
                   )}

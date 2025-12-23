@@ -872,7 +872,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             </div>
 
             {!sendToSelf && (
-              <div className="space-y-4 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+              <div className="space-y-4 p-4 bg-primary/10 dark:bg-primary/80/20 rounded-lg border border-orange-200 dark:border-orange-800">
                 <h3 className="font-medium flex items-center gap-2">
                   <User className="w-4 h-4 text-foreground" />
                   Recipient Details
@@ -961,8 +961,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             </div>
 
             {error && (
-              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              <div className="p-3 bg-primary/10 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-sm text-primary dark:text-red-400">{error}</p>
               </div>
             )}
 
@@ -1170,8 +1170,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             </div>
 
             {error && (
-              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              <div className="p-3 bg-primary/10 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-sm text-primary dark:text-red-400">{error}</p>
               </div>
             )}
 

@@ -78,7 +78,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
                     <li>• Plagiarism or copyright infringement will result in immediate account termination</li>
                   </ul>
                 </div>
-                <div className="p-3 bg-orange-50 rounded-lg">
+                <div className="p-3 bg-primary/10 rounded-lg">
                   <h4 className="font-medium mb-2">Content Guidelines</h4>
                   <ul className="space-y-1 text-muted-foreground">
                     <li>• All content must be appropriate for educational purposes</li>
@@ -134,7 +134,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
                 <h3 className="text-lg font-semibold">Refund Policy</h3>
               </div>
               <div className="space-y-3">
-                <div className="p-3 bg-red-50 rounded-lg">
+                <div className="p-3 bg-primary/10 rounded-lg">
                   <h4 className="font-medium mb-2">Digital Products</h4>
                   <ul className="space-y-1 text-muted-foreground">
                     <li>• Customers can request refunds within 7 days of purchase</li>
@@ -202,7 +202,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
                     <li>• Promote your work within platform guidelines</li>
                   </ul>
                 </div>
-                <div className="p-3 bg-red-50 rounded-lg">
+                <div className="p-3 bg-primary/10 rounded-lg">
                   <h4 className="font-medium mb-2">Prohibited Activities</h4>
                   <ul className="space-y-1 text-muted-foreground">
                     <li>• Requesting direct payment outside the platform</li>
@@ -222,7 +222,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
                 <FileText className="w-5 h-5" style={{ color: '#2d5ddd' }} />
                 <h3 className="text-lg font-semibold">Account Requirements</h3>
               </div>
-              <div className="p-3 bg-orange-50 rounded-lg">
+              <div className="p-3 bg-primary/10 rounded-lg">
                 <h4 className="font-medium mb-2">Profile & Verification</h4>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>• Valid government-issued ID required for verification</li>
@@ -242,7 +242,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
                 <h3 className="text-lg font-semibold">Legal & Compliance</h3>
               </div>
               <div className="space-y-3">
-                <div className="p-3 bg-red-50 rounded-lg">
+                <div className="p-3 bg-primary/10 rounded-lg">
                   <h4 className="font-medium mb-2">Account Termination</h4>
                   <ul className="space-y-1 text-muted-foreground">
                     <li>• EduFiliova reserves the right to suspend or terminate accounts</li>

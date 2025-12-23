@@ -703,7 +703,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                     Recommended: Square image, at least 200x200px, under 5MB
                   </p>
                   {avatarError && (
-                    <div className="flex items-center gap-2 text-sm text-red-600">
+                    <div className="flex items-center gap-2 text-sm text-primary">
                       <AlertCircle className="h-4 w-4" />
                       {avatarError}
                     </div>
@@ -763,7 +763,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                     Recommended: Wide format (16:9 aspect ratio), at least 1200x600px, under 10MB
                   </p>
                   {coverError && (
-                    <div className="flex items-center gap-2 text-sm text-red-600">
+                    <div className="flex items-center gap-2 text-sm text-primary">
                       <AlertCircle className="h-4 w-4" />
                       {coverError}
                     </div>
@@ -1021,7 +1021,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                     <Badge key={index} variant="outline" className="flex items-center gap-1">
                       {skill}
                       <X 
-                        className="h-3 w-3 cursor-pointer hover:text-red-500" 
+                        className="h-3 w-3 cursor-pointer hover:text-primary" 
                         onClick={() => handleRemoveSkill(skill)}
                       />
                     </Badge>
@@ -1115,7 +1115,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                     <Badge key={index} variant="outline" className="flex items-center gap-1">
                       {language}
                       <X 
-                        className="h-3 w-3 cursor-pointer hover:text-red-500" 
+                        className="h-3 w-3 cursor-pointer hover:text-primary" 
                         onClick={() => handleRemoveLanguage(language)}
                       />
                     </Badge>
@@ -1177,7 +1177,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                         {link}
                       </a>
                       <X 
-                        className="h-4 w-4 cursor-pointer hover:text-red-500" 
+                        className="h-4 w-4 cursor-pointer hover:text-primary" 
                         onClick={() => handleRemovePortfolioLink(link)}
                       />
                     </div>
@@ -1353,7 +1353,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                           {url}
                         </a>
                         <X 
-                          className="h-4 w-4 cursor-pointer hover:text-red-500" 
+                          className="h-4 w-4 cursor-pointer hover:text-primary" 
                           onClick={() => handleRemoveSocialLink(platform)}
                         />
                       </div>
@@ -1372,7 +1372,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               {hasUnsavedChanges && (
-                <div className="flex items-center gap-2 text-sm text-orange-600">
+                <div className="flex items-center gap-2 text-sm text-primary">
                   <AlertCircle className="h-4 w-4" />
                   You have unsaved changes
                 </div>
@@ -1384,7 +1384,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                 </div>
               )}
               {saveError && (
-                <div className="flex items-center gap-2 text-sm text-red-600">
+                <div className="flex items-center gap-2 text-sm text-primary">
                   <AlertCircle className="h-4 w-4" />
                   {saveError}
                 </div>

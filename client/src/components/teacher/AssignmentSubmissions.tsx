@@ -158,7 +158,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
       return <FileVideo className="h-5 w-5 text-purple-500" />;
     }
     if (extension === 'pdf' || mimeType === 'application/pdf') {
-      return <FileText className="h-5 w-5 text-red-500" />;
+      return <FileText className="h-5 w-5 text-primary" />;
     }
     return <File className="h-5 w-5 text-gray-500" />;
   };
@@ -388,7 +388,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                                 {studentAnswer && (
                                   <Badge 
                                     variant={isCorrect ? "default" : "destructive"}
-                                    className={isCorrect ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}
+                                    className={isCorrect ? "bg-green-100 text-green-800" : "bg-primary/15 text-red-800"}
                                   >
                                     {isCorrect ? "✓ Correct" : "✗ Incorrect"}
                                   </Badge>
@@ -415,7 +415,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                                               isSelected 
                                                 ? isCorrectOption 
                                                   ? 'bg-green-50 border-green-400 shadow-md' 
-                                                  : 'bg-red-50 border-red-400 shadow-md'
+                                                  : 'bg-primary/10 border-primary shadow-md'
                                                 : isCorrectOption 
                                                   ? 'bg-blue-50 border-blue-300' 
                                                   : 'bg-white border-gray-200'
@@ -513,7 +513,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                                   ? 'bg-green-100 text-green-800 border-2 border-green-300' 
                                   : selectedSubmission.grade === 'C' 
                                     ? 'bg-yellow-100 text-yellow-800 border-2 border-yellow-300' 
-                                    : 'bg-red-100 text-red-800 border-2 border-red-300'
+                                    : 'bg-primary/15 text-red-800 border-2 border-red-300'
                               }`}>
                                 {selectedSubmission.grade}
                               </div>
@@ -523,7 +523,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                                 ) : selectedSubmission.grade === 'C' ? (
                                   <span className="text-yellow-600 font-bold">~ AVERAGE</span>
                                 ) : (
-                                  <span className="text-red-600 font-bold">✗ FAILED</span>
+                                  <span className="text-primary font-bold">✗ FAILED</span>
                                 )}
                               </div>
                             </div>
@@ -555,7 +555,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                                 ? 'bg-green-100 text-green-700' 
                                 : selectedSubmission.grade === 'C' 
                                   ? 'bg-yellow-100 text-yellow-700' 
-                                  : 'bg-red-100 text-red-700'
+                                  : 'bg-primary/15 text-primary'
                             }`}>
                               {selectedSubmission.grade === 'A' || selectedSubmission.grade === 'B' ? 'PASSED' 
                                : selectedSubmission.grade === 'C' ? 'AVERAGE' 
@@ -587,7 +587,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                         { letter: 'A', status: 'Pass', color: 'bg-green-100 border-green-400 text-green-800', numeric: assignment.maxGrade },
                         { letter: 'B', status: 'Pass', color: 'bg-green-100 border-green-400 text-green-800', numeric: Math.round(assignment.maxGrade * 0.85) },
                         { letter: 'C', status: 'Average', color: 'bg-yellow-100 border-yellow-400 text-yellow-800', numeric: Math.round(assignment.maxGrade * 0.75) },
-                        { letter: 'D', status: 'Failed', color: 'bg-red-100 border-red-400 text-red-800', numeric: Math.round(assignment.maxGrade * 0.65) }
+                        { letter: 'D', status: 'Failed', color: 'bg-primary/15 border-primary text-red-800', numeric: Math.round(assignment.maxGrade * 0.65) }
                       ].map((grade) => (
                         <button
                           key={grade.letter}
@@ -623,7 +623,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                               ? 'bg-green-100 text-green-800' 
                               : gradingData.grade === 'C' 
                                 ? 'bg-yellow-100 text-yellow-800' 
-                                : 'bg-red-100 text-red-800'
+                                : 'bg-primary/15 text-red-800'
                           }`}>
                             Grade: {gradingData.grade}
                           </div>
@@ -633,7 +633,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                             ) : gradingData.grade === 'C' ? (
                               <span className="text-yellow-600 font-semibold">~ AVERAGE</span>
                             ) : (
-                              <span className="text-red-600 font-semibold">✗ FAILED</span>
+                              <span className="text-primary font-semibold">✗ FAILED</span>
                             )}
                           </div>
                         </div>

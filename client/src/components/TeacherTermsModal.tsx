@@ -84,7 +84,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
                 <h3 className="text-lg font-semibold">Child Safety & Protection (HIGHEST PRIORITY)</h3>
               </div>
               <div className="space-y-3">
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <div className="p-3 bg-primary/10 border border-red-200 rounded-lg">
                   <h4 className="font-medium mb-2 text-red-900">Zero Tolerance Policy</h4>
                   <ul className="space-y-1 text-muted-foreground">
                     <li>• Absolutely NO inappropriate communication with minors under any circumstances</li>
@@ -93,7 +93,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
                     <li>• Teachers must complete mandatory child safety training upon approval</li>
                   </ul>
                 </div>
-                <div className="p-3 bg-orange-50 rounded-lg">
+                <div className="p-3 bg-primary/10 rounded-lg">
                   <h4 className="font-medium mb-2">Required Background Checks</h4>
                   <ul className="space-y-1 text-muted-foreground">
                     <li>• Criminal background check required before teaching minors (under 18)</li>
@@ -214,7 +214,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
                     <li>• Access student analytics and progress reports</li>
                   </ul>
                 </div>
-                <div className="p-3 bg-red-50 rounded-lg">
+                <div className="p-3 bg-primary/10 rounded-lg">
                   <h4 className="font-medium mb-2">Prohibited Activities</h4>
                   <ul className="space-y-1 text-muted-foreground">
                     <li>• Sharing inappropriate or harmful content</li>
@@ -234,7 +234,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
                 <FileText className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Document Requirements</h3>
               </div>
-              <div className="p-3 bg-orange-50 rounded-lg">
+              <div className="p-3 bg-primary/10 rounded-lg">
                 <h4 className="font-medium mb-2">Required Documentation</h4>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>• Valid government-issued ID or passport</li>
@@ -277,7 +277,7 @@ const TeacherTermsModal = ({ isOpen, onClose, onAccept, onDecline }: TeacherTerm
                 <h3 className="text-lg font-semibold">Legal & Compliance</h3>
               </div>
               <div className="space-y-3">
-                <div className="p-3 bg-red-50 rounded-lg">
+                <div className="p-3 bg-primary/10 rounded-lg">
                   <h4 className="font-medium mb-2">Important Legal Notes</h4>
                   <ul className="space-y-1 text-muted-foreground">
                     <li>• These terms are governed by applicable local laws</li>

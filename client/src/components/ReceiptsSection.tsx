@@ -64,7 +64,7 @@ const receiptTypeConfig = {
   banner_payment: {
     label: 'Advertisement',
     icon: Megaphone,
-    color: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300'
+    color: 'bg-primary/15 text-primary dark:bg-primary/80 dark:text-primary/30'
   },
   certificate: {
     label: 'Certificate',
@@ -77,7 +77,7 @@ const deliveryStatusConfig = {
   pending: { label: 'Pending', icon: Clock, color: 'text-yellow-600' },
   sent: { label: 'Emailed', icon: CheckCircle2, color: 'text-green-600' },
   downloaded: { label: 'Downloaded', icon: Download, color: 'text-blue-600' },
-  failed: { label: 'Failed', icon: XCircle, color: 'text-red-600' }
+  failed: { label: 'Failed', icon: XCircle, color: 'text-primary' }
 };
 
 function ReceiptDetailModal({ 

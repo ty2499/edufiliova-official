@@ -96,7 +96,7 @@ export function SponsoredListingDisplay({
     <div className={cn('sponsored-listings-container space-y-4', className)}>
       {/* Sponsored section header */}
       <div className="flex items-center gap-2 mb-4">
-        <TrendingUp className="h-5 w-5 text-orange-600" />
+        <TrendingUp className="h-5 w-5 text-primary" />
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           Sponsored {itemType === 'course' ? 'Courses' : itemType === 'freelancer_project' ? 'Projects' : 'Content'}
         </h3>
@@ -122,9 +122,9 @@ export function SponsoredListingDisplay({
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base">
                 {listing.itemType === 'course' ? (
-                  <BookOpen className="h-4 w-4 text-orange-600" />
+                  <BookOpen className="h-4 w-4 text-primary" />
                 ) : (
-                  <Briefcase className="h-4 w-4 text-orange-600" />
+                  <Briefcase className="h-4 w-4 text-primary" />
                 )}
                 <span className="line-clamp-1">
                   {listing.itemTitle || `${listing.itemType.replace('_', ' ')} #${listing.itemId.slice(0, 8)}`}
@@ -162,7 +162,7 @@ export function SponsoredListingDisplay({
                 {/* Price or action button area */}
                 <div className="flex items-center justify-between">
                   {listing.itemPrice && (
-                    <div className="font-semibold text-orange-600">
+                    <div className="font-semibold text-primary">
                       ${listing.itemPrice}
                     </div>
                   )}
@@ -257,7 +257,7 @@ export function PromoteButton({ itemType, itemId, itemTitle, className }: Promot
       variant="outline"
       size="sm"
       className={cn(
-        'border-orange-300 text-orange-700 hover:bg-orange-50 hover:border-orange-400 dark:border-orange-700 dark:text-orange-300 dark:hover:bg-orange-950/30',
+        'border-orange-300 text-orange-700 hover:bg-primary/10 hover:border-orange-400 dark:border-orange-700 dark:text-primary/30 dark:hover:bg-primary/80/30',
         className
       )}
       data-testid={`promote-button-${itemId}`}

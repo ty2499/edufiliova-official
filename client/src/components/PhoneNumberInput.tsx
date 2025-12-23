@@ -141,7 +141,7 @@ const PhoneNumberInput = ({
             placeholder={placeholder}
             value={phoneNumber}
             onChange={(e) => handlePhoneChange(e.target.value)}
-            className={`pl-10 ${error ? "border-red-500" : ""}`}
+            className={`pl-10 ${error ? "border-primary" : ""}`}
             disabled={disabled}
           />
         </div>
@@ -156,7 +156,7 @@ const PhoneNumberInput = ({
 
       {/* Error message */}
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="text-sm text-primary">{error}</p>
       )}
     </div>
   );

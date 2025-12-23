@@ -328,7 +328,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                 {quizScore >= 70 ? (
                   <CheckCircle2 className="w-6 h-6 text-green-600" />
                 ) : (
-                  <AlertCircle className="w-6 h-6 text-orange-600" />
+                  <AlertCircle className="w-6 h-6 text-primary" />
                 )}
                 Quiz Results
               </CardTitle>
@@ -348,8 +348,8 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                   </p>
                 </div>
               ) : (
-                <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg">
-                  <p className="text-orange-700 dark:text-orange-300">
+                <div className="bg-primary/10 dark:bg-primary/80/20 p-4 rounded-lg">
+                  <p className="text-orange-700 dark:text-primary/30">
                     📚 You need 70% to pass. Review the lesson content and try again.
                   </p>
                 </div>
@@ -588,7 +588,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                   .replace(/Note:\s*([^\n]+)/gi, 
                     '<div class="bg-amber-500/5 border-l-4 border-amber-500 p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-amber-600 dark:text-amber-400">Note:</span> $1</div>')
                   .replace(/Important:\s*([^\n]+)/gi, 
-                    '<div class="bg-primary/5 border-l-4 border-red-500 p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-primary-600 dark:text-primary-400">Important:</span> $1</div>')
+                    '<div class="bg-primary/5 border-l-4 border-primary p-3 my-3 rounded-r-lg text-sm sm:text-base"><span class="font-semibold text-primary-600 dark:text-primary-400">Important:</span> $1</div>')
                   // Clean up paragraph breaks
                   .replace(/\n\n+/g, '</p><p class="mb-3 text-sm sm:text-base">')
                   .replace(/\n/g, '<br/>')
@@ -766,10 +766,10 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
       programming: 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200',
       design: 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-200',
       business: 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200',
-      marketing: 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200',
+      marketing: 'bg-primary/15 text-primary dark:bg-primary/80/50 dark:text-orange-200',
       photography: 'bg-pink-100 text-pink-800 dark:bg-pink-900/50 dark:text-pink-200',
       music: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-200',
-      health: 'bg-red-100 text-primary-800 dark:bg-red-900/50 dark:text-primary-200',
+      health: 'bg-primary/15 text-primary-800 dark:bg-red-900/50 dark:text-primary-200',
       language: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200',
       other: 'bg-gray-100 text-gray-800 dark:bg-gray-700/50 dark:text-gray-200'
     };
@@ -4135,7 +4135,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                   ? isCorrect
                                     ? 'border-green-500 bg-green-50 text-green-700'
                                     : isSelected && !isCorrect
-                                    ? 'border-red-500 bg-red-50 text-primary-700'
+                                    ? 'border-primary bg-primary/10 text-primary-700'
                                     : 'border-gray-200 bg-gray-50'
                                   : isSelected
                                   ? 'border-primary bg-primary/10'
@@ -4565,7 +4565,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                             <div className={`p-3 rounded-lg border-2 ${
                               questionAnswers[question.id] === question.correctAnswer 
                                 ? 'bg-green-50 border-green-300'
-                                : 'bg-red-50 border-red-300'
+                                : 'bg-primary/10 border-red-300'
                             }`}>
                               <div className="flex items-center gap-2">
                                 {questionAnswers[question.id] === question.correctAnswer ? (
@@ -4584,7 +4584,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                                 {questionAnswers[question.id] === question.correctAnswer ? (
                                   <Badge className="bg-green-100 text-green-800 text-xs ml-auto">Correct</Badge>
                                 ) : (
-                                  <Badge className="bg-red-100 text-primary-800 text-xs ml-auto">Incorrect</Badge>
+                                  <Badge className="bg-primary/15 text-primary-800 text-xs ml-auto">Incorrect</Badge>
                                 )}
                               </div>
                             </div>
@@ -4706,7 +4706,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                     <div className={`p-4 rounded-lg mb-4 ${
                       submissionMessage.type === 'success' 
                         ? 'bg-green-50 border border-green-200 text-green-800' 
-                        : 'bg-red-50 border border-red-200 text-primary-800'
+                        : 'bg-primary/10 border border-red-200 text-primary-800'
                     }`}>
                       <div className="flex items-center">
                         {submissionMessage.type === 'success' ? (

@@ -13,17 +13,17 @@ const emailTemplates = [
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
     .title { color: #1a1a1a; font-size: 28px; font-weight: 700; margin: 0 0 20px 0; }
     .message { color: #4a5568; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
     .features { background-color: #f9fafb; border-radius: 12px; padding: 25px; margin: 25px 0; }
     .feature { padding: 12px 0; border-bottom: 1px solid #e5e7eb; }
     .feature:last-child { border-bottom: none; }
-    .feature-icon { color: #ff5834; font-size: 18px; margin-right: 10px; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .feature-icon { color: #0C332C; font-size: 18px; margin-right: 10px; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
     .social-links { margin: 20px 0; }
   </style>
@@ -56,7 +56,7 @@ const emailTemplates = [
       </center>
       
       <p class="message" style="margin-top: 30px;">
-        If you have any questions, our support team is always here to help at <a href="mailto:support@edufiliova.com" style="color: #ff5834;">support@edufiliova.com</a>
+        If you have any questions, our support team is always here to help at <a href="mailto:support@edufiliova.com" style="color: #0C332C;">support@edufiliova.com</a>
       </p>
     </div>
     <div class="footer">
@@ -101,17 +101,17 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
     .title { color: #1a1a1a; font-size: 28px; font-weight: 700; margin: 0 0 20px 0; }
-    .subtitle { color: #ff5834; font-size: 20px; font-weight: 600; margin: 30px 0 15px 0; }
+    .subtitle { color: #0C332C; font-size: 20px; font-weight: 600; margin: 30px 0 15px 0; }
     .message { color: #4a5568; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
-    .card { background-color: #f9fafb; border-radius: 12px; padding: 20px; margin: 15px 0; border-left: 4px solid #ff5834; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .card { background-color: #f9fafb; border-radius: 12px; padding: 20px; margin: 15px 0; border-left: 4px solid #0C332C; }
     .card-title { color: #1a1a1a; font-size: 18px; font-weight: 600; margin: 0 0 10px 0; }
     .card-text { color: #6b7280; font-size: 14px; margin: 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -188,20 +188,20 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
-    .promo-banner { background: linear-gradient(135deg, #ff5834 0%, #e64520 100%); padding: 30px; text-align: center; }
+    .promo-banner { background: linear-gradient(135deg, #0C332C 0%, #e64520 100%); padding: 30px; text-align: center; }
     .promo-text { color: #ffffff; font-size: 42px; font-weight: 800; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
     .promo-subtext { color: #ffffff; font-size: 18px; margin: 10px 0 0 0; opacity: 0.9; }
     .content { padding: 40px; }
     .title { color: #1a1a1a; font-size: 26px; font-weight: 700; margin: 0 0 20px 0; }
     .message { color: #4a5568; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 18px; margin: 20px 0; box-shadow: 0 4px 14px rgba(255, 88, 52, 0.4); }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 18px; margin: 20px 0; box-shadow: 0 4px 14px rgba(255, 88, 52, 0.4); }
     .countdown { background-color: #fff4ed; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
     .countdown-text { color: #e64520; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-    .offer-box { background-color: #f9fafb; border: 2px dashed #ff5834; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; }
-    .code { background-color: #ff5834; color: #ffffff; padding: 10px 20px; border-radius: 6px; font-size: 20px; font-weight: 700; letter-spacing: 2px; display: inline-block; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .offer-box { background-color: #f9fafb; border: 2px dashed #0C332C; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; }
+    .code { background-color: #0C332C; color: #ffffff; padding: 10px 20px; border-radius: 6px; font-size: 20px; font-weight: 700; letter-spacing: 2px; display: inline-block; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -275,7 +275,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .celebration { background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 40px; text-align: center; }
     .trophy { font-size: 60px; margin-bottom: 15px; }
@@ -283,14 +283,14 @@ Unsubscribe: {{unsubscribeLink}}`,
     .content { padding: 40px; }
     .title { color: #1a1a1a; font-size: 24px; font-weight: 700; margin: 0 0 20px 0; }
     .message { color: #4a5568; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
     .stats-box { background-color: #f9fafb; border-radius: 12px; padding: 25px; margin: 25px 0; display: flex; justify-content: space-around; text-align: center; }
     .stat { flex: 1; }
-    .stat-value { color: #ff5834; font-size: 32px; font-weight: 700; }
+    .stat-value { color: #0C332C; font-size: 32px; font-weight: 700; }
     .stat-label { color: #6b7280; font-size: 14px; margin-top: 5px; }
     .next-steps { background-color: #eff6ff; border-radius: 12px; padding: 20px; margin: 20px 0; }
     .next-steps h3 { color: #1e40af; margin: 0 0 15px 0; font-size: 18px; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -375,20 +375,20 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
     .emoji-header { font-size: 50px; text-align: center; margin-bottom: 20px; }
     .title { color: #1a1a1a; font-size: 28px; font-weight: 700; margin: 0 0 20px 0; text-align: center; }
     .message { color: #4a5568; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
     .reasons { background-color: #f9fafb; border-radius: 12px; padding: 25px; margin: 25px 0; }
     .reason { padding: 15px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; }
     .reason:last-child { border-bottom: none; }
     .reason-icon { font-size: 24px; margin-right: 15px; }
     .reason-text { color: #4b5563; font-size: 15px; }
-    .offer { background: linear-gradient(135deg, #ff5834 0%, #e64520 100%); border-radius: 12px; padding: 25px; margin: 25px 0; text-align: center; color: #ffffff; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .offer { background: linear-gradient(135deg, #0C332C 0%, #e64520 100%); border-radius: 12px; padding: 25px; margin: 25px 0; text-align: center; color: #ffffff; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -472,20 +472,20 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .badge { background-color: #10b981; color: #ffffff; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 20px; }
     .content { padding: 40px; }
     .title { color: #1a1a1a; font-size: 28px; font-weight: 700; margin: 0 0 20px 0; }
     .message { color: #4a5568; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
     .course-card { border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; margin: 25px 0; }
     .course-image { width: 100%; height: 200px; background-color: #f3f4f6; background-size: cover; background-position: center; }
     .course-details { padding: 20px; }
     .course-title { color: #1a1a1a; font-size: 20px; font-weight: 600; margin: 0 0 10px 0; }
     .course-desc { color: #6b7280; font-size: 14px; line-height: 1.6; margin: 0 0 15px 0; }
     .course-meta { display: flex; gap: 15px; color: #9ca3af; font-size: 13px; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -563,7 +563,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .success-banner { background-color: #10b981; padding: 20px; text-align: center; }
     .success-icon { font-size: 40px; margin-bottom: 10px; }
@@ -576,8 +576,8 @@ Unsubscribe: {{unsubscribeLink}}`,
     .order-row:last-child { border-bottom: none; font-weight: 600; }
     .order-label { color: #6b7280; }
     .order-value { color: #1a1a1a; font-weight: 500; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -612,7 +612,7 @@ Unsubscribe: {{unsubscribeLink}}`,
           </tr>
           <tr class="order-row">
             <td class="order-label" style="font-weight: 600;">Total Amount</td>
-            <td class="order-value" style="text-align: right; color: #ff5834; font-weight: 700;">{{totalAmount}}</td>
+            <td class="order-value" style="text-align: right; color: #0C332C; font-weight: 700;">{{totalAmount}}</td>
           </tr>
         </table>
       </div>
@@ -665,7 +665,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
     .receipt-header { text-align: center; margin-bottom: 30px; }
@@ -680,8 +680,8 @@ Unsubscribe: {{unsubscribeLink}}`,
     .detail-row:last-child { border-bottom: none; }
     .detail-label { color: #6b7280; font-size: 14px; }
     .detail-value { color: #1a1a1a; font-size: 14px; font-weight: 500; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -774,7 +774,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .welcome-banner { background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); padding: 40px; text-align: center; }
     .welcome-icon { font-size: 50px; margin-bottom: 15px; }
@@ -785,12 +785,12 @@ Unsubscribe: {{unsubscribeLink}}`,
     .steps { background-color: #f9fafb; border-radius: 12px; padding: 25px; margin: 25px 0; }
     .step { padding: 15px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: flex-start; }
     .step:last-child { border-bottom: none; }
-    .step-number { background-color: #ff5834; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 15px; flex-shrink: 0; }
+    .step-number { background-color: #0C332C; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 15px; flex-shrink: 0; }
     .step-content { flex: 1; }
     .step-title { color: #1a1a1a; font-weight: 600; margin: 0 0 5px 0; }
     .step-desc { color: #6b7280; font-size: 14px; margin: 0; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -892,7 +892,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .welcome-banner { background: linear-gradient(135deg, #059669 0%, #10b981 100%); padding: 40px; text-align: center; }
     .welcome-icon { font-size: 50px; margin-bottom: 15px; }
@@ -904,11 +904,11 @@ Unsubscribe: {{unsubscribeLink}}`,
     .benefit { background-color: #f9fafb; border-radius: 12px; padding: 20px; text-align: center; }
     .benefit-icon { font-size: 32px; margin-bottom: 10px; }
     .benefit-title { color: #1a1a1a; font-weight: 600; font-size: 14px; margin: 0; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
     .tip-box { background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 20px; margin: 25px 0; border-radius: 0 12px 12px 0; }
     .tip-title { color: #1e40af; font-weight: 600; margin: 0 0 10px 0; }
     .tip-text { color: #4b5563; font-size: 14px; margin: 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -1004,7 +1004,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
     .title { color: #1a1a1a; font-size: 26px; font-weight: 700; margin: 0 0 20px 0; }
@@ -1017,11 +1017,11 @@ Unsubscribe: {{unsubscribeLink}}`,
     .stat { text-align: center; }
     .stat-value { color: #1a1a1a; font-size: 24px; font-weight: 700; }
     .stat-label { color: #6b7280; font-size: 12px; margin-top: 5px; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
     .motivation { background-color: #fef3c7; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
     .motivation-icon { font-size: 32px; margin-bottom: 10px; }
     .motivation-text { color: #92400e; font-size: 16px; font-weight: 500; margin: 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -1111,7 +1111,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
     .emoji-header { font-size: 60px; text-align: center; margin-bottom: 20px; }
@@ -1120,12 +1120,12 @@ Unsubscribe: {{unsubscribeLink}}`,
     .rating-box { background-color: #f9fafb; border-radius: 12px; padding: 30px; margin: 25px 0; text-align: center; }
     .rating-label { color: #6b7280; font-size: 14px; margin: 0 0 15px 0; }
     .stars { font-size: 36px; letter-spacing: 8px; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
     .button-secondary { display: inline-block; background-color: #e5e7eb; color: #4b5563 !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 10px; }
     .promise { background-color: #eff6ff; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
     .promise-icon { font-size: 24px; margin-bottom: 10px; }
     .promise-text { color: #1e40af; font-size: 14px; margin: 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -1197,7 +1197,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .hero { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); padding: 50px; text-align: center; }
     .snowflakes { font-size: 24px; margin-bottom: 15px; }
@@ -1215,7 +1215,7 @@ Unsubscribe: {{unsubscribeLink}}`,
     .button { display: inline-block; background-color: #dc2626; color: #ffffff !important; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 18px; margin: 20px 0; }
     .timer { background-color: #fef2f2; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
     .timer-text { color: #991b1b; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>
@@ -1308,7 +1308,7 @@ Unsubscribe: {{unsubscribeLink}}`,
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #ff5834; padding: 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .alert-banner { background-color: #fef3c7; padding: 20px; text-align: center; border-bottom: 3px solid #f59e0b; }
     .alert-icon { font-size: 32px; margin-bottom: 10px; }
@@ -1323,8 +1323,8 @@ Unsubscribe: {{unsubscribeLink}}`,
     .benefit { padding: 10px 0; display: flex; align-items: center; }
     .benefit-icon { color: #10b981; font-size: 18px; margin-right: 12px; }
     .benefit-text { color: #4b5563; font-size: 15px; }
-    .button { display: inline-block; background-color: #ff5834; color: #ffffff !important; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 18px; margin: 20px 0; }
-    .footer { background-color: #ff5834; padding: 30px; text-align: center; color: #ffffff; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 18px; margin: 20px 0; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
   </style>
 </head>

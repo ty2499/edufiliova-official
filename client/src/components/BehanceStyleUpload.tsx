@@ -171,7 +171,7 @@ function SortableImage({ image, onDelete, onPreview }: SortableImageProps) {
           </div>
         ) : image.error ? (
           // Error State
-          <div className="w-full h-full flex flex-col items-center justify-center bg-red-50 text-red-600">
+          <div className="w-full h-full flex flex-col items-center justify-center bg-primary/10 text-primary">
             <X className="h-8 w-8 mb-2" />
             <p className="text-sm text-center px-2">{image.error}</p>
           </div>

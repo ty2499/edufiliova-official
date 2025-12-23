@@ -545,19 +545,19 @@ function PaymentMethodsCard({ user }: { user: any }) {
         
         {/* Notifications Panel - Facebook-like */}
         {showNotifications && notifications.length > 0 && (
-          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="mt-4 p-4 bg-primary/10 border border-red-200 rounded-lg">
             <h4 className="font-medium text-red-800 mb-2 flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
               Payment Method Alerts
             </h4>
             <div className="space-y-2">
               {notifications.map((notification, index) => (
-                <div key={notification.id || index} className="text-sm text-red-700 bg-white p-3 rounded border">
+                <div key={notification.id || index} className="text-sm text-primary bg-white p-3 rounded border">
                   <div className="font-medium">{notification.reason}</div>
-                  <div className="text-red-600 mt-1">
+                  <div className="text-primary mt-1">
                     {notification.details?.message || 'Please review and try again.'}
                   </div>
-                  <div className="text-xs text-red-500 mt-2">
+                  <div className="text-xs text-primary mt-2">
                     {new Date(notification.createdAt).toLocaleDateString()} at {new Date(notification.createdAt).toLocaleTimeString()}
                   </div>
                 </div>
@@ -606,7 +606,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                           Verified
                         </Badge>
                       ) : (
-                        <Badge variant="outline" className="text-xs text-orange-600">
+                        <Badge variant="outline" className="text-xs text-primary">
                           <Clock className="h-3 w-3 mr-1" />
                           Pending Verification
                         </Badge>
@@ -1846,7 +1846,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
   const getTrendIcon = (trend: 'up' | 'down' | 'stable') => {
     switch (trend) {
       case 'up': return <TrendingUp className="h-4 w-4 text-green-500" />;
-      case 'down': return <TrendingUp className="h-4 w-4 text-red-500 rotate-180" />;
+      case 'down': return <TrendingUp className="h-4 w-4 text-primary rotate-180" />;
       case 'stable': return <TrendingUp className="h-4 w-4 text-gray-500 rotate-90" />;
     }
   };
@@ -2946,7 +2946,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                         </div>
                         <div>
                           <p className="text-gray-500">Commission (25%)</p>
-                          <p className="font-semibold text-red-600">-${earning.platformCommission}</p>
+                          <p className="font-semibold text-primary">-${earning.platformCommission}</p>
                         </div>
                         <div>
                           <p className="text-gray-500">Your Earnings</p>
@@ -3110,7 +3110,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-orange-600" />
+                  <Clock className="h-5 w-5 text-primary" />
                   Availability & Schedule
                 </CardTitle>
                 <CardDescription>
@@ -3367,7 +3367,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                                     size="sm"
                                     variant="outline"
                                     onClick={() => handleDeclineAppointment(appointment.id)}
-                                    className="text-red-600 border-red-200 hover:bg-red-50"
+                                    className="text-primary border-red-200 hover:bg-primary/10"
                                     data-testid={`decline-appointment-${appointment.id}`}
                                   >
                                     <XCircle className="h-3 w-3 mr-1" />

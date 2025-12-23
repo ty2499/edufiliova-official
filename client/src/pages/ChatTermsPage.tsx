@@ -107,7 +107,7 @@ const ChatTermsPage = ({ onNavigate }: ChatTermsPageProps) => {
               </ul>
             </div>
 
-            <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+            <div className="bg-primary/10 border border-red-200 rounded-xl p-6">
               <div className="flex items-center gap-3 mb-4">
                 <AlertTriangle className="h-6 w-6 text-primary-600" />
                 <h4 className="font-semibold text-primary-900 text-lg">❌ Strictly Prohibited</h4>
@@ -194,11 +194,11 @@ const ChatTermsPage = ({ onNavigate }: ChatTermsPageProps) => {
                 <h4 className="font-semibold text-yellow-900 mb-2">First Warning</h4>
                 <p className="text-yellow-800 text-sm">Account notification and reminder of guidelines</p>
               </div>
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+              <div className="bg-primary/10 border border-orange-200 rounded-lg p-4">
                 <h4 className="font-semibold text-orange-900 mb-2">Temporary Suspension</h4>
-                <p className="text-orange-800 text-sm">Chat privileges suspended for 1-7 days</p>
+                <p className="text-primary text-sm">Chat privileges suspended for 1-7 days</p>
               </div>
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <div className="bg-primary/10 border border-red-200 rounded-lg p-4">
                 <h4 className="font-semibold text-primary-900 mb-2">Permanent Ban</h4>
                 <p className="text-primary-800 text-sm">Complete removal from platform for serious violations</p>
               </div>

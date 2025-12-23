@@ -220,7 +220,7 @@ export default function SupportProfilesManagement() {
     return (
       <Card>
         <CardContent className="p-6">
-          <div className="text-center text-red-500">
+          <div className="text-center text-primary">
             Error loading support agents: {(error as any)?.message || 'Unknown error'}
           </div>
         </CardContent>
@@ -559,7 +559,7 @@ export default function SupportProfilesManagement() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleDelete(agent.id)}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    className="text-primary hover:text-primary hover:bg-primary/10"
                     data-testid={`delete-agent-${agent.id}`}
                   >
                     <Trash2 className="h-3 w-3" />

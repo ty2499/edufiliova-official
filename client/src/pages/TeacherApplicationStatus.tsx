@@ -119,7 +119,7 @@ export default function TeacherApplicationStatus() {
         )}
 
         {isRejected && (
-          <Card className="mb-6 border-red-500 bg-red-50 dark:bg-red-950/20">
+          <Card className="mb-6 border-primary bg-primary/10 dark:bg-red-950/20">
             <CardContent className="pt-6 text-center">
               <XCircle className="w-16 h-16 text-primary-500 mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Application Not Approved</h2>

@@ -91,7 +91,7 @@ export function VoucherCard({
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <Ticket className="w-6 h-6 text-orange-600 dark:text-orange-500" />
+              <Ticket className="w-6 h-6 text-primary dark:text-orange-500" />
               <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
                 {description}
               </h3>
@@ -108,11 +108,11 @@ export function VoucherCard({
           <div className="flex-1">
             <div className="mb-4">
               <div className="flex items-baseline gap-1 mb-1">
-                <span className="text-5xl font-bold text-orange-600 dark:text-orange-500">
+                <span className="text-5xl font-bold text-primary dark:text-orange-500">
                   ${formattedAmount.split('.')[0]}
                 </span>
                 {formattedAmount.split('.')[1] && (
-                  <span className="text-2xl font-semibold text-orange-600 dark:text-orange-500">
+                  <span className="text-2xl font-semibold text-primary dark:text-orange-500">
                     .{formattedAmount.split('.')[1]}
                   </span>
                 )}
@@ -131,7 +131,7 @@ export function VoucherCard({
           </div>
 
           <div className="flex items-center justify-center w-24 h-24 bg-white dark:bg-gray-800 rounded-full border-4 border-orange-500 shadow-lg">
-            <Gift className="w-12 h-12 text-orange-600 dark:text-orange-500" />
+            <Gift className="w-12 h-12 text-primary dark:text-orange-500" />
           </div>
         </div>
 

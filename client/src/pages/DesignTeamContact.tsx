@@ -325,7 +325,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                   </div>
 
                   {errorMessage && (
-                    <div className="p-4 bg-red-100 border-2 border-red-500 rounded-lg" data-testid="error-message">
+                    <div className="p-4 bg-primary/15 border-2 border-primary rounded-lg" data-testid="error-message">
                       <p className="text-primary-700 font-medium text-sm">{errorMessage}</p>
                     </div>
                   )}

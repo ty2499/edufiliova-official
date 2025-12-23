@@ -110,7 +110,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
     { value: 'bg-gradient-to-br from-yellow-100 to-yellow-200', label: 'Yellow', color: 'bg-yellow-200' },
     { value: 'bg-gradient-to-br from-pink-100 to-pink-200', label: 'Pink', color: 'bg-pink-200' },
     { value: 'bg-gradient-to-br from-indigo-100 to-indigo-200', label: 'Indigo', color: 'bg-indigo-200' },
-    { value: 'bg-gradient-to-br from-red-100 to-red-200', label: 'Red', color: 'bg-red-200' },
+    { value: 'bg-gradient-to-br from-primary/10 to-primary/15', label: 'Red', color: 'bg-red-200' },
     { value: 'bg-gradient-to-br from-gray-100 to-gray-200', label: 'Gray', color: 'bg-gray-200' }
   ];
 
@@ -387,7 +387,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
         {(error || success) && (
           <div className="mb-6">
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-md p-4">
+              <div className="bg-primary/10 border border-red-200 rounded-md p-4">
                 <div className="flex items-center">
                   <X className="h-5 w-5 text-primary-400 mr-2" />
                   <p className="text-sm text-primary-700">{error}</p>
@@ -531,7 +531,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
                           className={`${
                             category.scope === 'global' 
                               ? 'bg-blue-50 border-blue-200 text-blue-700' 
-                              : 'bg-orange-50 border-orange-200 text-orange-700'
+                              : 'bg-primary/10 border-orange-200 text-orange-700'
                           }`}
                         >
                           {category.scope === 'global' ? (
@@ -626,7 +626,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
 
             {/* Error/Success Messages */}
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-md p-4">
+              <div className="bg-primary/10 border border-red-200 rounded-md p-4">
                 <div className="flex items-center">
                   <X className="h-5 w-5 text-primary-400 mr-2" />
                   <p className="text-sm text-primary-700">{error}</p>

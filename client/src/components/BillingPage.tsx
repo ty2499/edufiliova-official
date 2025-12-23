@@ -521,7 +521,7 @@ export default function BillingPage() {
                           size="sm"
                           onClick={() => handleDelete(method.id)}
                           disabled={deleteMutation.isPending}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          className="text-primary hover:text-primary hover:bg-primary/10"
                           data-testid={`button-delete-${index}`}
                         >
                           <Trash2 className="w-4 h-4" />
@@ -558,7 +558,7 @@ export default function BillingPage() {
         <AlertDialogContent data-testid="dialog-cancel-subscription">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-red-600" />
+              <AlertCircle className="w-5 h-5 text-primary" />
               Cancel Subscription?
             </AlertDialogTitle>
             <AlertDialogDescription className="space-y-3">

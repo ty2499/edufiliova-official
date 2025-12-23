@@ -400,7 +400,7 @@ function CertificateCheckoutForm({
   if (enabledGateways.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-600">No payment gateways are currently configured. Please contact support.</p>
+        <p className="text-primary">No payment gateways are currently configured. Please contact support.</p>
       </div>
     );
   }
@@ -536,7 +536,7 @@ function CertificateCheckoutForm({
         </CardHeader>
         <CardContent>
           {paymentError && (
-            <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-3 text-sm mb-4">
+            <div className="bg-primary/10 border border-red-200 text-red-800 rounded-lg p-3 text-sm mb-4">
               {paymentError}
             </div>
           )}
@@ -547,7 +547,7 @@ function CertificateCheckoutForm({
                 onClick={() => setSelectedMethod('card')}
                 className={`w-full p-4 border-2 rounded-lg transition-all text-left ${
                   selectedMethod === 'card'
-                    ? 'border-orange-500 bg-orange-50 dark:bg-orange-950/20'
+                    ? 'border-orange-500 bg-primary/10 dark:bg-primary/80/20'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
                 data-testid="button-method-card"
@@ -598,7 +598,7 @@ function CertificateCheckoutForm({
                     <div className="font-semibold">System Wallet</div>
                     <div className="text-xs text-muted-foreground">
                       Balance: ${walletBalance.toFixed(2)}
-                      {!hasSufficientBalance && <span className="text-red-500 ml-1">(Insufficient)</span>}
+                      {!hasSufficientBalance && <span className="text-primary ml-1">(Insufficient)</span>}
                     </div>
                   </div>
                 </div>
@@ -623,7 +623,7 @@ function CertificateCheckoutForm({
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-3 text-sm mb-4">
+            <div className="bg-primary/10 border border-red-200 text-red-800 rounded-lg p-3 text-sm mb-4">
               {error}
             </div>
           )}

@@ -157,7 +157,7 @@ export async function sendSubscriptionCancellationEmail(
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .header {
-      background-color: #ff5834;
+      background-color: #0C332C;
       padding: 30px 40px;
       text-align: center;
     }
@@ -185,7 +185,7 @@ export async function sendSubscriptionCancellationEmail(
       padding: 20px;
       border-radius: 8px;
       margin: 20px 0;
-      border-left: 4px solid #ff5734;
+      border-left: 4px solid #0C332C;
     }
     .info-title {
       font-weight: bold;
@@ -198,7 +198,7 @@ export async function sendSubscriptionCancellationEmail(
     }
     .cta-button {
       display: inline-block;
-      background-color: #ff5734;
+      background-color: #0C332C;
       color: #ffffff !important;
       text-decoration: none;
       padding: 14px 28px;
@@ -207,7 +207,7 @@ export async function sendSubscriptionCancellationEmail(
       margin: 20px 0;
     }
     .footer {
-      background: #ff5834;
+      background: #0C332C;
       padding: 30px 40px;
       color: #ffffff;
       text-align: center;
@@ -307,7 +307,7 @@ function generateVoucherEmailHTML(
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .header {
-      background-color: #ff5834;
+      background-color: #0C332C;
       padding: 30px 40px;
       text-align: center;
       border-bottom: none;
@@ -324,7 +324,7 @@ function generateVoucherEmailHTML(
       margin: 30px;
       padding: 40px;
       border-radius: 12px;
-      border: 3px solid #ff5734;
+      border: 3px solid #0C332C;
       position: relative;
     }
     .voucher-code {
@@ -339,7 +339,7 @@ function generateVoucherEmailHTML(
     .amount {
       font-size: 48px;
       font-weight: bold;
-      color: #ff5734;
+      color: #0C332C;
       text-align: center;
       margin: 20px 0;
     }
@@ -348,12 +348,12 @@ function generateVoucherEmailHTML(
       padding: 20px;
       border-radius: 8px;
       margin: 20px 0;
-      border-left: 4px solid #ff5734;
+      border-left: 4px solid #0C332C;
     }
     .footer {
-      background: #ff5834;
+      background: #0C332C;
       padding: 40px;
-      border-top: 3px solid #ff5834;
+      border-top: 3px solid #0C332C;
       color: #ffffff;
     }
     .footer-contact {
@@ -423,7 +423,7 @@ function generateVoucherEmailHTML(
       </div>
 
       <div style="background: #fff3e0; padding: 15px; border-radius: 6px; margin-top: 20px;">
-        <h4 style="margin-top: 0; color: #ff5734;">Terms & Conditions:</h4>
+        <h4 style="margin-top: 0; color: #0C332C;">Terms & Conditions:</h4>
         <ul style="color: #666; font-size: 13px; line-height: 1.6; margin: 0; padding-left: 20px;">
           <li>One-time use only per customer</li>
           <li>Cannot be combined with other offers</li>
@@ -509,7 +509,7 @@ export async function sendBulkVouchersEmail(
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .header {
-      background-color: #ff5834;
+      background-color: #0C332C;
       padding: 30px 40px;
       text-align: center;
       border-bottom: none;
@@ -541,7 +541,7 @@ export async function sendBulkVouchersEmail(
     .total {
       font-size: 24px;
       font-weight: bold;
-      color: #ff5734;
+      color: #0C332C;
       border-top: 2px solid #ddd;
       padding-top: 15px;
       margin-top: 15px;
@@ -551,12 +551,12 @@ export async function sendBulkVouchersEmail(
       padding: 15px;
       border-radius: 8px;
       margin: 20px 0;
-      border-left: 4px solid #ff5734;
+      border-left: 4px solid #0C332C;
     }
     .footer {
-      background: #ff5834;
+      background: #0C332C;
       padding: 40px;
-      border-top: 3px solid #ff5834;
+      border-top: 3px solid #0C332C;
       color: #ffffff;
     }
     .footer-contact {
@@ -614,7 +614,7 @@ export async function sendBulkVouchersEmail(
     </div>
 
     <div class="attachment-note">
-      <h3 style="margin-top: 0; color: #ff5734;">📎 Vouchers Attached</h3>
+      <h3 style="margin-top: 0; color: #0C332C;">📎 Vouchers Attached</h3>
       <p style="margin: 0; color: #666;">
         Your ${vouchers.length} voucher codes are attached as a PDF file. 
         Download and save the PDF - you'll need the codes to redeem your vouchers.
@@ -698,7 +698,7 @@ function generateVouchersPDF(vouchers: VoucherData[], recipientName?: string): P
       const pageHeight = doc.page.height;
 
       // HEADER - Orange background with white logo (matching email template)
-      doc.rect(0, 0, pageWidth, 120).fillColor('#ff5834').fill();
+      doc.rect(0, 0, pageWidth, 120).fillColor('#0C332C').fill();
       
       const whiteLogoPath = path.join(process.cwd(), 'public', 'edufiliova-white-logo.png');
       const fallbackLogoPath = path.join(process.cwd(), 'public', 'Edufiliova_Logo_Optimized.png');
@@ -760,10 +760,10 @@ function generateVouchersPDF(vouchers: VoucherData[], recipientName?: string): P
         const cardPadding = 50;
         const cardWidth = pageWidth - (cardPadding * 2);
         
-        // Voucher card border (matching email's border: 3px solid #ff5734)
+        // Voucher card border (matching email's border: 3px solid #0C332C)
         doc.roundedRect(cardPadding, yPos, cardWidth, cardHeight, 12)
           .lineWidth(3)
-          .strokeColor('#ff5734')
+          .strokeColor('#0C332C')
           .stroke();
 
         // Voucher number
@@ -771,7 +771,7 @@ function generateVouchersPDF(vouchers: VoucherData[], recipientName?: string): P
           .text(`Voucher #${index + 1}`, cardPadding + 20, yPos + 20);
 
         // Amount (matching email's large red amount)
-        doc.fontSize(48).fillColor('#ff5734').font('Helvetica-Bold')
+        doc.fontSize(48).fillColor('#0C332C').font('Helvetica-Bold')
           .text(`$${voucher.amount.toFixed(2)}`, cardPadding + 20, yPos + 40);
 
         // Description
@@ -800,7 +800,7 @@ function generateVouchersPDF(vouchers: VoucherData[], recipientName?: string): P
         doc.font('Helvetica');
         if (voucher.expiresAt) {
           const expiryDate = new Date(voucher.expiresAt).toLocaleDateString();
-          doc.fontSize(9).fillColor('#ff5734')
+          doc.fontSize(9).fillColor('#0C332C')
             .text(`Valid until: ${expiryDate}`, cardPadding + 20, yPos + 160);
         }
         
@@ -837,7 +837,7 @@ function generateVouchersPDF(vouchers: VoucherData[], recipientName?: string): P
       doc.moveDown(3);
 
       // Terms & Conditions section
-      doc.fontSize(16).fillColor('#ff5734').font('Helvetica-Bold')
+      doc.fontSize(16).fillColor('#0C332C').font('Helvetica-Bold')
         .text('Terms & Conditions', 70, doc.y);
       doc.moveDown(1);
       

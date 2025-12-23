@@ -256,15 +256,15 @@ const ImageUploadSection = ({
   };
 
   return (
-    <div className={`border-2 border-dashed rounded-lg p-4 text-center ${!currentUrl && isRequired ? 'border-red-300 bg-red-50/30' : 'border-gray-300'}`}>
+    <div className={`border-2 border-dashed rounded-lg p-4 text-center ${!currentUrl && isRequired ? 'border-red-300 bg-primary/10/30' : 'border-gray-300'}`}>
       <Icon className={`mx-auto h-8 w-8 mb-2 ${!currentUrl && isRequired ? 'text-red-400' : 'text-gray-400'}`} />
       <div className="space-y-2">
         <p className="text-sm font-medium text-gray-900">
-          {type} Image {isRequired && <span className="text-red-500">*</span>}
+          {type} Image {isRequired && <span className="text-primary">*</span>}
         </p>
         <p className="text-xs text-gray-500">{dimensions}</p>
         {!currentUrl && isRequired && (
-          <p className="text-xs text-red-600 font-medium">Required for publication</p>
+          <p className="text-xs text-primary font-medium">Required for publication</p>
         )}
         <div className="space-y-3">
           {imagePreview && (
@@ -423,19 +423,19 @@ const HeroForm = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label className="text-sm font-medium">
-                Hero Title <span className="text-red-500">*</span>
+                Hero Title <span className="text-primary">*</span>
               </Label>
               <Input
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 placeholder="Enter compelling title"
-                className={`mt-1 ${!formData.title.trim() ? 'border-red-300 focus:border-red-500' : ''}`}
+                className={`mt-1 ${!formData.title.trim() ? 'border-red-300 focus:border-primary' : ''}`}
                 data-testid="input-hero-title"
               />
             </div>
             <div>
               <Label className="text-sm font-medium">
-                Placement Page <span className="text-red-500">*</span>
+                Placement Page <span className="text-primary">*</span>
               </Label>
               <Select 
                 value={formData.placement} 
@@ -744,12 +744,12 @@ const HeroForm = ({
 
       {/* Display Form Errors */}
       {formErrors.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+        <div className="bg-primary/10 border border-red-200 rounded-lg p-4 mb-4">
           <div className="flex items-start">
-            <XCircle className="h-5 w-5 text-red-500 mr-2 mt-0.5" />
+            <XCircle className="h-5 w-5 text-primary mr-2 mt-0.5" />
             <div className="flex-1">
               <h3 className="text-sm font-medium text-red-800">Please fix the following issues:</h3>
-              <ul className="mt-1 list-disc list-inside text-sm text-red-700">
+              <ul className="mt-1 list-disc list-inside text-sm text-primary">
                 {formErrors.map((error, index) => (
                   <li key={index}>{error}</li>
                 ))}

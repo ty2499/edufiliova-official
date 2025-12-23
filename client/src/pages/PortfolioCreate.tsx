@@ -833,7 +833,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                             setValidationErrors(prev => ({ ...prev, videoUrl: '' }));
                           }
                         }}
-                        className={validationErrors.videoUrl ? 'border-red-500 focus:border-red-500' : ''}
+                        className={validationErrors.videoUrl ? 'border-primary focus:border-primary' : ''}
                         data-testid="input-video-url"
                       />
                       <Button
@@ -861,7 +861,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
 
                 {/* Premium Feedback States */}
                 {(submitState === 'error' || errorMessage) && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 animate-in slide-in-from-top-2 duration-300">
+                  <div className="bg-primary/10 border border-red-200 rounded-lg p-4 animate-in slide-in-from-top-2 duration-300">
                     <div className="flex items-center gap-2 text-primary-800">
                       <AlertCircle className="h-4 w-4" />
                       <span className="text-sm font-medium">{errorMessage}</span>

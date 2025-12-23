@@ -2927,10 +2927,10 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
 
               {/* Voice Recording UI */}
               {isRecording && (
-                <div className="mb-3 px-4 py-2 bg-red-50 border border-red-200 rounded-xl backdrop-blur-sm">
+                <div className="mb-3 px-4 py-2 bg-primary/10 border border-red-200 rounded-xl backdrop-blur-sm">
                   <div className="flex items-center justify-center gap-3">
                     <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                    <span className="font-medium text-red-600 text-sm" style={{ fontFamily: 'Satoshi, sans-serif' }}>
+                    <span className="font-medium text-primary text-sm" style={{ fontFamily: 'Satoshi, sans-serif' }}>
                       Recording {formatRecordingTime(recordingTime)}
                     </span>
                     <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
@@ -3372,7 +3372,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               {/* Decline Button */}
               <Button
                 onClick={rejectCall}
-                className="h-14 w-14 rounded-full bg-primary hover:bg-primary text-white p-0 shadow-lg border-2 border-red-400 transition-all duration-200 hover:scale-105"
+                className="h-14 w-14 rounded-full bg-primary hover:bg-primary text-white p-0 shadow-lg border-2 border-primary transition-all duration-200 hover:scale-105"
                 data-testid="reject-call-button"
               >
                 <X className="h-6 w-6" />

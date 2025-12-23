@@ -30,7 +30,7 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
 
   const management = [
     { icon: <ClipboardCheck className="h-5 w-5" />, title: "Application Status", description: "Check your application progress", page: "teacher-status", bg: "bg-green-50", requiresAuth: true, requiresApproved: false },
-    { icon: <Video className="h-5 w-5" />, title: "Teacher Meetings", description: "Schedule and host classes", page: "teacher-meetings", bg: "bg-orange-50", requiresAuth: true, requiresApproved: true },
+    { icon: <Video className="h-5 w-5" />, title: "Teacher Meetings", description: "Schedule and host classes", page: "teacher-meetings", bg: "bg-primary/10", requiresAuth: true, requiresApproved: true },
     { icon: <Wallet className="h-5 w-5" />, title: "Earnings Dashboard", description: "Track your income and payments", page: "earnings", bg: "bg-teal-50", requiresAuth: true, requiresApproved: true },
   ];
 

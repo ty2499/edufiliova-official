@@ -325,7 +325,7 @@ export function WorkBoostManager() {
           )}
 
           {errorMessage && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" data-testid="alert-error">
+            <div className="bg-primary/15 border border-primary text-primary px-4 py-3 rounded relative" data-testid="alert-error">
               <strong className="font-bold">Error! </strong>
               <span className="block sm:inline">{errorMessage}</span>
             </div>

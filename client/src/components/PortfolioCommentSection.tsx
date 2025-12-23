@@ -116,7 +116,7 @@ const CommentItem = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-xs text-gray-600 hover:text-red-600"
+                className="h-7 text-xs text-gray-600 hover:text-primary"
                 onClick={() => handleDeleteComment(comment.id)}
                 disabled={deleteCommentMutation.isPending}
                 data-testid={`button-delete-comment-${comment.id}`}

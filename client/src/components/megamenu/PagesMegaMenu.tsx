@@ -20,8 +20,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
   ];
 
   const supportPages = [
-    { icon: <HelpCircle className="h-5 w-5" />, title: "Help & Support", description: "Find answers and get support", page: "help", bg: "bg-orange-50" },
-    { icon: <Shield className="h-5 w-5" />, title: "Privacy Policy", description: "How we protect your data", page: "privacy-policy", bg: "bg-red-50" },
+    { icon: <HelpCircle className="h-5 w-5" />, title: "Help & Support", description: "Find answers and get support", page: "help", bg: "bg-primary/10" },
+    { icon: <Shield className="h-5 w-5" />, title: "Privacy Policy", description: "How we protect your data", page: "privacy-policy", bg: "bg-primary/10" },
     { icon: <FileText className="h-5 w-5" />, title: "Terms of Service", description: "Our terms and conditions", page: "terms", bg: "bg-indigo-50" },
     { icon: <Users className="h-5 w-5" />, title: "Community Guidelines", description: "Community standards and rules", page: "community-guidelines", bg: "bg-pink-50" },
   ];

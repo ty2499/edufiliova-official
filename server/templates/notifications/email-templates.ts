@@ -10,10 +10,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
 </head>
@@ -63,10 +63,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .urgent-box { background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px 20px; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -112,10 +112,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .feature-box { background: #f9fafb; padding: 20px; border-radius: 8px; margin: 15px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -156,7 +156,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <div class="feature-box">
         <h3 style="color: #1a1a1a; margin: 0 0 10px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 8px;">
-            <circle cx="24" cy="24" r="20" stroke="#EF4444" stroke-width="4"/>
+            <circle cx="24" cy="24" r="20" stroke="#0C332C" stroke-width="4"/>
             <circle cx="24" cy="24" r="12" stroke="#F59E0B" stroke-width="4"/>
             <circle cx="24" cy="24" r="4" fill="#10B981"/>
           </svg>
@@ -189,10 +189,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .tip-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 12px; margin: 20px 0; color: #fff; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -250,10 +250,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .stats-box { background: #f0f9ff; border: 2px solid #0ea5e9; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -306,10 +306,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .reminder-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -355,10 +355,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .course-card { background: #f9fafb; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e5e7eb; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -402,10 +402,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .product-box { background: #f0fdf4; border: 2px solid #22c55e; padding: 20px; border-radius: 12px; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -455,10 +455,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .earnings-box { background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 25px; border-radius: 12px; margin: 20px 0; color: #fff; text-align: center; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -516,10 +516,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .showcase-box { background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); padding: 25px; border-radius: 12px; margin: 20px 0; color: #fff; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -538,7 +538,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
         <h3 style="margin: 0 0 10px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 8px;">
             <path d="M24 4C12.954 4 4 12.954 4 24C4 35.046 12.954 44 24 44C25.657 44 27 42.657 27 41C27 40.209 26.679 39.497 26.167 38.985C25.666 38.484 25.357 37.787 25.357 37C25.357 35.343 26.7 34 28.357 34H32C38.627 34 44 28.627 44 22C44 11.507 35.046 4 24 4Z" fill="#E5E7EB"/>
-            <circle cx="16" cy="18" r="4" fill="#EF4444"/>
+            <circle cx="16" cy="18" r="4" fill="#0C332C"/>
             <circle cx="24" cy="12" r="4" fill="#FCD34D"/>
             <circle cx="32" cy="18" r="4" fill="#10B981"/>
             <circle cx="14" cy="28" r="4" fill="#3B82F6"/>
@@ -576,11 +576,11 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
-    .tip-card { background: #f9fafb; padding: 15px 20px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #ff5834; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .tip-card { background: #f9fafb; padding: 15px 20px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #0C332C; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
 </head>
@@ -631,10 +631,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
 </head>
@@ -673,10 +673,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
 </head>
@@ -718,10 +718,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .offer-box { background: linear-gradient(135deg, #f43f5e 0%, #ec4899 100%); padding: 25px; border-radius: 12px; margin: 20px 0; color: #fff; text-align: center; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -739,7 +739,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <div class="offer-box">
         <h2 style="margin: 0;">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 8px;">
-            <rect x="6" y="18" width="36" height="26" rx="4" fill="#FF5834"/>
+            <rect x="6" y="18" width="36" height="26" rx="4" fill="#0C332C"/>
             <rect x="6" y="12" width="36" height="10" rx="2" fill="#E64A2A"/>
             <rect x="21" y="12" width="6" height="32" fill="#FCD34D"/>
             <path d="M24 12C24 12 18 6 14 10C10 14 16 18 24 12Z" fill="#FCD34D"/>
@@ -774,10 +774,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
 </head>
@@ -819,10 +819,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .celebration-box { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); padding: 30px; border-radius: 12px; margin: 20px 0; color: #1a1a1a; text-align: center; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -836,7 +836,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <div class="celebration-box">
         <div style="margin-bottom: 10px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <rect x="3" y="3" width="42" height="42" rx="8" fill="#FF5834"/>
+            <rect x="3" y="3" width="42" height="42" rx="8" fill="#0C332C"/>
             <path d="M24 10L26.5 19.5L36 22L26.5 24.5L24 34L21.5 24.5L12 22L21.5 19.5L24 10Z" fill="white"/>
             <circle cx="36" cy="12" r="3" fill="#FCD34D"/>
             <circle cx="12" cy="36" r="3" fill="#FCD34D"/>
@@ -878,10 +878,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .enrollment-box { background: #f0fdf4; border: 2px solid #22c55e; padding: 20px; border-radius: 12px; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
@@ -926,10 +926,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background-color: #ff5834; padding: 30px 40px; text-align: center; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
-    .btn { display: inline-block; background: #ff5834; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .payout-box { background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 30px; border-radius: 12px; margin: 20px 0; color: #fff; text-align: center; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>

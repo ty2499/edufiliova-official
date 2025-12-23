@@ -122,7 +122,7 @@ export default function VerificationCodeInput({
                   : 'bg-white'
               }
               ${error 
-                ? 'border-red-400 text-red-600 shake-animation' 
+                ? 'border-primary text-primary shake-animation' 
                 : digit 
                   ? darkMode 
                     ? 'border-amber-400 text-white' 

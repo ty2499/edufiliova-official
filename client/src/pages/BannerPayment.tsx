@@ -347,7 +347,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
             <div className="space-y-4 md:space-y-6">
               {/* Error Display */}
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded text-sm text-primary-700">
+                <div className="p-3 bg-primary/10 border border-red-200 rounded text-sm text-primary-700">
                   {error}
                 </div>
               )}

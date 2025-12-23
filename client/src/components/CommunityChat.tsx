@@ -758,7 +758,7 @@ export function CommunityChat() {
                                     }}
                                     className={cn(
                                       "gap-1",
-                                      post.isLiked && "text-red-500"
+                                      post.isLiked && "text-primary"
                                     )}
                                   >
                                     <Heart className={cn("h-4 w-4", post.isLiked && "fill-current")} />
@@ -816,7 +816,7 @@ export function CommunityChat() {
                                         }
                                       }}
                                       disabled={deletePostMutation.isPending}
-                                      className="gap-1 text-muted-foreground hover:text-red-500 disabled:opacity-50"
+                                      className="gap-1 text-muted-foreground hover:text-primary disabled:opacity-50"
                                       data-testid={`button-delete-post-${post.id}`}
                                     >
                                       {deletePostMutation.isPending ? (
@@ -933,7 +933,7 @@ export function CommunityChat() {
                                         }
                                       }}
                                       disabled={leaveGroupMutation.isPending}
-                                      className="flex-1 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                      className="flex-1 text-primary hover:text-primary hover:bg-primary/10"
                                     >
                                       Leave Group
                                     </Button>
@@ -1464,7 +1464,7 @@ export function CommunityChat() {
                                 }
                               }}
                               disabled={deleteReplyMutation.isPending}
-                              className="h-6 w-6 p-0 text-muted-foreground hover:text-red-500 disabled:opacity-50"
+                              className="h-6 w-6 p-0 text-muted-foreground hover:text-primary disabled:opacity-50"
                               data-testid={`button-delete-reply-${reply.id}`}
                             >
                               {deleteReplyMutation.isPending ? (
@@ -1518,14 +1518,14 @@ export function CommunityChat() {
                           size="sm" 
                           onClick={() => likeReplyMutation.mutate(reply.id)}
                           disabled={likeReplyMutation.isPending}
-                          className={`text-sm transition-colors p-2 h-auto rounded-full hover:bg-red-50 dark:hover:bg-red-950/20 ${
+                          className={`text-sm transition-colors p-2 h-auto rounded-full hover:bg-primary/10 dark:hover:bg-red-950/20 ${
                             reply.isLiked 
-                              ? 'text-red-500 hover:text-red-600' 
-                              : 'text-muted-foreground hover:text-red-500'
+                              ? 'text-primary hover:text-primary' 
+                              : 'text-muted-foreground hover:text-primary'
                           }`}
                         >
                           <Heart className={`h-4 w-4 mr-1 transition-colors ${
-                            reply.isLiked ? 'fill-current text-red-500' : ''
+                            reply.isLiked ? 'fill-current text-primary' : ''
                           }`} />
                           <span className="text-xs font-medium">{reply.likes || 0}</span>
                         </Button>
@@ -1657,7 +1657,7 @@ export function CommunityChat() {
                             variant="ghost"
                             size="sm"
                             onClick={() => likeReplyMutation.mutate(reply.id)}
-                            className={`h-6 px-2 text-xs ${reply.isLiked ? 'text-red-500' : 'text-muted-foreground'}`}
+                            className={`h-6 px-2 text-xs ${reply.isLiked ? 'text-primary' : 'text-muted-foreground'}`}
                           >
                             <Heart className={`h-3 w-3 mr-1 ${reply.isLiked ? 'fill-current' : ''}`} />
                             {reply.likes || 0}
@@ -1672,7 +1672,7 @@ export function CommunityChat() {
                                   queryClient.invalidateQueries({ queryKey: ['community-dialog-replies'] });
                                 }
                               }}
-                              className="h-6 px-2 text-xs text-muted-foreground hover:text-red-500"
+                              className="h-6 px-2 text-xs text-muted-foreground hover:text-primary"
                             >
                               <Trash2 className="h-3 w-3" />
                             </Button>

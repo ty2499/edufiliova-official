@@ -46,7 +46,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
           badgeVariant: 'destructive' as const,
           progressValue: 100,
           icon: Mail,
-          iconColor: 'text-red-500'
+          iconColor: 'text-primary'
         };
       default:
         return {

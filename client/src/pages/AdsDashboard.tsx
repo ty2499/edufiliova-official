@@ -138,7 +138,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries }: {
   return (
     <div className="space-y-4">
       {/* Admin Quick Regions */}
-      <div className="bg-orange-100 border border-white rounded-lg p-4">
+      <div className="bg-primary/15 border border-white rounded-lg p-4">
         <div className="text-sm font-medium text-gray-900 mb-3 flex items-center gap-2">
           <MapPin className="h-4 w-4" />
           Admin Quick Regions
@@ -151,7 +151,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries }: {
               variant="outline"
               size="sm"
               onClick={() => handleQuickRegionSelect(codes)}
-              className="text-xs bg-white hover:bg-orange-50 border-white text-gray-900"
+              className="text-xs bg-white hover:bg-primary/10 border-white text-gray-900"
             >
               {region} ({codes.length})
             </Button>
@@ -724,7 +724,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
         {/* Age Restrictions Section */}
         <div>
           <Label className="flex items-center gap-2">
-            <Shield className="h-4 w-4 text-orange-600" />
+            <Shield className="h-4 w-4 text-primary" />
             Age Restrictions (Optional)
           </Label>
           <p className="text-xs text-gray-500 mt-1 mb-3">
@@ -772,7 +772,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
 
         {/* Display Form Errors */}
         {formErrors.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+          <div className="bg-primary/10 border border-red-200 rounded-lg p-4 mb-4">
             <div className="flex items-start">
               <XCircle className="h-5 w-5 text-primary-500 mr-2 mt-0.5" />
               <div className="flex-1">
@@ -961,7 +961,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
 
       {/* Display Form Errors */}
       {formErrors.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+        <div className="bg-primary/10 border border-red-200 rounded-lg p-4 mb-4">
           <div className="flex items-start">
             <XCircle className="h-5 w-5 text-primary-500 mr-2 mt-0.5" />
             <div className="flex-1">

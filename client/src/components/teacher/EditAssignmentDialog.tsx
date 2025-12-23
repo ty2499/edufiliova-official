@@ -356,7 +356,7 @@ export function EditAssignmentDialog({ open, onOpenChange, assignment, onSuccess
                             variant="ghost"
                             size="sm"
                             onClick={() => removeAttachment(file.id)}
-                            className="text-red-500 hover:text-red-700"
+                            className="text-primary hover:text-primary"
                             data-testid={`button-edit-remove-attachment-${file.id}`}
                           >
                             <X className="h-4 w-4" />

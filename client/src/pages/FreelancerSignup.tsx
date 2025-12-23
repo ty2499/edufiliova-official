@@ -458,7 +458,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     What do you mainly create? <span className="text-primary-600">*</span>
                   </Label>
                   <Select value={primaryCategory} onValueChange={(value) => { setPrimaryCategory(value); clearError('primaryCategory'); }}>
-                    <SelectTrigger id="primaryCategory" className={errorMessages.primaryCategory ? 'border-red-500' : ''} data-testid="select-category">
+                    <SelectTrigger id="primaryCategory" className={errorMessages.primaryCategory ? 'border-primary' : ''} data-testid="select-category">
                       <SelectValue placeholder="Select primary category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -489,7 +489,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     onChange={(e) => { setTagline(e.target.value); clearError('tagline'); }}
                     placeholder="e.g. I design modern dashboards and education app UI"
                     maxLength={80}
-                    className={errorMessages.tagline ? 'border-red-500' : ''}
+                    className={errorMessages.tagline ? 'border-primary' : ''}
                     data-testid="input-tagline"
                   />
                   <p className="text-xs text-gray-500 mt-1">{tagline.length}/80</p>
@@ -513,7 +513,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     placeholder="I am a UI/UX designer with 3+ years of experience creating dashboards, landing pages and education platforms. I focus on clean, modern designs and responsive layouts."
                     rows={5}
                     maxLength={500}
-                    className={errorMessages.about ? 'border-red-500' : ''}
+                    className={errorMessages.about ? 'border-primary' : ''}
                     data-testid="textarea-about"
                   />
                   <p className="text-xs text-gray-500 mt-1">{about.length}/500</p>
@@ -665,7 +665,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
               </p>
 
               {errorMessages.portfolio && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div className="mb-6 p-4 bg-primary/10 border border-red-200 rounded-lg">
                   <p className="text-sm text-primary-700 flex items-center gap-2">
                     <AlertCircle className="w-5 h-5" />
                     {errorMessages.portfolio}
@@ -686,7 +686,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         value={currentSample.title}
                         onChange={(e) => setCurrentSample({ ...currentSample, title: e.target.value })}
                         placeholder="School Dashboard UI – Web App"
-                        className={errorMessages.sampleTitle ? 'border-red-500' : ''}
+                        className={errorMessages.sampleTitle ? 'border-primary' : ''}
                         data-testid="input-sample-title"
                       />
                       {errorMessages.sampleTitle && (
@@ -697,7 +697,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     <div>
                       <Label htmlFor="sampleCategory" className="text-sm font-medium text-gray-700 mb-1.5 block">Category</Label>
                       <Select value={currentSample.category} onValueChange={(value) => setCurrentSample({ ...currentSample, category: value })}>
-                        <SelectTrigger id="sampleCategory" className={errorMessages.sampleCategory ? 'border-red-500' : ''} data-testid="select-sample-category">
+                        <SelectTrigger id="sampleCategory" className={errorMessages.sampleCategory ? 'border-primary' : ''} data-testid="select-sample-category">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
                         <SelectContent>
@@ -719,7 +719,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         onChange={(e) => setCurrentSample({ ...currentSample, description: e.target.value })}
                         placeholder="Responsive admin dashboard for managing students, classes and payments. Designed in Figma with light and dark mode."
                         rows={3}
-                        className={errorMessages.sampleDescription ? 'border-red-500' : ''}
+                        className={errorMessages.sampleDescription ? 'border-primary' : ''}
                         data-testid="textarea-sample-description"
                       />
                       {errorMessages.sampleDescription && (
@@ -736,7 +736,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         onChange={handleFileChange}
                         multiple
                         accept=".png,.jpg,.jpeg,.pdf,.zip"
-                        className={errorMessages.sampleFiles ? 'border-red-500' : ''}
+                        className={errorMessages.sampleFiles ? 'border-primary' : ''}
                         data-testid="input-sample-files"
                       />
                       {currentSample.files.length > 0 && (
@@ -904,7 +904,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
               </div>
 
               {errorMessages.submit && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div className="mb-6 p-4 bg-primary/10 border border-red-200 rounded-lg">
                   <p className="text-sm text-primary-700 flex items-center gap-2">
                     <AlertCircle className="w-5 h-5" />
                     {errorMessages.submit}

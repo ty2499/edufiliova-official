@@ -732,19 +732,19 @@ function PaymentMethodsCard({ user }: { user: any }) {
         
         {/* Notifications Panel - Facebook-like */}
         {showNotifications && notifications.length > 0 && (
-          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="mt-4 p-4 bg-primary/10 border border-red-200 rounded-lg">
             <h4 className="font-medium text-red-800 mb-2 flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
               Payment Method Alerts
             </h4>
             <div className="space-y-2">
               {notifications.map((notification, index) => (
-                <div key={notification.id || index} className="text-sm text-red-700 bg-white p-3 rounded border">
+                <div key={notification.id || index} className="text-sm text-primary bg-white p-3 rounded border">
                   <div className="font-medium">{notification.reason}</div>
-                  <div className="text-red-600 mt-1">
+                  <div className="text-primary mt-1">
                     {notification.details?.message || 'Please review and try again.'}
                   </div>
-                  <div className="text-xs text-red-500 mt-2">
+                  <div className="text-xs text-primary mt-2">
                     {new Date(notification.createdAt).toLocaleDateString()} at {new Date(notification.createdAt).toLocaleTimeString()}
                   </div>
                 </div>
@@ -785,7 +785,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                               Verified
                             </Badge>
                           ) : (
-                            <Badge variant="outline" className="text-xs text-orange-600">
+                            <Badge variant="outline" className="text-xs text-primary">
                               <Clock className="h-3 w-3 mr-1" />
                               Pending Verification
                             </Badge>
@@ -1213,7 +1213,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   variant="outline"
                   disabled={submitting || showDeleteConfirmation || showUpdateWarning}
                   onClick={handleDeleteClick}
-                  className="text-red-600 border-red-300 hover:bg-red-50 flex-1"
+                  className="text-primary border-red-300 hover:bg-primary/10 flex-1"
                 >
                   {submitting ? (
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -1243,14 +1243,14 @@ function PaymentMethodsCard({ user }: { user: any }) {
 
               {/* Inline Delete Confirmation */}
               {showDeleteConfirmation && (
-                <div className="border border-red-200 bg-red-50 rounded-lg p-4 space-y-3">
+                <div className="border border-red-200 bg-primary/10 rounded-lg p-4 space-y-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                      <AlertCircle className="h-4 w-4 text-red-600" />
+                    <div className="w-8 h-8 bg-primary/15 rounded-full flex items-center justify-center">
+                      <AlertCircle className="h-4 w-4 text-primary" />
                     </div>
                     <div>
                       <h4 className="font-medium text-red-800">Confirm Deletion</h4>
-                      <p className="text-sm text-red-700">
+                      <p className="text-sm text-primary">
                         Are you sure you want to delete "{editingAccount?.accountName}"? This action cannot be undone.
                       </p>
                     </div>
@@ -1636,7 +1636,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                     variant={isPending ? "default" : "destructive"} 
                     className={cn(
                       isPending && "bg-blue-100 text-blue-800 border-blue-200",
-                      isRejected && "bg-red-100 text-red-800 border-red-200"
+                      isRejected && "bg-primary/15 text-red-800 border-red-200"
                     )}
                     data-testid="badge-approval-status"
                   >
@@ -1653,9 +1653,9 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                 </div>
 
                 {isRejected && userProfile?.rejectionReason && (
-                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-left">
+                  <div className="p-3 bg-primary/10 border border-red-200 rounded-lg text-left">
                     <h4 className="text-sm font-medium text-red-800 mb-2">Feedback:</h4>
-                    <p className="text-sm text-red-700">{userProfile.rejectionReason}</p>
+                    <p className="text-sm text-primary">{userProfile.rejectionReason}</p>
                   </div>
                 )}
 
@@ -1706,7 +1706,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
       case 'active': return 'bg-green-100 text-green-800';
       case 'pending': return 'bg-yellow-100 text-yellow-800';
       case 'completed': return 'bg-blue-100 text-blue-800';
-      case 'cancelled': return 'bg-red-100 text-red-800';
+      case 'cancelled': return 'bg-primary/15 text-red-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -2716,7 +2716,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                               </div>
                               <div>
                                 <p className="text-gray-500">Commission (25%)</p>
-                                <p className="font-semibold text-red-600">-${earning.platformCommission}</p>
+                                <p className="font-semibold text-primary">-${earning.platformCommission}</p>
                               </div>
                               <div>
                                 <p className="text-gray-500">Your Earnings</p>

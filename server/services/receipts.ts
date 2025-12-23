@@ -8,7 +8,7 @@ import { eq } from "drizzle-orm";
 const LOGO_PATH = path.join(process.cwd(), 'attached_assets', 'Edufiliova_Logo_Optimized.png');
 const BRAND_COLORS = {
   primary: '#4169E1',
-  accent: '#FF5734',
+  accent: '#0C332C',
   dark: '#111827',
   muted: '#6B7280',
   light: '#F9FAFB',

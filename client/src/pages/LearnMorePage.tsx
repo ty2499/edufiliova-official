@@ -82,13 +82,13 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
       title: "Language Arts",
       courses: ["Creative Writing", "Literature", "Grammar", "Public Speaking", "Research Skills"],
       icon: <MessageCircle className="h-6 w-6" />,
-      color: "bg-orange-50 text-orange-600"
+      color: "bg-primary/10 text-primary"
     },
     {
       title: "Business & Economics",
       courses: ["Entrepreneurship", "Financial Literacy", "Marketing", "Economics", "Leadership"],
       icon: <TrendingUp className="h-6 w-6" />,
-      color: "bg-red-50 text-primary-600"
+      color: "bg-primary/10 text-primary-600"
     },
     {
       title: "Arts & Design",

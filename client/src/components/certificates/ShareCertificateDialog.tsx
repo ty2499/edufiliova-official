@@ -125,7 +125,7 @@ export function ShareCertificateDialog({ open, onOpenChange, certificate }: Shar
                 id="certificate-link"
                 value={verificationUrl}
                 readOnly
-                className={`flex-1 ${copied ? 'border-green-500 dark:border-green-500' : ''} ${copyError ? 'border-red-500 dark:border-red-500' : ''}`}
+                className={`flex-1 ${copied ? 'border-green-500 dark:border-green-500' : ''} ${copyError ? 'border-primary dark:border-primary' : ''}`}
                 data-testid="input-certificate-link"
               />
               <Button
@@ -138,7 +138,7 @@ export function ShareCertificateDialog({ open, onOpenChange, certificate }: Shar
                 {copied ? (
                   <Check className="w-4 h-4" />
                 ) : copyError ? (
-                  <AlertCircle className="w-4 h-4 text-red-500" />
+                  <AlertCircle className="w-4 h-4 text-primary" />
                 ) : (
                   <Link2 className="w-4 h-4" />
                 )}
@@ -150,7 +150,7 @@ export function ShareCertificateDialog({ open, onOpenChange, certificate }: Shar
               </p>
             )}
             {copyError && (
-              <p className="text-xs text-red-600 dark:text-red-400 font-medium animate-in fade-in slide-in-from-top-1">
+              <p className="text-xs text-primary dark:text-red-400 font-medium animate-in fade-in slide-in-from-top-1">
                 Failed to copy. Please copy the link manually.
               </p>
             )}

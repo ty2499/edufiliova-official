@@ -580,12 +580,12 @@ export function BannerAdForm() {
 
                   {/* Display Form Errors */}
                   {formErrors.length > 0 && (
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                    <div className="bg-primary/10 border border-red-200 rounded-lg p-4 mb-4">
                       <div className="flex items-start">
-                        <XCircle className="h-5 w-5 text-red-500 mr-2 mt-0.5" />
+                        <XCircle className="h-5 w-5 text-primary mr-2 mt-0.5" />
                         <div className="flex-1">
                           <h3 className="text-sm font-medium text-red-800">Please fix the following issues:</h3>
-                          <ul className="mt-1 list-disc list-inside text-sm text-red-700">
+                          <ul className="mt-1 list-disc list-inside text-sm text-primary">
                             {formErrors.map((error, index) => (
                               <li key={index}>{error}</li>
                             ))}

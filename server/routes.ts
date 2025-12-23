@@ -524,7 +524,7 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
       }
       .header { 
-        background-color: #ff5834; 
+        background-color: #0C332C; 
         padding: 30px 40px; 
         text-align: center; 
       }
@@ -572,7 +572,7 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       }
       .button { 
         display: inline-block; 
-        background-color: #ff5834; 
+        background-color: #0C332C; 
         color: #ffffff !important; 
         padding: 14px 32px; 
         text-decoration: none; 
@@ -583,13 +583,13 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       }
       .alert-warning { 
         background-color: #fff4ed; 
-        border-left: 4px solid #ff5834; 
+        border-left: 4px solid #0C332C; 
         padding: 15px 20px; 
         border-radius: 6px; 
         margin: 20px 0; 
       }
       .footer { 
-        background: #ff5834; 
+        background: #0C332C; 
         padding: 40px; 
         color: #ffffff; 
       }

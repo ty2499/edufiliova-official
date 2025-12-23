@@ -642,7 +642,7 @@ export function registerEmailMarketingRoutes(app: Express) {
         const success = await emailService.sendEmail({
           to: email,
           subject: '[TEST] Receipt Email Test',
-          html: `<div style="font-family: Arial, sans-serif; padding: 20px;"><h2 style="color: #ff5834;">Receipt Test Email</h2><p>This is a test of the receipt email functionality.</p><p><strong>Receipt #:</strong> REC-TEST-001</p><p><strong>Amount:</strong> $29.99</p></div>`
+          html: `<div style="font-family: Arial, sans-serif; padding: 20px;"><h2 style="color: #0C332C;">Receipt Test Email</h2><p>This is a test of the receipt email functionality.</p><p><strong>Receipt #:</strong> REC-TEST-001</p><p><strong>Amount:</strong> $29.99</p></div>`
         });
         results.push({ name: 'Receipt Email', success });
       } catch (e) { results.push({ name: 'Receipt Email', success: false, error: (e as Error).message }); }

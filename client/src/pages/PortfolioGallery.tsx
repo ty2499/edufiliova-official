@@ -493,7 +493,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
               data-testid={`button-like-${project.id}`}
             >
               <Heart 
-                className={`h-3 w-3 ${likeStatusData?.[project.id] ? 'fill-red-500 text-primary-500' : ''}`} 
+                className={`h-3 w-3 ${likeStatusData?.[project.id] ? 'fill-primary text-primary-500' : ''}`} 
               />
               {formatNumber(project.likeCount)}
             </button>
@@ -587,7 +587,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                   data-testid={`button-like-list-${project.id}`}
                 >
                   <Heart 
-                    className={`h-3 w-3 ${likeStatusData?.[project.id] ? 'fill-red-500 text-primary-500' : ''}`} 
+                    className={`h-3 w-3 ${likeStatusData?.[project.id] ? 'fill-primary text-primary-500' : ''}`} 
                   />
                   {formatNumber(project.likeCount)}
                 </button>
@@ -992,7 +992,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                       data-testid={`button-like-modal-${selectedProject.id}`}
                     >
                       <Heart 
-                        className={`h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 ${likeStatusData?.[selectedProject.id] ? 'fill-red-500 text-primary-500' : ''}`} 
+                        className={`h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 ${likeStatusData?.[selectedProject.id] ? 'fill-primary text-primary-500' : ''}`} 
                       />
                       {formatNumber(selectedProject.likeCount)}
                     </button>

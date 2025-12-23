@@ -345,7 +345,7 @@ export default function TeacherSignup() {
           <CardContent>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {errorMessage && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-primary-700 text-sm">
+                <div className="p-3 bg-primary/10 border border-red-200 rounded-lg text-primary-700 text-sm">
                   {errorMessage}
                 </div>
               )}

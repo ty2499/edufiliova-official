@@ -659,7 +659,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       </div>
 
       {errors.general && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
+        <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />
           <span>{errors.general}</span>
         </div>
@@ -711,7 +711,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             value={formData.loginIdentifier}
             onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
             placeholder={`Enter your ${formData.loginMethod === 'email' ? 'email address' : formData.loginMethod === 'phone' ? 'phone number' : 'ID number'}`}
-            className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.loginIdentifier ? 'border-red-500' : ''}`}
+            className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.loginIdentifier ? 'border-primary' : ''}`}
             data-testid="input-login-identifier"
           />
           {errors.loginIdentifier && <p className="text-sm text-primary-500 mt-1">{errors.loginIdentifier}</p>}
@@ -728,7 +728,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Enter your password"
-              className={`h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-red-500' : ''}`}
+              className={`h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-primary' : ''}`}
               data-testid="input-password"
             />
             <Button
@@ -840,7 +840,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </div>
 
         {errors.general && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
+          <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
             <AlertCircle className="h-4 w-4 flex-shrink-0" />
             <span>{errors.general}</span>
           </div>
@@ -864,7 +864,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     placeholder="e.g. Keith Williams"
-                    className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.name ? 'border-red-500' : ''}`}
+                    className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.name ? 'border-primary' : ''}`}
                     data-testid="input-name"
                   />
                 </div>
@@ -883,7 +883,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     placeholder="e.g. student@example.com"
-                    className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.email ? 'border-red-500' : ''}`}
+                    className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.email ? 'border-primary' : ''}`}
                     data-testid="input-email"
                   />
                 </div>
@@ -901,7 +901,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.password}
                     onChange={(e) => handleInputChange('password', e.target.value)}
                     placeholder="••••••••"
-                    className={`h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-red-500' : ''}`}
+                    className={`h-11 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-primary' : ''}`}
                     data-testid="input-register-password"
                   />
                   <button
@@ -927,7 +927,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   value={formData.confirmPassword}
                   onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                   placeholder="••••••••"
-                  className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.confirmPassword ? 'border-red-500' : ''}`}
+                  className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.confirmPassword ? 'border-primary' : ''}`}
                   data-testid="input-confirm-password"
                 />
                 {errors.confirmPassword && <p className="text-sm text-primary-500 mt-1">{errors.confirmPassword}</p>}
@@ -970,7 +970,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.age}
                     onChange={(e) => handleInputChange('age', e.target.value)}
                     placeholder="e.g. 14"
-                    className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.age ? 'border-red-500' : ''}`}
+                    className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.age ? 'border-primary' : ''}`}
                     data-testid="input-age"
                   />
                 </div>
@@ -1006,7 +1006,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   value={formData.country_id} 
                   onValueChange={(value: any) => handleInputChange('country_id', value)}
                 >
-                  <SelectTrigger className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.country_id ? 'border-red-500' : ''}`} data-testid="select-country">
+                  <SelectTrigger className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.country_id ? 'border-primary' : ''}`} data-testid="select-country">
                     <SelectValue placeholder="Select your country" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1028,7 +1028,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   value={formData.educationSystem} 
                   onValueChange={(value: any) => handleInputChange('educationSystem', value)}
                 >
-                  <SelectTrigger className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.educationSystem ? 'border-red-500' : ''}`} data-testid="select-education-system">
+                  <SelectTrigger className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.educationSystem ? 'border-primary' : ''}`} data-testid="select-education-system">
                     <SelectValue placeholder="Select your education system" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1049,7 +1049,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   value={formData.grade} 
                   onValueChange={(value: any) => handleInputChange('grade', value)}
                 >
-                  <SelectTrigger className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.grade ? 'border-red-500' : ''}`} data-testid="select-grade">
+                  <SelectTrigger className={`h-11 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.grade ? 'border-primary' : ''}`} data-testid="select-grade">
                     <SelectValue placeholder="Select your grade" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1129,7 +1129,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 id="agree-terms"
                 checked={formData.agreeToTerms}
                 onChange={(e) => handleCheckboxChange('agreeToTerms', e.target.checked)}
-                className={`mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 ${errors.agreeToTerms ? 'border-red-500' : ''}`}
+                className={`mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 ${errors.agreeToTerms ? 'border-primary' : ''}`}
                 data-testid="checkbox-agree-terms"
               />
               <Label htmlFor="agree-terms" className="text-sm text-gray-700 cursor-pointer">
@@ -1144,7 +1144,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 id="confirm-student"
                 checked={formData.confirmStudent}
                 onChange={(e) => handleCheckboxChange('confirmStudent', e.target.checked)}
-                className={`mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 ${errors.confirmStudent ? 'border-red-500' : ''}`}
+                className={`mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 ${errors.confirmStudent ? 'border-primary' : ''}`}
                 data-testid="checkbox-confirm-student"
               />
               <Label htmlFor="confirm-student" className="text-sm text-gray-700 cursor-pointer">
@@ -1205,7 +1205,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       </div>
 
       {errors.general && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
+        <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />
           <span>{errors.general}</span>
         </div>
@@ -1224,7 +1224,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
               placeholder="Enter your full name"
-              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.name ? 'border-red-500' : ''}`}
+              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.name ? 'border-primary' : ''}`}
               data-testid="input-teacher-name"
             />
           </div>
@@ -1243,7 +1243,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
               placeholder="Enter your email"
-              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.email ? 'border-red-500' : ''}`}
+              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.email ? 'border-primary' : ''}`}
               data-testid="input-teacher-email"
             />
           </div>
@@ -1280,7 +1280,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Create a password"
-              className={`h-11 pl-10 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-red-500' : ''}`}
+              className={`h-11 pl-10 pr-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.password ? 'border-primary' : ''}`}
               data-testid="input-teacher-password"
             />
             <button
@@ -1307,7 +1307,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.confirmPassword}
               onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
               placeholder="Confirm your password"
-              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.confirmPassword ? 'border-red-500' : ''}`}
+              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.confirmPassword ? 'border-primary' : ''}`}
               data-testid="input-confirm-teacher-password"
             />
           </div>
@@ -1424,7 +1424,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
 
           {errors.code && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
+            <div className="p-3 bg-primary/10 border border-red-200 rounded-xl text-primary-700 text-sm">
               {errors.code}
             </div>
           )}
@@ -1551,7 +1551,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
 
           {errors.code && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
+            <div className="p-3 bg-primary/10 border border-red-200 rounded-xl text-primary-700 text-sm">
               {errors.code}
             </div>
           )}
@@ -1625,7 +1625,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       </div>
 
       {errors.forgotPasswordEmail && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
+        <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />
           <span>{errors.forgotPasswordEmail}</span>
         </div>
@@ -1644,7 +1644,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={forgotPasswordEmail}
               onChange={(e) => setForgotPasswordEmail(e.target.value)}
               placeholder="Enter your email"
-              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.forgotPasswordEmail ? 'border-red-500' : ''}`}
+              className={`h-11 pl-10 rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 ${errors.forgotPasswordEmail ? 'border-primary' : ''}`}
               data-testid="input-forgot-password-email"
             />
           </div>
@@ -1869,7 +1869,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 </div>
               ))}
               <div className="border-t pt-4 text-center text-sm text-gray-600">
-                <p>Questions? Email us at <a href="mailto:support@edufiliova.com" className="text-orange-600 hover:underline">support@edufiliova.com</a></p>
+                <p>Questions? Email us at <a href="mailto:support@edufiliova.com" className="text-primary hover:underline">support@edufiliova.com</a></p>
               </div>
             </div>
           </ScrollArea>
@@ -1884,7 +1884,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </DialogHeader>
           <ScrollArea className="h-[calc(90vh-70px)] px-4 md:px-6">
             <div className="py-4 space-y-4">
-              <div className="bg-orange-50 border-l-4 border-orange-500 p-3 rounded">
+              <div className="bg-primary/10 border-l-4 border-orange-500 p-3 rounded">
                 <h3 className="text-sm font-semibold text-gray-800 mb-1">Your Privacy Matters to Us</h3>
                 <p className="text-sm text-gray-600">At EduFiliova, we're committed to protecting your privacy and ensuring your personal information is secure. This policy explains how we collect, use, and protect your data.</p>
               </div>
@@ -1892,7 +1892,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               <div>
                 <h3 className="text-sm font-semibold text-gray-800 mb-2">1. Information We Collect</h3>
                 <div className="grid gap-3 text-sm">
-                  <div className="bg-orange-50 p-3 rounded border border-orange-200">
+                  <div className="bg-primary/10 p-3 rounded border border-orange-200">
                     <h4 className="text-sm font-medium text-gray-800 mb-1">Account Information</h4>
                     <ul className="text-gray-600 space-y-1 text-sm">
                       <li>• Name and email address</li>
@@ -1901,7 +1901,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                       <li>• Learning preferences</li>
                     </ul>
                   </div>
-                  <div className="bg-orange-50 p-3 rounded border border-orange-200">
+                  <div className="bg-primary/10 p-3 rounded border border-orange-200">
                     <h4 className="text-sm font-medium text-gray-800 mb-1">Learning Data</h4>
                     <ul className="text-gray-600 space-y-1 text-sm">
                       <li>• Course progress and scores</li>
@@ -1910,7 +1910,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                       <li>• Certificate achievements</li>
                     </ul>
                   </div>
-                  <div className="bg-orange-50 p-3 rounded border border-orange-200">
+                  <div className="bg-primary/10 p-3 rounded border border-orange-200">
                     <h4 className="text-sm font-medium text-gray-800 mb-1">Technical Information</h4>
                     <ul className="text-gray-600 space-y-1 text-sm">
                       <li>• Device type and browser</li>
@@ -1974,7 +1974,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div className="border-t pt-4 text-center text-sm text-gray-600">
-                <p>Privacy questions? Email us at <a href="mailto:privacy@edufiliova.com" className="text-orange-600 hover:underline">privacy@edufiliova.com</a></p>
+                <p>Privacy questions? Email us at <a href="mailto:privacy@edufiliova.com" className="text-primary hover:underline">privacy@edufiliova.com</a></p>
               </div>
             </div>
           </ScrollArea>

@@ -19,7 +19,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
       title: "Student Pricing",
       description: "Affordable plans for learners",
       page: "education-pricing",
-      iconBg: "bg-orange-100",
+      iconBg: "bg-primary/15",
       iconColor: "text-[#ff5833]",
     },
     {
@@ -27,7 +27,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
       title: "Customer Pricing",
       description: "Plans for buyers and customers",
       page: "customer-pricing",
-      iconBg: "bg-orange-100",
+      iconBg: "bg-primary/15",
       iconColor: "text-[#ff5833]",
     },
     {
@@ -35,7 +35,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
       title: "Freelancer Pricing",
       description: "Plans for creators and freelancers",
       page: "creator-pricing",
-      iconBg: "bg-orange-100",
+      iconBg: "bg-primary/15",
       iconColor: "text-[#ff5833]",
     },
   ];

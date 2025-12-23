@@ -371,7 +371,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       icon: Briefcase,
       title: "Build Portfolio",
       description: "Showcase your work, skills, and achievements. Get featured and attract more clients.",
-      color: "bg-orange-50 dark:bg-orange-950",
+      color: "bg-primary/10 dark:bg-primary/80",
       iconColor: "text-gray-900"
     },
     {

@@ -251,7 +251,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
             <Button 
               size="sm" 
               variant="outline" 
-              className="ml-4 bg-white text-orange-600 hover:bg-orange-50 border-white h-7"
+              className="ml-4 bg-white text-primary hover:bg-primary/10 border-white h-7"
               onClick={handleReturnToAdmin}
             >
               Return to Admin Dashboard

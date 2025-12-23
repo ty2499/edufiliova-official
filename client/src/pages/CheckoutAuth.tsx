@@ -186,7 +186,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
           <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4" data-testid="form-checkout-auth">
             {errors.general && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
+              <div className="p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
                 <AlertCircle className="h-4 w-4 flex-shrink-0" />
                 <span>{errors.general}</span>
               </div>
@@ -201,7 +201,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  className={errors.name ? "border-red-500" : ""}
+                  className={errors.name ? "border-primary" : ""}
                   required
                   data-testid="input-name"
                 />
@@ -219,7 +219,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
+                  className={`pl-10 ${errors.email ? "border-primary" : ""}`}
                   required
                   data-testid="input-email"
                 />
@@ -237,7 +237,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                   placeholder={isLogin ? "Enter your password" : "Create a password (min 8 characters)"}
                   value={formData.password}
                   onChange={(e) => handleInputChange("password", e.target.value)}
-                  className={`pl-10 pr-10 ${errors.password ? "border-red-500" : ""}`}
+                  className={`pl-10 pr-10 ${errors.password ? "border-primary" : ""}`}
                   required
                   data-testid="input-password"
                 />
@@ -264,7 +264,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                     placeholder="Confirm your password"
                     value={formData.confirmPassword}
                     onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                    className={`pl-10 ${errors.confirmPassword ? "border-red-500" : ""}`}
+                    className={`pl-10 ${errors.confirmPassword ? "border-primary" : ""}`}
                     required
                     data-testid="input-confirm-password"
                   />

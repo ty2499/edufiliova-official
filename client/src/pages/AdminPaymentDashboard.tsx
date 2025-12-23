@@ -637,7 +637,7 @@ const AdminProfileSettings = () => {
 
         {/* Status Messages */}
         {uploadAvatarMutation.error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+          <div className="p-3 bg-primary/10 border border-red-200 rounded-lg">
             <p className="text-sm text-primary-600">
               Avatar upload error: {uploadAvatarMutation.error.message}
             </p>
@@ -645,7 +645,7 @@ const AdminProfileSettings = () => {
         )}
 
         {updateProfileMutation.error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+          <div className="p-3 bg-primary/10 border border-red-200 rounded-lg">
             <p className="text-sm text-primary-600">
               Profile update error: {updateProfileMutation.error.message}
             </p>
@@ -986,7 +986,7 @@ const UserCard = ({
       case 'moderator': return <Badge variant="outline" className="text-xs text-purple-600 border-purple-300">Moderator</Badge>;
       case 'freelancer': return <Badge variant="outline" className="text-xs text-blue-600 border-blue-300">Freelancer</Badge>;
       case 'accountant': return <Badge variant="outline" className="text-xs text-green-600 border-green-300">Accountant</Badge>;
-      case 'customer_service': return <Badge variant="outline" className="text-xs text-orange-600 border-orange-300">Customer Service</Badge>;
+      case 'customer_service': return <Badge variant="outline" className="text-xs text-primary border-orange-300">Customer Service</Badge>;
       default: return <Badge variant="secondary" className="text-xs">{role}</Badge>;
     }
   };
@@ -994,7 +994,7 @@ const UserCard = ({
   const getStatusBadge = (status: string = 'active') => {
     switch (status) {
       case 'banned': return <Badge variant="destructive" className="text-xs">Banned</Badge>;
-      case 'suspended': return <Badge variant="outline" className="text-xs text-orange-600 border-orange-300">Suspended</Badge>;
+      case 'suspended': return <Badge variant="outline" className="text-xs text-primary border-orange-300">Suspended</Badge>;
       case 'active': return <Badge className="text-xs text-black" style={{ backgroundColor: '#c5f13c' }}>Active</Badge>;
       default: return <Badge className="text-xs text-black" style={{ backgroundColor: '#c5f13c' }}>Active</Badge>;
     }
@@ -1439,7 +1439,7 @@ const ProductsList = ({
                           <span>{new Date(product.createdAt).toLocaleDateString()}</span>
                         </div>
                         {product.rejectionReason && (
-                          <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded">
+                          <div className="mt-2 p-2 bg-primary/10 border border-red-200 rounded">
                             <p className="text-sm text-primary-700">
                               <strong>Rejection Reason:</strong> {product.rejectionReason}
                             </p>
@@ -2574,7 +2574,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
       case 'moderator': return <Badge variant="outline" className="text-xs text-purple-600 border-purple-300">Moderator</Badge>;
       case 'freelancer': return <Badge variant="outline" className="text-xs text-blue-600 border-blue-300">Freelancer</Badge>;
       case 'accountant': return <Badge variant="outline" className="text-xs text-green-600 border-green-300">Accountant</Badge>;
-      case 'customer_service': return <Badge variant="outline" className="text-xs text-orange-600 border-orange-300">Customer Service</Badge>;
+      case 'customer_service': return <Badge variant="outline" className="text-xs text-primary border-orange-300">Customer Service</Badge>;
       default: return <Badge variant="secondary" className="text-xs">{role}</Badge>;
     }
   };
@@ -2582,7 +2582,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
   const getStatusBadge = (status: string = 'active') => {
     switch (status) {
       case 'banned': return <Badge variant="destructive" className="text-xs">Banned</Badge>;
-      case 'suspended': return <Badge variant="outline" className="text-xs text-orange-600 border-orange-300">Suspended</Badge>;
+      case 'suspended': return <Badge variant="outline" className="text-xs text-primary border-orange-300">Suspended</Badge>;
       case 'active': return <Badge className="text-xs text-black" style={{ backgroundColor: '#c5f13c' }}>Active</Badge>;
       default: return <Badge className="text-xs text-black" style={{ backgroundColor: '#c5f13c' }}>Active</Badge>;
     }
@@ -5485,7 +5485,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                     <Badge 
                                       variant="outline"
                                       className={
-                                        ticket.priority === 'urgent' ? 'border-red-500 text-primary-700' :
+                                        ticket.priority === 'urgent' ? 'border-primary text-primary-700' :
                                         ticket.priority === 'high' ? 'border-orange-500 text-orange-700' :
                                         ticket.priority === 'medium' ? 'border-yellow-500 text-yellow-700' :
                                         'border-gray-500 text-gray-700'
@@ -6242,7 +6242,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 </Button>
                 <Button 
                   variant="outline"
-                  className="text-orange-600 border-orange-300"
+                  className="text-primary border-orange-300"
                   onClick={() => {
                     if (selectedUser) {
                       banUserMutation.mutate({ userId: selectedUser.userId, status: 'suspended' });

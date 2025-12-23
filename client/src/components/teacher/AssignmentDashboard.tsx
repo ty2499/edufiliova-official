@@ -322,7 +322,7 @@ export function AssignmentDashboard({ teacherId }: AssignmentDashboardProps) {
                         <Button
                           size="sm"
                           onClick={() => handleDeleteAssignment(assignment.id)}
-                          className="bg-red-100 text-red-700 border-0"
+                          className="bg-primary/15 text-primary border-0"
                           disabled={isDeleting === assignment.id}
                           data-testid={`button-delete-${assignment.id}`}
                         >
@@ -394,7 +394,7 @@ export function AssignmentDashboard({ teacherId }: AssignmentDashboardProps) {
                       <Button
                         size="sm"
                         onClick={() => handleDeleteAssignment(assignment.id)}
-                        className="bg-red-100 text-red-700 border-0"
+                        className="bg-primary/15 text-primary border-0"
                         disabled={isDeleting === assignment.id}
                       >
                         <Trash2 className="h-4 w-4" />

@@ -44,7 +44,7 @@ const getStatusIcon = (status: string) => {
     case 'approved':
       return <CheckCircle2 className="h-4 w-4 text-green-600" />;
     case 'rejected':
-      return <XCircle className="h-4 w-4 text-red-600" />;
+      return <XCircle className="h-4 w-4 text-primary" />;
     case 'pending':
     default:
       return <Clock className="h-4 w-4 text-yellow-600" />;
@@ -56,7 +56,7 @@ const getStatusColor = (status: string) => {
     case 'approved':
       return 'bg-green-100 text-green-800';
     case 'rejected':
-      return 'bg-red-100 text-red-800';
+      return 'bg-primary/15 text-red-800';
     case 'pending':
     default:
       return 'bg-yellow-100 text-yellow-800';
@@ -242,8 +242,8 @@ const ProductCard = ({
       </div>
 
       {product.status === 'rejected' && product.rejectionReason && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-700 line-clamp-3 overflow-hidden">
+        <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg">
+          <p className="text-sm text-primary line-clamp-3 overflow-hidden">
             <strong>Rejection Reason:</strong> {product.rejectionReason}
           </p>
         </div>
@@ -531,7 +531,7 @@ export const ProductForm = ({
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Inline Notification */}
       {notification && (
-        <div className={`p-4 rounded-lg ${notification.type === 'error' ? 'bg-red-100 border border-red-300 text-red-800' : 'bg-green-100 border border-green-300 text-green-800'}`}>
+        <div className={`p-4 rounded-lg ${notification.type === 'error' ? 'bg-primary/15 border border-red-300 text-red-800' : 'bg-green-100 border border-green-300 text-green-800'}`}>
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium">{notification.message}</p>
             <button 
@@ -1383,7 +1383,7 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
       ) : error ? (
         <Card>
           <CardContent className="p-6 text-center">
-            <p className="text-red-600">Failed to load products. Please try again.</p>
+            <p className="text-primary">Failed to load products. Please try again.</p>
             <Button 
               onClick={() => queryClient.invalidateQueries({ queryKey: ['/api/products/my/products'] })}
               className="mt-4"

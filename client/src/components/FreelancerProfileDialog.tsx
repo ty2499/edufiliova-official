@@ -214,7 +214,7 @@ export function FreelancerProfileDialog({
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem 
                   onClick={onLogout}
-                  className="cursor-pointer text-red-600 focus:text-red-600"
+                  className="cursor-pointer text-primary focus:text-primary"
                   data-testid="menu-signout"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
@@ -323,7 +323,7 @@ export function FreelancerProfileDialog({
                       data-testid="input-firstname"
                     />
                     {form.formState.errors.firstName && (
-                      <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                      <p className="text-xs text-primary mt-1 flex items-center gap-1">
                         {form.formState.errors.firstName.message}
                       </p>
                     )}
@@ -341,7 +341,7 @@ export function FreelancerProfileDialog({
                       data-testid="input-lastname"
                     />
                     {form.formState.errors.lastName && (
-                      <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+                      <p className="text-xs text-primary mt-1 flex items-center gap-1">
                         {form.formState.errors.lastName.message}
                       </p>
                     )}
@@ -361,7 +361,7 @@ export function FreelancerProfileDialog({
                     data-testid="input-email"
                   />
                   {form.formState.errors.email && (
-                    <p className="text-xs text-red-500 mt-1">{form.formState.errors.email.message}</p>
+                    <p className="text-xs text-primary mt-1">{form.formState.errors.email.message}</p>
                   )}
                 </div>
 

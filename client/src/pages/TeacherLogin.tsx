@@ -209,7 +209,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
       <CardContent>
         <form onSubmit={handleTeacherLogin} className="space-y-4">
           {errors.general && (
-            <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
+            <div className="bg-primary/10 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
               <AlertCircle className="h-4 w-4 flex-shrink-0" />
               <span className="text-sm">{errors.general}</span>
             </div>
@@ -225,7 +225,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
-                className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
+                className={`pl-10 ${errors.email ? "border-primary" : ""}`}
                 disabled={loading}
                 data-testid="input-teacher-email"
               />
@@ -243,7 +243,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={(e) => handleInputChange("password", e.target.value)}
-                className={`pl-10 pr-10 ${errors.password ? "border-red-500" : ""}`}
+                className={`pl-10 pr-10 ${errors.password ? "border-primary" : ""}`}
                 disabled={loading}
                 data-testid="input-teacher-password"
               />
@@ -296,7 +296,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
       <CardContent>
         <form onSubmit={handleTeacherApplication} className="space-y-6">
           {errors.general && (
-            <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
+            <div className="bg-primary/10 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
               <AlertCircle className="h-4 w-4 flex-shrink-0" />
               <span className="text-sm">{errors.general}</span>
             </div>
@@ -313,7 +313,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                   placeholder="Your full name"
                   value={formData.fullName}
                   onChange={(e) => handleInputChange("fullName", e.target.value)}
-                  className={`pl-10 ${errors.fullName ? "border-red-500" : ""}`}
+                  className={`pl-10 ${errors.fullName ? "border-primary" : ""}`}
                   disabled={loading}
                   data-testid="input-full-name"
                 />
@@ -331,7 +331,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                   placeholder="Your email address"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
+                  className={`pl-10 ${errors.email ? "border-primary" : ""}`}
                   disabled={loading}
                   data-testid="input-apply-email"
                 />
@@ -368,7 +368,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                   placeholder="Your country"
                   value={formData.country}
                   onChange={(e) => handleInputChange("country", e.target.value)}
-                  className={`pl-10 ${errors.country ? "border-red-500" : ""}`}
+                  className={`pl-10 ${errors.country ? "border-primary" : ""}`}
                   disabled={loading}
                   data-testid="input-country"
                 />
@@ -386,7 +386,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 placeholder="Describe your educational qualifications and degrees..."
                 value={formData.qualifications}
                 onChange={(e) => handleInputChange("qualifications", e.target.value)}
-                className={`pl-10 min-h-[100px] ${errors.qualifications ? "border-red-500" : ""}`}
+                className={`pl-10 min-h-[100px] ${errors.qualifications ? "border-primary" : ""}`}
                 disabled={loading}
                 data-testid="textarea-qualifications"
               />
@@ -403,7 +403,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 placeholder="Describe your teaching experience and background..."
                 value={formData.experience}
                 onChange={(e) => handleInputChange("experience", e.target.value)}
-                className={`pl-10 min-h-[100px] ${errors.experience ? "border-red-500" : ""}`}
+                className={`pl-10 min-h-[100px] ${errors.experience ? "border-primary" : ""}`}
                 disabled={loading}
                 data-testid="textarea-experience"
               />
@@ -420,7 +420,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
                 placeholder="e.g., Monday-Friday 9AM-5PM, Weekends available"
                 value={formData.availableHours}
                 onChange={(e) => handleInputChange("availableHours", e.target.value)}
-                className={`pl-10 min-h-[80px] ${errors.availableHours ? "border-red-500" : ""}`}
+                className={`pl-10 min-h-[80px] ${errors.availableHours ? "border-primary" : ""}`}
                 disabled={loading}
                 data-testid="textarea-available-hours"
               />
@@ -529,7 +529,7 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         {errors.code && (
-          <div className="bg-red-50 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
+          <div className="bg-primary/10 border border-red-200 rounded-md p-3 flex items-center gap-2 text-primary-600">
             <AlertCircle className="h-4 w-4 flex-shrink-0" />
             <span className="text-sm">{errors.code}</span>
           </div>

@@ -179,7 +179,7 @@ export default function PaymentMethodSelector({ onPaymentMethodSelect, selectedC
     <div className="space-y-6" data-testid="payment-method-selector">
       {/* Status Messages */}
       {error && (
-        <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400">
+        <div className="flex items-center gap-2 p-3 bg-primary/10 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-primary dark:text-red-400">
           <AlertCircle className="w-4 h-4" />
           <span className="text-sm">{error}</span>
         </div>

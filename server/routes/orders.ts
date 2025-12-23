@@ -1248,7 +1248,7 @@ router.get("/:orderId/slip", requireAuth, async (req: AuthenticatedRequest, res:
     doc.rect(370, currentY - 10, 192, 2).fill('#111827');
     doc.fontSize(12).fillColor('#111827').font('Helvetica-Bold');
     doc.text('Total Amount', 370, currentY, { align: 'right', width: 80 });
-    doc.fontSize(16).fillColor('#FF5734');
+    doc.fontSize(16).fillColor('#0C332C');
     doc.text(`$${parseFloat(order.totalAmount).toFixed(2)}`, 470, currentY - 2, { align: 'right', width: 80 });
 
     // Professional Blue Footer

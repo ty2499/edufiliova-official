@@ -119,8 +119,8 @@ export function CategoryAccessManager({ userRole }: CategoryAccessManagerProps) 
         </div>
 
         {statusMessage && (
-          <Alert className={statusMessage.type === 'error' ? 'border-red-200 bg-red-50' : 'border-green-200 bg-green-50'}>
-            <AlertDescription className={statusMessage.type === 'error' ? 'text-red-700' : 'text-green-700'}>
+          <Alert className={statusMessage.type === 'error' ? 'border-red-200 bg-primary/10' : 'border-green-200 bg-green-50'}>
+            <AlertDescription className={statusMessage.type === 'error' ? 'text-primary' : 'text-green-700'}>
               {statusMessage.text}
             </AlertDescription>
           </Alert>
@@ -140,8 +140,8 @@ export function CategoryAccessManager({ userRole }: CategoryAccessManagerProps) 
       </div>
 
       {statusMessage && (
-        <Alert className={statusMessage.type === 'error' ? 'border-red-200 bg-red-50' : 'border-green-200 bg-green-50'}>
-          <AlertDescription className={statusMessage.type === 'error' ? 'text-red-700' : 'text-green-700'}>
+        <Alert className={statusMessage.type === 'error' ? 'border-red-200 bg-primary/10' : 'border-green-200 bg-green-50'}>
+          <AlertDescription className={statusMessage.type === 'error' ? 'text-primary' : 'text-green-700'}>
             {statusMessage.text}
           </AlertDescription>
         </Alert>
@@ -152,7 +152,7 @@ export function CategoryAccessManager({ userRole }: CategoryAccessManagerProps) 
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {accessStatus?.status === 'pending' && <Clock className="h-5 w-5 text-yellow-500" />}
-            {accessStatus?.status === 'rejected' && <XCircle className="h-5 w-5 text-red-500" />}
+            {accessStatus?.status === 'rejected' && <XCircle className="h-5 w-5 text-primary" />}
             {accessStatus?.status === 'none' && <Info className="h-5 w-5 text-blue-500" />}
             Category Management Access Status
           </CardTitle>
@@ -264,7 +264,7 @@ export function CategoryAccessManager({ userRole }: CategoryAccessManagerProps) 
                 {accessStatus.rejectionReason && (
                   <div className="space-y-1">
                     <span className="text-sm text-gray-600">Reason:</span>
-                    <p className="text-sm bg-red-50 p-3 rounded border border-red-200 text-red-700">
+                    <p className="text-sm bg-primary/10 p-3 rounded border border-red-200 text-primary">
                       {accessStatus.rejectionReason}
                     </p>
                   </div>

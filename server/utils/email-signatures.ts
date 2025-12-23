@@ -12,7 +12,7 @@ export function getEmailSignature(emailAccount: string): EmailSignature {
     container: 'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #4a5568; line-height: 1.6; margin-top: 30px; padding-top: 20px; border-top: 2px solid #e2e8f0;',
     name: 'font-weight: 600; color: #1a1a1a; font-size: 16px; margin: 0;',
     title: 'color: #64748b; font-size: 14px; margin: 5px 0;',
-    company: 'color: #ff5834; font-weight: 600; font-size: 15px; margin: 10px 0;',
+    company: 'color: #0C332C; font-weight: 600; font-size: 15px; margin: 10px 0;',
     contact: 'font-size: 13px; color: #64748b; margin: 3px 0;',
     link: 'color: #2d5ddd; text-decoration: none;',
     disclaimer: 'font-size: 11px; color: #94a3b8; margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0;'

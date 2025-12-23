@@ -30,7 +30,7 @@ async function sendMarketingEmailsToAudrey() {
         subject: 'Welcome to EduFiliova - Your Creative Journey Starts Here!',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h1 style="color: #ff5834;">Welcome, ${recipientName}! 🎨</h1>
+            <h1 style="color: #0C332C;">Welcome, ${recipientName}! 🎨</h1>
             <p>We're thrilled to have you join EduFiliova's community of talented freelancers.</p>
             <p>As a creative professional, you now have access to:</p>
             <ul>
@@ -39,7 +39,7 @@ async function sendMarketingEmailsToAudrey() {
               <li>Earn from your expertise and creativity</li>
             </ul>
             <p>Start building your profile today and let your talent shine!</p>
-            <a href="https://edufiliova.com" style="display: inline-block; background: #ff5834; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 20px;">Get Started</a>
+            <a href="https://edufiliova.com" style="display: inline-block; background: #0C332C; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 20px;">Get Started</a>
             <p style="margin-top: 30px; color: #666; font-size: 12px;">EduFiliova Team</p>
           </div>
         `
@@ -48,7 +48,7 @@ async function sendMarketingEmailsToAudrey() {
         subject: 'Boost Your Freelance Career with EduFiliova',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h1 style="color: #ff5834;">Ready to Level Up, ${recipientName}? 🚀</h1>
+            <h1 style="color: #0C332C;">Ready to Level Up, ${recipientName}? 🚀</h1>
             <p>Here are some tips to maximize your success on EduFiliova:</p>
             <ol>
               <li><strong>Complete Your Profile</strong> - Add your skills, bio, and profile photo</li>
@@ -57,7 +57,7 @@ async function sendMarketingEmailsToAudrey() {
               <li><strong>Stay Active</strong> - Regular engagement helps you get discovered</li>
             </ol>
             <p>Freelancers with complete profiles get 3x more inquiries!</p>
-            <a href="https://edufiliova.com" style="display: inline-block; background: #ff5834; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 20px;">Update Your Profile</a>
+            <a href="https://edufiliova.com" style="display: inline-block; background: #0C332C; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 20px;">Update Your Profile</a>
             <p style="margin-top: 30px; color: #666; font-size: 12px;">EduFiliova Team</p>
           </div>
         `
@@ -66,7 +66,7 @@ async function sendMarketingEmailsToAudrey() {
         subject: 'Special Offer: Premium Features for Freelancers',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h1 style="color: #ff5834;">Exclusive Opportunity, ${recipientName}! ⭐</h1>
+            <h1 style="color: #0C332C;">Exclusive Opportunity, ${recipientName}! ⭐</h1>
             <p>As a valued member of our freelancer community, we're offering you exclusive access to premium features:</p>
             <ul>
               <li>✨ Featured placement in search results</li>
@@ -75,7 +75,7 @@ async function sendMarketingEmailsToAudrey() {
               <li>🎯 Access to premium client projects</li>
             </ul>
             <p>Take your freelance career to new heights with EduFiliova Premium!</p>
-            <a href="https://edufiliova.com" style="display: inline-block; background: #ff5834; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 20px;">Learn More</a>
+            <a href="https://edufiliova.com" style="display: inline-block; background: #0C332C; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 20px;">Learn More</a>
             <p style="margin-top: 30px; color: #666; font-size: 12px;">EduFiliova Team</p>
           </div>
         `

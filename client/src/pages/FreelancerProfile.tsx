@@ -716,7 +716,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                       {likeMutation.isPending ? (
                         <Timer className="h-4 w-4 animate-spin" />
                       ) : (
-                        <Heart className={`h-4 w-4 ${profileStats?.likedByMe ? 'fill-red-500 text-primary-500' : ''}`} />
+                        <Heart className={`h-4 w-4 ${profileStats?.likedByMe ? 'fill-primary text-primary-500' : ''}`} />
                       )}
                     </Button>
                   </div>

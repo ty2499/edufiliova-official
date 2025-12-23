@@ -189,7 +189,7 @@ class EmailService {
 
   getEmailTemplate(headerColor: 'orange' | 'blue' = 'blue', logoUrl?: string): string {
     const whiteLogoUrl = logoUrl || process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
-    const headerBgColor = '#ff5834';
+    const headerBgColor = '#0C332C';
     
     return `
       <!DOCTYPE html>
@@ -315,7 +315,7 @@ class EmailService {
             background-color: #1e4ac9;
           }
           .button-secondary {
-            background-color: #ff5834;
+            background-color: #0C332C;
           }
           .button-secondary:hover {
             background-color: #e64520;
@@ -351,7 +351,7 @@ class EmailService {
           }
           .alert-warning {
             background-color: #fff4ed;
-            border-left: 4px solid #ff5834;
+            border-left: 4px solid #0C332C;
             padding: 15px 20px;
             border-radius: 6px;
             margin: 20px 0;
@@ -364,9 +364,9 @@ class EmailService {
             margin: 20px 0;
           }
           .footer {
-            background: #ff5834;
+            background: #0C332C;
             padding: 40px;
-            border-top: 3px solid #ff5834;
+            border-top: 3px solid #0C332C;
             color: #ffffff;
           }
           .footer-social {
@@ -530,7 +530,7 @@ class EmailService {
             </tr>
             <tr>
               <td class="detail-label">Total Paid</td>
-              <td class="detail-value" style="color: #ff5834;">$${data.price.toFixed(2)}</td>
+              <td class="detail-value" style="color: #0C332C;">$${data.price.toFixed(2)}</td>
             </tr>
           </table>
         </div>
@@ -587,7 +587,7 @@ class EmailService {
             </tr>
             <tr>
               <td class="detail-label">Amount Paid</td>
-              <td class="detail-value" style="color: #ff5834;">$${data.price.toFixed(2)}</td>
+              <td class="detail-value" style="color: #0C332C;">$${data.price.toFixed(2)}</td>
             </tr>
             <tr>
               <td class="detail-label">Access</td>
@@ -656,7 +656,7 @@ class EmailService {
             </tr>
             <tr>
               <td class="detail-label">Amount</td>
-              <td class="detail-value" style="color: #ff5834;">$${data.price.toFixed(2)}</td>
+              <td class="detail-value" style="color: #0C332C;">$${data.price.toFixed(2)}</td>
             </tr>
           </table>
         </div>
@@ -770,7 +770,7 @@ class EmailService {
             </tr>
             <tr>
               <td class="detail-label">Total Paid</td>
-              <td class="detail-value" style="color: #ff5834;">$${data.totalPrice.toFixed(2)}</td>
+              <td class="detail-value" style="color: #0C332C;">$${data.totalPrice.toFixed(2)}</td>
             </tr>
           </table>
         </div>
@@ -836,7 +836,7 @@ class EmailService {
           ${itemsHtml}
             <tr style="border-top: 2px solid #111827;">
               <td class="detail-label" style="font-size: 16px; padding-top: 15px;">Total</td>
-              <td class="detail-value" style="color: #ff5834; font-size: 18px; padding-top: 15px;">$${data.price.toFixed(2)}</td>
+              <td class="detail-value" style="color: #0C332C; font-size: 18px; padding-top: 15px;">$${data.price.toFixed(2)}</td>
             </tr>
           </table>
         </div>
@@ -1094,12 +1094,12 @@ class EmailService {
         </p>
         
         <div style="text-align: center; margin: 30px 0;">
-          <a href="${data.verificationLink}" style="display: inline-block; background: linear-gradient(135deg, #ff5834 0%, #e84a2a 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(255, 88, 52, 0.3);">
+          <a href="${data.verificationLink}" style="display: inline-block; background: linear-gradient(135deg, #0C332C 0%, #e84a2a 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(255, 88, 52, 0.3);">
             Verify Email Address
           </a>
         </div>
 
-        <div style="background: rgba(255, 88, 52, 0.08); border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #ff5834;">
+        <div style="background: rgba(255, 88, 52, 0.08); border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #0C332C;">
           <div style="color: #9a3412; font-size: 14px;">
             <strong>Link expires in ${data.expiresIn}</strong>
           </div>
@@ -1108,7 +1108,7 @@ class EmailService {
         <p class="message" style="font-size: 13px; color: #666;">
           If the button doesn't work, copy and paste this link into your browser:
           <br>
-          <span style="word-break: break-all; color: #ff5834;">${data.verificationLink}</span>
+          <span style="word-break: break-all; color: #0C332C;">${data.verificationLink}</span>
         </p>
 
         <div class="alert-warning">
@@ -1264,12 +1264,12 @@ class EmailService {
         </p>
         
         <div style="text-align: center; margin: 30px 0;">
-          <a href="${data.verificationLink}" style="display: inline-block; background: linear-gradient(135deg, #ff5834 0%, #e84a2a 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(255, 88, 52, 0.3);">
+          <a href="${data.verificationLink}" style="display: inline-block; background: linear-gradient(135deg, #0C332C 0%, #e84a2a 100%); color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 8px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(255, 88, 52, 0.3);">
             Verify Email Address
           </a>
         </div>
 
-        <div style="background: rgba(255, 88, 52, 0.08); border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #ff5834;">
+        <div style="background: rgba(255, 88, 52, 0.08); border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #0C332C;">
           <div style="color: #9a3412; font-size: 14px;">
             <strong>Link expires in ${data.expiresIn}</strong>
           </div>
@@ -1278,7 +1278,7 @@ class EmailService {
         <p class="message" style="font-size: 13px; color: #666;">
           If the button doesn't work, copy and paste this link into your browser:
           <br>
-          <span style="word-break: break-all; color: #ff5834;">${data.verificationLink}</span>
+          <span style="word-break: break-all; color: #0C332C;">${data.verificationLink}</span>
         </p>
 
         <div class="alert-warning">
@@ -1346,7 +1346,7 @@ class EmailService {
         <div class="details-box">
           <div style="color: #374151; font-size: 14px; font-weight: 600; margin-bottom: 15px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 8px;">
-              <path d="M24 4C24 4 16 12 16 26C16 34 20 40 24 44C28 40 32 34 32 26C32 12 24 4 24 4Z" fill="#FF5834"/>
+              <path d="M24 4C24 4 16 12 16 26C16 34 20 40 24 44C28 40 32 34 32 26C32 12 24 4 24 4Z" fill="#0C332C"/>
               <circle cx="24" cy="22" r="4" fill="white"/>
               <path d="M16 30C12 32 8 30 8 30C8 30 10 26 14 24" fill="#FCD34D"/>
               <path d="M32 30C36 32 40 30 40 30C40 30 38 26 34 24" fill="#FCD34D"/>
@@ -2123,7 +2123,7 @@ class EmailService {
             </tr>
             <tr>
               <td class="detail-label">Amount</td>
-              <td class="detail-value" style="color: #ff5834;">$${data.amount.toFixed(2)}</td>
+              <td class="detail-value" style="color: #0C332C;">$${data.amount.toFixed(2)}</td>
             </tr>
             <tr>
               <td class="detail-label">Reason</td>
@@ -2448,7 +2448,7 @@ class EmailService {
           ${itemsHtml}
           <div style="display: flex; justify-content: space-between; padding-top: 15px; margin-top: 10px; border-top: 2px solid #111827;">
             <span style="color: #111827; font-weight: 700; font-size: 16px;">Total Paid</span>
-            <span style="color: #ff5834; font-weight: 700; font-size: 18px;">${currencySymbol}${data.totalAmount.toFixed(2)}</span>
+            <span style="color: #0C332C; font-weight: 700; font-size: 18px;">${currencySymbol}${data.totalAmount.toFixed(2)}</span>
           </div>
         </div>
 
@@ -2543,14 +2543,14 @@ export async function sendVoucherEmail(options: VoucherEmailOptions): Promise<bo
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
   <div style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-    <div style="background: linear-gradient(135deg, #ff5734 0%, #ff4520 100%); padding: 40px 30px; text-align: center; color: white;">
+    <div style="background: linear-gradient(135deg, #0C332C 0%, #0C332C 100%); padding: 40px 30px; text-align: center; color: white;">
       <h1 style="margin: 0; font-size: 32px;">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 10px;">
           <rect x="6" y="18" width="36" height="26" rx="4" fill="white"/>
           <rect x="6" y="12" width="36" height="10" rx="2" fill="#FCD34D"/>
-          <rect x="21" y="12" width="6" height="32" fill="#FF5834"/>
-          <path d="M24 12C24 12 18 6 14 10C10 14 16 18 24 12Z" fill="#FF5834"/>
-          <path d="M24 12C24 12 30 6 34 10C38 14 32 18 24 12Z" fill="#FF5834"/>
+          <rect x="21" y="12" width="6" height="32" fill="#0C332C"/>
+          <path d="M24 12C24 12 18 6 14 10C10 14 16 18 24 12Z" fill="#0C332C"/>
+          <path d="M24 12C24 12 30 6 34 10C38 14 32 18 24 12Z" fill="#0C332C"/>
         </svg>
         You've Received a Gift!
       </h1>
@@ -2566,10 +2566,10 @@ export async function sendVoucherEmail(options: VoucherEmailOptions): Promise<bo
     </div>
     ` : ''}
 
-    <div style="background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); margin: 30px; padding: 40px; border-radius: 12px; border: 3px solid #ff5734; position: relative;">
+    <div style="background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); margin: 30px; padding: 40px; border-radius: 12px; border: 3px solid #0C332C; position: relative;">
       ${recipientName ? `<p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 16px;">For: <strong>${recipientName}</strong></p>` : ''}
       
-      <div style="text-align: center; font-size: 52px; font-weight: bold; color: #ff5734; margin: 20px 0;">
+      <div style="text-align: center; font-size: 52px; font-weight: bold; color: #0C332C; margin: 20px 0;">
         $${formattedAmount}
       </div>
       
@@ -2578,18 +2578,18 @@ export async function sendVoucherEmail(options: VoucherEmailOptions): Promise<bo
         <p style="margin: 0; font-size: 28px; font-weight: bold; letter-spacing: 4px;">${voucherCode}</p>
       </div>
 
-      <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ff5734;">
+      <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #0C332C;">
         <h3 style="margin-top: 0; color: #333; font-size: 16px;">How to Redeem:</h3>
         <ol style="color: #666; line-height: 1.8; margin: 10px 0; padding-left: 20px;">
           <li>Log in to your EduFiliova account</li>
           <li>Go to your Wallet and click "Redeem Voucher"</li>
-          <li>Enter code <strong style="color: #ff5734;">${voucherCode}</strong></li>
+          <li>Enter code <strong style="color: #0C332C;">${voucherCode}</strong></li>
           <li>Your $${formattedAmount} credit will be added instantly!</li>
         </ol>
       </div>
 
       <div style="background: #fff3e0; padding: 15px; border-radius: 6px; margin-top: 20px;">
-        <h4 style="margin-top: 0; color: #ff5734; font-size: 14px;">Terms & Conditions:</h4>
+        <h4 style="margin-top: 0; color: #0C332C; font-size: 14px;">Terms & Conditions:</h4>
         <ul style="color: #666; font-size: 13px; line-height: 1.6; margin: 0; padding-left: 20px;">
           <li>One-time use only</li>
           <li>Can be used for any course or subscription</li>
@@ -2601,7 +2601,7 @@ export async function sendVoucherEmail(options: VoucherEmailOptions): Promise<bo
 
     <div style="text-align: center; padding: 30px; color: #666; font-size: 14px; border-top: 1px solid #eee;">
       <p style="margin: 0 0 15px 0;">Ready to start learning?</p>
-      <a href="https://edufiliova.com" style="display: inline-block; background: #ff5734; color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px;">Visit EduFiliova</a>
+      <a href="https://edufiliova.com" style="display: inline-block; background: #0C332C; color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px;">Visit EduFiliova</a>
       <p style="margin: 20px 0 0 0; font-size: 12px; color: #999;">
         Questions? Contact our support team at support@edufiliova.com
       </p>

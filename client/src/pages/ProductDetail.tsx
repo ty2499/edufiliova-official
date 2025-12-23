@@ -1276,7 +1276,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                     size="sm"
                     className={`h-8 px-2 md:h-9 md:px-3 ${
                       isLiked 
-                        ? 'bg-red-50 border-red-300 hover:bg-primary/100 text-primary-600' 
+                        ? 'bg-primary/10 border-red-300 hover:bg-primary/100 text-primary-600' 
                         : 'bg-white border-gray-300 hover:bg-gray-50 text-gray-900'
                     }`}
                     onClick={() => handleLike(selectedProduct)}
@@ -1562,7 +1562,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
             <div className={`mt-4 p-4 rounded-lg ${
               downloadMessage.type === 'success' 
                 ? 'bg-[#2d5ddd] border border-[#2d5ddd]' 
-                : 'bg-red-50 border border-red-200'
+                : 'bg-primary/10 border border-red-200'
             }`}>
               <p className={`text-sm font-medium ${
                 downloadMessage.type === 'success' ? 'text-white' : 'text-primary-800'
@@ -1836,7 +1836,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         ? upgradeCosts[selectedPlan.planId].upgradeCost
                         : parseFloat(billingCycle === 'monthly' ? selectedPlan.monthlyPrice || '0' : selectedPlan.yearlyPrice || '0');
                       return parseFloat(wallet?.balance || '0') < actualCost && (
-                        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-primary-700">
+                        <div className="bg-primary/10 border border-red-200 rounded-lg p-3 text-sm text-primary-700">
                           Insufficient balance. You need ${actualCost.toFixed(2)} but have ${parseFloat(wallet?.balance || '0').toFixed(2)}. Please add funds to your wallet or pay with card.
                         </div>
                       );
@@ -2108,7 +2108,7 @@ function MembershipPaymentForm({
       <PaymentElement />
       
       {error && (
-        <div className="bg-red-50 text-primary-800 p-3 rounded-lg text-sm">
+        <div className="bg-primary/10 text-primary-800 p-3 rounded-lg text-sm">
           {error}
         </div>
       )}

@@ -347,13 +347,13 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
             </div>
 
             {errors.verification && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
+              <div className="p-3 bg-primary/10 border border-red-200 rounded-xl text-primary-700 text-sm">
                 {errors.verification}
               </div>
             )}
             
             {errors.general && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-primary-700 text-sm">
+              <div className="p-3 bg-primary/10 border border-red-200 rounded-xl text-primary-700 text-sm">
                 {errors.general}
               </div>
             )}
@@ -445,7 +445,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
 
         <form onSubmit={handleSubmit} className="space-y-5" data-testid="form-shop-auth">
           {errors.general && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3 text-primary-700 text-sm">
+            <div className="p-4 bg-primary/10 border border-red-200 rounded-lg flex items-start gap-3 text-primary-700 text-sm">
               <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
               <span>{errors.general}</span>
             </div>
@@ -460,7 +460,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 placeholder="Enter your full name"
                 value={name}
                 onChange={(e) => { setName(e.target.value); clearError('name'); }}
-                className={errors.name ? 'border-red-500' : ''}
+                className={errors.name ? 'border-primary' : ''}
                 disabled={isProcessing}
                 data-testid="input-name"
               />
@@ -476,7 +476,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => { setEmail(e.target.value); clearError('email'); }}
-              className={errors.email ? 'border-red-500' : ''}
+              className={errors.email ? 'border-primary' : ''}
               disabled={isProcessing}
               data-testid="input-email"
             />
@@ -492,7 +492,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 placeholder={authMode === 'signin' ? 'Enter your password' : 'Create a password (min 8 characters)'}
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); clearError('password'); }}
-                className={`pr-10 ${errors.password ? 'border-red-500' : ''}`}
+                className={`pr-10 ${errors.password ? 'border-primary' : ''}`}
                 disabled={isProcessing}
                 data-testid="input-password"
               />
@@ -518,7 +518,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 placeholder="Confirm your password"
                 value={confirmPassword}
                 onChange={(e) => { setConfirmPassword(e.target.value); clearError('confirmPassword'); }}
-                className={errors.confirmPassword ? 'border-red-500' : ''}
+                className={errors.confirmPassword ? 'border-primary' : ''}
                 disabled={isProcessing}
                 data-testid="input-confirm-password"
               />

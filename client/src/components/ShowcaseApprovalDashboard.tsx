@@ -98,7 +98,7 @@ export function ShowcaseApprovalDashboard() {
       case 'approved':
         return <CheckmarkIcon size="sm" />;
       case 'rejected':
-        return <XCircle className="h-4 w-4 text-red-600" />;
+        return <XCircle className="h-4 w-4 text-primary" />;
       case 'pending':
       default:
         return <Clock className="h-4 w-4 text-yellow-600" />;
@@ -110,7 +110,7 @@ export function ShowcaseApprovalDashboard() {
       case 'approved':
         return 'bg-green-100 text-green-800';
       case 'rejected':
-        return 'bg-red-100 text-red-800';
+        return 'bg-primary/15 text-red-800';
       case 'pending':
       default:
         return 'bg-yellow-100 text-yellow-800';

@@ -563,7 +563,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
       
       {/* Error Message Display */}
       {errorMessage && (
-        <Alert className="border-red-200 bg-red-50 text-red-800">
+        <Alert className="border-red-200 bg-primary/10 text-red-800">
           <AlertDescription className="flex items-center gap-2">
             <X className="h-4 w-4" />
             {errorMessage}

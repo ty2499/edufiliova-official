@@ -24,7 +24,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
       description: "Discover premium design resources",
       page: "product-shop",
       bgColor: "bg-gradient-to-br from-orange-50 to-red-50",
-      iconBg: "bg-orange-100",
+      iconBg: "bg-primary/15",
     },
     {
       icon: <Tag className="h-5 w-5 text-rose-600" />,

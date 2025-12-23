@@ -87,8 +87,8 @@ const STATUS_COLORS = {
   scheduled: 'bg-blue-100 text-blue-800',
   confirmed: 'bg-green-100 text-green-800', 
   completed: 'bg-gray-100 text-gray-800',
-  cancelled: 'bg-red-100 text-red-800',
-  no_show: 'bg-orange-100 text-orange-800'
+  cancelled: 'bg-primary/15 text-red-800',
+  no_show: 'bg-primary/15 text-primary'
 };
 
 export const SchedulingInterface: React.FC = () => {
@@ -703,7 +703,7 @@ export const SchedulingInterface: React.FC = () => {
                     {bookAppointmentMutation.isPending ? 'Booking...' : 'Book Session'}
                   </Button>
                   {bookAppointmentMutation.error && (
-                    <div className="text-red-600 text-sm mt-2">
+                    <div className="text-primary text-sm mt-2">
                       Booking failed. Please try again.
                     </div>
                   )}
@@ -723,7 +723,7 @@ export const SchedulingInterface: React.FC = () => {
                     ) : !availableTeachers || availableTeachers.length === 0 ? (
                       <div className="text-center py-8 text-muted-foreground">
                         <p>No teachers available at the moment</p>
-                        {teachersError && <p className="text-red-500 text-sm">Error: {teachersError.message}</p>}
+                        {teachersError && <p className="text-primary text-sm">Error: {teachersError.message}</p>}
                       </div>
                     ) : (
                       availableTeachers.map((teacher: any) => {

@@ -221,7 +221,7 @@ export default function TransactionDashboard() {
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600" data-testid="pending-payouts">
+            <div className="text-2xl font-bold text-primary" data-testid="pending-payouts">
               {balance ? formatCurrency(balance.pendingPayouts) : formatCurrency('0')}
             </div>
           </CardContent>
@@ -454,7 +454,7 @@ export default function TransactionDashboard() {
                         
                         {/* Status Messages */}
                         {error && (
-                          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-primary-700 dark:text-primary-400 text-sm" data-testid="error-message">
+                          <div className="p-3 bg-primary/10 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-primary-700 dark:text-primary-400 text-sm" data-testid="error-message">
                             {error}
                           </div>
                         )}

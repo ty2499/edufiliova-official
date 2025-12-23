@@ -211,9 +211,9 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
           </div>
 
           {worksError && (
-            <Card className="border-red-200 bg-red-50">
+            <Card className="border-red-200 bg-primary/10">
               <CardContent className="p-4 flex items-center justify-between">
-                <p className="text-red-600">Error loading works: {(worksError as Error).message}</p>
+                <p className="text-primary">Error loading works: {(worksError as Error).message}</p>
                 <Button 
                   variant="outline" 
                   size="sm" 

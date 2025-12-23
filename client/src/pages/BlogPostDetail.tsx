@@ -39,7 +39,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   "Continuous Testing": "bg-pink-100 text-pink-700 border-pink-200",
   "AI Test Scripts": "bg-blue-100 text-blue-700 border-blue-200",
   "Test Automation": "bg-indigo-100 text-indigo-700 border-indigo-200",
-  "Code Coverage": "bg-orange-100 text-orange-700 border-orange-200"
+  "Code Coverage": "bg-primary/15 text-orange-700 border-orange-200"
 };
 
 interface BlogPostDetailProps {

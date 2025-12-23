@@ -183,9 +183,9 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
 
   if (error) {
     return (
-      <Card className={cn("border-red-200 bg-red-50", className)}>
+      <Card className={cn("border-red-200 bg-primary/10", className)}>
         <CardContent className="p-4">
-          <div className="flex items-center gap-2 text-red-600">
+          <div className="flex items-center gap-2 text-primary">
             <AlertCircle className="w-4 h-4" />
             <span className="text-sm">Unable to load announcements. Please complete your profile setup first.</span>
           </div>
@@ -248,8 +248,8 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
                   announcement.isRead 
                     ? "border-l-gray-300 bg-white" 
                     : "border-l-[#42fa76] bg-green-50/30",
-                  announcement.priority === 'urgent' && "border-l-red-500 bg-red-50/30",
-                  announcement.priority === 'high' && "border-l-orange-500 bg-orange-50/30"
+                  announcement.priority === 'urgent' && "border-l-red-500 bg-primary/10/30",
+                  announcement.priority === 'high' && "border-l-orange-500 bg-primary/10/30"
                 )}
                 data-testid={`announcement-${announcement.id}`}
               >

@@ -1112,8 +1112,8 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                   <div className="mb-3">
                     {/* After-hours banner - auto-hides after 10 seconds */}
                     {showAfterHoursBanner && (
-                      <div className="mb-3 p-3 bg-orange-50 border border-orange-200 rounded-xl">
-                        <p className="text-sm text-orange-800" style={{ fontFamily: 'Satoshi, sans-serif' }}>
+                      <div className="mb-3 p-3 bg-primary/10 border border-orange-200 rounded-xl">
+                        <p className="text-sm text-primary" style={{ fontFamily: 'Satoshi, sans-serif' }}>
                           Support is currently offline. We will take time to respond — our team will reply shortly.
                         </p>
                       </div>
@@ -1212,7 +1212,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                 </form>
 
                 {!isConnected && (
-                  <p className="text-xs text-red-500 mt-2 text-center" style={{ fontFamily: 'Satoshi, sans-serif' }}>
+                  <p className="text-xs text-primary mt-2 text-center" style={{ fontFamily: 'Satoshi, sans-serif' }}>
                     Connection lost. Trying to reconnect...
                   </p>
                 )}

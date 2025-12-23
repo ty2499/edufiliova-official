@@ -683,7 +683,7 @@ router.post('/apply', upload.any(), async (req, res) => {
       </head>
       <body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f3f4f6;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
-          <div style="background: linear-gradient(135deg, #ff5734 0%, #ef4444 100%); padding: 40px 30px; text-align: center;">
+          <div style="background: linear-gradient(135deg, #0C332C 0%, #0C332C 100%); padding: 40px 30px; text-align: center;">
             <h1 style="color: white; margin: 0;">EduFiliova</h1>
             <p style="color: #ffffff; font-size: 14px; margin: 10px 0 0 0;">Creativity, Learning, and Growth in One Place</p>
           </div>
@@ -732,7 +732,7 @@ router.post('/apply', upload.any(), async (req, res) => {
             </div>
           </div>
           
-          <div style="background-color: #ff5734; color: #ffffff; padding: 30px; text-align: center;">
+          <div style="background-color: #0C332C; color: #ffffff; padding: 30px; text-align: center;">
             <div style="margin: 15px 0;">
               <div style="font-weight: bold; font-size: 14px; margin-bottom: 8px;">Contact Us</div>
               <div style="font-size: 12px; line-height: 1.5;">

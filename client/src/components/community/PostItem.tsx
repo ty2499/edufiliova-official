@@ -196,7 +196,7 @@ export function PostItem({ post, currentUserId, onLike, onEdit, onDelete }: Post
                   variant="ghost"
                   size="sm"
                   onClick={onLike}
-                  className={`h-8 px-2 ${post.likedByCurrentUser ? 'text-red-500 hover:text-red-600' : 'text-muted-foreground hover:text-foreground'}`}
+                  className={`h-8 px-2 ${post.likedByCurrentUser ? 'text-primary hover:text-primary' : 'text-muted-foreground hover:text-foreground'}`}
                   data-testid={`like-post-${post.id}`}
                 >
                   <Heart className={`h-4 w-4 mr-1 ${post.likedByCurrentUser ? 'fill-current' : ''}`} />

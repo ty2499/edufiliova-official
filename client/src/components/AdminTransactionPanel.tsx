@@ -363,7 +363,7 @@ export default function AdminTransactionPanel() {
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600" data-testid="pending-payouts">
+            <div className="text-2xl font-bold text-primary" data-testid="pending-payouts">
               {stats?.pendingPayouts || 0}
             </div>
           </CardContent>
@@ -493,7 +493,7 @@ export default function AdminTransactionPanel() {
                   <p className="text-xs font-medium text-purple-900 mb-1">Freelancers</p>
                   <p className="text-xl font-bold">{formatCurrency(stats.walletsByRole.freelancer)}</p>
                 </div>
-                <div className="p-4 rounded-lg bg-orange-50 border border-orange-200">
+                <div className="p-4 rounded-lg bg-primary/10 border border-orange-200">
                   <p className="text-xs font-medium text-orange-900 mb-1">Teachers</p>
                   <p className="text-xl font-bold">{formatCurrency(stats.walletsByRole.teacher)}</p>
                 </div>
@@ -1000,7 +1000,7 @@ export default function AdminTransactionPanel() {
                             Verified
                           </Badge>
                         ) : (
-                          <Badge variant="outline" className="text-orange-600">
+                          <Badge variant="outline" className="text-primary">
                             <Clock className="w-3 h-3 mr-1" />
                             Pending
                           </Badge>
@@ -1142,7 +1142,7 @@ export default function AdminTransactionPanel() {
                   <p className="text-xs font-medium text-purple-900 mb-1">Freelancers</p>
                   <p className="text-xl font-bold">{planData?.stats?.revenueByRole ? formatCurrency(planData.stats.revenueByRole.freelancer) : '$0.00'}</p>
                 </div>
-                <div className="p-4 rounded-lg bg-orange-50 border border-orange-200">
+                <div className="p-4 rounded-lg bg-primary/10 border border-orange-200">
                   <p className="text-xs font-medium text-orange-900 mb-1">Teachers</p>
                   <p className="text-xl font-bold">{planData?.stats?.revenueByRole ? formatCurrency(planData.stats.revenueByRole.teacher) : '$0.00'}</p>
                 </div>

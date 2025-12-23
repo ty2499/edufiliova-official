@@ -19,7 +19,7 @@ export const StudentsMegaMenu = ({ isOpen, onNavigate, onClose }: StudentsMegaMe
   ];
 
   const community = [
-    { icon: <Settings className="h-5 w-5" />, title: "Study Settings", description: "Customize your learning experience", page: "settings", bg: "bg-orange-50" },
+    { icon: <Settings className="h-5 w-5" />, title: "Study Settings", description: "Customize your learning experience", page: "settings", bg: "bg-primary/10" },
   ];
 
   return (
