@@ -725,7 +725,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                Turn Your <span className="text-blue-600">Skills</span> Into Income
+                Turn Your <span className="text-[#2f5a4e]">Skills</span> Into Income
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Join our thriving marketplace of educators, creators, and professionals. Share knowledge, build your brand, and earn from multiple revenue streams.
