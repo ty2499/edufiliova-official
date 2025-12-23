@@ -53,11 +53,11 @@ export const MegaMenuItem = ({ icon, title, description, onClick, badge, testId,
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-sm text-[#2f5a4e] dark:text-[#2f5a4e] group-hover:text-[#2f5a4e] transition-colors whitespace-nowrap" transition-all duration-300>
+          <h4 className="font-semibold text-sm text-[#a0fab2] dark:text-[#a0fab2] group-hover:text-[#a0fab2] transition-colors whitespace-nowrap" transition-all duration-300>
             {title}
           </h4>
           {description && (
-            <p className="text-xs text-[#2f5a4e]/70 dark:text-[#2f5a4e]/70 mt-1 line-clamp-1">
+            <p className="text-xs text-white dark:text-white mt-1 line-clamp-1">
               {description}
             </p>
           )}
@@ -121,14 +121,14 @@ export const MegaMenuHighlight = ({ image, title, description, buttonText, onCli
           <img src={image} alt={title} className="w-full h-full object-cover" />
         </div>
       )}
-      <h3 className="text-lg font-bold text-white dark:text-white mb-2">{title}</h3>
-      <p className="text-sm text-white/80 dark:text-white/80 mb-4 flex-1">{description}</p>
+      <h3 className="text-lg font-bold text-[#a0fab2] dark:text-[#a0fab2] mb-2">{title}</h3>
+      <p className="text-sm text-white dark:text-white mb-4 flex-1">{description}</p>
       {stats && stats.length > 0 && (
         <div className="grid grid-cols-2 gap-3 mb-4">
           {stats.map((stat, index) => (
             <div key={index} className="text-center p-2 bg-white/10 dark:bg-white/10 rounded-lg">
               <div className="text-lg font-bold text-white">{stat.value}</div>
-              <div className="text-xs text-white/70 dark:text-white/70">{stat.label}</div>
+              <div className="text-xs text-white dark:text-white">{stat.label}</div>
             </div>
           ))}
         </div>
