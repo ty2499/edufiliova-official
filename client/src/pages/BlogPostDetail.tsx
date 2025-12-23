@@ -269,7 +269,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
                   data-testid="share-bottom-facebook"
                   className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600"
                 >
-                  <Facebook className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                  <Facebook className="h-4 w-4 text-[#2f5a4e] flex-shrink-0" />
                 </Button>
                 <Button
                   variant="outline"
@@ -278,7 +278,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
                   data-testid="share-bottom-twitter"
                   className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600"
                 >
-                  <Twitter className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                  <Twitter className="h-4 w-4 text-[#2f5a4e] flex-shrink-0" />
                 </Button>
                 <Button
                   variant="outline"
@@ -287,7 +287,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
                   data-testid="share-bottom-linkedin"
                   className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600"
                 >
-                  <Linkedin className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                  <Linkedin className="h-4 w-4 text-[#2f5a4e] flex-shrink-0" />
                 </Button>
                 <Button
                   variant="outline"
@@ -296,7 +296,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
                   data-testid="share-bottom-copy"
                   className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600"
                 >
-                  <LinkIcon className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                  <LinkIcon className="h-4 w-4 text-[#2f5a4e] flex-shrink-0" />
                 </Button>
               </div>
             </div>
