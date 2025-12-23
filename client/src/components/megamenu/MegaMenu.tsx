@@ -53,11 +53,11 @@ export const MegaMenuItem = ({ icon, title, description, onClick, badge, testId,
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-sm text-white dark:text-white group-hover:text-white transition-colors whitespace-nowrap" transition-all duration-300>
+          <h4 className="font-semibold text-sm text-[#2f5a4e] dark:text-[#2f5a4e] group-hover:text-[#2f5a4e] transition-colors whitespace-nowrap" transition-all duration-300>
             {title}
           </h4>
           {description && (
-            <p className="text-xs text-white/70 dark:text-white/70 mt-1 line-clamp-1">
+            <p className="text-xs text-[#2f5a4e]/70 dark:text-[#2f5a4e]/70 mt-1 line-clamp-1">
               {description}
             </p>
           )}
