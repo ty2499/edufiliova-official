@@ -280,7 +280,7 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
                 <Button
                   size="lg"
                   onClick={() => onNavigate(currentContent.ctaAction)}
-                  className={`font-semibold px-8 py-6 text-lg rounded-full group ${currentContent.color === '#A0FAB2' ? 'text-black' : 'text-white'}`}
+                  className="inline-flex items-center justify-center whitespace-nowrap transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer bg-accent hover:bg-accent/80 hover:scale-105 active:scale-95 focus-visible:ring-accent h-13 sm:px-8 font-semibold px-8 py-6 text-lg rounded-full group text-white pt-[15px] pb-[15px]"
                   style={{ 
                     backgroundColor: currentContent.color
                   }}
