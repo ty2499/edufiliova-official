@@ -962,6 +962,11 @@ All colors MUST be HSL.
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
+  /* Voucher purchase Switch styling - use mint green when checked */
+  [role="switch"][data-state="checked"] {
+    background-color: #a0fab2 !important;
+  }
+
   /* Remove focus outline and selection box from all elements */
   * {
     outline: none !important;
