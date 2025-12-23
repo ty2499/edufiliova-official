@@ -7,6 +7,7 @@ import { CheckmarkIcon } from "@/components/ui/checkmark-icon";
 import { useAuth } from '@/hooks/useAuth';
 import Logo from '@/components/Logo';
 import { useState } from 'react';
+import { useLocation } from 'wouter';
 
 interface TeacherDashboardPendingProps {
   onNavigate?: (page: string, transition?: string) => void;
@@ -14,44 +15,12 @@ interface TeacherDashboardPendingProps {
 
 export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingProps) {
   const { teacherApplicationStatus, logout } = useAuth();
-  const [isResubmitting, setIsResubmitting] = useState(false);
+  const [, navigate] = useLocation();
   const [resubmitError, setResubmitError] = useState("");
 
-  const handleResubmit = async () => {
-    if (!teacherApplicationStatus?.id) {
-      setResubmitError("Application ID not found");
-      return;
-    }
-    setIsResubmitting(true);
-    setResubmitError("");
-    try {
-      const response = await fetch(`/api/teacher-applications/${teacherApplicationStatus.id}/resubmit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        setResubmitError(errorData.error || "Failed to resubmit application");
-      } else {
-        const data = await response.json();
-        if (data.success) {
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
-        } else {
-          setResubmitError("Failed to resubmit application");
-        }
-      }
-    } catch (error) {
-      console.error("Resubmit error:", error);
-      setResubmitError("An error occurred while resubmitting");
-    } finally {
-      setIsResubmitting(false);
-    }
+  const handleEditAndResubmit = () => {
+    // Navigate to teacher application form page to edit and resubmit
+    onNavigate?.('teacher-application', 'slide');
   };
 
   const getStatusInfo = () => {
@@ -158,13 +127,12 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                   </div>
                 )}
                 <Button
-                  onClick={handleResubmit}
-                  disabled={isResubmitting}
+                  onClick={handleEditAndResubmit}
                   style={{ backgroundColor: '#2f5a4e' }}
                   className="hover:opacity-90 text-white"
                 >
                   <RefreshCw className="w-4 h-4 mr-2" />
-                  {isResubmitting ? "Resubmitting..." : "Resubmit Application"}
+                  Edit & Resubmit Application
                 </Button>
               </CardContent>
             </Card>
