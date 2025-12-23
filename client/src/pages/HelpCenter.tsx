@@ -977,7 +977,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                         <category.icon className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                       </div>
                       {category.title}
-                      <Badge className="bg-primary text-white">{faqs.length} {faqs.length === 1 ? 'question' : 'questions'}</Badge>
+                      <Badge style={{ backgroundColor: '#2f5a4e', color: '#ffffff' }}>{faqs.length} {faqs.length === 1 ? 'question' : 'questions'}</Badge>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -1352,7 +1352,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <Button 
                   size="lg" 
                   onClick={() => onNavigate("contact")}
-                  className="bg-primary text-[#ffffff]"
+                  style={{ backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' }}
                   data-testid="button-contact-support"
                 >
                   <MessageCircle className="h-5 w-5 mr-2" style={{color: "#ffffff"}} />
@@ -1364,7 +1364,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   onClick={() => window.open("mailto:support@edufiliova.com", "_blank")}
                   data-testid="button-email-support"
                 >
-                  <Mail className="h-5 w-5 mr-2" style={{ color: '#2f5a4e' }} />
+                  <Mail className="h-5 w-5 mr-2" style={{ color: '#ffffff' }} />
                   Email Us
                 </Button>
               </div>
