@@ -1032,8 +1032,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                     }`}
                     data-testid="button-payment-wallet"
                   >
-                    <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                      <Wallet className="w-5 h-5 text-green-600" />
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#a0fab2' }}>
+                      <Wallet className="w-5 h-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1 text-left">
                       <p className="font-medium">Wallet Balance</p>
@@ -1056,8 +1056,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                     }`}
                     data-testid="button-payment-card"
                   >
-                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
-                      <CreditCard className="w-5 h-5 text-blue-600" />
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#a0fab2' }}>
+                      <CreditCard className="w-5 h-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1 text-left">
                       <p className="font-medium">Credit/Debit Card</p>
@@ -1080,8 +1080,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                     }`}
                     data-testid="button-payment-paypal"
                   >
-                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
-                      <SiPaypal className="w-5 h-5 text-blue-600" />
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#a0fab2' }}>
+                      <SiPaypal className="w-5 h-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1 text-left">
                       <p className="font-medium">PayPal</p>
@@ -1104,8 +1104,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                     }`}
                     data-testid="button-payment-paystack"
                   >
-                    <div className="w-10 h-10 bg-teal-100 dark:bg-teal-900/30 rounded-full flex items-center justify-center">
-                      <DollarSign className="w-5 h-5 text-teal-600" />
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#a0fab2' }}>
+                      <DollarSign className="w-5 h-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1 text-left">
                       <p className="font-medium">Paystack</p>
@@ -1128,8 +1128,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                     }`}
                     data-testid="button-payment-dodopay"
                   >
-                    <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center">
-                      <CreditCard className="w-5 h-5 text-indigo-600" />
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#a0fab2' }}>
+                      <CreditCard className="w-5 h-5" style={{ color: '#2f5a4e' }} />
                     </div>
                     <div className="flex-1 text-left">
                       <p className="font-medium">Card Payment</p>
