@@ -844,7 +844,7 @@ function ReferralSection() {
           />
           <Button
             onClick={handleCopy}
-            className="bg-primary hover:bg-primary text-white" transition-all duration-300
+            className="bg-[#a0fab2] text-black" transition-all duration-300
             data-testid="button-copy-referral"
           >
             {copied ? (
