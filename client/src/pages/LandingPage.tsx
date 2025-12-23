@@ -379,7 +379,6 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       title: "Client Reviews",
       description: "Build credibility with client ratings and reviews. Get verification badges for quality work.",
       color: "bg-pink-50 dark:bg-pink-950",
-      bgColor: "#545454",
       iconColor: "text-gray-900"
     },
     {
