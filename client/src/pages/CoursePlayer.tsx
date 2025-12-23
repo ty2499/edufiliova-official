@@ -801,7 +801,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                             isExpanded ? 'text-white' : 'text-muted-foreground'
                           } ${isExpanded ? 'rotate-90' : ''}`} />
                           <BookOpen className={`h-4 w-4 flex-shrink-0 ${
-                            isExpanded ? 'text-white' : 'text-blue-600'
+                            isExpanded ? 'text-white' : 'text-[#a0fab2]'
                           }`} />
                         </div>
                         <div className="flex-1 min-w-0 space-y-1">
