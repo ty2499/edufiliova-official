@@ -823,16 +823,16 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
           <h2 className="text-3xl font-bold text-center mb-12">Get Help Fast</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Intro Card */}
-            <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+            <Card style={{ backgroundColor: '#2f5a4e', color: '#ffffff', border: '2px solid #2f5a4e' }}>
               <CardHeader className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                  <Headphones className="h-8 w-8" style={{ color: '#2f5a4e' }} />
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}>
+                  <Headphones className="h-8 w-8" style={{ color: '#ffffff' }} />
                 </div>
-                <CardTitle className="text-lg">We're Here to Help</CardTitle>
-                <CardDescription>Multiple ways to reach our support team</CardDescription>
+                <CardTitle className="text-lg" style={{ color: '#ffffff' }}>We're Here to Help</CardTitle>
+                <CardDescription style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Multiple ways to reach our support team</CardDescription>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
                   Choose the best contact method for you. We're available 24/7 to assist with any questions.
                 </p>
               </CardContent>
@@ -963,7 +963,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   <p className="text-muted-foreground mb-6">
                     Try different keywords or browse by category
                   </p>
-                  <Button onClick={() => setSearchQuery("")} data-testid="button-clear-search-no-results">
+                  <Button style={{ backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' }} onClick={() => setSearchQuery("")} data-testid="button-clear-search-no-results">
                     Clear Search
                   </Button>
                 </CardContent>
