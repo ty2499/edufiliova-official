@@ -2451,7 +2451,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-1">
                                 <p className="font-semibold text-gray-900 truncate">{contact.name || contact.email}</p>
-                                <div className="w-3 h-3 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                                <div className="w-3 h-3 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#3747D6' }}>
                                   <svg viewBox="0 0 24 24" className="w-2 h-2 fill-white">
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                                   </svg>
@@ -2542,7 +2542,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                       {selectedGroup ? selectedGroup.name : (selectedUser?.name || selectedUser?.email)}
                     </h3>
                     {selectedUser?.role === 'admin' && (
-                      <div className="w-3 h-3 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-3 h-3 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#3747D6' }}>
                         <svg viewBox="0 0 24 24" className="w-2 h-2 fill-white">
                           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                         </svg>
