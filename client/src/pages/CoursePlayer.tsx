@@ -837,7 +837,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                                 selectedLesson === lesson.id 
                                   ? 'bg-[#0C332C] text-white shadow-md' 
                                   : accessible 
-                                    ? 'hover:bg-accent/50' 
+                                    ? 'hover:bg-[#a0fab2]/20' 
                                     : 'opacity-60 cursor-not-allowed'
                               }`}
                               onClick={() => {
