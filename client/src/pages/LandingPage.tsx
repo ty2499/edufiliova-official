@@ -630,10 +630,10 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                     <CardTitle className="text-[14px] font-bold">{feature.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0 pb-4">
-                    <CardDescription className="text-center text-muted-foreground text-sm leading-relaxed lg:hidden">
+                    <CardDescription className="text-center text-sm leading-relaxed lg:hidden" style={{ color: '#545454' }}>
                       {feature.shortDescription}
                     </CardDescription>
-                    <CardDescription className="text-center text-muted-foreground text-sm leading-relaxed hidden lg:block">
+                    <CardDescription className="text-center text-sm leading-relaxed hidden lg:block" style={{ color: '#545454' }}>
                       {feature.description}
                     </CardDescription>
                   </CardContent>
