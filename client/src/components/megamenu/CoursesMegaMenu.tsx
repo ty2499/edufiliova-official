@@ -93,7 +93,7 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
   return (
     <MegaMenu isOpen={isOpen}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        <MegaMenuSection title="Explore Learning" icon={<BookOpen className="h-4 w-4 text-[#ff5833]" />}>
+        <MegaMenuSection title="Explore Learning" icon={<BookOpen className="h-4 w-4 text-[#0C332C]" />}>
           {exploreLearning.map((item: any, index) => (
             <MegaMenuItem
               key={index}
@@ -108,7 +108,7 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
           ))}
         </MegaMenuSection>
 
-        <MegaMenuSection title="Certificates" icon={<Award className="h-4 w-4 text-[#ff5833]" />}>
+        <MegaMenuSection title="Certificates" icon={<Award className="h-4 w-4 text-[#0C332C]" />}>
           {certificates.filter((item: any) => {
             if (item.page === 'claim-certificate' && claimableCertificatesCount === 0) {
               return false;
@@ -128,7 +128,7 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
           ))}
         </MegaMenuSection>
 
-        <MegaMenuSection title="Create Learning" icon={<FilePlus className="h-4 w-4 text-[#ff5833]" />}>
+        <MegaMenuSection title="Create Learning" icon={<FilePlus className="h-4 w-4 text-[#0C332C]" />}>
           {createLearning.map((item: any, index) => (
             <MegaMenuItem
               key={index}

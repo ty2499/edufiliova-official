@@ -47,7 +47,7 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
     <MegaMenu isOpen={isOpen}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         {showJoinAsTeacher && (
-          <MegaMenuSection title="Join as Teacher" icon={<UserPlus className="h-4 w-4 text-[#ff5833]" />}>
+          <MegaMenuSection title="Join as Teacher" icon={<UserPlus className="h-4 w-4 text-[#0C332C]" />}>
             {joinAsTeacher.map((item, index) => (
               <MegaMenuItem
                 key={index}
@@ -64,7 +64,7 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
 
         {/* Application Status - For Unapproved Teachers */}
         {showApplicationStatus && applicationStatusItems.length > 0 && (
-          <MegaMenuSection title="Status" icon={<ClipboardCheck className="h-4 w-4 text-[#ff5833]" />}>
+          <MegaMenuSection title="Status" icon={<ClipboardCheck className="h-4 w-4 text-[#0C332C]" />}>
             {applicationStatusItems.map((item, index) => (
               <MegaMenuItem
                 key={index}
@@ -81,7 +81,7 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
 
         {/* Create Courses - For Approved Teachers */}
         {showApprovedManagement && filteredCreateCourses.length > 0 && (
-          <MegaMenuSection title="Create Courses" icon={<FilePlus className="h-4 w-4 text-[#ff5833]" />}>
+          <MegaMenuSection title="Create Courses" icon={<FilePlus className="h-4 w-4 text-[#0C332C]" />}>
             {filteredCreateCourses.map((item, index) => (
               <MegaMenuItem
                 key={index}
@@ -98,7 +98,7 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
 
         {/* Management - For Approved Teachers */}
         {showApprovedManagement && approvedManagementItems.length > 0 && (
-          <MegaMenuSection title="Dashboard" icon={<Video className="h-4 w-4 text-[#ff5833]" />}>
+          <MegaMenuSection title="Dashboard" icon={<Video className="h-4 w-4 text-[#0C332C]" />}>
             {approvedManagementItems.map((item, index) => (
               <MegaMenuItem
                 key={index}

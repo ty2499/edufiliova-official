@@ -19,7 +19,7 @@ export const MobileMegaMenuSection = ({ title, children, icon, isDefaultOpen = f
         data-testid={`mobile-menu-${title.toLowerCase().replace(/\s+/g, '-')}`}
       >
         <div className="flex items-center gap-3">
-          {icon && <div style={{color: '#ff5833'}}>{icon}</div>}
+          {icon && <div style={{color: '#0C332C'}}>{icon}</div>}
           <span className="font-semibold text-sm text-gray-900 dark:text-white">{title}</span>
         </div>
         {isOpen ? (

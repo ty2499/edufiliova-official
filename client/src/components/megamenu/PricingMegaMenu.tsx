@@ -20,7 +20,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
       description: "Affordable plans for learners",
       page: "education-pricing",
       iconBg: "bg-primary/15",
-      iconColor: "text-[#ff5833]",
+      iconColor: "text-[#0C332C]",
     },
     {
       icon: <ShoppingCart className="h-6 w-6" />,
@@ -28,7 +28,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
       description: "Plans for buyers and customers",
       page: "customer-pricing",
       iconBg: "bg-primary/15",
-      iconColor: "text-[#ff5833]",
+      iconColor: "text-[#0C332C]",
     },
     {
       icon: <Briefcase className="h-6 w-6" />,
@@ -36,7 +36,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
       description: "Plans for creators and freelancers",
       page: "creator-pricing",
       iconBg: "bg-primary/15",
-      iconColor: "text-[#ff5833]",
+      iconColor: "text-[#0C332C]",
     },
   ];
 
@@ -44,7 +44,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
     <MegaMenu isOpen={isOpen}>
       <div className="w-full">
         <div className="flex items-center gap-2 mb-4 px-2">
-          <Coins className="h-4 w-4 text-[#ff5833]" />
+          <Coins className="h-4 w-4 text-[#0C332C]" />
           <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
             Choose Your Plan
           </h3>
@@ -63,7 +63,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-[#ff5833] transition-colors">
+                <h4 className="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-[#0C332C] transition-colors">
                   {item.title}
                 </h4>
                 <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">

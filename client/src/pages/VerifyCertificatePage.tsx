@@ -43,8 +43,8 @@ export default function VerifyCertificatePage() {
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex flex-col pt-20">
         <div className="container mx-auto p-6 max-w-4xl flex-1 flex items-center justify-center">
           <div className="text-center">
-            <Award className="w-12 h-12 text-[#ff5833] mx-auto mb-4" />
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff5833] mx-auto mb-4"></div>
+            <Award className="w-12 h-12 text-[#0C332C] mx-auto mb-4" />
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0C332C] mx-auto mb-4"></div>
             <p className="text-gray-600">Verifying certificate...</p>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function VerifyCertificatePage() {
         <div className="container mx-auto px-6 max-w-4xl flex-1">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-              <Award className="w-8 h-8 text-[#ff5833]" />
+              <Award className="w-8 h-8 text-[#0C332C]" />
               Verify Certificate
             </h1>
             <p className="text-gray-600">Check the authenticity of certificates issued by Edufiliova</p>
@@ -94,7 +94,7 @@ export default function VerifyCertificatePage() {
         <div className="container mx-auto px-6 max-w-4xl flex-1">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-              <Award className="w-8 h-8 text-[#ff5833]" />
+              <Award className="w-8 h-8 text-[#0C332C]" />
               Verify Certificate
             </h1>
             <p className="text-gray-600">Check the authenticity of certificates issued by Edufiliova</p>
@@ -129,7 +129,7 @@ export default function VerifyCertificatePage() {
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-            <Award className="w-8 h-8 text-[#ff5833]" />
+            <Award className="w-8 h-8 text-[#0C332C]" />
             Verify Certificate
           </h1>
           <p className="text-gray-600">Check the authenticity of certificates issued by Edufiliova</p>
@@ -149,7 +149,7 @@ export default function VerifyCertificatePage() {
         <Card className="border-gray-200 shadow-sm">
           <CardHeader>
             <div className="flex items-center gap-3">
-              <Award className="w-8 h-8 text-[#ff5833]" />
+              <Award className="w-8 h-8 text-[#0C332C]" />
               <CardTitle>Certificate Details</CardTitle>
             </div>
           </CardHeader>

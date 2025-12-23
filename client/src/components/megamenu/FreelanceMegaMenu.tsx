@@ -63,7 +63,7 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         <MegaMenuSection 
           title="Start Freelancing" 
-          icon={<Briefcase className="h-4 w-4 text-[#ff5833]" />}
+          icon={<Briefcase className="h-4 w-4 text-[#0C332C]" />}
         >
           {startFreelancing.map((item, index) => (
             <MegaMenuItem
@@ -80,7 +80,7 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
         {isCreator && (
           <MegaMenuSection 
             title="Portfolio" 
-            icon={<IdCard className="h-4 w-4 text-[#ff5833]" />}
+            icon={<IdCard className="h-4 w-4 text-[#0C332C]" />}
           >
             {portfolio.map((item, index) => (
               <MegaMenuItem
@@ -97,7 +97,7 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
 
         <MegaMenuSection 
           title="Marketplace" 
-          icon={<Users2 className="h-4 w-4 text-[#ff5833]" />}
+          icon={<Users2 className="h-4 w-4 text-[#0C332C]" />}
         >
           {marketplace.map((item, index) => (
             <MegaMenuItem

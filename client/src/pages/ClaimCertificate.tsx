@@ -165,7 +165,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-[#ff5833] text-white sticky top-0 z-10">
+      <div className="bg-[#0C332C] text-white sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-3">
             <button 
@@ -347,7 +347,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
                 onClick={handleClaimCertificate}
                 disabled={generateCertificateMutation.isPending}
                 size="lg"
-                className="bg-[#ff5833] hover:bg-[#e64a2a] text-white text-lg px-8 py-6"
+                className="bg-[#0C332C] hover:bg-[#e64a2a] text-white text-lg px-8 py-6"
                 data-testid="button-generate-certificate"
               >
                 {generateCertificateMutation.isPending ? "Generating..." : `Claim ${certificateType}`}

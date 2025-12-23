@@ -46,8 +46,8 @@ export const MegaMenuItem = ({ icon, title, description, onClick, badge, testId,
             <img src={image} alt={title} className="w-full h-full object-cover" />
           </div>
         ) : (
-          <div className={`flex-shrink-0 w-12 h-12 ${iconBg || 'bg-[#ff5833]/10'} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`} style={{backgroundColor: iconBg ? undefined : 'rgba(255, 88, 51, 0.1)'}}>
-            <div style={{color: iconColor || '#ff5833'}} className="text-lg">
+          <div className={`flex-shrink-0 w-12 h-12 ${iconBg || 'bg-[#0C332C]/10'} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`} style={{backgroundColor: iconBg ? undefined : 'rgba(12, 51, 44, 0.1)'}}>
+            <div style={{color: iconColor || '#0C332C'}} className="text-lg">
               {icon}
             </div>
           </div>
@@ -91,7 +91,7 @@ export const MegaMenuSection = ({ title, children, className = "", icon }: MegaM
     <div className={className}>
       {title && (
         <div className="flex items-center gap-2 mb-4 px-2">
-          {icon && <div style={{color: '#ff5833'}} className="text-base">{icon}</div>}
+          {icon && <div style={{color: '#0C332C'}} className="text-base">{icon}</div>}
           <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
             {title}
           </h3>
