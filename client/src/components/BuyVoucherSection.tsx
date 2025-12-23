@@ -747,7 +747,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
               {user ? (
                 onBack && (
                   <Button
-                    className="flex-1 bg-primary text-[#ffffff]"
+                    className="flex-1 text-white"
+                    style={{ backgroundColor: '#a0fab2', color: '#2f5a4e' }}
                     onClick={onBack}
                     data-testid="button-back-to-dashboard"
                   >
@@ -756,7 +757,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                 )
               ) : (
                 <Button
-                  className="flex-1 bg-primary text-[#ffffff]"
+                  className="flex-1 text-white"
+                  style={{ backgroundColor: '#a0fab2', color: '#2f5a4e' }}
                   onClick={() => setLocation('/auth')}
                   data-testid="button-sign-in"
                 >
