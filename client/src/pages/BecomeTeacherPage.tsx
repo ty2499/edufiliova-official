@@ -200,9 +200,6 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
               data-testid={`benefit-card-${index}`}
             >
               <CardContent className="p-4 sm:p-6 md:p-8">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-[#0C332C] flex items-center justify-center mb-4 sm:mb-5 md:mb-6 transition-transform duration-300" transition-all duration-300>
-                  <benefit.icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-white" />
-                </div>
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
                   {benefit.title}
                 </h3>
