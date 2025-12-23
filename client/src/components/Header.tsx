@@ -497,7 +497,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <Button
                 size="sm"
                 onClick={() => onNavigate("auth")}
-                className="text-sm font-medium bg-[#0C332C] hover:bg-primary text-white rounded-full px-8 pl-[52px] pr-[52px]" transition-all duration-300
+                className="text-sm font-medium hover:bg-primary rounded-full px-8 pl-[52px] pr-[52px] bg-[#a0fab2] text-[#2f5a4e]" transition-all duration-300
                 data-testid="button-signin"
               >
                 Sign In
