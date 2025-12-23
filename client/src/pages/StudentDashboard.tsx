@@ -311,7 +311,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                     <Button
                       onClick={handleQuizSubmit}
                       disabled={Object.keys(selectedAnswers).length !== exercises.length}
-                      className="hover:bg-green-700 bg-[#f44e3c] text-[#ffffff] w-full sm:w-auto text-xs sm:text-sm" transition-all duration-300
+                      className="hover:bg-[#1f4038] bg-[#2f5a4e] text-white w-full sm:w-auto text-xs sm:text-sm" transition-all duration-300
                       size="sm"
                     >
                       Submit Quiz
@@ -631,7 +631,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
             <Button
               onClick={() => setShowQuiz(true)}
               size="lg"
-              className="hover:bg-primary/80 hover:scale-105 bg-[#f44e3c] text-[#ffffff]" transition-all duration-300
+              className="hover:bg-[#1f4038] hover:scale-105 bg-[#2f5a4e] text-white" transition-all duration-300
               data-testid="take-quiz-button"
             >
               <Trophy className="w-5 h-5 mr-2" />
