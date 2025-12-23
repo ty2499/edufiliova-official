@@ -812,8 +812,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
       </div>
 
       <div className="flex gap-2 mb-6">
-        <div className={`flex-1 h-2 rounded-full ${step === 'details' || step === 'payment' ? 'bg-primary' : 'bg-gray-200'}`} />
-        <div className={`flex-1 h-2 rounded-full ${step === 'payment' ? 'bg-primary' : 'bg-gray-200'}`} />
+        <div className="flex-1 h-2 rounded-full" style={{ backgroundColor: step === 'details' || step === 'payment' ? '#2f5a4e' : '#e5e7eb' }} />
+        <div className="flex-1 h-2 rounded-full" style={{ backgroundColor: step === 'payment' ? '#2f5a4e' : '#e5e7eb' }} />
       </div>
 
       {step === 'details' && (
