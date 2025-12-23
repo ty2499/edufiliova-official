@@ -485,26 +485,38 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
             {/* Tabs */}
             <div className="flex space-x-1 mb-4 md:mb-6 p-1 bg-muted rounded-lg w-full md:w-fit overflow-x-auto">
               <Button
-                variant="ghost"
                 onClick={() => setActiveTab('overview')}
                 data-testid="tab-overview"
-                className={`text-xs md:text-sm whitespace-nowrap flex-1 md:flex-none ${activeTab === 'overview' ? 'bg-[#2f5a4e] text-[#ffffff]' : 'hover:bg-[#a0fab2] hover:text-black text-foreground'}`}
+                className="text-xs md:text-sm whitespace-nowrap flex-1 md:flex-none"
+                style={{
+                  backgroundColor: activeTab === 'overview' ? '#2f5a4e' : 'transparent',
+                  color: activeTab === 'overview' ? '#ffffff' : '#000000',
+                  border: 'none',
+                }}
               >
                 Overview
               </Button>
               <Button
-                variant="ghost"
                 onClick={() => setActiveTab('content')}
                 data-testid="tab-content"
-                className={`text-xs md:text-sm whitespace-nowrap flex-1 md:flex-none ${activeTab === 'content' ? 'bg-[#2f5a4e] text-[#ffffff]' : 'hover:bg-[#a0fab2] hover:text-black text-foreground'}`}
+                className="text-xs md:text-sm whitespace-nowrap flex-1 md:flex-none"
+                style={{
+                  backgroundColor: activeTab === 'content' ? '#2f5a4e' : 'transparent',
+                  color: activeTab === 'content' ? '#ffffff' : '#000000',
+                  border: 'none',
+                }}
               >
                 Course Content
               </Button>
               <Button
-                variant="ghost"
                 onClick={() => setActiveTab('reviews')}
                 data-testid="tab-reviews"
-                className={`text-xs md:text-sm whitespace-nowrap flex-1 md:flex-none ${activeTab === 'reviews' ? 'bg-[#2f5a4e] text-[#ffffff]' : 'hover:bg-[#a0fab2] hover:text-black text-foreground'}`}
+                className="text-xs md:text-sm whitespace-nowrap flex-1 md:flex-none"
+                style={{
+                  backgroundColor: activeTab === 'reviews' ? '#2f5a4e' : 'transparent',
+                  color: activeTab === 'reviews' ? '#ffffff' : '#000000',
+                  border: 'none',
+                }}
               >
                 Reviews
               </Button>
