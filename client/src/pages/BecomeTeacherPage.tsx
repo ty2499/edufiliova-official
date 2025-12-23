@@ -305,17 +305,17 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
             <Button
               onClick={() => onNavigate("teacher-signup-basic")}
               size="lg"
-              className="bg-white text-foreground text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold transition-all duration-300 group w-full sm:w-auto" transition-all duration-300
+              className="bg-white text-foreground hover:bg-white text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold group w-full sm:w-auto"
               data-testid="button-apply-now"
             >
               Apply Now
-              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 transition-transform" transition-all duration-300 />
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
             <Button
               onClick={() => onNavigate("help")}
               size="lg"
               variant="outline"
-              className="bg-white/10 backdrop-blur-md text-white border-2 border-white/50 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold transition-all duration-300 w-full sm:w-auto" transition-all duration-300
+              className="bg-white/10 backdrop-blur-md text-white border-2 border-white/50 hover:bg-white/10 hover:border-white/50 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold w-full sm:w-auto"
               data-testid="button-help-center"
             >
               <BookOpen className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
