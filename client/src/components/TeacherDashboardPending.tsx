@@ -136,8 +136,8 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                   {/* Step 1: Submitted */}
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className="rounded-full bg-blue-500 p-1">
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" />
+                      <div className="rounded-full p-1" style={{ backgroundColor: '#a0fab2' }}>
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
                       <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1" />
                     </div>
@@ -159,12 +159,12 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                   {/* Step 2: Under Review */}
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className={`rounded-full p-1 ${
-                        teacherApplicationStatus?.status === 'under_review' || teacherApplicationStatus?.status === 'approved' || teacherApplicationStatus?.status === 'rejected'
-                          ? 'bg-green-500'
-                          : 'bg-gray-300 dark:bg-gray-600'
-                      }`}>
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" />
+                      <div className="rounded-full p-1" style={{
+                        backgroundColor: teacherApplicationStatus?.status === 'under_review' || teacherApplicationStatus?.status === 'approved' || teacherApplicationStatus?.status === 'rejected'
+                          ? '#a0fab2'
+                          : '#d1d5db'
+                      }}>
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
                       <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1" />
                     </div>
@@ -188,14 +188,14 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                   {/* Step 3: Decision */}
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className={`rounded-full p-1 ${
-                        teacherApplicationStatus?.status === 'approved'
-                          ? 'bg-green-500'
+                      <div className="rounded-full p-1" style={{
+                        backgroundColor: teacherApplicationStatus?.status === 'approved'
+                          ? '#a0fab2'
                           : teacherApplicationStatus?.status === 'rejected'
-                          ? 'bg-primary'
-                          : 'bg-gray-300 dark:bg-gray-600'
-                      }`}>
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" />
+                          ? '#a0fab2'
+                          : '#d1d5db'
+                      }}>
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
                     </div>
                     <div>

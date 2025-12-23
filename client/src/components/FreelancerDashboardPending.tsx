@@ -136,8 +136,8 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
                   {/* Step 1: Submitted */}
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className="rounded-full bg-blue-500 p-1">
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" />
+                      <div className="rounded-full p-1" style={{ backgroundColor: '#a0fab2' }}>
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
                       <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1" />
                     </div>
@@ -159,12 +159,12 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
                   {/* Step 2: Under Review */}
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className={`rounded-full p-1 ${
-                        freelancerApplicationStatus?.status === 'under_review' || freelancerApplicationStatus?.status === 'approved' || freelancerApplicationStatus?.status === 'rejected'
-                          ? 'bg-green-500'
-                          : 'bg-gray-300 dark:bg-gray-600'
-                      }`}>
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" />
+                      <div className="rounded-full p-1" style={{
+                        backgroundColor: freelancerApplicationStatus?.status === 'under_review' || freelancerApplicationStatus?.status === 'approved' || freelancerApplicationStatus?.status === 'rejected'
+                          ? '#a0fab2'
+                          : '#d1d5db'
+                      }}>
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
                       <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1" />
                     </div>
@@ -188,14 +188,14 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
                   {/* Step 3: Decision */}
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <div className={`rounded-full p-1 ${
-                        freelancerApplicationStatus?.status === 'approved'
-                          ? 'bg-green-500'
+                      <div className="rounded-full p-1" style={{
+                        backgroundColor: freelancerApplicationStatus?.status === 'approved'
+                          ? '#a0fab2'
                           : freelancerApplicationStatus?.status === 'rejected'
-                          ? 'bg-primary'
-                          : 'bg-gray-300 dark:bg-gray-600'
-                      }`}>
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" />
+                          ? '#a0fab2'
+                          : '#d1d5db'
+                      }}>
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
                     </div>
                     <div>
