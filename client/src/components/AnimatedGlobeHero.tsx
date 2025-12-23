@@ -227,7 +227,7 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight">
                 EduFiliova
               </h1>
-              <p className="text-lg mb-8 text-[#ffffff]" style={{color: "#0C332C"}}>
+              <p className="text-lg mb-8 text-[#ffffff]" style={{color: "#A0FAB2"}}>
                 Learn. Teach. Create. Earn. All in one place.
               </p>
             </div>
