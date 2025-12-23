@@ -346,22 +346,26 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
               <Search className="h-4 w-4 mr-2" />
               Browse Courses
             </Button>
-            <Button
-              onClick={() => setActiveTab('enrolled')}
-              data-testid="tab-enrolled"
-              className={`whitespace-nowrap ${activeTab === 'enrolled' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white' : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-800'}`}
-            >
-              <BookOpen className="h-4 w-4 mr-2" />
-              My Courses
-            </Button>
-            <Button
-              onClick={() => setActiveTab('certificates')}
-              data-testid="tab-certificates"
-              className={`whitespace-nowrap ${activeTab === 'certificates' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white' : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-800'}`}
-            >
-              <Award className="h-4 w-4 mr-2" />
-              Certificates
-            </Button>
+            {isAuthenticated && (
+              <Button
+                onClick={() => setActiveTab('enrolled')}
+                data-testid="tab-enrolled"
+                className={`whitespace-nowrap ${activeTab === 'enrolled' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white' : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-800'}`}
+              >
+                <BookOpen className="h-4 w-4 mr-2" />
+                My Courses
+              </Button>
+            )}
+            {isAuthenticated && (
+              <Button
+                onClick={() => setActiveTab('certificates')}
+                data-testid="tab-certificates"
+                className={`whitespace-nowrap ${activeTab === 'certificates' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white' : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-800'}`}
+              >
+                <Award className="h-4 w-4 mr-2" />
+                Certificates
+              </Button>
+            )}
           </div>
         </div>
 
