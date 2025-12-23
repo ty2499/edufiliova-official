@@ -194,7 +194,7 @@ const AboutPage = ({ onNavigate }: AboutPageProps) => {
               <div className="flex flex-wrap justify-center gap-4">
                 <Button 
                   onClick={() => onNavigate("course-browse")}
-                  className="bg-white text-foreground hover:bg-gray-100 font-semibold px-8 py-3 rounded-full"
+                  className="bg-white text-foreground hover:bg-gray-100 font-semibold px-8 py-3 rounded-full" transition-all duration-300
                   data-testid="button-browse-courses"
                 >
                   Browse Courses
@@ -202,7 +202,7 @@ const AboutPage = ({ onNavigate }: AboutPageProps) => {
                 <Button 
                   onClick={() => onNavigate("contact")}
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-3 rounded-full"
+                  className="border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-3 rounded-full" transition-all duration-300
                   data-testid="button-contact"
                 >
                   Contact Us

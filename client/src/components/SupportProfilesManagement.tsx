@@ -321,7 +321,7 @@ export default function SupportProfilesManagement() {
                             />
                             <label
                               htmlFor="avatar-upload"
-                              className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-input bg-background hover:bg-accent hover:text-foreground-foreground cursor-pointer rounded-md text-sm transition-colors"
+                              className="flex items-center justify-center gap-2 w-full px-4 py-2 border border-input bg-background hover:bg-accent hover:text-foreground-foreground cursor-pointer rounded-md text-sm transition-colors" transition-all duration-300
                             >
                               <Upload className="h-4 w-4" />
                               Upload Image
@@ -505,7 +505,7 @@ export default function SupportProfilesManagement() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {agents?.map((agent: SupportAgent) => (
-            <Card key={agent.id} className="hover:shadow-md transition-shadow" data-testid={`agent-card-${agent.id}`}>
+            <Card key={agent.id} className="hover:shadow-md transition-shadow" transition-all duration-300 data-testid={`agent-card-${agent.id}`}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -559,7 +559,7 @@ export default function SupportProfilesManagement() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleDelete(agent.id)}
-                    className="text-primary hover:text-primary hover:bg-primary/10"
+                    className="text-primary hover:text-primary hover:bg-primary/10" transition-all duration-300
                     data-testid={`delete-agent-${agent.id}`}
                   >
                     <Trash2 className="h-3 w-3" />

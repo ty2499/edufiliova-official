@@ -245,7 +245,7 @@ export function PortfolioMonitoringDashboard() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {portfolios.map((portfolio) => (
-            <Card key={portfolio.id} className="group hover:shadow-lg transition-shadow">
+            <Card key={portfolio.id} className="group hover:shadow-lg transition-shadow" transition-all duration-300>
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
@@ -324,7 +324,7 @@ export function PortfolioMonitoringDashboard() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 text-primary hover:text-orange-700"
+                      className="flex-1 text-primary hover:text-orange-700" transition-all duration-300
                       onClick={() => openModerationDialog(portfolio, 'suspend')}
                       data-testid={`button-suspend-${portfolio.id}`}
                     >
@@ -334,7 +334,7 @@ export function PortfolioMonitoringDashboard() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 text-primary hover:text-primary"
+                      className="flex-1 text-primary hover:text-primary" transition-all duration-300
                       onClick={() => openModerationDialog(portfolio, 'delete')}
                       data-testid={`button-delete-${portfolio.id}`}
                     >

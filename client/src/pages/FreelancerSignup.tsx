@@ -354,7 +354,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <button
         onClick={() => onNavigate?.('portfolio-gallery')}
-        className="absolute top-6 right-6 z-10 text-gray-600 hover:text-gray-900 transition-colors"
+        className="absolute top-6 right-6 z-10 text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
         data-testid="button-close"
         aria-label="Close"
       >
@@ -593,7 +593,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                           className="data-[state=checked]:bg-[#0C332C]"
                           data-testid={`service-${service.toLowerCase().replace(/\s+/g, '-')}`}
                         />
-                        <span className="text-gray-700 group-hover:text-gray-900">{service}</span>
+                        <span className="text-gray-700 group-hover:text-gray-900" transition-all duration-300>{service}</span>
                       </label>
                     ))}
                   </div>
@@ -645,7 +645,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 </Button>
                 <Button
                   onClick={handleNext}
-                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white"
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white" transition-all duration-300
                   data-testid="button-next-2"
                 >
                   Next <ChevronRight className="ml-2 w-4 h-4" />
@@ -749,7 +749,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
                     <Button
                       onClick={addPortfolioSample}
-                      className="w-full bg-[#0C332C] hover:bg-[#2448b8] text-white"
+                      className="w-full bg-[#0C332C] hover:bg-[#2448b8] text-white" transition-all duration-300
                       data-testid="button-add-sample"
                     >
                       <Upload className="w-4 h-4 mr-2" />
@@ -772,7 +772,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                               onClick={() => removePortfolioSample(index)}
                               variant="ghost"
                               size="sm"
-                              className="text-primary-600 hover:text-primary-700 hover:bg-primary/50"
+                              className="text-primary-600 hover:text-primary-700 hover:bg-primary/50" transition-all duration-300
                               data-testid={`button-remove-sample-${index}`}
                             >
                               <Trash2 className="w-4 h-4" />
@@ -812,7 +812,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 </Button>
                 <Button
                   onClick={handleNext}
-                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white"
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white" transition-all duration-300
                   data-testid="button-next-3"
                 >
                   Next <ChevronRight className="ml-2 w-4 h-4" />
@@ -833,7 +833,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   type="button"
                   variant="outline"
                   onClick={() => setTermsModalOpen(true)}
-                  className="text-[#0C332C] border-[#0C332C] hover:bg-[#0C332C] hover:text-white"
+                  className="text-[#0C332C] border-[#0C332C] hover:bg-[#0C332C] hover:text-white" transition-all duration-300
                   data-testid="button-view-terms"
                 >
                   View Freelancer Terms & Policies
@@ -848,7 +848,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     className="mt-1 data-[state=checked]:bg-[#0C332C]"
                     data-testid="checkbox-terms"
                   />
-                  <span className="text-gray-700 group-hover:text-gray-900">
+                  <span className="text-gray-700 group-hover:text-gray-900" transition-all duration-300>
                     I confirm that all work I upload is my own or I have the legal right to sell it.
                   </span>
                 </label>
@@ -866,12 +866,12 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     className="mt-1 data-[state=checked]:bg-[#0C332C]"
                     data-testid="checkbox-policy"
                   />
-                  <span className="text-gray-700 group-hover:text-gray-900">
+                  <span className="text-gray-700 group-hover:text-gray-900" transition-all duration-300>
                     I agree to EduFiliova's{' '}
                     <button
                       type="button"
                       onClick={() => setTermsModalOpen(true)}
-                      className="text-[#0C332C] underline hover:text-[#2448b8]"
+                      className="text-[#0C332C] underline hover:text-[#2448b8]" transition-all duration-300
                     >
                       Freelancer Terms, Commission Policy, and Refund Policy
                     </button>.
@@ -891,7 +891,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     className="mt-1 data-[state=checked]:bg-[#0C332C]"
                     data-testid="checkbox-review"
                   />
-                  <span className="text-gray-700 group-hover:text-gray-900">
+                  <span className="text-gray-700 group-hover:text-gray-900" transition-all duration-300>
                     I understand that EduFiliova may review, approve or reject my freelancer application.
                   </span>
                 </label>
@@ -923,7 +923,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting || portfolioSamples.length < 9}
-                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white disabled:opacity-50 disabled:cursor-not-allowed" transition-all duration-300
                   data-testid="button-submit"
                 >
                   {isSubmitting ? (

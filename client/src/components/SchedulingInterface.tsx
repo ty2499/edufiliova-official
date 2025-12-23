@@ -448,7 +448,7 @@ export const SchedulingInterface: React.FC = () => {
                                       variant="default"
                                       onClick={() => handleApproveAppointment(appointment.id)}
                                       data-testid={`approve-appointment-${appointment.id}`}
-                                      className="bg-green-600 hover:bg-green-700 text-white dark:bg-green-500 dark:hover:bg-green-600"
+                                      className="bg-green-600 hover:bg-green-700 text-white dark:bg-green-500 dark:hover:bg-green-600" transition-all duration-300
                                     >
                                       <CheckCircle2 className="h-3 w-3" />
                                       Approve
@@ -499,7 +499,7 @@ export const SchedulingInterface: React.FC = () => {
                           {appointment.meetingLink && (
                             <div className="flex items-center gap-2">
                               <Video className="h-3 w-3" />
-                              <a href={appointment.meetingLink} target="_blank" rel="noopener noreferrer" className="text-foreground hover:underline">
+                              <a href={appointment.meetingLink} target="_blank" rel="noopener noreferrer" className="text-foreground hover:underline" transition-all duration-300>
                                 Join Meeting
                               </a>
                             </div>

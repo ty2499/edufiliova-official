@@ -241,7 +241,7 @@ export default function BuyVoucherPage() {
                 <Button
                   onClick={handlePayNow}
                   disabled={whatsappCheckout.loading}
-                  className="w-full bg-gradient-to-r from-primary to-green-500 hover:from-orange-600 hover:to-green-600 text-white py-6 text-lg"
+                  className="w-full bg-gradient-to-r from-primary to-green-500 hover:from-orange-600 hover:to-green-600 text-white py-6 text-lg" transition-all duration-300
                   data-testid="button-pay-now"
                 >
                   {whatsappCheckout.loading ? (

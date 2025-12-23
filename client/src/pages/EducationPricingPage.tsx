@@ -282,7 +282,7 @@ const EducationPricingPage = ({ onNavigate }: EducationPricingPageProps) => {
                   {section.items.map((item, itemIndex) => (
                     <div
                       key={item.name}
-                      className="grid grid-cols-1 md:grid-cols-4 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors"
+                      className="grid grid-cols-1 md:grid-cols-4 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors" transition-all duration-300
                     >
                       <div className="font-medium text-gray-900 flex items-center">
                         {item.name}

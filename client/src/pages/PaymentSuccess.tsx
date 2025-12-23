@@ -255,7 +255,7 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
             <p className="text-gray-600 mb-6">{error}</p>
             <Button 
               onClick={handleContinue}
-              className="bg-[#0C332C] hover:bg-[#0C332C]/90 text-white"
+              className="bg-[#0C332C] hover:bg-[#0C332C]/90 text-white" transition-all duration-300
               data-testid="button-return-dashboard"
             >
               Return to Dashboard
@@ -426,13 +426,13 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
         <div className="text-center">
           <Button 
             onClick={handleContinue}
-            className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-[#151314] font-semibold px-8 py-6 text-base"
+            className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-[#151314] font-semibold px-8 py-6 text-base" transition-all duration-300
             data-testid="button-go-dashboard"
           >
             {paymentType === 'banner' ? 'View My Ads' : 'Go to Dashboard'}
           </Button>
           <p className="text-sm text-gray-600 mt-4">
-            Need help? <a href="/?page=contact" className="text-[#0C332C] hover:underline font-medium">Contact Support</a>
+            Need help? <a href="/?page=contact" className="text-[#0C332C] hover:underline font-medium" transition-all duration-300>Contact Support</a>
           </p>
         </div>
       </div>

@@ -410,7 +410,7 @@ export default function StudentNetworking() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {students.map((student) => (
-                  <Card key={student.id} className="hover:shadow-md transition-shadow">
+                  <Card key={student.id} className="hover:shadow-md transition-shadow" transition-all duration-300>
                     <CardContent className="p-4">
                       <div className="flex items-start space-x-4">
                         <div className="relative">
@@ -484,7 +484,7 @@ export default function StudentNetworking() {
                     <p className="text-sm text-muted-foreground mb-4">
                       Premium members can search and connect with students worldwide. Expand your network today!
                     </p>
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800" transition-all duration-300>
                       <Crown className="h-4 w-4 mr-2" />
                       Upgrade Now
                     </Button>
@@ -540,7 +540,7 @@ export default function StudentNetworking() {
                         <Button
                           size="sm"
                           onClick={() => respondToRequest(request.id, 'accept')}
-                          className="bg-green-600 hover:bg-green-700"
+                          className="bg-green-600 hover:bg-green-700" transition-all duration-300
                         >
                           <CheckmarkIcon size="sm" variant="success" className="mr-1" />
                           Accept
@@ -588,7 +588,7 @@ export default function StudentNetworking() {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {friends.map((friend) => (
-                    <Card key={friend.userId} className="hover:shadow-md transition-shadow">
+                    <Card key={friend.userId} className="hover:shadow-md transition-shadow" transition-all duration-300>
                       <CardContent className="p-4">
                         <div className="flex items-start space-x-4">
                           <div className="relative">
@@ -712,7 +712,7 @@ export default function StudentNetworking() {
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {groups.map((group) => (
-                      <Card key={group.id} className="hover:shadow-md transition-shadow">
+                      <Card key={group.id} className="hover:shadow-md transition-shadow" transition-all duration-300>
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex-1">

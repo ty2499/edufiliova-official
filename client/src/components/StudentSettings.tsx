@@ -720,7 +720,7 @@ export function StudentSettings() {
                         <Mail className="w-4 h-4 text-gray-500" />
                         <a 
                           href="mailto:erase@edufiliova.com" 
-                          className="text-sm text-blue-600 hover:underline"
+                          className="text-sm text-blue-600 hover:underline" transition-all duration-300
                           data-testid="link-delete-email"
                         >
                           erase@edufiliova.com
@@ -844,7 +844,7 @@ function ReferralSection() {
           />
           <Button
             onClick={handleCopy}
-            className="bg-primary hover:bg-primary text-white"
+            className="bg-primary hover:bg-primary text-white" transition-all duration-300
             data-testid="button-copy-referral"
           >
             {copied ? (

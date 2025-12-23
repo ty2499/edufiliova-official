@@ -128,7 +128,7 @@ export function ErrorPage({
       <div className="p-4 border-b border-border">
         <button 
           onClick={handleGoBack}
-          className="flex items-center gap-2 text-foreground hover:text-foreground transition-colors"
+          className="flex items-center gap-2 text-foreground hover:text-foreground transition-colors" transition-all duration-300
           data-testid="button-go-back"
         >
           <ArrowLeft className="w-5 h-5" />
@@ -170,7 +170,7 @@ export function ErrorPage({
             )}
             
             <Button 
-              className="w-full bg-primary hover:bg-primary/90 text-white"
+              className="w-full bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white" transition-all duration-300
               onClick={handlePrimaryAction}
               data-testid={`button-primary-action-${type}`}
             >

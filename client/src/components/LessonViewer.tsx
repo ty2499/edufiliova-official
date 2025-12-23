@@ -474,7 +474,7 @@ const LessonViewer = ({
                 </p>
                 <Button 
                   onClick={() => setShowUpgradeModal(true)}
-                  className="bg-amber-600 hover:bg-amber-700 text-white"
+                  className="bg-amber-600 hover:bg-amber-700 text-white" transition-all duration-300
                 >
                   Upgrade to Premium
                 </Button>
@@ -522,7 +522,7 @@ const LessonViewer = ({
                 <Button 
                   onClick={handleStartLesson}
                   size="lg" 
-                  className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/80 text-black"
+                  className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/80 text-black" transition-all duration-300
                   disabled={!accessData?.hasAccess && !accessData?.isPremium}
                 >
                   <Play className="w-5 h-5 mr-2" />
@@ -556,7 +556,7 @@ const LessonViewer = ({
               <div className="flex justify-center mb-6">
                 <Button 
                   onClick={handleCompleteLesson}
-                  className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/80 text-black"
+                  className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/80 text-black" transition-all duration-300
                 >
                   Mark as Complete
                 </Button>
@@ -579,7 +579,7 @@ const LessonViewer = ({
           <Button 
             onClick={handleNextLesson}
             disabled={!allLessons.length || allLessons.findIndex(l => l.id === lessonId) === allLessons.length - 1}
-            className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/80 text-black"
+            className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/80 text-black" transition-all duration-300
           >
             Next Lesson
             <ArrowRight className="w-4 h-4 ml-2" />
@@ -614,7 +614,7 @@ const LessonViewer = ({
                 Maybe Later
               </Button>
               <Button 
-                className="flex-1 bg-[#A0FAB2] hover:bg-[#A0FAB2]/80 text-black"
+                className="flex-1 bg-[#A0FAB2] hover:bg-[#A0FAB2]/80 text-black" transition-all duration-300
                 onClick={() => {
                   // TODO: Navigate to pricing page
                   setShowUpgradeModal(false);

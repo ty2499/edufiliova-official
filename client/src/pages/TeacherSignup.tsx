@@ -863,7 +863,7 @@ export default function TeacherSignup() {
                             e.preventDefault();
                             setShowTermsModal(true);
                           }}
-                          className="text-foreground underline hover:text-foreground/80"
+                          className="text-foreground underline hover:text-foreground/80" transition-all duration-300
                         >
                           Teacher Terms & Safety Policy
                         </button>.
@@ -922,7 +922,7 @@ export default function TeacherSignup() {
                   <Button
                     type="button"
                     onClick={nextStep}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-primary-foreground" transition-all duration-300
                     data-testid="button-next"
                   >
                     Next
@@ -932,7 +932,7 @@ export default function TeacherSignup() {
                   <Button
                     type="submit"
                     disabled={submitMutation.isPending}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-primary-foreground" transition-all duration-300
                     data-testid="button-submit"
                   >
                     {submitMutation.isPending ? (

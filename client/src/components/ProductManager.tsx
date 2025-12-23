@@ -149,7 +149,7 @@ const ProductCard = ({
   const isCurrentVideo = currentMedia ? isVideoUrl(currentMedia) : false;
   
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300 h-full">
+    <Card className="group hover:shadow-lg transition-all duration-300 h-full" transition-all duration-300>
       <CardContent className="p-3 sm:p-4 h-full flex flex-col">
         {/* Premium Cover & Hover Image Effect */}
         {hasHoverEffect ? (
@@ -254,7 +254,7 @@ const ProductCard = ({
         <Button
           variant="outline"
           size="sm"
-          className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
+          className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center" transition-all duration-300
           onClick={() => onEdit(product)}
           data-testid={`button-edit-${product.id}`}
         >
@@ -264,7 +264,7 @@ const ProductCard = ({
           <Button
             variant="outline"
             size="sm"
-            className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
+            className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center" transition-all duration-300
             onClick={() => {
               const mainFile = product.downloadableFiles.find(f => f.type === 'main');
               if (mainFile) {
@@ -286,7 +286,7 @@ const ProductCard = ({
         <Button
           variant="outline"
           size="sm"
-          className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
+          className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center" transition-all duration-300
           onClick={() => onDelete(product.id)}
           disabled={deleteLoading}
           data-testid={`button-delete-${product.id}`}
@@ -537,7 +537,7 @@ export const ProductForm = ({
             <button 
               type="button"
               onClick={() => setNotification(null)}
-              className="text-sm hover:opacity-70"
+              className="text-sm hover:opacity-70" transition-all duration-300
             >
               ✕
             </button>
@@ -840,7 +840,7 @@ export const ProductForm = ({
                       type="button"
                       variant="destructive"
                       size="sm"
-                      className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300
                       onClick={() => setFormData({
                         ...formData,
                         images: formData.images.filter((_, i) => i !== index)
@@ -1192,7 +1192,7 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
               setCurrentView('list');
             }}
             data-testid="button-back-to-list"
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
           >
             <ArrowLeft className="h-6 w-6 text-gray-700" />
           </button>
@@ -1231,7 +1231,7 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
               setCurrentView('list');
             }}
             data-testid="button-back-to-list"
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
           >
             <ArrowLeft className="h-6 w-6 text-gray-700" />
           </button>

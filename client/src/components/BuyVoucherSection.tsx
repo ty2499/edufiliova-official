@@ -972,7 +972,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                 <span className="text-2xl font-bold">${effectiveAmount?.toFixed(2) || '0.00'}</span>
               </div>
               <Button
-                className="w-full h-12 text-lg bg-primary hover:bg-primary/90 text-white"
+                className="w-full h-12 text-lg bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white" transition-all duration-300
                 onClick={handleProceedToPayment}
                 disabled={processing || !effectiveAmount || gatewaysLoading}
                 data-testid="button-voucher-proceed-payment"
@@ -1176,7 +1176,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             )}
 
             <Button
-              className="w-full h-12 text-lg hover:bg-green-700 text-white bg-[#0C332C]"
+              className="w-full h-12 text-lg hover:bg-green-700 text-white bg-[#0C332C]" transition-all duration-300
               onClick={handlePayment}
               disabled={processing || !selectedPaymentMethod || (selectedPaymentMethod === 'card' && !stripe)}
               data-testid="button-voucher-complete-payment"

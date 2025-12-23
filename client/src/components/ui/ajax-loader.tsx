@@ -151,7 +151,7 @@ export const AjaxButton: React.FC<AjaxButtonProps> = ({
       case 'secondary':
         return cn(base, 'bg-secondary text-secondary-foreground hover:bg-secondary/80 disabled:bg-secondary/50');
       default:
-        return cn(base, 'bg-primary text-primary-foreground hover:bg-primary/90 disabled:bg-primary/50');
+        return cn(base, 'bg-primary text-primary-foreground hover:bg-primary/80 hover:shadow-xl hover:scale-105 disabled:bg-primary/50');
     }
   };
 

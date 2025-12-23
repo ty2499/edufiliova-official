@@ -195,7 +195,7 @@ const RefundPolicyPage = ({ onNavigate }: RefundPolicyPageProps) => {
             {sections.map((section, index) => (
               <div 
                 key={section.id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 animate-fade-in"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 animate-fade-in" transition-all duration-300
                 style={{ animationDelay: `${index * 50}ms` }}
                 data-testid={`section-${section.id}`}
               >
@@ -247,7 +247,7 @@ const RefundPolicyPage = ({ onNavigate }: RefundPolicyPageProps) => {
                 <span className="font-semibold text-sm md:text-base">Email:</span>
                 <a 
                   href="mailto:support@edufiliova.com" 
-                  className="text-primary-foreground/90 hover:text-primary-foreground underline text-sm md:text-base transition-colors"
+                  className="text-primary-foreground/90 hover:text-primary-foreground underline text-sm md:text-base transition-colors" transition-all duration-300
                   data-testid="link-support-email"
                 >
                   support@edufiliova.com
@@ -259,7 +259,7 @@ const RefundPolicyPage = ({ onNavigate }: RefundPolicyPageProps) => {
                   href="https://www.edufiliova.com" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary-foreground/90 hover:text-primary-foreground underline text-sm md:text-base transition-colors"
+                  className="text-primary-foreground/90 hover:text-primary-foreground underline text-sm md:text-base transition-colors" transition-all duration-300
                   data-testid="link-website"
                 >
                   www.edufiliova.com

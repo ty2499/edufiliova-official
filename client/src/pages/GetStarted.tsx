@@ -224,12 +224,12 @@ export default function GetStarted({ onComplete }: GetStartedProps) {
           <Button
             onClick={handleGetStarted}
             size="lg"
-            className="group relative bg-gradient-to-r from-primary to-red-500 hover:from-orange-600 hover:to-primary text-white font-semibold px-16 py-4 rounded-full text-base shadow-2xl shadow-orange-500/30 hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105"
+            className="group relative bg-gradient-to-r from-primary to-red-500 hover:from-orange-600 hover:to-primary text-white font-semibold px-16 py-4 rounded-full text-base shadow-2xl shadow-orange-500/30 hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105" transition-all duration-300
             data-testid="button-get-started"
           >
             <span className="flex items-center gap-2">
               Get Started
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" transition-all duration-300 />
             </span>
           </Button>
 
@@ -238,7 +238,7 @@ export default function GetStarted({ onComplete }: GetStartedProps) {
               onClick={() => navigateOrOpenExternal('/')}
               size="lg"
               variant="outline"
-              className="bg-white/10 backdrop-blur-sm border-white/30 hover:bg-white/20 text-white font-semibold px-12 py-4 rounded-full text-base hover:scale-105 transition-all duration-300"
+              className="bg-white/10 backdrop-blur-sm border-white/30 hover:bg-white/20 text-white font-semibold px-12 py-4 rounded-full text-base hover:scale-105 transition-all duration-300" transition-all duration-300
               data-testid="button-explore-website"
             >
               <span className="flex items-center gap-2">

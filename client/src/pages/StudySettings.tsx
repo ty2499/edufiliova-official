@@ -637,10 +637,10 @@ const StudySettings = ({ onBack }: StudySettingsProps) => {
 
           {/* Save Button */}
           <div className="flex gap-4">
-            <Button variant="secondary" onClick={onBack} className="flex-1 bg-background/90 border-border hover:bg-accent hover:text-foreground-foreground">
+            <Button variant="secondary" onClick={onBack} className="flex-1 bg-background/90 border-border hover:bg-accent hover:text-foreground-foreground" transition-all duration-300>
               Cancel
             </Button>
-            <Button onClick={handleSave} className="flex-1 bg-white text-primary-foreground hover:shadow-sm" disabled={loading}>
+            <Button onClick={handleSave} className="flex-1 bg-white text-primary-foreground hover:shadow-sm" transition-all duration-300 disabled={loading}>
               {loading ? "Saving..." : "Save Settings"}
             </Button>
           </div>

@@ -496,7 +496,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
         <div className="flex justify-end p-4 pb-0">
           <button
             onClick={onCancel}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
             disabled={isLoading}
             data-testid="button-close-modal"
           >
@@ -701,7 +701,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                   <Button
                     type="submit"
                     disabled={!stripe || isLoading || stripeLoading}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-complete-purchase"
                   >
                     {isLoading ? 'Processing...' : `Complete Purchase`}
@@ -731,7 +731,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                   <Button
                     onClick={handleSubmit}
                     disabled={isLoading}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-complete-vodapay-purchase"
                   >
                     {isLoading ? 'Redirecting to VodaPay...' : `Continue with VodaPay`}
@@ -761,7 +761,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                   <Button
                     onClick={handleSubmit}
                     disabled={isLoading}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-complete-dodo-purchase"
                   >
                     {isLoading ? 'Processing...' : `Pay with Card`}
@@ -831,7 +831,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                   <Button
                     onClick={handleSubmit}
                     disabled={walletBalance < amount || isLoading}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-wallet-payment"
                   >
                     {isLoading ? 'Processing...' : `Pay ${formatPrice(amount)}`}

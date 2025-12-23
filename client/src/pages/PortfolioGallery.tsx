@@ -432,14 +432,14 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
 
       <CardContent className="p-3 sm:p-4">
         {/* Project Title */}
-        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 text-sm sm:text-base">
+        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 text-sm sm:text-base" transition-all duration-300>
           {project.title}
         </h3>
 
         {/* Freelancer info with stats */}
         <div className="flex items-center justify-between">
           <div 
-            className="flex items-center gap-2 min-w-0 flex-1 cursor-pointer hover:bg-gray-50 rounded-lg p-1 -m-1 transition-colors"
+            className="flex items-center gap-2 min-w-0 flex-1 cursor-pointer hover:bg-gray-50 rounded-lg p-1 -m-1 transition-colors" transition-all duration-300
             onClick={(e) => {
               e.stopPropagation(); // Prevent project modal from opening
               // Update URL to include freelancer ID
@@ -458,7 +458,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
               </AvatarFallback>
             </Avatar>
             <div className="flex items-center gap-1 min-w-0">
-              <p className="text-xs text-gray-600 truncate hover:text-blue-600 transition-colors">
+              <p className="text-xs text-gray-600 truncate hover:text-blue-600 transition-colors" transition-all duration-300>
                 {project.freelancer.displayName || project.freelancer.name}
               </p>
               {project.freelancer.verificationBadge && project.freelancer.verificationBadge !== 'none' && (
@@ -488,7 +488,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
               {formatNumber(project.viewCount)}
             </span>
             <button 
-              className="flex items-center gap-1 hover:text-primary-500 transition-colors"
+              className="flex items-center gap-1 hover:text-primary-500 transition-colors" transition-all duration-300
               onClick={(e) => handleLikeToggle(e, project.id)}
               data-testid={`button-like-${project.id}`}
             >
@@ -526,13 +526,13 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
 
           {/* Content */}
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 hover:text-blue-600 transition-colors line-clamp-1 text-sm sm:text-base mb-2">
+            <h3 className="font-semibold text-gray-900 hover:text-blue-600 transition-colors line-clamp-1 text-sm sm:text-base mb-2" transition-all duration-300>
               {project.title}
             </h3>
             
             <div className="flex items-center justify-between">
               <div 
-                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 rounded-lg p-1 -m-1 transition-colors"
+                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 rounded-lg p-1 -m-1 transition-colors" transition-all duration-300
                 onClick={(e) => {
                   e.stopPropagation(); // Prevent project modal from opening
                   // Update URL to include freelancer ID
@@ -551,7 +551,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex items-center gap-1 min-w-0">
-                  <span className="text-xs text-gray-600 truncate hover:text-blue-600 transition-colors">
+                  <span className="text-xs text-gray-600 truncate hover:text-blue-600 transition-colors" transition-all duration-300>
                     {project.freelancer.displayName || project.freelancer.name}
                   </span>
                   {project.freelancer.verificationBadge && project.freelancer.verificationBadge !== 'none' && (
@@ -582,7 +582,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                   {formatNumber(project.viewCount)}
                 </span>
                 <button 
-                  className="flex items-center gap-1 hover:text-primary-500 transition-colors"
+                  className="flex items-center gap-1 hover:text-primary-500 transition-colors" transition-all duration-300
                   onClick={(e) => handleLikeToggle(e, project.id)}
                   data-testid={`button-like-list-${project.id}`}
                 >
@@ -631,7 +631,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                     onNavigate?.('student-dashboard', 'slide-right');
                   }
                 }}
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900" transition-all duration-300
                 data-testid="button-back-to-dashboard"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -673,7 +673,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                     variant="outline"
                     size="sm"
                     onClick={() => setShowFilters(!showFilters)}
-                    className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 hover:from-blue-100 hover:to-indigo-100 transition-all duration-300"
+                    className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 hover:from-blue-100 hover:to-indigo-100 transition-all duration-300" transition-all duration-300
                     data-testid="button-burger-menu"
                   >
                     <Menu className="h-4 w-4 text-blue-600" />
@@ -746,7 +746,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                               setSearchQuery('');
                               setSortBy('recent');
                             }}
-                            className="w-full text-gray-600 hover:text-gray-800"
+                            className="w-full text-gray-600 hover:text-gray-800" transition-all duration-300
                             data-testid="button-clear-filters"
                           >
                             Clear All Filters
@@ -759,7 +759,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
 
                 {/* Quick Sort Dropdown */}
                 <Select value={sortBy} onValueChange={(value: SortOption) => setSortBy(value)}>
-                  <SelectTrigger className="w-full sm:w-40 bg-white border-gray-200 hover:border-gray-300 transition-colors" data-testid="select-sort">
+                  <SelectTrigger className="w-full sm:w-40 bg-white border-gray-200 hover:border-gray-300 transition-colors" transition-all duration-300 data-testid="select-sort">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -789,13 +789,13 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                 {/* Scroll Arrows - Desktop Only */}
                 <button 
                   onClick={scrollLeft}
-                  className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 hover:bg-gray-50 transition-colors"
+                  className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 hover:bg-gray-50 transition-colors" transition-all duration-300
                 >
                   <ChevronLeft className="h-4 w-4 text-gray-600" />
                 </button>
                 <button 
                   onClick={scrollRight}
-                  className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 hover:bg-gray-50 transition-colors"
+                  className="hidden md:block absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 hover:bg-gray-50 transition-colors" transition-all duration-300
                 >
                   <ArrowUpRight className="h-4 w-4 text-gray-600 rotate-90" />
                 </button>
@@ -826,7 +826,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                   ].map((category) => (
                     <div
                       key={category.name}
-                      className="group relative flex-shrink-0 w-28 h-12 rounded-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105"
+                      className="group relative flex-shrink-0 w-28 h-12 rounded-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105" transition-all duration-300
                       onClick={() => {
                         setSelectedCategory(category.name);
                         setSearchQuery('');
@@ -841,7 +841,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                       ></div>
                       
                       {/* Dark Overlay for Readability */}
-                      <div className="absolute inset-0 bg-black bg-opacity-75 group-hover:bg-opacity-60 transition-all duration-300"></div>
+                      <div className="absolute inset-0 bg-black bg-opacity-75 group-hover:bg-opacity-60 transition-all duration-300" transition-all duration-300></div>
                       
                       {/* Content */}
                       <div className="relative h-full flex items-center justify-center text-white p-2 z-10">
@@ -853,7 +853,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                       </div>
                       
                       {/* Hover Effect */}
-                      <div className="absolute inset-0 bg-white bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
+                      <div className="absolute inset-0 bg-white bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" transition-all duration-300></div>
                     </div>
                   ))}
                 </div>
@@ -941,7 +941,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                       variant="ghost"
                       size="sm"
                       onClick={() => setSelectedProject(null)}
-                      className="flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                      className="flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors" transition-all duration-300
                       data-testid="button-close-modal"
                       aria-label="Close"
                     >
@@ -987,7 +987,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                       {formatNumber(selectedProject.viewCount)}
                     </span>
                     <button 
-                      className="flex items-center gap-1.5 hover:text-primary-500 transition-colors"
+                      className="flex items-center gap-1.5 hover:text-primary-500 transition-colors" transition-all duration-300
                       onClick={(e) => handleLikeToggle(e, selectedProject.id)}
                       data-testid={`button-like-modal-${selectedProject.id}`}
                     >
@@ -1042,7 +1042,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                         <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">Skills & Tools</h3>
                         <div className="flex flex-wrap gap-2 sm:gap-3">
                           {selectedProject.tags.map((tag) => (
-                            <Badge key={tag} variant="outline" className="px-2 sm:px-3 py-1 text-xs sm:text-sm border-gray-300 hover:border-gray-400 transition-colors">
+                            <Badge key={tag} variant="outline" className="px-2 sm:px-3 py-1 text-xs sm:text-sm border-gray-300 hover:border-gray-400 transition-colors" transition-all duration-300>
                               {tag}
                             </Badge>
                           ))}
@@ -1068,7 +1068,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                                   <img 
                                     src={project.media[0]} 
                                     alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" transition-all duration-300
                                   />
                                 ) : (
                                   <div className="w-full h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
@@ -1089,7 +1089,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
                               </div>
 
                               <div className="p-4">
-                                <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">
+                                <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2" transition-all duration-300>
                                   {project.title}
                                 </h4>
                                 <div className="flex items-center gap-2">
@@ -1214,7 +1214,7 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
               <Button
                 variant="secondary"
                 size="sm"
-                className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white border-white/20"
+                className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white border-white/20" transition-all duration-300
                 onClick={() => setSelectedImageUrl(null)}
                 data-testid="button-close-image-viewer"
               >

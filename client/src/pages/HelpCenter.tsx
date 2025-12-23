@@ -855,7 +855,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     {option.availability}
                   </div>
                   <Button 
-                    className={`w-full ${option.primary ? 'bg-primary hover:bg-primary/90 text-[#ffffff]' : 'variant-outline'}`}
+                    className={`w-full ${option.primary ? 'bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-[#ffffff]' : 'variant-outline'}`}
                     onClick={() => {
                       if (option.method === "Live Chat Support") {
                         setIsChatOpen(true);
@@ -987,7 +987,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                           value={`${category.id}-${faqIndex}`} 
                           className="border rounded-lg px-4"
                         >
-                          <AccordionTrigger className="text-left hover:no-underline" data-testid={`accordion-trigger-${category.id}-${faqIndex}`}>
+                          <AccordionTrigger className="text-left hover:no-underline" transition-all duration-300 data-testid={`accordion-trigger-${category.id}-${faqIndex}`}>
                             {searchQuery ? highlightText(faq.question, searchQuery) : faq.question}
                           </AccordionTrigger>
                           <AccordionContent className="text-muted-foreground leading-relaxed">
@@ -1016,7 +1016,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Privacy & Security */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
@@ -1042,7 +1042,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Terms of Service */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
@@ -1068,7 +1068,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Student Terms */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
@@ -1094,7 +1094,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Teacher Terms */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
@@ -1120,7 +1120,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* School/Institution Terms */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
@@ -1146,7 +1146,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Payment & Billing Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center flex-shrink-0">
@@ -1172,7 +1172,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Refund Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
@@ -1198,7 +1198,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Cookies Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-pink-100 flex items-center justify-center flex-shrink-0">
@@ -1224,7 +1224,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* WhatsApp Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center flex-shrink-0">
@@ -1250,7 +1250,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Data Retention Policy */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
@@ -1276,7 +1276,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Community Guidelines */}
-              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40">
+              <Card className="hover-lift transition-all duration-200 border-primary/20 hover:border-primary/40" transition-all duration-300>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
@@ -1308,7 +1308,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
                 <Button 
                   variant="outline" 
-                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" 
+                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" transition-all duration-300 
                   data-testid="button-resource-mobile"
                 >
                   <Download className="h-6 w-6" style={{ color: '#0C332C' }} />
@@ -1316,7 +1316,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" 
+                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" transition-all duration-300 
                   onClick={() => onNavigate("contact")} 
                   data-testid="button-resource-contact"
                 >
@@ -1325,7 +1325,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" 
+                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" transition-all duration-300 
                   onClick={() => onNavigate("about")} 
                   data-testid="button-resource-about"
                 >
@@ -1351,10 +1351,10 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <Button 
                   size="lg" 
                   onClick={() => onNavigate("contact")}
-                  className="bg-primary hover:bg-primary/90 text-[#ffffff]"
+                  className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-[#ffffff]" transition-all duration-300
                   data-testid="button-contact-support"
                 >
-                  <MessageCircle className="h-5 w-5 mr-2" style={{ color: '#ffffff' }} />
+                  <MessageCircle className="h-5 w-5 mr-2" style={{color: "#0C332C"}} />
                   Contact Support
                 </Button>
                 <Button 

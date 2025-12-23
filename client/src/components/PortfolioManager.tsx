@@ -202,7 +202,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                   window.location.href = '?page=portfolio-create';
                 }
               }} 
-              className="bg-primary hover:bg-primary text-[#ffffff]" 
+              className="bg-primary hover:bg-primary text-[#ffffff]" transition-all duration-300 
               data-testid="button-create-work"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -255,7 +255,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                       window.location.href = '?page=portfolio-create';
                     }
                   }} 
-                  className="bg-primary hover:bg-primary text-white"
+                  className="bg-primary hover:bg-primary text-white" transition-all duration-300
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Create Your First Work
@@ -265,7 +265,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
           ) : viewMode === 'grid' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {works.map((work) => (
-                <Card key={work.id} className="group hover:shadow-lg transition-shadow">
+                <Card key={work.id} className="group hover:shadow-lg transition-shadow" transition-all duration-300>
                   <CardContent className="p-0">
                     {/* Smart Media Preview Carousel - Clickable like Behance */}
                     <MediaCarousel
@@ -359,7 +359,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
             // List View
             <div className="space-y-4">
               {works.map((work) => (
-                <Card key={work.id} className="hover:shadow-lg transition-shadow">
+                <Card key={work.id} className="hover:shadow-lg transition-shadow" transition-all duration-300>
                   <CardContent className="p-6">
                     <div className="flex gap-4">
                       {/* Thumbnail Carousel - Clickable for preview */}
@@ -596,7 +596,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                       window.location.href = '?page=portfolio-create';
                     }
                   }}
-                  className="bg-primary hover:bg-primary text-white"
+                  className="bg-primary hover:bg-primary text-white" transition-all duration-300
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Create Your First Work

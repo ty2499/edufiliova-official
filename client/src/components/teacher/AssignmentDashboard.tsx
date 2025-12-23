@@ -252,7 +252,7 @@ export function AssignmentDashboard({ teacherId }: AssignmentDashboardProps) {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredAssignments.map((assignment) => (
-                <Card key={assignment.id} className="hover:shadow-lg transition-shadow">
+                <Card key={assignment.id} className="hover:shadow-lg transition-shadow" transition-all duration-300>
                   <CardHeader>
                     <div className="flex justify-between items-start mb-2">
                       <CardTitle className="text-lg font-semibold line-clamp-2">

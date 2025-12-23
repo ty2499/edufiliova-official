@@ -261,7 +261,7 @@ export function BehanceStyleMobileProfile({
           <Button 
             onClick={handleFollowClick}
             disabled={!user || user.id === profileData.id || followMutation.isPending}
-            className="flex-1 bg-primary hover:bg-primary text-white"
+            className="flex-1 bg-primary hover:bg-primary text-white" transition-all duration-300
             data-testid="button-follow"
           >
             {followMutation.isPending ? (
@@ -277,7 +277,7 @@ export function BehanceStyleMobileProfile({
             variant="outline"
             onClick={onContactFreelancer}
             disabled={!user || user.id === profileData.id}
-            className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
+            className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50" transition-all duration-300
             data-testid="button-hire"
           >
             Hire
@@ -375,7 +375,7 @@ export function BehanceStyleMobileProfile({
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="flex items-center justify-between p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors" transition-all duration-300
                   data-testid={`social-link-${platform.toLowerCase()}`}
                 >
                   <div className="flex items-center gap-3">
@@ -394,7 +394,7 @@ export function BehanceStyleMobileProfile({
           <Button
             variant="ghost"
             onClick={onNavigateToFullProfile}
-            className="w-full mt-4 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+            className="w-full mt-4 text-blue-600 hover:text-blue-700 hover:bg-blue-50" transition-all duration-300
             data-testid="button-view-full-profile"
           >
             View Full Profile

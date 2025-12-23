@@ -106,7 +106,7 @@ export function SponsoredListingDisplay({
         {displayListings.map((listing) => (
           <Card 
             key={listing.id}
-            className="relative cursor-pointer border-orange-200 dark:border-orange-800 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/50 dark:to-amber-950/50 hover:from-orange-100 hover:to-amber-100 dark:hover:from-orange-950/70 dark:hover:to-amber-950/70 transition-all duration-200 hover:shadow-md"
+            className="relative cursor-pointer border-orange-200 dark:border-orange-800 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/50 dark:to-amber-950/50 hover:from-orange-100 hover:to-amber-100 dark:hover:from-orange-950/70 dark:hover:to-amber-950/70 transition-all duration-200 hover:shadow-md" transition-all duration-300
             onClick={() => handleSponsoredClick(listing)}
             data-testid={`sponsored-listing-${listing.id}`}
           >
@@ -169,7 +169,7 @@ export function SponsoredListingDisplay({
                   
                   <Button 
                     size="sm" 
-                    className="ml-auto bg-primary hover:bg-orange-700 text-white"
+                    className="ml-auto bg-primary hover:bg-orange-700 text-white" transition-all duration-300
                     onClick={(e) => {
                       e.stopPropagation();
                       handleSponsoredClick(listing);

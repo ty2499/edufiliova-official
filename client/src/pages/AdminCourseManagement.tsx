@@ -207,7 +207,7 @@ export default function AdminCourseManagement() {
           <div className="flex gap-2 pt-2">
             <Button
               size="sm"
-              className="flex-1 bg-primary hover:bg-primary"
+              className="flex-1 bg-primary hover:bg-primary" transition-all duration-300
               onClick={() => handleApprove(course)}
               disabled={approveMutation.isPending}
               data-testid={`button-approve-${course.id}`}

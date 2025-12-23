@@ -202,7 +202,7 @@ export default function AdminSubjectApproval({ onNavigate }: AdminSubjectApprova
           ) : (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {subjects.map((subject) => (
-                <Card key={subject.id} className="hover:border-primary transition-colors" data-testid={`card-subject-${subject.id}`}>
+                <Card key={subject.id} className="hover:border-primary transition-colors" transition-all duration-300 data-testid={`card-subject-${subject.id}`}>
                   <CardHeader className="pb-2">
                     <div className="flex items-start gap-3">
                       {subject.iconUrl ? (

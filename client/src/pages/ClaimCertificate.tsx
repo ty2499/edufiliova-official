@@ -171,7 +171,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
             <button 
               onClick={() => onNavigate(`course-player-${courseId}`)}
               data-testid="button-back-to-course"
-              className="text-white hover:bg-white/10 p-2 rounded-lg transition-colors"
+              className="text-white hover:bg-white/10 p-2 rounded-lg transition-colors" transition-all duration-300
             >
               <ArrowLeft className="h-6 w-6" />
             </button>
@@ -223,7 +223,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
                       disabled={resendCertificateMutation.isPending}
                       variant="outline"
                       size="sm"
-                      className="bg-white dark:bg-blue-900 border-2 border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-800 w-full sm:w-auto text-xs sm:text-sm"
+                      className="bg-white dark:bg-blue-900 border-2 border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-800 w-full sm:w-auto text-xs sm:text-sm" transition-all duration-300
                       data-testid="button-resend-certificate"
                     >
                       {resendCertificateMutation.isPending ? (
@@ -245,7 +245,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
 
             {/* Support Contact Information */}
             <div 
-              className="mt-4 sm:mt-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-300 dark:border-gray-600 rounded-2xl p-4 sm:p-6 cursor-pointer hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
+              className="mt-4 sm:mt-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-300 dark:border-gray-600 rounded-2xl p-4 sm:p-6 cursor-pointer hover:border-gray-400 dark:hover:border-gray-500 transition-colors" transition-all duration-300
               onClick={() => setIsChatOpen(true)}
               data-testid="section-help-support"
             >
@@ -298,7 +298,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
 
             {/* Help Section */}
             <div 
-              className="mt-4 sm:mt-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-300 dark:border-gray-600 rounded-2xl p-4 sm:p-6 cursor-pointer hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
+              className="mt-4 sm:mt-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-2 border-gray-300 dark:border-gray-600 rounded-2xl p-4 sm:p-6 cursor-pointer hover:border-gray-400 dark:hover:border-gray-500 transition-colors" transition-all duration-300
               onClick={() => setIsChatOpen(true)}
               data-testid="section-help-support-already-purchased"
             >
@@ -347,7 +347,7 @@ export default function ClaimCertificate({ courseId, onNavigate }: ClaimCertific
                 onClick={handleClaimCertificate}
                 disabled={generateCertificateMutation.isPending}
                 size="lg"
-                className="bg-[#0C332C] hover:bg-[#e64a2a] text-white text-lg px-8 py-6"
+                className="bg-[#0C332C] hover:bg-[#e64a2a] text-white text-lg px-8 py-6" transition-all duration-300
                 data-testid="button-generate-certificate"
               >
                 {generateCertificateMutation.isPending ? "Generating..." : `Claim ${certificateType}`}

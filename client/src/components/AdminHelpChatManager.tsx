@@ -636,7 +636,7 @@ export default function AdminHelpChatManager() {
                 setAssignedAgent(null); // Clear assigned agent
                 setIsChatOpen(false); // Show navigation when closing chat
               }}
-              className="text-white hover:bg-white/10 p-2"
+              className="text-white hover:bg-white/10 p-2" transition-all duration-300
               data-testid="back-to-conversations"
             >
               <ArrowLeft className="h-5 w-5" />
@@ -673,7 +673,7 @@ export default function AdminHelpChatManager() {
               variant="ghost"
               size="sm"
               onClick={() => handleExport(selectedConversation)}
-              className="text-white hover:bg-white/10"
+              className="text-white hover:bg-white/10" transition-all duration-300
               data-testid="export-conversation"
             >
               <Download className="h-4 w-4" />
@@ -829,7 +829,7 @@ export default function AdminHelpChatManager() {
                     key={index}
                     variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0 hover:bg-gray-100 rounded-lg text-base transition-all"
+                    className="h-8 w-8 p-0 hover:bg-gray-100 rounded-lg text-base transition-all" transition-all duration-300
                     onClick={() => handleEmojiSelect(emoji)}
                     data-testid={`emoji-${index}`}
                   >

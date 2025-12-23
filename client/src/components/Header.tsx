@@ -251,7 +251,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
             <Button 
               size="sm" 
               variant="outline" 
-              className="ml-4 bg-white text-primary hover:bg-primary/10 border-white h-7"
+              className="ml-4 bg-white text-primary hover:bg-primary/10 border-white h-7" transition-all duration-300
               onClick={handleReturnToAdmin}
             >
               Return to Admin Dashboard
@@ -267,7 +267,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               type="home"
               logoSize="square"
               onClick={() => handleNavigation("home")}
-              className="animate-fade-in hover:opacity-80 transition-opacity"
+              className="animate-fade-in hover:opacity-80 transition-opacity" transition-all duration-300
             />
           </div>
 
@@ -290,7 +290,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsLearnOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
                 >
                   Learn
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isLearnOpen ? 'rotate-180' : ''}`} />
@@ -311,7 +311,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         setIsStudentsOpen(true);
                       }
                     }}
-                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
                   >
                     Students
                     <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isStudentsOpen ? 'rotate-180' : ''}`} />
@@ -333,7 +333,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         setIsTeachersOpen(true);
                       }
                     }}
-                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
                   >
                     Teachers
                     <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isTeachersOpen ? 'rotate-180' : ''}`} />
@@ -354,7 +354,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsFreelanceOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
                 >
                   Freelancers
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isFreelanceOpen ? 'rotate-180' : ''}`} />
@@ -374,7 +374,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsShopOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
                 >
                   Creative Space
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isShopOpen ? 'rotate-180' : ''}`} />
@@ -394,7 +394,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsPricingOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
                 >
                   Pricing
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isPricingOpen ? 'rotate-180' : ''}`} />
@@ -404,7 +404,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               {/* Blog */}
               <button 
                 onClick={() => handleNavigation("blog")}
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
               >
                 Blog
               </button>
@@ -412,7 +412,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               {/* About Us */}
               <button 
                 onClick={() => handleNavigation("about")}
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
                 data-testid="nav-about-us"
               >
                 About Us
@@ -431,7 +431,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsPagesOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
                 >
                   Pages
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isPagesOpen ? 'rotate-180' : ''}`} />
@@ -497,7 +497,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <Button
                 size="sm"
                 onClick={() => onNavigate("auth")}
-                className="text-sm font-medium bg-[#0C332C] hover:bg-primary text-white rounded-full px-8 pl-[52px] pr-[52px]"
+                className="text-sm font-medium bg-[#0C332C] hover:bg-primary text-white rounded-full px-8 pl-[52px] pr-[52px]" transition-all duration-300
                 data-testid="button-signin"
               >
                 Sign In
@@ -514,7 +514,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
             type="home"
             logoSize="square"
             onClick={() => {handleNavigation("home"); setIsMobileMenuOpen(false);}}
-            className="animate-fade-in hover:opacity-80 transition-opacity"
+            className="animate-fade-in hover:opacity-80 transition-opacity" transition-all duration-300
           />
           
           <div className="flex items-center gap-3">
@@ -539,7 +539,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobileLearnOpen(!isMobileLearnOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
                 >
                   Learn
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobileLearnOpen ? 'rotate-180' : ''}`} />
@@ -548,7 +548,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                   <div className="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 space-y-2">
                     <button 
                       onClick={() => {onNavigate("course-browse"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Search className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -559,7 +559,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     {!isAuthenticated && (
                       <button 
                         onClick={() => {onNavigate("student-signup"); setIsMobileMenuOpen(false);}}
-                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                       >
                         <UserPlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
@@ -571,7 +571,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     {isAuthenticated && profile?.role === 'student' && (
                       <button 
                         onClick={() => {onNavigate("student-dashboard"); setIsMobileMenuOpen(false);}}
-                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                       >
                         <Library className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
@@ -582,7 +582,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     )}
                     <button 
                       onClick={() => {onNavigate("my-certificates"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Award className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -593,7 +593,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     {claimableCertificatesCount > 0 && (
                       <button 
                         onClick={() => {onNavigate("claim-certificate"); setIsMobileMenuOpen(false);}}
-                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                       >
                         <FileCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
@@ -611,7 +611,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                 <div className="border-b border-gray-200 dark:border-gray-800">
                   <button 
                     onClick={() => setIsMobileTeachersOpen(!isMobileTeachersOpen)}
-                    className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
+                    className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
                   >
                     For Teachers
                     <ChevronDown className={`h-4 w-4 transition-transform ${isMobileTeachersOpen ? 'rotate-180' : ''}`} />
@@ -620,7 +620,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     <div className="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 space-y-2">
                       <button 
                         onClick={() => {onNavigate("teacher-application"); setIsMobileMenuOpen(false);}}
-                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                       >
                         <UserPlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
@@ -630,7 +630,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       </button>
                       <button 
                         onClick={() => {onNavigate("teacher-pricing"); setIsMobileMenuOpen(false);}}
-                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                        className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                       >
                         <Wallet className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                         <div>
@@ -641,7 +641,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       {isAuthenticated && profile?.role === 'teacher' && (
                         <button 
                           onClick={() => {onNavigate("teacher-status"); setIsMobileMenuOpen(false);}}
-                          className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                         >
                           <ClipboardCheck className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                           <div>
@@ -654,7 +654,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         <>
                           <button 
                             onClick={() => {onNavigate("course-creator"); setIsMobileMenuOpen(false);}}
-                            className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                            className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                           >
                             <FilePlus className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                             <div>
@@ -664,7 +664,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                           </button>
                           <button 
                             onClick={() => {onNavigate("subject-creator"); setIsMobileMenuOpen(false);}}
-                            className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                            className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                           >
                             <Layers className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                             <div>
@@ -674,7 +674,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                           </button>
                           <button 
                             onClick={() => {onNavigate("teacher-meetings"); setIsMobileMenuOpen(false);}}
-                            className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                            className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                           >
                             <Video className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                             <div>
@@ -684,7 +684,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                           </button>
                           <button 
                             onClick={() => {onNavigate("earnings"); setIsMobileMenuOpen(false);}}
-                            className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                            className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                           >
                             <Wallet className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                             <div>
@@ -703,7 +703,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobileFreelanceOpen(!isMobileFreelanceOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
                 >
                   Freelancers
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobileFreelanceOpen ? 'rotate-180' : ''}`} />
@@ -712,7 +712,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                   <div className="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 space-y-2">
                     <button 
                       onClick={() => {onNavigate("freelancer-signup-basic"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Briefcase className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -722,7 +722,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("freelancer-profile"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <IdCard className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -732,7 +732,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("portfolio-create"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Upload className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -742,7 +742,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("portfolio-gallery"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Users2 className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -758,7 +758,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobileShopOpen(!isMobileShopOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
                 >
                   Creative Space
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobileShopOpen ? 'rotate-180' : ''}`} />
@@ -767,7 +767,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                   <div className="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 space-y-2">
                     <button 
                       onClick={() => {onNavigate("product-shop"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Store className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -777,7 +777,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("product-shop"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Tag className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -795,7 +795,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         onNavigate(dashboard);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <FolderOpen className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -805,7 +805,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("product-creation"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <PlusCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -821,7 +821,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobilePricingOpen(!isMobilePricingOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
                 >
                   Pricing
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobilePricingOpen ? 'rotate-180' : ''}`} />
@@ -830,7 +830,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                   <div className="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 space-y-2">
                     <button 
                       onClick={() => {onNavigate("education-pricing"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <GraduationCap className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -840,7 +840,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("customer-pricing"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <ShoppingBag className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -850,7 +850,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("creator-pricing"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Briefcase className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -866,7 +866,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => {handleNavigation("blog"); setIsMobileMenuOpen(false);}}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" transition-all duration-300
                 >
                   Blog
                 </button>
@@ -876,7 +876,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => {handleNavigation("about"); setIsMobileMenuOpen(false);}}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" transition-all duration-300
                   data-testid="nav-about-us-mobile"
                 >
                   About Us
@@ -887,7 +887,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobilePagesOpen(!isMobilePagesOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
                 >
                   Pages
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobilePagesOpen ? 'rotate-180' : ''}`} />
@@ -896,7 +896,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                   <div className="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 space-y-2">
                     <button 
                       onClick={() => {handleNavigation("about"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Info className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -906,7 +906,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {handleNavigation("contact"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Mail className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -916,7 +916,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("advertise-with-us"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Megaphone className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -926,7 +926,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {handleNavigation("help"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <HelpCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -936,7 +936,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("privacy-policy"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -946,7 +946,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("terms"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -956,7 +956,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("community-guidelines"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
                     >
                       <Users className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -977,7 +977,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                 <Button
                   size="sm"
                   onClick={() => {onNavigate("auth"); setIsMobileMenuOpen(false);}}
-                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-primary text-white rounded-full bg-[#0C332C]"
+                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-primary text-white rounded-full bg-[#0C332C]" transition-all duration-300
                   data-testid="button-signin-mobile"
                 >
                   Sign In
@@ -999,7 +999,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       }
                       setIsMobileMenuOpen(false);
                     }}
-                    className="w-full text-left px-4 py-3 flex items-start gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    className="w-full text-left px-4 py-3 flex items-start gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" transition-all duration-300
                     data-testid="button-account-mobile"
                   >
                     {(profile?.profilePicture || profile?.avatarUrl) ? (

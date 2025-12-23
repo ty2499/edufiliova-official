@@ -307,7 +307,7 @@ function AdminBlogManagement() {
               resetForm();
               setIsDialogOpen(true);
             }}
-            className="bg-primary hover:bg-primary text-[#ffffff]"
+            className="bg-primary hover:bg-primary text-[#ffffff]" transition-all duration-300
             data-testid="button-create-blog-post"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -322,7 +322,7 @@ function AdminBlogManagement() {
             {posts.map((post) => (
               <div
                 key={post.id}
-                className="p-4 border rounded-lg flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                className="p-4 border rounded-lg flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" transition-all duration-300
                 data-testid={`blog-post-${post.id}`}
               >
                 <div className="flex-1">
@@ -357,7 +357,7 @@ function AdminBlogManagement() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleDelete(post.id)}
-                    className="text-primary-600 hover:text-primary-700"
+                    className="text-primary-600 hover:text-primary-700" transition-all duration-300
                     data-testid={`button-delete-${post.id}`}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -456,7 +456,7 @@ function AdminBlogManagement() {
                     </Button>
                   </div>
                 ) : (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors" transition-all duration-300>
                     <input
                       id="coverImage"
                       type="file"

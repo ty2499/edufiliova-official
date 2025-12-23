@@ -735,7 +735,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               type="button"
               variant="ghost"
               size="sm"
-              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-gray-400"
+              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-gray-400" transition-all duration-300
               onClick={() => setShowPassword(!showPassword)}
               data-testid="button-toggle-password"
             >
@@ -749,7 +749,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-sm text-primary hover:text-purple-800 font-medium ml-auto"
+            className="text-sm text-primary hover:text-purple-800 font-medium ml-auto" transition-all duration-300
             data-testid="button-forgot-password"
           >
             Forgot password?
@@ -784,7 +784,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
         <Button
           type="button"
-          className="w-full h-11 font-medium rounded-lg bg-accent text-foreground hover:bg-accent/90"
+          className="w-full h-11 font-medium rounded-lg bg-accent text-foreground hover:bg-accent/90" transition-all duration-300
           disabled={loading}
           onClick={() => setCurrentStep("register")}
           data-testid="button-blue-action"
@@ -796,7 +796,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         <Button
           type="button"
           onClick={() => setCurrentStep("register-teacher")}
-          className="w-full h-11 bg-primary hover:bg-primary text-white rounded-lg font-medium"
+          className="w-full h-11 bg-primary hover:bg-primary text-white rounded-lg font-medium" transition-all duration-300
           data-testid="link-teacher-signup"
         >
           <GraduationCap className="h-4 w-4 mr-2" />
@@ -806,7 +806,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         <Button
           type="button"
           variant="outline"
-          className="w-full h-11 border-gray-300 hover:bg-gray-50 rounded-lg font-medium text-gray-900"
+          className="w-full h-11 border-gray-300 hover:bg-gray-50 rounded-lg font-medium text-gray-900" transition-all duration-300
           disabled={loading}
           onClick={() => {
             onNavigate?.('freelancer-signup-basic');
@@ -906,7 +906,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600" transition-all duration-300
                     data-testid="button-toggle-register-password"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -1132,7 +1132,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 data-testid="checkbox-agree-terms"
               />
               <Label htmlFor="agree-terms" className="text-sm text-gray-700 cursor-pointer">
-                I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-primary hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-primary hover:underline" data-testid="link-privacy-policy">Privacy Policy</button>
+                I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-primary hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-primary hover:underline" transition-all duration-300 data-testid="link-privacy-policy">Privacy Policy</button>
               </Label>
             </div>
             {errors.agreeToTerms && <p className="text-sm text-primary-500">{errors.agreeToTerms}</p>}
@@ -1175,7 +1175,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               type="button"
               onClick={() => setCurrentStep("login")}
-              className="text-primary hover:text-purple-800 font-medium"
+              className="text-primary hover:text-purple-800 font-medium" transition-all duration-300
               data-testid="link-login"
             >
               Sign in
@@ -1285,7 +1285,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600" transition-all duration-300
               data-testid="button-toggle-teacher-password"
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -1337,7 +1337,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-primary hover:text-purple-800 font-medium flex items-center justify-center gap-1"
+            className="text-primary hover:text-purple-800 font-medium flex items-center justify-center gap-1" transition-all duration-300
             data-testid="link-back-to-login"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1455,7 +1455,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               <button
                 onClick={() => handleResendCode("email")}
                 disabled={resendCooldown > 0 || loading}
-                className="font-medium hover:underline disabled:opacity-50"
+                className="font-medium hover:underline disabled:opacity-50" transition-all duration-300
                 style={{ color: '#0C332C' }}
                 data-testid="button-resend-email"
               >
@@ -1469,7 +1469,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 setVerificationCode("");
                 setErrors({});
               }}
-              className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900 mx-auto"
+              className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900 mx-auto" transition-all duration-300
               data-testid="button-back"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -1582,7 +1582,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               <button
                 onClick={() => handleResendCode("phone")}
                 disabled={resendCooldown > 0 || loading}
-                className="font-medium hover:underline disabled:opacity-50"
+                className="font-medium hover:underline disabled:opacity-50" transition-all duration-300
                 style={{ color: '#0C332C' }}
                 data-testid="button-resend-phone"
               >
@@ -1596,7 +1596,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 setVerificationCode("");
                 setErrors({});
               }}
-              className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900 mx-auto"
+              className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900 mx-auto" transition-all duration-300
               data-testid="button-back"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -1671,7 +1671,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-primary hover:text-purple-800 font-medium flex items-center justify-center gap-1"
+            className="text-primary hover:text-purple-800 font-medium flex items-center justify-center gap-1" transition-all duration-300
             data-testid="link-back-to-login-from-forgot"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1749,7 +1749,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-primary hover:text-purple-800 font-medium"
+            className="text-primary hover:text-purple-800 font-medium" transition-all duration-300
             data-testid="button-resend-reset-code"
           >
             Request new code
@@ -1760,7 +1760,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-primary hover:text-purple-800 font-medium text-sm flex items-center justify-center gap-1 mx-auto"
+            className="text-primary hover:text-purple-800 font-medium text-sm flex items-center justify-center gap-1 mx-auto" transition-all duration-300
             data-testid="link-back-to-login-from-reset"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1868,7 +1868,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 </div>
               ))}
               <div className="border-t pt-4 text-center text-sm text-gray-600">
-                <p>Questions? Email us at <a href="mailto:support@edufiliova.com" className="text-primary hover:underline">support@edufiliova.com</a></p>
+                <p>Questions? Email us at <a href="mailto:support@edufiliova.com" className="text-primary hover:underline" transition-all duration-300>support@edufiliova.com</a></p>
               </div>
             </div>
           </ScrollArea>
@@ -1973,7 +1973,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div className="border-t pt-4 text-center text-sm text-gray-600">
-                <p>Privacy questions? Email us at <a href="mailto:privacy@edufiliova.com" className="text-primary hover:underline">privacy@edufiliova.com</a></p>
+                <p>Privacy questions? Email us at <a href="mailto:privacy@edufiliova.com" className="text-primary hover:underline" transition-all duration-300>privacy@edufiliova.com</a></p>
               </div>
             </div>
           </ScrollArea>

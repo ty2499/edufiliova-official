@@ -548,7 +548,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
             subjects.map((subject: Subject) => (
               <Card 
                 key={subject.id} 
-                className="cursor-pointer hover:border-primary transition-colors"
+                className="cursor-pointer hover:border-primary transition-colors" transition-all duration-300
                 onClick={() => handleSelectSubject(subject)}
                 data-testid={`card-subject-${subject.id}`}
               >
@@ -802,7 +802,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
               subjectDetails.chapters.map((chapter: Chapter) => (
                 <Card key={chapter.id}>
                   <CardHeader 
-                    className="cursor-pointer hover:bg-muted/50 transition-colors py-3"
+                    className="cursor-pointer hover:bg-muted/50 transition-colors py-3" transition-all duration-300
                     onClick={() => toggleChapter(chapter.id)}
                   >
                     <div className="flex items-center justify-between">
@@ -881,7 +881,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
                           {chapter.lessons.map((lesson: Lesson) => (
                             <div key={lesson.id} className="border rounded-lg">
                               <div 
-                                className="flex items-center justify-between p-3 cursor-pointer hover:bg-muted/50"
+                                className="flex items-center justify-between p-3 cursor-pointer hover:bg-muted/50" transition-all duration-300
                                 onClick={() => toggleLesson(lesson.id)}
                               >
                                 <div className="flex items-center gap-2">

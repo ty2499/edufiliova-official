@@ -489,7 +489,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                             <img 
                               src={course.thumbnailUrl} 
                               alt={course.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" transition-all duration-300
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
@@ -521,7 +521,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                         container.scrollBy({ left: -320, behavior: 'smooth' });
                       }
                     }}
-                    className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200"
+                    className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200" transition-all duration-300
                     data-testid="button-courses-prev"
                   >
                     <ChevronLeft className="h-5 w-5 text-gray-700" />
@@ -533,7 +533,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                         container.scrollBy({ left: 320, behavior: 'smooth' });
                       }
                     }}
-                    className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200"
+                    className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200" transition-all duration-300
                     data-testid="button-courses-next"
                   >
                     <ChevronRight className="h-5 w-5 text-gray-700" />
@@ -546,7 +546,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                     {featuredCourses.slice(0, 8).map((course) => (
                       <Card 
                         key={course.id} 
-                        className="cursor-pointer transition-all duration-300 border border-gray-200 overflow-hidden group flex-shrink-0 snap-start hover:scale-105 bg-white"
+                        className="cursor-pointer transition-all duration-300 border border-gray-200 overflow-hidden group flex-shrink-0 snap-start hover:scale-105 bg-white" transition-all duration-300
                         style={{ width: '300px', minWidth: '300px' }}
                         onClick={() => {
                           onNavigate(`course-detail-${course.id}`);
@@ -558,7 +558,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                             <img 
                               src={course.thumbnailUrl} 
                               alt={course.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" transition-all duration-300
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
@@ -589,7 +589,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                     data-testid="button-explore-courses"
                   >
                     Explore More Courses
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" transition-all duration-300 />
                   </Button>
                 </div>
               </>
@@ -680,7 +680,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                           <img 
                             src={product.images[0]} 
                             alt={product.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" transition-all duration-300
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
@@ -689,7 +689,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                         )}
                       </div>
                       <CardHeader className="p-4">
-                        <CardTitle className="text-sm font-semibold line-clamp-2 group-hover:text-foreground transition-colors">
+                        <CardTitle className="text-sm font-semibold line-clamp-2 group-hover:text-foreground transition-colors" transition-all duration-300>
                           {product.name}
                         </CardTitle>
                       </CardHeader>
@@ -704,7 +704,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                     data-testid="button-explore-products"
                   >
                     Explore More
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" transition-all duration-300 />
                   </Button>
                 </div>
               </>
@@ -1065,7 +1065,7 @@ const PricingSlideshow = ({ onNavigate }: { onNavigate: (page: string) => void }
                         {slideData.pricing.map((price, idx) => (
                           <div 
                             key={idx}
-                            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-2 md:p-2.5 hover:bg-white/15 transition-all"
+                            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-2 md:p-2.5 hover:bg-white/15 transition-all" transition-all duration-300
                           >
                             <div className="text-[9px] md:text-[10px] text-white/80 mb-0.5">{price.label}</div>
                             <div className="text-base md:text-lg lg:text-xl font-bold text-white mb-0.5">
@@ -1096,11 +1096,11 @@ const PricingSlideshow = ({ onNavigate }: { onNavigate: (page: string) => void }
                           e.stopPropagation();
                           onNavigate(slideData.ctaPage);
                         }}
-                        className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 px-5 py-3 md:px-6 md:py-5 text-sm md:text-base font-semibold rounded-full group-hover:scale-105 transition-all duration-300 w-fit"
+                        className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 px-5 py-3 md:px-6 md:py-5 text-sm md:text-base font-semibold rounded-full group-hover:scale-105 transition-all duration-300 w-fit" transition-all duration-300
                         data-testid={`button-view-${slideData.id}-pricing`}
                       >
                         {slideData.ctaText}
-                        <ArrowRight className="ml-2 h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight className="ml-2 h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" transition-all duration-300 />
                       </Button>
                     </div>
                   </div>

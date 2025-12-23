@@ -149,7 +149,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-3 text-gray-400 hover:text-gray-600" transition-all duration-300
                   disabled={loading}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -175,7 +175,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
 
             <Button 
               type="submit" 
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-sm transition-all duration-300 hover:shadow-sm hover:scale-105" 
+              className="w-full bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-primary-foreground font-medium shadow-sm transition-all duration-300 hover:shadow-sm hover:scale-105" transition-all duration-300 
               disabled={loading}
               data-testid="button-reset-password"
             >

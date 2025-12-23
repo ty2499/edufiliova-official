@@ -98,7 +98,7 @@ export default function EmailVerification({ onNavigate }: EmailVerificationProps
             <div className="flex gap-4 justify-center">
               <Button
                 onClick={() => onNavigate?.('teacher-apply')}
-                className="bg-gradient-to-r from-orange-600 to-primary hover:from-orange-700 hover:to-red-700"
+                className="bg-gradient-to-r from-orange-600 to-primary hover:from-orange-700 hover:to-red-700" transition-all duration-300
                 data-testid="button-try-again"
               >
                 Try Again

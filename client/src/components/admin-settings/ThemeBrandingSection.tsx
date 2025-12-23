@@ -168,7 +168,7 @@ export function ThemeBrandingSection() {
             <Button
               onClick={() => saveThemeMutation.mutate()}
               disabled={saveThemeMutation.isPending}
-              className="bg-primary hover:bg-primary"
+              className="bg-primary hover:bg-primary" transition-all duration-300
               data-testid="button-save-theme"
             >
               <Save className="h-4 w-4 mr-2" />

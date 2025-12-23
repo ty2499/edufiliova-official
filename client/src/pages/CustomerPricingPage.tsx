@@ -191,7 +191,7 @@ const CustomerPricingPage = ({ onNavigate }: CustomerPricingPageProps) => {
                       variant={tier.buttonVariant}
                       className={`w-full ${
                         tier.highlighted
-                          ? 'hover:opacity-90'
+                          ? 'hover:opacity-80 hover:shadow-lg hover:scale-105'
                           : 'bg-white/10 text-white hover:bg-white/20 border-gray-600'
                       }`}
                       style={tier.highlighted ? { backgroundColor: '#A0FAB2', color: '#1a1a1a' } : {}}
@@ -230,7 +230,7 @@ const CustomerPricingPage = ({ onNavigate }: CustomerPricingPageProps) => {
                   {section.items.map((item, itemIndex) => (
                     <div key={item.name}>
                       {/* Mobile Layout */}
-                      <div className="md:hidden px-6 py-4 hover:bg-gray-50 transition-colors">
+                      <div className="md:hidden px-6 py-4 hover:bg-gray-50 transition-colors" transition-all duration-300>
                         <div className="font-medium text-gray-900 mb-3">
                           {item.name}
                         </div>
@@ -257,7 +257,7 @@ const CustomerPricingPage = ({ onNavigate }: CustomerPricingPageProps) => {
                       </div>
 
                       {/* Desktop Layout */}
-                      <div className="hidden md:grid md:grid-cols-4 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors">
+                      <div className="hidden md:grid md:grid-cols-4 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors" transition-all duration-300>
                         <div className="font-medium text-gray-900 flex items-center">
                           {item.name}
                         </div>

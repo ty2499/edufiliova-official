@@ -682,7 +682,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                       {profileForm.displayName?.split(' ').map(n => n[0]).join('').toUpperCase() || 'FL'}
                     </AvatarFallback>
                   </Avatar>
-                  <label htmlFor="avatar-upload" className="absolute bottom-0 right-0 p-1 bg-primary rounded-full cursor-pointer hover:bg-primary transition-colors">
+                  <label htmlFor="avatar-upload" className="absolute bottom-0 right-0 p-1 bg-primary rounded-full cursor-pointer hover:bg-primary transition-colors" transition-all duration-300>
                     <Camera className="h-4 w-4 text-white" />
                     <input
                       id="avatar-upload"
@@ -727,7 +727,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                         />
                         <label 
                           htmlFor="cover-upload" 
-                          className="absolute top-2 right-2 p-2 bg-black/50 rounded-full cursor-pointer hover:bg-black/70 transition-colors"
+                          className="absolute top-2 right-2 p-2 bg-black/50 rounded-full cursor-pointer hover:bg-black/70 transition-colors" transition-all duration-300
                         >
                           <Camera className="h-4 w-4 text-white" />
                         </label>
@@ -735,7 +735,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                     ) : (
                       <label 
                         htmlFor="cover-upload" 
-                        className="flex items-center justify-center h-32 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg cursor-pointer hover:from-gray-200 hover:to-gray-300 transition-colors border-2 border-dashed border-gray-300"
+                        className="flex items-center justify-center h-32 bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg cursor-pointer hover:from-gray-200 hover:to-gray-300 transition-colors border-2 border-dashed border-gray-300" transition-all duration-300
                       >
                         <div className="text-center">
                           <Camera className="h-8 w-8 text-gray-400 mx-auto mb-2" />
@@ -840,7 +840,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                           onClick={handleSaveTagline}
                           disabled={saveProfileMutation.isPending}
                           data-testid="button-save-tagline"
-                          className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
+                          className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                         >
                           {saveProfileMutation.isPending ? (
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -903,7 +903,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                         onClick={handleSaveBio}
                         disabled={saveProfileMutation.isPending}
                         data-testid="button-save-bio"
-                        className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
+                        className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                       >
                         {saveProfileMutation.isPending ? (
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -965,7 +965,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                         onClick={handleSaveStatement}
                         disabled={saveProfileMutation.isPending}
                         data-testid="button-save-professional-statement"
-                        className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
+                        className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                       >
                         {saveProfileMutation.isPending ? (
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -1021,7 +1021,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                     <Badge key={index} variant="outline" className="flex items-center gap-1">
                       {skill}
                       <X 
-                        className="h-3 w-3 cursor-pointer hover:text-primary" 
+                        className="h-3 w-3 cursor-pointer hover:text-primary" transition-all duration-300 
                         onClick={() => handleRemoveSkill(skill)}
                       />
                     </Badge>
@@ -1115,7 +1115,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                     <Badge key={index} variant="outline" className="flex items-center gap-1">
                       {language}
                       <X 
-                        className="h-3 w-3 cursor-pointer hover:text-primary" 
+                        className="h-3 w-3 cursor-pointer hover:text-primary" transition-all duration-300 
                         onClick={() => handleRemoveLanguage(language)}
                       />
                     </Badge>
@@ -1172,12 +1172,12 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                         href={link} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex-1 text-sm text-blue-600 hover:underline truncate"
+                        className="flex-1 text-sm text-blue-600 hover:underline truncate" transition-all duration-300
                       >
                         {link}
                       </a>
                       <X 
-                        className="h-4 w-4 cursor-pointer hover:text-primary" 
+                        className="h-4 w-4 cursor-pointer hover:text-primary" transition-all duration-300 
                         onClick={() => handleRemovePortfolioLink(link)}
                       />
                     </div>
@@ -1348,12 +1348,12 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                           href={url} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex-1 text-sm text-blue-600 hover:underline truncate"
+                          className="flex-1 text-sm text-blue-600 hover:underline truncate" transition-all duration-300
                         >
                           {url}
                         </a>
                         <X 
-                          className="h-4 w-4 cursor-pointer hover:text-primary" 
+                          className="h-4 w-4 cursor-pointer hover:text-primary" transition-all duration-300 
                           onClick={() => handleRemoveSocialLink(platform)}
                         />
                       </div>
@@ -1396,7 +1396,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                 onClick={() => handleSaveProfile()}
                 disabled={saveProfileMutation.isPending}
                 data-testid="button-save-profile"
-                className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
+                className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
               >
                 {saveProfileMutation.isPending ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />

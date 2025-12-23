@@ -92,7 +92,7 @@ export default function FreelancerApplicationStatus() {
               </p>
               <Button
                 onClick={() => navigate("/?page=freelancer-dashboard")}
-                className="bg-primary hover:bg-primary/90"
+                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105" transition-all duration-300
                 data-testid="button-go-dashboard"
               >
                 Access Freelancer Dashboard
@@ -253,7 +253,7 @@ export default function FreelancerApplicationStatus() {
         <div className="mt-6 text-center">
           <Button
             onClick={() => openExternalUrl('https://edufiliova.com')}
-            className="bg-primary hover:bg-primary/90"
+            className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105" transition-all duration-300
             data-testid="button-explore-website"
           >
             Explore Website

@@ -228,7 +228,7 @@ const PremiumPage = ({ onNavigate }: PremiumPageProps) => {
           className="fixed top-4 right-4 z-50 rounded-lg px-3 py-2 transition-colors"
           aria-label="Close"
         >
-          <X className="h-5 w-5 text-gray-600 hover:text-gray-800" />
+          <X className="h-5 w-5 text-gray-600 hover:text-gray-800" transition-all duration-300 />
         </button>
 
         <div className="min-h-screen flex items-center justify-center p-6">
@@ -286,7 +286,7 @@ const PremiumPage = ({ onNavigate }: PremiumPageProps) => {
         className="fixed top-4 right-4 z-50 rounded-lg px-3 py-2 transition-colors"
         aria-label="Close"
       >
-        <X className="h-5 w-5 text-gray-600 hover:text-gray-800" />
+        <X className="h-5 w-5 text-gray-600 hover:text-gray-800" transition-all duration-300 />
       </button>
 
       {/* Current Plan Status Banner - Show if user has active subscription */}
@@ -318,7 +318,7 @@ const PremiumPage = ({ onNavigate }: PremiumPageProps) => {
               </div>
               <Button 
                 variant="outline" 
-                className="bg-white hover:bg-gray-50"
+                className="bg-white hover:bg-gray-50" transition-all duration-300
                 onClick={navigateToDashboard}
                 data-testid="button-view-dashboard"
               >

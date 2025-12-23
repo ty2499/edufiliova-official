@@ -294,7 +294,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           <Button
             onClick={() => handleVerifyCode(verificationCode)}
             disabled={verificationCode.length !== 6 || isVerifying}
-            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base"
+            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base" transition-all duration-300
             data-testid="button-continue"
           >
             {isVerifying ? (
@@ -313,7 +313,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button
                 onClick={handleResendCode}
                 disabled={isResending}
-                className="font-medium text-foreground hover:underline disabled:opacity-50"
+                className="font-medium text-foreground hover:underline disabled:opacity-50" transition-all duration-300
                 data-testid="button-resend-code"
               >
                 {isResending ? "Sending..." : "Resend Code"}
@@ -350,7 +350,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 setSignupMethod('email');
                 setCurrentView('signup');
               }}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#0C332C] hover:bg-[#e54d2d] text-white font-medium rounded-xl transition-all"
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#0C332C] hover:bg-[#e54d2d] text-white font-medium rounded-xl transition-all" transition-all duration-300
               data-testid="button-signup-email"
             >
               <Mail className="h-5 w-5" />
@@ -362,7 +362,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 setSignupMethod('phone');
                 setCurrentView('signup');
               }}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-medium rounded-xl transition-all"
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-medium rounded-xl transition-all" transition-all duration-300
               data-testid="button-signup-phone"
             >
               <Phone className="h-5 w-5" />
@@ -376,7 +376,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button 
                 type="button"
                 onClick={() => setCurrentView('login')} 
-                className="font-semibold text-foreground hover:underline"
+                className="font-semibold text-foreground hover:underline" transition-all duration-300
                 data-testid="link-login"
               >
                 Log in
@@ -489,7 +489,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                   <SelectItem 
                     key={country.id} 
                     value={country.name}
-                    className="text-gray-900 hover:bg-gray-100 focus:bg-gray-100"
+                    className="text-gray-900 hover:bg-gray-100 focus:bg-gray-100" transition-all duration-300
                   >
                     {country.name}
                   </SelectItem>
@@ -515,7 +515,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" transition-all duration-300
                 data-testid="button-toggle-password"
               >
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -540,7 +540,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" transition-all duration-300
                 data-testid="button-toggle-confirm-password"
               >
                 {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -553,7 +553,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
 
           <Button
             type="submit"
-            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base mt-6"
+            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base mt-6" transition-all duration-300
             disabled={submitMutation.isPending}
             data-testid="button-submit"
           >
@@ -575,7 +575,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             <button 
               type="button"
               onClick={() => setCurrentView('login')} 
-              className="text-foreground font-semibold hover:underline"
+              className="text-foreground font-semibold hover:underline" transition-all duration-300
               data-testid="link-login-form"
             >
               Sign in here

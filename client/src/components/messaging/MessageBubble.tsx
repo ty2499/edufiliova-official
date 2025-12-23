@@ -147,7 +147,7 @@ export default function MessageBubble({ message, isOwnMessage, onLoad }: Message
           <div className="flex items-center space-x-3 min-w-[200px]">
             <button
               onClick={toggleAudio}
-              className="flex-shrink-0 w-10 h-10 bg-blue-500 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
+              className="flex-shrink-0 w-10 h-10 bg-blue-500 hover:bg-primary rounded-full flex items-center justify-center transition-colors" transition-all duration-300
             >
               {isPlaying ? (
                 <Pause className="w-4 h-4 text-white" />
@@ -194,7 +194,7 @@ export default function MessageBubble({ message, isOwnMessage, onLoad }: Message
           </div>
           <button
             onClick={() => window.open(fileUrl, '_blank')}
-            className="flex-shrink-0 p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors"
+            className="flex-shrink-0 p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors" transition-all duration-300
           >
             <Download className="w-4 h-4" />
           </button>

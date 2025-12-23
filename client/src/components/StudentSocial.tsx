@@ -212,7 +212,7 @@ const StudentSocial = () => {
   };
 
   const StudentCard = ({ student, showFriendButton = false }: { student: Student; showFriendButton?: boolean }) => (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="hover:shadow-md transition-shadow" transition-all duration-300>
       <CardContent className="p-4">
         <div className="flex items-center space-x-3">
           <div className="relative">
@@ -281,7 +281,7 @@ const StudentSocial = () => {
   );
 
   const FriendRequestCard = ({ request }: { request: FriendRequest }) => (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="hover:shadow-md transition-shadow" transition-all duration-300>
       <CardContent className="p-4">
         <div className="flex items-center space-x-3">
           <Avatar className="h-12 w-12">
@@ -332,7 +332,7 @@ const StudentSocial = () => {
   );
 
   const FriendCard = ({ friend }: { friend: Friend }) => (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="hover:shadow-md transition-shadow" transition-all duration-300>
       <CardContent className="p-4">
         <div className="flex items-center space-x-3">
           <div className="relative">
@@ -461,7 +461,7 @@ const StudentSocial = () => {
                       <p className="text-sm text-muted-foreground mb-4">
                         Premium members can search and connect with students in their grade or higher. Connect with friends and expand your network!
                       </p>
-                      <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
+                      <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800" transition-all duration-300>
                         <Crown className="h-4 w-4 mr-2" />
                         Upgrade Now
                       </Button>
@@ -528,7 +528,7 @@ const StudentSocial = () => {
                       <p className="text-sm text-muted-foreground mb-4">
                         Premium members can see and connect with their friends. Expand your network with other students!
                       </p>
-                      <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
+                      <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800" transition-all duration-300>
                         <Crown className="h-4 w-4 mr-2" />
                         Upgrade Now
                       </Button>

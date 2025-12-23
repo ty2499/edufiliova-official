@@ -135,7 +135,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
       {/* Close button for mobile */}
       <button
         onClick={() => navigate('/')}
-        className="absolute top-6 left-6 z-[100] text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium text-sm p-2 rounded-lg transition-colors lg:hidden"
+        className="absolute top-6 left-6 z-[100] text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium text-sm p-2 rounded-lg transition-colors lg:hidden" transition-all duration-300
         data-testid="button-close-mobile"
         aria-label="Close"
       >
@@ -145,7 +145,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
       {/* Close button for desktop */}
       <button
         onClick={() => navigate('/')}
-        className="hidden lg:block absolute top-6 right-6 z-[100] text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium text-sm p-2 rounded-lg transition-colors"
+        className="hidden lg:block absolute top-6 right-6 z-[100] text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium text-sm p-2 rounded-lg transition-colors" transition-all duration-300
         data-testid="button-close-desktop"
         aria-label="Close"
       >
@@ -244,7 +244,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-3 text-gray-400 hover:text-gray-600" transition-all duration-300
                   disabled={loading}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -285,11 +285,11 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                 />
                 <label htmlFor="agreeToTerms" className="text-sm text-gray-600 dark:text-gray-400">
                   I agree to the{" "}
-                  <a href="/terms" target="_blank" className="text-blue-600 hover:underline">
+                  <a href="/terms" target="_blank" className="text-blue-600 hover:underline" transition-all duration-300>
                     Terms of Service
                   </a>{" "}
                   and{" "}
-                  <a href="/privacy" target="_blank" className="text-blue-600 hover:underline">
+                  <a href="/privacy" target="_blank" className="text-blue-600 hover:underline" transition-all duration-300>
                     Privacy Policy
                   </a>
                 </label>
@@ -336,7 +336,7 @@ export function CheckoutAuth({ onSuccess }: CheckoutAuthProps) {
                     agreeToTerms: false
                   });
                 }}
-                className="text-sm text-blue-600 hover:text-blue-800 underline"
+                className="text-sm text-blue-600 hover:text-blue-800 underline" transition-all duration-300
                 disabled={loading}
                 data-testid={`button-switch-to-${isLogin ? 'register' : 'login'}`}
               >

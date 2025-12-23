@@ -201,7 +201,7 @@ export function CouponManagement() {
         </div>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-primary hover:bg-primary text-white" data-testid="button-create-coupon">
+            <Button className="bg-primary hover:bg-primary text-white" transition-all duration-300 data-testid="button-create-coupon">
               <Plus className="h-4 w-4 mr-2" />
               Create Coupon
             </Button>
@@ -550,7 +550,7 @@ function CouponForm({
         <Button
           onClick={onSubmit}
           disabled={isSubmitting || !formData.code || !formData.discountValue}
-          className="bg-primary hover:bg-primary text-white"
+          className="bg-primary hover:bg-primary text-white" transition-all duration-300
           data-testid="button-submit-coupon"
         >
           {isSubmitting ? 'Saving...' : submitLabel}

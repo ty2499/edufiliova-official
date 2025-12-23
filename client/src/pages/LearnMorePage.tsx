@@ -164,7 +164,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
               <Button 
                 size="lg"
                 onClick={() => onNavigate("auth")}
-                className="bg-slate-900 text-foreground hover:bg-slate-800 text-lg px-10 py-4"
+                className="bg-slate-900 text-foreground hover:bg-slate-800 text-lg px-10 py-4" transition-all duration-300
                 data-testid="button-start-journey"
               >
                 Start Your Journey Today
@@ -172,7 +172,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
               <Button 
                 size="lg"
                 onClick={() => onNavigate("contact")}
-                className="bg-slate-900 text-white hover:bg-slate-800 text-lg px-10 py-4"
+                className="bg-slate-900 text-white hover:bg-slate-800 text-lg px-10 py-4" transition-all duration-300
                 data-testid="button-contact-us"
               >
                 Contact Our Team
@@ -213,7 +213,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="text-center hover:scale-105 transition-transform duration-300">
+              <Card key={index} className="text-center hover:scale-105 transition-transform duration-300" transition-all duration-300>
                 <CardHeader>
                   <div className="flex justify-center mb-4">
                     <div className="p-3 bg-primary/10 rounded-full text-foreground">
@@ -247,7 +247,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {subjects.map((subject, index) => (
-              <Card key={index} className="overflow-hidden hover:scale-105 transition-transform duration-300">
+              <Card key={index} className="overflow-hidden hover:scale-105 transition-transform duration-300" transition-all duration-300>
                 <CardHeader>
                   <div className="flex items-center space-x-3">
                     <div className={`p-3 rounded-full ${subject.color}`}>
@@ -437,7 +437,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
               <Button 
                 size="lg"
                 onClick={() => onNavigate("auth")}
-                className="bg-slate-900 text-foreground hover:bg-slate-800 text-lg px-12 py-4"
+                className="bg-slate-900 text-foreground hover:bg-slate-800 text-lg px-12 py-4" transition-all duration-300
                 data-testid="button-start-final-cta"
               >
                 Get Premium Access
@@ -445,7 +445,7 @@ const LearnMorePage = ({ onNavigate }: LearnMorePageProps) => {
               <Button 
                 size="lg"
                 onClick={() => onNavigate("contact")}
-                className="bg-slate-900 text-white hover:bg-slate-800 text-lg px-12 py-4"
+                className="bg-slate-900 text-white hover:bg-slate-800 text-lg px-12 py-4" transition-all duration-300
                 data-testid="button-contact-final-cta"
               >
                 Talk to Our Team

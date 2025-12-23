@@ -635,7 +635,7 @@ const PricingManagement: React.FC = () => {
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
             <Button 
-              className="hover:bg-[#3ae66c] bg-[#f64e3c] text-[#ffffff] w-full sm:w-auto"
+              className="hover:bg-[#3ae66c] bg-[#f64e3c] text-[#ffffff] w-full sm:w-auto" transition-all duration-300
               data-testid="create-pricing-plan-button"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -916,7 +916,7 @@ const PricingManagement: React.FC = () => {
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-primary hover:bg-primary text-white"
+                    className="bg-primary hover:bg-primary text-white" transition-all duration-300
                     disabled={createPlanMutation.isPending}
                     data-testid="button-submit-create"
                   >
@@ -1139,7 +1139,7 @@ const PricingManagement: React.FC = () => {
                     variant="outline"
                     onClick={() => handleDeletePlan(plan.id)}
                     disabled={deletePlanMutation.isPending}
-                    className="text-primary hover:text-primary"
+                    className="text-primary hover:text-primary" transition-all duration-300
                     data-testid={`button-delete-${plan.id}`}
                   >
                     <Trash2 className="h-3 w-3" />
@@ -1162,7 +1162,7 @@ const PricingManagement: React.FC = () => {
             </p>
             <Button 
               onClick={() => setIsCreateDialogOpen(true)}
-              className="hover:bg-[#3ae66c] bg-[#f64e3c] text-[#ffffff] w-full sm:w-auto"
+              className="hover:bg-[#3ae66c] bg-[#f64e3c] text-[#ffffff] w-full sm:w-auto" transition-all duration-300
               data-testid="button-create-first-plan"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -1257,7 +1257,7 @@ const PricingManagement: React.FC = () => {
                               onClick={() => handleBannerPriceDelete(config.id, config.targetingType, config.durationDays)}
                               disabled={deleteBannerPricingMutation.isPending}
                               data-testid={`button-delete-banner-price-${config.id}`}
-                              className="text-primary hover:text-primary hover:bg-primary/10"
+                              className="text-primary hover:text-primary hover:bg-primary/10" transition-all duration-300
                             >
                               <Trash2 className="h-3 w-3" />
                             </Button>
@@ -1421,7 +1421,7 @@ const PricingManagement: React.FC = () => {
                           }
                         }}
                         disabled={deleteFreelancerPlanMutation.isPending}
-                        className="text-primary hover:text-primary"
+                        className="text-primary hover:text-primary" transition-all duration-300
                         data-testid={`button-delete-freelancer-plan-${plan.id}`}
                       >
                         <Trash2 className="h-3 w-3" />
@@ -1750,7 +1750,7 @@ const PricingManagement: React.FC = () => {
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-primary hover:bg-primary text-white"
+                  className="bg-primary hover:bg-primary text-white" transition-all duration-300
                   disabled={updatePlanMutation.isPending}
                   data-testid="button-submit-edit"
                 >
@@ -2035,7 +2035,7 @@ const PricingManagement: React.FC = () => {
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-primary hover:bg-primary text-white"
+                  className="bg-primary hover:bg-primary text-white" transition-all duration-300
                   disabled={updateFreelancerPlanMutation.isPending}
                   data-testid="button-submit-edit-freelancer"
                 >

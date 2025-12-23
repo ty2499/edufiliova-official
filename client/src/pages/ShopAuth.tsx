@@ -391,7 +391,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 <button
                   onClick={handleResendCode}
                   disabled={isResending}
-                  className="font-medium hover:underline disabled:opacity-50"
+                  className="font-medium hover:underline disabled:opacity-50" transition-all duration-300
                   style={{ color: '#0C332C' }}
                   data-testid="button-resend-code"
                 >
@@ -406,7 +406,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                   setErrors({});
                   setVerificationError(false);
                 }}
-                className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900 mx-auto"
+                className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900 mx-auto" transition-all duration-300
                 data-testid="button-back"
               >
                 <ArrowLeft className="h-4 w-4" />
@@ -499,7 +499,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" transition-all duration-300
                 disabled={isProcessing}
                 data-testid="button-toggle-password"
               >
@@ -539,9 +539,9 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 />
                 <label htmlFor="terms" className="text-xs sm:text-sm text-gray-600 leading-snug cursor-pointer">
                   I agree to the{' '}
-                  <a href="/terms" target="_blank" className="text-blue-600 hover:underline font-medium">Terms of Service</a>{' '}
+                  <a href="/terms" target="_blank" className="text-blue-600 hover:underline font-medium" transition-all duration-300>Terms of Service</a>{' '}
                   and{' '}
-                  <a href="/privacy" target="_blank" className="text-blue-600 hover:underline font-medium">Privacy Policy</a>
+                  <a href="/privacy" target="_blank" className="text-blue-600 hover:underline font-medium" transition-all duration-300>Privacy Policy</a>
                 </label>
               </div>
               {errors.terms && <p className="text-sm text-primary-600">{errors.terms}</p>}
@@ -550,7 +550,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
 
           <Button 
             type="submit" 
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-6 text-base font-semibold"
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-6 text-base font-semibold" transition-all duration-300
             disabled={isProcessing}
             data-testid={`button-${authMode}`}
           >
@@ -575,7 +575,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 setConfirmPassword('');
                 setAgreeToTerms(false);
               }}
-              className="text-sm text-blue-600 hover:text-blue-800 font-medium hover:underline block w-full"
+              className="text-sm text-blue-600 hover:text-blue-800 font-medium hover:underline block w-full" transition-all duration-300
               disabled={isProcessing}
               data-testid={`button-switch-to-${authMode === 'signin' ? 'signup' : 'signin'}`}
             >

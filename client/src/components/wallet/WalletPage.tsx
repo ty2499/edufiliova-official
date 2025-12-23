@@ -308,7 +308,7 @@ function WalletPaymentModal({
         <div className="flex justify-end p-4 pb-0">
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
             disabled={processing}
             data-testid="button-close-modal"
           >
@@ -420,7 +420,7 @@ function WalletPaymentModal({
                   <Button
                     type="submit"
                     disabled={!stripe || processing}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-complete-purchase"
                   >
                     {processing ? 'Processing...' : `Complete Purchase`}
@@ -448,7 +448,7 @@ function WalletPaymentModal({
                   <Button
                     onClick={handlePayPalPayment}
                     disabled={processing}
-                    className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white py-6 text-base font-semibold"
+                    className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-paypal-checkout"
                   >
                     {processing ? 'Redirecting...' : 'Continue with PayPal'}
@@ -480,7 +480,7 @@ function WalletPaymentModal({
                   <Button
                     onClick={handleDodoPayment}
                     disabled={processing}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-dodopay-checkout"
                   >
                     {processing ? (
@@ -515,7 +515,7 @@ function WalletPaymentModal({
                   <Button
                     onClick={() => handleMobileMoneyPayment(selectedGateway)}
                     disabled={processing}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid={`button-${selectedGateway}-checkout`}
                   >
                     {processing ? 'Processing...' : `Pay with ${getGatewayDisplayName(enabledGateways.find(g => g.gatewayId === selectedGateway) || { gatewayId: selectedGateway, gatewayName: selectedGateway } as PaymentGateway)}`}
@@ -757,7 +757,7 @@ export function WalletPage({ userRole = 'customer' }: WalletPageProps) {
               onClick={handleAddFunds}
               disabled={!addAmount || createPaymentIntentMutation.isPending}
               data-testid="button-add-funds"
-              className="bg-primary text-white hover:bg-primary"
+              className="bg-primary text-white hover:bg-primary" transition-all duration-300
             >
               Add Funds
             </Button>
@@ -790,7 +790,7 @@ export function WalletPage({ userRole = 'customer' }: WalletPageProps) {
               onClick={handleRedeemVoucher}
               disabled={!voucherCode.trim() || redeemVoucherMutation.isPending}
               data-testid="button-redeem-voucher"
-              className="bg-primary text-white hover:bg-primary"
+              className="bg-primary text-white hover:bg-primary" transition-all duration-300
             >
               {redeemVoucherMutation.isPending ? 'Redeeming...' : 'Redeem'}
             </Button>

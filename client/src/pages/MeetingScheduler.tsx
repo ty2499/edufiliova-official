@@ -504,7 +504,7 @@ export default function MeetingScheduler() {
                 <div className="flex gap-3 pt-4">
                   <Button
                     type="submit"
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white" transition-all duration-300
                     disabled={createMeetingMutation.isPending}
                     data-testid="button-create-meeting"
                   >

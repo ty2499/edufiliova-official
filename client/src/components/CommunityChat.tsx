@@ -699,7 +699,7 @@ export function CommunityChat() {
                     {posts.map((post: Post) => (
                       <Card 
                         key={post.id} 
-                        className="hover:shadow-md transition-shadow cursor-pointer"
+                        className="hover:shadow-md transition-shadow cursor-pointer" transition-all duration-300
                         onClick={() => {
                           setSelectedPost(post);
                           setViewMode('post-details');
@@ -791,7 +791,7 @@ export function CommunityChat() {
                                           handleEditPost(post);
                                         }}
                                         disabled={editPostMutation.isPending}
-                                        className="gap-1 text-muted-foreground hover:text-foreground"
+                                        className="gap-1 text-muted-foreground hover:text-foreground" transition-all duration-300
                                         data-testid={`button-edit-post-${post.id}`}
                                       >
                                         {editPostMutation.isPending && editingPost?.id === post.id ? (
@@ -816,7 +816,7 @@ export function CommunityChat() {
                                         }
                                       }}
                                       disabled={deletePostMutation.isPending}
-                                      className="gap-1 text-muted-foreground hover:text-primary disabled:opacity-50"
+                                      className="gap-1 text-muted-foreground hover:text-primary disabled:opacity-50" transition-all duration-300
                                       data-testid={`button-delete-post-${post.id}`}
                                     >
                                       {deletePostMutation.isPending ? (
@@ -871,7 +871,7 @@ export function CommunityChat() {
                     <p className="text-muted-foreground mb-4">
                       Create a group and wait for admin approval, or join existing approved groups
                     </p>
-                    <Button onClick={() => setShowCreateGroup(true)} className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black">
+                    <Button onClick={() => setShowCreateGroup(true)} className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300>
                       <Plus className="h-4 w-4 mr-2" />
                       Create Group (Pending Approval)
                     </Button>
@@ -879,7 +879,7 @@ export function CommunityChat() {
                 ) : (
                   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {groups.map((group: Group) => (
-                      <Card key={group.id} className="hover:shadow-md transition-shadow">
+                      <Card key={group.id} className="hover:shadow-md transition-shadow" transition-all duration-300>
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex-1">
@@ -933,7 +933,7 @@ export function CommunityChat() {
                                         }
                                       }}
                                       disabled={leaveGroupMutation.isPending}
-                                      className="flex-1 text-primary hover:text-primary hover:bg-primary/10"
+                                      className="flex-1 text-primary hover:text-primary hover:bg-primary/10" transition-all duration-300
                                     >
                                       Leave Group
                                     </Button>
@@ -963,7 +963,7 @@ export function CommunityChat() {
                                 size="sm" 
                                 onClick={() => joinGroupMutation.mutate(group.id)}
                                 disabled={joinGroupMutation.isPending || group.memberCount >= (group.maxMembers || 100000)}
-                                className="w-full bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
+                                className="w-full bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
                               >
                                 {joinGroupMutation.isPending ? (
                                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
@@ -996,7 +996,7 @@ export function CommunityChat() {
                       </p>
                       <Button 
                         size="lg" 
-                        className="bg-primary hover:bg-primary text-white"
+                        className="bg-primary hover:bg-primary text-white" transition-all duration-300
                         onClick={() => setShowPaymentModal(true)}
                         data-testid="button-upgrade-premium"
                       >
@@ -1025,7 +1025,7 @@ export function CommunityChat() {
                     ) : (
                       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {students.map((student: Student) => (
-                          <Card key={student.id} className="hover:shadow-md transition-shadow">
+                          <Card key={student.id} className="hover:shadow-md transition-shadow" transition-all duration-300>
                             <CardContent className="p-4">
                               <div className="flex items-center gap-3 mb-3">
                                 <Avatar className="h-12 w-12">
@@ -1047,7 +1047,7 @@ export function CommunityChat() {
                                     size="sm" 
                                     onClick={() => sendFriendRequestMutation.mutate(student.userId)}
                                     disabled={sendFriendRequestMutation.isPending}
-                                    className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
+                                    className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
                                   >
                                     <UserPlus className="h-4 w-4 mr-1" />
                                     Add Friend
@@ -1091,7 +1091,7 @@ export function CommunityChat() {
                     <MessageSquare className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
                     <p className="text-muted-foreground mb-4">Start sharing your thoughts and knowledge</p>
-                    <Button onClick={() => setShowCreatePost(true)} className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black">
+                    <Button onClick={() => setShowCreatePost(true)} className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300>
                       <Plus className="h-4 w-4 mr-2" />
                       Create Your First Post
                     </Button>
@@ -1101,7 +1101,7 @@ export function CommunityChat() {
                     {posts.map((post: Post) => (
                       <Card 
                         key={post.id} 
-                        className="hover:shadow-md transition-shadow cursor-pointer"
+                        className="hover:shadow-md transition-shadow cursor-pointer" transition-all duration-300
                         onClick={() => {
                           setSelectedPost(post);
                           setViewMode('post-details');
@@ -1263,7 +1263,7 @@ export function CommunityChat() {
               <Button 
                 onClick={handleUpdatePost} 
                 disabled={editPostMutation.isPending}
-                className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
+                className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
                 data-testid="button-update-post"
               >
                 {editPostMutation.isPending ? 'Updating...' : 'Update Topic'}
@@ -1306,7 +1306,7 @@ export function CommunityChat() {
               <Button 
                 onClick={handleCreateGroup} 
                 disabled={createGroupMutation.isPending}
-                className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
+                className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
               >
                 {createGroupMutation.isPending ? 'Creating...' : 'Create Group'}
               </Button>
@@ -1400,7 +1400,7 @@ export function CommunityChat() {
                     onClick={() => selectedPost && replyMutation.mutate({ postId: selectedPost.id, content: replyContent })}
                     disabled={!replyContent.trim() || replyMutation.isPending}
                     size="sm"
-                    className="self-end bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
+                    className="self-end bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
                   >
                     {replyMutation.isPending ? (
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
@@ -1427,7 +1427,7 @@ export function CommunityChat() {
               ) : (
                 <div className="space-y-4">
                 {replies.map((reply: Reply) => (
-                  <div key={reply.id} className="flex gap-3 p-3 hover:bg-muted/20 transition-colors duration-200 rounded-lg">
+                  <div key={reply.id} className="flex gap-3 p-3 hover:bg-muted/20 transition-colors duration-200 rounded-lg" transition-all duration-300>
                     <Avatar className="h-8 w-8 flex-shrink-0">
                       <AvatarImage src={reply.author.profilePic} />
                       <AvatarFallback>{reply.author.name?.charAt(0) || '?'}</AvatarFallback>
@@ -1446,7 +1446,7 @@ export function CommunityChat() {
                               size="sm"
                               onClick={() => handleEditReply(reply)}
                               disabled={editReplyMutation.isPending}
-                              className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground disabled:opacity-50"
+                              className="h-6 w-6 p-0 text-muted-foreground hover:text-foreground disabled:opacity-50" transition-all duration-300
                               data-testid={`button-edit-reply-${reply.id}`}
                             >
                               {editReplyMutation.isPending && editingReply?.id === reply.id ? (
@@ -1464,7 +1464,7 @@ export function CommunityChat() {
                                 }
                               }}
                               disabled={deleteReplyMutation.isPending}
-                              className="h-6 w-6 p-0 text-muted-foreground hover:text-primary disabled:opacity-50"
+                              className="h-6 w-6 p-0 text-muted-foreground hover:text-primary disabled:opacity-50" transition-all duration-300
                               data-testid={`button-delete-reply-${reply.id}`}
                             >
                               {deleteReplyMutation.isPending ? (
@@ -1489,7 +1489,7 @@ export function CommunityChat() {
                               size="sm"
                               onClick={handleUpdateReply}
                               disabled={editReplyMutation.isPending}
-                              className="h-6 text-xs bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
+                              className="h-6 text-xs bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
                               data-testid={`button-save-reply-${reply.id}`}
                             >
                               {editReplyMutation.isPending ? 'Saving...' : 'Save'}
@@ -1536,7 +1536,7 @@ export function CommunityChat() {
                             // Handle reply to reply functionality
                             console.log('Reply to reply:', reply.id);
                           }}
-                          className="text-sm text-muted-foreground hover:text-[#A0FAB2] hover:bg-green-50 dark:hover:bg-green-950/20 transition-colors p-1 h-auto rounded-full"
+                          className="text-sm text-muted-foreground hover:text-[#A0FAB2] hover:bg-green-50 dark:hover:bg-green-950/20 transition-colors p-1 h-auto rounded-full" transition-all duration-300
                         >
                           <MessageCircle className="h-4 w-4 mr-1" />
                           <span className="text-xs">Reply</span>
@@ -1672,7 +1672,7 @@ export function CommunityChat() {
                                   queryClient.invalidateQueries({ queryKey: ['community-dialog-replies'] });
                                 }
                               }}
-                              className="h-6 px-2 text-xs text-muted-foreground hover:text-primary"
+                              className="h-6 px-2 text-xs text-muted-foreground hover:text-primary" transition-all duration-300
                             >
                               <Trash2 className="h-3 w-3" />
                             </Button>

@@ -178,7 +178,7 @@ const ContactPage = ({ onNavigate }: ContactPageProps) => {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-black text-white hover:bg-gray-800 rounded-lg py-6 text-base font-medium mt-8"
+                    className="w-full bg-black text-white hover:bg-gray-800 rounded-lg py-6 text-base font-medium mt-8" transition-all duration-300
                     disabled={isSubmitting}
                     data-testid="button-submit"
                   >

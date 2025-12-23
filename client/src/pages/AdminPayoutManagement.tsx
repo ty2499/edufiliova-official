@@ -291,7 +291,7 @@ export default function AdminPayoutManagement({ isEmbedded = false }: AdminPayou
                       {currentRequests.map((request: any) => (
                       <div
                         key={request.request.id}
-                        className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow"
+                        className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-shadow" transition-all duration-300
                         data-testid={`request-${request.request.id}`}
                       >
                         <div className="flex items-start justify-between mb-4">

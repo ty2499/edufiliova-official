@@ -86,7 +86,7 @@ export default function MyCertificatesPage() {
           {certificates.map((certificate, index) => (
             <Card 
               key={certificate.id}
-              className="border-2 hover:shadow-lg transition-shadow"
+              className="border-2 hover:shadow-lg transition-shadow" transition-all duration-300
               data-testid={`card-certificate-${certificate.id}`}
             >
               {/* Certificate Visual Header */}

@@ -186,7 +186,7 @@ export default function StudentMeetings() {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="text-white hover:text-gray-200"
+                className="text-white hover:text-gray-200" transition-all duration-300
                 data-testid="button-mobile-menu"
               >
                 {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -212,7 +212,7 @@ export default function StudentMeetings() {
           <nav className="flex-1 flex flex-col space-y-2 px-3 overflow-y-auto">
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-overview"
             >
@@ -222,7 +222,7 @@ export default function StudentMeetings() {
             
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-subjects"
             >
@@ -233,7 +233,7 @@ export default function StudentMeetings() {
             {featureRestrictions.canAccessCourses && (
               <Button
                 variant="ghost"
-                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-courses"
               >
@@ -244,7 +244,7 @@ export default function StudentMeetings() {
             
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" transition-all duration-300
               onClick={() => setShowMobileMenu(false)}
               data-testid="nav-classes"
             >
@@ -256,7 +256,7 @@ export default function StudentMeetings() {
               <>
                 <Button
                   variant="ghost"
-                  className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+                  className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                   onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
                   data-testid="nav-portfolio-gallery"
                 >
@@ -265,7 +265,7 @@ export default function StudentMeetings() {
                 </Button>
                 <Button
                   variant="ghost"
-                  className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+                  className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                   onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
                   data-testid="nav-marketplace"
                 >
@@ -277,7 +277,7 @@ export default function StudentMeetings() {
             
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-assignments"
             >
@@ -287,7 +287,7 @@ export default function StudentMeetings() {
 
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-book-teacher"
             >
@@ -297,7 +297,7 @@ export default function StudentMeetings() {
             
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-messages"
             >
@@ -307,7 +307,7 @@ export default function StudentMeetings() {
             
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-notes"
             >
@@ -317,7 +317,7 @@ export default function StudentMeetings() {
             
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-announcements"
             >
@@ -328,7 +328,7 @@ export default function StudentMeetings() {
             {featureRestrictions.canAccessCommunity && (
               <Button
                 variant="ghost"
-                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-community"
               >
@@ -339,7 +339,7 @@ export default function StudentMeetings() {
             
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-wallet"
             >
@@ -350,7 +350,7 @@ export default function StudentMeetings() {
             {featureRestrictions.canAccessBilling && (
               <Button
                 variant="ghost"
-                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-billing"
               >
@@ -362,7 +362,7 @@ export default function StudentMeetings() {
             {featureRestrictions.canAccessPurchases && (
               <Button
                 variant="ghost"
-                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-purchases"
               >
@@ -374,7 +374,7 @@ export default function StudentMeetings() {
             {featureRestrictions.canAccessDownloads && (
               <Button
                 variant="ghost"
-                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-downloads"
               >
@@ -386,7 +386,7 @@ export default function StudentMeetings() {
             {featureRestrictions.canAccessCreateAd && (
               <Button
                 variant="ghost"
-                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+                className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-create-ad"
               >
@@ -400,7 +400,7 @@ export default function StudentMeetings() {
           <div className="border-t border-white/20 pt-3 px-3 space-y-2">
             <Button
               variant="ghost"
-              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black"
+              className="w-full justify-start rounded-lg transition-colors px-3 py-2 text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { navigate('/student-dashboard'); setShowMobileMenu(false); }}
               data-testid="nav-settings"
             >
@@ -412,7 +412,7 @@ export default function StudentMeetings() {
           <div className="p-3 border-t border-white/20 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium"
+              className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium" transition-all duration-300
               onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
@@ -421,7 +421,7 @@ export default function StudentMeetings() {
             </Button>
             <Button
               size="sm"
-              className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium"
+              className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium" transition-all duration-300
               onClick={async () => { 
                 setIsLoggingOut(true);
                 setShowMobileMenu(false);

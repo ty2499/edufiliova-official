@@ -408,7 +408,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
           <div className="space-y-3">
             {/* Product Title */}
             <h3 
-              className="font-bold text-base text-gray-900 line-clamp-2 leading-tight cursor-pointer hover:text-blue-600 font-['StackSans_Headline']"
+              className="font-bold text-base text-gray-900 line-clamp-2 leading-tight cursor-pointer hover:text-blue-600 font-['StackSans_Headline']" transition-all duration-300
               onClick={() => onNavigate('product-detail', 'slide-left', { productId: product.id })}
             >
               {product.name}
@@ -470,7 +470,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
 
             {/* More like this link - Navigate to category */}
             <button 
-              className="w-full text-left text-sm text-gray-600 hover:text-gray-900 flex items-center justify-between group"
+              className="w-full text-left text-sm text-gray-600 hover:text-gray-900 flex items-center justify-between group" transition-all duration-300
               onClick={(e) => {
                 e.stopPropagation();
                 if (productCategory && onNavigate) {
@@ -479,7 +479,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               }}
             >
               <span>Explore More</span>
-              <span className="text-gray-400 group-hover:text-gray-600 transition-colors">→</span>
+              <span className="text-gray-400 group-hover:text-gray-600 transition-colors" transition-all duration-300>→</span>
             </button>
           </div>
         </CardContent>
@@ -493,7 +493,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
     
     return (
       <Card 
-        className="hover:shadow-md transition-shadow cursor-pointer" 
+        className="hover:shadow-md transition-shadow cursor-pointer" transition-all duration-300 
         data-testid={`product-list-${product.id}`}
       >
         <CardContent className="p-3 sm:p-4">
@@ -518,7 +518,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
             <div className="flex-1 min-w-0">
               <div className="mb-2">
                 <h3 
-                  className="font-bold text-gray-900 line-clamp-2 text-xs sm:text-sm cursor-pointer hover:text-blue-600 font-['StackSans_Headline']"
+                  className="font-bold text-gray-900 line-clamp-2 text-xs sm:text-sm cursor-pointer hover:text-blue-600 font-['StackSans_Headline']" transition-all duration-300
                   onClick={() => onNavigate('product-detail', 'slide-left', { productId: product.id })}
                 >
                   {product.name}
@@ -581,7 +581,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                   </Button>
                 )}
                 <button 
-                  className="text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1 group"
+                  className="text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1 group" transition-all duration-300
                   onClick={(e) => {
                     e.stopPropagation();
                     if (productCategory && onNavigate) {
@@ -590,7 +590,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                   }}
                 >
                   <span>Explore More</span>
-                  <span className="text-gray-400 group-hover:text-gray-600 transition-colors">→</span>
+                  <span className="text-gray-400 group-hover:text-gray-600 transition-colors" transition-all duration-300>→</span>
                 </button>
               </div>
             </div>
@@ -613,7 +613,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
           <div className="flex-1 font-medium">{notification.message}</div>
           <button
             onClick={() => setNotification({ show: false, message: '', type: 'success' })}
-            className="p-1 hover:bg-white/20 rounded transition-colors"
+            className="p-1 hover:bg-white/20 rounded transition-colors" transition-all duration-300
             data-testid="button-close-notification"
           >
             <X className="h-4 w-4" />
@@ -682,7 +682,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="px-3 py-2 rounded-full font-medium text-sm text-gray-700 hover:text-gray-800 hover:scale-105 transform transition-all duration-200"
+                        className="px-3 py-2 rounded-full font-medium text-sm text-gray-700 hover:text-gray-800 hover:scale-105 transform transition-all duration-200" transition-all duration-300
                         onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                         data-testid="nav-more-categories"
@@ -769,7 +769,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               <Button
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform relative"
+                className="flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform relative" transition-all duration-300
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                 onClick={() => onNavigate && onNavigate('cart')}
@@ -798,7 +798,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex items-center justify-center px-3 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform"
+                  className="flex items-center justify-center px-3 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform" transition-all duration-300
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                   onClick={() => onNavigate && onNavigate(getDashboardForRole())}
@@ -810,7 +810,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                 <Button
                   variant="default"
                   size="sm"
-                  className="flex items-center gap-2 px-5 py-2 rounded-full font-medium text-sm text-white transition-all duration-200 hover:scale-105 transform" style={{backgroundColor: '#0C332C'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#0C332C'}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full font-medium text-sm text-white transition-all duration-200 hover:scale-105 transform" transition-all duration-300 style={{backgroundColor: '#0C332C'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#0C332C'}
                   onClick={() => onNavigate && onNavigate('shop-auth')}
                   data-testid="button-login"
                 >
@@ -1031,7 +1031,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                     onClick={() => onNavigate('shop-auth')}
                     size="lg"
                     variant="outline"
-                    className="px-6 py-3 font-semibold bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 rounded-lg backdrop-blur-sm w-full sm:w-auto"
+                    className="px-6 py-3 font-semibold bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 rounded-lg backdrop-blur-sm w-full sm:w-auto" transition-all duration-300
                     data-testid="button-become-seller"
                   >
                     Become a Seller
@@ -1043,7 +1043,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
             {/* Right side - Stats/Features cards */}
             <div className="hidden md:grid grid-cols-2 gap-4">
               {/* Stat Card 1 */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-blue-400/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(45, 93, 216, 0.15)' }}>
                   <Package className="h-5 w-5" style={{ color: '#2d5dd8' }} />
                 </div>
@@ -1052,7 +1052,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               </div>
               
               {/* Stat Card 2 */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-blue-400/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(45, 93, 216, 0.15)' }}>
                   <Users className="h-5 w-5" style={{ color: '#2d5dd8' }} />
                 </div>
@@ -1061,13 +1061,13 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               </div>
               
               {/* Stat Card 3 */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
                 <h3 className="text-2xl font-bold text-white mb-1">50K+</h3>
                 <p className="text-sm text-slate-400">Products Sold</p>
               </div>
               
               {/* Stat Card 4 */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
                 <h3 className="text-2xl font-bold text-white mb-1">25K+</h3>
                 <p className="text-sm text-slate-400">Happy Customers</p>
               </div>
@@ -1092,7 +1092,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               {/* Left scroll button - Hidden on mobile */}
               <button
                 onClick={() => scrollCreators('left')}
-                className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="h-6 w-6 text-gray-700" />
@@ -1101,7 +1101,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               {/* Right scroll button - Hidden on mobile */}
               <button
                 onClick={() => scrollCreators('right')}
-                className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300
                 aria-label="Scroll right"
               >
                 <ChevronRight className="h-6 w-6 text-gray-700" />
@@ -1125,7 +1125,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                         }
                       }, 0);
                     }}
-                    className="flex-shrink-0 w-56 sm:w-64 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer border border-gray-100 overflow-hidden"
+                    className="flex-shrink-0 w-56 sm:w-64 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer border border-gray-100 overflow-hidden" transition-all duration-300
                     data-testid={`creator-card-${creator.id}`}
                   >
                     {/* Cover/Banner */}
@@ -1213,7 +1213,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                   <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
                     {/* All mockups option */}
                     <div className="mb-2">
-                      <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm">
+                      <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm" transition-all duration-300>
                         <input 
                           type="radio" 
                           name="filter-all" 
@@ -1234,7 +1234,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                             {/* Main category with arrow */}
                             <button
                               onClick={() => toggleCategory(category.id)}
-                              className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-sm font-medium"
+                              className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-sm font-medium" transition-all duration-300
                               data-testid={`filter-category-${category.id}`}
                             >
                               <span>{category.name.charAt(0).toUpperCase() + category.name.slice(1)}</span>
@@ -1251,7 +1251,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                                 {category.subcategories.map((sub) => (
                                   <label 
                                     key={sub} 
-                                    className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded"
+                                    className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded" transition-all duration-300
                                     data-testid={`filter-subcategory-${sub.toLowerCase().replace(/\s+/g, '-')}`}
                                   >
                                     <input 
@@ -1275,7 +1275,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                         ) : (
                           /* Standalone categories without subcategories */
                           <label 
-                            className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded"
+                            className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded" transition-all duration-300
                             data-testid={`filter-category-${category.id}`}
                           >
                             <input 
@@ -1333,7 +1333,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
 
                     {/* All mockups option */}
                     <div className="mb-2">
-                      <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm">
+                      <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm" transition-all duration-300>
                         <input 
                           type="radio" 
                           name="filter-all-mobile" 
@@ -1354,7 +1354,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                               {/* Main category with arrow */}
                               <button
                                 onClick={() => toggleCategory(category.id)}
-                                className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-sm font-medium"
+                                className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-sm font-medium" transition-all duration-300
                               >
                                 <span>{category.name.charAt(0).toUpperCase() + category.name.slice(1)}</span>
                                 <ChevronDown 
@@ -1370,7 +1370,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                                   {category.subcategories.map((sub) => (
                                     <label 
                                       key={sub} 
-                                      className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded"
+                                      className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded" transition-all duration-300
                                     >
                                       <input 
                                         type="checkbox" 
@@ -1393,7 +1393,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                           ) : (
                             /* Standalone categories without subcategories */
                             <label 
-                              className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded"
+                              className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded" transition-all duration-300
                             >
                               <input 
                                 type="checkbox" 
@@ -1436,7 +1436,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                           setSelectedCreatorId(null);
                           setSelectedCreatorName(null);
                         }}
-                        className="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full p-2 transition-colors shadow-md"
+                        className="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full p-2 transition-colors shadow-md" transition-all duration-300
                         data-testid="button-close-creator-profile"
                       >
                         <X className="h-5 w-5 text-gray-700" />

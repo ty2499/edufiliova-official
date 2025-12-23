@@ -70,7 +70,7 @@ export function MinimizedMeeting() {
       onClick={handleExpand}
       data-testid="minimized-meeting-window"
     >
-      <div className="relative bg-gray-900 rounded-md sm:rounded-lg overflow-hidden shadow-2xl border sm:border-2 border-white dark:border-gray-700 w-28 h-20 sm:w-80 sm:h-52 transition-transform hover:scale-105">
+      <div className="relative bg-gray-900 rounded-md sm:rounded-lg overflow-hidden shadow-2xl border sm:border-2 border-white dark:border-gray-700 w-28 h-20 sm:w-80 sm:h-52 transition-transform hover:scale-105" transition-all duration-300>
         {/* Video Container */}
         <div 
           ref={minimizedVideoRef} 
@@ -92,7 +92,7 @@ export function MinimizedMeeting() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-between p-1 sm:p-3">
           <div className="flex items-center justify-between">
             <Badge className="bg-primary text-white text-[8px] sm:text-xs px-1 py-0 sm:px-2 sm:py-1 h-4 sm:h-auto">Live</Badge>
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity hidden sm:block">
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity hidden sm:block" transition-all duration-300>
               <Button
                 size="icon"
                 variant="secondary"

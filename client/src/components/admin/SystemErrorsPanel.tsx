@@ -393,7 +393,7 @@ export function SystemErrorsPanel() {
             <Button
               onClick={confirmResolve}
               disabled={resolveMutation.isPending}
-              className="bg-green-600 hover:bg-green-700"
+              className="bg-green-600 hover:bg-green-700" transition-all duration-300
               data-testid="button-confirm-resolve"
             >
               {resolveMutation.isPending ? (

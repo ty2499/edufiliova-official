@@ -267,7 +267,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
                   size="sm"
                   onClick={() => handleShare('facebook')}
                   data-testid="share-bottom-facebook"
-                  className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600 hover:border-[#0C332C] hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600 hover:border-[#0C332C] hover:bg-gray-100 dark:hover:bg-gray-700" transition-all duration-300
                 >
                   <Facebook className="h-4 w-4 text-blue-600 flex-shrink-0" />
                 </Button>
@@ -276,7 +276,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
                   size="sm"
                   onClick={() => handleShare('twitter')}
                   data-testid="share-bottom-twitter"
-                  className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600 hover:border-[#0C332C] hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600 hover:border-[#0C332C] hover:bg-gray-100 dark:hover:bg-gray-700" transition-all duration-300
                 >
                   <Twitter className="h-4 w-4 text-blue-600 flex-shrink-0" />
                 </Button>
@@ -285,7 +285,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
                   size="sm"
                   onClick={() => handleShare('linkedin')}
                   data-testid="share-bottom-linkedin"
-                  className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600 hover:border-[#0C332C] hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600 hover:border-[#0C332C] hover:bg-gray-100 dark:hover:bg-gray-700" transition-all duration-300
                 >
                   <Linkedin className="h-4 w-4 text-blue-600 flex-shrink-0" />
                 </Button>
@@ -294,7 +294,7 @@ function BlogPostDetail({ onNavigate, slug }: BlogPostDetailProps) {
                   size="sm"
                   onClick={() => handleShare('copy')}
                   data-testid="share-bottom-copy"
-                  className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600 hover:border-[#0C332C] hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="h-9 w-9 p-0 flex items-center justify-center rounded-full border-gray-300 dark:border-gray-600 hover:border-[#0C332C] hover:bg-gray-100 dark:hover:bg-gray-700" transition-all duration-300
                 >
                   <LinkIcon className="h-4 w-4 text-blue-600 flex-shrink-0" />
                 </Button>

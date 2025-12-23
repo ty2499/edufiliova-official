@@ -719,7 +719,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               variant="outline" 
               size="sm" 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="text-white border-gray-300 hover:opacity-90 w-full sm:w-auto sm:ml-auto" style={{backgroundColor: '#0C332C'}}
+              className="text-white border-gray-300 hover:opacity-80 hover:shadow-lg hover:scale-105 w-full sm:w-auto sm:ml-auto" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
             >
               <AlertCircle className="h-4 w-4 mr-1" />
               {notifications.length} Alert{notifications.length > 1 ? 's' : ''}
@@ -761,7 +761,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <h4 className="font-medium text-base">Your Payment Account</h4>
             </div>
             {payoutAccounts.map((account) => (
-              <div key={account.id} className="border rounded-lg p-4 transition-all duration-200 hover:shadow-md">
+              <div key={account.id} className="border rounded-lg p-4 transition-all duration-200 hover:shadow-md" transition-all duration-300>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   {/* Account Icon and Info */}
                   <div className="flex items-center gap-3 flex-1">
@@ -812,7 +812,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   
                   {/* Edit Icon */}
                   <div 
-                    className="flex items-center gap-1 text-gray-500 hover:text-blue-600 cursor-pointer transition-colors duration-200"
+                    className="flex items-center gap-1 text-gray-500 hover:text-blue-600 cursor-pointer transition-colors duration-200" transition-all duration-300
                     onClick={() => handleEditAccount(account)}
                     data-testid={`button-edit-${account.id}`}
                   >
@@ -833,7 +833,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
             <p className="text-sm text-muted-foreground mb-4">
               Add a payment method to receive your earnings
             </p>
-            <Button onClick={handleShowAddForm} className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
+            <Button onClick={handleShowAddForm} className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
               <Plus className="h-4 w-4 mr-2" />
               Add Your First Payment Method
             </Button>
@@ -845,7 +845,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Add New Payment Method</h4>
-              <Button size="sm" onClick={handleHideAddForm} className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
+              <Button size="sm" onClick={handleHideAddForm} className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -1032,7 +1032,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <Button 
                 type="submit" 
                 disabled={submitting}
-                className="w-full text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
+                className="w-full text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
               >
                 {submitting ? (
                   <>
@@ -1053,7 +1053,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                 <button 
                   type="button" 
                   onClick={() => window.open(window.location.origin + '?page=payout-policy', '_blank')}
-                  className="text-xs text-blue-600 hover:text-blue-800 underline font-medium"
+                  className="text-xs text-blue-600 hover:text-blue-800 underline font-medium" transition-all duration-300
                 >
                   View Policy
                 </button>
@@ -1081,7 +1081,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                 type="button" 
                 variant="outline"
                 onClick={() => setShowUpdateWarning(false)}
-                className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
+                className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50" transition-all duration-300
                 disabled={submitting}
               >
                 Cancel
@@ -1089,7 +1089,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <Button 
                 type="button" 
                 onClick={handleConfirmEdit}
-                className="flex-1 text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
+                className="flex-1 text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                 disabled={submitting}
               >
                 Continue to Edit
@@ -1103,7 +1103,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Edit Payment Method</h4>
-              <Button size="sm" onClick={handleHideEditForm} className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
+              <Button size="sm" onClick={handleHideEditForm} className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -1213,7 +1213,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   variant="outline"
                   disabled={submitting || showDeleteConfirmation || showUpdateWarning}
                   onClick={handleDeleteClick}
-                  className="text-primary border-red-300 hover:bg-primary/10 flex-1"
+                  className="text-primary border-red-300 hover:bg-primary/10 flex-1" transition-all duration-300
                 >
                   {submitting ? (
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -1225,7 +1225,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                 <Button 
                   type="submit" 
                   disabled={submitting || showUpdateWarning}
-                  className="text-white hover:opacity-90 flex-1" style={{backgroundColor: '#0C332C'}}
+                  className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 flex-1" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                 >
                   {submitting ? (
                     <>
@@ -1260,7 +1260,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                       type="button" 
                       variant="outline"
                       onClick={() => setShowDeleteConfirmation(false)}
-                      className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
+                      className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50" transition-all duration-300
                       disabled={submitting}
                     >
                       Cancel
@@ -1268,7 +1268,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                     <Button 
                       type="button" 
                       onClick={handleConfirmDelete}
-                      className="flex-1 bg-primary hover:bg-red-700 text-white"
+                      className="flex-1 bg-primary hover:bg-red-700 text-white" transition-all duration-300
                       disabled={submitting}
                     >
                       {submitting ? (
@@ -1720,7 +1720,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
               <div className="flex items-center space-x-3">
                 <button
                   onClick={() => setShowMobileMenu(!showMobileMenu)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-gray-500 hover:text-gray-700" transition-all duration-300
                   data-testid="button-toggle-menu"
                 >
                   {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -1741,7 +1741,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   }}
                   onStatisticsClick={() => setActiveTab('overview')}
                 >
-                  <button className="flex items-center gap-2 hover:opacity-80 transition-opacity" data-testid="button-profile-dropdown">
+                  <button className="flex items-center gap-2 hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="button-profile-dropdown">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={profile?.avatarUrl || undefined} alt={profile?.displayName || 'Freelancer'} />
                       <AvatarFallback>
@@ -1878,7 +1878,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
             <div className="pt-3">
               <button
                 onClick={() => setMoneyOpen(!moneyOpen)}
-                className="w-full flex items-center justify-between px-4 py-2 text-xs text-gray-400 uppercase tracking-wider hover:text-gray-600 transition-colors"
+                className="w-full flex items-center justify-between px-4 py-2 text-xs text-gray-400 uppercase tracking-wider hover:text-gray-600 transition-colors" transition-all duration-300
                 data-testid="nav-money-toggle"
               >
                 <span>Money</span>
@@ -1933,7 +1933,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
             <div className="pt-3">
               <button
                 onClick={() => setStoreOpen(!storeOpen)}
-                className="w-full flex items-center justify-between px-4 py-2 text-xs text-gray-400 uppercase tracking-wider hover:text-gray-600 transition-colors"
+                className="w-full flex items-center justify-between px-4 py-2 text-xs text-gray-400 uppercase tracking-wider hover:text-gray-600 transition-colors" transition-all duration-300
                 data-testid="nav-store-toggle"
               >
                 <span>Store</span>
@@ -2001,7 +2001,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
             <div className="pt-3">
               <button
                 onClick={() => setMarketplaceOpen(!marketplaceOpen)}
-                className="w-full flex items-center justify-between px-4 py-2 text-xs text-gray-400 uppercase tracking-wider hover:text-gray-600 transition-colors"
+                className="w-full flex items-center justify-between px-4 py-2 text-xs text-gray-400 uppercase tracking-wider hover:text-gray-600 transition-colors" transition-all duration-300
                 data-testid="nav-marketplace-toggle"
               >
                 <span>Marketplace</span>
@@ -2072,7 +2072,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
           <div className="p-4 border-t border-gray-200 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-primary hover:bg-primary text-white"
+              className="w-full bg-primary hover:bg-primary text-white" transition-all duration-300
               onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
@@ -2081,7 +2081,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
             </Button>
             <Button
               size="sm"
-              className="w-full bg-[#151314] hover:bg-[#2a2826] text-white"
+              className="w-full bg-[#151314] hover:bg-[#2a2826] text-white" transition-all duration-300
               onClick={() => {
                 setIsLoggingOut(true);
                 setShowMobileMenu(false);
@@ -2478,7 +2478,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   <p className="text-gray-600 mb-4">Please select a freelancer from the marketplace to view their profile.</p>
                   <Button 
                     onClick={() => setActiveTab('marketplace')}
-                    className="bg-primary hover:bg-primary text-white"
+                    className="bg-primary hover:bg-primary text-white" transition-all duration-300
                   >
                     <ChevronLeft className="h-4 w-4 mr-2" />
                     Back to Marketplace
@@ -2510,7 +2510,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   <p className="text-gray-600 mb-4">Please select a portfolio work to view its details.</p>
                   <Button 
                     onClick={() => setActiveTab('portfolio-gallery')}
-                    className="bg-primary hover:bg-primary text-white"
+                    className="bg-primary hover:bg-primary text-white" transition-all duration-300
                   >
                     <ChevronLeft className="h-4 w-4 mr-2" />
                     Back to Gallery
@@ -2565,7 +2565,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                 {/* Earnings Overview Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Available Balance */}
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
                         <Banknote className="h-5 w-5 text-gray-900" />
@@ -2581,7 +2581,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   </div>
 
                   {/* Pending Balance */}
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
                         <Clock className="h-5 w-5 text-gray-900" />
@@ -2597,7 +2597,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   </div>
 
                   {/* Lifetime Earnings */}
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
                         <TrendingUp className="h-5 w-5 text-gray-900" />
@@ -2613,7 +2613,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   </div>
 
                   {/* Total Withdrawn */}
-                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+                  <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow" transition-all duration-300>
                     <div className="flex items-start justify-between mb-3">
                       <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
                         <CreditCard className="h-5 w-5 text-gray-900" />
@@ -2652,7 +2652,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                         </thead>
                         <tbody>
                           {(downloadStatsData as any)?.data?.map((stat: ProductDownloadStats) => (
-                            <tr key={stat.productId} className="border-b hover:bg-gray-50">
+                            <tr key={stat.productId} className="border-b hover:bg-gray-50" transition-all duration-300>
                               <td className="py-3 px-4 text-sm font-medium text-gray-900">{stat.productName}</td>
                               <td className="py-3 px-4 text-sm text-right font-semibold text-gray-900">{stat.totalDownloads}</td>
                               <td className="py-3 px-4 text-sm text-right text-gray-600">{stat.freeDownloads}</td>
@@ -2694,7 +2694,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                         {(creatorBalanceData as any)?.recentEarnings
                           ?.slice(earningsPage * 5, (earningsPage + 1) * 5)
                           ?.map((earning: CreatorEarningEvent) => (
-                          <div key={earning.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                          <div key={earning.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors" transition-all duration-300>
                             <div className="flex items-start justify-between mb-2">
                               <div>
                                 <p className="font-medium text-gray-900">
@@ -2839,7 +2839,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                         { id: 'payments', label: 'Payment confirmations' },
                         { id: 'milestones', label: 'Milestone reminders' },
                       ].map((notification) => (
-                        <div key={notification.id} className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+                        <div key={notification.id} className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors" transition-all duration-300>
                           <input 
                             type="checkbox" 
                             className="h-4 w-4 text-blue-600 rounded focus:ring-blue-500" 

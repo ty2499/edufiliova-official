@@ -296,7 +296,7 @@ export default function SimpleOptimizedInterface({
           {onBack && (
             <button
               onClick={onBack}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors" transition-all duration-300
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -453,10 +453,10 @@ export default function SimpleOptimizedInterface({
                 style={{ maxHeight: '120px', minHeight: '52px' }}
               />
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
-                <button className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full transition-colors">
+                <button className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full transition-colors" transition-all duration-300>
                   <Paperclip className="w-4 h-4 text-gray-500" />
                 </button>
-                <button className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full transition-colors">
+                <button className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full transition-colors" transition-all duration-300>
                   <Smile className="w-4 h-4 text-gray-500" />
                 </button>
               </div>

@@ -322,7 +322,7 @@ export default function CategoryAccessApprovalInterface() {
                             onClick={() => handleApprove(request.id)}
                             disabled={approveRequestMutation.isPending}
                             data-testid={`approve-${request.id}`}
-                            className="bg-green-600 hover:bg-green-700 text-white"
+                            className="bg-green-600 hover:bg-green-700 text-white" transition-all duration-300
                           >
                             <UserCheck className="h-4 w-4 mr-1" />
                             Approve

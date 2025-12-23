@@ -258,7 +258,7 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     If you believe this decision was made in error or would like to reapply, please contact our support team 
-                    at <a href="mailto:support@edufiliova.com" className="text-blue-600 dark:text-blue-400 hover:underline">support@edufiliova.com</a>
+                    at <a href="mailto:support@edufiliova.com" className="text-blue-600 dark:text-blue-400 hover:underline" transition-all duration-300>support@edufiliova.com</a>
                   </p>
                 </div>
               </CardContent>
