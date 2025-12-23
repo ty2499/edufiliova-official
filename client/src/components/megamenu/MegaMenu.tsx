@@ -12,7 +12,7 @@ export const MegaMenu = ({ isOpen, children, className = "" }: MegaMenuProps) =>
   return (
     <div className={`w-screen mt-0 pointer-events-auto ${className}`}>
       <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-7xl">
-        <div className="bg-[#2f5a4e] dark:bg-[#2f5a4e] backdrop-blur-xl rounded-2xl shadow-2xl border border-[#2f5a4e]/50 dark:border-[#2f5a4e]/50 p-6 animate-fade-in">
+        <div className="bg-[#2f5a4e] dark:bg-[#2f5a4e] backdrop-blur-xl rounded-2xl shadow-2xl border border-[#2f5a4e]/50 dark:border-[#2f5a4e]/50 p-6 animate-fade-in outline-none focus:outline-none">
           {children}
         </div>
       </div>
