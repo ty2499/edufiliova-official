@@ -11,11 +11,11 @@ const userTypeContent = [
     type: 'Students',
     headline: 'Learn From Anywhere',
     description: 'Access world-class education with personalized courses, expert teachers, and earn certificates that matter.',
-    cta: 'Start Learning',
+    cta: 'Browse Store',
     ctaAction: 'auth',
     secondaryCta: 'Browse Courses',
     secondaryAction: 'course-browse',
-    color: '#A0FAB2'
+    color: '#2f5a4e'
   },
   {
     type: 'Teachers',
@@ -280,14 +280,14 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
                 <Button
                   size="lg"
                   onClick={() => onNavigate(currentContent.ctaAction)}
-                  className="inline-flex items-center justify-center whitespace-nowrap transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer hover:scale-105 active:scale-95 focus-visible:ring-accent font-semibold px-8 py-6 text-lg rounded-full group text-white"
-                  style={{ 
+                  className={`inline-flex items-center justify-center whitespace-nowrap transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer hover:scale-105 active:scale-95 focus-visible:ring-accent font-semibold px-8 py-6 text-lg rounded-full group text-white ${currentContent.type === 'Students' ? 'bg-[#2f5a4e]' : ''}`}
+                  style={currentContent.type !== 'Students' ? { 
                     backgroundColor: currentContent.color
-                  }}
+                  } : undefined}
                   data-testid={`button-cta-${currentContent.type.toLowerCase()}`}
                 >
                   {currentContent.cta}
-                  <ArrowRight className={`ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform ${currentContent.color === '#A0FAB2' ? 'text-black' : 'text-white'}`} />
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform text-white" />
                 </Button>
               </div>
             </div>
