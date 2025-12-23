@@ -154,7 +154,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
               onClick={() => setActiveTab('portfolio')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'portfolio'
-                  ? 'border-[#A0FAB2] text-[#A0FAB2]'
+                  ? 'border-[#2f5a4e] text-[#2f5a4e]'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
               data-testid="tab-portfolio"
@@ -165,7 +165,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
               onClick={() => setActiveTab('analytics')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'analytics'
-                  ? 'border-[#A0FAB2] text-[#A0FAB2]'
+                  ? 'border-[#2f5a4e] text-[#2f5a4e]'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
               data-testid="tab-analytics"
@@ -288,8 +288,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                         </div>
                         <Badge 
                           variant={work.visibility === 'public' ? 'default' : 'secondary'}
-                          className={work.visibility === 'public' ? 'text-gray-900 border-0' : ''}
-                          style={work.visibility === 'public' ? { backgroundColor: '#A0FAB2' } : {}}
+                          className={work.visibility === 'public' ? 'text-white border-0' : ''}
+                          style={work.visibility === 'public' ? { backgroundColor: '#2f5a4e' } : {}}
                         >
                           {work.visibility}
                         </Badge>
@@ -381,8 +381,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                               <h3 className="font-semibold text-lg truncate">{work.title}</h3>
                               <Badge 
                                 variant={work.visibility === 'public' ? 'default' : 'secondary'}
-                                className={work.visibility === 'public' ? 'text-gray-900 border-0' : ''}
-                                style={work.visibility === 'public' ? { backgroundColor: '#A0FAB2' } : {}}
+                                className={work.visibility === 'public' ? 'text-white border-0' : ''}
+                                style={work.visibility === 'public' ? { backgroundColor: '#2f5a4e' } : {}}
                               >
                                 {work.visibility}
                               </Badge>
@@ -565,8 +565,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                     <div key={visibility} className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className={`w-3 h-3 rounded-full ${
-                          visibility === 'public' ? 'bg-[#A0FAB2]' :
-                          visibility === 'unlisted' ? 'bg-[#A0FAB2]/60' : 'bg-[#A0FAB2]/30'
+                          visibility === 'public' ? 'bg-[#2f5a4e]' :
+                          visibility === 'unlisted' ? 'bg-[#2f5a4e]/60' : 'bg-[#2f5a4e]/30'
                         }`}></div>
                         <span className="text-sm capitalize">{visibility}</span>
                       </div>
