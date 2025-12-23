@@ -408,7 +408,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
           <div className="space-y-3">
             {/* Product Title */}
             <h3 
-              className="font-bold text-base text-gray-900 line-clamp-2 leading-tight cursor-pointer hover:text-blue-600 font-['StackSans_Headline']" transition-all duration-300
+              className="font-bold text-base text-gray-900 line-clamp-2 leading-tight cursor-pointer font-['StackSans_Headline']"
               onClick={() => onNavigate('product-detail', 'slide-left', { productId: product.id })}
             >
               {product.name}
@@ -518,7 +518,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
             <div className="flex-1 min-w-0">
               <div className="mb-2">
                 <h3 
-                  className="font-bold text-gray-900 line-clamp-2 text-xs sm:text-sm cursor-pointer hover:text-blue-600 font-['StackSans_Headline']" transition-all duration-300
+                  className="font-bold text-gray-900 line-clamp-2 text-xs sm:text-sm cursor-pointer font-['StackSans_Headline']"
                   onClick={() => onNavigate('product-detail', 'slide-left', { productId: product.id })}
                 >
                   {product.name}
@@ -741,7 +741,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                     placeholder="Search products..."
                     value={searchQuery || ''}
                     onChange={(e) => onSearchChange && onSearchChange(e.target.value)}
-                    className="pl-10 pr-4 py-2 w-full rounded-full border-gray-300 bg-white/80 backdrop-blur-sm focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className="pl-10 pr-4 py-2 w-full rounded-full border-gray-300 bg-white/80 backdrop-blur-sm focus:bg-white focus:ring-2 focus:ring-[#2f5a4e] focus:border-transparent transition-all duration-200"
                     data-testid="input-search-products"
                   />
                   {searchQuery && (
@@ -923,25 +923,25 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
       }}>
         {/* Abstract mesh grid background */}
         <div className="absolute inset-0 opacity-15" style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h50v50H0z' fill='%23000'/%3E%3Cpath d='M0 0h50v50H0z' stroke='%232d5dd8' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='25' cy='25' r='1' fill='%232d5dd8' opacity='0.5'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h50v50H0z' fill='%23000'/%3E%3Cpath d='M0 0h50v50H0z' stroke='%232f5a4e' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='25' cy='25' r='1' fill='%232f5a4e' opacity='0.5'/%3E%3C/svg%3E")`,
           animation: 'drift 20s linear infinite'
         }}></div>
 
         {/* Animated abstract shapes */}
         <div className="absolute -top-40 -right-40 w-80 h-80 opacity-20" style={{
-          background: 'linear-gradient(135deg, #2d5dd8 0%, #1a3a7a 100%)',
+          background: 'linear-gradient(135deg, #2f5a4e 0%, #1a3a33 100%)',
           borderRadius: '45% 55% 60% 40% / 55% 45% 45% 55%',
           animation: 'morphing 15s ease-in-out infinite'
         }}></div>
 
         <div className="absolute top-1/3 -left-32 w-72 h-72 opacity-15" style={{
-          background: 'linear-gradient(45deg, #4a7ef5 0%, #2d5dd8 100%)',
+          background: 'linear-gradient(45deg, #3d8f7a 0%, #2f5a4e 100%)',
           borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
           animation: 'morphing 18s ease-in-out infinite reverse'
         }}></div>
 
         <div className="absolute bottom-0 right-1/4 w-96 h-96 opacity-10" style={{
-          background: 'radial-gradient(circle, #2d5dd8 0%, transparent 70%)',
+          background: 'radial-gradient(circle, #2f5a4e 0%, transparent 70%)',
           borderRadius: '50%',
           filter: 'blur(60px)',
           animation: 'pulse-slow 12s ease-in-out infinite'
@@ -951,8 +951,8 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
         <svg className="absolute inset-0 w-full h-full opacity-10" style={{ animation: 'float 30s ease-in-out infinite' }}>
           <defs>
             <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: '#2d5dd8', stopOpacity: 0.3 }} />
-              <stop offset="100%" style={{ stopColor: '#4a7ef5', stopOpacity: 0.1 }} />
+              <stop offset="0%" style={{ stopColor: '#2f5a4e', stopOpacity: 0.3 }} />
+              <stop offset="100%" style={{ stopColor: '#3d8f7a', stopOpacity: 0.1 }} />
             </linearGradient>
           </defs>
           <path d="M 0 200 Q 250 100 500 200 T 1000 200" stroke="url(#lineGradient)" strokeWidth="2" fill="none" />
@@ -990,7 +990,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-white break-words">
                 Discover Premium
                 <br />
-                <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(to right, #2d5dd8, #4a7ef5, #2d5dd8)' }}>
+                <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(to right, #2f5a4e, #3d8f7a, #2f5a4e)' }}>
                   Digital Products
                 </span>
               </h1>
@@ -1015,11 +1015,9 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                   size="lg"
                   className="px-6 py-3 font-semibold text-white transition-all duration-300 rounded-lg shadow-lg w-full sm:w-auto"
                   style={{
-                    backgroundColor: '#2d5dd8',
-                    boxShadow: '0 10px 25px rgba(45, 93, 216, 0.25)'
+                    backgroundColor: '#2f5a4e',
+                    boxShadow: '0 10px 25px rgba(47, 90, 78, 0.25)'
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#1f4ba8')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#2d5dd8')}
                   data-testid="button-explore-products"
                 >
                   <Package className="mr-2 h-5 w-5" />
@@ -1044,8 +1042,8 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
             <div className="hidden md:grid grid-cols-2 gap-4">
               {/* Stat Card 1 */}
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-blue-400/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(45, 93, 216, 0.15)' }}>
-                  <Package className="h-5 w-5" style={{ color: '#2d5dd8' }} />
+                <div className="w-10 h-10 bg-gradient-to-br from-[#2f5a4e]/20 to-[#2f5a4e]/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(47, 90, 78, 0.15)' }}>
+                  <Package className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-1">Free Products</h3>
                 <p className="text-sm text-slate-400">Available for Everyone</p>
@@ -1053,8 +1051,8 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               
               {/* Stat Card 2 */}
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-blue-400/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(45, 93, 216, 0.15)' }}>
-                  <Users className="h-5 w-5" style={{ color: '#2d5dd8' }} />
+                <div className="w-10 h-10 bg-gradient-to-br from-[#2f5a4e]/20 to-[#2f5a4e]/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(47, 90, 78, 0.15)' }}>
+                  <Users className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-1">Premium Products</h3>
                 <p className="text-sm text-slate-400">Exclusive Collections</p>
@@ -1131,7 +1129,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                     {/* Cover/Banner */}
                     <div 
                       className="h-24"
-                      style={creator.coverImageUrl ? { backgroundImage: `url(${creator.coverImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : (defaultCover && defaultCover !== null) ? { backgroundImage: `url(${defaultCover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: 'linear-gradient(to right, #3b82f6, #a855f7)' }}
+                      style={creator.coverImageUrl ? { backgroundImage: `url(${creator.coverImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : (defaultCover && defaultCover !== null) ? { backgroundImage: `url(${defaultCover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: 'linear-gradient(to right, #2f5a4e, #a0fab2)' }}
                     />
                     
                     {/* Creator Info */}
@@ -1142,7 +1140,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                           {creator.avatarUrl ? (
                             <img src={creator.avatarUrl} alt={creator.name} className="w-full h-full object-cover" />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-blue-500 text-white text-xl font-bold">
+                            <div className="w-full h-full flex items-center justify-center text-white text-xl font-bold" style={{ backgroundColor: '#2f5a4e' }}>
                               {creator.name.charAt(0).toUpperCase()}
                             </div>
                           )}
@@ -1451,7 +1449,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                           {selectedCreator.avatarUrl ? (
                             <img src={selectedCreator.avatarUrl} alt={selectedCreator.name} className="w-full h-full object-cover" />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-blue-500 text-white text-3xl font-bold">
+                            <div className="w-full h-full flex items-center justify-center text-white text-3xl font-bold" style={{ backgroundColor: '#2f5a4e' }}>
                               {selectedCreator.name.charAt(0).toUpperCase()}
                             </div>
                           )}
