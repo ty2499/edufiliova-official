@@ -44,8 +44,8 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
     <MegaMenu isOpen={isOpen}>
       <div className="w-full">
         <div className="flex items-center gap-2 mb-4 px-2">
-          <Coins className="h-4 w-4 text-[#0C332C]" />
-          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+          <Coins className="h-4 w-4 text-[#a0fab2]" />
+          <h3 className="text-xs font-semibold text-[#a0fab2] dark:text-[#a0fab2] uppercase tracking-wide">
             Choose Your Plan
           </h3>
         </div>
@@ -63,10 +63,10 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-[#0C332C] transition-colors" transition-all duration-300>
+                <h4 className="font-semibold text-sm text-[#a0fab2] dark:text-[#a0fab2] group-hover:text-[#a0fab2] transition-colors" transition-all duration-300>
                   {item.title}
                 </h4>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
+                <p className="text-xs text-white dark:text-white mt-0.5">
                   {item.description}
                 </p>
               </div>

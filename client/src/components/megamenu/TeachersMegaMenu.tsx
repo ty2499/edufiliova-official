@@ -19,19 +19,19 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
   };
 
   const joinAsTeacher = [
-    { icon: <UserPlus className="h-5 w-5" />, title: "Join as Teacher", description: "Start your teaching journey", page: "teacher-application", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
-    { icon: <Wallet className="h-5 w-5" />, title: "Why Teach With Us", description: "Discover benefits and opportunities", page: "teacher-pricing", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
+    { icon: <UserPlus className="h-5 w-5" />, title: "Join as Teacher", description: "Start your teaching journey", page: "teacher-application", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#a0fab2" },
+    { icon: <Wallet className="h-5 w-5" />, title: "Why Teach With Us", description: "Discover benefits and opportunities", page: "teacher-pricing", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#a0fab2" },
   ];
 
   const createCourses = [
-    { icon: <FilePlus className="h-5 w-5" />, title: "Create Course", description: "Design and publish new courses", page: "course-creator", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e", requiresAuth: true, requiresApproved: true },
-    { icon: <Layers className="h-5 w-5" />, title: "Subject Creator", description: "Build course subjects and lessons", page: "subject-creator", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e", requiresAuth: true, requiresApproved: true },
+    { icon: <FilePlus className="h-5 w-5" />, title: "Create Course", description: "Design and publish new courses", page: "course-creator", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#a0fab2", requiresAuth: true, requiresApproved: true },
+    { icon: <Layers className="h-5 w-5" />, title: "Subject Creator", description: "Build course subjects and lessons", page: "subject-creator", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#a0fab2", requiresAuth: true, requiresApproved: true },
   ];
 
   const management = [
-    { icon: <ClipboardCheck className="h-5 w-5" />, title: "Application Status", description: "Check your application progress", page: "teacher-status", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e", requiresAuth: true, requiresApproved: false },
+    { icon: <ClipboardCheck className="h-5 w-5" />, title: "Application Status", description: "Check your application progress", page: "teacher-status", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#a0fab2", requiresAuth: true, requiresApproved: false },
     { icon: <Video className="h-5 w-5" />, title: "Teacher Meetings", description: "Schedule and host classes", page: "teacher-meetings", bg: "bg-primary/10", requiresAuth: true, requiresApproved: true },
-    { icon: <Wallet className="h-5 w-5" />, title: "Earnings Dashboard", description: "Track your income and payments", page: "earnings", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e", requiresAuth: true, requiresApproved: true },
+    { icon: <Wallet className="h-5 w-5" />, title: "Earnings Dashboard", description: "Track your income and payments", page: "earnings", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#a0fab2", requiresAuth: true, requiresApproved: true },
   ];
 
   // Logic for showing sections based on authentication and approval status
