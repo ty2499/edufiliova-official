@@ -1029,9 +1029,10 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                   <button
                     type="button"
                     onClick={() => setSelectedPaymentMethod('system_wallet')}
+                    style={selectedPaymentMethod === 'system_wallet' ? { borderColor: '#a0fab2', backgroundColor: '#f0fff5' } : {}}
                     className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${
                       selectedPaymentMethod === 'system_wallet' 
-                        ? 'border-primary bg-primary/5' 
+                        ? '' 
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                     data-testid="button-payment-wallet"
@@ -1053,9 +1054,10 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                   <button
                     type="button"
                     onClick={() => setSelectedPaymentMethod('card')}
+                    style={selectedPaymentMethod === 'card' ? { borderColor: '#a0fab2', backgroundColor: '#f0fff5' } : {}}
                     className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${
                       selectedPaymentMethod === 'card' 
-                        ? 'border-primary bg-primary/5' 
+                        ? '' 
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                     data-testid="button-payment-card"
@@ -1077,9 +1079,10 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                   <button
                     type="button"
                     onClick={() => setSelectedPaymentMethod('paypal')}
+                    style={selectedPaymentMethod === 'paypal' ? { borderColor: '#a0fab2', backgroundColor: '#f0fff5' } : {}}
                     className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${
                       selectedPaymentMethod === 'paypal' 
-                        ? 'border-primary bg-primary/5' 
+                        ? '' 
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                     data-testid="button-payment-paypal"
@@ -1101,9 +1104,10 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                   <button
                     type="button"
                     onClick={() => setSelectedPaymentMethod('paystack')}
+                    style={selectedPaymentMethod === 'paystack' ? { borderColor: '#a0fab2', backgroundColor: '#f0fff5' } : {}}
                     className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${
                       selectedPaymentMethod === 'paystack' 
-                        ? 'border-primary bg-primary/5' 
+                        ? '' 
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                     data-testid="button-payment-paystack"
@@ -1125,9 +1129,10 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                   <button
                     type="button"
                     onClick={() => setSelectedPaymentMethod('dodopay')}
+                    style={selectedPaymentMethod === 'dodopay' ? { borderColor: '#a0fab2', backgroundColor: '#f0fff5' } : {}}
                     className={`flex items-center gap-3 p-4 border-2 rounded-lg transition-all ${
                       selectedPaymentMethod === 'dodopay' 
-                        ? 'border-primary bg-primary/5' 
+                        ? '' 
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                     data-testid="button-payment-dodopay"
