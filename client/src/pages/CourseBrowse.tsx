@@ -377,7 +377,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                     <Button
                       size="sm"
                       onClick={() => setPriceFilter('all')}
-                      className={`${priceFilter === 'all' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white' : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-800'}`}
+                      className={`${priceFilter === 'all' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white border-[#2f5a4e]' : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:bg-[#a0fab2] hover:text-[#2f5a4e]'}`}
                       data-testid="filter-price-all"
                     >
                       All
@@ -385,7 +385,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                     <Button
                       size="sm"
                       onClick={() => setPriceFilter('free')}
-                      className={priceFilter === 'free' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white border-[#2f5a4e]' : 'border-[#A0FAB2] text-gray-900 dark:text-gray-900 hover:bg-[#A0FAB2]/10'}
+                      className={priceFilter === 'free' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white border-[#2f5a4e]' : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:bg-[#a0fab2] hover:text-[#2f5a4e]'}
                       data-testid="filter-price-free"
                     >
                       Free
@@ -393,7 +393,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                     <Button
                       size="sm"
                       onClick={() => setPriceFilter('paid')}
-                      className={priceFilter === 'paid' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white border-[#2f5a4e]' : 'border-[#0C332C] text-gray-900 dark:text-gray-900 hover:bg-[#0C332C]/10'}
+                      className={priceFilter === 'paid' ? 'bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white border-[#2f5a4e]' : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:bg-[#a0fab2] hover:text-[#2f5a4e]'}
                       data-testid="filter-price-paid"
                     >
                       Paid
