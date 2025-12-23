@@ -139,7 +139,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                         key={category}
                         onClick={() => setSelectedCategory(category)}
                         className={`cursor-pointer ${
-                          selectedCategory === category ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600" : ""
+                          selectedCategory === category ? "bg-[#2f5a4e]/10 dark:bg-[#2f5a4e]/20 text-[#2f5a4e]" : ""
                         }`}
                         data-testid={`category-filter-${category}`}
                       >
@@ -176,7 +176,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" transition-all duration-300
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#2f5a4e] to-[#1a3a33]">
                           <span className="text-white text-6xl font-bold opacity-30">
                             {filteredPosts[0].title[0]}
                           </span>
@@ -185,10 +185,10 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                     </div>
                     {/* Content */}
                     <CardContent className="p-6 md:p-8 flex flex-col justify-center">
-                      <Badge className="w-fit mb-4 bg-blue-100 text-blue-700 hover:bg-blue-100 border-0" transition-all duration-300>
+                      <Badge className="w-fit mb-4 bg-[#2f5a4e]/10 text-[#2f5a4e] hover:bg-[#2f5a4e]/10 border-0" transition-all duration-300>
                         {filteredPosts[0].category}
                       </Badge>
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 font-['StackSans_Headline']" transition-all duration-300>
+                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#2f5a4e] transition-colors line-clamp-2 font-['StackSans_Headline']" transition-all duration-300>
                         {filteredPosts[0].title}
                       </h2>
                       <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3 text-base leading-relaxed">
@@ -245,7 +245,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors font-['StackSans_Headline']" transition-all duration-300>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-[#2f5a4e] transition-colors font-['StackSans_Headline']" transition-all duration-300>
                         {post.title}
                       </h3>
 
@@ -255,7 +255,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                       </p>
 
                       {/* Read More */}
-                      <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400 text-sm font-medium group-hover:gap-2 transition-all" transition-all duration-300>
+                      <div className="flex items-center gap-1 text-[#2f5a4e] dark:text-[#2f5a4e] text-sm font-medium group-hover:gap-2 transition-all" transition-all duration-300>
                         Read article
                         <ArrowRight className="h-4 w-4" />
                       </div>
