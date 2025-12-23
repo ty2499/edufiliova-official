@@ -962,6 +962,45 @@ All colors MUST be HSL.
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
+  /* Remove focus outline and selection box from all elements */
+  * {
+    outline: none !important;
+    -webkit-outline: none !important;
+  }
+
+  *:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+
+  *:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus,
+  button:focus,
+  a:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+
+  /* Remove selection highlight */
+  *::selection {
+    background-color: transparent;
+    color: inherit;
+  }
+
+  *::-moz-selection {
+    background-color: transparent;
+    color: inherit;
+  }
+
   /* Reading Progress Bar */
   .reading-progress {
     position: sticky;
