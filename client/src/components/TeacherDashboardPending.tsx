@@ -136,7 +136,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
                       <div className="rounded-full p-1" style={{ backgroundColor: '#a0fab2' }}>
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" style={{ color: '#2f5a4e' }} />
                       </div>
                       <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1" />
                     </div>
@@ -163,7 +163,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                           ? '#a0fab2'
                           : '#d1d5db'
                       }}>
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" style={{ color: '#2f5a4e' }} />
                       </div>
                       <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1" />
                     </div>
@@ -194,7 +194,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                           ? '#a0fab2'
                           : '#d1d5db'
                       }}>
-                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
+                        <CheckmarkIcon size="sm" variant="default" className="bg-transparent" style={{ color: '#2f5a4e' }} />
                       </div>
                     </div>
                     <div>
