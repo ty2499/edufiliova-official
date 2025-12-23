@@ -812,12 +812,12 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
               }}
               className="h-14 w-14 md:h-16 md:w-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 relative" transition-all duration-300
               style={{ backgroundColor: '#0C332C' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e04e2f'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#a0fab2'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0C332C'}
               data-testid="help-chat-bubble"
               aria-label="Open help chat"
             >
-              <MessageCircle className="h-8 w-8 md:h-14 md:w-14 text-white" />
+              <MessageCircle className="h-8 w-8 md:h-14 md:w-14" style={{ color: '#2f5a4e' }} />
               {!isWithinHours && (
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
                   <Clock className="h-2 w-2 text-white" />
@@ -1149,7 +1149,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                           type="submit"
                           className="w-full text-white"
                           style={{ backgroundColor: '#0C332C' }}
-                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e04e2f'}
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#a0fab2'}
                           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0C332C'}
                           data-testid="button-submit-after-hours"
                         >
@@ -1200,7 +1200,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                     )}
                     style={newMessage.trim() ? { backgroundColor: '#0C332C' } : {}}
                     onMouseEnter={(e) => {
-                      if (newMessage.trim()) e.currentTarget.style.backgroundColor = '#e04e2f';
+                      if (newMessage.trim()) e.currentTarget.style.backgroundColor = '#a0fab2';
                     }}
                     onMouseLeave={(e) => {
                       if (newMessage.trim()) e.currentTarget.style.backgroundColor = '#0C332C';
