@@ -18,16 +18,20 @@ export default function TeacherApplicationStatus() {
   const [resubmitError, setResubmitError] = useState("");
 
   const { data: application, isLoading, refetch } = useQuery<any>({
-    queryKey: [`/api/teacher-applications/${applicationId}`],
-    queryFn: () => apiRequest(`/api/teacher-applications/${applicationId}`),
+    queryKey: [`/api/teacher-applications/status/${applicationId}`],
+    queryFn: () => apiRequest(`/api/teacher-applications/status/${applicationId}`),
     enabled: !!applicationId,
   });
 
   const handleResubmit = async () => {
+    if (!application?.id) {
+      setResubmitError("Application data not loaded");
+      return;
+    }
     setIsResubmitting(true);
     setResubmitError("");
     try {
-      const data = await apiRequest(`/api/teacher-applications/${applicationId}/resubmit`, {
+      const data = await apiRequest(`/api/teacher-applications/${application.id}/resubmit`, {
         method: 'POST',
       });
       if (data.success) {

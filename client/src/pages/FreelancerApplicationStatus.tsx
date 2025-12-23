@@ -18,16 +18,20 @@ export default function FreelancerApplicationStatus() {
   const [resubmitError, setResubmitError] = useState("");
 
   const { data: application, isLoading, refetch } = useQuery<any>({
-    queryKey: [`/api/freelancer/applications/${applicationId}`],
-    queryFn: () => apiRequest(`/api/freelancer/applications/${applicationId}`),
+    queryKey: [`/api/freelancer/applications/status/${applicationId}`],
+    queryFn: () => apiRequest(`/api/freelancer/applications/status/${applicationId}`),
     enabled: !!applicationId,
   });
 
   const handleResubmit = async () => {
+    if (!application?.id) {
+      setResubmitError("Application data not loaded");
+      return;
+    }
     setIsResubmitting(true);
     setResubmitError("");
     try {
-      const data = await apiRequest(`/api/freelancer/applications/${applicationId}/resubmit`, {
+      const data = await apiRequest(`/api/freelancer/applications/${application.id}/resubmit`, {
         method: 'POST',
       });
       if (data.success) {
