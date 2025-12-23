@@ -916,69 +916,44 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
       
       {/* Dark Abstract Hero Section */}
       <div className="relative overflow-hidden pt-8 md:pt-16 pb-4 md:pb-8" style={{ 
-        background: `
-          linear-gradient(135deg, #0a0e27 0%, #1a1f3a 25%, #0f1628 50%, #1a1f3a 75%, #0a0e27 100%)
-        `,
+        background: 'linear-gradient(135deg, #0a0e27 0%, #0f1425 50%, #0a0e27 100%)',
         backgroundColor: '#0a0e27'
       }}>
-        {/* Abstract mesh grid background */}
-        <div className="absolute inset-0 opacity-15" style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h50v50H0z' fill='%23000'/%3E%3Cpath d='M0 0h50v50H0z' stroke='%232f5a4e' stroke-width='0.5' fill='none'/%3E%3Ccircle cx='25' cy='25' r='1' fill='%232f5a4e' opacity='0.5'/%3E%3C/svg%3E")`,
-          animation: 'drift 20s linear infinite'
+        {/* Animated gradient blob - Primary */}
+        <div className="absolute -top-56 -right-56 w-96 h-96 opacity-25" style={{
+          background: 'linear-gradient(135deg, #2f5a4e 0%, #1a3a33 50%, #0f2b26 100%)',
+          borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%',
+          animation: 'blobFloat 25s ease-in-out infinite',
+          filter: 'blur(40px)'
         }}></div>
 
-        {/* Animated abstract shapes */}
-        <div className="absolute -top-40 -right-40 w-80 h-80 opacity-20" style={{
-          background: 'linear-gradient(135deg, #2f5a4e 0%, #1a3a33 100%)',
-          borderRadius: '45% 55% 60% 40% / 55% 45% 45% 55%',
-          animation: 'morphing 15s ease-in-out infinite'
+        {/* Animated gradient blob - Secondary */}
+        <div className="absolute top-1/2 -left-64 w-80 h-80 opacity-20" style={{
+          background: 'linear-gradient(225deg, #1a3a33 0%, #2f5a4e 50%, #0f1425 100%)',
+          borderRadius: '60% 40% 50% 50% / 50% 60% 30% 40%',
+          animation: 'blobFloat 30s ease-in-out infinite reverse',
+          filter: 'blur(50px)'
         }}></div>
 
-        <div className="absolute top-1/3 -left-32 w-72 h-72 opacity-15" style={{
-          background: 'linear-gradient(45deg, #3d8f7a 0%, #2f5a4e 100%)',
-          borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
-          animation: 'morphing 18s ease-in-out infinite reverse'
+        {/* Accent blob */}
+        <div className="absolute bottom-0 right-1/3 w-72 h-72 opacity-15" style={{
+          background: 'radial-gradient(ellipse at center, #a0fab2 0%, transparent 70%)',
+          borderRadius: '45% 55% 50% 50% / 50% 45% 55% 45%',
+          animation: 'blobDrift 35s ease-in-out infinite',
+          filter: 'blur(60px)'
         }}></div>
-
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 opacity-10" style={{
-          background: 'radial-gradient(circle, #2f5a4e 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(60px)',
-          animation: 'pulse-slow 12s ease-in-out infinite'
-        }}></div>
-
-        {/* Animated lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-10" style={{ animation: 'float 30s ease-in-out infinite' }}>
-          <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: '#2f5a4e', stopOpacity: 0.3 }} />
-              <stop offset="100%" style={{ stopColor: '#3d8f7a', stopOpacity: 0.1 }} />
-            </linearGradient>
-          </defs>
-          <path d="M 0 200 Q 250 100 500 200 T 1000 200" stroke="url(#lineGradient)" strokeWidth="2" fill="none" />
-          <path d="M 0 400 Q 300 300 600 400 T 1200 400" stroke="url(#lineGradient)" strokeWidth="1.5" fill="none" />
-          <path d="M 0 600 Q 400 500 800 600 T 1600 600" stroke="url(#lineGradient)" strokeWidth="1" fill="none" />
-        </svg>
 
         {/* CSS animations */}
         <style>{`
-          @keyframes morphing {
-            0%, 100% { borderRadius: '45% 55% 60% 40% / 55% 45% 45% 55%'; transform: translate(0, 0) scale(1); }
-            25% { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%'; transform: translate(30px, -50px) scale(1.1); }
-            50% { borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%'; transform: translate(-20px, 30px) scale(0.9); }
-            75% { borderRadius: '70% 30% 40% 60% / 40% 60% 60% 40%'; transform: translate(50px, -30px) scale(1.05); }
+          @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -60px) scale(1.05); }
+            50% { transform: translate(-30px, 40px) scale(0.95); }
+            75% { transform: translate(60px, 30px) scale(1.02); }
           }
-          @keyframes pulse-slow {
-            0%, 100% { transform: scale(1); opacity: 0.1; }
-            50% { transform: scale(1.2); opacity: 0.15; }
-          }
-          @keyframes drift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-          }
-          @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+          @keyframes blobDrift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -50px) scale(1.1); }
           }
         `}</style>
 
