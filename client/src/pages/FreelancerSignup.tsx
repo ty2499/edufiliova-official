@@ -158,7 +158,9 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
       loadApplication(appIdParam);
     } else if (user?.id) {
       // No applicationId in URL - try to get or create one
-      fetch(resolveApiUrl('/api/freelancer/applications/user/current'))
+      fetch(resolveApiUrl('/api/freelancer/applications/user/current'), {
+        credentials: 'include'
+      })
         .then(res => res.json())
         .then(data => {
           if (data.success && data.application) {
@@ -343,6 +345,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
       const response = await fetch(resolveApiUrl(`/api/freelancer/applications/${applicationId}`), {
         method: 'PUT',
         body: formData,
+        credentials: 'include'
       });
 
       if (response.ok) {
