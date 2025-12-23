@@ -19,8 +19,12 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
   const [resubmitError, setResubmitError] = useState("");
 
   const handleEditAndResubmit = () => {
-    // Navigate to freelancer application form page to edit and resubmit
-    onNavigate?.('freelancer-application', 'slide');
+    // Navigate to freelancer signup form to edit and resubmit (freelancer-application route doesn't exist)
+    if (freelancerApplicationStatus?.id) {
+      const url = `/?page=freelancer-signup&applicationId=${freelancerApplicationStatus.id}`;
+      window.history.pushState({}, '', url);
+      onNavigate?.('freelancer-signup', 'slide');
+    }
   };
 
   const getStatusInfo = () => {
