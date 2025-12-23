@@ -784,7 +784,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
         <Button
           type="button"
-          className="w-full h-11 font-medium rounded-lg bg-accent text-foreground hover:bg-accent/90" transition-all duration-300
+          className="w-full h-11 font-medium rounded-lg hover:opacity-90"
+          style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
           disabled={loading}
           onClick={() => setCurrentStep("register")}
           data-testid="button-blue-action"
