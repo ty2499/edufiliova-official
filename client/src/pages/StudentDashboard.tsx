@@ -824,7 +824,8 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
       <div className="flex items-center justify-between mb-8">
         <div className="flex space-x-1 p-1 bg-muted rounded-lg w-fit">
           <Button
-            variant={activeTab === 'browse' ? 'default' : 'ghost'}
+            variant="ghost"
+            className={activeTab === 'browse' ? 'bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]/90' : ''}
             onClick={() => setActiveTab('browse')}
             data-testid="tab-browse-courses"
           >
@@ -832,7 +833,8 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
             Browse Courses
           </Button>
           <Button
-            variant={activeTab === 'enrolled' ? 'default' : 'ghost'}
+            variant="ghost"
+            className={activeTab === 'enrolled' ? 'bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]/90' : ''}
             onClick={() => setActiveTab('enrolled')}
             data-testid="tab-my-courses"
           >
