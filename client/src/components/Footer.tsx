@@ -641,7 +641,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
             {/* Show More Policies Button */}
             <button
               onClick={() => setShowMorePolicies(!showMorePolicies)}
-              className="block text-sm text-blue-600 hover:text-blue-800 transition-colors font-medium text-left" transition-all duration-300
+              className="block text-sm text-[#2f5a4e] hover:text-[#1a3a32] transition-colors font-medium text-left" transition-all duration-300
               data-testid="button-show-more-policies"
             >
               {showMorePolicies ? 'Show less' : 'Show more policies'}
