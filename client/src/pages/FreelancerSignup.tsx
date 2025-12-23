@@ -394,133 +394,171 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-10">
           {currentSection === 1 && (
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">1. Basic Details</h2>
-              
-              <div className="space-y-5">
-                <div>
-                  <Label htmlFor="fullName" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    Full name
-                  </Label>
-                  <Input
-                    id="fullName"
-                    type="text"
-                    value={fullName}
-                    disabled
-                    className="bg-gray-50"
-                    data-testid="input-full-name"
-                  />
+              <div className="grid md:grid-cols-3 gap-8">
+                {/* Form Section */}
+                <div className="md:col-span-2">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">1. Basic Details</h2>
+                  
+                  <div className="space-y-5">
+                    <div>
+                      <Label htmlFor="fullName" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                        Full name
+                      </Label>
+                      <Input
+                        id="fullName"
+                        type="text"
+                        value={fullName}
+                        disabled
+                        className="bg-gray-50"
+                        data-testid="input-full-name"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="displayName" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                        Display name / Brand
+                      </Label>
+                      <Input
+                        id="displayName"
+                        type="text"
+                        value={displayName}
+                        disabled
+                        className="bg-gray-50"
+                        data-testid="input-display-name"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                        Email
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={email}
+                        disabled
+                        className="bg-gray-50"
+                        data-testid="input-email"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="country" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                        Country
+                      </Label>
+                      <Input
+                        id="country"
+                        type="text"
+                        value={country}
+                        disabled
+                        className="bg-gray-50"
+                        data-testid="input-country"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="primaryCategory" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                        What do you mainly create? <span className="text-primary-600">*</span>
+                      </Label>
+                      <Select value={primaryCategory} onValueChange={(value) => { setPrimaryCategory(value); clearError('primaryCategory'); }}>
+                        <SelectTrigger id="primaryCategory" data-testid="select-category">
+                          <SelectValue placeholder="Select primary category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {PRIMARY_CATEGORIES.map((cat) => (
+                            <SelectItem key={cat} value={cat}>
+                              {cat}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {errorMessages.primaryCategory && (
+                        <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-4 h-4" />
+                          {errorMessages.primaryCategory}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="tagline" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                        Short tagline <span className="text-primary-600">*</span>
+                      </Label>
+                      <p className="text-xs text-gray-500 mb-2">Describe your work in one sentence (max 80 characters).</p>
+                      <Input
+                        id="tagline"
+                        type="text"
+                        value={tagline}
+                        onChange={(e) => { setTagline(e.target.value); clearError('tagline'); }}
+                        placeholder="e.g. I design modern dashboards and education app UI"
+                        maxLength={80}
+                        data-testid="input-tagline"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">{tagline.length}/80</p>
+                      {errorMessages.tagline && (
+                        <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-4 h-4" />
+                          {errorMessages.tagline}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="about" className="text-sm font-medium text-gray-700 mb-1.5 block">
+                        About you <span className="text-primary-600">*</span>
+                      </Label>
+                      <p className="text-xs text-gray-500 mb-2">Tell clients about your experience, style, and what you offer (300-500 characters).</p>
+                      <Textarea
+                        id="about"
+                        value={about}
+                        onChange={(e) => { setAbout(e.target.value); clearError('about'); }}
+                        placeholder="I am a UI/UX designer with 3+ years of experience creating dashboards, landing pages and education platforms. I focus on clean, modern designs and responsive layouts."
+                        rows={5}
+                        maxLength={500}
+                        data-testid="textarea-about"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">{about.length}/500</p>
+                      {errorMessages.about && (
+                        <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
+                          <AlertCircle className="w-4 h-4" />
+                          {errorMessages.about}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="displayName" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    Display name / Brand
-                  </Label>
-                  <Input
-                    id="displayName"
-                    type="text"
-                    value={displayName}
-                    disabled
-                    className="bg-gray-50"
-                    data-testid="input-display-name"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    disabled
-                    className="bg-gray-50"
-                    data-testid="input-email"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="country" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    Country
-                  </Label>
-                  <Input
-                    id="country"
-                    type="text"
-                    value={country}
-                    disabled
-                    className="bg-gray-50"
-                    data-testid="input-country"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="primaryCategory" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    What do you mainly create? <span className="text-primary-600">*</span>
-                  </Label>
-                  <Select value={primaryCategory} onValueChange={(value) => { setPrimaryCategory(value); clearError('primaryCategory'); }}>
-                    <SelectTrigger id="primaryCategory" data-testid="select-category">
-                      <SelectValue placeholder="Select primary category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {PRIMARY_CATEGORIES.map((cat) => (
-                        <SelectItem key={cat} value={cat}>
-                          {cat}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errorMessages.primaryCategory && (
-                    <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-4 h-4" />
-                      {errorMessages.primaryCategory}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="tagline" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    Short tagline <span className="text-primary-600">*</span>
-                  </Label>
-                  <p className="text-xs text-gray-500 mb-2">Describe your work in one sentence (max 80 characters).</p>
-                  <Input
-                    id="tagline"
-                    type="text"
-                    value={tagline}
-                    onChange={(e) => { setTagline(e.target.value); clearError('tagline'); }}
-                    placeholder="e.g. I design modern dashboards and education app UI"
-                    maxLength={80}
-                    data-testid="input-tagline"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">{tagline.length}/80</p>
-                  {errorMessages.tagline && (
-                    <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-4 h-4" />
-                      {errorMessages.tagline}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="about" className="text-sm font-medium text-gray-700 mb-1.5 block">
-                    About you <span className="text-primary-600">*</span>
-                  </Label>
-                  <p className="text-xs text-gray-500 mb-2">Tell clients about your experience, style, and what you offer (300-500 characters).</p>
-                  <Textarea
-                    id="about"
-                    value={about}
-                    onChange={(e) => { setAbout(e.target.value); clearError('about'); }}
-                    placeholder="I am a UI/UX designer with 3+ years of experience creating dashboards, landing pages and education platforms. I focus on clean, modern designs and responsive layouts."
-                    rows={5}
-                    maxLength={500}
-                    data-testid="textarea-about"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">{about.length}/500</p>
-                  {errorMessages.about && (
-                    <p className="text-sm text-primary-600 mt-1 flex items-center gap-1">
-                      <AlertCircle className="w-4 h-4" />
-                      {errorMessages.about}
-                    </p>
-                  )}
+                {/* Preview Panel */}
+                <div className="md:col-span-1">
+                  <div className="bg-gradient-to-br from-[#0C332C] to-[#0f4a3d] rounded-xl p-6 text-white sticky top-6">
+                    <h3 className="text-lg font-bold mb-4">Profile Preview</h3>
+                    
+                    <div className="space-y-4">
+                      {/* Full Name */}
+                      <div>
+                        <p className="text-xs font-semibold text-gray-300 uppercase mb-1">Full Name</p>
+                        <p className="text-sm font-medium">{fullName || '—'}</p>
+                      </div>
+                      
+                      {/* Display Name */}
+                      <div className="pt-2 border-t border-white/20">
+                        <p className="text-xs font-semibold text-gray-300 uppercase mb-1">Display Name / Brand</p>
+                        <p className="text-sm font-medium">{displayName || '—'}</p>
+                      </div>
+                      
+                      {/* Email */}
+                      <div className="pt-2 border-t border-white/20">
+                        <p className="text-xs font-semibold text-gray-300 uppercase mb-1">Email</p>
+                        <p className="text-sm font-medium break-all">{email || '—'}</p>
+                      </div>
+                      
+                      {/* Country */}
+                      <div className="pt-2 border-t border-white/20">
+                        <p className="text-xs font-semibold text-gray-300 uppercase mb-1">Country</p>
+                        <p className="text-sm font-medium">{country || '—'}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
