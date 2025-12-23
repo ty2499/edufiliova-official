@@ -749,7 +749,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-sm text-primary hover:text-purple-800 font-medium ml-auto" transition-all duration-300
+            className="text-sm font-medium ml-auto transition-all duration-300"
+            style={{ color: '#2f5a4e' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#2f5a4e'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#2f5a4e'}
             data-testid="button-forgot-password"
           >
             Forgot password?
