@@ -103,8 +103,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
-                  <CardTitle className="text-2xl flex items-center gap-2">
-                    <StatusIcon className={`h-6 w-6 ${statusInfo.iconColor}`} />
+                  <CardTitle className="text-2xl">
                     {statusInfo.title}
                   </CardTitle>
                   <CardDescription className="text-base">
