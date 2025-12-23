@@ -18,20 +18,36 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
   const [resubmitError, setResubmitError] = useState("");
 
   const handleResubmit = async () => {
-    if (!teacherApplicationStatus?.id) return;
+    if (!teacherApplicationStatus?.id) {
+      setResubmitError("Application ID not found");
+      return;
+    }
     setIsResubmitting(true);
     setResubmitError("");
     try {
       const response = await fetch(`/api/teacher-applications/${teacherApplicationStatus.id}/resubmit`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
       });
-      const data = await response.json();
+      
       if (!response.ok) {
-        setResubmitError(data.error || "Failed to resubmit application");
+        const errorData = await response.json();
+        setResubmitError(errorData.error || "Failed to resubmit application");
       } else {
-        window.location.reload();
+        const data = await response.json();
+        if (data.success) {
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+        } else {
+          setResubmitError("Failed to resubmit application");
+        }
       }
     } catch (error) {
+      console.error("Resubmit error:", error);
       setResubmitError("An error occurred while resubmitting");
     } finally {
       setIsResubmitting(false);
