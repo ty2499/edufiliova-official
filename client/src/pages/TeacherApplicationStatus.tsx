@@ -5,18 +5,41 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Clock, XCircle, FileText, ArrowLeft } from "lucide-react";
+import { Clock, XCircle, FileText, ArrowLeft, RefreshCw } from "lucide-react";
 import { CheckmarkIcon } from "@/components/ui/checkmark-icon";
+import { useState } from "react";
 
 export default function TeacherApplicationStatus() {
   const [, navigate] = useLocation();
   const urlParams = new URLSearchParams(window.location.search);
   const applicationId = urlParams.get("id");
+  const [isResubmitting, setIsResubmitting] = useState(false);
+  const [resubmitError, setResubmitError] = useState("");
 
-  const { data: application, isLoading } = useQuery<any>({
+  const { data: application, isLoading, refetch } = useQuery<any>({
     queryKey: [`/api/teacher-applications/${applicationId}`],
     enabled: !!applicationId,
   });
+
+  const handleResubmit = async () => {
+    setIsResubmitting(true);
+    setResubmitError("");
+    try {
+      const response = await fetch(`/api/teacher-applications/${applicationId}/resubmit`, {
+        method: 'POST',
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setResubmitError(data.error || "Failed to resubmit application");
+      } else {
+        refetch();
+      }
+    } catch (error) {
+      setResubmitError("An error occurred while resubmitting");
+    } finally {
+      setIsResubmitting(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -127,11 +150,25 @@ export default function TeacherApplicationStatus() {
                 We're sorry, but your application was not approved at this time.
               </p>
               {application.adminNotes && (
-                <div className="bg-background p-4 rounded-lg text-left">
+                <div className="bg-background p-4 rounded-lg text-left mb-4">
                   <p className="font-medium mb-2">Feedback:</p>
                   <p className="text-sm text-muted-foreground">{application.adminNotes}</p>
                 </div>
               )}
+              {resubmitError && (
+                <div className="bg-destructive/10 border border-destructive p-3 rounded-lg text-left mb-4">
+                  <p className="text-sm text-destructive">{resubmitError}</p>
+                </div>
+              )}
+              <Button
+                onClick={handleResubmit}
+                disabled={isResubmitting}
+                className="bg-primary hover:bg-primary/80"
+                data-testid="button-resubmit"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                {isResubmitting ? "Resubmitting..." : "Resubmit Application"}
+              </Button>
             </CardContent>
           </Card>
         )}
