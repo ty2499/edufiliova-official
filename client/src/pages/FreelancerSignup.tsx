@@ -24,6 +24,7 @@ import Logo from '@/components/Logo';
 import { countryCodes } from '@shared/countryCodes';
 import FreelancerTermsModal from '@/components/FreelancerTermsModal';
 import { resolveApiUrl } from '@/lib/queryClient';
+import { useAuth } from '@/hooks/useAuth';
 
 interface FreelancerSignupProps {
   onNavigate?: (page: string) => void;
@@ -67,6 +68,7 @@ const PORTFOLIO_CATEGORIES = [
 ];
 
 export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) {
+  const { user, profile } = useAuth();
   const [applicationId, setApplicationId] = useState<string | null>(null);
   const [currentSection, setCurrentSection] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -99,6 +101,16 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
   const [reviewAccepted, setReviewAccepted] = useState(false);
   const [termsModalOpen, setTermsModalOpen] = useState(false);
 
+  // Load user profile data first
+  useEffect(() => {
+    if (profile && !fullName) {
+      setFullName(profile.name || '');
+      setEmail(profile.email || '');
+      setCountry(profile.country || '');
+      setDisplayName(profile.displayName || '');
+    }
+  }, [profile]);
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const appIdParam = urlParams.get('applicationId');
@@ -115,7 +127,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
         })
         .then(data => {
           if (data && data.success !== false) {
-            // Populate basic info fields
+            // Populate basic info fields (overrides profile data when editing)
             setFullName(data.fullName || '');
             setDisplayName(data.displayName || '');
             setEmail(data.email || '');
@@ -156,8 +168,6 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
           console.error('Failed to load application data:', err);
           setErrorMessages({ submit: 'Failed to load your application. Please try again or contact support.' });
         });
-    } else {
-      setErrorMessages({ submit: 'Invalid application. Please start from the signup page.' });
     }
   }, []);
 
