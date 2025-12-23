@@ -784,7 +784,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                   <div key={module.id} className="mb-3">
                     <button
                       className={`w-full text-left p-3 rounded-lg transition-colors ${
-                        isExpanded ? 'bg-accent' : 'hover:bg-accent/50'
+                        isExpanded ? 'bg-accent' : 'hover:bg-[#a0fab2]/20'
                       }`}
                       onClick={() => {
                         // Toggle module expansion
