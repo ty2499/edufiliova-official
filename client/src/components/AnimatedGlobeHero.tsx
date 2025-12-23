@@ -35,7 +35,7 @@ const userTypeContent = [
     ctaAction: 'freelancer-signup-basic',
     secondaryCta: 'Learn More',
     secondaryAction: 'help',
-    color: '#2a59d1'
+    color: '#0C332C'
   },
   {
     type: 'Customers',
@@ -144,15 +144,15 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
         centerY,
         radius * 1.5
       );
-      gradient.addColorStop(0, 'rgba(197, 241, 60, 0.08)');
-      gradient.addColorStop(0.5, 'rgba(255, 88, 52, 0.04)');
+      gradient.addColorStop(0, 'rgba(160, 250, 178, 0.08)');
+      gradient.addColorStop(0.5, 'rgba(12, 51, 44, 0.04)');
       gradient.addColorStop(1, 'transparent');
       ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius * 1.5, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.strokeStyle = 'rgba(197, 241, 60, 0.2)';
+      ctx.strokeStyle = 'rgba(160, 250, 178, 0.2)';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
@@ -176,9 +176,9 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
         const size = dot.size * (0.5 + depth * 0.5);
 
         if (i % 3 === 0) {
-          ctx.fillStyle = `rgba(255, 88, 52, ${alpha})`;
+          ctx.fillStyle = `rgba(12, 51, 44, ${alpha})`;
         } else {
-          ctx.fillStyle = `rgba(197, 241, 60, ${alpha})`;
+          ctx.fillStyle = `rgba(160, 250, 178, ${alpha})`;
         }
 
         ctx.beginPath();
@@ -187,7 +187,7 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
       });
 
       for (let i = 0; i < 3; i++) {
-        ctx.strokeStyle = `rgba(197, 241, 60, ${0.08 - i * 0.02})`;
+        ctx.strokeStyle = `rgba(160, 250, 178, ${0.08 - i * 0.02})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius + 10 + i * 15, 0, Math.PI * 2);
@@ -243,10 +243,10 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
                       setContentVisible(true);
                     }, 300);
                   }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform ${
                     activeIndex === index
-                      ? 'border border-transparent'
-                      : 'bg-white/10 text-white hover:bg-white/20 border border-transparent'
+                      ? 'border border-transparent scale-105 shadow-lg'
+                      : 'bg-white/10 text-white hover:bg-white/20 border border-transparent hover:scale-105 hover:shadow-lg active:scale-95'
                   }`}
                   style={activeIndex === index ? { 
                     backgroundColor: item.color, 
