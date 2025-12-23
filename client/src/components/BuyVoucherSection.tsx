@@ -693,12 +693,9 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
     return (
       <div className="max-w-lg mx-auto">
         <Card className="border-0 overflow-hidden shadow-none">
-          <div className="p-8 text-center text-white" style={{ background: 'linear-gradient(to right, #2d5dd8, #2d5dd8)' }}>
-            <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
-              <CheckCircle2 className="w-12 h-12" />
-            </div>
+          <div className="p-8 text-center text-white" style={{ backgroundColor: '#2f5a4e' }}>
             <h1 className="text-2xl font-bold">Gift Voucher Purchased!</h1>
-            <p className="text-green-100 mt-2">Your gift is on its way</p>
+            <p className="text-white mt-2">Your gift is on its way</p>
           </div>
 
           <CardContent className="p-6 space-y-6">
