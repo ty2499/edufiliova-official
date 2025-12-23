@@ -839,7 +839,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             </Card>
             
             {supportOptions.map((option, index) => (
-              <Card key={index} className={`${option.primary ? 'border-2 border-primary' : ''}`}>
+              <Card key={index} style={option.primary ? { border: '2px solid #2f5a4e' } : {}}>
                 <CardHeader className="text-center">
                   <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 ${
                     option.primary ? 'bg-primary text-primary-foreground' : 'bg-muted'
@@ -1017,7 +1017,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Privacy & Security */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
@@ -1043,7 +1043,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Terms of Service */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
@@ -1069,7 +1069,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Student Terms */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
@@ -1095,7 +1095,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Teacher Terms */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
@@ -1121,7 +1121,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* School/Institution Terms */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
@@ -1147,7 +1147,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Payment & Billing Policy */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center flex-shrink-0">
@@ -1173,7 +1173,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Refund Policy */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
@@ -1199,7 +1199,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Cookies Policy */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-pink-100 flex items-center justify-center flex-shrink-0">
@@ -1225,7 +1225,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* WhatsApp Policy */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-teal-100 flex items-center justify-center flex-shrink-0">
@@ -1251,7 +1251,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Data Retention Policy */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
@@ -1277,7 +1277,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               </Card>
 
               {/* Community Guidelines */}
-              <Card className="border-2 border-primary/20">
+              <Card style={{ border: "2px solid rgba(47, 90, 78, 0.2)" }}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
