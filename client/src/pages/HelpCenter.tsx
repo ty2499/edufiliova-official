@@ -974,7 +974,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                         <category.icon className="h-5 w-5" style={{ color: '#2f5a4e' }} />
                       </div>
                       {category.title}
-                      <Badge variant="secondary">{faqs.length} {faqs.length === 1 ? 'question' : 'questions'}</Badge>
+                      <Badge className="bg-primary text-white">{faqs.length} {faqs.length === 1 ? 'question' : 'questions'}</Badge>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
