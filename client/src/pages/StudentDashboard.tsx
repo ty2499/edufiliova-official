@@ -2213,8 +2213,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               variant="ghost"
               className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                 activeTab === "overview" 
-                  ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                  ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                  : "text-white hover:bg-[#a0fab2] hover:text-black"
               }`}
               onClick={() => { setActiveTab("overview"); setShowMobileMenu(false); }}
               data-testid="nav-overview"
@@ -2228,8 +2228,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                 variant="ghost"
                 className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                   activeTab === "subjects" 
-                    ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                    : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                    ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                    : "text-white hover:bg-[#a0fab2] hover:text-black"
                 }`}
                 onClick={() => { setActiveTab("subjects"); setShowMobileMenu(false); }}
                 data-testid="nav-subjects"
@@ -2244,8 +2244,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                 variant="ghost"
                 className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                   activeTab === "courses" 
-                    ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                    : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                    ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                    : "text-white hover:bg-[#a0fab2] hover:text-black"
                 }`}
                 onClick={() => { setActiveTab("courses"); setShowMobileMenu(false); }}
                 data-testid="nav-courses"
@@ -2259,8 +2259,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               variant="ghost"
               className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                 activeTab === "classes" 
-                  ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                  ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                  : "text-white hover:bg-[#a0fab2] hover:text-black"
               }`}
               onClick={() => { setActiveTab("classes"); setShowMobileMenu(false); }}
               data-testid="nav-classes"
@@ -2272,8 +2272,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               variant="ghost"
               className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                 activeTab === "assignments" 
-                  ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                  ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                  : "text-white hover:bg-[#a0fab2] hover:text-black"
               }`}
               onClick={() => { setActiveTab("assignments"); setShowMobileMenu(false); }}
               data-testid="nav-assignments"
@@ -2285,8 +2285,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               variant="ghost"
               className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                 activeTab === "book-teacher" 
-                  ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                  ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                  : "text-white hover:bg-[#a0fab2] hover:text-black"
               }`}
               onClick={() => { setActiveTab("book-teacher"); setShowMobileMenu(false); }}
               data-testid="nav-book-teacher"
@@ -2305,8 +2305,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               variant="ghost"
               className={`w-full justify-start rounded-lg transition-colors px-3 py-2 relative ${
                 activeTab === "messages" 
-                  ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                  ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                  : "text-white hover:bg-[#a0fab2] hover:text-black"
               }`}
               onClick={() => { setActiveTab("messages"); setShowMobileMenu(false); }}
               data-testid="nav-messages"
@@ -2323,8 +2323,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               variant="ghost"
               className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                 activeTab === "notes" 
-                  ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                  ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                  : "text-white hover:bg-[#a0fab2] hover:text-black"
               }`}
               onClick={() => { setActiveTab("notes"); setShowMobileMenu(false); }}
               data-testid="nav-notes"
@@ -2336,8 +2336,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               variant="ghost"
               className={`w-full justify-start rounded-lg transition-colors px-3 py-2 relative ${
                 activeTab === "announcements" 
-                  ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                  ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                  : "text-white hover:bg-[#a0fab2] hover:text-black"
               }`}
               onClick={() => { setActiveTab("announcements"); setShowMobileMenu(false); }}
               data-testid="nav-announcements"
@@ -2356,8 +2356,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                 variant="ghost"
                 className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                   activeTab === "community" 
-                    ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                    : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                    ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                    : "text-white hover:bg-[#a0fab2] hover:text-black"
                 }`}
                 onClick={() => { setActiveTab("community"); setShowMobileMenu(false); }}
                 data-testid="nav-community"
@@ -2385,8 +2385,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                   variant="ghost"
                   className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                     activeTab === "wallet" 
-                      ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                      : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                      ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                      : "text-white hover:bg-[#a0fab2] hover:text-black"
                   }`}
                   onClick={() => { setActiveTab("wallet"); setShowMobileMenu(false); }}
                   data-testid="nav-wallet"
@@ -2399,8 +2399,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                     variant="ghost"
                     className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                       activeTab === "billing" 
-                        ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                        : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                        ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                        : "text-white hover:bg-[#a0fab2] hover:text-black"
                     }`}
                     onClick={() => { setActiveTab("billing"); setShowMobileMenu(false); }}
                     data-testid="nav-billing"
@@ -2414,8 +2414,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                     variant="ghost"
                     className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                       activeTab === "receipts" 
-                        ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                        : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                        ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                        : "text-white hover:bg-[#a0fab2] hover:text-black"
                     }`}
                     onClick={() => { setActiveTab("receipts"); setShowMobileMenu(false); }}
                     data-testid="nav-receipts"
@@ -2446,8 +2446,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                     variant="ghost"
                     className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                       activeTab === "purchases" 
-                        ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                        : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                        ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                        : "text-white hover:bg-[#a0fab2] hover:text-black"
                     }`}
                     onClick={() => { setActiveTab("purchases"); setShowMobileMenu(false); }}
                     data-testid="nav-purchases"
@@ -2461,8 +2461,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                     variant="ghost"
                     className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                       activeTab === "downloads" 
-                        ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                        : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                        ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                        : "text-white hover:bg-[#a0fab2] hover:text-black"
                     }`}
                     onClick={() => { setActiveTab("downloads"); setShowMobileMenu(false); }}
                     data-testid="nav-downloads"
@@ -2475,8 +2475,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                   variant="ghost"
                   className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                     activeTab === "buy-voucher" 
-                      ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                      : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                      ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                      : "text-white hover:bg-[#a0fab2] hover:text-black"
                   }`}
                   onClick={() => { setActiveTab("buy-voucher"); setShowMobileMenu(false); }}
                   data-testid="nav-buy-voucher"
@@ -2507,8 +2507,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       variant="ghost"
                       className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                         activeTab === "portfolio-gallery" 
-                          ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                          : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                          ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                          : "text-white hover:bg-[#a0fab2] hover:text-black"
                       }`}
                       onClick={() => { setActiveTab("portfolio-gallery"); setShowMobileMenu(false); }}
                       data-testid="nav-portfolio-gallery"
@@ -2520,8 +2520,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       variant="ghost"
                       className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                         activeTab === "marketplace" 
-                          ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                          : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                          ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                          : "text-white hover:bg-[#a0fab2] hover:text-black"
                       }`}
                       onClick={() => { setActiveTab("marketplace"); setShowMobileMenu(false); }}
                       data-testid="nav-marketplace"
@@ -2534,8 +2534,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                         variant="ghost"
                         className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                           activeTab === "create-ad" 
-                            ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                            : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                            ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                            : "text-white hover:bg-[#a0fab2] hover:text-black"
                         }`}
                         onClick={() => { setActiveTab("create-ad"); setShowMobileMenu(false); }}
                         data-testid="nav-create-ad"
@@ -2556,8 +2556,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               variant="ghost"
               className={`w-full justify-start rounded-lg transition-colors px-3 py-2 ${
                 activeTab === "settings" 
-                  ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90 hover:text-black" 
-                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+                  ? "bg-[#a0fab2] text-black hover:bg-[#a0fab2]/90 hover:text-black" 
+                  : "text-white hover:bg-[#a0fab2] hover:text-black"
               }`}
               onClick={() => { setActiveTab("settings"); setShowMobileMenu(false); }}
               data-testid="nav-settings"
@@ -2570,7 +2570,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
           <div className="p-3 border-t border-white/20 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium" transition-all duration-300
+              className="w-full bg-[#a0fab2] hover:bg-[#a0fab2]/90 text-black font-medium" transition-all duration-300
               onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
