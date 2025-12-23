@@ -855,7 +855,8 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     {option.availability}
                   </div>
                   <Button 
-                    className={`w-full ${option.primary ? 'bg-primary text-[#ffffff]' : 'variant-outline'}`}
+                    style={option.primary ? { backgroundColor: '#2f5a4e', color: '#ffffff' } : {}}
+                    className={`w-full ${!option.primary ? 'variant-outline' : ''}`}
                     onClick={() => {
                       if (option.method === "Live Chat Support") {
                         setIsChatOpen(true);
