@@ -1159,7 +1159,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
           <Button
             type="submit"
-            className="w-full h-11 font-medium rounded-lg"
+            className="w-full h-11 font-medium rounded-lg border-0"
             style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
             disabled={loading}
             data-testid="button-register"
@@ -1319,7 +1319,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
         <Button
           type="submit"
-          className="w-full h-11 font-medium rounded-lg"
+          className="w-full h-11 font-medium rounded-lg border-0"
           style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
           disabled={loading}
           data-testid="button-submit-teacher-application"
@@ -1656,7 +1656,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
         <Button
           type="submit"
-          className="w-full h-11 font-medium rounded-lg"
+          className="w-full h-11 font-medium rounded-lg border-0"
           style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
           disabled={forgotPasswordLoading}
           data-testid="button-send-reset-link"
