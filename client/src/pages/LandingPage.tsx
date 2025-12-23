@@ -650,7 +650,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
                 Trending <span className="relative inline-block px-4 py-1 text-white rounded-lg transform -rotate-1 bg-[#2f5a4e]">Products</span>
               </h2>
-              <p className="text-lg md:text-xl text-muted-foreground">
+              <p className="text-lg md:text-xl text-[#545454]">
                 Discover what's hot right now from our community of talented creators
               </p>
             </div>
