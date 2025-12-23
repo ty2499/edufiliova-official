@@ -835,7 +835,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
                   <Button
                     key={amt}
                     variant={amount === amt && !customAmount ? "default" : "outline"}
-                    className={`h-14 text-lg font-bold ${amount === amt && !customAmount ? 'bg-primary text-white' : ''}`}
+                    className="h-14 text-lg font-bold"
+                    style={amount === amt && !customAmount ? { backgroundColor: '#2f5a4e', color: 'white' } : {}}
                     onClick={() => handleAmountSelect(amt)}
                     data-testid={`button-voucher-amount-${amt}`}
                   >
