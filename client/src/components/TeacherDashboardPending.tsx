@@ -233,12 +233,12 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
           <Card className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
             <CardContent className="pt-6">
               <div className="flex gap-3">
-                <Mail className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                <Mail className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: '#2f5a4e' }} />
                 <div className="space-y-1">
-                  <p className="font-medium text-blue-900 dark:text-blue-100">
+                  <p className="font-medium" style={{ color: '#2f5a4e' }}>
                     Email Notification
                   </p>
-                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                  <p className="text-sm" style={{ color: '#2f5a4e' }}>
                     You will receive an email notification once your application has been reviewed and approved. 
                     This typically takes 2-3 business days.
                   </p>
@@ -257,7 +257,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     If you believe this decision was made in error or would like to reapply, please contact our support team 
-                    at <a href="mailto:support@edufiliova.com" className="text-blue-600 dark:text-blue-400 hover:underline" transition-all duration-300>support@edufiliova.com</a>
+                    at <a href="mailto:support@edufiliova.com" className="hover:underline" style={{ color: '#2f5a4e' }}>support@edufiliova.com</a>
                   </p>
                 </div>
               </CardContent>
