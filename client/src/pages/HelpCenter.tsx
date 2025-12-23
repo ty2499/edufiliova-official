@@ -844,14 +844,14 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 ${
                     option.primary ? 'bg-primary text-primary-foreground' : 'bg-muted'
                   }`}>
-                    <option.icon className="h-8 w-8" style={{ color: '#2f5a4e' }} />
+                    <option.icon className="h-8 w-8" style={{ color: option.primary ? '#ffffff' : '#2f5a4e' }} />
                   </div>
                   <CardTitle className="text-lg">{option.method}</CardTitle>
                   <CardDescription>{option.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
                   <div className="text-sm text-muted-foreground mb-4">
-                    <Clock className="h-4 w-4 inline mr-1" style={{ color: '#2f5a4e' }} />
+                    <Clock className="h-4 w-4 inline mr-1" style={{ color: option.primary ? '#ffffff' : '#2f5a4e' }} />
                     {option.availability}
                   </div>
                   <Button 
