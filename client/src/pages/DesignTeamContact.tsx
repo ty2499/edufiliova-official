@@ -126,7 +126,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
               {/* Contact Form with Lime Green Background */}
               <div 
                 className="rounded-3xl p-8 md:p-12"
-                style={{ backgroundColor: '#CCFF00' }}
+                style={{ backgroundColor: '#a0fab2' }}
               >
                 <h1 className="text-3xl md:text-4xl font-bold mb-4 text-black">
                   Let's create something amazing together.
@@ -373,7 +373,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
 
                   <div className="space-y-6">
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#CCFF00' }}>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#a0fab2' }}>
                         <Check className="h-6 w-6 text-black" />
                       </div>
                       <div>
@@ -387,7 +387,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                     </div>
 
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#CCFF00' }}>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#a0fab2' }}>
                         <Check className="h-6 w-6 text-black" />
                       </div>
                       <div>
@@ -401,7 +401,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                     </div>
 
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#CCFF00' }}>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#a0fab2' }}>
                         <Check className="h-6 w-6 text-black" />
                       </div>
                       <div>
@@ -452,7 +452,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                 {/* Contact Info */}
                 <div className="bg-white rounded-3xl p-8 md:p-12">
                   <div className="flex items-start space-x-4 mb-6">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#CCFF00' }}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#a0fab2' }}>
                       <Mail className="h-6 w-6 text-black" />
                     </div>
                     <div>
@@ -469,7 +469,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#CCFF00' }}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#a0fab2' }}>
                       <Clock className="h-6 w-6 text-black" />
                     </div>
                     <div>
