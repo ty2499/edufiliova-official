@@ -142,28 +142,29 @@ export default function FreelancerApplicationStatus() {
         )}
 
         {isRejected && (
-          <Card className="mb-6 border-primary bg-primary/10 dark:bg-red-950/20">
+          <Card className="mb-6" style={{ backgroundColor: '#a0fab2', borderColor: '#2f5a4e' }}>
             <CardContent className="pt-6 text-center">
-              <XCircle className="w-16 h-16 text-primary-500 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold mb-2">Application Not Approved</h2>
-              <p className="text-muted-foreground mb-4">
+              <XCircle className="w-16 h-16 mx-auto mb-4" style={{ color: '#2f5a4e' }} />
+              <h2 className="text-2xl font-bold mb-2" style={{ color: '#2f5a4e' }}>Application Not Approved</h2>
+              <p className="mb-4" style={{ color: '#2f5a4e' }}>
                 We're sorry, but your application was not approved at this time.
               </p>
               {application.adminNotes && (
-                <div className="bg-background p-4 rounded-lg text-left mb-4">
-                  <p className="font-medium mb-2">Feedback:</p>
-                  <p className="text-sm text-muted-foreground">{application.adminNotes}</p>
+                <div className="bg-white/50 p-4 rounded-lg text-left mb-4 border" style={{ borderColor: '#2f5a4e' }}>
+                  <p className="font-medium mb-2" style={{ color: '#2f5a4e' }}>Feedback:</p>
+                  <p className="text-sm" style={{ color: '#2f5a4e' }}>{application.adminNotes}</p>
                 </div>
               )}
               {resubmitError && (
-                <div className="bg-destructive/10 border border-destructive p-3 rounded-lg text-left mb-4">
-                  <p className="text-sm text-destructive">{resubmitError}</p>
+                <div className="bg-red-100 border border-red-300 p-3 rounded-lg text-left mb-4">
+                  <p className="text-sm text-red-700">{resubmitError}</p>
                 </div>
               )}
               <Button
                 onClick={handleResubmit}
                 disabled={isResubmitting}
-                className="bg-primary hover:bg-primary/80"
+                style={{ backgroundColor: '#2f5a4e' }}
+                className="hover:opacity-90"
                 data-testid="button-resubmit"
               >
                 <RefreshCw className="w-4 h-4 mr-2" />
