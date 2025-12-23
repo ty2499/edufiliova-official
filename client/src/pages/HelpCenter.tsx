@@ -828,7 +828,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}>
                   <Headphones className="h-8 w-8" style={{ color: '#ffffff' }} />
                 </div>
-                <CardTitle className="text-lg" style={{ color: '#ffffff' }}>We're Here to Help</CardTitle>
+                <CardTitle className="font-bold tracking-tight font-['StackSans_Headline'] text-lg text-[#a0fab2]">We're Here to Help</CardTitle>
                 <CardDescription style={{ color: 'rgba(255, 255, 255, 0.8)' }}>Multiple ways to reach our support team</CardDescription>
               </CardHeader>
               <CardContent className="text-center">
