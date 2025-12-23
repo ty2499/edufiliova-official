@@ -133,8 +133,8 @@ All colors MUST be HSL.
     /* Mobile navigation height for bottom spacing */
     --mobile-nav-height: 64px;
     
-    /* Primary Forest Green: #0C332C */
-    --primary: 166 50% 15%;
+    /* Primary Forest Green: #2f5a4e */
+    --primary: 158 31% 27%;
     --primary-foreground: 0 0% 100%;
 
     /* Accent Mint Green: #A0FAB2 */
