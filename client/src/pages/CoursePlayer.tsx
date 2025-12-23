@@ -1053,7 +1053,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                       return (
                       <div key={qIndex} className="p-2 border rounded bg-background">
                         <div className="flex items-start gap-2 mb-3">
-                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold">
+                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#2f5a4e] text-white flex items-center justify-center text-xs font-semibold">
                             {qIndex + 1}
                           </div>
                           <div className="flex-1">
@@ -1104,14 +1104,14 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                                     <RadioGroupItem value={optIndex.toString()} id={`${question.id}-${optIndex}`} />
                                     <Label
                                       htmlFor={`${question.id}-${optIndex}`}
-                                      className={`flex-1 cursor-pointer text-sm ${showResult && isCorrect ? 'font-semibold text-green-700 dark:text-green-400' : ''}`}
+                                      className={`flex-1 cursor-pointer text-sm ${showResult && isCorrect ? 'font-semibold text-[#2f5a4e] dark:text-[#2f5a4e]' : ''}`}
                                     >
                                       {option}
                                     </Label>
                                     {showResult && isCorrect && (
                                       <div className="flex items-center gap-1">
-                                        <Check className="h-4 w-4 text-green-600 font-bold" />
-                                        <span className="text-xs font-semibold text-green-600">Correct</span>
+                                        <Check className="h-4 w-4 text-[#2f5a4e] font-bold" />
+                                        <span className="text-xs font-semibold text-[#2f5a4e]">Correct</span>
                                       </div>
                                     )}
                                     {showResult && isSelected && !isCorrect && (
