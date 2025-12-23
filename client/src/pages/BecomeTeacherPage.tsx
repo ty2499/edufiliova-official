@@ -179,7 +179,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
       </div>
 
       {/* Why Teach With Us Section */}
-      <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 max-w-7xl mx-auto">
+      <div className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-14 max-w-7xl mx-auto bg-white dark:bg-white w-full">
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
           <Badge className="mb-3 sm:mb-4 bg-[#0C332C]/10 text-foreground dark:bg-[#0C332C]/20 dark:text-foreground px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
             Benefits
