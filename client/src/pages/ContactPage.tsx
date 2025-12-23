@@ -80,14 +80,13 @@ const ContactPage = ({ onNavigate }: ContactPageProps) => {
   return (
     <div className="min-h-screen flex flex-col pt-16">
       <Header onNavigate={onNavigate} currentPage="contact" />
-      
       <main className="flex-1 bg-gray-50 py-8 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Contact Form with Lime Green Background */}
               <div 
-                className="rounded-3xl p-8 md:p-12"
+                className="rounded-3xl p-8 md:p-12 bg-[#a0fab2]"
                 style={{ backgroundColor: '#CCFF00' }}
               >
                 <h1 className="text-3xl md:text-4xl font-bold mb-4 text-black">
@@ -285,7 +284,6 @@ const ContactPage = ({ onNavigate }: ContactPageProps) => {
           </div>
         </div>
       </main>
-
       <Footer onNavigate={onNavigate} />
     </div>
   );
