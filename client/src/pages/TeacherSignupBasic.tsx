@@ -350,7 +350,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 setSignupMethod('email');
                 setCurrentView('signup');
               }}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#0C332C] hover:bg-[#e54d2d] text-white font-medium rounded-xl transition-all" transition-all duration-300
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#0C332C] text-white font-medium rounded-xl"
               data-testid="button-signup-email"
             >
               <Mail className="h-5 w-5" />
@@ -362,7 +362,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 setSignupMethod('phone');
                 setCurrentView('signup');
               }}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-medium rounded-xl transition-all" transition-all duration-300
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#A0FAB2] text-black font-medium rounded-xl"
               data-testid="button-signup-phone"
             >
               <Phone className="h-5 w-5" />
@@ -553,7 +553,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
 
           <Button
             type="submit"
-            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base mt-6" transition-all duration-300
+            className="w-full h-12 bg-[#A0FAB2] text-black font-semibold rounded-xl text-base mt-6"
             disabled={submitMutation.isPending}
             data-testid="button-submit"
           >
