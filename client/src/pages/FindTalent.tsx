@@ -602,7 +602,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
                   variant={viewMode === 'grid' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => setViewMode('grid')}
-                  className="h-8 w-10 p-0"
+                  className={`h-8 w-10 p-0 ${viewMode === 'grid' ? 'bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]' : ''}`}
                   data-testid="button-grid-view"
                 >
                   <Grid3x3 className="h-4 w-4" />
@@ -611,7 +611,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
                   variant={viewMode === 'list' ? 'default' : 'ghost'}
                   size="sm"
                   onClick={() => setViewMode('list')}
-                  className="h-8 w-10 p-0"
+                  className={`h-8 w-10 p-0 ${viewMode === 'list' ? 'bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]' : ''}`}
                   data-testid="button-list-view"
                 >
                   <List className="h-4 w-4" />
