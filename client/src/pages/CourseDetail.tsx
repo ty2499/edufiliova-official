@@ -653,7 +653,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
                     <CardContent>
                       <div className="flex flex-wrap gap-2">
                         {course.tags.map((tag: string, index: number) => (
-                          <Badge key={index} variant="secondary">
+                          <Badge key={index} style={{ backgroundColor: '#2f5a4e', color: '#a0fab2' }}>
                             {tag}
                           </Badge>
                         ))}
@@ -710,7 +710,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
                                       {lesson.durationMinutes} min
                                     </span>
                                     {lesson.freePreviewFlag && (
-                                      <Badge variant="outline" className="text-xs">
+                                      <Badge className="text-xs" style={{ backgroundColor: '#2f5a4e', color: '#a0fab2' }}>
                                         Free Preview
                                       </Badge>
                                     )}
