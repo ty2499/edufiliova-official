@@ -795,7 +795,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               />
               {searchQuery && (
                 <Button
-                  variant="ghost"
+                  style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }}
                   size="sm"
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 rounded-full"
                   onClick={() => setSearchQuery("")}
@@ -855,8 +855,8 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                     {option.availability}
                   </div>
                   <Button 
-                    style={option.primary ? { backgroundColor: '#2f5a4e', color: '#ffffff' } : {}}
-                    className={`w-full ${!option.primary ? 'variant-outline' : ''}`}
+                    style={{ backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' }}
+                    className="w-full"
                     onClick={() => {
                       if (option.method === "Live Chat Support") {
                         setIsChatOpen(true);
@@ -1031,13 +1031,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: '#2f5a4e', color: '#ffffff', border: 'none' }}
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("privacy")} 
                     data-testid="button-resource-privacy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1057,13 +1057,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("terms")} 
                     data-testid="button-resource-terms"
                   >
                     View Terms
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1083,13 +1083,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("student-terms")} 
                     data-testid="button-resource-student-terms"
                   >
                     View Terms
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1109,13 +1109,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("teacher-terms")} 
                     data-testid="button-resource-teacher-terms"
                   >
                     View Terms
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1135,13 +1135,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("school-terms")} 
                     data-testid="button-resource-school-terms"
                   >
                     View Terms
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1161,13 +1161,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("payment-billing")} 
                     data-testid="button-resource-payment-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1187,13 +1187,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("refund-policy")} 
                     data-testid="button-resource-refund-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1213,13 +1213,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("cookies-policy")} 
                     data-testid="button-resource-cookies-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1239,13 +1239,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("whatsapp-policy")} 
                     data-testid="button-resource-whatsapp-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1265,13 +1265,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("data-retention")} 
                     data-testid="button-resource-data-retention-policy"
                   >
                     View Policy
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1291,13 +1291,13 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </CardHeader>
                 <CardContent className="pt-0">
                   <Button 
-                    variant="ghost" 
+                    style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }} 
                     className="w-full justify-between text-sm h-9" 
                     onClick={() => onNavigate("community-guidelines")} 
                     data-testid="button-resource-community-guidelines"
                   >
                     View Guidelines
-                    <ArrowRight className="h-4 w-4" style={{ color: '#2f5a4e' }} />
+                    <ArrowRight className="h-4 w-4" style={{ color: '#ffffff' }} />
                   </Button>
                 </CardContent>
               </Card>
@@ -1360,7 +1360,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </Button>
                 <Button 
                   size="lg" 
-                  variant="outline"
+                  style={{ backgroundColor: "#2f5a4e", color: "#ffffff", border: "none" }}
                   onClick={() => window.open("mailto:support@edufiliova.com", "_blank")}
                   data-testid="button-email-support"
                 >
