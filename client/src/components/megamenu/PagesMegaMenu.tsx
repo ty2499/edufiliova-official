@@ -29,7 +29,7 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
   return (
     <MegaMenu isOpen={isOpen}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-        <MegaMenuSection title="Company">
+        <MegaMenuSection title="Company" icon={<Info className="h-4 w-4 text-[#a0fab2]" />}>
           {companyPages.map((item, index) => (
             <MegaMenuItem
               key={index}
@@ -43,7 +43,7 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
           ))}
         </MegaMenuSection>
 
-        <MegaMenuSection title="Support & Policies">
+        <MegaMenuSection title="Support & Policies" icon={<Shield className="h-4 w-4 text-[#a0fab2]" />}>
           {supportPages.map((item, index) => (
             <MegaMenuItem
               key={index}

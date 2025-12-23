@@ -71,7 +71,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
       isOpen={isOpen}
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        <MegaMenuSection title="Explore" icon={<ShoppingBag className="h-4 w-4 text-[#0C332C]" />}>
+        <MegaMenuSection title="Explore" icon={<ShoppingBag className="h-4 w-4 text-[#a0fab2]" />}>
           {explore.map((item: any, index) => (
             <MegaMenuItem
               key={index}
@@ -86,7 +86,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
           ))}
         </MegaMenuSection>
 
-        <MegaMenuSection title="My Account" icon={<FolderOpen className="h-4 w-4 text-[#0C332C]" />}>
+        <MegaMenuSection title="My Account" icon={<FolderOpen className="h-4 w-4 text-[#a0fab2]" />}>
           {myAccount.map((item: any, index) => (
             <MegaMenuItem
               key={index}
@@ -102,7 +102,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
         </MegaMenuSection>
 
         {isCreator && (
-          <MegaMenuSection title="Sell" icon={<PlusCircle className="h-4 w-4 text-[#0C332C]" />}>
+          <MegaMenuSection title="Sell" icon={<PlusCircle className="h-4 w-4 text-[#a0fab2]" />}>
             {sell.map((item: any, index) => (
               <MegaMenuItem
                 key={index}

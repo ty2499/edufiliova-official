@@ -55,7 +55,7 @@ export const ResourcesMegaMenu = ({ isOpen, onNavigate, onClose }: ResourcesMega
   return (
     <MegaMenu isOpen={isOpen}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        <MegaMenuSection title="Community" icon={<UsersRound className="h-4 w-4" />}>
+        <MegaMenuSection title="Community" icon={<UsersRound className="h-4 w-4 text-[#a0fab2]" />}>
           {community.map((item, index) => (
             <MegaMenuItem
               key={index}
@@ -68,7 +68,7 @@ export const ResourcesMegaMenu = ({ isOpen, onNavigate, onClose }: ResourcesMega
           ))}
         </MegaMenuSection>
 
-        <MegaMenuSection title="Blog" icon={<Newspaper className="h-4 w-4" />}>
+        <MegaMenuSection title="Blog" icon={<Newspaper className="h-4 w-4 text-[#a0fab2]" />}>
           {blog.map((item, index) => (
             <MegaMenuItem
               key={index}
@@ -81,7 +81,7 @@ export const ResourcesMegaMenu = ({ isOpen, onNavigate, onClose }: ResourcesMega
           ))}
         </MegaMenuSection>
 
-        <MegaMenuSection title="Help" icon={<LifeBuoy className="h-4 w-4" />}>
+        <MegaMenuSection title="Help" icon={<LifeBuoy className="h-4 w-4 text-[#a0fab2]" />}>
           {help.map((item, index) => (
             <MegaMenuItem
               key={index}

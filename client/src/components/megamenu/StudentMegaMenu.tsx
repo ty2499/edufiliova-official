@@ -46,7 +46,7 @@ export const StudentMegaMenu = ({ isOpen, onNavigate, onClose }: StudentMegaMenu
   return (
     <MegaMenu isOpen={isOpen}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-        <MegaMenuSection title="Dashboard" icon={<Gauge className="h-4 w-4" />}>
+        <MegaMenuSection title="Dashboard" icon={<Gauge className="h-4 w-4 text-[#a0fab2]" />}>
           {dashboard.map((item, index) => (
             <MegaMenuItem
               key={index}
@@ -59,7 +59,7 @@ export const StudentMegaMenu = ({ isOpen, onNavigate, onClose }: StudentMegaMenu
           ))}
         </MegaMenuSection>
 
-        <MegaMenuSection title="Tools" icon={<UserRound className="h-4 w-4" />}>
+        <MegaMenuSection title="Tools" icon={<UserRound className="h-4 w-4 text-[#a0fab2]" />}>
           {tools.map((item, index) => (
             <MegaMenuItem
               key={index}
