@@ -797,8 +797,8 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
         )}
 
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary rounded-xl flex items-center justify-center">
-            <Gift className="w-6 h-6 text-white" />
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#a0fab2' }}>
+            <Gift className="w-6 h-6" style={{ color: '#2f5a4e' }} />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
