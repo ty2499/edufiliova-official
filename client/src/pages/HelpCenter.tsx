@@ -775,7 +775,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
         
         <div className="container mx-auto px-6 text-center relative z-10">
           <div className="max-w-4xl mx-auto text-gray-800">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6" style={{ color: '#2f5a4e' }}>
               Help Center
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8">
@@ -801,7 +801,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                   onClick={() => setSearchQuery("")}
                   data-testid="button-clear-search"
                 >
-                  <XCircle className="h-5 w-5" style={{ color: '#2f5a4e' }} />
+                  <XCircle className="h-5 w-5" style={{ color: '#ffffff' }} />
                 </Button>
               )}
             </div>
