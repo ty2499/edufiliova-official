@@ -137,7 +137,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
   return (
     <div className="space-y-6" data-testid="portfolio-manager">
       {/* Header */}
-      <div className="flex items-center justify-between bg-blue-600 p-6 rounded-lg">
+      <div className="flex items-center justify-between bg-primary p-6 rounded-lg">
         <div>
           <h2 className="text-3xl font-bold text-white">Portfolio Management</h2>
           <p className="text-white mt-1">
@@ -154,7 +154,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
               onClick={() => setActiveTab('portfolio')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'portfolio'
-                  ? 'border-[#42fa76] text-[#42fa76]'
+                  ? 'border-[#A0FAB2] text-[#A0FAB2]'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
               data-testid="tab-portfolio"
@@ -165,7 +165,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
               onClick={() => setActiveTab('analytics')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'analytics'
-                  ? 'border-[#42fa76] text-[#42fa76]'
+                  ? 'border-[#A0FAB2] text-[#A0FAB2]'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
               data-testid="tab-analytics"
@@ -202,7 +202,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                   window.location.href = '?page=portfolio-create';
                 }
               }} 
-              className="bg-blue-600 hover:bg-blue-700 text-[#ffffff]" 
+              className="bg-primary hover:bg-primary text-[#ffffff]" 
               data-testid="button-create-work"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -255,7 +255,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                       window.location.href = '?page=portfolio-create';
                     }
                   }} 
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="bg-primary hover:bg-primary text-white"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Create Your First Work
@@ -289,7 +289,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                         <Badge 
                           variant={work.visibility === 'public' ? 'default' : 'secondary'}
                           className={work.visibility === 'public' ? 'text-gray-900 border-0' : ''}
-                          style={work.visibility === 'public' ? { backgroundColor: '#42fa76' } : {}}
+                          style={work.visibility === 'public' ? { backgroundColor: '#A0FAB2' } : {}}
                         >
                           {work.visibility}
                         </Badge>
@@ -329,7 +329,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                           size="sm"
                           onClick={() => handleEdit(work)}
                           className="flex-1 h-8 text-xs px-2 text-white border-0"
-                          style={{ backgroundColor: '#2d5ddd' }}
+                          style={{ backgroundColor: '#0C332C' }}
                           data-testid={`button-edit-${work.id}`}
                         >
                           <Edit className="h-3 w-3 mr-1" />
@@ -340,7 +340,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                           onClick={() => deleteWorkMutation.mutate(work.id)}
                           disabled={deleteWorkMutation.isPending}
                           className="h-8 w-8 p-0 text-white border-0"
-                          style={{ backgroundColor: '#2d5ddd' }}
+                          style={{ backgroundColor: '#0C332C' }}
                           data-testid={`button-delete-${work.id}`}
                         >
                           {deleteWorkMutation.isPending && deleteWorkMutation.variables === work.id ? (
@@ -382,7 +382,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                               <Badge 
                                 variant={work.visibility === 'public' ? 'default' : 'secondary'}
                                 className={work.visibility === 'public' ? 'text-gray-900 border-0' : ''}
-                                style={work.visibility === 'public' ? { backgroundColor: '#42fa76' } : {}}
+                                style={work.visibility === 'public' ? { backgroundColor: '#A0FAB2' } : {}}
                               >
                                 {work.visibility}
                               </Badge>
@@ -398,7 +398,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                               size="sm" 
                               onClick={() => handleEdit(work)}
                               className="h-8 text-xs px-3 text-white border-0"
-                              style={{ backgroundColor: '#2d5ddd' }}
+                              style={{ backgroundColor: '#0C332C' }}
                               data-testid={`button-edit-list-${work.id}`}
                             >
                               <Edit className="h-3 w-3 mr-1" />
@@ -409,7 +409,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                               onClick={() => deleteWorkMutation.mutate(work.id)}
                               disabled={deleteWorkMutation.isPending}
                               className="h-8 w-8 p-0 text-white border-0"
-                              style={{ backgroundColor: '#2d5ddd' }}
+                              style={{ backgroundColor: '#0C332C' }}
                               data-testid={`button-delete-list-${work.id}`}
                             >
                               {deleteWorkMutation.isPending && deleteWorkMutation.variables === work.id ? (
@@ -565,8 +565,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                     <div key={visibility} className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className={`w-3 h-3 rounded-full ${
-                          visibility === 'public' ? 'bg-[#42fa76]' :
-                          visibility === 'unlisted' ? 'bg-[#42fa76]/60' : 'bg-[#42fa76]/30'
+                          visibility === 'public' ? 'bg-[#A0FAB2]' :
+                          visibility === 'unlisted' ? 'bg-[#A0FAB2]/60' : 'bg-[#A0FAB2]/30'
                         }`}></div>
                         <span className="text-sm capitalize">{visibility}</span>
                       </div>
@@ -596,7 +596,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                       window.location.href = '?page=portfolio-create';
                     }
                   }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="bg-primary hover:bg-primary text-white"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Create Your First Work

@@ -511,7 +511,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
               
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-blue-600 text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 bg-primary text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
                     {isOrderPayment ? <CreditCard className="w-4 h-4" /> : <Wallet className="w-4 h-4" />}
                   </div>
                   <div className="flex-1">
@@ -701,7 +701,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                   <Button
                     type="submit"
                     disabled={!stripe || isLoading || stripeLoading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-complete-purchase"
                   >
                     {isLoading ? 'Processing...' : `Complete Purchase`}
@@ -731,7 +731,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                   <Button
                     onClick={handleSubmit}
                     disabled={isLoading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-complete-vodapay-purchase"
                   >
                     {isLoading ? 'Redirecting to VodaPay...' : `Continue with VodaPay`}
@@ -761,7 +761,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                   <Button
                     onClick={handleSubmit}
                     disabled={isLoading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-complete-dodo-purchase"
                   >
                     {isLoading ? 'Processing...' : `Pay with Card`}
@@ -831,7 +831,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
                   <Button
                     onClick={handleSubmit}
                     disabled={walletBalance < amount || isLoading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-wallet-payment"
                   >
                     {isLoading ? 'Processing...' : `Pay ${formatPrice(amount)}`}

@@ -375,7 +375,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 <div 
                   className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                     currentSection >= section 
-                      ? 'bg-[#2d5ddd] text-white' 
+                      ? 'bg-[#0C332C] text-white' 
                       : 'bg-gray-200 text-gray-500'
                   }`}
                 >
@@ -383,7 +383,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 </div>
                 {section < 3 && (
                   <div className={`h-1 w-12 md:w-24 mx-2 ${
-                    currentSection > section ? 'bg-[#2d5ddd]' : 'bg-gray-200'
+                    currentSection > section ? 'bg-[#0C332C]' : 'bg-gray-200'
                   }`} />
                 )}
               </div>
@@ -529,7 +529,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
               <div className="mt-8 flex justify-end">
                 <Button
                   onClick={handleNext}
-                  className="text-[#ffffff] bg-[#2d5ddd]"
+                  className="text-[#ffffff] bg-[#0C332C]"
                   data-testid="button-next-1"
                 >
                   Next <ChevronRight className="ml-2 w-4 h-4" />
@@ -555,7 +555,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         onClick={() => toggleSkill(skill)}
                         className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                           selectedSkills.includes(skill)
-                            ? 'bg-[#2d5ddd] text-white hover:bg-[#2448b8]'
+                            ? 'bg-[#0C332C] text-white hover:bg-[#2448b8]'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                         data-testid={`skill-${skill.toLowerCase().replace(/\s+/g, '-')}`}
@@ -590,7 +590,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                         <Checkbox
                           checked={servicesOffered.includes(service)}
                           onCheckedChange={() => toggleService(service)}
-                          className="data-[state=checked]:bg-[#2d5ddd]"
+                          className="data-[state=checked]:bg-[#0C332C]"
                           data-testid={`service-${service.toLowerCase().replace(/\s+/g, '-')}`}
                         />
                         <span className="text-gray-700 group-hover:text-gray-900">{service}</span>
@@ -645,7 +645,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 </Button>
                 <Button
                   onClick={handleNext}
-                  className="bg-[#2d5ddd] hover:bg-[#2448b8] text-white"
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white"
                   data-testid="button-next-2"
                 >
                   Next <ChevronRight className="ml-2 w-4 h-4" />
@@ -749,7 +749,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
                     <Button
                       onClick={addPortfolioSample}
-                      className="w-full bg-[#2d5ddd] hover:bg-[#2448b8] text-white"
+                      className="w-full bg-[#0C332C] hover:bg-[#2448b8] text-white"
                       data-testid="button-add-sample"
                     >
                       <Upload className="w-4 h-4 mr-2" />
@@ -812,7 +812,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 </Button>
                 <Button
                   onClick={handleNext}
-                  className="bg-[#2d5ddd] hover:bg-[#2448b8] text-white"
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white"
                   data-testid="button-next-3"
                 >
                   Next <ChevronRight className="ml-2 w-4 h-4" />
@@ -833,7 +833,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   type="button"
                   variant="outline"
                   onClick={() => setTermsModalOpen(true)}
-                  className="text-[#2d5ddd] border-[#2d5ddd] hover:bg-[#2d5ddd] hover:text-white"
+                  className="text-[#0C332C] border-[#0C332C] hover:bg-[#0C332C] hover:text-white"
                   data-testid="button-view-terms"
                 >
                   View Freelancer Terms & Policies
@@ -845,7 +845,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   <Checkbox
                     checked={termsAccepted}
                     onCheckedChange={(checked) => { setTermsAccepted(!!checked); clearError('terms'); }}
-                    className="mt-1 data-[state=checked]:bg-[#2d5ddd]"
+                    className="mt-1 data-[state=checked]:bg-[#0C332C]"
                     data-testid="checkbox-terms"
                   />
                   <span className="text-gray-700 group-hover:text-gray-900">
@@ -863,7 +863,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   <Checkbox
                     checked={policyAccepted}
                     onCheckedChange={(checked) => { setPolicyAccepted(!!checked); clearError('policy'); }}
-                    className="mt-1 data-[state=checked]:bg-[#2d5ddd]"
+                    className="mt-1 data-[state=checked]:bg-[#0C332C]"
                     data-testid="checkbox-policy"
                   />
                   <span className="text-gray-700 group-hover:text-gray-900">
@@ -871,7 +871,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     <button
                       type="button"
                       onClick={() => setTermsModalOpen(true)}
-                      className="text-[#2d5ddd] underline hover:text-[#2448b8]"
+                      className="text-[#0C332C] underline hover:text-[#2448b8]"
                     >
                       Freelancer Terms, Commission Policy, and Refund Policy
                     </button>.
@@ -888,7 +888,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   <Checkbox
                     checked={reviewAccepted}
                     onCheckedChange={(checked) => { setReviewAccepted(!!checked); clearError('review'); }}
-                    className="mt-1 data-[state=checked]:bg-[#2d5ddd]"
+                    className="mt-1 data-[state=checked]:bg-[#0C332C]"
                     data-testid="checkbox-review"
                   />
                   <span className="text-gray-700 group-hover:text-gray-900">
@@ -923,7 +923,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting || portfolioSamples.length < 9}
-                  className="bg-[#2d5ddd] hover:bg-[#2448b8] text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white disabled:opacity-50 disabled:cursor-not-allowed"
                   data-testid="button-submit"
                 >
                   {isSubmitting ? (

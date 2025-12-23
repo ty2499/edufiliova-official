@@ -180,7 +180,7 @@ export function AssignmentDashboard({ teacherId }: AssignmentDashboardProps) {
         </div>
         <Button 
           onClick={() => setShowCreateDialog(true)}
-          className="font-medium bg-[#2d5ddd] text-[#ffffff]"
+          className="font-medium bg-[#0C332C] text-[#ffffff]"
           data-testid="button-create-assignment"
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -241,7 +241,7 @@ export function AssignmentDashboard({ teacherId }: AssignmentDashboardProps) {
                 {(!searchQuery && statusFilter === 'all' && subjectFilter === 'all') && (
                   <Button 
                     onClick={() => setShowCreateDialog(true)}
-                    className="bg-[#2d5ddd] text-[#ffffff]"
+                    className="bg-[#0C332C] text-[#ffffff]"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Create Assignment

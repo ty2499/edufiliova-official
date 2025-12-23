@@ -626,7 +626,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
                       variant={selectedTags.includes(tag) ? 'default' : 'outline'}
                       className={`cursor-pointer text-xs ${
                         selectedTags.includes(tag)
-                          ? 'bg-blue-600 text-white hover:bg-blue-700'
+                          ? 'bg-primary text-white hover:bg-primary'
                           : 'hover:bg-gray-100'
                       }`}
                       onClick={() => toggleTag(tag)}

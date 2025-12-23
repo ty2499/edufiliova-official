@@ -774,11 +774,11 @@ export default function SubscriptionPaymentModal({
             {/* Left Side - Plan Summary */}
             <div className="space-y-4 md:space-y-6">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 text-white rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center">
                   <BookOpen className="w-5 h-5" />
                 </div>
                 <h3 className="font-semibold text-lg">{plan.name}</h3>
-                <Badge className="bg-blue-600 text-white">
+                <Badge className="bg-primary text-white">
                   Premium
                 </Badge>
               </div>
@@ -1064,7 +1064,7 @@ export default function SubscriptionPaymentModal({
                   <Button
                     type="submit"
                     disabled={!stripe || !clientSecret || processing}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-submit-payment"
                   >
                     {processing ? 'Processing...' : `Complete Purchase`}
@@ -1093,7 +1093,7 @@ export default function SubscriptionPaymentModal({
                   <Button 
                     onClick={handleSavedCardPayment}
                     disabled={processing}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-saved-card-checkout"
                   >
                     {processing ? "Processing..." : "Complete Purchase"}
@@ -1174,7 +1174,7 @@ export default function SubscriptionPaymentModal({
                       }
                     }}
                     disabled={processing || !hasSufficientBalance}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-wallet-checkout"
                   >
                     {processing ? 'Processing...' : `Pay $${plan.price.toFixed(2)} from Wallet`}
@@ -1209,7 +1209,7 @@ export default function SubscriptionPaymentModal({
                       });
                     }}
                     disabled={processing}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-paystack-checkout"
                   >
                     {processing ? 'Processing...' : 'Complete Purchase'}
@@ -1309,7 +1309,7 @@ export default function SubscriptionPaymentModal({
                       }
                     }}
                     disabled={processing}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-vodapay-checkout"
                   >
                     {processing ? 'Redirecting...' : 'Continue with VodaPay'}

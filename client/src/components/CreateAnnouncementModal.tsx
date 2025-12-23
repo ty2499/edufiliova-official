@@ -134,11 +134,11 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
       case 'high':
         return 'bg-primary text-white hover:bg-primary';
       case 'normal':
-        return 'bg-blue-500 text-white hover:bg-blue-600';
+        return 'bg-blue-500 text-white hover:bg-primary';
       case 'low':
         return 'bg-gray-500 text-white hover:bg-gray-600';
       default:
-        return 'bg-blue-500 text-white hover:bg-blue-600';
+        return 'bg-blue-500 text-white hover:bg-primary';
     }
   };
 
@@ -149,7 +149,7 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
       <DialogTrigger asChild>
         {trigger || (
           <Button 
-            className="bg-[#42fa76] text-black hover:bg-[#42fa76]/90"
+            className="bg-[#A0FAB2] text-black hover:bg-[#A0FAB2]/90"
             data-testid="create-announcement-button"
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -161,7 +161,7 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Bell className="w-5 h-5 text-[#42fa76]" />
+            <Bell className="w-5 h-5 text-[#A0FAB2]" />
             Create New Announcement
           </DialogTitle>
         </DialogHeader>
@@ -248,7 +248,7 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
                     variant={targetGrades.includes(grade) ? "default" : "outline"}
                     size="sm"
                     onClick={() => handleGradeToggle(grade)}
-                    className={targetGrades.includes(grade) ? "bg-[#42fa76] text-black hover:bg-[#42fa76]/90" : ""}
+                    className={targetGrades.includes(grade) ? "bg-[#A0FAB2] text-black hover:bg-[#A0FAB2]/90" : ""}
                     data-testid={`grade-${grade}-button`}
                   >
                     Grade {grade}
@@ -323,7 +323,7 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
             <Button
               type="submit"
               disabled={!title.trim() || !content.trim() || createAnnouncementMutation.isPending}
-              className="bg-[#42fa76] text-black hover:bg-[#42fa76]/90"
+              className="bg-[#A0FAB2] text-black hover:bg-[#A0FAB2]/90"
               data-testid="submit-announcement-button"
             >
               {createAnnouncementMutation.isPending ? (

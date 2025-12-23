@@ -299,7 +299,7 @@ export default function PortfolioCommentSection({ workId, currentUserId }: Portf
           <Button
             onClick={handlePostComment}
             disabled={!newComment.trim() || createCommentMutation.isPending}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
+            className="bg-primary hover:bg-primary text-white"
             data-testid="button-post-comment"
           >
             <Send className="h-4 w-4 mr-2" />

@@ -769,7 +769,7 @@ export default function MessageComposer({
               disabled={disabled || (!message.trim() && !selectedFile)}
               className={cn(
                 'p-2 rounded-full bg-blue-500 text-white transition-all duration-200',
-                'hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed'
+                'hover:bg-primary disabled:opacity-50 disabled:cursor-not-allowed'
               )}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

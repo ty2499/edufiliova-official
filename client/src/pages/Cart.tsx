@@ -418,7 +418,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
             </p>
             <Button 
               onClick={() => onNavigate('product-shop')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
+              className="bg-primary hover:bg-primary text-white px-8 py-3"
               data-testid="button-continue-shopping"
             >
               Continue Shopping
@@ -583,7 +583,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                               <Button
                                 onClick={handleApplyCoupon}
                                 disabled={applyCouponMutation.isPending || !couponCode.trim()}
-                                className="bg-blue-600 hover:bg-blue-700 text-white"
+                                className="bg-primary hover:bg-primary text-white"
                                 data-testid="button-apply-coupon"
                               >
                                 {applyCouponMutation.isPending ? 'Applying...' : 'Apply'}
@@ -687,7 +687,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                       <Button 
                         onClick={handleCheckout}
                         disabled={isCheckingOut || checkoutMutation.isPending || isEmpty}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-base font-medium disabled:opacity-50"
+                        className="w-full bg-primary hover:bg-primary text-white py-3 text-base font-medium disabled:opacity-50"
                         data-testid="button-checkout"
                       >
                         {isCheckingOut || checkoutMutation.isPending ? (

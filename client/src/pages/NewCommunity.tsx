@@ -718,7 +718,7 @@ export default function NewCommunity() {
                   <p className="text-muted-foreground mb-6">
                     Upgrade to premium to discover and connect with students worldwide.
                   </p>
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 h-12 text-base">
+                  <Button className="w-full bg-primary hover:bg-primary h-12 text-base">
                     <MessageSquare className="h-4 w-4 mr-2" />
                     Upgrade Now
                   </Button>

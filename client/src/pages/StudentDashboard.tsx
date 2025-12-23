@@ -2171,7 +2171,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navbar - Mobile */}
-      <nav className="bg-[#2d5ddc] border-b border-white/10 fixed top-0 left-0 right-0 z-40 md:hidden pt-safe">
+      <nav className="bg-[#0C332C] border-b border-white/10 fixed top-0 left-0 right-0 z-40 md:hidden pt-safe">
         <div className="px-4">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
@@ -2198,7 +2198,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
       {/* Left Sidebar - Slide-in on mobile, fixed on desktop - Hidden when viewing portfolio gallery */}
       <div className={`${
         showMobileMenu ? 'translate-x-0' : '-translate-x-full'
-      } ${activeTab === 'portfolio-gallery' ? 'md:-translate-x-full' : 'md:translate-x-0'} fixed left-0 top-0 md:top-0 h-full w-64 border-r border-white/10 z-50 bg-[#2d5ddc] transition-transform duration-300`}>
+      } ${activeTab === 'portfolio-gallery' ? 'md:-translate-x-full' : 'md:translate-x-0'} fixed left-0 top-0 md:top-0 h-full w-64 border-r border-white/10 z-50 bg-[#0C332C] transition-transform duration-300`}>
         <div className="flex flex-col h-full py-4">
           
           {/* Logo */}
@@ -2875,7 +2875,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       <h2 className="text-xl font-semibold text-foreground mb-4">Continue Reading</h2>
                       <div className="flex gap-4 overflow-x-auto pb-4">
                         {inProgressLessons.map((lesson: any, index: number) => {
-                          const colors = ['#2d5ddd', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
+                          const colors = ['#0C332C', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
                           const bgColor = colors[index % colors.length];
                           const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
                           const textColor = isLight ? '#000000' : '#ffffff';
@@ -2991,7 +2991,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                             className="h-3 rounded-full transition-all duration-300"
                             style={{
                               width: `${dailyQuestions.totalQuestions > 0 ? (dailyQuestions.answeredQuestions / dailyQuestions.totalQuestions) * 100 : 0}%`,
-                              background: 'linear-gradient(90deg, #42fa76 0%, #34d662 100%)'
+                              background: 'linear-gradient(90deg, #A0FAB2 0%, #34d662 100%)'
                             }}
                           />
                         </div>
@@ -3003,7 +3003,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                         {/* Today's Progress Card */}
                         <div 
                           className="rounded-2xl p-5 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between"
-                          style={{ backgroundColor: '#2d5ddd' }}
+                          style={{ backgroundColor: '#0C332C' }}
                           data-testid="daily-questions-today"
                           onClick={() => setShowDailyQuestions(true)}
                         >
@@ -3124,7 +3124,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       
                       <div className="flex gap-4 overflow-x-auto pb-4">
                         {userNotes.slice(0, 6).map((note: any, index: number) => {
-                          const colors = ['#2d5ddd', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
+                          const colors = ['#0C332C', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
                           const bgColor = colors[index % colors.length];
                           const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
                           const textColor = isLight ? '#000000' : '#ffffff';
@@ -4202,7 +4202,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                     className="h-2 rounded-full transition-all duration-300"
                     style={{
                       width: `${(dailyQuestions.answeredQuestions / dailyQuestions.totalQuestions) * 100}%`,
-                      background: 'linear-gradient(90deg, #42fa76 0%, #34d662 100%)'
+                      background: 'linear-gradient(90deg, #A0FAB2 0%, #34d662 100%)'
                     }}
                   />
                 </div>
@@ -4394,7 +4394,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
   return (
     <div className="fixed w-screen h-screen bg-white z-[9999] flex flex-col overflow-hidden" style={{margin: 0, padding: 0, top: 0, left: 0, right: 0, bottom: 0, position: 'fixed'}}>
       {/* Header Bar */}
-      <div className="px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between border-b bg-[#2d5ddd] text-[#ffffff] flex-shrink-0">
+      <div className="px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between border-b bg-[#0C332C] text-[#ffffff] flex-shrink-0">
         <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
           <Button 
             variant="ghost" 
@@ -4480,7 +4480,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
               <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
                 <div className="bg-gray-50 px-3 sm:px-6 py-3 sm:py-4 border-b rounded-t-xl">
                   <h3 className="text-base sm:text-lg font-semibold text-gray-900 flex items-center gap-2">
-                    <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-[#42fa76]" />
+                    <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-[#A0FAB2]" />
                     Questions ({questions.length})
                   </h3>
                 </div>
@@ -4503,7 +4503,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                                   disabled={!!assignment.submissionId}
                                   className={`w-full text-left p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 ${
                                     questionAnswers[question.id] === optionLetter
-                                      ? 'bg-[#2d5ddd] border-[#2d5ddd] text-white font-medium shadow-md'
+                                      ? 'bg-[#0C332C] border-[#0C332C] text-white font-medium shadow-md'
                                       : 'bg-white border-gray-300'
                                   } ${assignment.submissionId ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
                                   data-testid={`button-option-${question.id}-${optionLetter}`}
@@ -4524,7 +4524,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                                   disabled={!!assignment.submissionId}
                                   className={`w-full text-left p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 ${
                                     questionAnswers[question.id] === optionLetter
-                                      ? 'bg-[#2d5ddd] border-[#2d5ddd] text-white font-medium shadow-md'
+                                      ? 'bg-[#0C332C] border-[#0C332C] text-white font-medium shadow-md'
                                       : 'bg-white border-gray-300'
                                   } ${assignment.submissionId ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'}`}
                                   data-testid={`button-option-${question.id}-${optionLetter}`}
@@ -4545,7 +4545,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                             onChange={(e) => !assignment.submissionId && handleManualAnswer(question.id, e.target.value)}
                             placeholder={assignment.submissionId ? "No answer provided" : "Enter your answer here..."}
                             disabled={!!assignment.submissionId}
-                            className="w-full p-3 sm:p-4 border-2 border-gray-300 rounded-lg bg-white text-gray-900 resize-vertical min-h-[100px] sm:min-h-[120px] focus:border-[#42fa76] focus:outline-none text-sm sm:text-base"
+                            className="w-full p-3 sm:p-4 border-2 border-gray-300 rounded-lg bg-white text-gray-900 resize-vertical min-h-[100px] sm:min-h-[120px] focus:border-[#A0FAB2] focus:outline-none text-sm sm:text-base"
                             data-testid={`textarea-answer-${question.id}`}
                           />
                           {assignment.submissionId && manualAnswers[question.id] && (
@@ -4635,7 +4635,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
               <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
                 <div className="bg-gray-50 px-6 py-4 border-b rounded-t-xl">
                   <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                    <Upload className="h-5 w-5 text-[#42fa76]" />
+                    <Upload className="h-5 w-5 text-[#A0FAB2]" />
                     Submit Your Work
                   </h3>
                 </div>
@@ -4650,7 +4650,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                       value={submissionText}
                       onChange={(e) => setSubmissionText(e.target.value)}
                       placeholder="Enter your response or explanation here..."
-                      className="w-full p-4 border-2 border-gray-300 rounded-lg bg-white text-gray-900 resize-vertical min-h-[140px] focus:border-[#42fa76] focus:outline-none text-base"
+                      className="w-full p-4 border-2 border-gray-300 rounded-lg bg-white text-gray-900 resize-vertical min-h-[140px] focus:border-[#A0FAB2] focus:outline-none text-base"
                       data-testid="textarea-submission-text"
                     />
                   </div>
@@ -4724,7 +4724,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                     <Button 
                       onClick={handleSubmission}
                       disabled={isSubmitting}
-                      className="w-full bg-[#2d5ddd] text-white font-semibold py-3 text-lg hover:bg-[#2d5ddd] active:bg-[#2d5ddd]"
+                      className="w-full bg-[#0C332C] text-white font-semibold py-3 text-lg hover:bg-[#0C332C] active:bg-[#0C332C]"
                       data-testid="button-submit-assignment"
                     >
                       {isSubmitting ? (
@@ -4809,7 +4809,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                   <p className="text-gray-600 mb-4">Preview not available for this file type.</p>
                   <Button 
                     onClick={() => window.open(viewingAttachment.url, '_blank')}
-                    className="bg-[#42fa76] hover:bg-[#42fa76]/90 text-black"
+                    className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-black"
                   >
                     Download {viewingAttachment.name}
                   </Button>
@@ -4913,7 +4913,7 @@ const AssignmentsView = () => {
       }
       return 'bg-primary text-primary-foreground';
     } else if (assignment.submissionStatus === 'submitted') {
-      return 'bg-blue-600 dark:bg-blue-500 text-white';
+      return 'bg-primary dark:bg-blue-500 text-white';
     } else {
       return 'bg-muted text-muted-foreground';
     }

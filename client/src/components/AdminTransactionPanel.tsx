@@ -270,7 +270,7 @@ export default function AdminTransactionPanel() {
   const getPaymentMethodIcon = (type: string) => {
     switch (type) {
       case 'paypal':
-        return <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center"><span className="text-white text-xs font-bold">PP</span></div>;
+        return <div className="w-6 h-6 bg-primary rounded flex items-center justify-center"><span className="text-white text-xs font-bold">PP</span></div>;
       case 'crypto':
         return <div className="w-6 h-6 bg-primary rounded flex items-center justify-center"><span className="text-white text-xs font-bold">₿</span></div>;
       default:
@@ -295,7 +295,7 @@ export default function AdminTransactionPanel() {
 
     if (status === 'completed') {
       return (
-        <Badge className="bg-blue-600 text-white">
+        <Badge className="bg-primary text-white">
           {icons[status as keyof typeof icons]}
           {status.charAt(0).toUpperCase() + status.slice(1)}
         </Badge>
@@ -604,7 +604,7 @@ export default function AdminTransactionPanel() {
                   {stats.topFreelancers.slice((topEarnersPage - 1) * 5, topEarnersPage * 5).map((freelancer, index) => (
                     <div key={freelancer.userId} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm">
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm">
                           {(topEarnersPage - 1) * 5 + index + 1}
                         </div>
                         <div>
@@ -863,7 +863,7 @@ export default function AdminTransactionPanel() {
                           <Button
                             size="sm"
                             onClick={() => handleProcessPayout(transaction, 'approve')}
-                            className="bg-blue-600 hover:bg-blue-700"
+                            className="bg-primary hover:bg-primary"
                             data-testid={`button-approve-${transaction.id}`}
                           >
                             <CheckmarkIcon size="sm" />
@@ -995,7 +995,7 @@ export default function AdminTransactionPanel() {
                       </TableCell>
                       <TableCell>
                         {account.isVerified ? (
-                          <Badge className="bg-blue-600 text-white">
+                          <Badge className="bg-primary text-white">
                             <CheckmarkIcon size="sm" className="mr-1" />
                             Verified
                           </Badge>
@@ -1020,7 +1020,7 @@ export default function AdminTransactionPanel() {
                             <Button
                               size="sm"
                               onClick={() => handleProcessAccount(account, 'approve')}
-                              className="bg-blue-600 hover:bg-blue-700"
+                              className="bg-primary hover:bg-primary"
                               data-testid={`button-approve-account-${account.id}`}
                             >
                               <CheckmarkIcon size="sm" />
@@ -1261,7 +1261,7 @@ export default function AdminTransactionPanel() {
                             </div>
                           </TableCell>
                           <TableCell>
-                            <Badge className={sub.status === 'approved' ? 'bg-blue-600 text-white' : ''}>
+                            <Badge className={sub.status === 'approved' ? 'bg-primary text-white' : ''}>
                               {sub.status || 'Unknown'}
                             </Badge>
                           </TableCell>
@@ -1363,7 +1363,7 @@ export default function AdminTransactionPanel() {
                             {formatCurrency(payment.amount)}
                           </TableCell>
                           <TableCell>
-                            <Badge className={payment.status === 'succeeded' ? 'bg-blue-600 text-white' : ''}>
+                            <Badge className={payment.status === 'succeeded' ? 'bg-primary text-white' : ''}>
                               {payment.status}
                             </Badge>
                           </TableCell>
@@ -1505,7 +1505,7 @@ export default function AdminTransactionPanel() {
                     }
                   }}
                   disabled={processAccountMutation.isPending}
-                  className={accountApprovalAction === 'approve' ? 'bg-blue-600 hover:bg-blue-700' : ''}
+                  className={accountApprovalAction === 'approve' ? 'bg-primary hover:bg-primary' : ''}
                   data-testid="button-confirm-account-action"
                 >
                   {processAccountMutation.isPending ? 'Processing...' : 
@@ -1570,7 +1570,7 @@ export default function AdminTransactionPanel() {
                     }
                   }}
                   disabled={processPayoutMutation.isPending}
-                  className={approvalAction === 'approve' ? 'bg-blue-600 hover:bg-blue-700' : ''}
+                  className={approvalAction === 'approve' ? 'bg-primary hover:bg-primary' : ''}
                   data-testid="button-confirm-action"
                 >
                   {processPayoutMutation.isPending ? 'Processing...' : 

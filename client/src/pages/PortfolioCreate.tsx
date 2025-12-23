@@ -432,7 +432,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
   return (
     <div className="min-h-screen bg-gray-50" data-testid="portfolio-create">
       {/* Header */}
-      <div style={{ backgroundColor: '#2d5ddd' }} className="px-4 sm:px-6 py-6">
+      <div style={{ backgroundColor: '#0C332C' }} className="px-4 sm:px-6 py-6">
         <div className="container mx-auto max-w-4xl">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <Button
@@ -444,7 +444,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                   window.location.href = '?page=freelancer-dashboard';
                 }
               }}
-              style={{ backgroundColor: '#2d5ddd' }}
+              style={{ backgroundColor: '#0C332C' }}
               className="text-white hover:opacity-90 transition-all duration-200 font-semibold rounded-full p-2 hover:scale-110 self-start"
               data-testid="button-back-to-dashboard"
             >
@@ -723,7 +723,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                     type="button"
                     onClick={() => addTag(currentTag)}
                     disabled={!currentTag.trim()}
-                    style={{ backgroundColor: '#2d5ddd' }}
+                    style={{ backgroundColor: '#0C332C' }}
                     className="text-white hover:opacity-90 transition-all duration-200 font-semibold"
                     data-testid="button-add-tag"
                   >
@@ -742,7 +742,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                         size="sm"
                         onClick={() => addTag(tag)}
                         disabled={(form.watch('tags') || []).includes(tag)}
-                        style={{ backgroundColor: '#2d5ddd' }}
+                        style={{ backgroundColor: '#0C332C' }}
                         className="text-white hover:opacity-90 transition-all duration-200 font-semibold rounded-full px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-[11px] font-medium flex items-center gap-1 disabled:opacity-50"
                         data-testid={`button-common-tag-${tag.replace(/\s+/g, '-').toLowerCase()}`}
                       >
@@ -786,7 +786,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                             type="button"
                             size="sm"
                             onClick={() => removeVideoUrl(video.id)}
-                            style={{ backgroundColor: '#2d5ddd' }}
+                            style={{ backgroundColor: '#0C332C' }}
                             className="text-white hover:opacity-90 transition-all duration-200 font-semibold"
                             data-testid={`button-remove-video-${video.id}`}
                           >
@@ -840,7 +840,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                         type="button"
                         onClick={addVideoUrl}
                         disabled={!newVideoUrl.trim()}
-                        style={{ backgroundColor: '#2d5ddd' }}
+                        style={{ backgroundColor: '#0C332C' }}
                         className="text-white hover:opacity-90 transition-all duration-200 font-semibold"
                         data-testid="button-add-video"
                       >
@@ -928,7 +928,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                     )}
                     
                     {/* Glow effect */}
-                    <div className="absolute -inset-1 rounded-full opacity-30 group-hover:opacity-60 blur transition-opacity duration-300 -z-10" style={{ backgroundColor: '#2d5ddd' }}></div>
+                    <div className="absolute -inset-1 rounded-full opacity-30 group-hover:opacity-60 blur transition-opacity duration-300 -z-10" style={{ backgroundColor: '#0C332C' }}></div>
                   </Button>
                 </div>
               </form>

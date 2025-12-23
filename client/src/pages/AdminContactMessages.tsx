@@ -159,7 +159,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      'new': { bg: '#2d5ddd', text: 'white', label: 'New' },
+      'new': { bg: '#0C332C', text: 'white', label: 'New' },
       'in-progress': { bg: '#0C332C', text: 'white', label: 'In Progress' },
       'resolved': { bg: '#151314', text: 'white', label: 'Resolved' }
     };

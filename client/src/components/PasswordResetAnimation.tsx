@@ -197,8 +197,8 @@ export default function PasswordResetAnimation({
           <button
             onClick={handleClose}
             className={`
-              mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg font-medium
-              hover:bg-blue-700 transition-colors duration-200
+              mt-6 px-6 py-2 bg-primary text-white rounded-lg font-medium
+              hover:bg-primary transition-colors duration-200
               transform transition-all duration-500 delay-1300 ease-out
               ${showEmailSent ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
             `}

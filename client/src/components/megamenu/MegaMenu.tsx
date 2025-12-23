@@ -62,7 +62,7 @@ export const MegaMenuItem = ({ icon, title, description, onClick, badge, testId,
             </p>
           )}
           {badge && (
-            <span className="px-2 py-0.5 text-xs font-medium bg-blue-600 text-white rounded-full inline-block mt-1">
+            <span className="px-2 py-0.5 text-xs font-medium bg-primary text-white rounded-full inline-block mt-1">
               {badge}
             </span>
           )}

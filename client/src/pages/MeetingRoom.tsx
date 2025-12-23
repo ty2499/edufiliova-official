@@ -671,7 +671,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
 
               {/* Screen sharing indicator */}
               {(meeting.isScreenSharing || (mainUser && mainUser.isScreenSharing)) && (
-                <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-lg flex items-center gap-2">
+                <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-lg flex items-center gap-2">
                   <MonitorUp className="h-4 w-4" />
                   <span className="text-sm font-medium">
                     {meeting.isScreenSharing ? 'You are sharing screen' : `${mainUser?.name} is sharing screen`}

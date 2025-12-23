@@ -53,7 +53,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
             
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Briefcase className="w-5 h-5" style={{ color: '#2d5ddd' }} />
+                <Briefcase className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Welcome to EduFiliova Freelancer Platform</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
@@ -65,7 +65,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
 
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Shield className="w-5 h-5" style={{ color: '#2d5ddd' }} />
+                <Shield className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Content & Intellectual Property</h3>
               </div>
               <div className="space-y-3">
@@ -94,7 +94,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
 
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <DollarSign className="w-5 h-5" style={{ color: '#2d5ddd' }} />
+                <DollarSign className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Commission Structure</h3>
               </div>
               <div className="space-y-3">
@@ -102,7 +102,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
                   <h4 className="font-medium mb-2">Platform Commission Rates</h4>
                   <div className="grid md:grid-cols-2 gap-3">
                     <div>
-                      <Badge variant="default" className="mb-2 bg-[#2d5ddd]">Digital Products</Badge>
+                      <Badge variant="default" className="mb-2 bg-[#0C332C]">Digital Products</Badge>
                       <p className="text-sm text-muted-foreground">Freelancers receive 75% of sales revenue</p>
                       <p className="text-xs text-muted-foreground mt-1">EduFiliova takes 25% platform fee</p>
                     </div>
@@ -130,7 +130,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
 
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <TrendingUp className="w-5 h-5" style={{ color: '#2d5ddd' }} />
+                <TrendingUp className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Refund Policy</h3>
               </div>
               <div className="space-y-3">
@@ -160,7 +160,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
 
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Award className="w-5 h-5" style={{ color: '#2d5ddd' }} />
+                <Award className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Professional Standards</h3>
               </div>
               <div className="space-y-3">
@@ -189,7 +189,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
 
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Globe className="w-5 h-5" style={{ color: '#2d5ddd' }} />
+                <Globe className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Platform Usage</h3>
               </div>
               <div className="space-y-3">
@@ -219,7 +219,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
 
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <FileText className="w-5 h-5" style={{ color: '#2d5ddd' }} />
+                <FileText className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Account Requirements</h3>
               </div>
               <div className="p-3 bg-primary/10 rounded-lg">
@@ -238,7 +238,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
 
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="w-5 h-5" style={{ color: '#2d5ddd' }} />
+                <AlertTriangle className="w-5 h-5" style={{ color: '#0C332C' }} />
                 <h3 className="text-lg font-semibold">Legal & Compliance</h3>
               </div>
               <div className="space-y-3">
@@ -286,7 +286,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
             <Button 
               onClick={onClose}
               disabled={!hasScrolledToBottom}
-              className="flex-1 bg-[#2d5ddd] hover:bg-[#2448b8]"
+              className="flex-1 bg-[#0C332C] hover:bg-[#2448b8]"
             >
               <CheckCircle2 className="w-4 h-4 mr-2" />
               I Have Read & Understood

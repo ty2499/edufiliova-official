@@ -893,7 +893,7 @@ export default function NewPaymentModal({
               
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-blue-600 text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 bg-primary text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
                     <BookOpen className="w-4 h-4" />
                   </div>
                   <div className="flex-1">

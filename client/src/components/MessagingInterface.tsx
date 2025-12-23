@@ -2044,7 +2044,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-gray-100 border-0 rounded-lg text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#42fa76]"
+              className="w-full pl-10 pr-4 py-2 bg-gray-100 border-0 rounded-lg text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-[#A0FAB2]"
               data-testid="search-conversations"
             />
           </div>
@@ -2345,7 +2345,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                             <div className="relative">
                               <Avatar className="h-12 w-12 rounded-full">
                                 <AvatarImage src={contact.avatarUrl} className="rounded-full" />
-                                <AvatarFallback className="bg-blue-600 text-white rounded-full font-semibold">
+                                <AvatarFallback className="bg-primary text-white rounded-full font-semibold">
                                   {contact.name?.charAt(0) || contact.email?.charAt(0)?.toUpperCase() || 'T'}
                                 </AvatarFallback>
                               </Avatar>
@@ -2451,7 +2451,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-1">
                                 <p className="font-semibold text-gray-900 truncate">{contact.name || contact.email}</p>
-                                <div className="w-3 h-3 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <div className="w-3 h-3 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
                                   <svg viewBox="0 0 24 24" className="w-2 h-2 fill-white">
                                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                                   </svg>
@@ -2524,7 +2524,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                   <ChevronLeft className="h-6 w-6 text-black stroke-[3]" style={{ color: '#000000' }} />
                 </button>
                 <Avatar 
-                  className="h-10 w-10 rounded-full hover:ring-2 hover:ring-[#42fa76] hover:ring-offset-1 transition-all cursor-pointer"
+                  className="h-10 w-10 rounded-full hover:ring-2 hover:ring-[#A0FAB2] hover:ring-offset-1 transition-all cursor-pointer"
                   onClick={() => {
                     if (selectedUser && !isGroupConversation) {
                       handleOpenUserProfile(selectedUser.userId, selectedUser.name);
@@ -2542,7 +2542,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                       {selectedGroup ? selectedGroup.name : (selectedUser?.name || selectedUser?.email)}
                     </h3>
                     {selectedUser?.role === 'admin' && (
-                      <div className="w-3 h-3 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-3 h-3 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
                         <svg viewBox="0 0 24 24" className="w-2 h-2 fill-white">
                           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                         </svg>
@@ -2653,7 +2653,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                           {/* Receiver's Avatar - Left Side */}
                           {!isFromCurrentUser && (
                             <Avatar 
-                              className="h-10 w-10 flex-shrink-0 rounded-full mb-1 cursor-pointer hover:ring-2 hover:ring-[#42fa76] hover:ring-offset-2 transition-all"
+                              className="h-10 w-10 flex-shrink-0 rounded-full mb-1 cursor-pointer hover:ring-2 hover:ring-[#A0FAB2] hover:ring-offset-2 transition-all"
                               onClick={() => handleOpenUserProfile(message.senderId, message.senderName)}
                             >
                               <AvatarImage src={message.senderAvatarUrl} className="rounded-full" />
@@ -3025,7 +3025,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                   <button
                     type="submit"
                     disabled={sendMessageMutation.isPending}
-                    className="h-10 w-10 p-0 hover:bg-[#3ae374] text-white rounded-full flex-shrink-0 flex items-center justify-center transition-colors bg-[#2d5ddd]"
+                    className="h-10 w-10 p-0 hover:bg-[#3ae374] text-white rounded-full flex-shrink-0 flex items-center justify-center transition-colors bg-[#0C332C]"
                     data-testid="send-button"
                   >
                     <Send className="h-4 w-4 text-white" />

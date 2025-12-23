@@ -1435,7 +1435,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                     
                     {selectedProduct.type === 'digital' && (
                       <Button
-                        className="w-full h-12 bg-[#2d5ddd] hover:bg-[#1e3d99] font-medium text-white border-0"
+                        className="w-full h-12 bg-[#0C332C] hover:bg-[#1e3d99] font-medium text-white border-0"
                         onClick={async () => {
                           if (selectedProduct) {
                             try {
@@ -1561,7 +1561,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
           {downloadMessage.text && (
             <div className={`mt-4 p-4 rounded-lg ${
               downloadMessage.type === 'success' 
-                ? 'bg-[#2d5ddd] border border-[#2d5ddd]' 
+                ? 'bg-[#0C332C] border border-[#0C332C]' 
                 : 'bg-primary/10 border border-red-200'
             }`}>
               <p className={`text-sm font-medium ${
@@ -1582,7 +1582,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                 }
               }}
               disabled={isDownloading || downloadMessage.type === 'success'}
-              className="flex-1 h-12 bg-[#2d5ddd] hover:bg-[#2554cc] text-white font-semibold border-0 disabled:opacity-50"
+              className="flex-1 h-12 bg-[#0C332C] hover:bg-[#2554cc] text-white font-semibold border-0 disabled:opacity-50"
               data-testid="button-confirm-download"
             >
               {isDownloading ? (

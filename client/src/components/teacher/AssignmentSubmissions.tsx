@@ -711,7 +711,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                     <Button
                       onClick={() => handleGradeSubmission(selectedSubmission.id)}
                       disabled={gradingLoading || !gradingData.grade}
-                      className="bg-[#2d5ddd] hover:bg-[#2447b8] text-white"
+                      className="bg-[#0C332C] hover:bg-[#2447b8] text-white"
                       data-testid="button-submit-grade"
                     >
                       {gradingLoading ? 'Grading...' : 'Submit Grade'}
@@ -789,7 +789,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                             </div>
                             {submission.status === 'graded' && (
                               <div className="mt-2 text-sm">
-                                <span className="font-medium text-[#42fa76]">
+                                <span className="font-medium text-[#A0FAB2]">
                                   Grade: {submission.grade || `${submission.numericGrade}/${assignment.maxGrade}`}
                                 </span>
                               </div>

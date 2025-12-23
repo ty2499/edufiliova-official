@@ -73,7 +73,7 @@ export const UserProfileModal = ({ isOpen, onClose, userProfile, onStartChat }: 
           <DialogDescription>View detailed information about {userProfile.name || 'this user'}</DialogDescription>
         </DialogHeader>
         {/* Header with Cover */}
-        <div className="bg-gradient-to-br from-[#42fa76] via-green-400 to-emerald-500 h-24 sm:h-28 relative">
+        <div className="bg-gradient-to-br from-[#A0FAB2] via-green-400 to-emerald-500 h-24 sm:h-28 relative">
           <button
             onClick={onClose}
             className="absolute top-3 left-3 sm:top-4 sm:left-4 p-1.5 hover:bg-white/20 rounded-full transition-colors z-10"
@@ -206,7 +206,7 @@ export const UserProfileModal = ({ isOpen, onClose, userProfile, onStartChat }: 
                   onStartChat(userProfile.userId);
                   onClose();
                 }}
-                className="flex-1 bg-gradient-to-r from-[#42fa76] to-green-500 hover:from-green-500 hover:to-green-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+                className="flex-1 bg-gradient-to-r from-[#A0FAB2] to-green-500 hover:from-green-500 hover:to-green-600 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200"
                 data-testid="start-chat-button"
               >
                 <MessageCircle className="h-4 w-4 mr-2" />

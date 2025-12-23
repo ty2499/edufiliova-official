@@ -98,7 +98,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
                     setIsMobileMenuOpen(false);
                   }}
                   size="sm"
-                  className="w-full bg-[#2d5ddd] hover:bg-[#1e3a8a] text-white"
+                  className="w-full bg-[#0C332C] hover:bg-[#1e3a8a] text-white"
                   data-testid="mobile-nav-dashboard"
                 >
                   Dashboard
@@ -123,7 +123,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
                   setIsMobileMenuOpen(false);
                 }}
                 size="sm"
-                className="w-full bg-[#2d5ddd] hover:bg-[#1e3a8a] text-white"
+                className="w-full bg-[#0C332C] hover:bg-[#1e3a8a] text-white"
               >
                 Log in
               </Button>

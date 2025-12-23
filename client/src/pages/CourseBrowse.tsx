@@ -210,7 +210,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
           icon: ShieldCheck,
           label: 'Admin',
           color: 'bg-blue-500 text-white border-blue-600',
-          hoverColor: 'group-hover:bg-blue-600'
+          hoverColor: 'group-hover:bg-primary'
         };
       case 'teacher':
         return {
@@ -293,7 +293,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
           style={{ backgroundImage: `url(${studentsImage})` }}
         />
         {/* Blue Overlay */}
-        <div className="absolute inset-0 bg-[#2d5ddd]/80" />
+        <div className="absolute inset-0 bg-[#0C332C]/80" />
         
         {/* Content */}
         <div className="px-4 md:px-8 py-12 relative z-10">
@@ -503,7 +503,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                                       ? 'bg-[#c5f13c] hover:bg-[#c5f13c]/90 text-gray-900'
                                       : isPaid
                                       ? 'bg-[#0C332C] hover:bg-[#0C332C]/90 text-white'
-                                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                                      : 'bg-primary hover:bg-primary text-white'
                                   } border-0`}
                                   data-testid={`button-enroll-${course.id}`}
                                 >
@@ -756,7 +756,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                         {course.hasCertificate && course.certificate ? (
                           <Button
                             onClick={() => handleClaimCertificate(course.courseId)}
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            className="w-full bg-primary hover:bg-primary text-white"
                             data-testid={`button-download-cert-${course.courseId}`}
                           >
                             <Download className="h-4 w-4 mr-2" />

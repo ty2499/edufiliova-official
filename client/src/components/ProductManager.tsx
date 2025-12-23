@@ -211,7 +211,7 @@ const ProductCard = ({
       {/* Product type and stats */}
       <div className="mb-3 sm:mb-4 space-y-2">
         <div className="flex items-center gap-2 overflow-hidden">
-          <Badge className="text-xs flex-shrink-0 bg-[#2d5ddd] text-white">
+          <Badge className="text-xs flex-shrink-0 bg-[#0C332C] text-white">
             {product.type === 'digital' ? (
               <><Download className="h-3 w-3 mr-1" /> Digital</>
             ) : (
@@ -254,7 +254,7 @@ const ProductCard = ({
         <Button
           variant="outline"
           size="sm"
-          className="h-9 w-9 p-0 bg-[#2d5ddd] text-white border-[#2d5ddd] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
+          className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
           onClick={() => onEdit(product)}
           data-testid={`button-edit-${product.id}`}
         >
@@ -264,7 +264,7 @@ const ProductCard = ({
           <Button
             variant="outline"
             size="sm"
-            className="h-9 w-9 p-0 bg-[#2d5ddd] text-white border-[#2d5ddd] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
+            className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
             onClick={() => {
               const mainFile = product.downloadableFiles.find(f => f.type === 'main');
               if (mainFile) {
@@ -286,7 +286,7 @@ const ProductCard = ({
         <Button
           variant="outline"
           size="sm"
-          className="h-9 w-9 p-0 bg-[#2d5ddd] text-white border-[#2d5ddd] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
+          className="h-9 w-9 p-0 bg-[#0C332C] text-white border-[#0C332C] hover:bg-[#1e4bcc] hover:text-white shadow-sm transition-all duration-200 flex items-center justify-center"
           onClick={() => onDelete(product.id)}
           disabled={deleteLoading}
           data-testid={`button-delete-${product.id}`}

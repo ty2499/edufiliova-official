@@ -234,7 +234,7 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#2d5ddd] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-[#0C332C] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Verifying your payment...</p>
         </div>
       </div>
@@ -244,7 +244,7 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <div className="bg-[#2d5ddd] py-6 px-6 sm:px-10 lg:px-14">
+        <div className="bg-[#0C332C] py-6 px-6 sm:px-10 lg:px-14">
           <div className="max-w-4xl mx-auto flex items-center justify-center">
             <Logo className="h-10" type="home" />
           </div>
@@ -255,7 +255,7 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
             <p className="text-gray-600 mb-6">{error}</p>
             <Button 
               onClick={handleContinue}
-              className="bg-[#2d5ddd] hover:bg-[#2d5ddd]/90 text-white"
+              className="bg-[#0C332C] hover:bg-[#0C332C]/90 text-white"
               data-testid="button-return-dashboard"
             >
               Return to Dashboard
@@ -308,8 +308,8 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-14 py-12">
         {/* Thank You Message */}
-        <div className="bg-white rounded-lg shadow-sm border-2 border-dashed border-[#2d5ddd] p-6 mb-8">
-          <p className="text-center text-[#2d5ddd] text-xl font-semibold" data-testid="text-thank-you">
+        <div className="bg-white rounded-lg shadow-sm border-2 border-dashed border-[#0C332C] p-6 mb-8">
+          <p className="text-center text-[#0C332C] text-xl font-semibold" data-testid="text-thank-you">
             {paymentType === 'banner' 
               ? 'Thank you. Your banner ad has been submitted for review.' 
               : 'Thank you. Your order has been received.'}
@@ -432,7 +432,7 @@ export default function PaymentSuccess({ onContinue, onNavigate }: PaymentSucces
             {paymentType === 'banner' ? 'View My Ads' : 'Go to Dashboard'}
           </Button>
           <p className="text-sm text-gray-600 mt-4">
-            Need help? <a href="/?page=contact" className="text-[#2d5ddd] hover:underline font-medium">Contact Support</a>
+            Need help? <a href="/?page=contact" className="text-[#0C332C] hover:underline font-medium">Contact Support</a>
           </p>
         </div>
       </div>

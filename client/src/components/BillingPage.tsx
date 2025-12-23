@@ -122,7 +122,7 @@ function AddPaymentMethodForm({ onSuccess, onCancel }: { onSuccess: () => void; 
         <Button
           type="submit"
           disabled={!stripe || isSubmitting}
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-primary hover:bg-primary"
           data-testid="button-save-payment"
         >
           {isSubmitting ? (
@@ -378,7 +378,7 @@ export default function BillingPage() {
                   Cancelled
                 </Badge>
               ) : (
-                <Badge className="bg-blue-600 text-white">
+                <Badge className="bg-primary text-white">
                   <Check className="w-3 h-3 mr-1" />
                   Active
                 </Badge>
@@ -467,7 +467,7 @@ export default function BillingPage() {
               </p>
               <Button
                 onClick={() => setShowAddDialog(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-[#ffffff]"
+                className="bg-primary hover:bg-primary text-[#ffffff]"
                 data-testid="button-add-first-payment"
               >
                 <Plus className="w-4 h-4 mr-2" />

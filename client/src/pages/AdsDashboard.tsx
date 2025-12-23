@@ -837,7 +837,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
               onSubmit(submitData);
             }}
             disabled={createAdMutation.isPending || uploadingImage || (!ad && !selectedFile && !formData.imageUrl)}
-            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg"
+            className="w-full sm:w-auto bg-primary hover:bg-primary text-white font-medium px-6 py-2 rounded-lg"
             data-testid="create-ad-button"
           >
             {uploadingImage ? 'Uploading...' : createAdMutation.isPending ? 'Processing...' : 'Create Ad'}

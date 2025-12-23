@@ -46,7 +46,7 @@ const SUBJECT_COLORS: Record<string, string> = {
   'Computer Science': '#2e86de',
   'Psychology': '#f368e0',
   'Philosophy': '#3742fa',
-  'Other': '#42fa76'
+  'Other': '#A0FAB2'
 };
 
 const COMMON_SUBJECTS = Object.keys(SUBJECT_COLORS);
@@ -67,7 +67,7 @@ const StudyNotes = () => {
     title: '',
     content: '',
     subject: '',
-    color: '#42fa76'
+    color: '#A0FAB2'
   });
 
   // Edit note form state
@@ -75,7 +75,7 @@ const StudyNotes = () => {
     title: '',
     content: '',
     subject: '',
-    color: '#42fa76'
+    color: '#A0FAB2'
   });
 
   // Lazy load notes on component mount
@@ -207,7 +207,7 @@ const StudyNotes = () => {
 
       if (result.success) {
         setNotes([result.data, ...notes]);
-        setNewNote({ title: '', content: '', subject: '', color: '#42fa76' });
+        setNewNote({ title: '', content: '', subject: '', color: '#A0FAB2' });
         setIsCreating(false);
       } else {
         console.error('StudyNotes: Failed to create note:', result.error);
@@ -255,7 +255,7 @@ const StudyNotes = () => {
           note.id === noteId ? result.data : note
         ));
         setEditingNote(null);
-        setEditNote({ title: '', content: '', subject: '', color: '#42fa76' });
+        setEditNote({ title: '', content: '', subject: '', color: '#A0FAB2' });
       } else {
         console.error('StudyNotes: Failed to update note:', result.error);
       }
@@ -314,11 +314,11 @@ const StudyNotes = () => {
 
   const cancelEditing = () => {
     setEditingNote(null);
-    setEditNote({ title: '', content: '', subject: '', color: '#42fa76' });
+    setEditNote({ title: '', content: '', subject: '', color: '#A0FAB2' });
   };
 
   const handleSubjectChange = (subject: string, isEdit = false) => {
-    const color = SUBJECT_COLORS[subject] || '#42fa76';
+    const color = SUBJECT_COLORS[subject] || '#A0FAB2';
     if (isEdit) {
       setEditNote(prev => ({ ...prev, subject, color }));
     } else {
@@ -464,7 +464,7 @@ const StudyNotes = () => {
                 variant="outline" 
                 onClick={() => {
                   setIsCreating(false);
-                  setNewNote({ title: '', content: '', subject: '', color: '#42fa76' });
+                  setNewNote({ title: '', content: '', subject: '', color: '#A0FAB2' });
                 }}
                 disabled={loading}
                 data-testid="cancel-note-btn"
@@ -509,7 +509,7 @@ const StudyNotes = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredNotes.map((note, index) => {
-            const colors = ['#2d5ddd', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
+            const colors = ['#0C332C', '#c5f13c', '#151314', '#0C332C', '#a28ff9', '#a4f5a6'];
             const bgColor = colors[index % colors.length];
             const isLight = ['#c5f13c', '#a4f5a6'].includes(bgColor);
             const textColor = isLight ? '#000000' : '#ffffff';
@@ -629,7 +629,7 @@ const StudyNotes = () => {
                       value={editNote.subject} 
                       onValueChange={(subject) => {
                         handleSubjectChange(subject, true);
-                        debouncedAutoSave(note.id, { subject, color: SUBJECT_COLORS[subject] || '#42fa76' });
+                        debouncedAutoSave(note.id, { subject, color: SUBJECT_COLORS[subject] || '#A0FAB2' });
                       }}
                     >
                       <SelectTrigger className="w-40 bg-transparent border-white/30" style={{ color: textColor }}>

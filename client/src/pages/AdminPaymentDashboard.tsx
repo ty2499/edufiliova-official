@@ -1031,7 +1031,7 @@ const UserCard = ({
             onClick={() => onLoginAsUser(user)}
             data-testid={`login-as-user-${user.userId}`}
             className="h-8 px-2.5 sm:px-3 text-xs bg-blue-50 hover:bg-blue-100 flex-1 sm:flex-initial min-w-[70px]"
-            style={{ borderColor: '#2d5ddc', color: '#2d5ddc' }}
+            style={{ borderColor: '#0C332C', color: '#0C332C' }}
           >
             <User className="h-3.5 w-3.5 sm:mr-1.5" />
             <span className="hidden xs:inline sm:inline">Login</span>
@@ -1066,7 +1066,7 @@ const UserCard = ({
           onClick={() => onEdit(user)}
           data-testid={`edit-user-${user.userId}`}
           className="h-8 px-2.5 sm:px-3 text-xs flex-1 sm:flex-initial min-w-[70px]"
-          style={{ borderColor: '#2d5ddc', color: '#2d5ddc' }}
+          style={{ borderColor: '#0C332C', color: '#0C332C' }}
         >
           <Edit className="h-3.5 w-3.5 sm:mr-1.5" />
           <span className="hidden xs:inline sm:inline">Edit</span>
@@ -1077,7 +1077,7 @@ const UserCard = ({
           onClick={() => onBan(user)}
           data-testid={`ban-user-${user.userId}`}
           className="h-8 px-2.5 sm:px-3 text-xs flex-1 sm:flex-initial min-w-[70px]"
-          style={{ borderColor: '#2d5ddc', color: '#2d5ddc' }}
+          style={{ borderColor: '#0C332C', color: '#0C332C' }}
         >
           <Ban className="h-3.5 w-3.5 sm:mr-1.5" />
           <span className="hidden xs:inline sm:inline">Status</span>
@@ -3189,7 +3189,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
           <div className="flex-shrink-0 mt-4 space-y-2">
             <Button
               variant="outline"
-              className="w-full h-11 rounded-lg transition-colors text-white hover:bg-blue-600 hover:text-white border-white/20 justify-start"
+              className="w-full h-11 rounded-lg transition-colors text-white hover:bg-primary hover:text-white border-white/20 justify-start"
               onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
@@ -3248,12 +3248,12 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 <div className="grid grid-cols-2 gap-3 md:gap-4">
                   {/* Messages */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#2d5ddc] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#2d5ddc]" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C]" 
                     data-testid="card-messages"
                     onClick={() => setSelectedTab("messaging")}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 md:p-3 bg-[#2d5ddc]/10 dark:bg-[#2d5ddc]/20 rounded-lg">
+                      <div className="p-2 md:p-3 bg-[#0C332C]/10 dark:bg-[#0C332C]/20 rounded-lg">
                         <MessageSquare className="h-5 w-5 md:h-6 md:w-6 text-gray-900 dark:text-white" />
                       </div>
                       <div>
@@ -3299,12 +3299,12 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Community */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#42fa76] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#42fa76]" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2]" 
                     data-testid="card-community"
                     onClick={() => setSelectedTab("community")}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 md:p-3 bg-[#42fa76]/20 dark:bg-[#42fa76]/30 rounded-lg">
+                      <div className="p-2 md:p-3 bg-[#A0FAB2]/20 dark:bg-[#A0FAB2]/30 rounded-lg">
                         <Users className="h-5 w-5 md:h-6 md:w-6 text-gray-900 dark:text-white" />
                       </div>
                       <div>
@@ -3316,12 +3316,12 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Groups */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#2d5ddc] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#2d5ddc]" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C]" 
                     data-testid="card-groups"
                     onClick={() => setSelectedTab("groups")}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 md:p-3 bg-[#2d5ddc]/10 dark:bg-[#2d5ddc]/20 rounded-lg">
+                      <div className="p-2 md:p-3 bg-[#0C332C]/10 dark:bg-[#0C332C]/20 rounded-lg">
                         <Users className="h-5 w-5 md:h-6 md:w-6 text-gray-900 dark:text-white" />
                       </div>
                       <div>
@@ -3367,12 +3367,12 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Mode */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#42fa76] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#42fa76]" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2]" 
                     data-testid="card-mode"
                     onClick={() => setSelectedTab("assignment-mode")}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 md:p-3 bg-[#42fa76]/20 dark:bg-[#42fa76]/30 rounded-lg">
+                      <div className="p-2 md:p-3 bg-[#A0FAB2]/20 dark:bg-[#A0FAB2]/30 rounded-lg">
                         <Settings className="h-5 w-5 md:h-6 md:w-6 text-gray-900 dark:text-white" />
                       </div>
                       <div>
@@ -3401,12 +3401,12 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Blog */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#42fa76] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#42fa76]" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2]" 
                     data-testid="card-blog"
                     onClick={() => onNavigate?.('admin-blog-management')}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 md:p-3 bg-[#42fa76]/20 dark:bg-[#42fa76]/30 rounded-lg">
+                      <div className="p-2 md:p-3 bg-[#A0FAB2]/20 dark:bg-[#A0FAB2]/30 rounded-lg">
                         <FileText className="h-5 w-5 md:h-6 md:w-6 text-gray-900 dark:text-white" />
                       </div>
                       <div>
@@ -4292,7 +4292,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                           });
                         }}
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          voucherCodeMode === 'auto' ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'
+                          voucherCodeMode === 'auto' ? 'bg-primary' : 'bg-gray-300 dark:bg-gray-600'
                         }`}
                         data-testid="toggle-voucher-mode"
                       >
@@ -4792,7 +4792,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                  <Badge className="bg-blue-600 text-white font-mono text-lg">
+                                  <Badge className="bg-primary text-white font-mono text-lg">
                                     {voucher.code}
                                   </Badge>
                                   <Badge variant="default">Active</Badge>
@@ -4859,7 +4859,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                  <Badge className="bg-blue-600 text-white font-mono text-lg">
+                                  <Badge className="bg-primary text-white font-mono text-lg">
                                     {voucher.code}
                                   </Badge>
                                   <Badge variant="destructive">Expired</Badge>
@@ -4924,7 +4924,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-2">
-                                  <Badge className="bg-blue-600 text-white font-mono text-lg">
+                                  <Badge className="bg-primary text-white font-mono text-lg">
                                     {voucher.code}
                                   </Badge>
                                   <Badge variant="secondary">Fully Used</Badge>
@@ -5245,7 +5245,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                           window.location.href = url.toString();
                         }
                       }}
-                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      className="bg-primary hover:bg-primary text-white"
                       data-testid="admin-create-product-button"
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -5405,10 +5405,10 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Resolved</CardTitle>
-                    <CheckCircle2 className="h-4 w-4" style={{ color: '#2d5ddd' }} />
+                    <CheckCircle2 className="h-4 w-4" style={{ color: '#0C332C' }} />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold" style={{ color: '#2d5ddd' }}>
+                    <div className="text-2xl font-bold" style={{ color: '#0C332C' }}>
                       {supportTickets.filter((t: any) => t.status === 'resolved' || t.status === 'closed').length}
                     </div>
                     <p className="text-xs text-muted-foreground">Completed tickets</p>
@@ -5525,7 +5525,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                     <Button 
                                       variant="default"
                                       size="sm"
-                                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                                      className="bg-primary hover:bg-primary text-white"
                                       data-testid={`button-reply-${ticket.id}`}
                                     >
                                       <MessageSquare className="h-4 w-4 mr-2 text-white" />

@@ -719,7 +719,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               variant="outline" 
               size="sm" 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="text-white border-gray-300 hover:opacity-90 w-full sm:w-auto sm:ml-auto" style={{backgroundColor: '#1e40af'}}
+              className="text-white border-gray-300 hover:opacity-90 w-full sm:w-auto sm:ml-auto" style={{backgroundColor: '#0C332C'}}
             >
               <AlertCircle className="h-4 w-4 mr-1" />
               {notifications.length} Alert{notifications.length > 1 ? 's' : ''}
@@ -780,7 +780,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                             <Badge variant="secondary" className="text-xs">Default</Badge>
                           )}
                           {account.isVerified ? (
-                            <Badge variant="default" className="text-xs text-white flex items-center gap-1" style={{ backgroundColor: '#2d5ddd' }}>
+                            <Badge variant="default" className="text-xs text-white flex items-center gap-1" style={{ backgroundColor: '#0C332C' }}>
                               <CheckmarkIcon size="sm" />
                               Verified
                             </Badge>
@@ -833,7 +833,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
             <p className="text-sm text-muted-foreground mb-4">
               Add a payment method to receive your earnings
             </p>
-            <Button onClick={handleShowAddForm} className="text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}>
+            <Button onClick={handleShowAddForm} className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
               <Plus className="h-4 w-4 mr-2" />
               Add Your First Payment Method
             </Button>
@@ -845,7 +845,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Add New Payment Method</h4>
-              <Button size="sm" onClick={handleHideAddForm} className="text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}>
+              <Button size="sm" onClick={handleHideAddForm} className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -1032,7 +1032,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <Button 
                 type="submit" 
                 disabled={submitting}
-                className="w-full text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+                className="w-full text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
               >
                 {submitting ? (
                   <>
@@ -1089,7 +1089,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <Button 
                 type="button" 
                 onClick={handleConfirmEdit}
-                className="flex-1 text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+                className="flex-1 text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
                 disabled={submitting}
               >
                 Continue to Edit
@@ -1103,7 +1103,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Edit Payment Method</h4>
-              <Button size="sm" onClick={handleHideEditForm} className="text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}>
+              <Button size="sm" onClick={handleHideEditForm} className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -1225,7 +1225,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                 <Button 
                   type="submit" 
                   disabled={submitting || showUpdateWarning}
-                  className="text-white hover:opacity-90 flex-1" style={{backgroundColor: '#1e40af'}}
+                  className="text-white hover:opacity-90 flex-1" style={{backgroundColor: '#0C332C'}}
                 >
                   {submitting ? (
                     <>
@@ -2072,7 +2072,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
           <div className="p-4 border-t border-gray-200 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              className="w-full bg-primary hover:bg-primary text-white"
               onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
@@ -2478,7 +2478,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   <p className="text-gray-600 mb-4">Please select a freelancer from the marketplace to view their profile.</p>
                   <Button 
                     onClick={() => setActiveTab('marketplace')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    className="bg-primary hover:bg-primary text-white"
                   >
                     <ChevronLeft className="h-4 w-4 mr-2" />
                     Back to Marketplace
@@ -2510,7 +2510,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   <p className="text-gray-600 mb-4">Please select a portfolio work to view its details.</p>
                   <Button 
                     onClick={() => setActiveTab('portfolio-gallery')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    className="bg-primary hover:bg-primary text-white"
                   >
                     <ChevronLeft className="h-4 w-4 mr-2" />
                     Back to Gallery

@@ -96,7 +96,7 @@ export default function TeacherLayout({
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navbar - Mobile */}
-      <nav className="bg-[#2d5ddc] border-b border-white/10 fixed top-0 left-0 right-0 z-40 md:hidden pt-safe">
+      <nav className="bg-[#0C332C] border-b border-white/10 fixed top-0 left-0 right-0 z-40 md:hidden pt-safe">
         <div className="px-4">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
@@ -116,7 +116,7 @@ export default function TeacherLayout({
       {/* Left Sidebar - Slide-in on mobile, fixed on desktop */}
       <div className={`${
         showMobileMenu ? 'translate-x-0' : '-translate-x-full'
-      } md:translate-x-0 fixed left-0 top-0 md:top-0 h-full w-64 border-r border-white/10 z-50 bg-[#2d5ddc] transition-transform duration-300`}>
+      } md:translate-x-0 fixed left-0 top-0 md:top-0 h-full w-64 border-r border-white/10 z-50 bg-[#0C332C] transition-transform duration-300`}>
         <div className="flex flex-col h-full py-4">
           
           {/* Logo - Desktop only */}

@@ -247,7 +247,7 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
                   "transition-all duration-200 hover:shadow-md cursor-pointer border-l-4",
                   announcement.isRead 
                     ? "border-l-gray-300 bg-white" 
-                    : "border-l-[#42fa76] bg-green-50/30",
+                    : "border-l-[#A0FAB2] bg-green-50/30",
                   announcement.priority === 'urgent' && "border-l-red-500 bg-primary/10/30",
                   announcement.priority === 'high' && "border-l-orange-500 bg-primary/10/30"
                 )}
@@ -257,7 +257,7 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3 flex-1">
                       <Avatar className="w-8 h-8">
-                        <AvatarFallback className="bg-[#42fa76] text-white text-sm">
+                        <AvatarFallback className="bg-[#A0FAB2] text-white text-sm">
                           {announcement.authorRole === 'admin' ? 'A' : 'T'}
                         </AvatarFallback>
                       </Avatar>
@@ -271,7 +271,7 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
                             {announcement.title}
                           </CardTitle>
                           {!announcement.isRead && (
-                            <div className="w-2 h-2 bg-[#42fa76] rounded-full flex-shrink-0" />
+                            <div className="w-2 h-2 bg-[#A0FAB2] rounded-full flex-shrink-0" />
                           )}
                         </div>
                         
@@ -321,7 +321,7 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => toggleExpanded(announcement.id)}
-                      className="mt-2 p-0 h-auto text-[#42fa76] hover:text-[#42fa76]/80 font-medium"
+                      className="mt-2 p-0 h-auto text-[#A0FAB2] hover:text-[#A0FAB2]/80 font-medium"
                       data-testid={`expand-button-${announcement.id}`}
                     >
                       {isExpanded ? (

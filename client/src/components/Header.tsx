@@ -497,7 +497,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <Button
                 size="sm"
                 onClick={() => onNavigate("auth")}
-                className="text-sm font-medium bg-[#0C332C] hover:bg-blue-700 text-white rounded-full px-8 pl-[52px] pr-[52px]"
+                className="text-sm font-medium bg-[#0C332C] hover:bg-primary text-white rounded-full px-8 pl-[52px] pr-[52px]"
                 data-testid="button-signin"
               >
                 Sign In
@@ -977,7 +977,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                 <Button
                   size="sm"
                   onClick={() => {onNavigate("auth"); setIsMobileMenuOpen(false);}}
-                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-blue-700 text-white rounded-full bg-[#0C332C]"
+                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-primary text-white rounded-full bg-[#0C332C]"
                   data-testid="button-signin-mobile"
                 >
                   Sign In

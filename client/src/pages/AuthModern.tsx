@@ -797,7 +797,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         <Button
           type="button"
           onClick={() => setCurrentStep("register-teacher")}
-          className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
+          className="w-full h-11 bg-primary hover:bg-primary text-white rounded-lg font-medium"
           data-testid="link-teacher-signup"
         >
           <GraduationCap className="h-4 w-4 mr-2" />

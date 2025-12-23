@@ -78,7 +78,7 @@ export function SocialAuthRouter() {
             <p className="text-gray-600 mb-4">The page you're looking for doesn't exist.</p>
             <button
               onClick={() => window.location.href = '/'}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-primary text-white px-4 py-2 rounded hover:bg-primary"
             >
               Go Home
             </button>

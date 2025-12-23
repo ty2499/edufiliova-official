@@ -261,7 +261,7 @@ export function BehanceStyleMobileProfile({
           <Button 
             onClick={handleFollowClick}
             disabled={!user || user.id === profileData.id || followMutation.isPending}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+            className="flex-1 bg-primary hover:bg-primary text-white"
             data-testid="button-follow"
           >
             {followMutation.isPending ? (

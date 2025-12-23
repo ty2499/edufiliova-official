@@ -944,7 +944,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                       )}
                       <Button
                         onClick={() => setReviewAction("approve")}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700"
+                        className="flex-1 bg-primary hover:bg-primary"
                         data-testid="btn-approve-teacher"
                       >
                         Approve Application
@@ -1152,7 +1152,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                     <div className="flex gap-2 pt-4 border-t">
                       <Button
                         onClick={() => setReviewAction("approve")}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700"
+                        className="flex-1 bg-primary hover:bg-primary"
                         data-testid="btn-approve-freelancer"
                       >
                         Approve Application
@@ -1253,7 +1253,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
             <Button 
               onClick={handleReviewSubmit}
               disabled={(reviewAction === "reject" && !rejectionReason.trim()) || ajaxStatus.type === 'loading'}
-              className={reviewAction === "approve" ? "bg-blue-600 hover:bg-blue-700" : ""}
+              className={reviewAction === "approve" ? "bg-primary hover:bg-primary" : ""}
               variant={reviewAction === "reject" ? "destructive" : "default"}
               data-testid="review-submit-button"
             >

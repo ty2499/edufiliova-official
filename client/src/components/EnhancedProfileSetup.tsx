@@ -682,7 +682,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                       {profileForm.displayName?.split(' ').map(n => n[0]).join('').toUpperCase() || 'FL'}
                     </AvatarFallback>
                   </Avatar>
-                  <label htmlFor="avatar-upload" className="absolute bottom-0 right-0 p-1 bg-blue-600 rounded-full cursor-pointer hover:bg-blue-700 transition-colors">
+                  <label htmlFor="avatar-upload" className="absolute bottom-0 right-0 p-1 bg-primary rounded-full cursor-pointer hover:bg-primary transition-colors">
                     <Camera className="h-4 w-4 text-white" />
                     <input
                       id="avatar-upload"
@@ -840,7 +840,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                           onClick={handleSaveTagline}
                           disabled={saveProfileMutation.isPending}
                           data-testid="button-save-tagline"
-                          className="text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+                          className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
                         >
                           {saveProfileMutation.isPending ? (
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -903,7 +903,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                         onClick={handleSaveBio}
                         disabled={saveProfileMutation.isPending}
                         data-testid="button-save-bio"
-                        className="text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+                        className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
                       >
                         {saveProfileMutation.isPending ? (
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -965,7 +965,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                         onClick={handleSaveStatement}
                         disabled={saveProfileMutation.isPending}
                         data-testid="button-save-professional-statement"
-                        className="text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+                        className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
                       >
                         {saveProfileMutation.isPending ? (
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -1396,7 +1396,7 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
                 onClick={() => handleSaveProfile()}
                 disabled={saveProfileMutation.isPending}
                 data-testid="button-save-profile"
-                className="text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+                className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}
               >
                 {saveProfileMutation.isPending ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />

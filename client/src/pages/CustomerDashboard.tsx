@@ -396,7 +396,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
             <div className="p-4 border-t border-gray-200 space-y-2 flex-shrink-0">
               <Button
                 size="sm"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full bg-primary hover:bg-primary text-white"
                 onClick={() => openExternalUrl('https://edufiliova.com')}
                 data-testid="button-browse-website"
               >
@@ -559,19 +559,19 @@ function DashboardHome({ onNavigate, userName }: { onNavigate: (page: DashboardP
           <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Button size="sm" className="justify-start bg-blue-600 hover:bg-blue-700 text-white" data-testid="button-view-purchases" onClick={() => onNavigate('purchases')}>
+          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white" data-testid="button-view-purchases" onClick={() => onNavigate('purchases')}>
             <ShoppingBag className="h-4 w-4 mr-2" />
             View Purchases
           </Button>
-          <Button size="sm" className="justify-start bg-blue-600 hover:bg-blue-700 text-white" data-testid="button-create-ad" onClick={() => onNavigate('ads')}>
+          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white" data-testid="button-create-ad" onClick={() => onNavigate('ads')}>
             <Plus className="h-4 w-4 mr-2" />
             Create Ad
           </Button>
-          <Button size="sm" className="justify-start bg-blue-600 hover:bg-blue-700 text-white" data-testid="button-add-funds" onClick={() => onNavigate('wallet')}>
+          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white" data-testid="button-add-funds" onClick={() => onNavigate('wallet')}>
             <DollarSign className="h-4 w-4 mr-2" />
             Add Funds
           </Button>
-          <Button size="sm" className="justify-start bg-blue-600 hover:bg-blue-700 text-white" data-testid="button-contact-support" onClick={() => onNavigate('support')}>
+          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white" data-testid="button-contact-support" onClick={() => onNavigate('support')}>
             <HeadphonesIcon className="h-4 w-4 mr-2" />
             Contact Support
           </Button>
@@ -1081,7 +1081,7 @@ function PurchasesPage({ onNavigate }: { onNavigate?: (page: string) => void }) 
                             onNavigate?.('course-player');
                           }
                         }}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full px-4 py-1 h-8 text-xs"
+                        className="bg-primary hover:bg-primary text-white font-medium rounded-full px-4 py-1 h-8 text-xs"
                         data-testid={`button-view-course-${purchase.id}`}
                       >
                         View Course
@@ -1317,7 +1317,7 @@ function AdsPage({ onNavigateExternal, onNavigateInternal }: { onNavigateExterna
         <CardContent>
           <Button
             onClick={() => onNavigateInternal?.('create-ad')}
-            className="hover:bg-blue-700 bg-[#1d4ed8] text-[#ffffff]"
+            className="hover:bg-primary bg-[#1d4ed8] text-[#ffffff]"
             data-testid="button-create-banner-ad"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -1486,7 +1486,7 @@ function OldCoursesPage({ onNavigate }: { onNavigate?: (page: string) => void })
               <p className="text-gray-600 dark:text-gray-400 mb-6">Start learning by browsing our course catalog</p>
               <Button 
                 onClick={() => onNavigate?.('courses')} 
-                className="bg-blue-600 hover:bg-blue-700 text-white"
+                className="bg-primary hover:bg-primary text-white"
                 data-testid="button-explore-courses"
               >
                 <BookOpen className="h-4 w-4 mr-2" />
@@ -1526,7 +1526,7 @@ function OldCoursesPage({ onNavigate }: { onNavigate?: (page: string) => void })
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div 
-                          className="bg-blue-600 h-2 rounded-full transition-all"
+                          className="bg-primary h-2 rounded-full transition-all"
                           style={{ width: `${course.progress || 0}%` }}
                         />
                       </div>
@@ -1536,7 +1536,7 @@ function OldCoursesPage({ onNavigate }: { onNavigate?: (page: string) => void })
                         window.history.pushState({}, '', `?page=course-player&courseId=${course.courseId}`);
                         onNavigate?.('course-player');
                       }}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                      className="w-full bg-primary hover:bg-primary text-white"
                       size="sm"
                       data-testid={`button-continue-course-${index}`}
                     >
@@ -2191,7 +2191,7 @@ function EmbeddedPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { am
           
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="w-6 h-6 bg-primary text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
                 <Wallet className="w-4 h-4" />
               </div>
               <div className="flex-1">
@@ -2844,7 +2844,7 @@ function WalletPage() {
                 onClick={handleAddFunds}
                 disabled={!addAmount || createPaymentIntentMutation.isPending}
                 data-testid="button-add-funds"
-                className="bg-blue-600 text-white hover:bg-blue-700"
+                className="bg-primary text-white hover:bg-primary"
               >
                 Add Funds
               </Button>
@@ -2878,7 +2878,7 @@ function WalletPage() {
                 onClick={handleRedeemVoucher}
                 disabled={!voucherCode.trim() || voucherAjax.isLoading}
                 data-testid="button-redeem-voucher"
-                className="bg-blue-600 text-white hover:bg-blue-700"
+                className="bg-primary text-white hover:bg-primary"
               >
                 {voucherAjax.isLoading ? 'Redeeming...' : 'Redeem'}
               </Button>
@@ -3674,7 +3674,7 @@ function SettingsPage() {
                 <Button
                   type="submit"
                   disabled={updateMutation.isPending}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="bg-primary hover:bg-primary text-white"
                   data-testid="button-save-settings"
                 >
                   {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
@@ -3800,7 +3800,7 @@ function ReferralSection() {
             />
             <Button
               onClick={handleCopy}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-primary hover:bg-primary text-white"
               data-testid="button-copy-referral"
             >
               {copied ? (
@@ -4010,7 +4010,7 @@ function BecomeStudentPage() {
             <Button
               type="submit"
               disabled={upgradeMutation.isPending}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+              className="w-full bg-primary hover:bg-primary text-white font-semibold"
               data-testid="button-upgrade-student"
             >
               {upgradeMutation.isPending ? 'Upgrading...' : 'Upgrade to Student Account'}

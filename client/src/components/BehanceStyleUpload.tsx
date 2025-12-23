@@ -573,7 +573,7 @@ export default function BehanceStyleUpload({
 
             <Button
               type="button"
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-primary hover:bg-primary text-white"
               onClick={() => fileInputRef.current?.click()}
               data-testid="button-browse-files"
             >

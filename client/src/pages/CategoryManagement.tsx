@@ -423,7 +423,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
           {canCreateCategories ? (
             <Button 
               onClick={handleCreateNew}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-primary hover:bg-primary"
               data-testid="button-create-category"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -608,7 +608,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
             <p className="text-gray-500 mb-6">
               Create your first shop category to get started with the marketplace.
             </p>
-            <Button onClick={handleCreateNew} className="bg-blue-600 hover:bg-blue-700">
+            <Button onClick={handleCreateNew} className="bg-primary hover:bg-primary">
               <Plus className="h-4 w-4 mr-2" />
               Create First Category
             </Button>

@@ -383,7 +383,7 @@ export function EditAssignmentDialog({ open, onOpenChange, assignment, onSuccess
             <Button
               type="submit"
               disabled={loading}
-              className="bg-[#42fa76] hover:bg-[#32e566] text-black"
+              className="bg-[#A0FAB2] hover:bg-[#32e566] text-black"
               data-testid="button-save-edit-assignment"
             >
               {loading ? 'Updating...' : 'Update Assignment'}

@@ -323,7 +323,7 @@ function WalletPaymentModal({
               
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-blue-600 text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 bg-primary text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Wallet className="w-4 h-4" />
                   </div>
                   <div className="flex-1">
@@ -420,7 +420,7 @@ function WalletPaymentModal({
                   <Button
                     type="submit"
                     disabled={!stripe || processing}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-complete-purchase"
                   >
                     {processing ? 'Processing...' : `Complete Purchase`}
@@ -480,7 +480,7 @@ function WalletPaymentModal({
                   <Button
                     onClick={handleDodoPayment}
                     disabled={processing}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-dodopay-checkout"
                   >
                     {processing ? (
@@ -757,7 +757,7 @@ export function WalletPage({ userRole = 'customer' }: WalletPageProps) {
               onClick={handleAddFunds}
               disabled={!addAmount || createPaymentIntentMutation.isPending}
               data-testid="button-add-funds"
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              className="bg-primary text-white hover:bg-primary"
             >
               Add Funds
             </Button>
@@ -790,7 +790,7 @@ export function WalletPage({ userRole = 'customer' }: WalletPageProps) {
               onClick={handleRedeemVoucher}
               disabled={!voucherCode.trim() || redeemVoucherMutation.isPending}
               data-testid="button-redeem-voucher"
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              className="bg-primary text-white hover:bg-primary"
             >
               {redeemVoucherMutation.isPending ? 'Redeeming...' : 'Redeem'}
             </Button>
@@ -860,7 +860,7 @@ export function WalletPage({ userRole = 'customer' }: WalletPageProps) {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-bold" style={{ color: '#2d5ddd' }}>
+                      <p className="text-sm font-bold" style={{ color: '#0C332C' }}>
                         {tx.type === 'add_funds' ? '+' : '-'}${tx.amount}
                       </p>
                       <Badge variant="secondary">{tx.status}</Badge>

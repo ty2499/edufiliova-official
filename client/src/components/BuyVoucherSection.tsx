@@ -1176,7 +1176,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             )}
 
             <Button
-              className="w-full h-12 text-lg hover:bg-green-700 text-white bg-[#2d5ddd]"
+              className="w-full h-12 text-lg hover:bg-green-700 text-white bg-[#0C332C]"
               onClick={handlePayment}
               disabled={processing || !selectedPaymentMethod || (selectedPaymentMethod === 'card' && !stripe)}
               data-testid="button-voucher-complete-payment"

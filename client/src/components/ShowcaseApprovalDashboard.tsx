@@ -441,7 +441,7 @@ export function ShowcaseApprovalDashboard() {
                                         <Button
                                           onClick={() => handleApproval(selectedProject.id, 'approved')}
                                           disabled={approvalMutation.isPending}
-                                          className="bg-blue-600 hover:bg-blue-700"
+                                          className="bg-primary hover:bg-primary"
                                           data-testid="button-approve"
                                         >
                                           {approvalMutation.isPending ? (
@@ -479,7 +479,7 @@ export function ShowcaseApprovalDashboard() {
                               size="sm"
                               onClick={() => handleApproval(project.id, 'approved')}
                               disabled={approvalMutation.isPending}
-                              className="bg-blue-600 hover:bg-blue-700"
+                              className="bg-primary hover:bg-primary"
                               data-testid={`button-quick-approve-${project.id}`}
                             >
                               <CheckmarkIcon size="sm" />

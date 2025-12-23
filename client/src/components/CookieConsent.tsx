@@ -208,7 +208,7 @@ const CookieConsent = () => {
           <div className="flex flex-col gap-3">
             <Button
               onClick={handleAcceptAll}
-              className="w-full h-10 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium"
+              className="w-full h-10 bg-primary hover:bg-primary text-white text-sm font-medium"
               data-testid="button-accept-all"
             >
               Accept all
@@ -348,7 +348,7 @@ const CookieConsent = () => {
           <div className="flex flex-col gap-2">
             <Button
               onClick={handleAcceptAll}
-              className="w-full h-9 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium"
+              className="w-full h-9 bg-primary hover:bg-primary text-white text-xs font-medium"
               data-testid="button-accept-all-mobile"
             >
               Accept all

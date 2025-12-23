@@ -75,7 +75,7 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleConfirm}
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              className="bg-primary text-white hover:bg-primary"
             >
               {config.confirmText}
             </AlertDialogAction>

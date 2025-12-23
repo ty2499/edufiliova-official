@@ -712,7 +712,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
   return (
     <div className="min-h-screen bg-white">
       {/* Blue Header */}
-      <div className="bg-[#2d5ddd] text-white sticky top-0 z-10">
+      <div className="bg-[#0C332C] text-white sticky top-0 z-10">
         <div className="px-2 py-2">
           <div className="flex items-center gap-2">
             <button 
@@ -747,7 +747,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
               <Button
                 size="sm"
                 onClick={() => onNavigate(`course-detail-${courseId}`)}
-                className="bg-blue-500 hover:bg-blue-600 text-white"
+                className="bg-blue-500 hover:bg-primary text-white"
                 data-testid="button-enroll-now"
               >
                 Enroll Now
@@ -835,7 +835,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                               key={lesson.id}
                               className={`w-full text-left p-2.5 rounded-md transition-all ${
                                 selectedLesson === lesson.id 
-                                  ? 'bg-[#2d5ddd] text-white shadow-md' 
+                                  ? 'bg-[#0C332C] text-white shadow-md' 
                                   : accessible 
                                     ? 'hover:bg-accent/50' 
                                     : 'opacity-60 cursor-not-allowed'
@@ -855,7 +855,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                                   ) : completed ? (
                                     <div className={`w-4 h-4 rounded flex items-center justify-center ${
                                       selectedLesson === lesson.id ? 'bg-white/20' : ''
-                                    }`} style={{ backgroundColor: selectedLesson === lesson.id ? undefined : '#2d5ddd' }}>
+                                    }`} style={{ backgroundColor: selectedLesson === lesson.id ? undefined : '#0C332C' }}>
                                       <Check className="h-3 w-3 text-white" strokeWidth={3} />
                                     </div>
                                   ) : (
@@ -901,7 +901,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
           {!showSidebar && (
             <button
               onClick={() => setShowSidebar(true)}
-              className="lg:hidden fixed bottom-6 right-6 z-30 bg-[#2d5ddd] text-white p-4 rounded-full shadow-lg hover:bg-[#1e3a8a] transition-colors"
+              className="lg:hidden fixed bottom-6 right-6 z-30 bg-[#0C332C] text-white p-4 rounded-full shadow-lg hover:bg-[#1e3a8a] transition-colors"
               data-testid="button-show-menu"
             >
               <Menu className="h-6 w-6" />
@@ -1179,7 +1179,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                         onClick={() => onNavigate('claim-certificate-' + courseId)}
                         size="sm"
                         className="text-white hover:opacity-90"
-                        style={{ backgroundColor: '#2d5ddd' }}
+                        style={{ backgroundColor: '#0C332C' }}
                         data-testid="button-view-certificate"
                       >
                         <BadgeCheck className="h-4 w-4 mr-2" />

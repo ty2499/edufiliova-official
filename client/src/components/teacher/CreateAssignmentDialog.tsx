@@ -333,7 +333,7 @@ export function CreateAssignmentDialog({ open, onOpenChange, onSuccess }: Create
                     type="button" 
                     size="sm" 
                     onClick={acceptParsedQuestions}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-primary hover:bg-primary"
                     data-testid="button-accept-parsed-questions"
                   >
                     Add to Questions Tab
@@ -673,7 +673,7 @@ export function CreateAssignmentDialog({ open, onOpenChange, onSuccess }: Create
             <Button
               type="submit"
               disabled={loading}
-              className="bg-[#2d5ddd] text-[#ffffff]"
+              className="bg-[#0C332C] text-[#ffffff]"
               data-testid="button-save-assignment"
             >
               {loading ? 'Creating...' : 'Create Assignment'}

@@ -790,7 +790,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
 
                   {isEnrolled ? (
                     <Button 
-                      className="w-full mb-4 bg-[#2d5ddd] hover:bg-[#2d5ddd]/90 text-white"
+                      className="w-full mb-4 bg-[#0C332C] hover:bg-[#0C332C]/90 text-white"
                       onClick={() => onNavigate(`course-player-${courseId}`)}
                       data-testid="button-go-to-course"
                     >

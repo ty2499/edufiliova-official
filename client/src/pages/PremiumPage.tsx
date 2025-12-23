@@ -308,7 +308,7 @@ const PremiumPage = ({ onNavigate }: PremiumPageProps) => {
                       </span>
                     )}
                     {hasVerifiedBadge && (
-                      <Badge className="bg-blue-600 text-white flex items-center gap-1">
+                      <Badge className="bg-primary text-white flex items-center gap-1">
                         <CheckmarkIcon size="sm" className="bg-white" />
                         Verified
                       </Badge>
@@ -356,7 +356,7 @@ const PremiumPage = ({ onNavigate }: PremiumPageProps) => {
                   onClick={() => setBillingCycle('monthly')}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     billingCycle === 'monthly' 
-                      ? 'bg-blue-600 text-white shadow-sm' 
+                      ? 'bg-primary text-white shadow-sm' 
                       : 'text-gray-600 hover:text-gray-800'
                   }`}
                   data-testid="billing-monthly"
@@ -367,7 +367,7 @@ const PremiumPage = ({ onNavigate }: PremiumPageProps) => {
                   onClick={() => setBillingCycle('yearly')}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     billingCycle === 'yearly' 
-                      ? 'bg-blue-600 text-white shadow-sm' 
+                      ? 'bg-primary text-white shadow-sm' 
                       : 'text-gray-600 hover:text-gray-800'
                   }`}
                   data-testid="billing-yearly"
@@ -401,7 +401,7 @@ const PremiumPage = ({ onNavigate }: PremiumPageProps) => {
                 >
                   {isCurrentPlan && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <Badge className="bg-blue-600 text-white flex items-center gap-1">
+                      <Badge className="bg-primary text-white flex items-center gap-1">
                         <span>Current Plan</span>
                         {hasVerifiedBadge && (
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" className="h-4 w-4">

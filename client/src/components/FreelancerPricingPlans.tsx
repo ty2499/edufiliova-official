@@ -53,7 +53,7 @@ export default function FreelancerPricingPlans({ onPlanSelect }: FreelancerPrici
 
   const getCardStyles = (badgeColor: string, popular: boolean) => {
     if (popular) {
-      return 'border-2 shadow-xl scale-105 relative' + ' ' + 'shadow-[#2d5ddd]/20' + ' ' + 'border-[#2d5ddd]';
+      return 'border-2 shadow-xl scale-105 relative' + ' ' + 'shadow-[#0C332C]/20' + ' ' + 'border-[#0C332C]';
     }
     switch (badgeColor) {
       case 'blue':
@@ -122,10 +122,10 @@ export default function FreelancerPricingPlans({ onPlanSelect }: FreelancerPrici
       {/* Current Plan Status Banner */}
       {hasActivePlan && planExpiry && (
         <div className="mb-8 max-w-3xl mx-auto">
-          <Card className="border-[#2d5ddd] bg-[#2d5ddd]/5 dark:bg-[#2d5ddd]/10" data-testid="current-plan-banner">
+          <Card className="border-[#0C332C] bg-[#0C332C]/5 dark:bg-[#0C332C]/10" data-testid="current-plan-banner">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <Badge className="bg-[#2d5ddd] text-white px-3 py-1 text-sm font-semibold whitespace-nowrap">
+                <Badge className="bg-[#0C332C] text-white px-3 py-1 text-sm font-semibold whitespace-nowrap">
                   Active Plan: {plans.find(p => p.planId === currentPlanId)?.name || currentPlanId}
                 </Badge>
                 <p className="text-sm text-gray-700 dark:text-gray-300">
@@ -186,14 +186,14 @@ export default function FreelancerPricingPlans({ onPlanSelect }: FreelancerPrici
               key={plan.id}
               className={`transition-all duration-300 ${
                 isCurrentPlan 
-                  ? 'border-2 border-[#2d5ddd] shadow-lg shadow-[#2d5ddd]/20' 
+                  ? 'border-2 border-[#0C332C] shadow-lg shadow-[#0C332C]/20' 
                   : getCardStyles(plan.badgeColor, plan.popular || false)
               } ${plan.popular ? 'transform' : ''}`}
               data-testid={`card-plan-${plan.planId}`}
             >
               {isCurrentPlan ? (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-[#2d5ddd] text-white px-2.5 py-0.5 text-[10px] font-semibold flex items-center gap-1 shadow-md whitespace-nowrap">
+                  <Badge className="bg-[#0C332C] text-white px-2.5 py-0.5 text-[10px] font-semibold flex items-center gap-1 shadow-md whitespace-nowrap">
                     <BadgeCheck className="h-3 w-3" />
                     Active
                   </Badge>
@@ -239,7 +239,7 @@ export default function FreelancerPricingPlans({ onPlanSelect }: FreelancerPrici
                 <Button
                   className={`w-full py-4 text-sm font-medium ${
                     isCurrentPlan 
-                      ? 'bg-[#2d5ddd] hover:bg-[#2d5ddd]/90' 
+                      ? 'bg-[#0C332C] hover:bg-[#0C332C]/90' 
                       : 'bg-[#151314] hover:bg-[#2a2826]'
                   } text-white`}
                   onClick={() =>

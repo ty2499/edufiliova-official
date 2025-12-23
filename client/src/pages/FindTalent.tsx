@@ -651,7 +651,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
             </div>
             <Button
               onClick={() => refetch()}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-primary hover:bg-primary text-white"
               data-testid="button-retry-freelancers"
             >
               Try Again

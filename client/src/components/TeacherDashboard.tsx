@@ -532,7 +532,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               variant="outline" 
               size="sm" 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="ml-auto text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+              className="ml-auto text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#0C332C'}}
             >
               <AlertCircle className="h-4 w-4 mr-1" />
               {notifications.length} Alert{notifications.length > 1 ? 's' : ''}
@@ -577,7 +577,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   variant="outline" 
                   size="sm" 
                   onClick={handleShowAddForm}
-                  className="text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+                  className="text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#0C332C'}}
                 >
                   <Plus className="h-4 w-4 mr-1" />
                   Add Method
@@ -588,7 +588,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               <div key={account.id} className="border rounded-lg p-4 flex items-center justify-between transition-all duration-200 hover:shadow-md">
                 <div className="flex items-center gap-3">
                   {account.type === 'paypal' ? (
-                    <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                    <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
                       <span className="text-white text-xs font-bold">PP</span>
                     </div>
                   ) : (
@@ -619,11 +619,11 @@ function PaymentMethodsCard({ user }: { user: any }) {
                 </div>
                 <div className="flex items-center gap-2">
                   {!account.isDefault && (
-                    <Button variant="outline" size="sm" onClick={() => handleSetDefault(account.id)} className="text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#1e40af'}}>
+                    <Button variant="outline" size="sm" onClick={() => handleSetDefault(account.id)} className="text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
                       Set Default
                     </Button>
                   )}
-                  <Button variant="outline" size="sm" onClick={() => handleDeleteAccount(account.id)} className="text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#1e40af'}}>
+                  <Button variant="outline" size="sm" onClick={() => handleDeleteAccount(account.id)} className="text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
                     Delete
                   </Button>
                 </div>
@@ -640,7 +640,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
             <p className="text-sm text-muted-foreground mb-4">
               Add a payment method to receive your earnings
             </p>
-            <Button onClick={handleShowAddForm} className="text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}>
+            <Button onClick={handleShowAddForm} className="text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
               <Plus className="h-4 w-4 mr-2" />
               Add Your First Payment Method
             </Button>
@@ -652,7 +652,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Add New Payment Method</h4>
-              <Button variant="outline" size="sm" onClick={handleHideAddForm} className="border-gray-300 text-white hover:opacity-90" style={{backgroundColor: '#1e40af'}}>
+              <Button variant="outline" size="sm" onClick={handleHideAddForm} className="border-gray-300 text-white hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -669,7 +669,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   variant="outline" 
                   size="sm" 
                   onClick={() => window.open(window.location.origin + '?page=payout-policy', '_blank')}
-                  className="text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#1e40af'}}
+                  className="text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#0C332C'}}
                 >
                   View Policy
                 </Button>
@@ -688,7 +688,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                     onClick={() => setSelectedType('paypal')}
                     className="justify-start"
                   >
-                    <div className="w-6 h-6 bg-blue-600 rounded mr-2 flex items-center justify-center">
+                    <div className="w-6 h-6 bg-primary rounded mr-2 flex items-center justify-center">
                       <SiPaypal className="text-white text-sm" />
                     </div>
                     PayPal
@@ -873,7 +873,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               </div>
 
               <div className="flex gap-2 pt-2">
-                <Button type="submit" disabled={submitting} className="flex-1 text-white" style={{backgroundColor: '#1e40af'}}>
+                <Button type="submit" disabled={submitting} className="flex-1 text-white" style={{backgroundColor: '#0C332C'}}>
                   {submitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -1082,7 +1082,7 @@ function PurchasesView({ onNavigate }: { onNavigate?: (page: string) => void }) 
                         </Button>
                       )}
                       {purchase.type === 'course' && (
-                        <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white" onClick={() => {
+                        <Button size="sm" className="bg-primary hover:bg-primary text-white" onClick={() => {
                           const courseId = purchase.originalData.courseId;
                           if (courseId) {
                             navigate(`/course/${courseId}/player`);
@@ -1863,7 +1863,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
   return (
     <div className="min-h-screen bg-background">
       {/* Top Navbar - Mobile */}
-      <nav className="bg-[#2d5ddc] border-b border-white/10 fixed top-0 left-0 right-0 z-40 md:hidden pt-safe">
+      <nav className="bg-[#0C332C] border-b border-white/10 fixed top-0 left-0 right-0 z-40 md:hidden pt-safe">
         <div className="px-4">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
@@ -1886,7 +1886,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
       {/* Left Sidebar - Slide-in on mobile, fixed on desktop - Hidden when viewing portfolio gallery */}
       <div className={`${
         showMobileMenu ? 'translate-x-0' : '-translate-x-full'
-      } ${activeTab === 'portfolio-gallery' ? 'md:-translate-x-full' : 'md:translate-x-0'} fixed left-0 top-0 md:top-0 h-full w-64 border-r border-white/10 z-50 bg-[#2d5ddc] transition-transform duration-300`}>
+      } ${activeTab === 'portfolio-gallery' ? 'md:-translate-x-full' : 'md:translate-x-0'} fixed left-0 top-0 md:top-0 h-full w-64 border-r border-white/10 z-50 bg-[#0C332C] transition-transform duration-300`}>
         <div className="flex flex-col h-full py-4">
           
           {/* Logo - Desktop only */}
@@ -2651,7 +2651,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                           </div>
                         )}
                         
-                        <Button size="sm" variant="outline" className="w-full mt-3 text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#1e40af'}}>
+                        <Button size="sm" variant="outline" className="w-full mt-3 text-white border-gray-300 hover:opacity-90" style={{backgroundColor: '#0C332C'}}>
                           <MessageCircle className="h-3 w-3 mr-2" />
                           Send Message
                         </Button>
@@ -3079,7 +3079,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                       >
                         <span>{dayNumber}</span>
                         {hasAppointments && (
-                          <div className="w-1 h-1 bg-blue-600 rounded-full mt-0.5" data-testid={`appointment-indicator-${startDate.getDate()}`}></div>
+                          <div className="w-1 h-1 bg-primary rounded-full mt-0.5" data-testid={`appointment-indicator-${startDate.getDate()}`}></div>
                         )}
                       </div>
                     );
@@ -3300,7 +3300,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                       >
                         <span>{dayNumber}</span>
                         {hasAppointments && (
-                          <div className="w-1 h-1 bg-blue-600 rounded-full mt-0.5" data-testid={`appointment-indicator-${startDate.getDate()}`}></div>
+                          <div className="w-1 h-1 bg-primary rounded-full mt-0.5" data-testid={`appointment-indicator-${startDate.getDate()}`}></div>
                         )}
                       </div>
                     );

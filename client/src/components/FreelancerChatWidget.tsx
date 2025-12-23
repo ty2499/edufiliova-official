@@ -230,7 +230,7 @@ export function FreelancerChatWidget() {
         style={{ height: '100dvh' }}
       >
         {/* Header */}
-        <div className="bg-[#2d5ddd] text-white p-3 sm:p-4 flex items-center gap-2 sm:gap-3 shadow-md flex-shrink-0">
+        <div className="bg-[#0C332C] text-white p-3 sm:p-4 flex items-center gap-2 sm:gap-3 shadow-md flex-shrink-0">
           <Button
             variant="ghost"
             size="icon"
@@ -261,7 +261,7 @@ export function FreelancerChatWidget() {
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5ddd] mx-auto mb-2"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0C332C] mx-auto mb-2"></div>
                 <p className="text-sm text-gray-500">Loading chat...</p>
               </div>
             </div>
@@ -296,7 +296,7 @@ export function FreelancerChatWidget() {
                         className={cn(
                           "max-w-[75%] sm:max-w-[70%] rounded-2xl px-3 py-2 sm:px-4 sm:py-3",
                           isOwnMessage
-                            ? "bg-[#2d5ddd] text-white rounded-br-sm"
+                            ? "bg-[#0C332C] text-white rounded-br-sm"
                             : "bg-white text-gray-900 rounded-bl-sm shadow-sm"
                         )}
                       >
@@ -328,7 +328,7 @@ export function FreelancerChatWidget() {
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Type a message..."
-              className="flex-1 rounded-full border-gray-300 focus:border-[#2d5ddd] focus:ring-[#2d5ddd] h-10 text-sm"
+              className="flex-1 rounded-full border-gray-300 focus:border-[#0C332C] focus:ring-[#0C332C] h-10 text-sm"
               disabled={isLoading || isSending}
               data-testid="input-message"
             />
@@ -336,7 +336,7 @@ export function FreelancerChatWidget() {
               onClick={handleSendMessage}
               disabled={!newMessage.trim() || isLoading || isSending}
               size="icon"
-              className="rounded-full bg-[#2d5ddd] hover:bg-[#2548c9] text-white h-10 w-10 flex-shrink-0"
+              className="rounded-full bg-[#0C332C] hover:bg-[#2548c9] text-white h-10 w-10 flex-shrink-0"
               data-testid="button-send"
             >
               <Send className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -365,7 +365,7 @@ export function FreelancerChatWidget() {
         )}
       >
         {/* Header */}
-        <div className="bg-[#2d5ddd] text-white p-3 flex items-center gap-3 flex-shrink-0">
+        <div className="bg-[#0C332C] text-white p-3 flex items-center gap-3 flex-shrink-0">
           <Avatar className="h-10 w-10 flex-shrink-0">
             <AvatarImage src={freelancer.avatarUrl} alt={freelancer.name} />
             <AvatarFallback className="bg-white/20 text-white text-sm">
@@ -409,7 +409,7 @@ export function FreelancerChatWidget() {
               {isLoading ? (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2d5ddd] mx-auto mb-2"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0C332C] mx-auto mb-2"></div>
                     <p className="text-sm text-gray-500">Loading chat...</p>
                   </div>
                 </div>
@@ -444,7 +444,7 @@ export function FreelancerChatWidget() {
                             className={cn(
                               "max-w-[75%] rounded-2xl px-3 py-2",
                               isOwnMessage
-                                ? "bg-[#2d5ddd] text-white rounded-br-sm"
+                                ? "bg-[#0C332C] text-white rounded-br-sm"
                                 : "bg-white text-gray-900 rounded-bl-sm shadow-sm"
                             )}
                           >
@@ -476,7 +476,7 @@ export function FreelancerChatWidget() {
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Type a message..."
-                  className="flex-1 rounded-full border-gray-300 focus:border-[#2d5ddd] focus:ring-[#2d5ddd] text-sm h-9"
+                  className="flex-1 rounded-full border-gray-300 focus:border-[#0C332C] focus:ring-[#0C332C] text-sm h-9"
                   disabled={isLoading || isSending}
                   data-testid="input-message"
                 />
@@ -484,7 +484,7 @@ export function FreelancerChatWidget() {
                   onClick={handleSendMessage}
                   disabled={!newMessage.trim() || isLoading || isSending}
                   size="icon"
-                  className="rounded-full bg-[#2d5ddd] hover:bg-[#2548c9] text-white h-9 w-9 flex-shrink-0"
+                  className="rounded-full bg-[#0C332C] hover:bg-[#2548c9] text-white h-9 w-9 flex-shrink-0"
                   data-testid="button-send"
                 >
                   <Send className="h-4 w-4" />

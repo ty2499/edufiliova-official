@@ -147,7 +147,7 @@ export default function MessageBubble({ message, isOwnMessage, onLoad }: Message
           <div className="flex items-center space-x-3 min-w-[200px]">
             <button
               onClick={toggleAudio}
-              className="flex-shrink-0 w-10 h-10 bg-blue-500 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors"
+              className="flex-shrink-0 w-10 h-10 bg-blue-500 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
             >
               {isPlaying ? (
                 <Pause className="w-4 h-4 text-white" />

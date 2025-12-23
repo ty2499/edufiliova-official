@@ -612,7 +612,7 @@ export function CommunityChat() {
           <div className="flex items-center gap-3">
             <Button 
               onClick={() => setShowCreatePost(true)}
-              className="bg-[#2d5ddc] text-[#ffffff]"
+              className="bg-[#0C332C] text-[#ffffff]"
               data-testid="button-create-topic"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -688,7 +688,7 @@ export function CommunityChat() {
                       {searchQuery ? "Try adjusting your search terms" : "Be the first to start a discussion!"}
                     </p>
                     {!searchQuery && (
-                      <Button onClick={() => setShowCreatePost(true)} className="bg-[#2d5ddc] text-[#ffffff]">
+                      <Button onClick={() => setShowCreatePost(true)} className="bg-[#0C332C] text-[#ffffff]">
                         <Plus className="h-4 w-4 mr-2" />
                         Create First Topic
                       </Button>
@@ -847,7 +847,7 @@ export function CommunityChat() {
                     <Button 
                       onClick={() => setShowCreateGroup(true)}
                       size="sm"
-                      className="bg-[#2d5ddc] text-[#ffffff]"
+                      className="bg-[#0C332C] text-[#ffffff]"
                       data-testid="button-new-group"
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -871,7 +871,7 @@ export function CommunityChat() {
                     <p className="text-muted-foreground mb-4">
                       Create a group and wait for admin approval, or join existing approved groups
                     </p>
-                    <Button onClick={() => setShowCreateGroup(true)} className="bg-[#42fa76] hover:bg-[#3de168] text-black">
+                    <Button onClick={() => setShowCreateGroup(true)} className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black">
                       <Plus className="h-4 w-4 mr-2" />
                       Create Group (Pending Approval)
                     </Button>
@@ -963,7 +963,7 @@ export function CommunityChat() {
                                 size="sm" 
                                 onClick={() => joinGroupMutation.mutate(group.id)}
                                 disabled={joinGroupMutation.isPending || group.memberCount >= (group.maxMembers || 100000)}
-                                className="w-full bg-[#42fa76] hover:bg-[#3de168] text-black"
+                                className="w-full bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
                               >
                                 {joinGroupMutation.isPending ? (
                                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
@@ -996,7 +996,7 @@ export function CommunityChat() {
                       </p>
                       <Button 
                         size="lg" 
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                        className="bg-primary hover:bg-primary text-white"
                         onClick={() => setShowPaymentModal(true)}
                         data-testid="button-upgrade-premium"
                       >
@@ -1047,7 +1047,7 @@ export function CommunityChat() {
                                     size="sm" 
                                     onClick={() => sendFriendRequestMutation.mutate(student.userId)}
                                     disabled={sendFriendRequestMutation.isPending}
-                                    className="bg-[#42fa76] hover:bg-[#3de168] text-black"
+                                    className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
                                   >
                                     <UserPlus className="h-4 w-4 mr-1" />
                                     Add Friend
@@ -1091,7 +1091,7 @@ export function CommunityChat() {
                     <MessageSquare className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
                     <p className="text-muted-foreground mb-4">Start sharing your thoughts and knowledge</p>
-                    <Button onClick={() => setShowCreatePost(true)} className="bg-[#42fa76] hover:bg-[#3de168] text-black">
+                    <Button onClick={() => setShowCreatePost(true)} className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black">
                       <Plus className="h-4 w-4 mr-2" />
                       Create Your First Post
                     </Button>
@@ -1209,7 +1209,7 @@ export function CommunityChat() {
               <Button 
                 onClick={handleCreatePost} 
                 disabled={createPostMutation.isPending}
-                className="bg-[#2d5ddc] text-[#ffffff]"
+                className="bg-[#0C332C] text-[#ffffff]"
               >
                 {createPostMutation.isPending ? 'Creating...' : 'Create Topic'}
               </Button>
@@ -1263,7 +1263,7 @@ export function CommunityChat() {
               <Button 
                 onClick={handleUpdatePost} 
                 disabled={editPostMutation.isPending}
-                className="bg-[#42fa76] hover:bg-[#3de168] text-black"
+                className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
                 data-testid="button-update-post"
               >
                 {editPostMutation.isPending ? 'Updating...' : 'Update Topic'}
@@ -1306,7 +1306,7 @@ export function CommunityChat() {
               <Button 
                 onClick={handleCreateGroup} 
                 disabled={createGroupMutation.isPending}
-                className="bg-[#42fa76] hover:bg-[#3de168] text-black"
+                className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
               >
                 {createGroupMutation.isPending ? 'Creating...' : 'Create Group'}
               </Button>
@@ -1400,7 +1400,7 @@ export function CommunityChat() {
                     onClick={() => selectedPost && replyMutation.mutate({ postId: selectedPost.id, content: replyContent })}
                     disabled={!replyContent.trim() || replyMutation.isPending}
                     size="sm"
-                    className="self-end bg-[#42fa76] hover:bg-[#3de168] text-black"
+                    className="self-end bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
                   >
                     {replyMutation.isPending ? (
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
@@ -1489,7 +1489,7 @@ export function CommunityChat() {
                               size="sm"
                               onClick={handleUpdateReply}
                               disabled={editReplyMutation.isPending}
-                              className="h-6 text-xs bg-[#42fa76] hover:bg-[#3de168] text-black"
+                              className="h-6 text-xs bg-[#A0FAB2] hover:bg-[#0C332C] text-black"
                               data-testid={`button-save-reply-${reply.id}`}
                             >
                               {editReplyMutation.isPending ? 'Saving...' : 'Save'}
@@ -1536,7 +1536,7 @@ export function CommunityChat() {
                             // Handle reply to reply functionality
                             console.log('Reply to reply:', reply.id);
                           }}
-                          className="text-sm text-muted-foreground hover:text-[#42fa76] hover:bg-green-50 dark:hover:bg-green-950/20 transition-colors p-1 h-auto rounded-full"
+                          className="text-sm text-muted-foreground hover:text-[#A0FAB2] hover:bg-green-50 dark:hover:bg-green-950/20 transition-colors p-1 h-auto rounded-full"
                         >
                           <MessageCircle className="h-4 w-4 mr-1" />
                           <span className="text-xs">Reply</span>

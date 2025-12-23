@@ -549,7 +549,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Freelancer Not Found</h2>
           <p className="text-gray-600 mb-4">The freelancer profile you're looking for doesn't exist.</p>
-          <Button onClick={handleClose} className="bg-blue-600 hover:bg-blue-700 text-white">
+          <Button onClick={handleClose} className="bg-primary hover:bg-primary text-white">
             Go to Find Talent
           </Button>
         </div>
@@ -663,7 +663,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                     <Button 
                       onClick={handleContactFreelancer}
                       disabled={user?.id === freelancerData.id}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                      className="flex-1 bg-primary hover:bg-primary text-white"
                       data-testid="button-hire-freelancer-mobile"
                     >
                       <MessageCircle className="h-4 w-4 mr-2" />
@@ -1135,7 +1135,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                     <Button 
                       onClick={handleContactFreelancer}
                       disabled={user?.id === freelancerData.id}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-6"
+                      className="bg-primary hover:bg-primary text-white px-6"
                       data-testid="button-hire-desktop"
                     >
                       <MessageCircle className="h-4 w-4 mr-2" />
@@ -1516,7 +1516,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                     </div>
                     <Button 
                       size="sm" 
-                      className="hidden lg:flex bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 text-xs sm:text-sm"
+                      className="hidden lg:flex bg-primary hover:bg-primary text-white px-3 sm:px-4 py-2 text-xs sm:text-sm"
                       data-testid="button-contact-freelancer" 
                       onClick={handleContactFreelancer} 
                       disabled={user?.id === freelancerData?.id}

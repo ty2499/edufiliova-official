@@ -321,7 +321,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
               
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-blue-600 text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 bg-primary text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
                     <CreditCard className="w-4 h-4" />
                   </div>
                   <div className="flex-1">
@@ -442,7 +442,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
                   <Button
                     type="submit"
                     disabled={!stripe || isLoading || stripeLoading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-complete-purchase"
                   >
                     {isLoading ? 'Processing...' : `Pay $${paymentData.amount}`}
@@ -534,7 +534,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
                   <Button
                     onClick={handleSubmit}
                     disabled={walletBalance < paymentData.amount || isLoading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-base font-semibold"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold"
                     data-testid="button-wallet-payment"
                   >
                     {isLoading ? 'Processing...' : `Pay $${paymentData.amount}`}

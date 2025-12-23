@@ -307,7 +307,7 @@ function AdminBlogManagement() {
               resetForm();
               setIsDialogOpen(true);
             }}
-            className="bg-blue-600 hover:bg-blue-700 text-[#ffffff]"
+            className="bg-primary hover:bg-primary text-[#ffffff]"
             data-testid="button-create-blog-post"
           >
             <Plus className="h-4 w-4 mr-2" />

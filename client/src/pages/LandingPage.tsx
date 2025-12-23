@@ -302,8 +302,8 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       gradeRange: "Grades 1-7",
       monthlyPrice: "5.99",
       yearlyPrice: "54.99",
-      bgColor: "bg-[#2d5ddd]",
-      borderColor: "border-[#2d5ddd]",
+      bgColor: "bg-[#0C332C]",
+      borderColor: "border-[#0C332C]",
       textColor: "text-white",
       features: [
         "Ideal for young learners and foundational education",

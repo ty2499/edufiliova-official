@@ -18,7 +18,7 @@ const ChatTermsPage = ({ onNavigate }: ChatTermsPageProps) => {
               <ArrowLeft className="h-5 w-5 text-gray-600" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="bg-[#42fa76] p-2 rounded-lg">
+              <div className="bg-[#A0FAB2] p-2 rounded-lg">
                 <MessageCircle className="h-5 w-5 text-white" />
               </div>
               <h1 className="text-xl font-bold text-gray-900">Chat Terms & Conditions</h1>
@@ -56,15 +56,15 @@ const ChatTermsPage = ({ onNavigate }: ChatTermsPageProps) => {
             </p>
             <ul className="space-y-3 ml-4">
               <li className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-[#42fa76] rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-[#A0FAB2] rounded-full mt-2 flex-shrink-0"></div>
                 <span className="text-gray-600">Only you and the intended recipient can read your messages</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-[#42fa76] rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-[#A0FAB2] rounded-full mt-2 flex-shrink-0"></div>
                 <span className="text-gray-600">Messages are encrypted on your device before being sent</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-[#42fa76] rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-[#A0FAB2] rounded-full mt-2 flex-shrink-0"></div>
                 <span className="text-gray-600">Even EduFiliova cannot access your private conversations</span>
               </li>
             </ul>
@@ -215,19 +215,19 @@ const ChatTermsPage = ({ onNavigate }: ChatTermsPageProps) => {
             </p>
             <ul className="space-y-3">
               <li className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-[#42fa76] rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-[#A0FAB2] rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-sm">1</span>
                 </div>
                 <span className="text-gray-700">Contact Tech Support through the chat system</span>
               </li>
               <li className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-[#42fa76] rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-[#A0FAB2] rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-sm">2</span>
                 </div>
                 <span className="text-gray-700">Use the "Report User" feature in conversations</span>
               </li>
               <li className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-[#42fa76] rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-[#A0FAB2] rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-sm">3</span>
                 </div>
                 <span className="text-gray-700">Email support@edufiliova.com for urgent matters</span>

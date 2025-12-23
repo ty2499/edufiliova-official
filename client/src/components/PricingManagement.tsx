@@ -916,7 +916,7 @@ const PricingManagement: React.FC = () => {
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    className="bg-primary hover:bg-primary text-white"
                     disabled={createPlanMutation.isPending}
                     data-testid="button-submit-create"
                   >
@@ -1683,7 +1683,7 @@ const PricingManagement: React.FC = () => {
                           variant={field.value ? "default" : "secondary"}
                           size="sm"
                           onClick={() => field.onChange(!field.value)}
-                          className={field.value ? "bg-blue-600 hover:bg-blue-700 text-white" : ""}
+                          className={field.value ? "bg-primary hover:bg-primary text-white" : ""}
                         >
                           {field.value ? "Active" : "Inactive"}
                         </Button>
@@ -1708,7 +1708,7 @@ const PricingManagement: React.FC = () => {
                           variant={field.value ? "default" : "secondary"}
                           size="sm"
                           onClick={() => field.onChange(!field.value)}
-                          className={field.value ? "bg-blue-600 hover:bg-blue-700 text-white" : ""}
+                          className={field.value ? "bg-primary hover:bg-primary text-white" : ""}
                         >
                           {field.value ? "Popular" : "Normal"}
                         </Button>
@@ -1750,7 +1750,7 @@ const PricingManagement: React.FC = () => {
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="bg-primary hover:bg-primary text-white"
                   disabled={updatePlanMutation.isPending}
                   data-testid="button-submit-edit"
                 >
@@ -1985,7 +1985,7 @@ const PricingManagement: React.FC = () => {
                           variant={field.value ? "default" : "secondary"}
                           size="sm"
                           onClick={() => field.onChange(!field.value)}
-                          className={field.value ? "bg-blue-600 hover:bg-blue-700 text-white" : ""}
+                          className={field.value ? "bg-primary hover:bg-primary text-white" : ""}
                           data-testid="button-edit-freelancer-active"
                         >
                           {field.value ? "Active" : "Inactive"}
@@ -2011,7 +2011,7 @@ const PricingManagement: React.FC = () => {
                           variant={field.value ? "default" : "secondary"}
                           size="sm"
                           onClick={() => field.onChange(!field.value)}
-                          className={field.value ? "bg-blue-600 hover:bg-blue-700 text-white" : ""}
+                          className={field.value ? "bg-primary hover:bg-primary text-white" : ""}
                           data-testid="button-edit-freelancer-popular"
                         >
                           {field.value ? "Popular" : "Normal"}
@@ -2035,7 +2035,7 @@ const PricingManagement: React.FC = () => {
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="bg-primary hover:bg-primary text-white"
                   disabled={updateFreelancerPlanMutation.isPending}
                   data-testid="button-submit-edit-freelancer"
                 >
