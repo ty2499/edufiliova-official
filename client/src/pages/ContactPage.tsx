@@ -86,8 +86,8 @@ const ContactPage = ({ onNavigate }: ContactPageProps) => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Contact Form with Lime Green Background */}
               <div 
-                className="rounded-3xl p-8 md:p-12 bg-[#a0fab2]"
-                style={{ backgroundColor: '#CCFF00' }}
+                className="rounded-3xl p-8 md:p-12"
+                style={{ backgroundColor: '#a0fab2' }}
               >
                 <h1 className="text-3xl md:text-4xl font-bold mb-4 text-black">
                   Have questions? We're here to help you succeed.
@@ -161,7 +161,7 @@ const ContactPage = ({ onNavigate }: ContactPageProps) => {
                             id={service.id}
                             checked={selectedServices.includes(service.id)}
                             onCheckedChange={() => handleServiceToggle(service.id)}
-                            className="border-2 border-black data-[state=checked]:bg-black data-[state=checked]:border-black data-[state=checked]:text-[#CCFF00] rounded-sm"
+                            className="border-2 border-black data-[state=checked]:bg-black data-[state=checked]:border-black data-[state=checked]:text-[#a0fab2] rounded-sm"
                             data-testid={`checkbox-${service.id}`}
                           />
                           <label
@@ -212,7 +212,7 @@ const ContactPage = ({ onNavigate }: ContactPageProps) => {
 
                   <div className="space-y-6">
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#CCFF00' }}>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#a0fab2' }}>
                         <Mail className="h-6 w-6 text-black" />
                       </div>
                       <div>
@@ -229,7 +229,7 @@ const ContactPage = ({ onNavigate }: ContactPageProps) => {
                     </div>
 
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#CCFF00' }}>
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#a0fab2' }}>
                         <Clock className="h-6 w-6 text-black" />
                       </div>
                       <div>
