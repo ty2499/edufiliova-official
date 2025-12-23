@@ -2072,7 +2072,8 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
           <div className="p-4 border-t border-gray-200 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-primary hover:bg-primary text-white" transition-all duration-300
+              className="w-full text-white"
+              style={{ backgroundColor: '#2f5a4e' }}
               onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
