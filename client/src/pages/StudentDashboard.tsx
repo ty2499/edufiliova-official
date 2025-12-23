@@ -2631,21 +2631,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                 </div>
               </div>
               
-              {/* Right side - Profile (Mobile) and Search Bar */}
+              {/* Right side - Profile (Mobile and Desktop) */}
               <div className="flex items-center space-x-4 flex-1 justify-end">
-                {/* Search Bar - Hidden on mobile */}
-                <div className="relative max-w-md hidden md:block">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                  <Input
-                    type="search"
-                    placeholder="Search lessons, subjects, assignments..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 bg-background/50 border-muted focus:border-primary rounded-2xl"
-                    data-testid="search-input"
-                  />
-                </div>
-                
                 {/* Profile Icon and User Info (Mobile - Right side) */}
                 <div className="flex md:hidden items-center space-x-2">
                   <div className="flex flex-col items-end">
