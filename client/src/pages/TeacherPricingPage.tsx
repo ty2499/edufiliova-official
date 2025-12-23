@@ -25,7 +25,7 @@ const TeacherPricingPage = ({ onNavigate }: TeacherPricingPageProps) => {
             <Button 
               size="lg"
               onClick={() => onNavigate("teacher-application")}
-              className="bg-white text-foreground hover:bg-gray-100 font-semibold rounded-full px-8 py-6 text-lg" transition-all duration-300
+              className="bg-white text-foreground hover:bg-white font-semibold rounded-full px-8 py-6 text-lg"
             >
               Start Your Application →
             </Button>
@@ -33,7 +33,7 @@ const TeacherPricingPage = ({ onNavigate }: TeacherPricingPageProps) => {
               size="lg" 
               variant="outline"
               onClick={() => onNavigate("help")}
-              className="border-2 border-white text-white hover:bg-white/10 font-semibold rounded-full px-8 py-6 text-lg flex items-center gap-2" transition-all duration-300
+              className="border-2 border-white text-white hover:bg-[#a0fab2] hover:text-[#2f5a4e] font-semibold rounded-full px-8 py-6 text-lg flex items-center gap-2"
             >
               <HelpCircle className="w-5 h-5" />
               Have Questions?
