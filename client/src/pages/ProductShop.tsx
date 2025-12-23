@@ -1030,7 +1030,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                     onClick={() => onNavigate('shop-auth')}
                     size="lg"
                     variant="outline"
-                    className="px-6 py-3 font-semibold bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:border-white/30 transition-all duration-300 rounded-lg backdrop-blur-sm w-full sm:w-auto" transition-all duration-300
+                    className="px-6 py-3 font-semibold bg-white/5 border border-white/20 text-white rounded-lg backdrop-blur-sm w-full sm:w-auto"
                     data-testid="button-become-seller"
                   >
                     Become a Seller
