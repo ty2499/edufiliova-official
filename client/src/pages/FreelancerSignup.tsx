@@ -404,8 +404,10 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
             ))}
           </div>
         </div>
+      </div>
 
-        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-10">
+      <div className="w-full bg-white p-8 md:p-10">
+        <div className="max-w-4xl mx-auto">
           {currentSection === 1 && (
             <div>
               <div className="grid md:grid-cols-3 gap-8">
