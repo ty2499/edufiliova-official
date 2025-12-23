@@ -625,7 +625,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                 >
                   <CardHeader className="text-center pb-3 pt-4">
                     <div className="w-12 h-12 bg-[#0C332C] rounded-2xl flex items-center justify-center mx-auto mb-3 scale-in">
-                      <feature.icon className="h-6 w-6 text-white" />
+                      <feature.icon className="h-6 w-6" style={{ color: '#a0fab2' }} />
                     </div>
                     <CardTitle className="text-[14px] font-bold">{feature.title}</CardTitle>
                   </CardHeader>
