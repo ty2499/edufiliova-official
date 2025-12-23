@@ -302,7 +302,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
             <Button
               onClick={() => onNavigate("teacher-signup-basic")}
               size="lg"
-              className="bg-white text-foreground hover:bg-white text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold group w-full sm:w-auto"
+              className="bg-white text-foreground hover:bg-white text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold group w-full sm:w-auto h-13"
               data-testid="button-apply-now"
             >
               Apply Now
@@ -312,7 +312,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
               onClick={() => onNavigate("help")}
               size="lg"
               variant="outline"
-              className="bg-white/10 backdrop-blur-md text-white border-2 border-white/50 hover:bg-white/10 hover:border-white/50 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold w-full sm:w-auto"
+              className="bg-white/10 backdrop-blur-md text-white border-2 border-white/50 hover:bg-white/10 hover:border-white/50 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold w-full sm:w-auto h-13"
               data-testid="button-help-center"
             >
               <BookOpen className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
