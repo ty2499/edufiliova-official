@@ -39,16 +39,18 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
       title: "Browse Courses",
       description: "Explore our complete course catalog",
       page: "course-browse",
-      bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50",
-      iconBg: "bg-blue-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
     {
       icon: <Library className="h-5 w-5" />,
       title: "My Subjects",
       description: "Access your enrolled courses",
       page: "student-dashboard",
-      bgColor: "bg-gradient-to-br from-purple-50 to-pink-50",
-      iconBg: "bg-purple-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
   ];
 
@@ -58,16 +60,18 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
       title: "My Certificates",
       description: "View your earned certificates",
       page: "my-certificates",
-      bgColor: "bg-gradient-to-br from-yellow-50 to-orange-50",
-      iconBg: "bg-yellow-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
     {
       icon: <FileCheck className="h-5 w-5" />,
       title: "Claim Certificate",
       description: "Get your course completion certificate",
       page: "claim-certificate",
-      bgColor: "bg-gradient-to-br from-teal-50 to-cyan-50",
-      iconBg: "bg-teal-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
   ];
 
@@ -77,16 +81,18 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
       title: "Create Course",
       description: "Build and publish your own course",
       page: "course-creator",
-      bgColor: "bg-gradient-to-br from-indigo-50 to-blue-50",
-      iconBg: "bg-indigo-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
     {
       icon: <Layers className="h-5 w-5" />,
       title: "Subject Creator",
       description: "Design custom subjects",
       page: "subject-creator",
-      bgColor: "bg-gradient-to-br from-pink-50 to-rose-50",
-      iconBg: "bg-pink-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
   ];
 
@@ -103,6 +109,7 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
               onClick={() => handleNavigate(item.page)}
               bgColor={item.bgColor}
               iconBg={item.iconBg}
+              iconColor={item.iconColor}
               testId={`megamenu-explore-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
             />
           ))}
@@ -123,6 +130,7 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
               onClick={() => handleNavigate(item.page)}
               bgColor={item.bgColor}
               iconBg={item.iconBg}
+              iconColor={item.iconColor}
               testId={`megamenu-certificate-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
             />
           ))}
@@ -138,6 +146,7 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
               onClick={() => handleNavigate(item.page)}
               bgColor={item.bgColor}
               iconBg={item.iconBg}
+              iconColor={item.iconColor}
               testId={`megamenu-create-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
             />
           ))}

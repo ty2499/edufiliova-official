@@ -14,8 +14,8 @@ export const StudentsMegaMenu = ({ isOpen, onNavigate, onClose }: StudentsMegaMe
   };
 
   const tools = [
-    { icon: <Gauge className="h-5 w-5" />, title: "Student Dashboard", description: "Track your progress and grades", page: "student-dashboard", bg: "bg-blue-50" },
-    { icon: <Video className="h-5 w-5" />, title: "Student Meetings", description: "Join virtual classrooms", page: "meetings", bg: "bg-purple-50" },
+    { icon: <Gauge className="h-5 w-5" />, title: "Student Dashboard", description: "Track your progress and grades", page: "student-dashboard", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
+    { icon: <Video className="h-5 w-5" />, title: "Student Meetings", description: "Join virtual classrooms", page: "meetings", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
   ];
 
   const community = [
@@ -33,7 +33,7 @@ export const StudentsMegaMenu = ({ isOpen, onNavigate, onClose }: StudentsMegaMe
               title={item.title}
               description={item.description}
               onClick={() => handleNavigate(item.page)}
-              iconBg={item.bg}
+              iconBg={item.bgIcon}
               testId={`megamenu-students-tools-${index}`}
             />
           ))}
@@ -47,7 +47,7 @@ export const StudentsMegaMenu = ({ isOpen, onNavigate, onClose }: StudentsMegaMe
               title={item.title}
               description={item.description}
               onClick={() => handleNavigate(item.page)}
-              iconBg={item.bg}
+              iconBg={item.bgIcon}
               testId={`megamenu-students-community-${index}`}
             />
           ))}

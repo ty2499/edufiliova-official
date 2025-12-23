@@ -14,16 +14,16 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
   };
 
   const companyPages = [
-    { icon: <Info className="h-5 w-5" />, title: "About Us", description: "Learn about our platform and mission", page: "about", bg: "bg-blue-50" },
-    { icon: <Mail className="h-5 w-5" />, title: "Contact", description: "Get in touch with our team", page: "contact", bg: "bg-green-50" },
-    { icon: <Megaphone className="h-5 w-5" />, title: "Advertise With Us", description: "Explore advertising opportunities", page: "advertise-with-us", bg: "bg-purple-50" },
+    { icon: <Info className="h-5 w-5" />, title: "About Us", description: "Learn about our platform and mission", page: "about", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
+    { icon: <Mail className="h-5 w-5" />, title: "Contact", description: "Get in touch with our team", page: "contact", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
+    { icon: <Megaphone className="h-5 w-5" />, title: "Advertise With Us", description: "Explore advertising opportunities", page: "advertise-with-us", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
   ];
 
   const supportPages = [
     { icon: <HelpCircle className="h-5 w-5" />, title: "Help & Support", description: "Find answers and get support", page: "help", bg: "bg-primary/10" },
     { icon: <Shield className="h-5 w-5" />, title: "Privacy Policy", description: "How we protect your data", page: "privacy-policy", bg: "bg-primary/10" },
-    { icon: <FileText className="h-5 w-5" />, title: "Terms of Service", description: "Our terms and conditions", page: "terms", bg: "bg-indigo-50" },
-    { icon: <Users className="h-5 w-5" />, title: "Community Guidelines", description: "Community standards and rules", page: "community-guidelines", bg: "bg-pink-50" },
+    { icon: <FileText className="h-5 w-5" />, title: "Terms of Service", description: "Our terms and conditions", page: "terms", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
+    { icon: <Users className="h-5 w-5" />, title: "Community Guidelines", description: "Community standards and rules", page: "community-guidelines", bg: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10", bgIcon: "bg-[#a0fab2]", colorIcon: "#2f5a4e" },
   ];
 
   return (
@@ -37,7 +37,7 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
               title={item.title}
               description={item.description}
               onClick={() => handleNavigate(item.page)}
-              iconBg={item.bg}
+              iconBg={item.bgIcon}
               testId={`megamenu-pages-company-${index}`}
             />
           ))}
@@ -51,7 +51,7 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
               title={item.title}
               description={item.description}
               onClick={() => handleNavigate(item.page)}
-              iconBg={item.bg}
+              iconBg={item.bgIcon}
               testId={`megamenu-pages-support-${index}`}
             />
           ))}

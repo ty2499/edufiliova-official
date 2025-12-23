@@ -23,16 +23,18 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
       title: "Design Marketplace",
       description: "Discover premium design resources",
       page: "product-shop",
-      bgColor: "bg-gradient-to-br from-orange-50 to-red-50",
-      iconBg: "bg-primary/15",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
     {
-      icon: <Tag className="h-5 w-5 text-rose-600" />,
+      icon: <Tag className="h-5 w-5" />,
       title: "Browse Designs",
       description: "Templates, graphics & creative assets",
       page: "product-shop",
-      bgColor: "bg-gradient-to-br from-rose-50 to-pink-50",
-      iconBg: "bg-rose-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
   ];
 
@@ -42,16 +44,18 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
       title: "My Purchases",
       description: "Access your downloaded design assets",
       page: "customer-dashboard",
-      bgColor: "bg-gradient-to-br from-cyan-50 to-blue-50",
-      iconBg: "bg-cyan-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
     {
-      icon: <Gift className="h-5 w-5 text-primary" />,
+      icon: <Gift className="h-5 w-5" />,
       title: "Gift Vouchers",
       description: "Buy gift vouchers for friends",
       page: "buy-voucher",
-      bgColor: "bg-gradient-to-br from-purple-50 to-indigo-50",
-      iconBg: "bg-purple-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
   ];
 
@@ -61,8 +65,9 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
       title: "Add Product",
       description: "List your products for sale",
       page: "product-creation",
-      bgColor: "bg-gradient-to-br from-green-50 to-emerald-50",
-      iconBg: "bg-green-100",
+      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
+      iconBg: "bg-[#a0fab2]",
+      iconColor: "#2f5a4e",
     },
   ];
 
@@ -81,6 +86,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
               onClick={() => handleNavigate(item.page)}
               bgColor={item.bgColor}
               iconBg={item.iconBg}
+              iconColor={item.iconColor}
               testId={`megamenu-shop-explore-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
             />
           ))}
@@ -96,6 +102,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
               onClick={() => handleNavigate(item.page)}
               bgColor={item.bgColor}
               iconBg={item.iconBg}
+              iconColor={item.iconColor}
               testId={`megamenu-shop-account-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
             />
           ))}
@@ -112,6 +119,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
                 onClick={() => handleNavigate(item.page)}
                 bgColor={item.bgColor}
                 iconBg={item.iconBg}
+                iconColor={item.iconColor}
                 testId={`megamenu-shop-sell-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
               />
             ))}

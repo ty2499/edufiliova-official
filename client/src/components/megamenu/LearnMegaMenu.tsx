@@ -40,7 +40,7 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
       title: "Browse Courses",
       description: "Explore our complete course catalog",
       page: "course-browse",
-      iconBg: "bg-blue-50",
+      iconBg: "bg-[#a0fab2]",
     },
   ];
 
@@ -50,7 +50,7 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
       title: "Create an Account",
       description: "Sign up and start learning today",
       page: "student-signup",
-      iconBg: "bg-green-50",
+      iconBg: "bg-[#a0fab2]",
       requiresAuth: false,
       showWhenNotAuth: true,
     },
@@ -62,7 +62,7 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
       title: "My Subjects",
       description: "Access your enrolled courses",
       page: "student-dashboard",
-      iconBg: "bg-purple-50",
+      iconBg: "bg-[#a0fab2]",
       requiresAuth: true,
     },
   ];
@@ -73,7 +73,7 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
       title: "My Certificates",
       description: "View earned certificates",
       page: "my-certificates",
-      iconBg: "bg-yellow-50",
+      iconBg: "bg-[#a0fab2]",
       requiresAuth: true,
     },
     {
@@ -81,7 +81,7 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
       title: "Claim Certificate",
       description: "Claim your earned certificates",
       page: "claim-certificate",
-      iconBg: "bg-teal-50",
+      iconBg: "bg-[#a0fab2]",
       requiresAuth: true,
     },
   ];
