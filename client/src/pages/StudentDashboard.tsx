@@ -825,7 +825,7 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
         <div className="flex space-x-1 p-1 bg-muted rounded-lg w-fit">
           <Button
             variant="ghost"
-            className={activeTab === 'browse' ? 'bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]/90' : ''}
+            className={activeTab === 'browse' ? 'bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]/90 hover:text-white' : 'hover:text-white'}
             onClick={() => setActiveTab('browse')}
             data-testid="tab-browse-courses"
           >
@@ -834,7 +834,7 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
           </Button>
           <Button
             variant="ghost"
-            className={activeTab === 'enrolled' ? 'bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]/90' : ''}
+            className={activeTab === 'enrolled' ? 'bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]/90 hover:text-white' : 'hover:text-white'}
             onClick={() => setActiveTab('enrolled')}
             data-testid="tab-my-courses"
           >
