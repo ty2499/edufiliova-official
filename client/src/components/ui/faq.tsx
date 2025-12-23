@@ -38,6 +38,16 @@ const faqs = [
 export default function FAQ() {
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
+      <style>{`
+        .faq-no-select ::selection {
+          background-color: transparent;
+          color: inherit;
+        }
+        .faq-no-select ::-moz-selection {
+          background-color: transparent;
+          color: inherit;
+        }
+      `}</style>
       <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-4xl">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-[40px] font-bold text-gray-900 dark:text-white mb-4">
@@ -48,7 +58,7 @@ export default function FAQ() {
           </p>
         </div>
 
-        <Accordion type="single" collapsible className="space-y-4" data-testid="accordion-faq">
+        <Accordion type="single" collapsible className="space-y-4 faq-no-select" data-testid="accordion-faq">
           {faqs.map((faq, index) => (
             <AccordionItem 
               key={index} 
