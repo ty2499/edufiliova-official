@@ -930,9 +930,8 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
           {!searchQuery && (
             <div className="flex flex-wrap justify-center gap-3 mb-8">
               <Button
-                variant={selectedCategory === "all" ? "default" : "outline"}
                 onClick={() => setSelectedCategory("all")}
-                className="rounded-full"
+                className={`rounded-full ${selectedCategory === "all" ? 'bg-primary text-white' : 'bg-transparent text-foreground'}`}
                 data-testid="button-category-all"
               >
                 All Categories
@@ -940,12 +939,11 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               {faqCategories.map((category) => (
                 <Button
                   key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
                   onClick={() => setSelectedCategory(category.id)}
-                  className="rounded-full"
+                  className={`rounded-full ${selectedCategory === category.id ? 'bg-primary text-white' : 'bg-transparent text-foreground'}`}
                   data-testid={`button-category-${category.id}`}
                 >
-                  <category.icon className="h-4 w-4 mr-2" style={{ color: '#2f5a4e' }} />
+                  <category.icon className="h-4 w-4 mr-2" style={{ color: selectedCategory === category.id ? '#ffffff' : '#2f5a4e' }} />
                   {category.title}
                 </Button>
               ))}
@@ -1308,7 +1306,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
                 <Button 
                   variant="outline" 
-                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" transition-all duration-300 
+                  className="h-auto py-4 flex-col gap-2"
                   data-testid="button-resource-mobile"
                 >
                   <Download className="h-6 w-6" style={{ color: '#2f5a4e' }} />
@@ -1316,7 +1314,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" transition-all duration-300 
+                  className="h-auto py-4 flex-col gap-2"
                   onClick={() => onNavigate("contact")} 
                   data-testid="button-resource-contact"
                 >
@@ -1325,7 +1323,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="h-auto py-4 flex-col gap-2 hover:bg-primary/5 hover:border-primary" transition-all duration-300 
+                  className="h-auto py-4 flex-col gap-2"
                   onClick={() => onNavigate("about")} 
                   data-testid="button-resource-about"
                 >
@@ -1351,10 +1349,10 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                 <Button 
                   size="lg" 
                   onClick={() => onNavigate("contact")}
-                  className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-[#ffffff]" transition-all duration-300
+                  className="bg-primary text-[#ffffff]"
                   data-testid="button-contact-support"
                 >
-                  <MessageCircle className="h-5 w-5 mr-2" style={{color: "#2f5a4e"}} />
+                  <MessageCircle className="h-5 w-5 mr-2" style={{color: "#ffffff"}} />
                   Contact Support
                 </Button>
                 <Button 
