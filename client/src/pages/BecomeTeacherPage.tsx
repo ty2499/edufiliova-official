@@ -144,17 +144,17 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
               <Button
                 onClick={() => onNavigate("teacher-signup-basic")}
                 size="lg"
-                className="bg-white text-foreground hover:bg-gray-100 text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto" transition-all duration-300
+                className="bg-white text-foreground text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 rounded-full font-bold transition-all duration-300 group w-full sm:w-auto" transition-all duration-300
                 data-testid="button-start-application"
               >
                 Start Your Application
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" transition-all duration-300 />
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 transition-transform" transition-all duration-300 />
               </Button>
               <Button
                 onClick={() => onNavigate("contact")}
                 size="lg"
                 variant="outline"
-                className="bg-white/10 backdrop-blur-md text-white border-2 border-white/30 hover:bg-white/20 text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 rounded-full font-bold transition-all duration-300 w-full sm:w-auto" transition-all duration-300
+                className="bg-white/10 backdrop-blur-md text-white border-2 border-white/30 text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-5 sm:py-6 md:py-7 rounded-full font-bold transition-all duration-300 w-full sm:w-auto" transition-all duration-300
                 data-testid="button-learn-more"
               >
                 <MessageCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -196,11 +196,11 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
           {benefits.map((benefit, index) => (
             <Card 
               key={index}
-              className="border-2 border-gray-200 dark:border-gray-700 hover:border-[#0C332C] dark:hover:border-[#0C332C] transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group" transition-all duration-300
+              className="border-2 border-gray-200 dark:border-gray-700 transition-all duration-300 group" transition-all duration-300
               data-testid={`benefit-card-${index}`}
             >
               <CardContent className="p-4 sm:p-6 md:p-8">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-[#0C332C] flex items-center justify-center mb-4 sm:mb-5 md:mb-6 group-hover:scale-110 transition-transform duration-300" transition-all duration-300>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl bg-[#0C332C] flex items-center justify-center mb-4 sm:mb-5 md:mb-6 transition-transform duration-300" transition-all duration-300>
                   <benefit.icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-white" />
                 </div>
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
@@ -238,7 +238,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
                   <div className="hidden lg:block absolute top-20 left-full w-full h-0.5 bg-[#0C332C] -z-10" />
                 )}
                 
-                <Card className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-[#0C332C] dark:hover:border-[#0C332C] transition-all duration-300 h-full" transition-all duration-300>
+                <Card className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 transition-all duration-300 h-full" transition-all duration-300>
                   <CardContent className="p-4 sm:p-6 md:p-8 text-center">
                     <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#0C332C] flex items-center justify-center mx-auto mb-4 sm:mb-5 md:mb-6 shadow-lg">
                       <span className="text-xl sm:text-2xl md:text-3xl font-bold text-white">{step.number}</span>
@@ -280,7 +280,7 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
                   className="flex items-start gap-2 sm:gap-3 md:gap-4 group"
                   data-testid={`requirement-${index}`}
                 >
-                  <CheckmarkIcon size="md" className="bg-[#0C332C] flex-shrink-0 mt-0.5 sm:mt-1 group-hover:scale-110 transition-transform" transition-all duration-300 />
+                  <CheckmarkIcon size="md" className="bg-[#0C332C] flex-shrink-0 mt-0.5 sm:mt-1 transition-transform" transition-all duration-300 />
                   <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base md:text-lg">
                     {requirement}
                   </p>
@@ -305,17 +305,17 @@ function BecomeTeacherPage({ onNavigate }: BecomeTeacherPageProps) {
             <Button
               onClick={() => onNavigate("teacher-signup-basic")}
               size="lg"
-              className="bg-white text-foreground hover:bg-gray-100 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold hover:scale-105 transition-all duration-300 group w-full sm:w-auto" transition-all duration-300
+              className="bg-white text-foreground text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold transition-all duration-300 group w-full sm:w-auto" transition-all duration-300
               data-testid="button-apply-now"
             >
               Apply Now
-              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" transition-all duration-300 />
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 transition-transform" transition-all duration-300 />
             </Button>
             <Button
               onClick={() => onNavigate("help")}
               size="lg"
               variant="outline"
-              className="bg-white/10 backdrop-blur-md text-white border-2 border-white/50 hover:bg-white/20 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold transition-all duration-300 w-full sm:w-auto" transition-all duration-300
+              className="bg-white/10 backdrop-blur-md text-white border-2 border-white/50 text-sm sm:text-base md:text-lg px-8 sm:px-10 md:px-12 py-5 sm:py-6 md:py-7 rounded-full font-bold transition-all duration-300 w-full sm:w-auto" transition-all duration-300
               data-testid="button-help-center"
             >
               <BookOpen className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
