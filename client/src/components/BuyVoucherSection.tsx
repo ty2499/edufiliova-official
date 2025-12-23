@@ -873,7 +873,7 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
             </div>
 
             {!sendToSelf && (
-              <div className="space-y-4 p-4 rounded-lg border" style={{ backgroundColor: '#a0fab2', borderColor: '#2f5a4e' }}>
+              <div className="space-y-4 p-4 rounded-lg border" style={{ backgroundColor: '#e8fdf2', borderColor: '#2f5a4e' }}>
                 <h3 className="font-medium flex items-center gap-2" style={{ color: '#2f5a4e' }}>
                   <User className="w-4 h-4" style={{ color: '#2f5a4e' }} />
                   Recipient Details
