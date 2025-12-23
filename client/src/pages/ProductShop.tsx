@@ -1013,10 +1013,11 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                     }
                   }}
                   size="lg"
-                  className="px-6 py-3 font-semibold text-white transition-all duration-300 rounded-lg shadow-lg w-full sm:w-auto"
+                  className="px-6 py-3 font-semibold transition-all duration-300 rounded-lg shadow-lg w-full sm:w-auto"
                   style={{
-                    backgroundColor: '#2f5a4e',
-                    boxShadow: '0 10px 25px rgba(47, 90, 78, 0.25)'
+                    backgroundColor: '#a0fab2',
+                    color: '#2f5a4e',
+                    boxShadow: '0 10px 25px rgba(160, 250, 178, 0.25)'
                   }}
                   data-testid="button-explore-products"
                 >
@@ -1426,7 +1427,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                     {/* Cover/Banner */}
                     <div 
                       className="h-32 md:h-40 relative"
-                      style={selectedCreator.coverImageUrl ? { backgroundImage: `url(${selectedCreator.coverImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : (defaultCover && defaultCover !== null) ? { backgroundImage: `url(${defaultCover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: 'linear-gradient(to right, #3b82f6, #a855f7)' }}
+                      style={selectedCreator.coverImageUrl ? { backgroundImage: `url(${selectedCreator.coverImageUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : (defaultCover && defaultCover !== null) ? { backgroundImage: `url(${defaultCover})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: 'linear-gradient(to right, #2f5a4e, #a0fab2)' }}
                     >
                       {/* Close button */}
                       <button
