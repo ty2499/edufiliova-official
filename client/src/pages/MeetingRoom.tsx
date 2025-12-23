@@ -884,7 +884,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
                   >
                     <div className={`max-w-[80%] ${
                       msg.senderId === user.id 
-                        ? 'bg-lime-200 dark:bg-lime-400 text-gray-900' 
+                        ? 'bg-[#a0fab2]/30 dark:bg-[#a0fab2]/40 text-gray-900' 
                         : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
                     } rounded-lg px-4 py-2.5`}>
                       <p className="text-sm font-medium mb-1 opacity-70">

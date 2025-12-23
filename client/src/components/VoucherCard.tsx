@@ -35,9 +35,9 @@ export function VoucherCard({
         <div className="relative h-full flex flex-col justify-between p-6">
           <div className="text-center">
             <div className="flex items-center justify-center mb-3">
-              <Gift className="w-12 h-12 text-lime-300" />
+              <Gift className="w-12 h-12 text-[#a0fab2]" />
             </div>
-            <h2 className="text-2xl font-bold text-lime-300 mb-2">{description}</h2>
+            <h2 className="text-2xl font-bold text-[#a0fab2] mb-2">{description}</h2>
           </div>
 
           <div className="space-y-3 text-sm bg-white/10 backdrop-blur-sm rounded-lg p-4">
@@ -124,7 +124,7 @@ export function VoucherCard({
 
             <div className="bg-gray-900 dark:bg-white rounded-lg px-3 py-2 inline-block">
               <p className="text-xs text-gray-400 dark:text-gray-600 mb-1 font-mono">CODE</p>
-              <p className="text-lg font-bold text-lime-400 dark:text-lime-600 font-mono tracking-wider">
+              <p className="text-lg font-bold text-[#a0fab2] dark:text-[#8ae8a0] font-mono tracking-wider">
                 {code}
               </p>
             </div>

@@ -3625,7 +3625,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                           'from-emerald-500 to-emerald-600',
                           'from-teal-500 to-teal-600',
                           'from-green-500 to-green-600',
-                          'from-lime-500 to-lime-600',
+                          'from-[#a0fab2] to-[#8ae8a0]',
                         ];
                         const colorIndex = (lesson.order || index) % lessonColors.length;
                         const gradientColor = lessonColors[colorIndex];
