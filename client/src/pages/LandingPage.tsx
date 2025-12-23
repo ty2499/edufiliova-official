@@ -379,6 +379,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       title: "Client Reviews",
       description: "Build credibility with client ratings and reviews. Get verification badges for quality work.",
       color: "bg-pink-50 dark:bg-pink-950",
+      bgColor: "#545454",
       iconColor: "text-gray-900"
     },
     {
@@ -736,8 +737,11 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
               {freelancerFeatures.map((feature, index) => (
                 <Card 
                   key={index}
-                  className={`${feature.color} border-0 transition-all duration-300 hover:scale-105 scroll-animate`}
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className={`${!feature.bgColor ? feature.color : ''} border-0 transition-all duration-300 hover:scale-105 scroll-animate`}
+                  style={{ 
+                    animationDelay: `${index * 100}ms`,
+                    ...(feature.bgColor && { backgroundColor: feature.bgColor })
+                  }}
                   data-testid={`card-freelancer-feature-${index}`}
                 >
                   <CardHeader className="pb-4">
