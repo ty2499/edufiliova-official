@@ -741,7 +741,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   data-testid={`card-freelancer-feature-${index}`}
                 >
                   <CardHeader className="pb-4">
-                    <div className={`w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-3`}>
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-3`} style={{ backgroundColor: '#a0fab2' }}>
                       <feature.icon className={`h-6 w-6 ${feature.iconColor}`} />
                     </div>
                     <CardTitle className="text-lg font-bold text-foreground">{feature.title}</CardTitle>
