@@ -493,7 +493,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
     
     return (
       <Card 
-        className="hover:shadow-md transition-shadow cursor-pointer" transition-all duration-300 
+        className="cursor-pointer"
         data-testid={`product-list-${product.id}`}
       >
         <CardContent className="p-3 sm:p-4">
@@ -607,7 +607,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
         <div 
           className={`fixed top-4 right-4 z-[9999] max-w-md animate-in slide-in-from-top-5 fade-in ${
             notification.type === 'success' ? 'bg-green-500' : 'bg-primary'
-          } text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3`}
+          } text-white px-6 py-4 rounded-lg flex items-center gap-3`}
           data-testid="ajax-notification"
         >
           <div className="flex-1 font-medium">{notification.message}</div>
@@ -988,11 +988,10 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                     }
                   }}
                   size="lg"
-                  className="px-6 py-3 font-semibold transition-all duration-300 rounded-lg shadow-lg w-full sm:w-auto"
+                  className="px-6 py-3 font-semibold transition-all duration-300 rounded-lg w-full sm:w-auto"
                   style={{
                     backgroundColor: '#a0fab2',
-                    color: '#2f5a4e',
-                    boxShadow: '0 10px 25px rgba(160, 250, 178, 0.25)'
+                    color: '#2f5a4e'
                   }}
                   data-testid="button-explore-products"
                 >
@@ -1060,7 +1059,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               {/* Left scroll button - Hidden on mobile */}
               <button
                 onClick={() => scrollCreators('left')}
-                className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300
+                className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="h-6 w-6 text-gray-700" />
@@ -1069,7 +1068,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               {/* Right scroll button - Hidden on mobile */}
               <button
                 onClick={() => scrollCreators('right')}
-                className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300
+                className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="h-6 w-6 text-gray-700" />
@@ -1093,7 +1092,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                         }
                       }, 0);
                     }}
-                    className="flex-shrink-0 w-56 sm:w-64 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer border border-gray-100 overflow-hidden" transition-all duration-300
+                    className="flex-shrink-0 w-56 sm:w-64 bg-white rounded-xl transition-all duration-200 cursor-pointer border border-gray-100 overflow-hidden"
                     data-testid={`creator-card-${creator.id}`}
                   >
                     {/* Cover/Banner */}
@@ -1271,7 +1270,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
             {/* Mobile Sidebar Filter Modal/Drawer - Yellow Images Style */}
             {showSidebar && (
               <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50" onClick={() => setShowSidebar(false)}>
-                <div className="fixed left-0 top-0 bottom-0 w-80 bg-white shadow-xl overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+                <div className="fixed left-0 top-0 bottom-0 w-80 bg-white overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                   <div className="p-4">
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="font-bold text-base">Filters</h3>
@@ -1392,7 +1391,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
               {selectedCreatorId && selectedCreatorName && (() => {
                 const selectedCreator = featuredCreators.find((c: any) => c.userId === selectedCreatorId);
                 return selectedCreator ? (
-                  <div className="mb-6 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                  <div className="mb-6 bg-white rounded-xl border border-gray-100 overflow-hidden">
                     {/* Cover/Banner */}
                     <div 
                       className="h-32 md:h-40 relative"
@@ -1404,7 +1403,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
                           setSelectedCreatorId(null);
                           setSelectedCreatorName(null);
                         }}
-                        className="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full p-2 transition-colors shadow-md" transition-all duration-300
+                        className="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full p-2 transition-colors"
                         data-testid="button-close-creator-profile"
                       >
                         <X className="h-5 w-5 text-gray-700" />
