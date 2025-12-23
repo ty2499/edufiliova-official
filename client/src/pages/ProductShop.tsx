@@ -1043,18 +1043,12 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
             <div className="hidden md:grid grid-cols-2 gap-4">
               {/* Stat Card 1 */}
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
-                <div className="w-10 h-10 bg-gradient-to-br from-[#2f5a4e]/20 to-[#2f5a4e]/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(47, 90, 78, 0.15)' }}>
-                  <Package className="h-5 w-5" style={{ color: '#2f5a4e' }} />
-                </div>
                 <h3 className="text-lg font-bold text-white mb-1">Free Products</h3>
                 <p className="text-sm text-slate-400">Available for Everyone</p>
               </div>
               
               {/* Stat Card 2 */}
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
-                <div className="w-10 h-10 bg-gradient-to-br from-[#2f5a4e]/20 to-[#2f5a4e]/10 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: 'rgba(47, 90, 78, 0.15)' }}>
-                  <Users className="h-5 w-5" style={{ color: '#2f5a4e' }} />
-                </div>
                 <h3 className="text-lg font-bold text-white mb-1">Premium Products</h3>
                 <p className="text-sm text-slate-400">Exclusive Collections</p>
               </div>
