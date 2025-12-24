@@ -17,15 +17,18 @@ export function log(message: string, source = "express") {
 export function serveStatic(app: Express) {
   // Try multiple path resolution strategies for different deployment environments
   const possiblePaths = [
-    // Strategy 1: Relative to bundled file location (standard esbuild output)
+    // Strategy 1: Vite dist folder (most common)
+    path.resolve(process.cwd(), "dist"),
+    // Strategy 2: Relative to bundled file location (standard esbuild output)
     path.resolve(import.meta.dirname, "public"),
-    // Strategy 2: Using fileURLToPath for ESM compatibility
+    // Strategy 3: Using fileURLToPath for ESM compatibility
     path.resolve(path.dirname(fileURLToPath(import.meta.url)), "public"),
-    // Strategy 3: Relative to current working directory (some platforms)
+    // Strategy 4: Relative to current working directory (some platforms)
     path.resolve(process.cwd(), "dist/public"),
-    // Strategy 4: Direct dist/public from cwd
+    // Strategy 5: Direct dist/public from cwd
     path.resolve(process.cwd(), "public"),
-    // Strategy 5: App directory for containerized deployments
+    // Strategy 6: App directory for containerized deployments
+    path.resolve("/app/dist"),
     path.resolve("/app/dist/public"),
     path.resolve("/app/public"),
   ];
