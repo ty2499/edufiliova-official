@@ -1107,11 +1107,15 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full">
-        <div className="max-w-4xl mx-auto px-6 pt-6">
-          {renderHeader()}
+        <div className="w-full pt-6">
+          <div className="max-w-4xl mx-auto">
+            {renderHeader()}
+          </div>
           <CardContent className="space-y-6">
-            {renderStepContent()}
-            {renderFooter()}
+            <div className="max-w-4xl mx-auto px-6">
+              {renderStepContent()}
+              {renderFooter()}
+            </div>
           </CardContent>
         </div>
       </Card>
