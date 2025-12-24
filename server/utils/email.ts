@@ -101,20 +101,25 @@ export class EmailService {
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_1766617362502.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
-    // 1:1 replacement of image paths with CIDs in the original HTML
-    html = html.replace('images/c9513ccbbd620ff1cc148b9f159cd39d.png', 'cid:logo');
-    html = html.replace('images/e4d45170731072cbb168266fca3fd470.png', 'cid:banner');
-    html = html.replace('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
-    html = html.replace('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
-    html = html.replace('images/df1ad55cc4e451522007cfa4378c9bbd.png', 'cid:icon_cs');
-    html = html.replace('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replace('images/9eefdace1f726880f93c5a973a54c2f6.png', 'cid:s_fb');
-    html = html.replace('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social'); // Same ID for all social to match repeat pattern if needed, or specific
+    // Remove preloads that might confuse some clients
+    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+
+    // 1:1 replacement of EXACT relative paths from the provided HTML with CIDs
+    html = html.replaceAll('images/c9513ccbbd620ff1cc148b9f159cd39d.png', 'cid:logo');
+    html = html.replaceAll('images/e4d45170731072cbb168266fca3fd470.png', 'cid:banner');
+    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
+    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
+    html = html.replaceAll('images/df1ad55cc4e451522007cfa4378c9bbd.png', 'cid:icon_cs');
+    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
+    html = html.replaceAll('images/9eefdace1f726880f93c5a973a54c2f6.png', 'cid:s_fb');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
 
     // Inject dynamic data
-    html = html.replace('[[Full Name]]', data.fullName);
-    html = html.replace('[[Display Name]]', data.displayName);
+    html = html.replace(/\[\[Full Name\]\]/g, data.fullName);
+    html = html.replace(/\[\[Display Name\]\]/g, data.displayName);
     html = html.replaceAll('{{baseUrl}}', baseUrl);
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
 
     return this.sendEmail({
       to: email,
@@ -122,14 +127,14 @@ export class EmailService {
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'logo.png', path: './public/email-assets/c9513ccbbd620ff1cc148b9f159cd39d_1766617371531.png', cid: 'logo' },
-        { filename: 'banner.png', path: './public/email-assets/e4d45170731072cbb168266fca3fd470_1766617371537.png', cid: 'banner' },
-        { filename: 'idb.png', path: './public/email-assets/bbe5722d1ffd3c84888e18335965d5e5_1766617371529.png', cid: 'icon_db' },
-        { filename: 'ipf.png', path: './public/email-assets/d320764f7298e63f6b035289d4219bd8_1766617371533.png', cid: 'icon_pf' },
-        { filename: 'ics.png', path: './public/email-assets/df1ad55cc4e451522007cfa4378c9bbd_1766617371535.png', cid: 'icon_cs' },
-        { filename: 'fl.png', path: './public/email-assets/4a834058470b14425c9b32ace711ef17_1766617371523.png', cid: 'footer_logo' },
-        { filename: 'fb.png', path: './public/email-assets/9eefdace1f726880f93c5a973a54c2f6_1766617371524.png', cid: 's_fb' },
-        { filename: 'social.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 's_social' }
+        { filename: 'logo.png', path: assetPath('c9513ccbbd620ff1cc148b9f159cd39d_1766617371531.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'banner.png', path: assetPath('e4d45170731072cbb168266fca3fd470_1766617371537.png'), cid: 'banner', contentType: 'image/png' },
+        { filename: 'idb.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766617371529.png'), cid: 'icon_db', contentType: 'image/png' },
+        { filename: 'ipf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766617371533.png'), cid: 'icon_pf', contentType: 'image/png' },
+        { filename: 'ics.png', path: assetPath('df1ad55cc4e451522007cfa4378c9bbd_1766617371535.png'), cid: 'icon_cs', contentType: 'image/png' },
+        { filename: 'fl.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766617371523.png'), cid: 'footer_logo', contentType: 'image/png' },
+        { filename: 'fb.png', path: assetPath('9eefdace1f726880f93c5a973a54c2f6_1766617371524.png'), cid: 's_fb', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766617371526.png'), cid: 's_social', contentType: 'image/png' }
       ]
     });
   }
