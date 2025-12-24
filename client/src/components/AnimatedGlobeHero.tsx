@@ -246,7 +246,7 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform ${
                     activeIndex === index
                       ? 'border border-transparent scale-105 shadow-lg'
-                      : 'bg-white/10 text-white hover:bg-white/20 border border-transparent hover:scale-105 hover:shadow-lg active:scale-95'
+                      : 'bg-white/10 text-white border border-transparent active:scale-95'
                   }`}
                   style={activeIndex === index ? { 
                     backgroundColor: item.color, 
