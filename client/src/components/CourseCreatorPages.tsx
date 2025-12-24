@@ -1111,20 +1111,20 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
   );
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="w-full">
-        <div className="w-full pt-6">
+    <div className="min-h-screen w-screen bg-white flex items-center justify-center">
+      <div className="w-full">
+        <div className="w-full">
           <div className="max-w-4xl mx-auto">
             {renderHeader()}
           </div>
-          <CardContent className="space-y-6">
-            <div className="max-w-4xl mx-auto px-6">
+          <div className="space-y-6">
+            <div className="max-w-4xl mx-auto">
               {renderStepContent()}
               {renderFooter()}
             </div>
-          </CardContent>
+          </div>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }
