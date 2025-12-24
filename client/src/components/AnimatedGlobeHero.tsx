@@ -280,11 +280,11 @@ export default function AnimatedGlobeHero({ onNavigate }: AnimatedGlobeHeroProps
                 <Button
                   size="lg"
                   onClick={() => onNavigate(currentContent.ctaAction)}
-                  className="inline-flex items-center justify-center whitespace-nowrap transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer hover:scale-105 active:scale-95 focus-visible:ring-accent font-semibold px-8 py-6 text-lg rounded-full group text-white bg-[#2f5a4e]"
+                  className="inline-flex items-center justify-center whitespace-nowrap transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer active:scale-95 focus-visible:ring-accent font-semibold px-8 py-6 text-lg rounded-full group text-white bg-[#2f5a4e]"
                   data-testid={`button-cta-${currentContent.type.toLowerCase()}`}
                 >
                   Browse Store
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform text-white" />
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform text-white" />
                 </Button>
               </div>
             </div>
