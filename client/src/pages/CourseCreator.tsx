@@ -1597,7 +1597,8 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
               <Button
                 onClick={handleCreateNewCourse}
                 data-testid="button-create-course"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto text-white"
+                style={{ backgroundColor: '#2f5a4e' }}
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Create Course
