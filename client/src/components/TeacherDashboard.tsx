@@ -2290,7 +2290,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                 setShowMobileMenu(false);
                 setTimeout(async () => {
                   await logout();
-                  onNavigate?.('home');
+                  onNavigate?.('shop-auth');
                 }, 3000);
               }}
               disabled={isLoggingOut}
