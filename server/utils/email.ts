@@ -1303,7 +1303,7 @@ class EmailService {
     });
   }
 
-  // Send Teacher Approval Email
+  // Send Teacher Approval Email - Uses Custom HTML Template
   async sendTeacherApprovalEmail(
     email: string,
     data: {
@@ -1311,65 +1311,8 @@ class EmailService {
       displayName: string;
     }
   ): Promise<boolean> {
-    const footer = await this.getEmailFooter();
-    const loginUrl = `${process.env.REPLIT_DEV_DOMAIN || 'http://localhost:5000'}`;
-    
-    const html = `
-      ${this.getEmailTemplate('blue')}
-      <div class="content">
-        <h2 class="title">Congratulations! Your Application is Approved</h2>
-        <p class="message">
-          Hi ${data.fullName},
-          <br><br>
-          Great news! Your teacher application has been approved. You are now officially part of the EduFiliova teaching community!
-        </p>
-        
-        <div class="alert-success" style="text-align: center; padding: 30px;">
-          <div style="margin-bottom: 10px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-              <circle cx="24" cy="24" r="22" fill="#10B981"/>
-              <path d="M15 24L21 30L33 18" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div style="color: #065f46; font-size: 18px; font-weight: bold; margin-bottom: 8px;">
-            Application Approved
-          </div>
-          <div style="color: #047857; font-size: 14px;">
-            Your documents have been reviewed and approved
-          </div>
-        </div>
-
-        <p class="message">
-          You can now access your teacher dashboard and start creating courses, connecting with students, and sharing your knowledge with our learning community.
-        </p>
-
-        <div class="details-box">
-          <div style="color: #374151; font-size: 14px; font-weight: 600; margin-bottom: 15px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 8px;">
-              <path d="M24 4C24 4 16 12 16 26C16 34 20 40 24 44C28 40 32 34 32 26C32 12 24 4 24 4Z" fill="#0C332C"/>
-              <circle cx="24" cy="22" r="4" fill="white"/>
-              <path d="M16 30C12 32 8 30 8 30C8 30 10 26 14 24" fill="#FCD34D"/>
-              <path d="M32 30C36 32 40 30 40 30C40 30 38 26 34 24" fill="#FCD34D"/>
-              <path d="M20 44L24 38L28 44" fill="#FCD34D"/>
-            </svg>
-            Next Steps:
-          </div>
-          <div style="color: #4b5563; font-size: 14px; line-height: 1.8;">
-            1. Log in to your teacher dashboard<br>
-            2. Complete your teacher profile<br>
-            3. Create your first course or lesson<br>
-            4. Start connecting with students
-          </div>
-        </div>
-
-        <a href="${loginUrl}" class="button">Access Teacher Dashboard</a>
-        
-        <p class="message" style="font-size: 14px; margin-top: 30px;">
-          Need help getting started? Check out our <a href="${loginUrl}/help" style="color: #2d5ddd; text-decoration: none;">Teacher Help Center</a> or contact our support team.
-        </p>
-      </div>
-      ${footer}
-    `;
+    // Custom professional HTML template for teacher approval
+    const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="format-detection" content="telephone=no, date=no, address=no, email=no"><style>body { width: 100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background-color: #f0f1f5; margin: 0; padding: 0; } .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); } .header { background: linear-gradient(135deg, #0C332C 0%, #2f5a4e 100%); padding: 40px 30px; text-align: center; border-bottom: 3px solid #a0fab2; } .logo { max-width: 180px; margin: 0 auto 20px; } .header-text { color: #ffffff; font-size: 28px; font-weight: 700; margin: 0; } .content { padding: 40px 30px; font-family: Arial, sans-serif; color: #333; } .title { color: #0C332C; font-size: 26px; font-weight: 700; margin: 0 0 20px 0; } .message { color: #666; font-size: 15px; line-height: 1.6; margin: 0 0 20px 0; } .success-badge { background: linear-gradient(135deg, #a0fab2 0%, #7be495 100%); padding: 30px; border-radius: 12px; text-align: center; margin: 30px 0; color: #0C332C; } .badge-icon { font-size: 48px; margin-bottom: 10px; } .badge-text { font-size: 20px; font-weight: 700; margin: 10px 0; } .details-box { background: #f9fafb; border-left: 4px solid #a0fab2; padding: 20px; margin: 25px 0; border-radius: 6px; } .detail-item { margin: 15px 0; color: #333; } .detail-label { font-weight: 600; color: #0C332C; display: block; margin-bottom: 5px; } .detail-value { color: #666; font-size: 14px; } .button { display: inline-block; background: linear-gradient(135deg, #a0fab2 0%, #7be495 100%); color: #0C332C !important; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; margin: 25px 0; transition: all 0.3s; border: none; cursor: pointer; } .button:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(160, 250, 178, 0.4); } .footer { background: #0C332C; padding: 30px; color: #ffffff; text-align: center; font-size: 13px; border-top: 3px solid #a0fab2; } .footer-text { margin: 10px 0; line-height: 1.6; } .footer a { color: #a0fab2; text-decoration: none; } .footer a:hover { text-decoration: underline; } .alert { padding: 15px; margin: 20px 0; border-radius: 6px; border-left: 4px solid #a0fab2; background: #f0fdf4; } .alert-text { color: #15803d; font-size: 14px; } </style></head><body><div class="container"><div class="header"><div style="color: #a0fab2; font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;">EduFiliova</div><div class="header-text">Congratulations!</div><p style="color: #a0fab2; margin: 10px 0 0 0; font-size: 15px;">Your Application is Approved</p></div><div class="content"><p class="message">Hi ${data.fullName},</p><p class="message">We're thrilled to inform you that your teacher application has been <strong>approved</strong>! You're now officially part of the EduFiliova teaching community.</p><div class="success-badge"><div class="badge-icon">✓</div><div class="badge-text">Application Approved</div><p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">Welcome to our platform!</p></div><p class="message">You can now access your teacher dashboard to:</p><div class="details-box"><div class="detail-item"><div class="detail-label">📚 Create Courses</div><div class="detail-value">Share your expertise by creating engaging courses and lessons</div></div><div class="detail-item"><div class="detail-label">👥 Connect with Students</div><div class="detail-value">Build relationships and inspire learners from around the world</div></div><div class="detail-item"><div class="detail-label">💼 Manage Your Profile</div><div class="detail-value">Complete your teacher profile and showcase your qualifications</div></div><div class="detail-item"><div class="detail-label">📊 Track Progress</div><div class="detail-value">Monitor student performance and course engagement</div></div></div><center><a href="https://edufiliova.com/teacher/dashboard" class="button">Access Teacher Dashboard</a></center><div class="alert"><div class="alert-text"><strong>What's Next?</strong><br>1. Log in to your account<br>2. Update your teacher profile<br>3. Create your first course<br>4. Start teaching!</div></div><p class="message" style="font-size: 13px; color: #999; margin-top: 30px;">Need help? Contact our support team at <a href="mailto:support@edufiliova.com" style="color: #a0fab2; text-decoration: none;">support@edufiliova.com</a></p></div><div class="footer"><div class="footer-text">© 2024 EduFiliova. All rights reserved.</div><div class="footer-text">Creativity, Learning, and Growth in One Place</div><div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);"><a href="https://edufiliova.com" class="footer">edufiliova.com</a> | <a href="https://edufiliova.com/help" class="footer">Help Center</a> | <a href="https://edufiliova.com/contact" class="footer">Contact Us</a></div></div></div></body></html>`;
 
     return this.sendEmail({
       to: email,
