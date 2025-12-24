@@ -1579,15 +1579,6 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onNavigate(getDashboardRoute())}
-                data-testid="button-back-to-dashboard"
-                className="flex-shrink-0"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
               <div>
                 <h1 className="text-2xl sm:text-3xl font-bold">Course Management</h1>
                 <p className="text-muted-foreground mt-1 sm:mt-2 text-sm sm:text-base">Create and manage your online courses</p>
