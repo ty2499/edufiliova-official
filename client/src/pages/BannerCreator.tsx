@@ -551,8 +551,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
           <div className="lg:col-span-8">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
               {/* Form Content */}
-              <div className="p-8">
-                <Form {...form}>
+              <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     {/* Campaign Details Section */}
                     <div className="space-y-6">
@@ -1030,8 +1029,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                       </Button>
                     </div>
                   </form>
-                </Form>
-              </div>
+              </Form>
             </div>
           </div>
 
