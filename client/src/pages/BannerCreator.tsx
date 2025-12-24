@@ -545,13 +545,13 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
     <>
       {isLandingPage && <Header onNavigate={onNavigate} currentPage="banner-creator" />}
       <div className={`bg-white min-h-screen ${isLandingPage ? 'pt-6' : ''}`}>
-        <div className="grid lg:grid-cols-12 gap-0">
+        <div className="grid lg:grid-cols-12 gap-6 px-4 md:px-6 lg:px-8">
           {/* Main Form - Premium Design */}
           <div className="lg:col-span-8">
             <div className="bg-white shadow-sm border border-gray-200/50 overflow-hidden">
               {/* Form Content */}
               <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-0">
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-0 p-8">
                     {/* Campaign Details Section */}
                     <div className="space-y-6">
                       <div className="flex items-start gap-3 pb-4 border-b">
