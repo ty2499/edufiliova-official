@@ -3059,7 +3059,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                         stopRecording();
                       }
                     }}
-                    className="p-2 flex-shrink-0 text-[#ffffff] bg-white rounded-full"
+                    className="p-1 sm:p-2 flex-shrink-0 text-[#ffffff] bg-white rounded-full"
                     data-testid="voice-button"
                   >
                     <Mic className="h-5 w-5" style={{ color: '#000000' }} />
