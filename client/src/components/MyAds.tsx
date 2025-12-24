@@ -164,7 +164,6 @@ export default function MyAds({ userRole = 'customer' }: MyAdsProps) {
         </CardHeader>
         <CardContent>
           <div className="text-center py-12">
-            <Target className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 mb-2">No campaigns yet</h3>
             <p className="text-gray-600 mb-6">Create your first banner ad campaign to reach your target audience</p>
           </div>
