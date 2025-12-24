@@ -76,12 +76,25 @@ export class EmailService {
   }
 
   async sendEmail(options: EmailOptions): Promise<boolean> {
-    if (this.transporters.size === 0) return false;
+    if (this.transporters.size === 0) {
+      console.log('📧 No transporters initialized, re-initializing...');
+      await this.initializeFromDatabase();
+    }
+    if (this.transporters.size === 0) {
+      console.error('📧 Critical: No email transporters available after re-initialization');
+      return false;
+    }
     try {
       const from = options.from || `"EduFiliova" <orders@edufiliova.com>`;
       const emailMatch = from.match(/<(.+?)>/);
       const senderEmail = emailMatch ? emailMatch[1] : from;
       let transporter = this.transporters.get(senderEmail) || this.transporters.get('orders@edufiliova.com');
+      
+      if (!transporter) {
+        console.log(`📧 Transporter for ${senderEmail} not found, using first available`);
+        transporter = Array.from(this.transporters.values())[0];
+      }
+      
       if (!transporter) return false;
       const baseUrl = this.getBaseUrl();
       const mailOptions: any = {
@@ -101,9 +114,12 @@ export class EmailService {
           contentType: att.contentType || 'application/pdf',
         }));
       }
+      console.log(`📧 Sending email to ${options.to} from ${from}...`);
       await transporter.sendMail(mailOptions);
+      console.log(`✅ Email sent successfully to ${options.to}`);
       return true;
     } catch (error) {
+      console.error('❌ Error in sendEmail:', error);
       return false;
     }
   }
