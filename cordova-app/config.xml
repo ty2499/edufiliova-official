@@ -36,17 +36,9 @@
         <!-- Custom splash screen with bounce circles -->
         <preference name="ShowSplashScreenOnLoad" value="false" />
         
-        <!-- Custom splash notification metadata -->
+        <!-- Firebase notification metadata -->
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
             <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="edufiliova_channel" />
-            
-            <!-- SplashActivity as LAUNCHER -->
-            <activity android:name="com.edufiliova.app.SplashActivity" android:exported="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="portrait">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            </activity>
         </config-file>
     </platform>
     
