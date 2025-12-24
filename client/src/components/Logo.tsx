@@ -112,10 +112,10 @@ const Logo = ({ size = "md", variant = "default", type = "home", logoSize = "squ
         src={customLogo} 
         alt="Custom Logo" 
         className="object-contain transition-all duration-300"
-        style={{ height: currentSize.container.includes('w-8') ? '16px' : 
-                         currentSize.container.includes('w-10') ? '20px' :
-                         currentSize.container.includes('w-12') ? '24px' :
-                         currentSize.container.includes('w-16') ? '32px' : '48px' }}
+        style={{ height: currentSize.container.includes('w-8') ? '32px' : 
+                         currentSize.container.includes('w-10') ? '40px' :
+                         currentSize.container.includes('w-12') ? '48px' :
+                         currentSize.container.includes('w-16') ? '64px' : '96px' }}
         data-testid="custom-logo-image"
       />
     </div>
