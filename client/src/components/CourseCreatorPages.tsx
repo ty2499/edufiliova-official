@@ -535,8 +535,8 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
       <div className="flex justify-center space-x-4 pt-4">
         <div className={`flex items-center ${currentStep >= 1 ? 'text-foreground' : 'text-muted-foreground'}`}>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
-            currentStep >= 1 ? 'border-primary bg-primary text-white' : 'border-muted-foreground'
-          }`}>
+            currentStep >= 1 ? 'border-[#0C332C] text-white' : 'border-muted-foreground'
+          }`} style={currentStep >= 1 ? { backgroundColor: '#0C332C' } : {}}>
             {currentStep > 1 ? <CheckCircle2 className="h-4 w-4" /> : '1'}
           </div>
           <span className="ml-2 text-sm font-medium hidden md:inline">Course Info</span>
@@ -544,8 +544,8 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
         
         <div className={`flex items-center ${currentStep >= 2 ? 'text-foreground' : 'text-muted-foreground'}`}>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
-            currentStep >= 2 ? 'border-primary bg-primary text-white' : 'border-muted-foreground'
-          }`}>
+            currentStep >= 2 ? 'border-[#0C332C] text-white' : 'border-muted-foreground'
+          }`} style={currentStep >= 2 ? { backgroundColor: '#0C332C' } : {}}>
             {currentStep > 2 ? <CheckCircle2 className="h-4 w-4" /> : '2'}
           </div>
           <span className="ml-2 text-sm font-medium hidden md:inline">Course Content</span>
@@ -553,8 +553,8 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
         
         <div className={`flex items-center ${currentStep >= 3 ? 'text-foreground' : 'text-muted-foreground'}`}>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
-            currentStep >= 3 ? 'border-primary bg-primary text-white' : 'border-muted-foreground'
-          }`}>
+            currentStep >= 3 ? 'border-[#0C332C] text-white' : 'border-muted-foreground'
+          }`} style={currentStep >= 3 ? { backgroundColor: '#0C332C' } : {}}>
             {currentStep > 3 ? <CheckCircle2 className="h-4 w-4" /> : '3'}
           </div>
           <span className="ml-2 text-sm font-medium hidden md:inline">Review & Publish</span>
