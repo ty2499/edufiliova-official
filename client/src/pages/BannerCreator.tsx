@@ -551,7 +551,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
             <div className="bg-white shadow-sm border border-gray-200/50 overflow-hidden">
               {/* Form Content */}
               <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-0">
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-0 px-8">
                     {/* Campaign Details Section */}
                     <div className="space-y-6">
                       <div className="flex items-center gap-3 pb-4 border-b">
