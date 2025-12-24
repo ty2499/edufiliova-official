@@ -882,7 +882,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
             onChange={(e) => setCurrentModule({ ...currentModule, title: e.target.value })}
             data-testid="input-module-title"
           />
-          <Button onClick={addModule} data-testid="button-add-module">
+          <Button onClick={addModule} className="text-white !hover:bg-[#2f5a4e] !hover:scale-100" style={{ backgroundColor: '#2f5a4e' }} data-testid="button-add-module">
             <Plus className="h-4 w-4 mr-2" />
             Add Module
           </Button>
@@ -934,6 +934,8 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
                   <Button
                     onClick={() => addLessonToModule(moduleIndex)}
                     size="sm"
+                    className="text-white !hover:bg-[#2f5a4e] !hover:scale-100"
+                    style={{ backgroundColor: '#2f5a4e' }}
                     data-testid={`button-add-lesson-${moduleIndex}`}
                   >
                     <Plus className="h-3 w-3 mr-1" />
@@ -984,6 +986,8 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
                       <Button
                         onClick={() => addQuizToLesson(moduleIndex, lessonIndex)}
                         size="sm"
+                        className="text-white !hover:bg-[#2f5a4e] !hover:scale-100"
+                        style={{ backgroundColor: '#2f5a4e' }}
                         data-testid={`button-add-quiz-${moduleIndex}-${lessonIndex}`}
                       >
                         <Plus className="h-3 w-3 mr-1" />
