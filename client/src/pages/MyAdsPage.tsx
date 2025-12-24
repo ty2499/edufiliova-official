@@ -15,7 +15,7 @@ export default function MyAdsPage({ onNavigate, userRole = 'customer' }: MyAdsPa
   if (showCreator) {
     return (
       <div>
-        <BannerCreator onNavigate={onNavigate} />
+        <BannerCreator />
       </div>
     );
   }
