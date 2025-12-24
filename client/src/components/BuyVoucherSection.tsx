@@ -772,29 +772,6 @@ function VoucherPurchaseFormInner({ onBack, onSuccess, stripe = null, elements =
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
-        {onBack && step === 'details' && (
-          <Button
-            variant="ghost"
-            onClick={onBack}
-            className="mb-4"
-            data-testid="button-back-from-voucher"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-        )}
-        {step === 'payment' && (
-          <Button
-            variant="ghost"
-            onClick={() => setStep('details')}
-            className="mb-4"
-            data-testid="button-back-to-details"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Details
-          </Button>
-        )}
-
         <div className="flex items-center gap-3 mb-2">
           <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#a0fab2' }}>
             <Gift className="w-6 h-6" style={{ color: '#2f5a4e' }} />
