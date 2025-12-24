@@ -684,21 +684,15 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="certificate">
-              <div className="flex items-center gap-2">
-                <Award className="h-4 w-4 text-blue-600" />
-                <div>
-                  <div className="font-medium">Certificate of Completion</div>
-                  <div className="text-xs text-muted-foreground">Standard course completion certificate</div>
-                </div>
+              <div>
+                <div className="font-medium">Certificate of Completion</div>
+                <div className="text-xs text-muted-foreground">Standard course completion certificate</div>
               </div>
             </SelectItem>
             <SelectItem value="diploma">
-              <div className="flex items-center gap-2">
-                <GraduationCap className="h-4 w-4 text-primary" />
-                <div>
-                  <div className="font-medium">Diploma</div>
-                  <div className="text-xs text-muted-foreground">Comprehensive program diploma (recommended for full courses)</div>
-                </div>
+              <div>
+                <div className="font-medium">Diploma</div>
+                <div className="text-xs text-muted-foreground">Comprehensive program diploma (recommended for full courses)</div>
               </div>
             </SelectItem>
           </SelectContent>
@@ -711,13 +705,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
               ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800' 
               : 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'
           }`}>
-            <div className="flex items-start gap-3">
-              {courseForm.certificationType === 'diploma' ? (
-                <GraduationCap className="h-5 w-5 text-primary mt-0.5" />
-              ) : (
-                <Award className="h-5 w-5 text-blue-600 mt-0.5" />
-              )}
-              <div className="space-y-1">
+            <div className="space-y-1">
                 <p className={`text-sm font-medium ${
                   courseForm.certificationType === 'diploma' 
                     ? 'text-purple-800 dark:text-purple-200' 
@@ -734,7 +722,6 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
                     ? 'Students will receive a professional diploma upon successful completion of all course requirements and assessments.' 
                     : 'Students will receive a certificate of completion after finishing the course.'}
                 </p>
-              </div>
             </div>
           </div>
         )}
