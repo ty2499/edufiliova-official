@@ -176,7 +176,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
     setIsLoggingOut(true);
     setTimeout(async () => {
       await logout();
-      onNavigate?.('auth');
+      onNavigate?.('shop-auth');
     }, 3000);
   };
 
