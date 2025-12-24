@@ -6,7 +6,9 @@ import { eq } from 'drizzle-orm';
 
 interface EmailAttachment {
   filename: string;
-  content: Buffer;
+  content?: Buffer;
+  path?: string;
+  cid?: string;
   contentType?: string;
 }
 
@@ -106,18 +108,13 @@ export class EmailService {
         to: options.to,
         subject: options.subject,
         html: options.html,
+        attachments: options.attachments || [],
         headers: {
           'X-Mailer': 'EduFiliova Mailer',
           'List-Unsubscribe': `<${baseUrl}/unsubscribe>, <mailto:unsubscribe@edufiliova.com?subject=Unsubscribe>`,
         },
       };
-      if (options.attachments) {
-        mailOptions.attachments = options.attachments.map(att => ({
-          filename: att.filename,
-          content: att.content,
-          contentType: att.contentType || 'application/pdf',
-        }));
-      }
+      
       console.log(`📧 Sending email to ${options.to} from ${from}...`);
       await transporter.sendMail(mailOptions);
       console.log(`✅ Email sent successfully to ${options.to}`);
@@ -130,7 +127,7 @@ export class EmailService {
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="preload" as="image" href="${baseUrl}/email-assets/db561a55b2cf0bc6e877bb934b39b700.png"><link rel="preload" as="image" href="${baseUrl}/email-assets/41506b29d7f0bbde9fcb0d4afb720c70.png"><link rel="preload" as="image" href="${baseUrl}/email-assets/83faf7f361d9ba8dfdc904427b5b6423.png"><link rel="preload" as="image" href="${baseUrl}/email-assets/3d94f798ad2bd582f8c3afe175798088.png"><link rel="preload" as="image" href="${baseUrl}/email-assets/afa2a8b912b8da2c69e49d9de4a30768.png"><link rel="preload" as="image" href="${baseUrl}/email-assets/9f7291948d8486bdd26690d0c32796e0.png"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="format-detection" content="telephone=no, date=no, address=no, email=no"><meta name="x-apple-disable-message-reformatting"><meta name="keywords" content="DAG8LLZe5qE, BAG4G5R9kJI"><!--[if mso]><div>
+    const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="format-detection" content="telephone=no, date=no, address=no, email=no"><meta name="x-apple-disable-message-reformatting"><meta name="keywords" content="DAG8LLZe5qE, BAG4G5R9kJI"><!--[if mso]><div>
                 <noscript>
                   <xml>
                     <o:OfficeDocumentSettings>
@@ -178,12 +175,45 @@ export class EmailService {
                     <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
                       <tbody>
                         <tr>
-                          <td><![endif]--><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:600px;margin:0 auto;background-color:#ffffff"><tbody><tr><td style="padding:10px 0px 0px 0px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:10px 0 10px 0"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#000;font-style:normal;font-weight:normal;font-size:16px;line-height:1.4;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word"><tbody><tr><td style="padding:10px 0 10px 0;text-align:center"><img src="${baseUrl}/email-assets/41506b29d7f0bbde9fcb0d4afb720c70.png" alt="EduFiliova" width="200" style="display:inline-block;max-width:100%;height:auto"></td></tr><tr><td style="padding:10px 0 10px 0;text-align:center;color:#0C332C;font-weight:bold">Learning • Skills • Careers</td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="padding:0px"><img src="${baseUrl}/email-assets/afa2a8b912b8da2c69e49d9de4a30768.png" alt="Welcome" width="600" style="display:block;width:100%;max-width:600px;height:auto"></td></tr><tr><td style="padding:40px 30px;color:#0C332C;font-family:Arial, Helvetica, sans-serif"><h2 style="margin:0 0 20px;font-size:22px">Hi ${data.fullName},</h2><p style="font-size:16px;line-height:1.6;margin-bottom:20px">We're excited to share some great news with you!</p><p style="font-size:16px;line-height:1.6;margin-bottom:20px">After a careful review of your application, qualifications, and submitted documents, we're happy to inform you that your teacher application has been successfully <strong style="color:#0C332C">approved</strong>. You are now officially part of the EduFiliova global teaching community.</p></td></tr><tr><td style="background-color:#061f1a;padding:15px 30px;color:#ffffff;font-family:Arial, Helvetica, sans-serif"><h3 style="margin:0;font-size:18px">What This Means for You</h3></td></tr><tr><td style="padding:20px"><table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color:#a3f7b5;border-radius:8px"><tbody><tr><td style="padding:30px;color:#0C332C;font-family:Arial, Helvetica, sans-serif"><img src="${baseUrl}/email-assets/3d94f798ad2bd582f8c3afe175798088.png" alt="Icon" width="40" style="margin-bottom:20px"><p style="font-weight:bold;margin-bottom:15px">As an approved teacher on EduFiliova, you can now:</p><ul style="font-size:15px;line-height:1.5"><li>Create and publish structured courses and lessons</li><li>Schedule and host live classes or meetings</li><li>Assign quizzes, exercises, and learning materials</li><li>Communicate with students through secure messaging</li><li>Earn income through courses, live sessions, and academic services</li><li>Reach students from multiple countries and education systems</li></ul></td></tr></tbody></table></td></tr><tr><td style="padding:40px 30px;color:#0C332C;font-family:Arial, Helvetica, sans-serif;background-color:#ffffff"><h3 style="font-size:18px;margin-bottom:10px">Set Your Availability (Optional)</h3><p style="font-size:15px;line-height:1.6;margin-bottom:25px">If you plan to host live classes or meetings, set your availability to allow students to book sessions.</p><h3 style="font-size:18px;margin-bottom:10px">Review Teacher Guidelines</h3><p style="font-size:15px;line-height:1.6">Make sure you understand EduFiliova's teaching standards, content policies, and Students Rights.</p></td></tr><tr><td style="background-color:#0C332C;padding:30px;text-align:center"><img src="${baseUrl}/email-assets/9f7291948d8486bdd26690d0c32796e0.png" alt="EduFiliova" width="180"></td></tr><tr><td style="padding:40px 30px;color:#0C332C;font-family:Arial, Helvetica, sans-serif;border-top:1px solid #eee;background-color:#ffffff"><h3 style="font-size:16px;margin:0 0 20px;color:#666">Important Notes</h3><ul style="font-size:14px;color:#333"><li>Your account has been approved for teaching purposes only.</li><li>All content is subject to periodic quality and policy review to ensure a safe learning environment.</li><li>Earnings and payouts are managed through your teacher dashboard and follow our payout policies.</li></ul></td></tr><tr><td style="padding:40px 30px;color:#0C332C;font-family:Arial, Helvetica, sans-serif;background-color:#ffffff"><h3 style="font-size:18px;margin-bottom:15px">Support & Help</h3><p style="font-size:15px;line-height:1.6;margin-bottom:25px">If you need help setting up your profile, creating courses, or understanding how teaching works on <strong style="color:#0C332C">EduFiliova</strong>, we're here for you.</p><p style="font-size:15px;line-height:1.6">We're proud to welcome you as an educator on EduFiliova and look forward to seeing the positive impact you'll make on learners around the world.</p><p style="margin-top:30px;font-weight:bold">Warm regards,</p><p style="font-size:18px;font-weight:bold;color:#0C332C">The EduFiliova Support Team</p></td></tr><tr><td style="background-color:#0C332C;padding:40px 30px;text-align:center;color:#ffffff;font-family:Arial, Helvetica, sans-serif"><h2 style="font-size:24px;margin-bottom:10px">Thank you!</h2><p style="font-size:14px;opacity:0.8;margin-bottom:30px">Feel free to reach out if you have any questions.</p><div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:20px;font-size:12px;opacity:0.7"><p>You can unsubscribe from these emails <a href="${baseUrl}/unsubscribe" style="color:#ffffff;text-decoration:underline">here</a>.</p><p style="margin-top:10px">Visit the Teacher <a href="${baseUrl}/help" style="color:#ffffff;text-decoration:underline">Help Center</a></p><p style="margin-top:10px">Or contact us anytime at support@edufiliova.com</p></div></td></tr></tbody></table><!--[if mso]></td></tr></tbody></table></center><![endif]--></td></tr></tbody></table></body></html>`;
+                          <td><![endif]--><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:600px;margin:0 auto;background-color:#ffffff"><tbody><tr><td style="padding:10px 0px 0px 0px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:10px 0 10px 0"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#000;font-style:normal;font-weight:normal;font-size:16px;line-height:1.4;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word"><tbody><tr><td style="padding:10px 0 10px 0;text-align:center"><img src="cid:logo" alt="EduFiliova" width="200" style="display:inline-block;max-width:100%;height:auto"></td></tr><tr><td style="padding:10px 0 10px 0;text-align:center;color:#0C332C;font-weight:bold">Learning • Skills • Careers</td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="padding:0px"><img src="cid:welcome" alt="Welcome" width="600" style="display:block;width:100%;max-width:600px;height:auto"></td></tr><tr><td style="padding:40px 30px;color:#0C332C;font-family:Arial, Helvetica, sans-serif"><h2 style="margin:0 0 20px;font-size:22px">Hi ${data.fullName},</h2><p style="font-size:16px;line-height:1.6;margin-bottom:20px">We're excited to share some great news with you!</p><p style="font-size:16px;line-height:1.6;margin-bottom:20px">After a careful review of your application, qualifications, and submitted documents, we're happy to inform you that your teacher application has been successfully <strong style="color:#0C332C">approved</strong>. You are now officially part of the EduFiliova global teaching community.</p></td></tr><tr><td style="background-color:#06110f;padding:40px 30px;color:#ffffff;font-family:Arial, Helvetica, sans-serif"><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding-bottom:30px;text-align:center"><h3 style="margin:0;font-size:20px;color:#ffffff">What's Next?</h3></td></tr><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="60" valign="top"><img src="cid:icon1" width="40" height="40" style="display:block"></td><td style="padding-bottom:20px"><strong style="display:block;font-size:16px;margin-bottom:5px">Complete Your Profile</strong><span style="font-size:14px;color:#cccccc">Log in to your dashboard and ensure all your professional details are up to date.</span></td></tr><tr><td width="60" valign="top"><img src="cid:icon2" width="40" height="40" style="display:block"></td><td style="padding-bottom:20px"><strong style="display:block;font-size:16px;margin-bottom:5px">Set Up Your Courses</strong><span style="font-size:14px;color:#cccccc">Start creating engaging content for your students using our AI-assisted tools.</span></td></tr><tr><td width="60" valign="top"><img src="cid:icon3" width="40" height="40" style="display:block"></td><td style="padding-bottom:20px"><strong style="display:block;font-size:16px;margin-bottom:5px">Connect with Students</strong><span style="font-size:14px;color:#cccccc">Use our real-time chat to support and guide your learners.</span></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="padding:40px 30px;text-align:center"><a href="${baseUrl}/login" style="background-color:#0C332C;color:#ffffff;padding:15px 35px;text-decoration:none;border-radius:5px;font-weight:bold;display:inline-block">Go to Dashboard</a></td></tr><tr><td style="background-color:#0C332C;padding:40px 30px;color:#ffffff;text-align:center;font-family:Arial, Helvetica, sans-serif"><img src="cid:footer_logo" alt="EduFiliova" width="150" style="margin-bottom:20px"><p style="font-size:14px;margin-bottom:20px">Empowering education globally through personalized learning experiences.</p><table align="center" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding:0 10px"><a href="#"><img src="${baseUrl}/email-assets/facebook.png" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="${baseUrl}/email-assets/instagram.png" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="${baseUrl}/email-assets/linkedin.png" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="${baseUrl}/email-assets/twitter.png" width="24" height="24"></a></td></tr></tbody></table><p style="font-size:12px;color:#999999;margin-top:30px">© ${new Date().getFullYear()} EduFiliova. All rights reserved.<br>123 Education St, Learning City, Global</p></td></tr></tbody></table><!--[if mso]></td></tr></tbody></table></center><![endif]--></td></tr></tbody></table></body></html>`;
+    
     return this.sendEmail({
       to: email,
       subject: 'Welcome Aboard! Your Teacher Application is Approved - EduFiliova',
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
+      attachments: [
+        {
+          filename: 'logo.png',
+          path: './public/email-assets/41506b29d7f0bbde9fcb0d4afb720c70_1766616088932.png',
+          cid: 'logo'
+        },
+        {
+          filename: 'welcome.png',
+          path: './public/email-assets/afa2a8b912b8da2c69e49d9de4a30768_1766616088936.png',
+          cid: 'welcome'
+        },
+        {
+          filename: 'icon1.png',
+          path: './public/email-assets/db561a55b2cf0bc6e877bb934b39b700_1766616088938.png',
+          cid: 'icon1'
+        },
+        {
+          filename: 'icon2.png',
+          path: './public/email-assets/83faf7f361d9ba8dfdc904427b5b6423_1766616088930.png',
+          cid: 'icon2'
+        },
+        {
+          filename: 'icon3.png',
+          path: './public/email-assets/3d94f798ad2bd582f8c3afe175798088_1766616088922.png',
+          cid: 'icon3'
+        },
+        {
+          filename: 'footer-logo.png',
+          path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766616088927.png',
+          cid: 'footer_logo'
+        }
+      ]
     });
   }
 }
