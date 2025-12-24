@@ -43,9 +43,13 @@ export class EmailService {
   }
 
   private getBaseUrl(): string {
-    return process.env.REPLIT_DEV_DOMAIN 
-      ? `https://${process.env.REPLIT_DEV_DOMAIN}`
-      : 'https://edufiliova.com';
+    if (process.env.REPLIT_DEV_DOMAIN) {
+      return `https://${process.env.REPLIT_DEV_DOMAIN}`;
+    }
+    if (process.env.BASE_URL) {
+      return process.env.BASE_URL;
+    }
+    return 'https://edufiliova.com';
   }
 
   private initialize() {
