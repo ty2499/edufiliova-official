@@ -554,7 +554,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-0">
                     {/* Campaign Details Section */}
                     <div className="space-y-6">
-                      <div className="flex items-center gap-3 pb-4 border-b">
+                      <div className="flex items-start gap-3 pb-4 border-b">
                         <div>
                           <h2 className="text-xl font-semibold text-foreground">Campaign Details</h2>
                           <p className="text-sm text-muted-foreground">Set up your banner advertisement</p>
@@ -913,7 +913,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                       <>
                         <Separator />
                         <div className="space-y-6">
-                          <div className="flex items-center gap-3 pb-4 border-b">
+                          <div className="flex items-start gap-3 pb-4 border-b">
                             <div>
                               <h2 className="text-xl font-semibold text-foreground">Contact Information</h2>
                               <p className="text-sm text-muted-foreground">Required to process your order and send updates</p>
