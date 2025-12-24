@@ -46,7 +46,7 @@ const AppContent = () => {
             <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-800"></div>
             <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 font-medium">Loading...</p>
+          <p className="text-gray-600 dark:text-gray-300 font-medium">Just a moment</p>
         </div>
       </div>
     );
