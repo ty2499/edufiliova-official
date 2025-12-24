@@ -135,6 +135,14 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
     }
   };
   
+  // Redirect logged-in users to their dashboard
+  useEffect(() => {
+    if (!authLoading && user && profile) {
+      const dashboard = getDashboardForRole();
+      onNavigate?.(dashboard, 'slide-left');
+    }
+  }, [user, profile, authLoading, onNavigate]);
+  
   // Only show login controls when auth is fully loaded and user is NOT logged in
   // This prevents showing login UI while auth is still checking the session
   const showLoginControls = !authLoading && !user;
