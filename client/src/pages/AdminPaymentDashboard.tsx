@@ -3477,23 +3477,23 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
           {/* Dashboard Overview */}
           <TabsContent value="dashboard" className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+              <Card className="px-6 py-4">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6 px-0">
                   <CardTitle className="text-sm font-medium">Total Users</CardTitle>
                   <Users className="h-4 w-4 text-gray-900 dark:text-white" />
                 </CardHeader>
-                <CardContent className="p-4">
+                <CardContent className="pt-4 px-0">
                   <div className="text-2xl font-bold">{users.length}</div>
                   <p className="text-xs text-muted-foreground">Active platform users</p>
                 </CardContent>
               </Card>
               
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+              <Card className="px-6 py-4">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6 px-0">
                   <CardTitle className="text-sm font-medium">Messages Today</CardTitle>
                   <MessageCircle className="h-4 w-4 text-gray-900 dark:text-white" />
                 </CardHeader>
-                <CardContent className="p-4">
+                <CardContent className="pt-4 px-0">
                   <div className="text-2xl font-bold">
                     {searchResults.filter((m: Message) => 
                       new Date(m.createdAt).toDateString() === new Date().toDateString()
@@ -3503,23 +3503,23 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 </CardContent>
               </Card>
               
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+              <Card className="px-6 py-4">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6 px-0">
                   <CardTitle className="text-sm font-medium">Moderation Actions</CardTitle>
                   <Flag className="h-4 w-4 text-gray-900 dark:text-white" />
                 </CardHeader>
-                <CardContent className="p-4">
+                <CardContent className="pt-4 px-0">
                   <div className="text-2xl font-bold">{moderationLogs.length}</div>
                   <p className="text-xs text-muted-foreground">Total mod actions</p>
                 </CardContent>
               </Card>
               
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+              <Card className="px-6 py-4">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6 px-0">
                   <CardTitle className="text-sm font-medium">Active Relationships</CardTitle>
                   <UserCheck className="h-4 w-4 text-gray-900 dark:text-white" />
                 </CardHeader>
-                <CardContent className="p-4">
+                <CardContent className="pt-4 px-0">
                   <div className="text-2xl font-bold">{assignments.filter((a: any) => a.isActive).length}</div>
                   <p className="text-xs text-muted-foreground">Teacher-student pairs</p>
                 </CardContent>
@@ -3527,11 +3527,11 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <Card>
-                <CardHeader className="pb-4">
+              <Card className="px-6 py-4">
+                <CardHeader className="pb-6 px-0">
                   <CardTitle>Recent Activity</CardTitle>
                 </CardHeader>
-                <CardContent className="p-4">
+                <CardContent className="pt-4 px-0">
                   <ScrollArea className="h-[300px]">
                     <div className="space-y-3">
                       {moderationLogs.slice(0, 10).map((log: ModerationLog) => (
@@ -3553,11 +3553,11 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="pb-4">
+              <Card className="px-6 py-4">
+                <CardHeader className="pb-6 px-0">
                   <CardTitle>User Distribution</CardTitle>
                 </CardHeader>
-                <CardContent className="p-4">
+                <CardContent className="pt-4 px-0">
                   <div className="space-y-4">
                     {['student', 'teacher', 'admin'].map(role => {
                       const count = users.filter((u: User) => u.role === role).length;
@@ -3582,11 +3582,11 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="pb-4">
+              <Card className="px-6 py-4">
+                <CardHeader className="pb-6 px-0">
                   <CardTitle>Email Management</CardTitle>
                 </CardHeader>
-                <CardContent className="p-4 space-y-3">
+                <CardContent className="pt-4 px-0 space-y-3">
                   <p className="text-sm text-muted-foreground">
                     Manage multiple email accounts and respond to customer inquiries
                   </p>
