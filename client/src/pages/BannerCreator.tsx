@@ -555,9 +555,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                     {/* Campaign Details Section */}
                     <div className="space-y-6">
                       <div className="flex items-center gap-3 pb-4 border-b">
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <ImageIcon className="h-5 w-5 text-foreground" />
-                        </div>
                         <div>
                           <h2 className="text-xl font-semibold text-foreground">Campaign Details</h2>
                           <p className="text-sm text-muted-foreground">Set up your banner advertisement</p>
@@ -587,7 +584,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                         <div className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all ${
                           selectedFile ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-primary/50 hover:bg-gray-50'
                         }`}>
-                          <Upload className={`mx-auto h-12 w-12 mb-4 ${selectedFile ? 'text-foreground' : 'text-gray-400'}`} />
                           <div className="space-y-2">
                             <div className="text-sm">
                               {selectedFile ? (
@@ -623,7 +619,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                           {uploadProgress && (
                             <div className="absolute inset-0 bg-white/90 flex items-center justify-center rounded-xl">
                               <div className="text-center">
-                                <Loader2 className="h-8 w-8 animate-spin text-foreground mx-auto mb-2" />
                                 <p className="text-sm font-medium text-foreground">Uploading...</p>
                               </div>
                             </div>
@@ -706,7 +701,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                                   ? `${form.watch('targetDashboards').length} dashboard${form.watch('targetDashboards').length > 1 ? 's' : ''} selected`
                                   : 'Select dashboards'}
                               </span>
-                              <ChevronDown className="h-4 w-4 opacity-50" />
                             </Button>
                           </PopoverTrigger>
                           <PopoverContent className="w-[400px] p-0" align="start">
@@ -751,10 +745,8 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                                       className="h-3 w-3 md:h-4 md:w-4"
                                     />
                                     <div className="flex items-center gap-2 flex-1">
-                                      <Icon className="h-4 w-4 text-foreground" />
                                       <span className="text-sm font-medium">{dashboard.label}</span>
                                     </div>
-                                    {isSelected && <Check className="h-4 w-4 text-foreground" />}
                                   </div>
                                 );
                               })}
@@ -764,8 +756,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                       </div>
 
                       <div>
-                        <FormLabel className="flex items-center gap-2 mb-3">
-                          <MapPin className="h-4 w-4 text-foreground" />
+                        <FormLabel className="mb-3 block">
                           <span className="text-sm font-semibold">Geographic Targeting {profile?.role === 'admin' ? '' : '(Optional)'}</span>
                         </FormLabel>
                         <FormDescription className="mb-4 text-sm">
@@ -788,8 +779,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                       </div>
 
                       <div>
-                        <FormLabel className="flex items-center gap-2 mb-3">
-                          <BookOpen className="h-4 w-4 text-foreground" />
+                        <FormLabel className="mb-3 block">
                           <span className="text-sm font-semibold">Grade Level Targeting (Optional)</span>
                         </FormLabel>
                         <FormDescription className="mb-4 text-sm">
@@ -806,7 +796,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                                   ? `${selectedGrades.length} grade${selectedGrades.length > 1 ? 's' : ''} selected`
                                   : 'Select grades (optional)'}
                               </span>
-                              <ChevronDown className="h-4 w-4 opacity-50" />
                             </Button>
                           </PopoverTrigger>
                           <PopoverContent className="w-[400px] p-0" align="start">
@@ -847,7 +836,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                                       <div className="text-sm font-medium">{grade.label}</div>
                                       <div className="text-xs text-muted-foreground">{grade.ageRange}</div>
                                     </div>
-                                    {isSelected && <Check className="h-4 w-4 text-foreground" />}
                                   </div>
                                 );
                               })}
@@ -858,8 +846,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
 
                       <div className="space-y-4">
                         <div>
-                          <FormLabel className="flex items-center gap-2 mb-3">
-                            <Shield className="h-4 w-4 text-foreground" />
+                          <FormLabel className="mb-3 block">
                             <span className="text-sm font-semibold">Age Restrictions (Optional)</span>
                           </FormLabel>
                           <FormDescription className="mb-4 text-sm">
@@ -927,9 +914,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                         <Separator />
                         <div className="space-y-6">
                           <div className="flex items-center gap-3 pb-4 border-b">
-                            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                              <Users className="h-5 w-5 text-foreground" />
-                            </div>
                             <div>
                               <h2 className="text-xl font-semibold text-foreground">Contact Information</h2>
                               <p className="text-sm text-muted-foreground">Required to process your order and send updates</p>
@@ -985,7 +969,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                     {formErrors.length > 0 && (
                       <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4">
                         <div className="flex items-start">
-                          <XCircle className="h-5 w-5 text-destructive mr-3 mt-0.5 flex-shrink-0" />
                           <div className="flex-1">
                             <h3 className="text-sm font-semibold text-destructive mb-2">Please fix the following:</h3>
                             <ul className="space-y-1">
@@ -1014,13 +997,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                           console.log('Form values:', form.getValues());
                         }}
                       >
-                        {ajaxOperation === 'uploading' || ajaxOperation === 'adding' ? (
-                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        ) : ajaxOperation === 'success' ? (
-                          <CheckmarkIcon size="md" variant="success" className="mr-2" />
-                        ) : (
-                          <CreditCard className="w-5 h-5 mr-2" />
-                        )}
                         {ajaxOperation === 'uploading' ? 'Creating...' :
                          ajaxOperation === 'adding' ? 'Creating...' :
                          ajaxOperation === 'success' ? 'Created!' :
@@ -1037,12 +1013,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
             <div className="sticky top-24">
               <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
                 <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-6 border-b border-gray-200/50">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
-                      <DollarSign className="h-5 w-5 text-foreground" />
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground">Investment Summary</h3>
-                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-4">Investment Summary</h3>
                   
                   <div className="bg-white rounded-xl p-6 shadow-sm">
                     <div className="text-4xl font-bold text-foreground mb-2">
@@ -1085,11 +1056,9 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                     <h4 className="text-base font-semibold text-foreground mb-3">Pricing Structure</h4>
                     <div className="space-y-3 text-base text-muted-foreground">
                       <div className="flex items-start gap-2.5">
-                        <CheckmarkIcon size="sm" className="bg-primary/20 mt-0.5" />
                         <span>Targeted (1-10 countries): Premium local rates</span>
                       </div>
                       <div className="flex items-start gap-2.5">
-                        <CheckmarkIcon size="sm" className="bg-primary/20 mt-0.5" />
                         <span>Global (11+ countries): Standard worldwide rates</span>
                       </div>
                     </div>
@@ -1101,19 +1070,15 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                     <h4 className="text-base font-semibold text-foreground mb-4">Campaign Process</h4>
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
-                        <CheckmarkIcon size="sm" className="bg-primary/20" />
                         <span className="text-base text-muted-foreground">Submit for professional review</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <CheckmarkIcon size="sm" className="bg-primary/20" />
                         <span className="text-base text-muted-foreground">Approval within 24 business hours</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <CheckmarkIcon size="sm" className="bg-primary/20" />
                         <span className="text-base text-muted-foreground">Secure payment processing</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <CheckmarkIcon size="sm" className="bg-primary/20" />
                         <span className="text-base text-muted-foreground">Campaign activation & tracking</span>
                       </div>
                     </div>
@@ -1130,13 +1095,9 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999] p-4">
           <Card className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl animate-scale-in">
             <CardHeader className="text-center pb-4">
-              {logoData?.logoUrl ? (
+              {logoData?.logoUrl && (
                 <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
                   <img src={logoData.logoUrl} alt="Edufiliova" className="w-full h-full object-contain" />
-                </div>
-              ) : (
-                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <CheckmarkIcon size="2xl" variant="primary" />
                 </div>
               )}
               <CardTitle className="text-2xl font-bold text-gray-900">Campaign Created Successfully!</CardTitle>
@@ -1179,26 +1140,21 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                   {profile?.role === 'admin' ? (
                     <>
                       <li className="flex items-start gap-2">
-                        <CheckmarkIcon size="sm" variant="success" className="mt-0.5 flex-shrink-0" />
                         <span>Your campaign is now live and visible to users</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckmarkIcon size="sm" variant="success" className="mt-0.5 flex-shrink-0" />
                         <span>Track performance in the My Ads section</span>
                       </li>
                     </>
                   ) : (
                     <>
                       <li className="flex items-start gap-2">
-                        <CheckmarkIcon size="sm" variant="primary" className="mt-0.5 flex-shrink-0" />
                         <span>Admin review within 24 business hours</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckmarkIcon size="sm" variant="primary" className="mt-0.5 flex-shrink-0" />
                         <span>Email notification upon approval</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckmarkIcon size="sm" variant="primary" className="mt-0.5 flex-shrink-0" />
                         <span>Track status in the My Ads section</span>
                       </li>
                     </>
@@ -1358,11 +1314,11 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
         <div className="flex justify-end p-4 pb-0">
           <button
             onClick={onCancel}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-xl" transition-all duration-300
             disabled={isProcessing}
             data-testid="button-close-modal"
           >
-            <X className="w-5 h-5" />
+            ✕
           </button>
         </div>
         <CardContent className="p-4 md:p-8 pt-2">
@@ -1373,9 +1329,6 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
               
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-primary text-white rounded flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Target className="w-4 h-4" />
-                  </div>
                   <div className="flex-1">
                     <div className="font-medium text-sm">{paymentData.bannerTitle}</div>
                     <div className="text-xs text-muted-foreground">Banner Advertisement Campaign</div>
@@ -1411,7 +1364,6 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
                     }`}
                     data-testid="button-payment-card"
                   >
-                    <CreditCard className="w-5 h-5 mx-auto" />
                     <span className="text-xs mt-1 block">Card</span>
                   </button>
                   
@@ -1426,7 +1378,6 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
                       }`}
                       data-testid="button-payment-wallet"
                     >
-                      <Wallet className="w-5 h-5 mx-auto" />
                       <span className="text-xs mt-1 block">Wallet</span>
                       <span className="text-xs text-blue-600 font-medium">${walletBalance.toFixed(2)}</span>
                     </button>
@@ -1476,7 +1427,6 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
                   </Button>
 
                   <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                    <Shield className="w-4 h-4 text-green-600" />
                     <span>Secure 256-bit SSL encrypted payment</span>
                   </div>
                 </form>
@@ -1510,7 +1460,6 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
                   </Button>
 
                   <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                    <Shield className="w-4 h-4 text-green-600" />
                     <span>Secure payment from your wallet</span>
                   </div>
                 </div>
