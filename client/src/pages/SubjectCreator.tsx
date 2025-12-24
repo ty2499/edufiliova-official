@@ -504,15 +504,6 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
-          {viewMode === 'list' ? (
-            <Button variant="ghost" size="icon" onClick={() => onNavigate('back')} data-testid="button-back-dashboard">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          ) : (
-            <Button variant="ghost" size="icon" onClick={handleBackToList} data-testid="button-back">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          )}
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
               <GraduationCap className="h-6 w-6 text-foreground" />
