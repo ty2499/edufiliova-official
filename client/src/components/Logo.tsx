@@ -111,7 +111,7 @@ const Logo = ({ size = "md", variant = "default", type = "home", logoSize = "squ
       <img 
         src={customLogo} 
         alt="Custom Logo" 
-        className="object-contain transition-all duration-300"
+        className="object-contain transition-all duration-300 hidden md:inline"
         style={{ height: currentSize.container.includes('w-8') ? '32px' : 
                          currentSize.container.includes('w-10') ? '40px' :
                          currentSize.container.includes('w-12') ? '48px' :
