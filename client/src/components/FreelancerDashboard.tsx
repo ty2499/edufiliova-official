@@ -1580,7 +1580,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
         {/* Header */}
         <header className="bg-white border-b border-gray-200 px-6 py-4">
           <div className="flex items-center justify-between">
-            <Logo size="lg" type="freelancer" />
+            <Logo size="lg" type="freelancer" disableHomeNavigation={true} />
             <div className="flex items-center gap-4">
               <span className="text-sm text-gray-600">Hello, {userProfile?.name || user?.email}</span>
               <Button 
@@ -1725,7 +1725,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                 >
                   {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
-                <Logo size="md" variant="dark" type="freelancer" onClick={() => onNavigate?.('home')} className="cursor-pointer" />
+                <Logo size="md" variant="dark" type="freelancer" disableHomeNavigation={true} />
               </div>
               <div className="flex items-center space-x-4">
                 <FreelancerProfileDialog

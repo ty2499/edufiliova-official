@@ -334,7 +334,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
-              <Logo size="md" type="customer" onClick={() => onNavigate?.('product-shop')} className="cursor-pointer" />
+              <Logo size="md" type="customer" disableHomeNavigation={true} />
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600 px-8 py-3">{profile?.name || user?.email}</span>

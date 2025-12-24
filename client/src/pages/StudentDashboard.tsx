@@ -2184,7 +2184,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               >
                 {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
-              <Logo size="md" variant="white" type="student" />
+              <Logo size="md" variant="white" type="student" disableHomeNavigation={true} />
             </div>
             <div className="flex items-center space-x-2">
               {unreadMessagesCount > 0 && (
@@ -2205,7 +2205,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
           
           {/* Logo */}
           <div className="mb-4 px-4" data-testid="sidebar-logo">
-            <Logo size="md" variant="white" type="student" />
+            <Logo size="md" variant="white" type="student" disableHomeNavigation={true} />
           </div>
           
           {/* Navigation Icons */}

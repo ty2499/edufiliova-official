@@ -104,8 +104,8 @@ const Logo = ({ size = "md", variant = "default", type = "home", logoSize = "squ
 
   return (
     <div 
-      className={`flex items-center space-x-1 cursor-pointer animate-fade-in hover:opacity-80 transition-opacity ${className}`}
-      onClick={handleClick}
+      className={`flex items-center space-x-1 animate-fade-in ${!disableHomeNavigation ? 'cursor-pointer hover:opacity-80' : ''} transition-opacity ${className}`}
+      onClick={!disableHomeNavigation ? handleClick : undefined}
       data-testid="logo-home-link"
     >
       <img 
