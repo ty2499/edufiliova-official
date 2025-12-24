@@ -421,7 +421,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                   </CardContent>
                 </Card>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {filteredTeacherApps.map((app) => (
                     <Card key={app.id} data-testid={`teacher-app-${app.id}`} className="flex flex-col">
                       <CardHeader className="pb-3">
@@ -475,7 +475,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                   </CardContent>
                 </Card>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {filteredFreelancerApps.map((app) => (
                     <Card key={app.id} data-testid={`freelancer-app-${app.id}`} className="flex flex-col">
                       <CardHeader className="pb-3">
