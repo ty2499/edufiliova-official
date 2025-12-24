@@ -644,22 +644,26 @@ export function EnhancedProfileSetup({ onProfileUpdate, showPublicPreview = true
       
       {/* Profile Setup Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="basic" className="flex items-center gap-2">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-2">
+          <TabsTrigger value="basic" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
             <User className="h-4 w-4" />
-            Basic Info
+            <span className="hidden sm:inline">Basic Info</span>
+            <span className="sm:hidden">Basic</span>
           </TabsTrigger>
-          <TabsTrigger value="professional" className="flex items-center gap-2">
+          <TabsTrigger value="professional" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
             <Briefcase className="h-4 w-4" />
-            Professional
+            <span className="hidden sm:inline">Professional</span>
+            <span className="sm:hidden">Pro</span>
           </TabsTrigger>
-          <TabsTrigger value="portfolio" className="flex items-center gap-2">
+          <TabsTrigger value="portfolio" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
             <Award className="h-4 w-4" />
-            Portfolio
+            <span className="hidden sm:inline">Portfolio</span>
+            <span className="sm:hidden">Work</span>
           </TabsTrigger>
-          <TabsTrigger value="contact" className="flex items-center gap-2">
+          <TabsTrigger value="contact" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
             <LinkIcon className="h-4 w-4" />
-            Contact & Social
+            <span className="hidden sm:inline">Contact & Social</span>
+            <span className="sm:hidden">Social</span>
           </TabsTrigger>
         </TabsList>
         
