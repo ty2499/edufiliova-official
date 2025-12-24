@@ -1207,21 +1207,8 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
   if (currentView === 'edit' && selectedProduct) {
     return (
       <div className="space-y-6" data-testid={roleInfo.testId}>
-        {/* Header with Back Button */}
+        {/* Header */}
         <div className="flex items-center gap-4 mb-4">
-          <button 
-            onClick={() => {
-              setCreateError(null);
-              setCreateSuccess(null);
-              setUpdateError(null);
-              setUpdateSuccess(null);
-              setCurrentView('list');
-            }}
-            data-testid="button-back-to-list"
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
-          >
-            <ArrowLeft className="h-6 w-6 text-gray-700" />
-          </button>
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Edit Product</h2>
             <p className="text-gray-600">Update your product details. Changes will be submitted for review.</p>

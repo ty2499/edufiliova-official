@@ -53,7 +53,7 @@ export default function FreelancerPricingPlans({ onPlanSelect }: FreelancerPrici
 
   const getCardStyles = (badgeColor: string, popular: boolean) => {
     if (popular) {
-      return 'border-2 shadow-xl scale-105 relative' + ' ' + 'shadow-[#0C332C]/20' + ' ' + 'border-[#0C332C]';
+      return 'border-2 shadow-xl relative' + ' ' + 'shadow-[#0C332C]/20' + ' ' + 'border-[#0C332C]';
     }
     switch (badgeColor) {
       case 'blue':
@@ -174,7 +174,7 @@ export default function FreelancerPricingPlans({ onPlanSelect }: FreelancerPrici
         </div>
       )}
       {/* Pricing Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {plans.map((plan) => {
           const Icon = getBadgeIcon(plan.badgeColor);
           const displayPrice = getDisplayPrice(plan);

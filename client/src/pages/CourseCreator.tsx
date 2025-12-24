@@ -1589,7 +1589,7 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
                 onClick={handleCreateNewCourse}
                 data-testid="button-create-course"
                 className="w-full sm:w-auto text-white"
-                style={{ backgroundColor: '#2f5a4e' }}
+                style={{ backgroundColor: '#0C332C' }}
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Create Course
@@ -1622,7 +1622,7 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
             <Button 
               onClick={handleCreateNewCourse}
               className="text-white"
-              style={{ backgroundColor: '#2f5a4e' }}
+              style={{ backgroundColor: '#0C332C' }}
             >
               <Plus className="h-4 w-4 mr-2" />
               Create Your First Course
