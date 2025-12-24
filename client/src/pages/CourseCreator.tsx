@@ -1627,7 +1627,11 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
             <BookOpen className="h-16 w-16 mx-auto mb-4 opacity-50 text-muted-foreground" />
             <h3 className="text-xl font-semibold mb-2">No courses yet</h3>
             <p className="text-muted-foreground mb-6">Create your first course to get started</p>
-            <Button onClick={handleCreateNewCourse}>
+            <Button 
+              onClick={handleCreateNewCourse}
+              className="text-white"
+              style={{ backgroundColor: '#2f5a4e' }}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Create Your First Course
             </Button>
