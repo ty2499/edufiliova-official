@@ -641,7 +641,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
               data-testid="input-course-thumbnail-file"
             />
             {thumbnailFile && (
-              <p className="text-xs text-green-600 mt-1">
+              <p className="text-xs text-gray-600 mt-1">
                 Selected: {thumbnailFile.name}
               </p>
             )}
@@ -882,7 +882,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
             onChange={(e) => setCurrentModule({ ...currentModule, title: e.target.value })}
             data-testid="input-module-title"
           />
-          <Button onClick={addModule} className="text-white !hover:bg-[#2f5a4e] !hover:scale-100" style={{ backgroundColor: '#2f5a4e' }} data-testid="button-add-module">
+          <Button onClick={addModule} className="text-white !hover:bg-[#374151] !hover:scale-100" style={{ backgroundColor: '#374151' }} data-testid="button-add-module">
             <Plus className="h-4 w-4 mr-2" />
             Add Module
           </Button>
@@ -934,8 +934,8 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
                   <Button
                     onClick={() => addLessonToModule(moduleIndex)}
                     size="sm"
-                    className="text-white !hover:bg-[#2f5a4e] !hover:scale-100"
-                    style={{ backgroundColor: '#2f5a4e' }}
+                    className="text-white !hover:bg-[#374151] !hover:scale-100"
+                    style={{ backgroundColor: '#374151' }}
                     data-testid={`button-add-lesson-${moduleIndex}`}
                   >
                     <Plus className="h-3 w-3 mr-1" />
@@ -986,8 +986,8 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
                       <Button
                         onClick={() => addQuizToLesson(moduleIndex, lessonIndex)}
                         size="sm"
-                        className="text-white !hover:bg-[#2f5a4e] !hover:scale-100"
-                        style={{ backgroundColor: '#2f5a4e' }}
+                        className="text-white !hover:bg-[#374151] !hover:scale-100"
+                        style={{ backgroundColor: '#374151' }}
                         data-testid={`button-add-quiz-${moduleIndex}-${lessonIndex}`}
                       >
                         <Plus className="h-3 w-3 mr-1" />
@@ -1095,7 +1095,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
         onClick={handleNext}
         disabled={createCourseMutation.isPending || uploadingThumbnail}
         className="text-white"
-        style={{ backgroundColor: '#2f5a4e' }}
+        style={{ backgroundColor: '#374151' }}
         data-testid="button-next"
       >
         {currentStep === 3 ? (
