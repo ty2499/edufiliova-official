@@ -1105,7 +1105,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
   );
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <Card className="w-full">
         <div className="w-full pt-6">
           <div className="max-w-4xl mx-auto">
