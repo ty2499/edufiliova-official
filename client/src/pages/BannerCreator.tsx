@@ -544,7 +544,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
   return (
     <>
       {isLandingPage && <Header onNavigate={onNavigate} currentPage="banner-creator" />}
-      <div className={`bg-white min-h-screen ${isLandingPage ? 'pt-20' : ''}`}>
+      <div className={`bg-white min-h-screen ${isLandingPage ? 'pt-6' : ''}`}>
         <div className="grid lg:grid-cols-12 gap-0">
           {/* Main Form - Premium Design */}
           <div className="lg:col-span-8">
