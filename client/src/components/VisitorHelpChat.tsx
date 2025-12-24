@@ -817,7 +817,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
               data-testid="help-chat-bubble"
               aria-label="Open help chat"
             >
-              <MessageCircle className="h-8 w-8 md:h-14 md:w-14" style={{ color: '#2f5a4e' }} />
+              <MessageCircle className="h-10 w-10 md:h-16 md:w-16" style={{ color: '#ffffff' }} />
               {!isWithinHours && (
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
                   <Clock className="h-2 w-2 text-white" />
