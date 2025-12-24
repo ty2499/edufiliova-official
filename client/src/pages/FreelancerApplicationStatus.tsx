@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { openExternalUrl } from '@/lib/utils';
 import { apiRequest } from '@/lib/queryClient';
+import { getFriendlyErrorMessage, logError } from '@/lib/error-handler';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -25,7 +26,7 @@ export default function FreelancerApplicationStatus() {
 
   const handleResubmit = async () => {
     if (!application?.id) {
-      setResubmitError("Application data not loaded");
+      setResubmitError("Please refresh and try again.");
       return;
     }
     setIsResubmitting(true);
@@ -37,10 +38,14 @@ export default function FreelancerApplicationStatus() {
       if (data.success) {
         refetch();
       } else {
-        setResubmitError(data.error || "Failed to resubmit application");
+        const friendlyError = getFriendlyErrorMessage(data.error);
+        setResubmitError(friendlyError);
+        logError(data.error, 'FreelancerApplicationStatus.handleResubmit');
       }
     } catch (error: any) {
-      setResubmitError(error.message || "An error occurred while resubmitting");
+      const friendlyError = getFriendlyErrorMessage(error);
+      setResubmitError(friendlyError);
+      logError(error, 'FreelancerApplicationStatus.handleResubmit');
     } finally {
       setIsResubmitting(false);
     }
