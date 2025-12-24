@@ -1633,7 +1633,7 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
             {courses?.map((course: Course) => (
               <Card 
                 key={course.id}
-                className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" transition-all duration-300
+                className="overflow-hidden cursor-pointer"
                 data-testid={`course-card-${course.id}`}
               >
                 {/* Course Thumbnail */}
