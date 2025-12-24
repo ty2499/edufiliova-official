@@ -400,15 +400,6 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
             <div className="p-4 border-t border-gray-200 space-y-2 flex-shrink-0">
               <Button
                 size="sm"
-                className="w-full bg-primary hover:bg-primary text-white" transition-all duration-300
-                onClick={() => window.open(window.location.origin, '_blank')}
-                data-testid="button-browse-website"
-              >
-                <Globe className="h-4 w-4 mr-2" />
-                Explore Website
-              </Button>
-              <Button
-                size="sm"
                 className="w-full bg-[#0C332C] hover:bg-[#e64d2e] text-white" transition-all duration-300
                 onClick={handleLogout}
                 disabled={isLoggingOut}

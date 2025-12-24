@@ -2572,15 +2572,6 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
           <div className="p-3 border-t border-white/20 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-[#a0fab2] hover:bg-[#a0fab2]/90 text-black font-medium" transition-all duration-300
-              onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
-              data-testid="nav-explore-website"
-            >
-              <Globe className="h-4 w-4 mr-2" />
-              Explore Website
-            </Button>
-            <Button
-              size="sm"
               className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium" transition-all duration-300
               onClick={() => { 
                 setIsLoggingOut(true);

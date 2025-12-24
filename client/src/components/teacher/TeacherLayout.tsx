@@ -171,18 +171,6 @@ export default function TeacherLayout({
           <div className="p-4 border-t border-white/10 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium" transition-all duration-300
-              onClick={() => { 
-                openExternalUrl('https://edufiliova.com'); 
-                setShowMobileMenu(false); 
-              }}
-              data-testid="nav-explore-website"
-            >
-              <FaGlobe className="h-4 w-4 mr-2" />
-              Explore Website
-            </Button>
-            <Button
-              size="sm"
               className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium" transition-all duration-300
               onClick={async () => {
                 setIsLoggingOut(true);

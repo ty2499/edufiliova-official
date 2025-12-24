@@ -297,16 +297,6 @@ export default function FreelancerApplicationStatus() {
             </div>
           </CardContent>
         </Card>
-
-        <div className="mt-6 text-center">
-          <Button
-            onClick={() => openExternalUrl('https://edufiliova.com')}
-            className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105" transition-all duration-300
-            data-testid="button-explore-website"
-          >
-            Explore Website
-          </Button>
-        </div>
       </div>
     </div>
   );

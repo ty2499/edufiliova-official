@@ -2072,16 +2072,6 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
           <div className="p-4 border-t border-gray-200 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full text-white"
-              style={{ backgroundColor: '#2f5a4e' }}
-              onClick={() => { window.open(window.location.origin, '_blank'); setShowMobileMenu(false); }}
-              data-testid="nav-explore-website"
-            >
-              <FaGlobe className="h-4 w-4 mr-2" />
-              Explore Website
-            </Button>
-            <Button
-              size="sm"
               className="w-full bg-[#151314] hover:bg-[#2a2826] text-white" transition-all duration-300
               onClick={() => {
                 setIsLoggingOut(true);

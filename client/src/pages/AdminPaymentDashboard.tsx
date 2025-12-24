@@ -3185,17 +3185,8 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
             </nav>
           </div>
           
-          {/* Explore Website and Logout Buttons */}
+          {/* Logout Button */}
           <div className="flex-shrink-0 mt-4 space-y-2">
-            <Button
-              variant="outline"
-              className="w-full h-11 rounded-lg transition-colors text-white hover:bg-primary hover:text-white border-white/20 justify-start" transition-all duration-300
-              onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
-              data-testid="nav-explore-website"
-            >
-              <Globe className="w-5 h-5 mr-3" />
-              <span>Explore Website</span>
-            </Button>
             <Button
               size="sm"
               className="w-full bg-[#0C332C] hover:bg-[#e64d2e] text-white" transition-all duration-300

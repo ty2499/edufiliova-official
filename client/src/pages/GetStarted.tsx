@@ -232,21 +232,6 @@ export default function GetStarted({ onComplete }: GetStartedProps) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" transition-all duration-300 />
             </span>
           </Button>
-
-          {isMobileApp && (
-            <Button
-              onClick={() => navigateOrOpenExternal('/')}
-              size="lg"
-              variant="outline"
-              className="bg-white/10 backdrop-blur-sm border-white/30 hover:bg-white/20 text-white font-semibold px-12 py-4 rounded-full text-base hover:scale-105 transition-all duration-300" transition-all duration-300
-              data-testid="button-explore-website"
-            >
-              <span className="flex items-center gap-2">
-                Explore Website
-                <ExternalLink className="w-4 h-4" />
-              </span>
-            </Button>
-          )}
         </motion.div>
 
         <motion.p
