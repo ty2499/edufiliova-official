@@ -189,7 +189,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
     try {
       await logout();
       if (onNavigate) {
-        onNavigate("home");
+        onNavigate("auth");
       }
     } catch (error) {
       console.error("Logout error:", error);
