@@ -539,7 +539,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
           }`}>
             {currentStep > 1 ? <CheckCircle2 className="h-4 w-4" /> : '1'}
           </div>
-          <span className="ml-2 text-sm font-medium">Course Info</span>
+          <span className="ml-2 text-sm font-medium hidden md:inline">Course Info</span>
         </div>
         
         <div className={`flex items-center ${currentStep >= 2 ? 'text-foreground' : 'text-muted-foreground'}`}>
@@ -548,7 +548,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
           }`}>
             {currentStep > 2 ? <CheckCircle2 className="h-4 w-4" /> : '2'}
           </div>
-          <span className="ml-2 text-sm font-medium">Course Content</span>
+          <span className="ml-2 text-sm font-medium hidden md:inline">Course Content</span>
         </div>
         
         <div className={`flex items-center ${currentStep >= 3 ? 'text-foreground' : 'text-muted-foreground'}`}>
@@ -557,7 +557,7 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
           }`}>
             {currentStep > 3 ? <CheckCircle2 className="h-4 w-4" /> : '3'}
           </div>
-          <span className="ml-2 text-sm font-medium">Review & Publish</span>
+          <span className="ml-2 text-sm font-medium hidden md:inline">Review & Publish</span>
         </div>
       </div>
       
