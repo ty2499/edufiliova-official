@@ -509,7 +509,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
               <GraduationCap className="h-6 w-6 text-foreground" />
               {viewMode === 'list' ? 'Subject Creator' : viewMode === 'create' ? 'Create Subject' : 'Manage Subject'}
             </h1>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-gray-700 dark:text-gray-400 text-sm">
               {viewMode === 'list' ? 'Create and manage subjects for students' : 
                viewMode === 'create' ? 'Fill in the details for your new subject' :
                'Add chapters, lessons and quizzes'}
