@@ -1090,6 +1090,8 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
       <Button
         onClick={handleNext}
         disabled={createCourseMutation.isPending || uploadingThumbnail}
+        className="text-white"
+        style={{ backgroundColor: '#2f5a4e' }}
         data-testid="button-next"
       >
         {currentStep === 3 ? (
