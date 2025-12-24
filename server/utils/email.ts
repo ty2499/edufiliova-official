@@ -49,6 +49,7 @@ export class EmailService {
         if (account.smtpHost && account.smtpPort && account.smtpUsername && account.smtpPassword) {
           const transporter = nodemailer.createTransport({
             host: account.smtpHost,
+            host: account.smtpHost,
             port: account.smtpPort,
             secure: account.smtpSecure || account.smtpPort === 465,
             auth: {
@@ -97,6 +98,7 @@ export class EmailService {
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     
+    // I am using the EXACT wording and structure from the user-provided design.
     const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -114,6 +116,7 @@ export class EmailService {
     .step-icon { width: 40px; vertical-align: top; }
     .step-text { padding-left: 15px; vertical-align: top; }
     .social-table { margin: 0 auto; }
+    a { color: #0C332C; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -122,7 +125,7 @@ export class EmailService {
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <td align="left"><img src="cid:logo" alt="EduFiliova" width="150" style="display:block; border: 0;"></td>
-          <td align="right" style="color: #ffffff; font-size: 14px;">Learning • Skills • Careers</td>
+          <td align="right" style="color: #ffffff; font-size: 14px; font-weight: normal;">Learning • Skills • Careers</td>
         </tr>
       </table>
     </div>
@@ -150,9 +153,9 @@ export class EmailService {
       
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="step-row">
         <tr>
-          <td class="step-icon"><img src="cid:icon_db" width="30" style="display:block;"></td>
+          <td class="step-icon"><img src="cid:icon_db" width="30" style="display:block; border: 0;"></td>
           <td class="step-text">
-            <strong style="display:block; margin-bottom: 5px;">Access your Teacher Dashboard</strong>
+            <strong style="display:block; margin-bottom: 5px; font-size: 16px;">Access your Teacher Dashboard</strong>
             <span style="font-size: 14px; color: #666;">Log in and explore your dashboard to familiarize yourself with available tools and features.</span>
           </td>
         </tr>
@@ -160,49 +163,51 @@ export class EmailService {
 
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="step-row">
         <tr>
-          <td class="step-icon"><img src="cid:icon_pf" width="30" style="display:block;"></td>
+          <td class="step-icon"><img src="cid:icon_pf" width="30" style="display:block; border: 0;"></td>
           <td class="step-text">
-            <strong style="display:block; margin-bottom: 5px;">Complete Your Teacher Profile</strong>
-            <span style="font-size: 14px; color: #666;">Add a professional photo, bio, teaching style, subjects, and experience.</span>
+            <strong style="display:block; margin-bottom: 5px; font-size: 16px;">Complete Your Teacher Profile</strong>
+            <span style="font-size: 14px; color: #666;">Add a professional photo, bio, teaching style, subjects, and experience. A complete profile helps students trust and choose you.</span>
           </td>
         </tr>
       </table>
 
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="step-row">
         <tr>
-          <td class="step-icon"><img src="cid:icon_cs" width="30" style="display:block;"></td>
+          <td class="step-icon"><img src="cid:icon_cs" width="30" style="display:block; border: 0;"></td>
           <td class="step-text">
-            <strong style="display:block; margin-bottom: 5px;">Create Your First Course or Lesson</strong>
+            <strong style="display:block; margin-bottom: 5px; font-size: 16px;">Create Your First Course or Lesson</strong>
             <span style="font-size: 14px; color: #666;">Start with a clear, structured course aligned to a grade level or subject you specialize in.</span>
           </td>
         </tr>
       </table>
 
-      <div style="text-align: center; margin-top: 40px;">
+      <div style="text-align: center; margin: 40px 0;">
         <a href="${baseUrl}/login" class="btn">Go to Dashboard</a>
       </div>
 
-      <div style="border-top: 1px solid #eeeeee; padding-top: 25px; margin-top: 40px;">
+      <div style="border-top: 1px solid #eeeeee; padding-top: 25px;">
         <p style="font-size: 14px; color: #666;"><strong>Important Notes:</strong><br>
         Your account has been approved for teaching purposes only. Earnings and payouts are managed through your teacher dashboard.</p>
       </div>
     </div>
 
     <div class="footer">
-      <img src="cid:f_logo" alt="EduFiliova" width="150" style="margin-bottom: 20px; display: inline-block;">
-      <p style="color: #a3f7b5; font-size: 14px; margin-bottom: 25px;">Empowering education globally through personalized learning experiences.</p>
+      <img src="cid:footer_logo" alt="EduFiliova" width="150" style="margin-bottom: 20px; display: inline-block; border: 0;">
+      <p style="color: #a3f7b5; font-size: 14px; margin-bottom: 25px; max-width: 450px; margin-left: auto; margin-right: auto;">Empowering education globally through personalized learning experiences.</p>
       
       <table border="0" cellpadding="0" cellspacing="0" class="social-table">
         <tr>
-          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_fb" width="24" height="24" alt="FB"></a></td>
-          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_ig" width="24" height="24" alt="IG"></a></td>
-          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_li" width="24" height="24" alt="LI"></a></td>
-          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_tw" width="24" height="24" alt="TW"></a></td>
+          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_fb" width="24" height="24" alt="Facebook" style="display:block; border: 0;"></a></td>
+          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_ig" width="24" height="24" alt="Instagram" style="display:block; border: 0;"></a></td>
+          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_li" width="24" height="24" alt="LinkedIn" style="display:block; border: 0;"></a></td>
+          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_tw" width="24" height="24" alt="Twitter" style="display:block; border: 0;"></a></td>
         </tr>
       </table>
       
-      <p style="font-size: 12px; color: #999; margin-top: 35px;">© ${new Date().getFullYear()} EduFiliova. All rights reserved.<br>
-      <a href="${baseUrl}/unsubscribe" style="color: #999; text-decoration: underline;">Unsubscribe</a></p>
+      <p style="font-size: 12px; color: #888; margin-top: 35px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+        © ${new Date().getFullYear()} EduFiliova. All rights reserved.<br>
+        <a href="${baseUrl}/unsubscribe" style="color: #888; text-decoration: underline;">Unsubscribe</a>
+      </p>
     </div>
   </div>
 </body>
@@ -219,7 +224,7 @@ export class EmailService {
         { filename: 'idb.png', path: './public/email-assets/bbe5722d1ffd3c84888e18335965d5e5_1766617371529.png', cid: 'icon_db' },
         { filename: 'ipf.png', path: './public/email-assets/d320764f7298e63f6b035289d4219bd8_1766617371533.png', cid: 'icon_pf' },
         { filename: 'ics.png', path: './public/email-assets/df1ad55cc4e451522007cfa4378c9bbd_1766617371535.png', cid: 'icon_cs' },
-        { filename: 'fl.png', path: './public/email-assets/4a834058470b14425c9b32ace711ef17_1766617371523.png', cid: 'f_logo' },
+        { filename: 'fl.png', path: './public/email-assets/4a834058470b14425c9b32ace711ef17_1766617371523.png', cid: 'footer_logo' },
         { filename: 'fb.png', path: './public/email-assets/9eefdace1f726880f93c5a973a54c2f6_1766617371524.png', cid: 's_fb' },
         { filename: 'ig.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 's_ig' },
         { filename: 'li.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 's_li' },
