@@ -1111,18 +1111,12 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
   );
 
   return (
-    <div className="min-h-screen w-screen bg-white flex items-center justify-center">
-      <div className="w-full">
-        <div className="w-full">
-          <div className="max-w-4xl mx-auto">
-            {renderHeader()}
-          </div>
-          <div className="space-y-6">
-            <div className="max-w-4xl mx-auto">
-              {renderStepContent()}
-              {renderFooter()}
-            </div>
-          </div>
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6">
+      <div className="w-full max-w-4xl">
+        <div className="space-y-6">
+          {renderHeader()}
+          {renderStepContent()}
+          {renderFooter()}
         </div>
       </div>
     </div>
