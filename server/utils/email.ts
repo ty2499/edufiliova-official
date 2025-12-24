@@ -110,7 +110,7 @@ export class EmailService {
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const html = \`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,30 +128,30 @@ export class EmailService {
 <body>
 <div class="container">
   <div class="header">
-    <img src="\${baseUrl}/email-assets/bbe5722d1ffd3c84888e18335965d5e5.png" alt="EduFiliova Logo" style="max-width: 150px; margin-bottom: 20px;">
+    <img src="${baseUrl}/email-assets/bbe5722d1ffd3c84888e18335965d5e5.png" alt="EduFiliova Logo" style="max-width: 150px; margin-bottom: 20px;">
     <h1 style="margin: 0; font-size: 24px;">Welcome to the Team!</h1>
   </div>
-  <img src="\${baseUrl}/email-assets/e4d45170731072cbb168266fca3fd470.png" alt="Welcome" style="width:100%; display:block;">
+  <img src="${baseUrl}/email-assets/e4d45170731072cbb168266fca3fd470.png" alt="Welcome" style="width:100%; display:block;">
   <div class="content">
-    <h2 style="color: #0C332C;">Congratulations \${data.fullName}!</h2>
+    <h2 style="color: #0C332C;">Congratulations ${data.fullName}!</h2>
     <p>Your teacher application for <strong>EduFiliova</strong> has been officially <strong>APPROVED</strong>.</p>
     <div style="text-align: center;">
-      <a href="\${baseUrl}/teacher-login" class="button">Access Your Dashboard</a>
+      <a href="${baseUrl}/teacher-login" class="button">Access Your Dashboard</a>
     </div>
     <p>Best regards,<br>The EduFiliova Team</p>
   </div>
   <div class="footer">
-    <img src="\${baseUrl}/email-assets/9f7291948d8486bdd26690d0c32796e0.png" alt="Social" style="width: 24px; margin-bottom: 10px;">
-    <p>© \${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
+    <img src="${baseUrl}/email-assets/9f7291948d8486bdd26690d0c32796e0.png" alt="Social" style="width: 24px; margin-bottom: 10px;">
+    <p>© ${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
   </div>
 </div>
 </body>
-</html>\`;
+</html>`;
     return this.sendEmail({
       to: email,
       subject: 'Congratulations! Your Teacher Application is Approved - EduFiliova',
       html,
-      from: \`"EduFiliova Support" <support@edufiliova.com>\`,
+      from: `"EduFiliova Support" <support@edufiliova.com>`,
     });
   }
 }

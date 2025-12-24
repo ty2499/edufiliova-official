@@ -8,7 +8,7 @@ import { cloudinaryStorage } from "../cloudinary-storage.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { storage } from "../storage.js";
-import { emailService } from "../utils/email.js";
+import { emailService } from "../utils/email";
 
 const router = Router();
 
