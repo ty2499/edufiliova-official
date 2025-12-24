@@ -2074,7 +2074,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
               size="sm"
               className="w-full text-white"
               style={{ backgroundColor: '#2f5a4e' }}
-              onClick={() => { onNavigate?.('home', 'fade'); setShowMobileMenu(false); }}
+              onClick={() => { window.open(window.location.origin, '_blank'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
               <FaGlobe className="h-4 w-4 mr-2" />
