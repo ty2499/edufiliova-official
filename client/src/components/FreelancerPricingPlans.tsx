@@ -236,20 +236,22 @@ export default function FreelancerPricingPlans({ onPlanSelect }: FreelancerPrici
                 </ul>
 
                 {/* CTA Button */}
-                <Button
-                  className={`w-full py-4 text-sm font-medium ${
-                    isCurrentPlan 
-                      ? 'bg-[#0C332C] hover:bg-[#0C332C]/90' 
-                      : 'bg-[#151314] hover:bg-[#2a2826]'
-                  } text-white`}
-                  onClick={() =>
-                    onPlanSelect?.(plan.planId, isLifetime ? 'lifetime' : billingPeriod)
-                  }
-                  disabled={isCurrentPlan}
-                  data-testid={`button-select-${plan.planId}`}
-                >
-                  {isCurrentPlan ? 'Active Plan' : isLifetime ? 'Get Lifetime Access' : `Choose ${plan.name}`}
-                </Button>
+                <div className="flex justify-center">
+                  <Button
+                    className={`py-2 px-6 text-sm font-medium ${
+                      isCurrentPlan 
+                        ? 'bg-[#0C332C] hover:bg-[#0C332C]/90' 
+                        : 'bg-[#151314] hover:bg-[#2a2826]'
+                    } text-white`}
+                    onClick={() =>
+                      onPlanSelect?.(plan.planId, isLifetime ? 'lifetime' : billingPeriod)
+                    }
+                    disabled={isCurrentPlan}
+                    data-testid={`button-select-${plan.planId}`}
+                  >
+                    {isCurrentPlan ? 'Active Plan' : isLifetime ? 'Get Lifetime Access' : `Choose ${plan.name}`}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           );
