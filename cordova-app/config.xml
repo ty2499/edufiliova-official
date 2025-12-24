@@ -33,31 +33,12 @@
         <icon src="res/icon/android/icon-xxhdpi.png" density="xxhdpi" />
         <icon src="res/icon/android/icon-xxxhdpi.png" density="xxxhdpi" />
         
-        <!-- Custom Animated Splash Screen Activity -->
+        <!-- Disable default Cordova splash screen -->
         <preference name="ShowSplashScreenOnLoad" value="false" />
+        <preference name="SplashScreenDelay" value="0" />
         
-        <!-- Custom splash activity with animated loading circles -->
+        <!-- Custom splash notification metadata -->
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <activity
-                android:name="com.edufiliova.app.SplashActivity"
-                android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                android:exported="true">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            </activity>
-            <activity
-                android:name="com.edufiliova.app.MainActivity"
-                android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-                android:label="@string/activity_name"
-                android:theme="@android:style/Theme.Black.NoTitleBar"
-                android:exported="true">
-                <intent-filter>
-                    <action android:name="android.intent.action.VIEW" />
-                    <category android:name="android.intent.category.DEFAULT" />
-                </intent-filter>
-            </activity>
             <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="edufiliova_channel" />
         </config-file>
     </platform>
