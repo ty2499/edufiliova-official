@@ -82,6 +82,7 @@ import { PortfolioGallery } from './PortfolioGallery';
 import ReceiptsSection from '@/components/ReceiptsSection';
 import BuyVoucherSection from '@/components/BuyVoucherSection';
 import ApiKeysPage from './ApiKeysPage';
+import { ProductShop } from './ProductShop';
 
 
 interface CustomerDashboardProps {
@@ -91,7 +92,7 @@ interface CustomerDashboardProps {
   };
 }
 
-type DashboardPage = 'home' | 'purchases' | 'downloads' | 'ads' | 'courses' | 'course-detail' | 'course-player' | 'marketplace' | 'portfolio-gallery' | 'membership' | 'wallet' | 'billing' | 'receipts' | 'support' | 'settings' | 'become-student' | 'become-freelancer' | 'create-ad' | 'buy-voucher' | 'api';
+type DashboardPage = 'home' | 'purchases' | 'downloads' | 'ads' | 'courses' | 'course-detail' | 'course-player' | 'marketplace' | 'portfolio-gallery' | 'membership' | 'wallet' | 'billing' | 'receipts' | 'support' | 'settings' | 'become-student' | 'become-freelancer' | 'create-ad' | 'buy-voucher' | 'api' | 'shop';
 
 export default function CustomerDashboard({ onNavigate, navigationOptions }: CustomerDashboardProps) {
   const { user, profile, logout } = useAuth();
@@ -235,6 +236,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
     { id: 'home', name: 'Dashboard', icon: Home },
     { id: 'purchases', name: 'Purchases', icon: ShoppingBag },
     { id: 'downloads', name: 'Downloads', icon: Download },
+    { id: 'shop', name: 'Explore Shop', icon: ShoppingCart },
     { id: 'ads', name: 'Advertising', icon: Megaphone },
     { id: 'courses', name: 'Courses', icon: BookOpen },
     { id: 'portfolio-gallery', name: 'Freelancer Works', icon: LayoutGrid },
@@ -301,6 +303,8 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
         return <ReceiptsSection showTitle={true} />;
       case 'support':
         return <SupportPage />;
+      case 'shop':
+        return <ProductShop />;
       case 'settings':
         return <SettingsPage />;
       case 'become-student':
