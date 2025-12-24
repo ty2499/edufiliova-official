@@ -111,45 +111,50 @@ export class EmailService {
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f0f1f5; color: #333; }
-  .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-  .header { background-color: #0C332C; padding: 40px 20px; text-align: center; color: white; }
-  .content { padding: 40px; line-height: 1.6; }
-  .footer { background-color: #0C332C; padding: 20px; text-align: center; color: rgba(255,255,255,0.7); font-size: 12px; }
-  .button { display: inline-block; padding: 12px 30px; background-color: #e84a2a; color: white !important; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 20px 0; }
-  .hero-image { width: 100%; max-width: 600px; height: auto; display: block; }
-</style>
-</head>
+<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #000000; color: #ffffff; }
+  .container { max-width: 600px; margin: 20px auto; background: #0C332C; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.5); border: 1px solid #1a4d43; }
+  .header { padding: 40px 20px; text-align: center; background-color: #000000; }
+  .hero-section { position: relative; width: 100%; }
+  .hero-image { width: 100%; display: block; }
+  .content { padding: 40px; line-height: 1.6; background-color: #0C332C; }
+  .footer { background-color: #000000; padding: 30px 20px; text-align: center; color: rgba(255,255,255,0.6); font-size: 12px; }
+  .button { display: inline-block; padding: 14px 35px; background-color: #ffffff; color: #0C332C !important; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 25px 0; transition: all 0.3s ease; }
+  h1, h2 { color: #ffffff; margin-top: 0; }
+  p { color: rgba(255,255,255,0.9); margin-bottom: 20px; }
+  .social-links { margin: 20px 0; }
+  .social-icon { width: 24px; margin: 0 10px; opacity: 0.8; }
+</style></head>
 <body>
 <div class="container">
   <div class="header">
-    <img src="${baseUrl}/email-assets/bbe5722d1ffd3c84888e18335965d5e5.png" alt="EduFiliova Logo" style="max-width: 150px; margin-bottom: 20px;">
-    <h1 style="margin: 0; font-size: 24px;">Welcome to the Team!</h1>
+    <img src="${baseUrl}/email-assets/bbe5722d1ffd3c84888e18335965d5e5.png" alt="EduFiliova Logo" style="max-width: 180px;">
   </div>
-  <img src="${baseUrl}/email-assets/e4d45170731072cbb168266fca3fd470.png" alt="Welcome" style="width:100%; display:block;">
+  <div class="hero-section">
+    <img src="${baseUrl}/email-assets/e4d45170731072cbb168266fca3fd470.png" alt="Welcome Aboard" class="hero-image">
+  </div>
   <div class="content">
-    <h2 style="color: #0C332C;">Congratulations ${data.fullName}!</h2>
-    <p>Your teacher application for <strong>EduFiliova</strong> has been officially <strong>APPROVED</strong>.</p>
+    <h1 style="font-size: 28px; font-weight: 800; letter-spacing: -0.5px;">Welcome to the Team, ${data.fullName}!</h1>
+    <p style="font-size: 18px;">We are thrilled to inform you that your teacher application for <strong>EduFiliova</strong> has been officially <strong>APPROVED</strong>.</p>
+    <p>You now have full access to your teacher dashboard where you can start creating courses, managing students, and building your educational community.</p>
     <div style="text-align: center;">
-      <a href="${baseUrl}/teacher-login" class="button">Access Your Dashboard</a>
+      <a href="${baseUrl}/teacher-login" class="button">Access Teacher Dashboard</a>
     </div>
-    <p>Best regards,<br>The EduFiliova Team</p>
+    <p style="font-size: 14px; color: rgba(255,255,255,0.7);">If you have any questions or need assistance getting started, our support team is always here to help.</p>
+    <p>Best regards,<br><span style="font-weight: bold; color: #ffffff;">The EduFiliova Team</span></p>
   </div>
   <div class="footer">
-    <img src="${baseUrl}/email-assets/9f7291948d8486bdd26690d0c32796e0.png" alt="Social" style="width: 24px; margin-bottom: 10px;">
-    <p>© ${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
+    <div class="social-links">
+      <img src="${baseUrl}/email-assets/9f7291948d8486bdd26690d0c32796e0.png" alt="Social" class="social-icon">
+    </div>
+    <p>© ${new Date().getFullYear()} EduFiliova. Modern Education for Everyone.</p>
+    <p style="margin-top: 10px; font-size: 10px;">You're receiving this because your application was approved. If this wasn't you, please contact support.</p>
   </div>
 </div>
-</body>
-</html>`;
+</body></html>`;
     return this.sendEmail({
       to: email,
-      subject: 'Congratulations! Your Teacher Application is Approved - EduFiliova',
+      subject: 'Welcome Aboard! Your Teacher Application is Approved - EduFiliova',
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
     });
