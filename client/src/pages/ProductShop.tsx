@@ -146,6 +146,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
   // Only show login controls when auth is fully loaded and user is NOT logged in
   // This prevents showing login UI while auth is still checking the session
   const showLoginControls = !authLoading && !user;
+  const isLandingPage = !!onNavigate;
   const { 
     isGuestMode, 
     addToGuestCart, 
@@ -629,12 +630,14 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
         </div>
       )}
       
-      <Header 
-        onNavigate={onNavigate} 
-        currentPage="product-shop" 
-        searchQuery={searchQuery}
-        onSearchChange={onSearchChange}
-      />
+      {isLandingPage && (
+        <Header 
+          onNavigate={onNavigate} 
+          currentPage="product-shop" 
+          searchQuery={searchQuery}
+          onSearchChange={onSearchChange}
+        />
+      )}
       {/* Premium Navigation Header */}
       <div className="bg-white border-b border-gray-100 fixed top-0 left-0 right-0 z-50 backdrop-blur-md pt-safe">
         <div className="px-4 md:px-8 py-4">
@@ -1589,7 +1592,7 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
       </section>
       
       {/* Footer */}
-      <Footer onNavigate={onNavigate} />
+      {isLandingPage && <Footer onNavigate={onNavigate} />}
     </div>
   );
 }

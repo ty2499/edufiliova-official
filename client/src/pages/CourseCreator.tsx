@@ -43,7 +43,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 
 interface CourseCreatorProps {
-  onNavigate: (page: string) => void;
+  onNavigate?: (page: string) => void;
   userRole?: string;
 }
 
@@ -120,6 +120,7 @@ interface ActionMessage {
 export default function CourseCreator({ onNavigate, userRole = 'student' }: CourseCreatorProps) {
   const queryClient = useQueryClient();
   const isMobile = useIsMobile();
+  const isLandingPage = !!onNavigate;
 
   // Determine the appropriate dashboard based on user role
   const getDashboardRoute = () => {
@@ -1574,43 +1575,45 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="border-b">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold">Course Management</h1>
-                <p className="text-muted-foreground mt-1 sm:mt-2 text-sm sm:text-base">Create and manage your online courses</p>
+      {/* Header - Only show when in landing page mode */}
+      {isLandingPage && (
+        <div className="border-b">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div>
+                  <h1 className="text-2xl sm:text-3xl font-bold">Course Management</h1>
+                  <p className="text-muted-foreground mt-1 sm:mt-2 text-sm sm:text-base">Create and manage your online courses</p>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <Button
+                  onClick={handleCreateNewCourse}
+                  data-testid="button-create-course"
+                  className="w-full sm:w-auto text-white"
+                  style={{ backgroundColor: '#0C332C' }}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create Course
+                </Button>
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              <Button
-                onClick={handleCreateNewCourse}
-                data-testid="button-create-course"
-                className="w-full sm:w-auto text-white"
-                style={{ backgroundColor: '#0C332C' }}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Create Course
-              </Button>
-            </div>
+            {/* Action Message */}
+            {actionMessage.status !== 'idle' && (
+              <Alert className={`mt-4 ${
+                actionMessage.status === 'success' 
+                  ? 'border-green-200 text-green-800' 
+                  : actionMessage.status === 'error'
+                  ? 'border-red-200 text-primary-800'
+                  : 'border-blue-200 text-blue-800'
+              }`}>
+                {actionMessage.status === 'error' && <AlertCircle className="h-4 w-4" />}
+                <AlertDescription>{actionMessage.text}</AlertDescription>
+              </Alert>
+            )}
           </div>
-          {/* Action Message */}
-          {actionMessage.status !== 'idle' && (
-            <Alert className={`mt-4 ${
-              actionMessage.status === 'success' 
-                ? 'border-green-200 text-green-800' 
-                : actionMessage.status === 'error'
-                ? 'border-red-200 text-primary-800'
-                : 'border-blue-200 text-blue-800'
-            }`}>
-              {actionMessage.status === 'error' && <AlertCircle className="h-4 w-4" />}
-              <AlertDescription>{actionMessage.text}</AlertDescription>
-            </Alert>
-          )}
         </div>
-      </div>
+      )}
       
       {/* Courses Grid/List View */}
       <div className="container mx-auto px-4 py-8">
