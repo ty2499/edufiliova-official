@@ -3219,7 +3219,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
         </div>
       </div>
       {/* Main content - with left margin on desktop to account for fixed sidebar, top padding for mobile navbar */}
-      <div className={`flex flex-col min-h-screen pt-16 md:pt-0 md:ml-64 ${selectedTab === "messaging" ? "h-full" : ""}`}>
+      <div className={`flex flex-col min-h-screen pt-16 md:pt-0 md:ml-64 bg-white ${selectedTab === "messaging" ? "h-full" : ""}`}>
         
         {/* Desktop Header - doesn't scroll */}
         {selectedTab !== "messaging" && !(isMobile && isChatOpen) && (
