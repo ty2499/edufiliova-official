@@ -810,7 +810,7 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
         >
           Courses
         </h1>
-        <p className="text-muted-foreground mt-1">Discover and enroll in amazing courses</p>
+        <p className="text-gray-700 mt-1">Discover and enroll in amazing courses</p>
       </div>
 
       {/* Sponsored Courses Section */}
