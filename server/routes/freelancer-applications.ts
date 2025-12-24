@@ -904,6 +904,11 @@ router.put('/applications/:id', upload.any(), async (req, res) => {
       behanceUrl: req.body.behanceUrl || null,
       githubUrl: req.body.githubUrl || null,
       websiteUrl: req.body.websiteUrl || null,
+      status: 'pending',
+      rejectionReason: null,
+      adminNotes: null,
+      approvedBy: null,
+      approvedAt: null,
       updatedAt: new Date(),
     };
 
