@@ -1358,6 +1358,8 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
             setCreateSuccess(null);
             setCurrentView('create');
           }}
+          className="text-white"
+          style={{ backgroundColor: '#0C332C' }}
           data-testid="button-create-product"
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -1400,11 +1402,15 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
             <p className="text-gray-500 mb-6">
               Start selling by creating your first product. Digital downloads and physical products are both supported.
             </p>
-            <Button onClick={() => {
-              setCreateError(null);
-              setCreateSuccess(null);
-              setCurrentView('create');
-            }}>
+            <Button 
+              onClick={() => {
+                setCreateError(null);
+                setCreateSuccess(null);
+                setCurrentView('create');
+              }}
+              className="text-white"
+              style={{ backgroundColor: '#0C332C' }}
+            >
               <Plus className="h-4 w-4 mr-2" />
               Create Your First Product
             </Button>
