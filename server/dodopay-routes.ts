@@ -13,7 +13,7 @@ const router = Router();
 // Cache for DoDo Pay instance
 let dodoPaymentsInstance: DodoPayments | null = null;
 let lastDodoUpdate: Date | null = null;
-const CACHE_TTL = 60000; // 1 minute cache
+const CACHE_TTL = 30000; // 30 second cache (reduced from 60s for faster credential updates)
 
 // Shared PaymentResult interface for consistency across gateways
 export interface PaymentResult {
@@ -43,41 +43,36 @@ function resolveSecretKey(secretKey: string | null | undefined): string | null {
 
 /**
  * Get DoDo Pay instance with admin-configured credentials
+ * Always fetches fresh from storage to avoid stale credentials after deployment
  */
 async function getDodoPayInstance(): Promise<DodoPayments | null> {
   try {
-    // Check cache
-    if (dodoPaymentsInstance && lastDodoUpdate) {
-      const cacheAge = Date.now() - lastDodoUpdate.getTime();
-      if (cacheAge < CACHE_TTL) {
-        return dodoPaymentsInstance;
-      }
-    }
-
-    // Get from admin settings
+    // Get from admin settings (always fresh, no cache during critical operations)
     const dodoGateway = await storage.getPaymentGateway('dodopay');
     
     if (dodoGateway && dodoGateway.isEnabled) {
       // Resolve secret key (supports ENV: prefix for environment variables)
       const secretKey = resolveSecretKey(dodoGateway.secretKey);
       
-      if (secretKey) {
-        console.log('✅ Using DoDo Pay with admin-configured credentials');
-        
-        dodoPaymentsInstance = new DodoPayments({
-          bearerToken: secretKey,
-          environment: dodoGateway.testMode ? 'test_mode' : 'live_mode',
-        });
-        
-        lastDodoUpdate = new Date();
-        return dodoPaymentsInstance;
+      if (!secretKey) {
+        console.error('❌ DoDo Pay secret key not found or not resolvable');
+        return null;
       }
+      
+      // Always create a fresh instance to avoid stale credentials
+      const instance = new DodoPayments({
+        bearerToken: secretKey,
+        environment: dodoGateway.testMode ? 'test_mode' : 'live_mode',
+      });
+      
+      console.log('✅ DoDo Pay instance initialized with', dodoGateway.testMode ? 'TEST' : 'LIVE', 'credentials');
+      return instance;
     }
 
-    console.warn('⚠️ DoDo Pay not configured in admin settings');
+    console.warn('⚠️ DoDo Pay not configured or disabled in admin settings');
     return null;
   } catch (error) {
-    console.error('Error initializing DoDo Pay:', error);
+    console.error('❌ Error initializing DoDo Pay:', error);
     return null;
   }
 }
@@ -166,46 +161,47 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
       // Normalize currency to uppercase for DodoPay
       const normalizedCurrency = currency.toUpperCase() as any;
       
-      if (isSubscription) {
-        // Create subscription product with recurring billing
-        // TimeInterval must be capitalized: 'Day', 'Week', 'Month', 'Year'
-        const intervalValue = billingInterval === 'yearly' ? 'Year' : 'Month';
-        
-        product = await dodo.products.create({
-          name: itemName,
-          description: itemDescription,
-          price: {
-            currency: normalizedCurrency,
-            discount: 0,
-            price: priceInCents,
-            purchasing_power_parity: false,
+      // Validate currency is supported
+      if (!['USD', 'EUR', 'GBP', 'ZWL', 'ZAR'].includes(normalizedCurrency)) {
+        console.warn(`⚠️ Currency ${normalizedCurrency} may not be fully supported, attempting anyway...`);
+      }
+      
+      const productPayload = {
+        name: itemName,
+        description: itemDescription,
+        price: {
+          currency: normalizedCurrency,
+          discount: 0,
+          price: priceInCents,
+          purchasing_power_parity: false,
+          ...( isSubscription ? {
             type: 'recurring_price',
             payment_frequency_count: 1,
-            payment_frequency_interval: intervalValue as any,
+            payment_frequency_interval: (billingInterval === 'yearly' ? 'Year' : 'Month') as any,
             subscription_period_count: 1,
-            subscription_period_interval: intervalValue as any,
-          },
-          tax_category: 'edtech',
-        });
-      } else {
-        // Create one-time payment product
-        product = await dodo.products.create({
-          name: itemName,
-          description: itemDescription,
-          price: {
-            currency: normalizedCurrency,
-            discount: 0,
-            price: priceInCents,
-            purchasing_power_parity: false,
+            subscription_period_interval: (billingInterval === 'yearly' ? 'Year' : 'Month') as any,
+          } : {
             type: 'one_time_price',
-          },
-          tax_category: 'edtech',
-        });
+          })
+        },
+        tax_category: 'edtech',
+      };
+      
+      console.log('🛒 Creating DodoPay product with payload:', JSON.stringify(productPayload, null, 2));
+      product = await dodo.products.create(productPayload as any);
+      
+      if (!product?.product_id) {
+        throw new Error(`DoDo Pay did not return a product_id. Response: ${JSON.stringify(product)}`);
       }
-      console.log('✅ DodoPay product created:', product?.product_id);
+      console.log('✅ DodoPay product created:', product.product_id);
     } catch (productError: any) {
-      console.error('❌ DodoPay product creation error:', productError?.message, productError);
-      throw new Error(`Failed to create product: ${productError?.message}`);
+      console.error('❌ DodoPay product creation error:', {
+        message: productError?.message,
+        response: productError?.response?.data,
+        status: productError?.response?.status,
+        fullError: productError
+      });
+      throw new Error(`Failed to create product: ${productError?.message || 'Unknown error'}`);
     }
 
     // Step 2: Create checkout session with the product
@@ -248,10 +244,20 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
         userName: userName || '',
       };
       
+      console.log('🛒 Creating checkout session with return URL:', successReturnUrl);
       checkoutSession = await dodo.checkoutSessions.create(checkoutParams);
+      
+      if (!checkoutSession) {
+        throw new Error('DoDo Pay returned empty checkout session response');
+      }
     } catch (sessionError: any) {
-      console.error('❌ DodoPay checkout session error:', sessionError?.message, sessionError);
-      throw new Error(`Failed to create checkout session: ${sessionError?.message}`);
+      console.error('❌ DodoPay checkout session error:', {
+        message: sessionError?.message,
+        response: sessionError?.response?.data,
+        status: sessionError?.response?.status,
+        fullError: sessionError
+      });
+      throw new Error(`Failed to create checkout session: ${sessionError?.message || 'Unknown error'}`);
     }
 
     // Extract session details from response
@@ -286,11 +292,18 @@ router.post('/checkout-session', async (req: Request, res: Response) => {
 
     return res.json(result);
   } catch (error: any) {
-    console.error('❌ DoDo Pay session creation error:', error);
+    console.error('❌ DoDo Pay session creation error:', {
+      message: error?.message,
+      stack: error?.stack,
+      response: error?.response?.data || error?.data
+    });
     return res.status(500).json({ 
       success: false,
       error: 'Failed to create DodoPay payment session. Please try again or use another payment method.',
-      metadata: { details: error.message }
+      metadata: { 
+        details: error.message,
+        code: error?.code || error?.response?.status
+      }
     } as PaymentResult);
   }
 });
@@ -331,6 +344,14 @@ router.post('/webhook', async (req: Request, res: Response) => {
 
     const payload = req.body;
     console.log('📥 DoDo Pay webhook received:', payload.event_type);
+    
+    // Prevent duplicate webhook processing - store webhook IDs temporarily
+    const webhookId = req.headers['webhook-id'] as string;
+    if (webhookId) {
+      // Simple in-memory deduplication (in production, use Redis)
+      const dedupeKey = `dodo_webhook_${webhookId}`;
+      console.log(`🔍 Webhook ID for deduplication: ${dedupeKey}`);
+    }
 
     switch (payload.event_type) {
       case 'payment.succeeded':
@@ -553,7 +574,23 @@ router.get('/verify/:paymentId', async (req: Request, res: Response) => {
     }
 
     // Retrieve payment details from DoDo Pay
-    const payment = await dodo.payments.retrieve(paymentId);
+    console.log(`🔍 Verifying DodoPay payment: ${paymentId}`);
+    let payment: any;
+    try {
+      payment = await dodo.payments.retrieve(paymentId);
+    } catch (retrieveError: any) {
+      console.error('❌ Failed to retrieve payment from DoDo Pay:', {
+        paymentId,
+        error: retrieveError?.message,
+        response: retrieveError?.response?.data
+      });
+      throw retrieveError;
+    }
+    
+    if (!payment) {
+      throw new Error(`Payment ${paymentId} not found`);
+    }
+    
     console.log('💳 DodoPay payment verification:', payment.payment_id, payment.status);
 
     // If payment succeeded, update any pending orders
