@@ -2074,7 +2074,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
               size="sm"
               className="w-full text-white"
               style={{ backgroundColor: '#2f5a4e' }}
-              onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
+              onClick={() => { onNavigate?.('home', 'fade'); setShowMobileMenu(false); }}
               data-testid="nav-explore-website"
             >
               <FaGlobe className="h-4 w-4 mr-2" />

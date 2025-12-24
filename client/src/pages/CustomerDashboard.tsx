@@ -401,7 +401,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
               <Button
                 size="sm"
                 className="w-full bg-primary hover:bg-primary text-white" transition-all duration-300
-                onClick={() => openExternalUrl('https://edufiliova.com')}
+                onClick={() => onNavigate?.('home', 'fade')}
                 data-testid="button-browse-website"
               >
                 <Globe className="h-4 w-4 mr-2" />
