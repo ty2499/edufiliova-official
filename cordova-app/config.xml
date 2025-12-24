@@ -36,7 +36,6 @@
         <!-- Android 12+ Splash Screen Configuration -->
         <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/icon/android/icon-mdpi.png" />
         <preference name="AndroidWindowSplashScreenBackground" value="#c5ff00" />
-        <preference name="AndroidWindowSplashScreenBrandingImage" value="res/screen/android/screen-mdpi-port.png" />
         
         <!-- Notification channel settings -->
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
