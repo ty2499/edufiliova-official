@@ -545,8 +545,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
     <>
       {isLandingPage && <Header onNavigate={onNavigate} currentPage="banner-creator" />}
       <div className={`bg-gradient-to-br from-slate-50 via-white to-slate-100 min-h-screen ${isLandingPage ? 'pt-20' : ''}`}>
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 py-12">
-        <div className="grid lg:grid-cols-12 gap-8">
+        <div className="grid lg:grid-cols-12 gap-8 px-6 sm:px-10 lg:px-14 py-12">
           {/* Main Form - Premium Design */}
           <div className="lg:col-span-8">
             <div className="bg-white shadow-sm border border-gray-200/50 overflow-hidden">
@@ -1264,7 +1263,6 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
           />
         </Elements>
       )}
-      </div>
       {isLandingPage && <Footer onNavigate={onNavigate} />}
     </>
   );
