@@ -50,7 +50,21 @@ export function getFriendlyErrorMessage(error: any): string {
 
   // Payment/transaction errors
   if (message.toLowerCase().includes('payment') || message.toLowerCase().includes('transaction') || message.toLowerCase().includes('stripe') || message.toLowerCase().includes('paypal')) {
-    return 'There was a problem processing your payment. Please try again or contact support.';
+    // Check for specific payment error codes/messages
+    if (message.toLowerCase().includes('timeout') || message.toLowerCase().includes('processing timeout')) {
+      return 'Payment is taking longer than expected. Please check your account to see if it was processed, then try again.';
+    }
+    if (message.toLowerCase().includes('already processed') || message.toLowerCase().includes('unexpected state')) {
+      return 'This payment has already been processed. Please check your account dashboard.';
+    }
+    if (message.toLowerCase().includes('declined') || message.toLowerCase().includes('card')) {
+      return 'Sorry, we couldn\'t process your payment. Please try a different payment method or contact your bank.';
+    }
+    if (message.toLowerCase().includes('insufficient') || message.toLowerCase().includes('limit')) {
+      return 'Sorry, there isn\'t enough balance for this transaction. Please check your account.';
+    }
+    // Generic payment error
+    return 'Sorry, we had a problem processing your payment. Please try again.';
   }
 
   // Server errors

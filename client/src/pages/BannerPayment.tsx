@@ -8,6 +8,7 @@ import { ArrowLeft, CreditCard, Shield, Wallet, X } from 'lucide-react';
 import { CheckmarkIcon } from "@/components/ui/checkmark-icon";
 import { SiPaypal, SiStripe, SiApplepay, SiGooglepay } from 'react-icons/si';
 import { apiRequest, queryClient } from '@/lib/queryClient';
+import { getFriendlyErrorMessage, logError } from '@/lib/error-handler';
 import Logo from '@/components/Logo';
 import Lottie from 'lottie-react';
 import smLoader from '@/assets/sm-loader.json';
@@ -98,7 +99,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
     const timer = setTimeout(() => {
       if (!stripe || !elements) {
         console.error('Stripe failed to load within timeout');
-        setError('Payment system failed to load. Please try again or contact support.');
+        setError('Sorry, the payment system isn\'t responding. Please try again.');
       }
       setStripeLoading(false);
     }, 10000); // 10 second timeout
@@ -116,7 +117,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
     if (isLoading && !redirecting) {
       const safetyTimeout = setTimeout(() => {
         setIsLoading(false);
-        setError('Payment processing timeout. Please check your ads dashboard to verify payment status, or try again.');
+        setError(getFriendlyErrorMessage('Payment processing timeout'));
       }, 30000); // 30 seconds timeout
 
       return () => clearTimeout(safetyTimeout);

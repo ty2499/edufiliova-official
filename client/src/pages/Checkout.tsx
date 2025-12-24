@@ -11,6 +11,7 @@ import { SiPaypal, SiStripe, SiApplepay, SiGooglepay } from 'react-icons/si';
 import { useCurrency } from "@/hooks/useCurrency";
 import { useAuth } from "@/hooks/useAuth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { getFriendlyErrorMessage, logError } from '@/lib/error-handler';
 import Logo from '@/components/Logo';
 import Lottie from 'lottie-react';
 import paymentSuccessAnimation from '@/assets/payment-success.json';
@@ -116,7 +117,7 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
     if (isLoading) {
       const safetyTimeout = setTimeout(() => {
         setIsLoading(false);
-        setError('Payment processing timeout. Please check your dashboard to verify payment status, or try again.');
+        setError(getFriendlyErrorMessage('Payment processing timeout'));
       }, 30000); // 30 seconds timeout
 
       return () => clearTimeout(safetyTimeout);
@@ -224,8 +225,9 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
         throw new Error(confirmResult.error || 'Payment confirmation failed');
       }
     } catch (confirmError) {
-      console.error('Error confirming payment:', confirmError);
-      setError('Payment processed but confirmation failed. Please contact support.');
+      const friendlyError = getFriendlyErrorMessage(confirmError);
+      logError(confirmError, 'Checkout.handlePaymentSuccess');
+      setError(friendlyError);
       setIsLoading(false);
     }
   };
@@ -287,7 +289,9 @@ export const CheckoutForm = ({ amount, planName, billingCycle, clientSecret, onS
     },
     onError: (error: any) => {
       setIsLoading(false);
-      setError(error.message || 'Wallet payment failed. Please try again.');
+      const friendlyError = getFriendlyErrorMessage(error);
+      logError(error, 'Checkout.walletPayment');
+      setError(friendlyError);
     },
   });
 
