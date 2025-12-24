@@ -74,7 +74,7 @@ export default function AuthLayout({
         </div>
 
         {/* Right Side - Form Container */}
-        <div className="w-full md:w-1/2 md:ml-auto flex flex-col items-center justify-start p-6 md:p-8 bg-gray-100 md:bg-gray-50 min-h-[50vh] md:min-h-screen md:max-h-screen md:overflow-y-auto rounded-t-[2rem] -mt-6 md:mt-0 md:rounded-none relative z-10">
+        <div className="w-full md:w-1/2 md:ml-auto flex flex-col items-center justify-start p-6 md:p-8 bg-gray-100 md:bg-gray-50 min-h-[50vh] overflow-y-auto md:min-h-screen md:max-h-screen rounded-t-[2rem] -mt-6 md:mt-0 md:rounded-none relative z-10">
           <div className="w-full max-w-md py-4 md:py-8">
             {/* Desktop top bar with buttons */}
             <div className="hidden md:flex justify-between items-center mb-6">
