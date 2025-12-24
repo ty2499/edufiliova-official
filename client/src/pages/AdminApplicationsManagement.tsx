@@ -424,7 +424,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                   {filteredTeacherApps.map((app) => (
                     <Card key={app.id} data-testid={`teacher-app-${app.id}`} className="flex flex-col">
-                      <CardHeader className="pb-3">
+                      <CardHeader className="pb-4 pt-4 px-4">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
                             <CardTitle className="text-base truncate">{app.fullName}</CardTitle>
@@ -435,7 +435,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                           {getStatusBadge(app.status)}
                         </div>
                       </CardHeader>
-                      <CardContent className="flex-1 flex flex-col gap-3 text-sm">
+                      <CardContent className="flex-1 flex flex-col gap-3 text-sm px-4 pb-4">
                         <div>
                           <p className="text-xs font-medium text-gray-500">Country</p>
                           <p className="text-xs truncate">{app.country}</p>
@@ -478,7 +478,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                   {filteredFreelancerApps.map((app) => (
                     <Card key={app.id} data-testid={`freelancer-app-${app.id}`} className="flex flex-col">
-                      <CardHeader className="pb-3">
+                      <CardHeader className="pb-4 pt-4 px-4">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
                             <CardTitle className="text-base truncate">{app.fullName}</CardTitle>
@@ -489,7 +489,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                           {getStatusBadge(app.status)}
                         </div>
                       </CardHeader>
-                      <CardContent className="flex-1 flex flex-col gap-3 text-sm">
+                      <CardContent className="flex-1 flex flex-col gap-3 text-sm px-4 pb-4">
                         <div>
                           <p className="text-xs font-medium text-gray-500">Country</p>
                           <p className="text-xs truncate">{app.country}</p>
