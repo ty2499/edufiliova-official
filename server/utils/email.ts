@@ -144,13 +144,13 @@ export class EmailService {
         .layout-0-under-1 {
           display: table !important;
         }
-      }</style><!--<![endif]--><!--[if !mso]><!--><style>@media (max-width: 450px) {
+      }</style><!--<![endif]--><!--[if !mso]><!--><style>@media (max-width: 200px) {
         .layout-1 {
           display: none !important;
         }
       }
-@media (max-width: 450px) and (min-width: 0px) {
-        .layout-1-under-450 {
+@media (max-width: 200px) and (min-width: 0px) {
+        .layout-1-under-200 {
           display: table !important;
         }
       }</style><!--<![endif]--><!--[if !mso]><!--><style>@media (max-width: 450px) {
@@ -162,20 +162,41 @@ export class EmailService {
         .layout-2-under-450 {
           display: table !important;
         }
-      }</style><!--<![endif]--><!--[if !mso]><!--><style>@media (max-width: 1px) {
+      }</style><!--<![endif]--><!--[if !mso]><!--><style>@media (max-width: 200px) {
         .layout-3 {
           display: none !important;
         }
       }
+@media (max-width: 200px) and (min-width: 0px) {
+        .layout-3-under-200 {
+          display: table !important;
+        }
+      }</style><!--<![endif]--><!--[if !mso]><!--><style>@media (max-width: 450px) {
+        .layout-4 {
+          display: none !important;
+        }
+      }
+@media (max-width: 450px) and (min-width: 0px) {
+        .layout-4-under-450 {
+          display: table !important;
+        }
+      }</style><!--<![endif]--><!--[if !mso]><!--><style>@media (max-width: 1px) {
+        .layout-5 {
+          display: none !important;
+        }
+      }
 @media (max-width: 1px) and (min-width: 0px) {
-        .layout-3-under-1 {
+        .layout-5-under-1 {
           display: table !important;
         }
       }</style><!--<![endif]--></head><body style="width:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;background-color:#f0f1f5;margin:0;padding:0"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#f0f1f5" style="background-color:#f0f1f5"><tbody><tr><td style="background-color:#f0f1f5"><!--[if mso]><center>
                     <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
                       <tbody>
                         <tr>
-                          <td><![endif]--><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:600px;margin:0 auto;background-color:#ffffff"><tbody><tr><td style="padding:10px 0px 0px 0px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:10px 0 10px 0"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#000;font-style:normal;font-weight:normal;font-size:16px;line-height:1.4;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word"><tbody><tr><td style="padding:10px 0 10px 0;text-align:center"><img src="cid:logo" alt="EduFiliova" width="200" style="display:inline-block;max-width:100%;height:auto"></td></tr><tr><td style="padding:10px 0 10px 0;text-align:center;color:#0C332C;font-weight:bold">Learning • Skills • Careers</td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="padding:0px"><img src="cid:welcome" alt="Welcome" width="600" style="display:block;width:100%;max-width:600px;height:auto"></td></tr><tr><td style="padding:40px 30px;color:#0C332C;font-family:Arial, Helvetica, sans-serif"><h2 style="margin:0 0 20px;font-size:22px">Hi ${data.fullName},</h2><p style="font-size:16px;line-height:1.6;margin-bottom:20px">We're excited to share some great news with you!</p><p style="font-size:16px;line-height:1.6;margin-bottom:20px">After a careful review of your application, qualifications, and submitted documents, we're happy to inform you that your teacher application has been successfully <strong style="color:#0C332C">approved</strong>. You are now officially part of the EduFiliova global teaching community.</p></td></tr><tr><td style="background-color:#06110f;padding:40px 30px;color:#ffffff;font-family:Arial, Helvetica, sans-serif"><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding-bottom:30px;text-align:center"><h3 style="margin:0;font-size:20px;color:#ffffff">What's Next?</h3></td></tr><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="60" valign="top"><img src="cid:icon1" width="40" height="40" style="display:block"></td><td style="padding-bottom:20px"><strong style="display:block;font-size:16px;margin-bottom:5px">Complete Your Profile</strong><span style="font-size:14px;color:#cccccc">Log in to your dashboard and ensure all your professional details are up to date.</span></td></tr><tr><td width="60" valign="top"><img src="cid:icon2" width="40" height="40" style="display:block"></td><td style="padding-bottom:20px"><strong style="display:block;font-size:16px;margin-bottom:5px">Set Up Your Courses</strong><span style="font-size:14px;color:#cccccc">Start creating engaging content for your students using our AI-assisted tools.</span></td></tr><tr><td width="60" valign="top"><img src="cid:icon3" width="40" height="40" style="display:block"></td><td style="padding-bottom:20px"><strong style="display:block;font-size:16px;margin-bottom:5px">Connect with Students</strong><span style="font-size:14px;color:#cccccc">Use our real-time chat to support and guide your learners.</span></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="padding:40px 30px;text-align:center"><a href="${baseUrl}/login" style="background-color:#0C332C;color:#ffffff;padding:15px 35px;text-decoration:none;border-radius:5px;font-weight:bold;display:inline-block">Go to Dashboard</a></td></tr><tr><td style="background-color:#0C332C;padding:40px 30px;color:#ffffff;text-align:center;font-family:Arial, Helvetica, sans-serif"><img src="cid:footer_logo" alt="EduFiliova" width="150" style="margin-bottom:20px"><p style="font-size:14px;margin-bottom:20px">Empowering education globally through personalized learning experiences.</p><table align="center" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding:0 10px"><a href="#"><img src="${baseUrl}/email-assets/facebook.png" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="${baseUrl}/email-assets/instagram.png" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="${baseUrl}/email-assets/linkedin.png" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="${baseUrl}/email-assets/twitter.png" width="24" height="24"></a></td></tr></tbody></table><p style="font-size:12px;color:#999999;margin-top:30px">© ${new Date().getFullYear()} EduFiliova. All rights reserved.<br>123 Education St, Learning City, Global</p></td></tr></tbody></table><!--[if mso]></td></tr></tbody></table></center><![endif]--></td></tr></tbody></table></body></html>`;
+                          <td><![endif]--><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:600px;min-height:600px;margin:0 auto;background-color:#ffffff"><tbody><tr><td style="vertical-align:top"></td></tr><tr><td style="vertical-align:top;padding:10px
+           0px
+           0px
+           0px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:10px 0 10px 0;vertical-align:top"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#000;font-style:normal;font-weight:normal;font-size:16px;line-height:1.4;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word;word-break:break-word"><tbody><tr><td><table border="0" cellpadding="0" cellspacing="0" class="layout-0" align="center" style="display:table;border-spacing:0px;border-collapse:separate;width:100%;max-width:100%;table-layout:fixed;margin:0 auto;background-color:#2f5a4e;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0"><tbody><tr><td style="text-align:center;padding:12.979552793324286px 0px"><table border="0" cellpadding="0" cellspacing="0" style="border-spacing:0px;border-collapse:separate;width:100%;max-width:600px;table-layout:fixed;margin:0 auto"><tbody><tr><td width="28.12%" style="width:28.12%;box-sizing:border-box;vertical-align:bottom;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0"><table border="0" cellpadding="0" cellspacing="0" style="border-spacing:0px;border-collapse:separate;width:100%;table-layout:fixed"><tbody><tr><td><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#000;font-style:normal;font-weight:normal;font-size:16px;line-height:1.4;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word;word-break:break-word"><tbody><tr><td><table cellpadding="0" cellspacing="0" border="0" style="width:100%"><tbody><tr><td align="left"><table cellpadding="0" cellspacing="0" border="0" style="border-spacing:0px;border-collapse:separate"><tbody><tr><td style="padding:0px"><img src="cid:logo" alt="EduFiliova" width="168" style="display:block;max-width:100%;height:auto;border-radius:0"></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td><td width="71.88%" style="width:71.88%;box-sizing:border-box;vertical-align:middle;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0;border-bottom-right-radius:0"><table border="0" cellpadding="0" cellspacing="0" style="border-spacing:0px;border-collapse:separate;width:100%;table-layout:fixed"><tbody><tr><td><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#000;font-style:normal;font-weight:normal;font-size:16px;line-height:1.4;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word;word-break:break-word"><tbody><tr><td style="padding:0px 10px"><div style="color:#ffffff;text-align:right">Learning • Skills • Careers</div></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:0px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:0px;vertical-align:top"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#000;font-style:normal;font-weight:normal;font-size:16px;line-height:1.4;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word;word-break:break-word"><tbody><tr><td><table cellpadding="0" cellspacing="0" border="0" style="width:100%"><tbody><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="border-spacing:0px;border-collapse:separate"><tbody><tr><td style="padding:0px"><img src="cid:banner" alt="Teacher Application" width="600" style="display:block;max-width:100%;height:auto;border-radius:0"></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:40px 30px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:0px;vertical-align:top"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#0C332C;font-style:normal;font-weight:normal;font-size:16px;line-height:1.6;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word;word-break:break-word"><tbody><tr><td><h2 style="margin:0 0 20px;font-size:22px;color:#0C332C">Hi ${data.fullName},</h2><p style="margin-bottom:20px">We’re excited to share some great news with you!</p><p style="margin-bottom:20px">After a careful review of your application, qualifications, and submitted documents, we’re happy to inform you that your teacher application has been successfully <strong>approved</strong>. You are now officially part of the EduFiliova global teaching community.</p></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:0px 30px 40px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:0px;vertical-align:top"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#0C332C;font-style:normal;font-weight:normal;font-size:16px;line-height:1.6;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word;word-break:break-word"><tbody><tr><td style="background-color:#f9f9f9;padding:30px;border-radius:8px"><h3 style="margin:0 0 15px;font-size:18px">What This Means for You</h3><p style="margin-bottom:15px">As an approved teacher on EduFiliova, you can now:</p><ul style="margin:0;padding-left:20px"><li style="margin-bottom:10px">Create and publish structured courses and lessons</li><li style="margin-bottom:10px">Schedule and host live classes or meetings</li><li style="margin-bottom:10px">Assign quizzes, exercises, and learning materials</li><li style="margin-bottom:10px">Communicate with students through secure messaging</li><li style="margin-bottom:10px">Earn income through courses and live sessions</li><li style="margin-bottom:10px">Reach students from multiple countries</li></ul></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:0px 30px 40px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:0px;vertical-align:top"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#0C332C;font-style:normal;font-weight:normal;font-size:16px;line-height:1.6;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word;word-break:break-word"><tbody><tr><td><h3 style="margin:0 0 20px;font-size:18px">Next Steps:</h3><table width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="40" valign="top" style="padding-top:5px"><img src="cid:icon_dashboard" width="30" style="display:block"></td><td style="padding-bottom:25px;padding-left:15px"><strong>Access your Teacher Dashboard</strong><br><span style="font-size:14px;color:#666666">Log in and explore your dashboard to familiarize yourself with available tools.</span></td></tr><tr><td width="40" valign="top" style="padding-top:5px"><img src="cid:icon_profile" width="30" style="display:block"></td><td style="padding-bottom:25px;padding-left:15px"><strong>Complete Your Teacher Profile</strong><br><span style="font-size:14px;color:#666666">Add a professional photo, bio, teaching style, and subjects.</span></td></tr><tr><td width="40" valign="top" style="padding-top:5px"><img src="cid:icon_course" width="30" style="display:block"></td><td style="padding-bottom:25px;padding-left:15px"><strong>Create Your First Course</strong><br><span style="font-size:14px;color:#666666">Start with a clear, structured course aligned to a grade level you specialize in.</span></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:0px 30px 40px;text-align:center"><a href="${baseUrl}/login" style="background-color:#0C332C;color:#ffffff;padding:15px 35px;text-decoration:none;border-radius:5px;font-weight:bold;display:inline-block">Go to Dashboard</a></td></tr><tr><td style="vertical-align:top;padding:40px 30px;background-color:#0C332C;color:#ffffff;text-align:center;font-family:Arial, Helvetica, sans-serif"><img src="cid:footer_logo" width="150" style="margin-bottom:20px"><p style="font-size:14px;margin-bottom:20px">Empowering education globally through personalized learning experiences.</p><table align="center" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding:0 10px"><a href="#"><img src="cid:social_fb" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="cid:social_ig" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="cid:social_li" width="24" height="24"></a></td><td style="padding:0 10px"><a href="#"><img src="cid:social_tw" width="24" height="24"></a></td></tr></tbody></table><p style="font-size:12px;color:#999999;margin-top:30px">© ${new Date().getFullYear()} EduFiliova. All rights reserved.<br>123 Education St, Learning City, Global</p></td></tr></tbody></table></td></tr></tbody></table></body></html>`;
     
     return this.sendEmail({
       to: email,
@@ -185,33 +206,53 @@ export class EmailService {
       attachments: [
         {
           filename: 'logo.png',
-          path: './public/email-assets/41506b29d7f0bbde9fcb0d4afb720c70_1766616088932.png',
+          path: './public/email-assets/c9513ccbbd620ff1cc148b9f159cd39d_1766617371531.png',
           cid: 'logo'
         },
         {
-          filename: 'welcome.png',
-          path: './public/email-assets/afa2a8b912b8da2c69e49d9de4a30768_1766616088936.png',
-          cid: 'welcome'
+          filename: 'banner.png',
+          path: './public/email-assets/e4d45170731072cbb168266fca3fd470_1766617371537.png',
+          cid: 'banner'
         },
         {
-          filename: 'icon1.png',
-          path: './public/email-assets/db561a55b2cf0bc6e877bb934b39b700_1766616088938.png',
-          cid: 'icon1'
+          filename: 'icon_dashboard.png',
+          path: './public/email-assets/bbe5722d1ffd3c84888e18335965d5e5_1766617371529.png',
+          cid: 'icon_dashboard'
         },
         {
-          filename: 'icon2.png',
-          path: './public/email-assets/83faf7f361d9ba8dfdc904427b5b6423_1766616088930.png',
-          cid: 'icon2'
+          filename: 'icon_profile.png',
+          path: './public/email-assets/d320764f7298e63f6b035289d4219bd8_1766617371533.png',
+          cid: 'icon_profile'
         },
         {
-          filename: 'icon3.png',
-          path: './public/email-assets/3d94f798ad2bd582f8c3afe175798088_1766616088922.png',
-          cid: 'icon3'
+          filename: 'icon_course.png',
+          path: './public/email-assets/df1ad55cc4e451522007cfa4378c9bbd_1766617371535.png',
+          cid: 'icon_course'
         },
         {
-          filename: 'footer-logo.png',
-          path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766616088927.png',
+          filename: 'footer_logo.png',
+          path: './public/email-assets/4a834058470b14425c9b32ace711ef17_1766617371523.png',
           cid: 'footer_logo'
+        },
+        {
+          filename: 'social_fb.png',
+          path: './public/email-assets/9eefdace1f726880f93c5a973a54c2f6_1766617371524.png',
+          cid: 'social_fb'
+        },
+        {
+          filename: 'social_ig.png',
+          path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png',
+          cid: 'social_ig'
+        },
+        {
+          filename: 'social_li.png',
+          path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png',
+          cid: 'social_li'
+        },
+        {
+          filename: 'social_tw.png',
+          path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png',
+          cid: 'social_tw'
         }
       ]
     });
