@@ -13,12 +13,15 @@
   "author": "EduFiliova Team",
   "license": "MIT",
   "devDependencies": {
+    "@havesource/cordova-plugin-push": "^4.0.1",
+    "cordova": "^13.0.0",
     "cordova-android": "^12.0.0",
-    "cordova-plugin-whitelist": "^1.3.5",
-    "cordova-plugin-statusbar": "^4.0.0",
-    "cordova-plugin-splashscreen": "^6.0.2",
     "cordova-plugin-inappbrowser": "^6.0.0",
-    "cordova-plugin-network-information": "^3.0.0"
+    "cordova-plugin-network-information": "^3.0.0",
+    "cordova-plugin-splashscreen": "^6.0.2",
+    "cordova-plugin-statusbar": "^4.0.0",
+    "cordova-plugin-vibration": "^3.1.1",
+    "cordova-plugin-whitelist": "^1.3.5"
   },
   "cordova": {
     "plugins": {
@@ -26,7 +29,12 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-network-information": {}
+      "cordova-plugin-network-information": {},
+      "@havesource/cordova-plugin-push": {
+        "FCM_VERSION": "23.0.0",
+        "ANDROIDX_CORE_VERSION": "1.6.+"
+      },
+      "cordova-plugin-vibration": {}
     },
     "platforms": [
       "android"

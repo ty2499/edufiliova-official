@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.edufiliova.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="StatusBar">
+        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
+    <feature name="PushNotification">
+        <param name="android-package" value="com.adobe.phonegap.push.PushPlugin" />
+    </feature>
+    <name>EduFiliova</name>
+    <description>Personalized learning experiences globally with interactive lessons and educational tools</description>
+    <author email="support@edufiliova.com" href="https://edufiliova.com">EduFiliova Team</author>
+    <content src="https://edufiliova.com/app" />
+    <access origin="*" />
+    <allow-navigation href="https://edufiliova.com/*" />
+    <allow-navigation href="https://*.edufiliova.com/*" />
+    <allow-navigation href="https://*.stripe.com/*" />
+    <allow-navigation href="https://*.paypal.com/*" />
+    <allow-navigation href="https://*.google.com/*" />
+    <allow-navigation href="https://*.facebook.com/*" />
+    <allow-navigation href="https://*.apple.com/*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <allow-intent href="market:*" />
+    <icon density="ldpi" src="res/icon/android/icon-ldpi.png" />
+    <icon density="mdpi" src="res/icon/android/icon-mdpi.png" />
+    <icon density="hdpi" src="res/icon/android/icon-hdpi.png" />
+    <icon density="xhdpi" src="res/icon/android/icon-xhdpi.png" />
+    <icon density="xxhdpi" src="res/icon/android/icon-xxhdpi.png" />
+    <icon density="xxxhdpi" src="res/icon/android/icon-xxxhdpi.png" />
+    <splash density="ldpi" src="res/screen/android/screen-ldpi-port.png" />
+    <splash density="mdpi" src="res/screen/android/screen-mdpi-port.png" />
+    <splash density="hdpi" src="res/screen/android/screen-hdpi-port.png" />
+    <splash density="xhdpi" src="res/screen/android/screen-xhdpi-port.png" />
+    <splash density="xxhdpi" src="res/screen/android/screen-xxhdpi-port.png" />
+    <splash density="xxxhdpi" src="res/screen/android/screen-xxxhdpi-port.png" />
+    <config-file parent="/manifest/application" target="AndroidManifest.xml">
+        <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="edufiliova_channel" />
+    </config-file>
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="AndroidXEnabled" value="true" />
+    <preference name="GradlePluginGoogleServicesEnabled" value="true" />
+    <preference name="GradlePluginGoogleServicesVersion" value="4.3.15" />
+    <preference name="GradlePluginKotlinEnabled" value="true" />
+    <preference name="GradlePluginKotlinVersion" value="1.7.21" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackgroundColor" value="#ffffff" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="Fullscreen" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#d44472" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="AndroidWindowSplashScreenBackground" value="#c5ff00" />
+</widget>
