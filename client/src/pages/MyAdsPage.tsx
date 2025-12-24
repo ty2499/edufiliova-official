@@ -23,7 +23,7 @@ export default function MyAdsPage({ onNavigate, userRole = 'customer' }: MyAdsPa
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
+        <div className="hidden md:block">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">My Advertisements</h1>
           <p className="text-gray-600 mt-1">Manage your banner ad campaigns</p>
         </div>
