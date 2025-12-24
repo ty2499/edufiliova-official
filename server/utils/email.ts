@@ -97,10 +97,6 @@ export class EmailService {
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     
-    // Fixed template:
-    // 1. Removed repeated social media CIDs to prevent triple logos
-    // 2. Corrected image path mapping (Banner image path was correct, but some clients handle background-style CIDs poorly)
-    // 3. Simplified footer to use distinct CIDs for each social platform
     const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -115,9 +111,10 @@ export class EmailService {
     .feature-box { background-color: #f9f9f9; padding: 25px; border-radius: 8px; margin: 30px 0; }
     .footer { background-color: #0C332C; padding: 40px 30px; color: #ffffff; text-align: center; }
     .btn { background-color: #0C332C; color: #ffffff !important; padding: 15px 40px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; }
-    .step-row { margin-bottom: 20px; }
-    .step-icon { width: 30px; vertical-align: top; }
-    .step-text { padding-left: 15px; display: inline-block; width: 480px; }
+    .step-row { margin-bottom: 20px; width: 100%; }
+    .step-icon { width: 40px; vertical-align: top; }
+    .step-text { padding-left: 15px; vertical-align: top; }
+    .social-table { margin: 0 auto; }
   </style>
 </head>
 <body>
@@ -125,81 +122,81 @@ export class EmailService {
     <div class="header">
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td align="left"><img src="cid:logo" alt="EduFiliova" width="150"></td>
-          <td align="right" style="color: #ffffff; font-size: 14px;">Learning • Skills • Careers</td>
+          <td align="left"><img src="cid:logo" alt="EduFiliova" width="150" style="display:block;"></td>
+          <td align="right" style="color: #ffffff; font-size: 14px; font-weight: bold;">Learning • Skills • Careers</td>
         </tr>
       </table>
     </div>
     
-    <img src="cid:banner" alt="Teacher Application" class="banner">
+    <img src="cid:banner" alt="Welcome" class="banner">
     
     <div class="content">
-      <h2 style="margin-top: 0;">Hi ${data.fullName},</h2>
+      <h2 style="margin-top: 0; color: #0C332C;">Hi ${data.fullName},</h2>
       <p>We’re excited to share some great news with you!</p>
       <p>After a careful review of your application, qualifications, and submitted documents, we’re happy to inform you that your teacher application has been successfully <strong>approved</strong>. You are now officially part of the EduFiliova global teaching community.</p>
       
       <div class="feature-box">
-        <h3 style="margin-top: 0;">What This Means for You</h3>
-        <ul style="padding-left: 20px;">
-          <li>Create and publish structured courses and lessons</li>
-          <li>Schedule and host live classes or meetings</li>
-          <li>Assign quizzes and learning materials</li>
-          <li>Communicate with students via secure messaging</li>
-          <li>Earn income through your expertise</li>
+        <h3 style="margin-top: 0; color: #0C332C;">What This Means for You</h3>
+        <ul style="padding-left: 20px; margin-bottom: 0;">
+          <li style="margin-bottom: 10px;">Create and publish structured courses and lessons</li>
+          <li style="margin-bottom: 10px;">Schedule and host live classes or meetings</li>
+          <li style="margin-bottom: 10px;">Assign quizzes, exercises, and learning materials</li>
+          <li style="margin-bottom: 10px;">Communicate with students through secure messaging</li>
+          <li style="margin-bottom: 0;">Earn income through courses and live sessions</li>
         </ul>
       </div>
 
-      <h3>Next Steps:</h3>
+      <h3 style="color: #0C332C;">Next Steps:</h3>
       
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="step-row">
         <tr>
-          <td class="step-icon"><img src="cid:icon_db" width="30"></td>
+          <td class="step-icon"><img src="cid:icon_db" width="30" style="display:block;"></td>
           <td class="step-text">
-            <strong>Access your Teacher Dashboard</strong><br>
-            <span style="font-size: 14px; color: #666;">Explore the tools and features available to you.</span>
+            <strong style="display:block; margin-bottom: 5px;">Access your Teacher Dashboard</strong>
+            <span style="font-size: 14px; color: #666;">Log in and explore your dashboard to familiarize yourself with available tools.</span>
           </td>
         </tr>
       </table>
 
       <table width="100%" border="0" cellpadding="0" cellspacing="0" class="step-row">
         <tr>
-          <td class="step-icon"><img src="cid:icon_pf" width="30"></td>
+          <td class="step-icon"><img src="cid:icon_pf" width="30" style="display:block;"></td>
           <td class="step-text">
-            <strong>Complete Your Profile</strong><br>
-            <span style="font-size: 14px; color: #666;">Add your photo and bio to build student trust.</span>
+            <strong style="display:block; margin-bottom: 5px;">Complete Your Teacher Profile</strong>
+            <span style="font-size: 14px; color: #666;">Add a professional photo, bio, teaching style, and subjects.</span>
           </td>
         </tr>
       </table>
 
-      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="step-row">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="step-row" style="margin-bottom: 40px;">
         <tr>
-          <td class="step-icon"><img src="cid:icon_cs" width="30"></td>
+          <td class="step-icon"><img src="cid:icon_cs" width="30" style="display:block;"></td>
           <td class="step-text">
-            <strong>Create Your First Course</strong><br>
-            <span style="font-size: 14px; color: #666;">Start sharing your knowledge with the world.</span>
+            <strong style="display:block; margin-bottom: 5px;">Create Your First Course or Lesson</strong>
+            <span style="font-size: 14px; color: #666;">Start sharing your knowledge with the world through structured lessons.</span>
           </td>
         </tr>
       </table>
 
-      <div style="text-align: center; margin-top: 40px;">
+      <div style="text-align: center;">
         <a href="${baseUrl}/login" class="btn">Go to Dashboard</a>
       </div>
     </div>
 
     <div class="footer">
-      <img src="cid:footer_logo" alt="EduFiliova" width="150" style="margin-bottom: 20px;">
-      <p style="color: #a3f7b5; font-size: 14px; margin-bottom: 20px;">Empowering education globally through personalized learning.</p>
+      <img src="cid:f_logo" alt="EduFiliova" width="150" style="margin-bottom: 20px; display: inline-block;">
+      <p style="color: #a3f7b5; font-size: 14px; margin-bottom: 25px; max-width: 400px; margin-left: auto; margin-right: auto;">Empowering education globally through personalized learning experiences.</p>
       
-      <table align="center" border="0" cellpadding="0" cellspacing="0">
+      <table border="0" cellpadding="0" cellspacing="0" class="social-table">
         <tr>
-          <td style="padding: 0 10px;"><a href="#"><img src="cid:fb" width="24" height="24" alt="FB"></a></td>
-          <td style="padding: 0 10px;"><a href="#"><img src="cid:ig" width="24" height="24" alt="IG"></a></td>
-          <td style="padding: 0 10px;"><a href="#"><img src="cid:li" width="24" height="24" alt="LI"></a></td>
-          <td style="padding: 0 10px;"><a href="#"><img src="cid:tw" width="24" height="24" alt="TW"></a></td>
+          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_fb" width="24" height="24" alt="Facebook" style="display:block;"></a></td>
+          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_ig" width="24" height="24" alt="Instagram" style="display:block;"></a></td>
+          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_li" width="24" height="24" alt="LinkedIn" style="display:block;"></a></td>
+          <td style="padding: 0 12px;"><a href="#"><img src="cid:s_tw" width="24" height="24" alt="Twitter" style="display:block;"></a></td>
         </tr>
       </table>
       
-      <p style="font-size: 12px; color: #888; margin-top: 30px;">© ${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
+      <p style="font-size: 12px; color: #999; margin-top: 35px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">© ${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
     </div>
   </div>
 </body>
@@ -213,14 +210,14 @@ export class EmailService {
       attachments: [
         { filename: 'logo.png', path: './public/email-assets/c9513ccbbd620ff1cc148b9f159cd39d_1766617371531.png', cid: 'logo' },
         { filename: 'banner.png', path: './public/email-assets/e4d45170731072cbb168266fca3fd470_1766617371537.png', cid: 'banner' },
-        { filename: 'icon_db.png', path: './public/email-assets/bbe5722d1ffd3c84888e18335965d5e5_1766617371529.png', cid: 'icon_db' },
-        { filename: 'icon_pf.png', path: './public/email-assets/d320764f7298e63f6b035289d4219bd8_1766617371533.png', cid: 'icon_pf' },
-        { filename: 'icon_cs.png', path: './public/email-assets/df1ad55cc4e451522007cfa4378c9bbd_1766617371535.png', cid: 'icon_cs' },
-        { filename: 'flogo.png', path: './public/email-assets/4a834058470b14425c9b32ace711ef17_1766617371523.png', cid: 'footer_logo' },
-        { filename: 'fb.png', path: './public/email-assets/9eefdace1f726880f93c5a973a54c2f6_1766617371524.png', cid: 'fb' },
-        { filename: 'ig.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 'ig' },
-        { filename: 'li.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 'li' },
-        { filename: 'tw.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 'tw' }
+        { filename: 'idb.png', path: './public/email-assets/bbe5722d1ffd3c84888e18335965d5e5_1766617371529.png', cid: 'icon_db' },
+        { filename: 'ipf.png', path: './public/email-assets/d320764f7298e63f6b035289d4219bd8_1766617371533.png', cid: 'icon_pf' },
+        { filename: 'ics.png', path: './public/email-assets/df1ad55cc4e451522007cfa4378c9bbd_1766617371535.png', cid: 'icon_cs' },
+        { filename: 'fl.png', path: './public/email-assets/4a834058470b14425c9b32ace711ef17_1766617371523.png', cid: 'f_logo' },
+        { filename: 'fb.png', path: './public/email-assets/9eefdace1f726880f93c5a973a54c2f6_1766617371524.png', cid: 's_fb' },
+        { filename: 'ig.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 's_ig' },
+        { filename: 'li.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 's_li' },
+        { filename: 'tw.png', path: './public/email-assets/9f7291948d8486bdd26690d0c32796e0_1766617371526.png', cid: 's_tw' }
       ]
     });
   }
