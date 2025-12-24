@@ -101,8 +101,16 @@ export class EmailService {
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_1766617362502.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
-    // Remove preloads that might confuse some clients
+    // Remove preloads and add iPhone font support
     html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    
+    // Inject iPhone system font stack at the beginning of style or head
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
     // 1:1 replacement of EXACT relative paths from the provided HTML with CIDs
     html = html.replaceAll('images/c9513ccbbd620ff1cc148b9f159cd39d.png', 'cid:logo');
@@ -114,9 +122,10 @@ export class EmailService {
     html = html.replaceAll('images/9eefdace1f726880f93c5a973a54c2f6.png', 'cid:s_fb');
     html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
 
-    // Inject dynamic data
-    html = html.replace(/\[\[Full Name\]\]/g, data.fullName);
-    html = html.replace(/\[\[Display Name\]\]/g, data.displayName);
+    // Dynamic Data Injection - ensure exact replacement for placeholders
+    // The design uses specific text for placeholders, likely "Hi [[Full Name]]" or similar
+    html = html.replaceAll('[[Full Name]]', data.fullName);
+    html = html.replaceAll('[[Display Name]]', data.displayName);
     html = html.replaceAll('{{baseUrl}}', baseUrl);
 
     const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
