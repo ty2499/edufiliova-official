@@ -549,7 +549,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
         <div className="grid lg:grid-cols-12 gap-8">
           {/* Main Form - Premium Design */}
           <div className="lg:col-span-8">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden">
+            <div className="bg-white shadow-sm border border-gray-200/50 overflow-hidden">
               {/* Form Content */}
               <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-0 px-8 pt-0">
