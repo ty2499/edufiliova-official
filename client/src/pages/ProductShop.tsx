@@ -120,9 +120,10 @@ interface ProductShopProps {
   navigationData?: any;
 }
 
-export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchChange, navigationData }: ProductShopProps = {}) {
+export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navigationData }: ProductShopProps = {}) {
   const { user, profile, loading: authLoading } = useAuth();
   const queryClient = useQueryClient();
+  const isLandingPage = !!onNavigate;
   
   // Helper function to get the appropriate dashboard based on user role
   const getDashboardForRole = (): string => {
@@ -135,18 +136,17 @@ export function ProductShop({ onNavigate = () => {}, searchQuery = '', onSearchC
     }
   };
   
-  // Redirect logged-in users to their dashboard
+  // Redirect logged-in users to their dashboard ONLY in landing page mode
   useEffect(() => {
-    if (!authLoading && user && profile) {
+    if (isLandingPage && !authLoading && user && profile) {
       const dashboard = getDashboardForRole();
-      onNavigate?.(dashboard, 'slide-left');
+      onNavigate(dashboard, 'slide-left');
     }
-  }, [user, profile, authLoading, onNavigate]);
+  }, [user, profile, authLoading, isLandingPage, onNavigate]);
   
   // Only show login controls when auth is fully loaded and user is NOT logged in
   // This prevents showing login UI while auth is still checking the session
   const showLoginControls = !authLoading && !user;
-  const isLandingPage = !!onNavigate;
   const { 
     isGuestMode, 
     addToGuestCart, 
