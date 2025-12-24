@@ -2122,7 +2122,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
       {/* Main Content */}
       <div className="flex pt-16">
         <main className={`flex-1 ${showMobileMenu ? 'lg:ml-64' : 'lg:ml-0'} min-h-screen overflow-y-auto transition-all duration-300 bg-white`}>
-          <div className={`bg-white ${(activeTab === 'portfolio-gallery' || activeTab === 'freelancer-profile' || activeTab === 'portfolio-preview') ? 'p-0' : 'p-6 lg:p-8'}`}>
+          <div className={`bg-white ${(activeTab === 'portfolio-gallery' || activeTab === 'freelancer-profile' || activeTab === 'portfolio-preview') ? 'p-0' : 'p-4 sm:p-6 lg:p-8'}`}>
             {/* Dashboard Overview */}
             {activeTab === 'overview' && (
               <div className="space-y-6">
