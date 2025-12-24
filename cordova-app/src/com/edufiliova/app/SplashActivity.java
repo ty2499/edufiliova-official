@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.FrameLayout;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
+import org.json.JSONObject;
+import java.io.InputStream;
 
 public class SplashActivity extends Activity {
 
@@ -16,31 +19,9 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         
-        // Animate the circles
+        // Try to load JSON animation
         try {
-            View circle1 = findViewById(R.id.circle1);
-            View circle2 = findViewById(R.id.circle2);
-            View circle3 = findViewById(R.id.circle3);
-            View circle4 = findViewById(R.id.circle4);
-            
-            if (circle1 != null) {
-                circle1.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce_up));
-            }
-            if (circle2 != null) {
-                android.view.animation.Animation anim2 = AnimationUtils.loadAnimation(this, R.anim.bounce_up);
-                anim2.setStartOffset(100);
-                circle2.startAnimation(anim2);
-            }
-            if (circle3 != null) {
-                android.view.animation.Animation anim3 = AnimationUtils.loadAnimation(this, R.anim.bounce_up);
-                anim3.setStartOffset(200);
-                circle3.startAnimation(anim3);
-            }
-            if (circle4 != null) {
-                android.view.animation.Animation anim4 = AnimationUtils.loadAnimation(this, R.anim.bounce_up);
-                anim4.setStartOffset(300);
-                circle4.startAnimation(anim4);
-            }
+            loadJsonAnimation();
         } catch (Exception e) {
             android.util.Log.e("SplashActivity", "Animation error: " + e.getMessage());
         }
@@ -56,5 +37,32 @@ public class SplashActivity extends Activity {
                 finish();
             }
         }, 3000);
+    }
+    
+    private void loadJsonAnimation() {
+        try {
+            FrameLayout container = findViewById(R.id.animation_container);
+            if (container != null) {
+                // Create a WebView to render the animation
+                WebView webView = new WebView(this);
+                container.addView(webView);
+                
+                // Load HTML with animation
+                String html = "<!DOCTYPE html><html><head><style>" +
+                    "body { margin: 0; padding: 0; background: #0c332c; display: flex; align-items: center; justify-content: center; height: 100vh; }" +
+                    "</style></head><body>" +
+                    "<svg viewBox='0 0 400 400' width='200' height='200' xmlns='http://www.w3.org/2000/svg'>" +
+                    "<circle cx='80' cy='200' r='20' fill='#a0fab2'><animate attributeName='cy' values='200;100;200' dur='0.6s' repeatCount='indefinite'/></circle>" +
+                    "<circle cx='160' cy='200' r='20' fill='#a0fab2'><animate attributeName='cy' values='200;100;200' dur='0.6s' repeatCount='indefinite' begin='0.1s'/></circle>" +
+                    "<circle cx='240' cy='200' r='20' fill='#a0fab2'><animate attributeName='cy' values='200;100;200' dur='0.6s' repeatCount='indefinite' begin='0.2s'/></circle>" +
+                    "<circle cx='320' cy='200' r='20' fill='#a0fab2'><animate attributeName='cy' values='200;100;200' dur='0.6s' repeatCount='indefinite' begin='0.3s'/></circle>" +
+                    "</svg>" +
+                    "</body></html>";
+                
+                webView.loadData(html, "text/html", "utf-8");
+            }
+        } catch (Exception e) {
+            android.util.Log.e("SplashActivity", "JSON Animation load error: " + e.getMessage());
+        }
     }
 }
