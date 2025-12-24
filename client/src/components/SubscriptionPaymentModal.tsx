@@ -145,6 +145,16 @@ export default function SubscriptionPaymentModal({
               console.error("Card checkout error:", event.data);
               const friendlyError = getFriendlyErrorMessage(event.data?.message || "Card payment failed");
               setError(friendlyError);
+              setPaymentDetails({
+                transactionId: 'N/A',
+                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                paymentMethod: 'Card',
+                total: plan.price,
+                planName: plan.name,
+                errorMessage: friendlyError
+              });
+              setPaymentStatus('failed');
+              setShowSuccess(true);
               setProcessing(false);
             }
           }
@@ -153,6 +163,9 @@ export default function SubscriptionPaymentModal({
         console.log(`✅ DodoPayments overlay SDK initialized (subscription) - mode: ${dodoMode}`);
       } catch (error) {
         console.warn("Failed to initialize Dodo overlay SDK:", error);
+        // Show friendly error to user if SDK initialization fails
+        const friendlyError = handlePaymentError(error, 'DodoPayments SDK');
+        setError(friendlyError);
       }
     }
   }, [isDodoEnabled, isDodoTestMode, dodoInitialized, onSuccess]);

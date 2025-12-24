@@ -5,20 +5,40 @@
 
 export function getFriendlyErrorMessage(error: any): string {
   if (!error) {
-    return 'Something went wrong. Please try again or contact support.';
+    return 'Something went wrong. Please refresh your browser and try again.';
   }
 
   const errorMessage = error?.message?.toLowerCase() || error?.toString?.()?.toLowerCase() || '';
+  const errorCode = error?.code || error?.response?.status;
+
+  // Connection/Network errors (applies to all gateways)
+  if (errorMessage.includes('network') || 
+      errorMessage.includes('timeout') || 
+      errorMessage.includes('offline') ||
+      errorMessage.includes('econnrefused') ||
+      errorMessage.includes('enotfound') ||
+      errorCode === 0 || // Network error
+      errorCode === 'ENOTFOUND' ||
+      errorCode === 'ECONNREFUSED') {
+    return 'Unable to connect to payment service. Please check your internet connection and refresh your browser, then try again.';
+  }
 
   // DodoPayments errors
   if (errorMessage.includes('dodo') || errorMessage.includes('dodopay')) {
+    // Connection/API issues
+    if (errorMessage.includes('failed to fetch') ||
+        errorMessage.includes('api') ||
+        errorMessage.includes('bearer') ||
+        errorMessage.includes('initialization')) {
+      return 'Cannot connect to card payment service. Please refresh your browser and check your internet connection.';
+    }
     if (errorMessage.includes('currency') || errorMessage.includes('product')) {
       return 'Payment system configuration issue. Please contact support.';
     }
-    if (errorMessage.includes('timeout') || errorMessage.includes('connection')) {
-      return 'Connection issue. Please check your internet and try again.';
+    if (errorMessage.includes('response')) {
+      return 'Card payment service is temporarily unavailable. Please try again in a moment or use another payment method.';
     }
-    return 'Card payment failed. Please try again or use another payment method.';
+    return 'Card payment failed. Please refresh your browser and try again, or use another payment method.';
   }
 
   // Stripe errors
@@ -70,9 +90,9 @@ export function getFriendlyErrorMessage(error: any): string {
     return 'Card payment failed. Please check your card details and try again.';
   }
 
-  // Network/Connection errors
-  if (errorMessage.includes('network') || errorMessage.includes('timeout') || errorMessage.includes('offline')) {
-    return 'Connection issue. Please check your internet connection and try again.';
+  // Additional PayPal connection issues
+  if (errorMessage.includes('paypal') && (errorMessage.includes('connect') || errorMessage.includes('fetch'))) {
+    return 'Cannot reach PayPal service. Please refresh your browser and check your internet, then try again.';
   }
 
   // Verification/Confirmation errors
@@ -80,8 +100,8 @@ export function getFriendlyErrorMessage(error: any): string {
     return 'Payment was processed but enrollment failed. Please contact support.';
   }
 
-  // Generic fallback
-  return 'Payment failed. Please try again or contact support if the problem persists.';
+  // Generic fallback with actionable advice
+  return 'Payment failed. Please refresh your browser, check your internet connection, and try again. If the problem persists, contact support.';
 }
 
 /**

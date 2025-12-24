@@ -221,7 +221,7 @@ export default function NewPaymentModal({
                   date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
                   paymentMethod: 'Card',
                   total: finalPriceUSD,
-                  errorMessage: error?.message || 'Failed to enroll in course',
+                  errorMessage: getFriendlyErrorMessage(error),
                 });
                 setPaymentStatus('failed');
                 setShowSuccess(true);
@@ -231,6 +231,18 @@ export default function NewPaymentModal({
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
               console.error("Card checkout error:", event.data);
+              const friendlyError = getFriendlyErrorMessage(event.data?.message || "Card payment failed");
+              setPaymentDetails({
+                transactionId: 'N/A',
+                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                paymentMethod: 'Card',
+                total: finalPriceUSD,
+                currency: '$',
+                courseId: courseId,
+                errorMessage: friendlyError
+              });
+              setPaymentStatus('failed');
+              setShowSuccess(true);
               setProcessing(false);
             }
           }
