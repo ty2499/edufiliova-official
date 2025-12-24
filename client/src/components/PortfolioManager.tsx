@@ -137,10 +137,10 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
   return (
     <div className="space-y-6" data-testid="portfolio-manager">
       {/* Header */}
-      <div className="flex items-center justify-between bg-primary p-6 rounded-lg">
+      <div className="flex items-center justify-between bg-primary p-3 md:p-6 rounded-lg">
         <div>
-          <h2 className="text-3xl font-bold text-white">Portfolio Management</h2>
-          <p className="text-white mt-1">
+          <h2 className="text-xl md:text-3xl font-bold text-white">Portfolio Management</h2>
+          <p className="text-white text-sm md:text-base mt-1">
             Create and manage your portfolio projects and showcase submissions
           </p>
         </div>
@@ -148,8 +148,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
 
       {/* Tabs and View Toggle */}
       <div className="border-b">
-        <div className="flex items-center justify-between">
-          <div className="flex space-x-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0">
+          <div className="flex space-x-2 md:space-x-8 overflow-x-auto">
             <button
               onClick={() => setActiveTab('portfolio')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
@@ -177,7 +177,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
           {/* View Dropdown - Only show on portfolio tab */}
           {activeTab === 'portfolio' && (
             <Select value={viewMode} onValueChange={(value: 'grid' | 'list') => setViewMode(value)}>
-              <SelectTrigger className="w-32" data-testid="select-view-mode">
+              <SelectTrigger className="w-full md:w-32" data-testid="select-view-mode">
                 <SelectValue placeholder="View" />
               </SelectTrigger>
               <SelectContent>
@@ -192,7 +192,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
       {/* Portfolio Tab */}
       {activeTab === 'portfolio' && (
         <div className="space-y-6">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
             <h3 className="text-lg font-semibold">Your Portfolio Works</h3>
             <Button 
               onClick={() => {
@@ -202,7 +202,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                   window.location.href = '?page=portfolio-create';
                 }
               }} 
-              className="bg-primary hover:bg-primary text-[#ffffff]" transition-all duration-300 
+              className="w-full md:w-auto bg-primary hover:bg-primary text-[#ffffff]" transition-all duration-300 
               data-testid="button-create-work"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -360,10 +360,10 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
             <div className="space-y-4">
               {works.map((work) => (
                 <Card key={work.id} className="hover:shadow-lg transition-shadow" transition-all duration-300>
-                  <CardContent className="p-6">
-                    <div className="flex gap-4">
+                  <CardContent className="p-3 md:p-6">
+                    <div className="flex flex-col md:flex-row gap-4">
                       {/* Thumbnail Carousel - Clickable for preview */}
-                      <div className="w-32 flex-shrink-0">
+                      <div className="w-full md:w-32 flex-shrink-0">
                         <MediaCarousel
                           images={work.media?.filter(m => m.type === 'image').map(m => m.url) || []}
                           aspectRatio=""
@@ -375,8 +375,8 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex-1 min-w-0 mr-4">
+                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 md:gap-0 mb-2">
+                          <div className="flex-1 min-w-0 md:mr-4">
                             <div className="flex items-center gap-2 mb-1">
                               <h3 className="font-semibold text-lg truncate">{work.title}</h3>
                               <Badge 
@@ -393,11 +393,11 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                           </div>
                           
                           {/* Action Buttons */}
-                          <div className="flex items-center gap-1.5 flex-shrink-0">
+                          <div className="flex items-center gap-1.5 flex-shrink-0 w-full md:w-auto">
                             <Button 
                               size="sm" 
                               onClick={() => handleEdit(work)}
-                              className="h-8 text-xs px-3 text-white border-0"
+                              className="h-8 text-xs px-3 text-white border-0 flex-1 md:flex-none"
                               style={{ backgroundColor: '#0C332C' }}
                               data-testid={`button-edit-list-${work.id}`}
                             >
@@ -464,36 +464,36 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
       {activeTab === 'analytics' && (
         <div className="space-y-6">
           {/* Portfolio Stats Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             <Card>
-              <CardContent className="p-6">
-                <p className="text-sm font-medium text-gray-600">Total Works</p>
-                <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">{works.length}</p>
+              <CardContent className="p-4 md:p-6">
+                <p className="text-xs md:text-sm font-medium text-gray-600">Total Works</p>
+                <p className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">{works.length}</p>
               </CardContent>
             </Card>
 
             <Card>
-              <CardContent className="p-6">
-                <p className="text-sm font-medium text-gray-600">Total Views</p>
-                <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+              <CardContent className="p-4 md:p-6">
+                <p className="text-xs md:text-sm font-medium text-gray-600">Total Views</p>
+                <p className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">
                   {works.reduce((sum, work) => sum + work.viewsCount, 0)}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
-              <CardContent className="p-6">
-                <p className="text-sm font-medium text-gray-600">Total Likes</p>
-                <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+              <CardContent className="p-4 md:p-6">
+                <p className="text-xs md:text-sm font-medium text-gray-600">Total Likes</p>
+                <p className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">
                   {works.reduce((sum, work) => sum + work.likesCount, 0)}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
-              <CardContent className="p-6">
-                <p className="text-sm font-medium text-gray-600">Total Comments</p>
-                <p className="text-3xl font-bold text-slate-800 dark:text-slate-100">
+              <CardContent className="p-4 md:p-6">
+                <p className="text-xs md:text-sm font-medium text-gray-600">Total Comments</p>
+                <p className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100">
                   {works.reduce((sum, work) => sum + work.commentsCount, 0)}
                 </p>
               </CardContent>
@@ -512,7 +512,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                   .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                   .slice(0, 5)
                   .map((work, index) => (
-                    <div key={work.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div key={work.id} className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 p-3 md:p-4 border rounded-lg">
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-8 rounded overflow-hidden bg-gray-100">
                           {work.media[0] && (
@@ -530,18 +530,18 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-6 text-sm">
-                        <div className="text-center">
-                          <p className="font-semibold">{work.viewsCount}</p>
-                          <p className="text-gray-500">Views</p>
+                      <div className="flex items-center gap-6 text-sm w-full md:w-auto">
+                        <div className="flex-1 md:flex-none text-center">
+                          <p className="font-semibold text-sm">{work.viewsCount}</p>
+                          <p className="text-gray-500 text-xs">Views</p>
                         </div>
-                        <div className="text-center">
-                          <p className="font-semibold">{work.likesCount}</p>
-                          <p className="text-gray-500">Likes</p>
+                        <div className="flex-1 md:flex-none text-center">
+                          <p className="font-semibold text-sm">{work.likesCount}</p>
+                          <p className="text-gray-500 text-xs">Likes</p>
                         </div>
-                        <div className="text-center">
-                          <p className="font-semibold">{work.commentsCount}</p>
-                          <p className="text-gray-500">Comments</p>
+                        <div className="flex-1 md:flex-none text-center">
+                          <p className="font-semibold text-sm">{work.commentsCount}</p>
+                          <p className="text-gray-500 text-xs">Comments</p>
                         </div>
                       </div>
                     </div>
