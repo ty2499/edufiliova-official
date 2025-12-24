@@ -239,7 +239,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
   return (
     <div className="min-h-screen bg-background flex flex-col md:block" data-testid="admin-applications-management">
       {/* Mobile Top Navbar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#0C332C] flex items-center justify-between px-4 z-50 border-b border-white/10 pt-safe">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#0C332C] flex items-center justify-between px-3 z-50 border-b border-white/10 pt-safe">
         <Button
           variant="ghost"
           size="icon"
@@ -261,7 +261,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
       } md:translate-x-0 ${
         isChatOpen ? "hidden" : "block"
       }`}>
-        <div className="flex flex-col py-4 px-3 bg-[#0C332C] min-h-full">
+        <div className="flex flex-col py-4 px-2 md:px-3 bg-[#0C332C] min-h-full">
           {/* Header */}
           <div className="flex items-center justify-between mb-6" data-testid="sidebar-header">
             <h2 className="text-white font-bold text-xl">Admin</h2>
@@ -346,18 +346,18 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 md:ml-64 p-4 md:p-6 mt-16 md:mt-0">
+      <div className="flex-1 md:ml-64 px-3 py-4 md:p-6 mt-16 md:mt-0">
         <div className="max-w-7xl mx-auto">
           {viewMode === 'list' && (
             <>
-              <div className="mb-6">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Applications Management</h1>
-                <p className="text-gray-600 dark:text-gray-400 mt-2">Review and manage teacher and freelancer applications</p>
+              <div className="mb-6 px-1 md:px-0">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Applications Management</h1>
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-2">Review and manage teacher and freelancer applications</p>
               </div>
 
           {/* Status Filter Tabs */}
-          <div className="mb-6">
-            <div className="flex flex-wrap gap-2">
+          <div className="mb-6 px-1 md:px-0">
+            <div className="flex flex-wrap gap-1 md:gap-2">
               <Button
                 variant={statusFilter === "all" ? "default" : "outline"}
                 onClick={() => setStatusFilter("all")}
@@ -405,10 +405,10 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
             </div>
           </div>
 
-          <Tabs defaultValue="teachers" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="teachers">Teacher Applications ({filteredTeacherApps.length})</TabsTrigger>
-              <TabsTrigger value="freelancers">Freelancer Applications ({filteredFreelancerApps.length})</TabsTrigger>
+          <Tabs defaultValue="teachers" className="w-full px-1 md:px-0">
+            <TabsList className="grid w-full grid-cols-2 mb-6 h-auto">
+              <TabsTrigger value="teachers" className="text-xs sm:text-sm">Teacher ({filteredTeacherApps.length})</TabsTrigger>
+              <TabsTrigger value="freelancers" className="text-xs sm:text-sm">Freelancer ({filteredFreelancerApps.length})</TabsTrigger>
             </TabsList>
 
             <TabsContent value="teachers">
@@ -421,7 +421,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                   </CardContent>
                 </Card>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                   {filteredTeacherApps.map((app) => (
                     <Card key={app.id} data-testid={`teacher-app-${app.id}`} className="flex flex-col">
                       <CardHeader className="pb-3">
@@ -475,7 +475,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                   </CardContent>
                 </Card>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                   {filteredFreelancerApps.map((app) => (
                     <Card key={app.id} data-testid={`freelancer-app-${app.id}`} className="flex flex-col">
                       <CardHeader className="pb-3">
@@ -525,24 +525,26 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
           {/* Teacher Detail View - Full Page */}
           {viewMode === 'teacher-detail' && selectedTeacherApp && (
             <>
-              <div className="mb-6 flex items-center gap-4">
+              <div className="mb-6 flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 px-1 md:px-0">
                 <Button
                   variant="outline"
                   onClick={handleBackToList}
                   data-testid="back-to-list"
+                  size="sm"
+                  className="w-full md:w-auto"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Applications
                 </Button>
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Teacher Application Details</h1>
-                  <p className="text-gray-600 dark:text-gray-400 mt-1">{selectedTeacherApp.fullName}</p>
+                <div className="w-full">
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Teacher Application Details</h1>
+                  <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">{selectedTeacherApp.fullName}</p>
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 md:p-6">
                 <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                     <div>
                       <Label>Full Name</Label>
                       <p className="text-sm mt-1">{selectedTeacherApp.fullName}</p>
@@ -975,24 +977,26 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
           {/* Freelancer Detail View - Full Page */}
           {viewMode === 'freelancer-detail' && selectedFreelancerApp && (
             <>
-              <div className="mb-6 flex items-center gap-4">
+              <div className="mb-6 flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 px-1 md:px-0">
                 <Button
                   variant="outline"
                   onClick={handleBackToList}
                   data-testid="back-to-list-freelancer"
+                  size="sm"
+                  className="w-full md:w-auto"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Applications
                 </Button>
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Freelancer Application Details</h1>
-                  <p className="text-gray-600 dark:text-gray-400 mt-1">{selectedFreelancerApp.fullName}</p>
+                <div className="w-full">
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Freelancer Application Details</h1>
+                  <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">{selectedFreelancerApp.fullName}</p>
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 md:p-6">
                 <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                     <div>
                       <Label>Full Name</Label>
                       <p className="text-sm mt-1">{selectedFreelancerApp.fullName}</p>
