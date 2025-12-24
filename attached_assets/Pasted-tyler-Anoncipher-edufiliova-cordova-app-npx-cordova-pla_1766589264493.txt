@@ -1,0 +1,47 @@
+tyler@Anoncipher:~/edufiliova/cordova-app$ npx cordova platform add android
+Using cordova-fetch for cordova-android@^12.0.0
+Adding android project...
+Creating Cordova project for the Android platform:
+	Path: platforms/android
+	Package: com.edufiliova.app
+	Name: EduFiliova
+	Activity: MainActivity
+	Android Target SDK: android-33
+	Android Compile SDK: 33
+Subproject Path: CordovaLib
+Subproject Path: app
+Android project created with cordova-android@12.0.1
+The "<splash>" tags were detected and are no longer supported. Please migrate to the "preference" tag "AndroidWindowSplashScreenAnimatedIcon".
+Plugin '@havesource/cordova-plugin-push' found in config.xml... Migrating it to package.json
+Plugin 'cordova-plugin-vibration' found in config.xml... Migrating it to package.json
+Discovered plugin "cordova-plugin-whitelist". Adding it to the project
+Installing "cordova-plugin-whitelist" for android
+Plugin doesn't support this project's cordova-android version. cordova-android: 12.0.1, failed version requirement: >=4.0.0 <10.0.0
+Skipping 'cordova-plugin-whitelist' for android
+Adding cordova-plugin-whitelist to package.json
+The "<splash>" tags were detected and are no longer supported. Please migrate to the "preference" tag "AndroidWindowSplashScreenAnimatedIcon".
+Discovered plugin "cordova-plugin-statusbar". Adding it to the project
+Installing "cordova-plugin-statusbar" for android
+Adding cordova-plugin-statusbar to package.json
+Discovered plugin "cordova-plugin-splashscreen". Adding it to the project
+Installing "cordova-plugin-splashscreen" for android
+Plugin doesn't support this project's cordova-android version. cordova-android: 12.0.1, failed version requirement: >=3.6.0 <11.0.0
+Skipping 'cordova-plugin-splashscreen' for android
+Adding cordova-plugin-splashscreen to package.json
+The "<splash>" tags were detected and are no longer supported. Please migrate to the "preference" tag "AndroidWindowSplashScreenAnimatedIcon".
+Discovered plugin "cordova-plugin-inappbrowser". Adding it to the project
+Installing "cordova-plugin-inappbrowser" for android
+Adding cordova-plugin-inappbrowser to package.json
+Discovered plugin "cordova-plugin-network-information". Adding it to the project
+Installing "cordova-plugin-network-information" for android
+Adding cordova-plugin-network-information to package.json
+Discovered plugin "@havesource/cordova-plugin-push". Adding it to the project
+Installing "@havesource/cordova-plugin-push" for android
+Subproject Path: CordovaLib
+Subproject Path: app
+Adding @havesource/cordova-plugin-push to package.json
+Discovered plugin "cordova-plugin-vibration". Adding it to the project
+Installing "cordova-plugin-vibration" for android
+Adding cordova-plugin-vibration to package.json
+The "<splash>" tags were detected and are no longer supported. Please migrate to the "preference" tag "AndroidWindowSplashScreenAnimatedIcon".
+tyler@Anoncipher:~/edufiliova/cordova-app$ 
