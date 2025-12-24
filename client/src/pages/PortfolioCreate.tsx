@@ -883,25 +883,11 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                   <Button
                     type="submit"
                     disabled={submitState === 'saving' || submitState === 'success' || (uploadedImages.length === 0 && videoUrls.length === 0)}
-                    className={`
-                      relative px-12 py-4 text-lg font-bold text-white
-                      bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600
-                      hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700
-                      transform transition-all duration-300 ease-out
-                      hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25
-                      rounded-full border-0
-                      disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none
-                      active:scale-95
-                      backdrop-blur-sm
-                      before:absolute before:inset-0 before:rounded-full 
-                      before:bg-gradient-to-r before:from-white/20 before:to-transparent 
-                      before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300
-                      overflow-hidden group
-                      ${submitState === 'success' ? 'from-green-500 via-emerald-500 to-green-600 hover:from-green-600 hover:via-emerald-600 hover:to-green-700' : ''}
-                    `}
+                    className="relative px-12 py-4 text-lg font-bold text-white rounded-full border-0 disabled:opacity-60 disabled:cursor-not-allowed"
+                    style={{ backgroundColor: '#0C332C' }}
                     data-testid="button-create-work"
                   >
-                    <div className={`relative z-10 flex items-center justify-center transition-all duration-300 ${submitState === 'saving' ? 'scale-105' : 'scale-100'}`}>
+                    <div className="relative z-10 flex items-center justify-center">
                       {submitState === 'saving' ? (
                         <>
                           <Loader2 className="h-5 w-5 mr-3 animate-spin" />
@@ -916,19 +902,6 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                         <span className="tracking-wide">{isEditMode ? 'Edit Portfolio Work' : 'Create Portfolio Work'}</span>
                       )}
                     </div>
-                    
-                    {/* Animated background effect */}
-                    <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" transition-all duration-300>
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
-                    </div>
-                    
-                    {/* Shimmer effect during saving */}
-                    {submitState === 'saving' && (
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-slide-shimmer"></div>
-                    )}
-                    
-                    {/* Glow effect */}
-                    <div className="absolute -inset-1 rounded-full opacity-30 group-hover:opacity-60 blur transition-opacity duration-300 -z-10" transition-all duration-300 style={{ backgroundColor: '#0C332C' }}></div>
                   </Button>
                 </div>
               </form>
