@@ -505,10 +505,6 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <div>
-            <h1 className="text-2xl font-bold flex items-center gap-2">
-              <GraduationCap className="h-6 w-6 text-foreground" />
-              {viewMode === 'list' ? 'Subject Creator' : viewMode === 'create' ? 'Create Subject' : 'Manage Subject'}
-            </h1>
             <p className="text-gray-700 dark:text-gray-400 text-sm">
               {viewMode === 'list' ? 'Create and manage subjects for students' : 
                viewMode === 'create' ? 'Fill in the details for your new subject' :
