@@ -202,11 +202,11 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                   window.location.href = '?page=portfolio-create';
                 }
               }} 
-              className="w-full md:w-auto bg-primary hover:bg-primary text-[#ffffff]" transition-all duration-300 
+              className="w-10 h-10 md:w-auto bg-primary hover:bg-primary text-[#ffffff] p-0 md:p-2" transition-all duration-300 
               data-testid="button-create-work"
             >
-              <Plus className="h-4 w-4 mr-2" />
-              Create New Work
+              <Plus className="h-4 w-4 md:mr-2" />
+              <span className="hidden md:inline">Create New Work</span>
             </Button>
           </div>
 
