@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0c332c">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:spacing="15dp">
+
+        <!-- Circle 1 -->
+        <ImageView
+            android:id="@+id/circle1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/circle"
+            android:layout_margin="8dp" />
+
+        <!-- Circle 2 -->
+        <ImageView
+            android:id="@+id/circle2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/circle"
+            android:layout_margin="8dp" />
+
+        <!-- Circle 3 -->
+        <ImageView
+            android:id="@+id/circle3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/circle"
+            android:layout_margin="8dp" />
+
+        <!-- Circle 4 -->
+        <ImageView
+            android:id="@+id/circle4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/circle"
+            android:layout_margin="8dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
