@@ -708,15 +708,15 @@ export default function CourseCreatorPages({ onComplete, onCancel }: CourseCreat
             <div className="space-y-1">
                 <p className={`text-sm font-medium ${
                   courseForm.certificationType === 'diploma' 
-                    ? 'text-purple-800 dark:text-purple-200' 
-                    : 'text-blue-800 dark:text-blue-200'
+                    ? 'text-gray-800 dark:text-gray-200' 
+                    : 'text-gray-800 dark:text-gray-200'
                 }`}>
                   {courseForm.certificationType === 'diploma' ? 'Diploma Program' : 'Certificate Course'}
                 </p>
                 <p className={`text-xs ${
                   courseForm.certificationType === 'diploma' 
-                    ? 'text-primary dark:text-purple-300' 
-                    : 'text-blue-600 dark:text-blue-300'
+                    ? 'text-gray-600 dark:text-gray-400' 
+                    : 'text-gray-600 dark:text-gray-400'
                 }`}>
                   {courseForm.certificationType === 'diploma' 
                     ? 'Students will receive a professional diploma upon successful completion of all course requirements and assessments.' 
