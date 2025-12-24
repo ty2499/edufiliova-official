@@ -24,6 +24,7 @@ import { WORLD_CURRENCIES } from '@shared/currency';
 import { useQuery } from "@tanstack/react-query";
 import { useEnabledGateways } from "@/hooks/useEnabledGateways";
 import { DodoPayments } from "dodopayments-checkout";
+import { handlePaymentError, getFriendlyErrorMessage } from "@/utils/paymentErrorHandler";
 
 interface Course {
   id: string;
@@ -279,7 +280,7 @@ export default function NewPaymentModal({
         throw new Error(data.error || 'Failed to initialize payment');
       }
     } catch (error: any) {
-      console.error("Card payment error:", error);
+      const friendlyError = handlePaymentError(error, 'DodoPayments');
       setPaymentDetails({
         transactionId: 'N/A',
         date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
@@ -287,7 +288,7 @@ export default function NewPaymentModal({
         total: finalPriceUSD,
         currency: '$',
         courseId: courseId,
-        errorMessage: error.message || 'Failed to initialize Card payment. Please try again or use another payment method.'
+        errorMessage: friendlyError
       });
       setPaymentStatus('failed');
       setShowSuccess(true);
@@ -342,6 +343,18 @@ export default function NewPaymentModal({
         throw new Error('Invalid PayPal order response');
       }
     } catch (error: any) {
+      const friendlyError = handlePaymentError(error, 'PayPal Payment');
+      setPaymentDetails({
+        transactionId: 'N/A',
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        paymentMethod: 'PayPal',
+        total: finalPriceUSD,
+        currency: '$',
+        courseId: courseId,
+        errorMessage: friendlyError
+      });
+      setPaymentStatus('failed');
+      setShowSuccess(true);
       setProcessing(false);
     }
   };
@@ -399,7 +412,7 @@ export default function NewPaymentModal({
         throw new Error(response.error || 'Wallet payment failed');
       }
     } catch (error: any) {
-      // Show failure receipt
+      const friendlyError = handlePaymentError(error, 'Wallet Payment');
       setPaymentDetails({
         transactionId: 'N/A',
         date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
@@ -407,7 +420,7 @@ export default function NewPaymentModal({
         total: finalPriceUSD,
         currency: currencySymbol,
         courseId: courseId,
-        errorMessage: error?.message || 'Wallet payment failed. Please try another payment method.'
+        errorMessage: friendlyError
       });
       setPaymentStatus('failed');
       setShowSuccess(true);
@@ -601,6 +614,7 @@ export default function NewPaymentModal({
       setEcocashPolling(false);
       setEcocashStatus('pending');
       
+      const friendlyError = handlePaymentError(error, 'EcoCash Payment');
       setPaymentDetails({
         transactionId: 'N/A',
         date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
@@ -608,7 +622,7 @@ export default function NewPaymentModal({
         total: finalPriceUSD,
         currency: '$',
         courseId: courseId,
-        errorMessage: error?.message || 'EcoCash payment failed. Please try again.'
+        errorMessage: friendlyError
       });
       setPaymentStatus('failed');
       setShowSuccess(true);

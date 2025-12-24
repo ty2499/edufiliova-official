@@ -21,6 +21,7 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useQuery } from "@tanstack/react-query";
 import { usePaystackPayment } from 'react-paystack';
 import { DodoPayments } from "dodopayments-checkout";
+import { handlePaymentError, getFriendlyErrorMessage } from "@/utils/paymentErrorHandler";
 
 interface SubscriptionPlan {
   tier: SubscriptionTier;
@@ -142,7 +143,8 @@ export default function SubscriptionPaymentModal({
               setProcessing(false);
             } else if (event.event_type === "checkout.error") {
               console.error("Card checkout error:", event.data);
-              setError(event.data?.message || "Payment failed");
+              const friendlyError = getFriendlyErrorMessage(event.data?.message || "Card payment failed");
+              setError(friendlyError);
               setProcessing(false);
             }
           }
@@ -317,7 +319,7 @@ export default function SubscriptionPaymentModal({
           
           setClientSecret(data.clientSecret);
         } catch (error: any) {
-          setError(error.message || 'Failed to initialize payment');
+          setError(handlePaymentError(error, 'Subscription Creation'));
         }
       };
       createSubscription();
@@ -348,7 +350,7 @@ export default function SubscriptionPaymentModal({
       });
 
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
 
       if (paymentIntent?.status === 'succeeded') {
@@ -387,7 +389,8 @@ export default function SubscriptionPaymentModal({
         throw new Error('Payment was not successful');
       }
     } catch (error: any) {
-      setError(error.message || 'Payment failed. Please try again.');
+      const friendlyError = handlePaymentError(error, 'Card Payment');
+      setError(friendlyError);
       
       // Show failure receipt
       setPaymentDetails({
@@ -395,7 +398,8 @@ export default function SubscriptionPaymentModal({
         date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
         paymentMethod: 'Card',
         total: plan.price,
-        planName: plan.name
+        planName: plan.name,
+        errorMessage: friendlyError
       });
       setPaymentStatus('failed');
       setShowSuccess(true);
@@ -432,7 +436,8 @@ export default function SubscriptionPaymentModal({
         throw new Error('PayPal links not received');
       }
     } catch (error: any) {
-      setError(error.message || 'PayPal payment failed');
+      const friendlyError = handlePaymentError(error, 'PayPal Payment');
+      setError(friendlyError);
       setProcessing(false);
     }
   };
@@ -465,8 +470,8 @@ export default function SubscriptionPaymentModal({
         setPaymentStatus('success');
         setShowSuccess(true);
         setTimeout(() => onSuccess(), 2000);
-      } catch (error) {
-        setError('Payment verification failed');
+      } catch (error: any) {
+        setError(handlePaymentError(error, 'Paystack Verification'));
       }
     },
     onClose: () => {
@@ -514,8 +519,8 @@ export default function SubscriptionPaymentModal({
         throw new Error(data.error || 'Failed to initialize payment');
       }
     } catch (error: any) {
-      console.error("Card payment error:", error);
-      setError(error.message || 'Failed to initialize Card payment');
+      const friendlyError = handlePaymentError(error, 'DodoPayments');
+      setError(friendlyError);
       setProcessing(false);
     }
   };
@@ -549,7 +554,7 @@ export default function SubscriptionPaymentModal({
       });
 
       if (error) {
-        throw new Error(error.message);
+        throw error;
       }
 
       if (paymentIntent?.status === 'succeeded') {
