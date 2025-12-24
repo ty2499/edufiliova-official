@@ -1610,6 +1610,14 @@ const Index = () => {
       );
     }
     
+    // When user logs out from a protected page, redirect to auth page
+    if (!loading && !user && protectedStates.includes(currentState)) {
+      navigateToPage('auth', 'instant');
+      setCurrentState('auth');
+      localStorage.removeItem('intentional_logout');
+      return null;
+    }
+    
     switch (currentState) {
       case "home":
         // Check if user intentionally clicked logo to go home
