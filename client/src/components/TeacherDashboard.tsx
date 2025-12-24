@@ -2276,11 +2276,11 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <Button
               size="sm"
               className="w-full bg-[#c4ee3d] hover:bg-[#c4ee3d]/90 text-black font-medium" transition-all duration-300
-              onClick={() => { openExternalUrl('https://edufiliova.com'); setShowMobileMenu(false); }}
-              data-testid="nav-explore-website"
+              onClick={() => { onNavigate?.('shop'); setShowMobileMenu(false); }}
+              data-testid="nav-shop"
             >
               <FaGlobe className="h-4 w-4 mr-2" />
-              Explore Website
+              Shop
             </Button>
             <Button
               size="sm"
