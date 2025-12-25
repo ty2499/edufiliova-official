@@ -2627,6 +2627,20 @@ export const subjects = pgTable("subjects", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Teacher Subjects table - Links teachers to subjects they teach
+export const teacherSubjects = pgTable("teacher_subjects", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  teacherId: uuid("teacher_id").references(() => users.id).notNull(),
+  subjectId: uuid("subject_id").references(() => subjects.id).notNull(),
+  isPrimary: boolean("is_primary").default(false), // Is this their primary subject?
+  experienceYears: integer("experience_years"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  teacherSubjectUnique: unique("uniq_teacher_subject").on(table.teacherId, table.subjectId),
+  teacherIdx: index("idx_teacher_subjects_teacher").on(table.teacherId),
+  subjectIdx: index("idx_teacher_subjects_subject").on(table.subjectId),
+}));
+
 // Subject Chapters table - Organize lessons within subjects
 export const subjectChapters = pgTable("subject_chapters", {
   id: uuid("id").primaryKey().defaultRandom(),

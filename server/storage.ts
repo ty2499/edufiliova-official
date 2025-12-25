@@ -159,6 +159,8 @@ import {
   teacherApplications,
   TeacherApplication,
   InsertTeacherApplication,
+  teacherSubjects,
+  subjects,
   emailMarketingTemplates,
   EmailMarketingTemplate,
   InsertEmailMarketingTemplate,

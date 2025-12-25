@@ -146,6 +146,7 @@ app.use('/attached_assets', express.static('attached_assets'));
   const { registerEmailRoutes } = await import("./emailRoutes");
   const { registerEmailMarketingRoutes } = await import("./routes/email-marketing");
   const { default: subscriptionRoutes } = await import("./routes/subscription-routes");
+  const { default: teacherSubjectsRoutes } = await import("./routes/teacher-subjects");
   const { default: pushNotificationRoutes } = await import("./routes/push-notification-routes");
   const { setupWebSocket } = await import("./websocket");
   const { log } = await import("./static-server");
@@ -206,6 +207,10 @@ app.use('/attached_assets', express.static('attached_assets'));
   // Register subscription routes
   app.use('/api', subscriptionRoutes);
   console.log('🔧 [STARTUP] Subscription routes registered');
+  
+  // Register teacher subjects routes
+  app.use(teacherSubjectsRoutes);
+  console.log('🔧 [STARTUP] Teacher subjects routes registered');
   
   // Register push notification routes
   app.use('/api/notifications', pushNotificationRoutes);
