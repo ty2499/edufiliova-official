@@ -19,7 +19,10 @@ export default function TeacherApplicationStatus() {
 
   const { data: application, isLoading, refetch } = useQuery<any>({
     queryKey: [`/api/teacher-applications/status/${applicationId}`],
-    queryFn: () => apiRequest(`/api/teacher-applications/status/${applicationId}`),
+    queryFn: async () => {
+      const response = await apiRequest(`/api/teacher-applications/${applicationId}`);
+      return response;
+    },
     enabled: !!applicationId,
   });
 
