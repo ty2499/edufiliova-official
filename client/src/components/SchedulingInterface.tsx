@@ -104,11 +104,13 @@ export const SchedulingInterface: React.FC = () => {
   });
   const [bookingForm, setBookingForm] = useState({
     teacherId: '',
+    subjectId: '',
     subject: '',
     description: '',
     scheduledAt: '',
     duration: 60
   });
+  const [filteredTeachers, setFilteredTeachers] = useState<any[]>([]);
 
   // Get user's appointments
   const { data: appointments = [], isLoading: appointmentsLoading, refetch: refetchAppointments } = useQuery({
@@ -158,6 +160,41 @@ export const SchedulingInterface: React.FC = () => {
     enabled: !!profile,
     staleTime: 5 * 60 * 1000
   });
+
+  // Get subjects that have teachers
+  const { data: subjectsWithTeachers = [], isLoading: subjectsLoading } = useQuery({
+    queryKey: ['subjects-with-teachers'],
+    queryFn: async () => {
+      try {
+        const response = await fetch('/api/subjects/with-teachers');
+        const data = await response.json();
+        return data?.success ? data.subjects : [];
+      } catch (error) {
+        console.error('Error fetching subjects:', error);
+        return [];
+      }
+    },
+    enabled: profile?.role === 'student',
+    staleTime: 5 * 60 * 1000
+  });
+
+  // Fetch teachers when subject is selected
+  const handleSubjectChange = async (subjectId: string, subjectName: string) => {
+    setBookingForm(prev => ({ ...prev, subjectId, subject: subjectName, teacherId: '' }));
+    setFilteredTeachers([]);
+    
+    if (subjectId) {
+      try {
+        const response = await fetch(`/api/teachers/by-subject/${subjectId}`);
+        const data = await response.json();
+        if (data.success) {
+          setFilteredTeachers(data.teachers || []);
+        }
+      } catch (error) {
+        console.error('Error fetching teachers for subject:', error);
+      }
+    }
+  };
 
 
   // Add availability mutation
@@ -629,35 +666,56 @@ export const SchedulingInterface: React.FC = () => {
               <CardContent className="px-3 py-4 md:px-6">
                 <div className="space-y-4">
                   <div>
-                    <Label>Select Teacher</Label>
+                    <Label>Select Subject</Label>
                     <Select 
-                      value={bookingForm.teacherId} 
-                      onValueChange={(value) => setBookingForm({...bookingForm, teacherId: value})}
+                      value={bookingForm.subjectId} 
+                      onValueChange={(value) => {
+                        const selected = subjectsWithTeachers.find((s: any) => s.id === value);
+                        handleSubjectChange(value, selected?.name || '');
+                      }}
                     >
-                      <SelectTrigger data-testid="teacher-select">
-                        <SelectValue placeholder="Choose a teacher" />
+                      <SelectTrigger data-testid="subject-select">
+                        <SelectValue placeholder="What subject do you want to learn?" />
                       </SelectTrigger>
                       <SelectContent>
-                        {availableTeachers && availableTeachers.length > 0 ? (
-                          availableTeachers.map((teacher: any) => (
-                            <SelectItem key={teacher.id} value={teacher.id}>
-                              {teacher.name} - {teacher.availability?.startTime || '9:00'}-{teacher.availability?.endTime || '17:00'} ({teacher.availability?.timezone || 'UTC'})
+                        {subjectsLoading ? (
+                          <SelectItem value="loading" disabled>Loading subjects...</SelectItem>
+                        ) : subjectsWithTeachers && subjectsWithTeachers.length > 0 ? (
+                          subjectsWithTeachers.map((subject: any) => (
+                            <SelectItem key={subject.id} value={subject.id}>
+                              {subject.name} ({subject.gradeSystem} - Grade {subject.gradeLevel}) - {subject.teacherCount} teacher{subject.teacherCount !== 1 ? 's' : ''}
                             </SelectItem>
                           ))
                         ) : (
-                          <SelectItem value="no-teachers" disabled>No teachers available</SelectItem>
+                          <SelectItem value="no-subjects" disabled>No subjects available</SelectItem>
                         )}
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
-                    <Label>Subject</Label>
-                    <Input
-                      placeholder="What would you like to learn?"
-                      value={bookingForm.subject}
-                      onChange={(e) => setBookingForm({...bookingForm, subject: e.target.value})}
-                      data-testid="booking-subject"
-                    />
+                    <Label>Select Teacher</Label>
+                    <Select 
+                      value={bookingForm.teacherId} 
+                      onValueChange={(value) => setBookingForm({...bookingForm, teacherId: value})}
+                      disabled={!bookingForm.subjectId}
+                    >
+                      <SelectTrigger data-testid="teacher-select">
+                        <SelectValue placeholder={bookingForm.subjectId ? "Choose a teacher for this subject" : "Select a subject first"} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {filteredTeachers && filteredTeachers.length > 0 ? (
+                          filteredTeachers.map((teacher: any) => (
+                            <SelectItem key={teacher.teacherId} value={teacher.teacherId}>
+                              {teacher.name} {teacher.hourlyRate ? `- $${teacher.hourlyRate}/hr` : ''}
+                            </SelectItem>
+                          ))
+                        ) : bookingForm.subjectId ? (
+                          <SelectItem value="no-teachers" disabled>No teachers for this subject yet</SelectItem>
+                        ) : (
+                          <SelectItem value="select-subject" disabled>Select a subject first</SelectItem>
+                        )}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div>
                     <Label>Date & Time</Label>

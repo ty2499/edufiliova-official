@@ -90,6 +90,7 @@ import SubjectCreator from '@/pages/SubjectCreator';
 import { FindTalent } from '@/pages/FindTalent';
 import { PortfolioGallery } from '@/pages/PortfolioGallery';
 import { TeacherMeetingsTab } from './teacher/TeacherMeetingsTab';
+import { TeacherSubjectsCard } from './teacher/TeacherSubjectsCard';
 import { TeacherDashboardPending } from './TeacherDashboardPending';
 import ReceiptsSection from '@/components/ReceiptsSection';
 import BuyVoucherSection from '@/components/BuyVoucherSection';
@@ -3101,6 +3102,9 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
 
             {/* Payment Settings */}
             <PaymentMethodsCard user={user} />
+
+            {/* Subjects I Teach */}
+            <TeacherSubjectsCard teacherId={user?.id} />
 
             {/* Availability Settings */}
             <Card>
