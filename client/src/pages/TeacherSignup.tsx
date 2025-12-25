@@ -453,7 +453,10 @@ export default function TeacherSignup() {
 
                   <div>
                     <Label htmlFor="gender">Gender (Optional)</Label>
-                    <Select onValueChange={(value) => form.setValue("gender", value)}>
+                    <Select 
+                      value={form.watch("gender")}
+                      onValueChange={(value) => form.setValue("gender", value)}
+                    >
                       <SelectTrigger data-testid="select-gender">
                         <SelectValue placeholder="Select gender" />
                       </SelectTrigger>
@@ -541,7 +544,10 @@ export default function TeacherSignup() {
 
                   <div>
                     <Label htmlFor="teachingStyle">Preferred Teaching Style (Optional)</Label>
-                    <Select onValueChange={(value) => form.setValue("preferredTeachingStyle", value)}>
+                    <Select 
+                      value={form.watch("preferredTeachingStyle")}
+                      onValueChange={(value) => form.setValue("preferredTeachingStyle", value)}
+                    >
                       <SelectTrigger data-testid="select-teaching-style">
                         <SelectValue placeholder="Select teaching style" />
                       </SelectTrigger>
