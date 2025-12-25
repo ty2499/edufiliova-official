@@ -222,9 +222,9 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
 
   // Switch to login view if requested
   if (currentView === 'login') {
-    return <TeacherLogin onNavigate={(page) => {
+    return <AuthModern onLogin={() => {}} onNavigate={(page) => {
       if (page === 'signup') setCurrentView('choice');
-    }} />;
+    }} userType="teacher" />;
   }
 
   // Verification Screen
