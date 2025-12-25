@@ -111,68 +111,47 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection - ensure exact replacement for placeholders
+    // Dynamic Data Injection - Unified high-reliability approach
     const fullName = data.fullName || 'Teacher';
     const displayName = data.displayName || data.fullName || 'Teacher';
+    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
 
-    const replacements = [
-      /\[\[Full Name\]\]/gi,
-      /\[\[Display Name\]\]/gi,
+    // 1. Handle blocks first (most complex)
+    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
+
+    // 2. Standardize all name variants to the actual value
+    const namePatterns = [
       /\{\{fullName\}\}/gi,
+      /\{\{ fullName \}\}/gi,
+      /\{\{data\.fullName\}\}/gi,
+      /\{\{ data\.fullName \}\}/gi,
       /\{\{displayName\}\}/gi,
+      /\{\{ displayName \}\}/gi,
+      /\{\{data\.displayName\}\}/gi,
+      /\{\{ data\.displayName \}\}/gi,
       /\$\{data\.fullName\}/gi,
       /\$\{fullName\}/gi,
-      /\{\{data\.fullName\}\}/gi,
-      /\{\{data\.displayName\}\}/gi,
-      /\{\{ data\.fullName \}\}/gi,
-      /\{\{ data\.displayName \}\}/gi,
+      /\$\{data\.displayName\}/gi,
+      /\$\{displayName\}/gi,
+      /\[\[Full Name\]\]/gi,
+      /\[\[Display Name\]\]/gi,
       /\[\[data\.fullName\]\]/gi,
       /\[\[data\.displayName\]\]/gi,
-      /\$\{data\?\.fullName\}/gi,
-      /\$\{data\?\.displayName\}/gi,
-      /\$ \{data\.fullName\}/gi,
-      /\$ \{data\.displayName\}/gi,
-      /\$ \{ fullName \}/gi,
-      /\$ \{ displayName \}/gi
+      /Tyler Williams/gi,
+      /Test Teacher/gi,
+      /EduFiliova Teacher/gi,
+      /Hallpt Design/gi
     ];
 
-    replacements.forEach(regex => {
-      html = html.replace(regex, fullName);
+    namePatterns.forEach(pattern => {
+      html = html.replace(pattern, fullName);
     });
 
-    const displayRegexes = [
-      /\{\{displayName\}\}/gi,
-      /\{\{data\.displayName\}\}/gi,
-      /\{\{ data\.displayName \}\}/gi,
-      /\[\[Display Name\]\]/gi,
-      /\$\{data\.displayName\}/gi,
-      /\$\{data\?\.displayName\}/gi,
-      /\$ \{data\.displayName\}/gi
-    ];
-    displayRegexes.forEach(regex => {
-      html = html.replace(regex, displayName);
-    });
-
-    // Cleanup specific blocks and hardcoded names
-    html = html.replace(/Hi \$\{data\.fullName\}/gi, `Hi ${fullName}`);
-    html = html.replace(/Hi \{\{fullName\}\}/gi, `Hi ${fullName}`);
-    html = html.replace(/Hi \{\{data\.fullName\}\}/gi, `Hi ${fullName}`);
-    html = html.replace(/<strong>\$\{data\.fullName\}<\/strong>/gi, `<strong>${fullName}</strong>`);
-    html = html.replace(/<strong>\{\{fullName\}\}<\/strong>/gi, `<strong>${fullName}</strong>`);
-    html = html.replace(/Test Teacher/gi, fullName);
-    html = html.replace(/Tyler Williams/gi, fullName);
-    html = html.replace(/Hallpt Design/gi, fullName);
-    html = html.replace(/EduFiliova Teacher/gi, fullName);
-
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, (match) => {
-      return `Reason provided:\n\n${data.reason || 'Missing documentation'}`;
-    });
-
-    // Final catch-all for any leftover reason tags
+    // 3. Final cleanup and simple tags
+    html = html.replace(/\{\{reason\}\}/gi, reasonText);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
     html = html.replace(/\{\{#if reason\}\}/gi, '');
     html = html.replace(/\{\{\/if\}\}/gi, '');
-    html = html.replace(/\{\{reason\}\}/gi, data.reason || 'Missing documentation');
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
     // 1:1 replacement of EXACT relative paths from the provided HTML with CIDs
     html = html.replaceAll('images/c9513ccbbd620ff1cc148b9f159cd39d.png', 'cid:logo');
@@ -219,36 +198,47 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection
+    // Dynamic Data Injection - Unified high-reliability approach
     const fullName = data.fullName || 'Teacher';
     const displayName = data.displayName || data.fullName || 'Teacher';
-    
-    // Handle conditional reason block
-    // We replace the entire block including the tags to ensure it works even if whitespace differs
     const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
 
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, (match) => {
-      return `Reason provided:\n\n${reasonText}`;
+    // 1. Handle blocks first
+    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
+
+    // 2. Standardize all name variants
+    const namePatterns = [
+      /\{\{fullName\}\}/gi,
+      /\{\{ fullName \}\}/gi,
+      /\{\{data\.fullName\}\}/gi,
+      /\{\{ data\.fullName \}\}/gi,
+      /\{\{displayName\}\}/gi,
+      /\{\{ displayName \}\}/gi,
+      /\{\{data\.displayName\}\}/gi,
+      /\{\{ data\.displayName \}\}/gi,
+      /\$\{data\.fullName\}/gi,
+      /\$\{fullName\}/gi,
+      /\$\{data\.displayName\}/gi,
+      /\$\{displayName\}/gi,
+      /\[\[Full Name\]\]/gi,
+      /\[\[Display Name\]\]/gi,
+      /\[\[data\.fullName\]\]/gi,
+      /\[\[data\.displayName\]\]/gi,
+      /Tyler Williams/gi,
+      /Test Teacher/gi,
+      /EduFiliova Teacher/gi,
+      /Hallpt Design/gi
+    ];
+
+    namePatterns.forEach(pattern => {
+      html = html.replace(pattern, fullName);
     });
 
-    // Cleanup and standard placeholders
+    // 3. Final cleanup
+    html = html.replace(/\{\{reason\}\}/gi, reasonText);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
     html = html.replace(/\{\{#if reason\}\}/gi, '');
     html = html.replace(/\{\{\/if\}\}/gi, '');
-    html = html.replace(/\{\{reason\}\}/gi, reasonText);
-
-    html = html.replace(/\{\{fullName\}\}/gi, fullName);
-    html = html.replace(/\{\{displayName\}\}/gi, displayName);
-    html = html.replace(/\$\{data\.fullName\}/gi, fullName);
-    html = html.replace(/\$\{fullName\}/gi, fullName);
-    html = html.replace(/\{\{data\.fullName\}\}/gi, fullName);
-    html = html.replace(/\{\{data\.displayName\}\}/gi, displayName);
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
-    // Also catch potential hardcoded test names
-    html = html.replace(/Test Teacher/gi, fullName);
-    html = html.replace(/Tyler Williams/gi, fullName);
-    html = html.replace(/Hallpt Design/gi, fullName);
-    html = html.replace(/EduFiliova Teacher/gi, fullName);
 
     // 1:1 replacement of EXACT relative paths with CIDs (matching declined template images)
     html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
