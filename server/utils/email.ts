@@ -111,24 +111,12 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // AGGRESSIVE DYNAMIC DATA INJECTION - Force name replacement
+    // SIMPLE & DIRECT - Just replace the placeholder
     const fullName = data.fullName || 'Teacher';
-    const displayName = data.displayName || fullName || 'Teacher';
-
-    // 1. First replace any {{FullName}} or variations
+    
+    // Replace {{FullName}} directly - case insensitive
     html = html.replace(/\{\{FullName\}\}/gi, fullName);
     html = html.replace(/\{\{fullName\}\}/gi, fullName);
-    html = html.replace(/\[\[Full Name\]\]/gi, fullName);
-    html = html.replace(/\[\[FullName\]\]/gi, fullName);
-
-    // 2. Aggressive fallback: Replace ANY occurrence of known hardcoded names or patterns
-    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
-    hardcodedNames.forEach(pattern => {
-      html = html.replace(pattern, fullName);
-    });
-
-    // 3. Replace all greeting patterns to force the dynamic name
-    html = html.replace(/Hi\s+[A-Za-z\s]+(?=<|,|!|\s|$)/g, `Hi ${fullName}`);
     
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
