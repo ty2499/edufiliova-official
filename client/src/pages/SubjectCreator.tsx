@@ -578,7 +578,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
                 <GraduationCap className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                 <h3 className="text-lg font-medium mb-2">No subjects yet</h3>
                 <p className="text-muted-foreground mb-4">Create your first subject to get started</p>
-                <Button onClick={() => setViewMode('create')} data-testid="button-create-first-subject">
+                <Button onClick={() => setViewMode('create')} data-testid="button-create-first-subject" className="bg-[#2f5a4e] text-white hover:bg-[#254a3f]">
                   <Plus className="h-4 w-4 mr-2" />
                   Create Subject
                 </Button>
