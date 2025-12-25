@@ -784,32 +784,29 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           onClick={() => setCurrentStep("register")}
           data-testid="button-blue-action"
         >
-          <User className="h-4 w-4 mr-2" />
           Join as Student
         </Button>
 
         <Button
           type="button"
           onClick={() => setCurrentStep("register-teacher")}
-          className="w-full h-11 rounded-lg font-medium"
-          style={{ backgroundColor: '#A0FAB2', color: '#000000' }}
+          className="w-full h-11 font-medium rounded-lg hover:opacity-90"
+          style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
           data-testid="link-teacher-signup"
         >
-          <GraduationCap className="h-4 w-4 mr-2" />
           Apply to teach
         </Button>
 
         <Button
           type="button"
-          className="w-full h-11 rounded-lg font-medium"
-          style={{ backgroundColor: '#A0FAB2', color: '#000000' }}
+          className="w-full h-11 font-medium rounded-lg hover:opacity-90"
+          style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
           disabled={loading}
           onClick={() => {
             onNavigate?.('freelancer-signup-basic');
           }}
           data-testid="button-join-freelancer"
         >
-          <Briefcase className="h-4 w-4 mr-2" />
           Join as Freelancer
         </Button>
       </form>
