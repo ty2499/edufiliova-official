@@ -539,6 +539,11 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                   onCheckedChange={(checked) => { setAgreeToTerms(checked as boolean); clearError('terms'); }}
                   disabled={isProcessing}
                   className="h-4 w-4 mt-0.5"
+                  style={{
+                    backgroundColor: agreeToTerms ? '#a0fab2' : 'transparent',
+                    borderColor: '#a0fab2',
+                    borderWidth: '2px'
+                  }}
                   data-testid="checkbox-terms"
                 />
                 <label htmlFor="terms" className="text-xs text-white leading-snug cursor-pointer">
