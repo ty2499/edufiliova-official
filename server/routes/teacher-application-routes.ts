@@ -617,6 +617,26 @@ router.post("/teacher-applications", async (req, res) => {
       .limit(1);
 
     if (existingApplication.length > 0) {
+      const app = existingApplication[0];
+      if (app.status === 'rejected') {
+        // Allow updating rejected applications via the main POST endpoint
+        const [updatedApplication] = await db
+          .update(teacherApplications)
+          .set({
+            ...validatedData,
+            status: "pending",
+            updatedAt: new Date(),
+          })
+          .where(eq(teacherApplications.id, app.id))
+          .returning();
+
+        return res.status(200).json({
+          success: true,
+          message: "Teacher application resubmitted successfully",
+          id: updatedApplication.id,
+          application: updatedApplication,
+        });
+      }
       return res.status(400).json({
         error: "An application with this email already exists. Please check your application status.",
       });
