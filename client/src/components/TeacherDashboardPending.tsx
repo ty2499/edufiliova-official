@@ -111,21 +111,22 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-6">
-          <Card className="mb-6 bg-white border-gray-100 shadow-sm">
-            <CardContent className="pt-6 text-center">
-              <XCircle className="w-16 h-16 mx-auto mb-4" style={{ color: '#2f5a4e' }} />
-              <h2 className="text-2xl font-bold mb-2 text-gray-900">Application Not Approved</h2>
-              <p className="mb-4 text-gray-600">
-                We're sorry, but your application was not approved at this time.
-              </p>
-              {teacherApplicationStatus?.adminNotes && (
-                <div className="bg-gray-50 p-4 rounded-lg text-left mb-4 border border-gray-100">
-                  <p className="font-medium mb-2 text-gray-900">Feedback:</p>
-                  <p className="text-sm text-gray-600">{teacherApplicationStatus.adminNotes}</p>
-                </div>
-              )}
+          {teacherApplicationStatus?.status === 'rejected' && (
+            <Card className="mb-6 bg-white border-gray-100 shadow-sm">
+              <CardContent className="pt-6 text-center">
+                <XCircle className="w-16 h-16 mx-auto mb-4" style={{ color: '#2f5a4e' }} />
+                <h2 className="text-2xl font-bold mb-2 text-gray-900">Application Not Approved</h2>
+                <p className="mb-4 text-gray-600">
+                  We're sorry, but your application was not approved at this time.
+                </p>
+                {teacherApplicationStatus?.adminNotes && (
+                  <div className="bg-gray-50 p-4 rounded-lg text-left mb-4 border border-gray-100">
+                    <p className="font-medium mb-2 text-gray-900">Feedback:</p>
+                    <p className="text-sm text-gray-600">{teacherApplicationStatus.adminNotes}</p>
+                  </div>
+                )}
                 {resubmitError && (
-                  <div className="bg-red-100 border border-red-300 p-3 rounded-lg text-left mb-4">
+                  <div className="bg-red-50 border border-red-100 p-3 rounded-lg text-left mb-4">
                     <p className="text-sm text-red-700">{resubmitError}</p>
                   </div>
                 )}
