@@ -738,7 +738,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               type="button"
               variant="ghost"
               size="sm"
-              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-white/70" transition-all duration-300
+              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-white/70 transition-all duration-300"
               onClick={() => setShowPassword(!showPassword)}
               data-testid="button-toggle-password"
             >
@@ -900,7 +900,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white" transition-all duration-300
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-all duration-300"
                     data-testid="button-toggle-register-password"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -1126,7 +1126,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 data-testid="checkbox-agree-terms"
               />
               <Label htmlFor="agree-terms" className="text-sm text-white cursor-pointer">
-                I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-primary hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-primary hover:underline" transition-all duration-300 data-testid="link-privacy-policy">Privacy Policy</button>
+                I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-primary hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-primary hover:underline transition-all duration-300" data-testid="link-privacy-policy">Privacy Policy</button>
               </Label>
             </div>
             {errors.agreeToTerms && <p className="text-sm text-primary-500">{errors.agreeToTerms}</p>}
@@ -1279,7 +1279,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white" transition-all duration-300
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-all duration-300"
               data-testid="button-toggle-teacher-password"
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -1331,7 +1331,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-white hover:text-white font-medium flex items-center justify-center gap-1" transition-all duration-300
+            className="text-white hover:text-white font-medium flex items-center justify-center gap-1 transition-all duration-300"
             data-testid="link-back-to-login"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1449,7 +1449,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               <button
                 onClick={() => handleResendCode("email")}
                 disabled={resendCooldown > 0 || loading}
-                className="font-medium hover:underline disabled:opacity-50" transition-all duration-300
+                className="font-medium hover:underline disabled:opacity-50 transition-all duration-300"
                 style={{ color: '#0C332C' }}
                 data-testid="button-resend-email"
               >
@@ -1463,7 +1463,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 setVerificationCode("");
                 setErrors({});
               }}
-              className="flex items-center justify-center gap-2 text-sm text-white hover:text-white mx-auto" transition-all duration-300
+              className="flex items-center justify-center gap-2 text-sm text-white hover:text-white mx-auto transition-all duration-300"
               data-testid="button-back"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -1576,7 +1576,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               onClick={() => handleResendCode("phone")}
               disabled={resendCooldown > 0 || loading}
-              className="font-medium hover:underline disabled:opacity-50 text-white" transition-all duration-300
+              className="font-medium hover:underline disabled:opacity-50 text-white transition-all duration-300"
               data-testid="button-resend-phone"
             >
                 {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code'}
@@ -1589,7 +1589,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 setVerificationCode("");
                 setErrors({});
               }}
-              className="flex items-center justify-center gap-2 text-sm text-white hover:text-white mx-auto" transition-all duration-300
+              className="flex items-center justify-center gap-2 text-sm text-white hover:text-white mx-auto transition-all duration-300"
               data-testid="button-back"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -1662,7 +1662,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               type="button"
               onClick={() => setCurrentStep("login")}
-              className="text-[#a0fab2] hover:text-[#a0fab2]/80 font-medium flex items-center justify-center gap-1" transition-all duration-300
+              className="text-[#a0fab2] hover:text-[#a0fab2]/80 font-medium flex items-center justify-center gap-1 transition-all duration-300"
               data-testid="link-back-to-login-from-forgot"
             >
             <ArrowLeft className="h-3 w-3" />
@@ -1740,7 +1740,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-primary hover:text-purple-800 font-medium" transition-all duration-300
+            className="text-primary hover:text-purple-800 font-medium transition-all duration-300"
             data-testid="button-resend-reset-code"
           >
             Request new code
@@ -1751,7 +1751,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-primary hover:text-purple-800 font-medium text-sm flex items-center justify-center gap-1 mx-auto" transition-all duration-300
+            className="text-primary hover:text-purple-800 font-medium text-sm flex items-center justify-center gap-1 mx-auto transition-all duration-300"
             data-testid="link-back-to-login-from-reset"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1848,7 +1848,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 },
                 {
                   title: "Changes to Terms",
-              }
+                  content: ["EduFiliova may update these Terms of Service at any time.", "We will notify you of changes via email or by posting the new Terms on our platform.", "Your continued use of the platform after changes means you accept the new Terms.", "If you disagree with changes, you may close your account."]
+                }
             ].map((section, idx) => (
               <div key={idx} className="border-white/20 pl-3 py-2">
                   <h3 className="text-sm font-semibold text-white mb-1">{section.title}</h3>
@@ -1858,7 +1859,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 </div>
               ))}
               <div className="border-t pt-4 text-center text-sm text-white">
-                <p>Questions? Email us at <a href="mailto:support@edufiliova.com" className="text-primary hover:underline" transition-all duration-300>support@edufiliova.com</a></p>
+                <p>Questions? Email us at <a href="mailto:support@edufiliova.com" className="text-primary hover:underline transition-all duration-300">support@edufiliova.com</a></p>
               </div>
             </div>
           </ScrollArea>
@@ -1963,7 +1964,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div className="border-t pt-4 text-center text-sm text-white">
-                <p>Privacy questions? Email us at <a href="mailto:privacy@edufiliova.com" className="text-primary hover:underline" transition-all duration-300>privacy@edufiliova.com</a></p>
+                <p>Privacy questions? Email us at <a href="mailto:privacy@edufiliova.com" className="text-primary hover:underline transition-all duration-300">privacy@edufiliova.com</a></p>
               </div>
             </div>
           </ScrollArea>
