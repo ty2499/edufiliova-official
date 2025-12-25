@@ -3062,7 +3062,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                         key={i}
                         className={`p-2 h-10 flex flex-col items-center justify-center text-sm cursor-pointer rounded transition-colors relative
                           ${isCurrentMonth ? 'text-foreground hover:bg-accent' : 'text-muted-foreground'}
-                          ${isToday ? 'bg-primary text-primary-foreground font-semibold' : ''}
+                          ${isToday ? 'bg-[#2f5a4e] text-white font-semibold' : ''}
                           ${hasAppointments && !isToday ? 'bg-blue-50 border border-blue-200' : ''}
                         `}
                         title={hasAppointments ? `${dayAppointments.length} appointment${dayAppointments.length > 1 ? 's' : ''}` : ''}
@@ -3283,7 +3283,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                         key={i}
                         className={`p-2 h-10 flex flex-col items-center justify-center text-sm cursor-pointer rounded transition-colors relative
                           ${isCurrentMonth ? 'text-foreground hover:bg-accent' : 'text-muted-foreground'}
-                          ${isToday ? 'bg-primary text-primary-foreground font-semibold' : ''}
+                          ${isToday ? 'bg-[#2f5a4e] text-white font-semibold' : ''}
                           ${hasAppointments && !isToday ? 'bg-blue-50 border border-blue-200' : ''}
                         `}
                         title={hasAppointments ? `${dayAppointments.length} appointment${dayAppointments.length > 1 ? 's' : ''}` : ''}
