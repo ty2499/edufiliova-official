@@ -460,7 +460,8 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                 <button 
                   type="button"
                   onClick={() => setCurrentView('login')}
-                  className="text-white hover:text-white/80 font-medium transition-all duration-300"
+                  className="font-medium hover:underline transition-all duration-300"
+                  style={{ color: '#a0fab2' }}
                 >
                   Sign in here
                 </button>
