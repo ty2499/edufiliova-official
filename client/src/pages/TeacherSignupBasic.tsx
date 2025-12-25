@@ -576,7 +576,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             Already have an account?{" "}
             <button 
               type="button"
-              onClick={() => setCurrentView('login')} 
+              onClick={() => handleNavigate('login')} 
               className="text-foreground font-semibold hover:underline transition-all duration-300"
               data-testid="link-login-form"
             >
