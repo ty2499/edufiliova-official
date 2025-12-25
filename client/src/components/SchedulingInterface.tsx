@@ -813,6 +813,7 @@ export const SchedulingInterface: React.FC = () => {
                     onClick={handleBookAppointment}
                     disabled={!bookingForm.teacherId || !bookingForm.scheduledAt || bookAppointmentMutation.isPending}
                     data-testid="book-appointment-btn"
+                    className="bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white"
                   >
                     <Calendar className="h-4 w-4 mr-2" />
                     {bookAppointmentMutation.isPending ? 'Booking...' : 'Book Session'}
