@@ -98,7 +98,7 @@ export class EmailService {
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'server/utils/approval-template.html');
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/teacher_approval_template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
@@ -111,27 +111,29 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection
+    // AGGRESSIVE DYNAMIC DATA INJECTION - Force name replacement
     const fullName = data.fullName || 'Teacher';
-    
-    // Explicitly replace the hardcoded "Hi {{FullName}}" or variations
-    html = html.replace(/Hi\s+\{\{FullName\}\}/gi, `Hi ${fullName}`);
-    html = html.replace(/Hi\s+Tyler\s+Williams/gi, `Hi ${fullName}`);
-    html = html.replace(/Hi\s+\[\[Full Name\]\]/gi, `Hi ${fullName}`);
+    const displayName = data.displayName || fullName || 'Teacher';
 
+    // 1. First replace any {{FullName}} or variations
+    html = html.replace(/\{\{FullName\}\}/gi, fullName);
+    html = html.replace(/\{\{fullName\}\}/gi, fullName);
+    html = html.replace(/\[\[Full Name\]\]/gi, fullName);
+    html = html.replace(/\[\[FullName\]\]/gi, fullName);
+
+    // 2. Aggressive fallback: Replace ANY occurrence of known hardcoded names or patterns
+    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
+    hardcodedNames.forEach(pattern => {
+      html = html.replace(pattern, fullName);
+    });
+
+    // 3. Replace all greeting patterns to force the dynamic name
+    html = html.replace(/Hi\s+[A-Za-z\s]+(?=<|,|!|\s|$)/g, `Hi ${fullName}`);
+    
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
-    // 1:1 replacement of EXACT relative paths with CIDs
-    html = html.replaceAll('images/0ac9744033a7e26f12e08d761c703308.png', 'cid:logo');
-    html = html.replaceAll('images/e4d45170731072cbb168266fca3fd470.png', 'cid:banner');
-    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
-    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
-    html = html.replaceAll('images/7976503d64a3eef4169fe235111cdc57.png', 'cid:corner_graphic');
-    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
 
     return this.sendEmail({
       to: email,
@@ -139,13 +141,14 @@ export class EmailService {
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'logo.png', path: assetPath('0ac9744033a7e26f12e08d761c703308_1766647041179.png'), cid: 'logo', contentType: 'image/png' },
-        { filename: 'banner.png', path: assetPath('e4d45170731072cbb168266fca3fd470_1766617371537.png'), cid: 'banner', contentType: 'image/png' },
         { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766647041212.png'), cid: 'icon_db', contentType: 'image/png' },
+        { filename: 'icon_curve.png', path: assetPath('c9513ccbbd620ff1cc148b9f159cd39d_1766706140594.png'), cid: 'icon_curve', contentType: 'image/png' },
         { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766647041216.png'), cid: 'icon_pf', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766647041186.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766647041190.png'), cid: 's_social', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('7976503d64a3eef4169fe235111cdc57_1766647041205.png'), cid: 'corner_graphic', contentType: 'image/png' }
+        { filename: 'banner.png', path: assetPath('e4d45170731072cbb168266fca3fd470_1766706140600.png'), cid: 'banner', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('df1ad55cc4e451522007cfa4378c9bbd_1766706140598.png'), cid: 'corner', contentType: 'image/png' },
+        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766706140574.png'), cid: 'footer_logo', contentType: 'image/png' },
+        { filename: 'teacher_img.png', path: assetPath('9eefdace1f726880f93c5a973a54c2f6_1766706140581.png'), cid: 'teacher_img', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766706140583.png'), cid: 'social', contentType: 'image/png' }
       ]
     });
   }
