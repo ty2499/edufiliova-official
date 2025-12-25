@@ -784,6 +784,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           onClick={() => setCurrentStep("register")}
           data-testid="button-blue-action"
         >
+          <User className="h-4 w-4 mr-2" />
           Join as Student
         </Button>
 
@@ -794,6 +795,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
           data-testid="link-teacher-signup"
         >
+          <GraduationCap className="h-4 w-4 mr-2" />
           Apply to teach
         </Button>
 
@@ -807,6 +809,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           }}
           data-testid="button-join-freelancer"
         >
+          <Briefcase className="h-4 w-4 mr-2" />
           Join as Freelancer
         </Button>
       </form>
