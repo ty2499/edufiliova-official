@@ -612,7 +612,7 @@ export function CommunityChat() {
           <div className="flex items-center gap-3">
             <Button 
               onClick={() => setShowCreatePost(true)}
-              className="bg-[#0C332C] text-[#ffffff]"
+              className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
               data-testid="button-create-topic"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -688,7 +688,7 @@ export function CommunityChat() {
                       {searchQuery ? "Try adjusting your search terms" : "Be the first to start a discussion!"}
                     </p>
                     {!searchQuery && (
-                      <Button onClick={() => setShowCreatePost(true)} className="bg-[#0C332C] text-[#ffffff]">
+                      <Button onClick={() => setShowCreatePost(true)} className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100">
                         <Plus className="h-4 w-4 mr-2" />
                         Create First Topic
                       </Button>
@@ -847,7 +847,7 @@ export function CommunityChat() {
                     <Button 
                       onClick={() => setShowCreateGroup(true)}
                       size="sm"
-                      className="bg-[#0C332C] text-[#ffffff]"
+                      className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
                       data-testid="button-new-group"
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -871,7 +871,7 @@ export function CommunityChat() {
                     <p className="text-muted-foreground mb-4">
                       Create a group and wait for admin approval, or join existing approved groups
                     </p>
-                    <Button onClick={() => setShowCreateGroup(true)} className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300>
+                    <Button onClick={() => setShowCreateGroup(true)} className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100">
                       <Plus className="h-4 w-4 mr-2" />
                       Create Group (Pending Approval)
                     </Button>
@@ -963,7 +963,7 @@ export function CommunityChat() {
                                 size="sm" 
                                 onClick={() => joinGroupMutation.mutate(group.id)}
                                 disabled={joinGroupMutation.isPending || group.memberCount >= (group.maxMembers || 100000)}
-                                className="w-full bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
+                                className="w-full bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
                               >
                                 {joinGroupMutation.isPending ? (
                                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
@@ -1047,7 +1047,7 @@ export function CommunityChat() {
                                     size="sm" 
                                     onClick={() => sendFriendRequestMutation.mutate(student.userId)}
                                     disabled={sendFriendRequestMutation.isPending}
-                                    className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
+                                    className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
                                   >
                                     <UserPlus className="h-4 w-4 mr-1" />
                                     Add Friend
@@ -1091,7 +1091,7 @@ export function CommunityChat() {
                     <MessageSquare className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                     <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
                     <p className="text-muted-foreground mb-4">Start sharing your thoughts and knowledge</p>
-                    <Button onClick={() => setShowCreatePost(true)} className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300>
+                    <Button onClick={() => setShowCreatePost(true)} className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100">
                       <Plus className="h-4 w-4 mr-2" />
                       Create Your First Post
                     </Button>
