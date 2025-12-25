@@ -3364,10 +3364,10 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                                   <Button
                                     size="sm"
                                     onClick={() => handleApproveAppointment(appointment.id)}
-                                    className="bg-green-600 hover:bg-green-700" transition-all duration-300
+                                    className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] active:bg-[#2f5a4e] whitespace-nowrap"
+                                    style={{ backgroundColor: '#2f5a4e', color: 'white', opacity: 1 }}
                                     data-testid={`approve-appointment-${appointment.id}`}
                                   >
-                                    <CheckmarkIcon size="sm" className="mr-1" />
                                     Approve
                                   </Button>
                                   <Button

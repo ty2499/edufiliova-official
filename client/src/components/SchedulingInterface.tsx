@@ -534,16 +534,15 @@ export const SchedulingInterface: React.FC = () => {
                               <>
                                 {profile?.role === 'teacher' ? (
                                   <>
-                                    <Button
-                                      size="sm"
-                                      variant="default"
-                                      onClick={() => handleApproveAppointment(appointment.id)}
-                                      data-testid={`approve-appointment-${appointment.id}`}
-                                      className="bg-green-600 hover:bg-green-700 text-white dark:bg-green-500 dark:hover:bg-green-600" transition-all duration-300
-                                    >
-                                      <CheckCircle2 className="h-3 w-3" />
-                                      Approve
-                                    </Button>
+                                  <Button
+                                    size="sm"
+                                    onClick={() => handleApproveAppointment(appointment.id)}
+                                    className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] active:bg-[#2f5a4e]"
+                                    style={{ backgroundColor: '#2f5a4e', color: 'white', opacity: 1 }}
+                                    data-testid={`approve-appointment-${appointment.id}`}
+                                  >
+                                    Approve
+                                  </Button>
                                     <Button
                                       size="sm"
                                       variant="destructive"
