@@ -573,7 +573,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             )}
           </Button>
 
-          <p className="text-sm text-gray-500 text-center mt-4">
+          <p className="text-sm text-white text-center mt-4">
             Already have an account?{" "}
             <button 
               type="button"

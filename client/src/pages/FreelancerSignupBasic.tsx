@@ -455,7 +455,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                 )}
               </Button>
 
-              <p className="text-sm text-muted-foreground text-center mt-4">
+              <p className="text-sm text-white text-center mt-4">
                 Already have an account?{" "}
                 <button 
                   type="button"
