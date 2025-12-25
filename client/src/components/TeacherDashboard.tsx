@@ -1902,7 +1902,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "overview" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("overview"); setShowMobileMenu(false); }}
               data-testid="nav-overview"
@@ -1916,7 +1916,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "students" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("students"); setShowMobileMenu(false); }}
               data-testid="nav-students"
@@ -1930,7 +1930,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "classes" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("classes"); setShowMobileMenu(false); }}
               data-testid="nav-classes"
@@ -1944,7 +1944,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "courses" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("courses"); setShowMobileMenu(false); }}
               data-testid="nav-courses"
@@ -1958,7 +1958,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "create-course" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("create-course"); setShowMobileMenu(false); }}
               data-testid="nav-create-course"
@@ -1972,7 +1972,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "create-subject" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("create-subject"); setShowMobileMenu(false); }}
               data-testid="nav-create-subject"
@@ -1986,7 +1986,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "messages" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("messages"); setShowMobileMenu(false); }}
               data-testid="nav-messages"
@@ -2000,7 +2000,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "assignments" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("assignments"); setShowMobileMenu(false); }}
               data-testid="nav-assignments"
@@ -2014,7 +2014,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "calendar" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("calendar"); setShowMobileMenu(false); }}
               data-testid="nav-calendar"
@@ -2029,7 +2029,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "announcements" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("announcements"); setShowMobileMenu(false); }}
               data-testid="nav-announcements"
@@ -2043,7 +2043,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "community" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("community"); setShowMobileMenu(false); }}
               data-testid="nav-community"
@@ -2057,7 +2057,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className={`w-full justify-start rounded-lg transition-colors ${
                 activeTab === "requests" 
                   ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                  : "text-white hover:bg-white/10"
+                  : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
               }`}
               onClick={() => { setActiveTab("requests"); setShowMobileMenu(false); }}
               data-testid="nav-requests"
@@ -2085,7 +2085,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "earnings" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("earnings"); setShowMobileMenu(false); }}
                   data-testid="nav-earnings"
@@ -2099,7 +2099,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "wallet" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("wallet"); setShowMobileMenu(false); }}
                   data-testid="nav-wallet"
@@ -2113,7 +2113,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "receipts" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("receipts"); setShowMobileMenu(false); }}
                   data-testid="nav-receipts"
@@ -2143,7 +2143,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "products" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("products"); setShowMobileMenu(false); }}
                   data-testid="nav-products"
@@ -2157,7 +2157,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "downloads" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("downloads"); setShowMobileMenu(false); }}
                   data-testid="nav-downloads"
@@ -2171,7 +2171,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "purchases" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("purchases"); setShowMobileMenu(false); }}
                   data-testid="nav-purchases"
@@ -2185,7 +2185,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "buy-voucher" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("buy-voucher"); setShowMobileMenu(false); }}
                   data-testid="nav-buy-voucher"
@@ -2215,7 +2215,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "portfolio-gallery" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("portfolio-gallery"); setShowMobileMenu(false); }}
                   data-testid="nav-portfolio-gallery"
@@ -2229,7 +2229,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "marketplace" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("marketplace"); setShowMobileMenu(false); }}
                   data-testid="nav-marketplace"
@@ -2243,7 +2243,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   className={`w-full justify-start rounded-lg transition-colors ${
                     activeTab === "create-ad" 
                       ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                      : "text-white hover:bg-white/10"
+                      : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                   }`}
                   onClick={() => { setActiveTab("create-ad"); setShowMobileMenu(false); }}
                   data-testid="nav-create-ad"
@@ -2261,7 +2261,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                 className={`w-full justify-start rounded-lg transition-colors ${
                   activeTab === "settings" 
                     ? "bg-[#c4ee3d] text-black hover:bg-[#c4ee3d]/90" 
-                    : "text-white hover:bg-white/10"
+                    : "text-white hover:bg-white/10 hover:text-[#a0fab2]"
                 }`}
                 onClick={() => { setActiveTab("settings"); setShowMobileMenu(false); }}
                 data-testid="nav-settings"
