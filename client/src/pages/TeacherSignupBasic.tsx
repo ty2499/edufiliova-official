@@ -411,19 +411,19 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </p>
         </div>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           {errorMessage && (
             <div className="p-3 bg-primary/10 border border-red-200 rounded-xl text-primary-600 text-sm">
               {errorMessage}
             </div>
           )}
 
-          <div className="space-y-1.5">
-            <Label htmlFor="fullName" className="text-white text-sm">Full Name</Label>
+          <div>
+            <Label htmlFor="fullName" className="text-sm font-medium text-white mb-1 block">Full Name</Label>
             <Input
               id="fullName"
               placeholder="e.g. Purity Johns"
-              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#0C332C] focus:ring-[#0C332C]/20"
+              className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               data-testid="input-full-name"
               {...form.register("fullName")}
             />
@@ -432,12 +432,12 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="displayName" className="text-white text-sm">Display Name</Label>
+          <div>
+            <Label htmlFor="displayName" className="text-sm font-medium text-white mb-1 block">Display Name</Label>
             <Input
               id="displayName"
               placeholder="e.g. Mrs. P Johns"
-              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#0C332C] focus:ring-[#0C332C]/20"
+              className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               data-testid="input-display-name"
               {...form.register("displayName")}
             />
@@ -446,13 +446,13 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="email" className="text-white text-sm">Email Address</Label>
+          <div>
+            <Label htmlFor="email" className="text-sm font-medium text-white mb-1 block">Email Address</Label>
             <Input
               id="email"
               type="email"
               placeholder="e.g. teacher@example.com"
-              className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl focus:border-[#0C332C] focus:ring-[#0C332C]/20"
+              className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               data-testid="input-email"
               {...form.register("email")}
             />
@@ -461,9 +461,9 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="phoneNumber" className="text-white text-sm">Phone Number</Label>
-            <div className="[&_input]:bg-gray-50 [&_input]:border-gray-200 [&_input]:text-gray-900 [&_input]:placeholder:text-gray-400 [&_input]:rounded-xl [&_input]:h-12 [&_button]:bg-gray-50 [&_button]:border-gray-200 [&_button]:text-gray-700 [&_button]:h-12">
+          <div>
+            <Label htmlFor="phoneNumber" className="text-sm font-medium text-white mb-1 block">Phone Number</Label>
+            <div className="[&_input]:h-12 [&_input]:text-base [&_input]:rounded-lg [&_input]:border-white/20 [&_input]:bg-white/10 [&_input]:placeholder:text-base [&_input]:text-white [&_button]:h-12 [&_button]:rounded-lg [&_button]:border-white/20 [&_button]:bg-white/10 [&_button]:text-white">
               <PhoneNumberInput
                 value={form.watch("phoneNumber") || ""}
                 onChange={(value) => form.setValue("phoneNumber", value)}
@@ -475,17 +475,17 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="country" className="text-white text-sm">Country</Label>
+          <div>
+            <Label htmlFor="country" className="text-sm font-medium text-white mb-1 block">Country</Label>
             <Select
               value={form.watch("country")}
               onValueChange={(value) => form.setValue("country", value)}
             >
               <SelectTrigger 
-                className="h-12 bg-gray-50 border-gray-200 text-gray-900 rounded-xl focus:border-[#0C332C] focus:ring-[#0C332C]/20"
+                className="h-12 text-base rounded-lg border-white/20 bg-white/10 text-white"
                 data-testid="select-country"
               >
-                <SelectValue placeholder="Select your country" className="text-gray-400" />
+                <SelectValue placeholder="Select your country" />
               </SelectTrigger>
               <SelectContent className="bg-white border-gray-200">
                 {countries?.map((country) => (
@@ -504,14 +504,14 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="password" className="text-white text-sm">Password</Label>
+          <div>
+            <Label htmlFor="password" className="text-sm font-medium text-white mb-1 block">Password</Label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="At least 8 characters"
-                className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl pr-12 focus:border-[#0C332C] focus:ring-[#0C332C]/20"
+                className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white pr-12"
                 data-testid="input-password"
                 {...form.register("password")}
               />
@@ -529,14 +529,14 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             )}
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="confirmPassword" className="text-white text-sm">Confirm Password</Label>
+          <div>
+            <Label htmlFor="confirmPassword" className="text-sm font-medium text-white mb-1 block">Confirm Password</Label>
             <div className="relative">
               <Input
                 id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Re-enter your password"
-                className="h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-xl pr-12 focus:border-[#0C332C] focus:ring-[#0C332C]/20"
+                className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white pr-12"
                 data-testid="input-confirm-password"
                 {...form.register("confirmPassword")}
               />

@@ -310,17 +310,18 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
           <h1 className="font-bold text-foreground mb-2 text-[20px] text-center">Apply as a Freelancer on EduFiliova</h1>
         </div>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
               {errorMessage && (
                 <div className="p-3 bg-primary/10 border border-red-200 rounded-lg text-primary-700 text-sm">
                   {errorMessage}
                 </div>
               )}
               <div>
-                <Label htmlFor="fullName" className="text-white">Full Name *</Label>
+                <Label htmlFor="fullName" className="text-sm font-medium text-white mb-1 block">Full Name *</Label>
                 <Input
                   id="fullName"
                   placeholder="e.g. John Doe"
+                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                   data-testid="input-full-name"
                   {...form.register("fullName")}
                 />
@@ -330,10 +331,11 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="displayName" className="text-white">Display Name (Shown to Clients) *</Label>
+                <Label htmlFor="displayName" className="text-sm font-medium text-white mb-1 block">Display Name (Shown to Clients) *</Label>
                 <Input
                   id="displayName"
                   placeholder="e.g. John D."
+                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                   data-testid="input-display-name"
                   {...form.register("displayName")}
                 />
@@ -343,11 +345,12 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="email" className="text-white">Email Address *</Label>
+                <Label htmlFor="email" className="text-sm font-medium text-white mb-1 block">Email Address *</Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="e.g. freelancer@example.com"
+                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                   data-testid="input-email"
                   {...form.register("email")}
                 />
@@ -357,24 +360,26 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="phoneNumber" className="text-white">Phone Number *</Label>
-                <PhoneNumberInput
-                  value={form.watch("phoneNumber") || ""}
-                  onChange={(value) => form.setValue("phoneNumber", value)}
-                  data-testid="input-phone"
-                />
+                <Label htmlFor="phoneNumber" className="text-sm font-medium text-white mb-1 block">Phone Number *</Label>
+                <div className="[&_input]:h-12 [&_input]:text-base [&_input]:rounded-lg [&_input]:border-white/20 [&_input]:bg-white/10 [&_input]:placeholder:text-base [&_input]:text-white [&_button]:h-12 [&_button]:rounded-lg [&_button]:border-white/20 [&_button]:bg-white/10 [&_button]:text-white">
+                  <PhoneNumberInput
+                    value={form.watch("phoneNumber") || ""}
+                    onChange={(value) => form.setValue("phoneNumber", value)}
+                    data-testid="input-phone"
+                  />
+                </div>
                 {form.formState.errors.phoneNumber && (
                   <p className="text-sm text-destructive mt-1">{form.formState.errors.phoneNumber.message}</p>
                 )}
               </div>
 
               <div>
-                <Label htmlFor="country" className="text-white">Country of Residence *</Label>
+                <Label htmlFor="country" className="text-sm font-medium text-white mb-1 block">Country of Residence *</Label>
                 <Select
                   value={form.watch("country")}
                   onValueChange={(value) => form.setValue("country", value)}
                 >
-                  <SelectTrigger data-testid="select-country">
+                  <SelectTrigger className="h-12 text-base rounded-lg border-white/20 bg-white/10 text-white" data-testid="select-country">
                     <SelectValue placeholder="Select your country" />
                   </SelectTrigger>
                   <SelectContent>
@@ -391,12 +396,13 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="password" className="text-white">Password *</Label>
+                <Label htmlFor="password" className="text-sm font-medium text-white mb-1 block">Password *</Label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="At least 8 characters"
+                    className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white pr-12"
                     data-testid="input-password"
                     {...form.register("password")}
                   />
@@ -415,12 +421,13 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="confirmPassword" className="text-white">Confirm Password *</Label>
+                <Label htmlFor="confirmPassword" className="text-sm font-medium text-white mb-1 block">Confirm Password *</Label>
                 <div className="relative">
                   <Input
                     id="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Re-enter your password"
+                    className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white pr-12"
                     data-testid="input-confirm-password"
                     {...form.register("confirmPassword")}
                   />
