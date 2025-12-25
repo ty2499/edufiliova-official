@@ -826,36 +826,45 @@ export default function TeacherSignup() {
                 <div className="space-y-4">
                   <div className="space-y-3">
                     <div className="flex items-start space-x-2">
-                      <Checkbox
-                        id="agreement1"
-                        checked={form.watch("agreementTruthful")}
-                        onCheckedChange={(checked) => form.setValue("agreementTruthful", checked as boolean)}
-                        data-testid="checkbox-agreement-truthful"
-                      />
+                      <div className="relative flex h-4 w-4 shrink-0 items-center justify-center mt-0.5">
+                        <Checkbox
+                          id="agreement1"
+                          checked={form.watch("agreementTruthful")}
+                          onCheckedChange={(checked) => form.setValue("agreementTruthful", checked as boolean)}
+                          className="h-full w-full rounded-sm border-gray-300"
+                          data-testid="checkbox-agreement-truthful"
+                        />
+                      </div>
                       <Label htmlFor="agreement1" className="text-sm font-normal leading-relaxed">
                         I confirm all information is truthful and accurate.
                       </Label>
                     </div>
 
                     <div className="flex items-start space-x-2">
-                      <Checkbox
-                        id="agreement2"
-                        checked={form.watch("agreementContent")}
-                        onCheckedChange={(checked) => form.setValue("agreementContent", checked as boolean)}
-                        data-testid="checkbox-agreement-content"
-                      />
+                      <div className="relative flex h-4 w-4 shrink-0 items-center justify-center mt-0.5">
+                        <Checkbox
+                          id="agreement2"
+                          checked={form.watch("agreementContent")}
+                          onCheckedChange={(checked) => form.setValue("agreementContent", checked as boolean)}
+                          data-testid="checkbox-agreement-content"
+                          className="h-full w-full rounded-sm border-gray-300"
+                        />
+                      </div>
                       <Label htmlFor="agreement2" className="text-sm font-normal leading-relaxed">
                         I agree that any content I upload is original or legally licensed.
                       </Label>
                     </div>
 
                     <div className="flex items-start space-x-2">
-                      <Checkbox
-                        id="agreement3"
-                        checked={form.watch("agreementTerms")}
-                        onCheckedChange={(checked) => form.setValue("agreementTerms", checked as boolean)}
-                        data-testid="checkbox-agreement-terms"
-                      />
+                      <div className="relative flex h-4 w-4 shrink-0 items-center justify-center mt-0.5">
+                        <Checkbox
+                          id="agreement3"
+                          checked={form.watch("agreementTerms")}
+                          onCheckedChange={(checked) => form.setValue("agreementTerms", checked as boolean)}
+                          data-testid="checkbox-agreement-terms"
+                          className="h-full w-full rounded-sm border-gray-300"
+                        />
+                      </div>
                       <Label htmlFor="agreement3" className="text-sm font-normal leading-relaxed">
                         I agree to EduFiliova's{" "}
                         <button
@@ -864,7 +873,7 @@ export default function TeacherSignup() {
                             e.preventDefault();
                             setShowTermsModal(true);
                           }}
-                          className="text-foreground underline hover:text-foreground/80" transition-all duration-300
+                          className="text-foreground underline hover:text-foreground/80 transition-all duration-300"
                         >
                           Teacher Terms & Safety Policy
                         </button>.
@@ -872,24 +881,30 @@ export default function TeacherSignup() {
                     </div>
 
                     <div className="flex items-start space-x-2">
-                      <Checkbox
-                        id="agreement4"
-                        checked={form.watch("agreementUnderstand")}
-                        onCheckedChange={(checked) => form.setValue("agreementUnderstand", checked as boolean)}
-                        data-testid="checkbox-agreement-understand"
-                      />
+                      <div className="relative flex h-4 w-4 shrink-0 items-center justify-center mt-0.5">
+                        <Checkbox
+                          id="agreement4"
+                          checked={form.watch("agreementUnderstand")}
+                          onCheckedChange={(checked) => form.setValue("agreementUnderstand", checked as boolean)}
+                          data-testid="checkbox-agreement-understand"
+                          className="h-full w-full rounded-sm border-gray-300"
+                        />
+                      </div>
                       <Label htmlFor="agreement4" className="text-sm font-normal leading-relaxed">
                         I understand EduFiliova may approve or reject my application.
                       </Label>
                     </div>
 
                     <div className="flex items-start space-x-2">
-                      <Checkbox
-                        id="agreement5"
-                        checked={form.watch("agreementSafety")}
-                        onCheckedChange={(checked) => form.setValue("agreementSafety", checked as boolean)}
-                        data-testid="checkbox-agreement-safety"
-                      />
+                      <div className="relative flex h-4 w-4 shrink-0 items-center justify-center mt-0.5">
+                        <Checkbox
+                          id="agreement5"
+                          checked={form.watch("agreementSafety")}
+                          onCheckedChange={(checked) => form.setValue("agreementSafety", checked as boolean)}
+                          data-testid="checkbox-agreement-safety"
+                          className="h-full w-full rounded-sm border-gray-300"
+                        />
+                      </div>
                       <Label htmlFor="agreement5" className="text-sm font-normal leading-relaxed">
                         I understand students' safety is the highest priority.
                       </Label>
