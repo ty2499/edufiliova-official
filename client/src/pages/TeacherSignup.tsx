@@ -506,7 +506,7 @@ export default function TeacherSignup() {
                             id={`category-${category}`}
                             checked={form.watch("teachingCategories").includes(category)}
                             onCheckedChange={() => handleCategoryToggle(category)}
-                            className="h-4 w-4 rounded border-gray-300"
+                            className="h-2 w-2 rounded-[1px] border-gray-300 sm:h-4 sm:w-4"
                             data-testid={`checkbox-category-${category.toLowerCase().replace(/\s+/g, "-")}`}
                           />
                           <Label htmlFor={`category-${category}`} className="text-sm font-normal">
@@ -530,7 +530,7 @@ export default function TeacherSignup() {
                             id={`grade-${level}`}
                             checked={form.watch("gradeLevels").includes(level)}
                             onCheckedChange={() => handleGradeLevelToggle(level)}
-                            className="h-4 w-4 rounded border-gray-300"
+                            className="h-2 w-2 rounded-[1px] border-gray-300 sm:h-4 sm:w-4"
                             data-testid={`checkbox-grade-${level.toLowerCase().replace(/\s+/g, "-")}`}
                           />
                           <Label htmlFor={`grade-${level}`} className="text-sm font-normal">
