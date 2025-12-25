@@ -373,6 +373,15 @@ export const SchedulingInterface: React.FC = () => {
   };
 
   const handleBookAppointment = () => {
+    console.log('📝 [UI] Attempting to book appointment with data:', bookingForm);
+    if (!bookingForm.teacherId) {
+      alert('Please select a teacher first');
+      return;
+    }
+    if (!bookingForm.scheduledAt) {
+      alert('Please select a date and time for your session');
+      return;
+    }
     bookAppointmentMutation.mutate(bookingForm);
   };
 
@@ -765,7 +774,10 @@ export const SchedulingInterface: React.FC = () => {
                     <Label>Select Teacher</Label>
                     <Select 
                       value={bookingForm.teacherId} 
-                      onValueChange={(value) => setBookingForm({...bookingForm, teacherId: value})}
+                      onValueChange={(value) => {
+                        console.log('👤 [UI] Selected teacher:', value);
+                        setBookingForm(prev => ({ ...prev, teacherId: value }));
+                      }}
                       disabled={!bookingForm.subjectId}
                     >
                       <SelectTrigger data-testid="teacher-select">
@@ -774,9 +786,10 @@ export const SchedulingInterface: React.FC = () => {
                       <SelectContent>
                         {filteredTeachers && filteredTeachers.length > 0 ? (
                           filteredTeachers.map((teacher: any) => {
+                            const teacherId = teacher.id || teacher.teacherId;
                             const specs = teacher.specializations?.map((s: any) => s.name).join(', ') || '';
                             return (
-                              <SelectItem key={teacher.teacherId} value={teacher.teacherId}>
+                              <SelectItem key={teacherId} value={teacherId}>
                                 <div className="flex flex-col items-start">
                                   <span className="font-medium">{teacher.name} {teacher.hourlyRate ? `- $${teacher.hourlyRate}/hr` : ''}</span>
                                   {specs && <span className="text-xs text-muted-foreground">Teaches: {specs}</span>}
@@ -873,8 +886,9 @@ export const SchedulingInterface: React.FC = () => {
                         </div>
                       ) : (
                         filteredTeachers.map((teacher: any) => {
+                          const teacherId = teacher.id || teacher.teacherId;
                           // Find matching teacher in availableTeachers to get full availability data
-                          const fullTeacherData = availableTeachers.find((t: any) => t.id === teacher.teacherId);
+                          const fullTeacherData = availableTeachers.find((t: any) => t.id === teacherId);
                           const availableDays = fullTeacherData 
                             ? Object.entries(fullTeacherData.availability.weeklyAvailability)
                                 .filter(([day, isAvailable]) => isAvailable)
@@ -883,7 +897,7 @@ export const SchedulingInterface: React.FC = () => {
                             : 'Schedule not set';
                           
                           return (
-                            <div key={teacher.teacherId} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors" data-testid={`teacher-${teacher.teacherId}`}>
+                            <div key={teacherId} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors" data-testid={`teacher-${teacherId}`}>
                               <div className="flex items-start gap-3">
                                 {teacher.avatarUrl && (
                                   <Avatar className="h-12 w-12">
@@ -916,8 +930,11 @@ export const SchedulingInterface: React.FC = () => {
                                 </div>
                                 <Button
                                   size="sm"
-                                  onClick={() => setBookingForm({...bookingForm, teacherId: teacher.teacherId})}
-                                  data-testid={`select-teacher-${teacher.teacherId}`}
+                                  onClick={() => {
+                                    console.log('👤 [UI] Selected teacher via button:', teacher.id || teacher.teacherId);
+                                    setBookingForm(prev => ({...prev, teacherId: teacher.id || teacher.teacherId}));
+                                  }}
+                                  data-testid={`select-teacher-${teacher.id || teacher.teacherId}`}
                                   className="whitespace-nowrap bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] active:bg-[#2f5a4e]"
                                   style={{ backgroundColor: '#2f5a4e', color: 'white', opacity: 1 }}
                                 >
