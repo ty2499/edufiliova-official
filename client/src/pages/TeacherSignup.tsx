@@ -372,7 +372,7 @@ export default function TeacherSignup() {
                       </p>
                     )}
                     {form.watch('passportPhotoUrl') && (
-                      <p className="text-sm text-blue-600 mt-1 flex items-center gap-2">
+                      <p className="text-sm text-[#2f5a4e] mt-1 flex items-center gap-2">
                         <CheckmarkIcon size="sm" />
                         Photo uploaded successfully
                       </p>
@@ -602,7 +602,7 @@ export default function TeacherSignup() {
                         Uploading certificates...
                       </p>
                     {form.watch('qualificationCertificates')?.length ? (
-                      <p className="text-sm text-blue-600 mt-1 flex items-center gap-2">
+                      <p className="text-sm text-[#2f5a4e] mt-1 flex items-center gap-2">
                         <CheckmarkIcon size="sm" />
                         {form.watch('qualificationCertificates')?.length || 0} certificate(s) uploaded
                       </p>
@@ -628,7 +628,7 @@ export default function TeacherSignup() {
                       </p>
                     )}
                     {form.watch('idPassportDocument') && (
-                      <p className="text-sm text-blue-600 mt-1 flex items-center gap-2">
+                      <p className="text-sm text-[#2f5a4e] mt-1 flex items-center gap-2">
                         <CheckmarkIcon size="sm" />
                         ID/Passport uploaded
                       </p>
@@ -657,7 +657,7 @@ export default function TeacherSignup() {
                       </p>
                     )}
                     {form.watch('cvResume') && (
-                      <p className="text-sm text-blue-600 mt-1 flex items-center gap-2">
+                      <p className="text-sm text-[#2f5a4e] mt-1 flex items-center gap-2">
                         <CheckmarkIcon size="sm" />
                         CV uploaded
                       </p>
@@ -725,7 +725,7 @@ export default function TeacherSignup() {
                       </p>
                     )}
                     {form.watch('proofOfTeaching')?.length ? (
-                      <p className="text-sm text-blue-600 mt-1 flex items-center gap-2">
+                      <p className="text-sm text-[#2f5a4e] mt-1 flex items-center gap-2">
                         <CheckmarkIcon size="sm" />
                         {form.watch('proofOfTeaching')?.length || 0} document(s) uploaded
                       </p>
@@ -758,7 +758,7 @@ export default function TeacherSignup() {
                       </p>
                     )}
                     {form.watch('sampleMaterials')?.length ? (
-                      <p className="text-sm text-blue-600 mt-1 flex items-center gap-2">
+                      <p className="text-sm text-[#2f5a4e] mt-1 flex items-center gap-2">
                         <CheckmarkIcon size="sm" />
                         {form.watch('sampleMaterials')?.length || 0} material(s) uploaded
                       </p>
@@ -786,7 +786,7 @@ export default function TeacherSignup() {
                       </p>
                     )}
                     {form.watch('introductionVideo') && (
-                      <p className="text-sm text-blue-600 mt-1 flex items-center gap-2">
+                      <p className="text-sm text-[#2f5a4e] mt-1 flex items-center gap-2">
                         <CheckmarkIcon size="sm" />
                         Video uploaded
                       </p>
