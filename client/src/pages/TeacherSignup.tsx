@@ -331,15 +331,15 @@ export default function TeacherSignup() {
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
               Step {currentStep} of {totalSteps}
             </h2>
-            <p className="text-gray-700 text-sm">
-              {currentStep === 1 && "Basic Personal Information"}
-              {currentStep === 2 && "Teaching Details"}
-              {currentStep === 3 && "Qualifications & Identity Verification"}
-              {currentStep === 4 && "Teaching Experience"}
-              {currentStep === 5 && "Lesson Samples (Quality Check)"}
-              {currentStep === 6 && "Account & Payment Setup (Later)"}
-              {currentStep === 7 && "Agreements"}
-            </p>
+          <p className="text-gray-600 text-sm">
+            {currentStep === 1 && "Basic Personal Information"}
+            {currentStep === 2 && "Teaching Details"}
+            {currentStep === 3 && "Qualifications & Identity Verification"}
+            {currentStep === 4 && "Teaching Experience"}
+            {currentStep === 5 && "Lesson Samples (Quality Check)"}
+            {currentStep === 6 && "Account & Payment Setup (Later)"}
+            {currentStep === 7 && "Agreements"}
+          </p>
           </div>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {errorMessage && (
@@ -366,7 +366,7 @@ export default function TeacherSignup() {
                       disabled={uploadingFiles['passport-photo']}
                     />
                     {uploadingFiles['passport-photo'] && (
-                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                      <p className="text-sm text-gray-600 mt-1 flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin" />
                         Uploading...
                       </p>
@@ -377,7 +377,7 @@ export default function TeacherSignup() {
                         Photo uploaded successfully
                       </p>
                     )}
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-gray-600 mt-1">
                       Clear, front-facing, professional photo. JPG/PNG only. Required.
                     </p>
                   </div>
@@ -445,7 +445,7 @@ export default function TeacherSignup() {
                       data-testid="input-dob"
                       {...form.register("dateOfBirth")}
                     />
-                    <p className="text-sm text-muted-foreground mt-1">For teacher identity verification.</p>
+                    <p className="text-sm text-gray-600 mt-1">For teacher identity verification.</p>
                     {form.formState.errors.dateOfBirth && (
                       <p className="text-sm text-destructive mt-1">{form.formState.errors.dateOfBirth.message}</p>
                     )}
@@ -463,7 +463,7 @@ export default function TeacherSignup() {
                         <SelectItem value="prefer_not_to_say">Prefer not to say</SelectItem>
                       </SelectContent>
                     </Select>
-                    <p className="text-sm text-muted-foreground mt-1">Used for identification only.</p>
+                    <p className="text-sm text-gray-600 mt-1">Used for identification only.</p>
                   </div>
 
                   <div>
@@ -495,7 +495,7 @@ export default function TeacherSignup() {
                 <div className="space-y-4">
                   <div>
                     <Label>Teaching Categories (Primary Focus Area) *</Label>
-                    <p className="text-sm text-muted-foreground mb-3">Must pick at least 1</p>
+                    <p className="text-sm text-gray-600 mb-3">Must pick at least 1</p>
                     <div className="grid grid-cols-2 gap-3">
                       {teachingCategories.map((category) => (
                         <div key={category} className="flex items-center space-x-2">
@@ -518,7 +518,7 @@ export default function TeacherSignup() {
 
                   <div>
                     <Label>Grade Levels You Teach *</Label>
-                    <p className="text-sm text-muted-foreground mb-3">Select at least one</p>
+                    <p className="text-sm text-gray-600 mb-3">Select at least one</p>
                     <div className="space-y-2">
                       {gradeLevels.map((level) => (
                         <div key={level} className="flex items-center space-x-2">
@@ -589,19 +589,17 @@ export default function TeacherSignup() {
                       onChange={(e) => handleFileUpload(e.target.files, 'qualification-cert', 'qualificationCertificates')}
                       disabled={uploadingFiles['qualification-cert']}
                     />
-                    {uploadingFiles['qualification-cert'] && (
-                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                    <p className="text-sm text-gray-600 mt-1 flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin" />
                         Uploading certificates...
                       </p>
-                    )}
                     {form.watch('qualificationCertificates')?.length ? (
                       <p className="text-sm text-blue-600 mt-1 flex items-center gap-2">
                         <CheckmarkIcon size="sm" />
                         {form.watch('qualificationCertificates')?.length || 0} certificate(s) uploaded
                       </p>
                     ) : null}
-                    <p className="text-sm text-muted-foreground mt-1">Accept: PDF, JPG, PNG. Required.</p>
+                    <p className="text-sm text-gray-600 mt-1">Accept: PDF, JPG, PNG. Required.</p>
                   </div>
 
                   <div>
@@ -616,7 +614,7 @@ export default function TeacherSignup() {
                       disabled={uploadingFiles['id-passport']}
                     />
                     {uploadingFiles['id-passport'] && (
-                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                      <p className="text-sm text-gray-600 mt-1 flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin" />
                         Uploading ID...
                       </p>
@@ -627,7 +625,7 @@ export default function TeacherSignup() {
                         ID/Passport uploaded
                       </p>
                     )}
-                    <p className="text-sm text-muted-foreground mt-1">For teacher verification. Accept: PDF, JPG, PNG. Required.</p>
+                    <p className="text-sm text-gray-600 mt-1">For teacher verification. Accept: PDF, JPG, PNG. Required.</p>
                     {form.formState.errors.idPassportDocument && (
                       <p className="text-sm text-destructive mt-1">{form.formState.errors.idPassportDocument.message}</p>
                     )}
@@ -645,7 +643,7 @@ export default function TeacherSignup() {
                       disabled={uploadingFiles['cv-resume']}
                     />
                     {uploadingFiles['cv-resume'] && (
-                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                      <p className="text-sm text-gray-600 mt-1 flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin" />
                         Uploading CV...
                       </p>
@@ -656,7 +654,7 @@ export default function TeacherSignup() {
                         CV uploaded
                       </p>
                     )}
-                    <p className="text-sm text-muted-foreground mt-1">Optional but boosts approval. Accept: PDF.</p>
+                    <p className="text-sm text-gray-600 mt-1">Optional but boosts approval. Accept: PDF.</p>
                   </div>
                 </div>
               )}
@@ -692,7 +690,7 @@ export default function TeacherSignup() {
                       data-testid="textarea-experience-summary"
                       {...form.register("experienceSummary")}
                     />
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-gray-600 mt-1">
                       Minimum 50 characters. Current: {form.watch("experienceSummary")?.length || 0}
                     </p>
                     {form.formState.errors.experienceSummary && (
@@ -713,7 +711,7 @@ export default function TeacherSignup() {
                       disabled={uploadingFiles['proof-teaching']}
                     />
                     {uploadingFiles['proof-teaching'] && (
-                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                      <p className="text-sm text-gray-600 mt-1 flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin" />
                         Uploading documents...
                       </p>
@@ -724,7 +722,7 @@ export default function TeacherSignup() {
                         {form.watch('proofOfTeaching')?.length || 0} document(s) uploaded
                       </p>
                     ) : null}
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-gray-600 mt-1">
                       Reference letter, teaching license, or school employment letter. Optional but helpful.
                     </p>
                   </div>
@@ -746,7 +744,7 @@ export default function TeacherSignup() {
                       disabled={uploadingFiles['sample-materials']}
                     />
                     {uploadingFiles['sample-materials'] && (
-                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                      <p className="text-sm text-gray-600 mt-1 flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin" />
                         Uploading materials...
                       </p>
@@ -757,7 +755,7 @@ export default function TeacherSignup() {
                         {form.watch('sampleMaterials')?.length || 0} material(s) uploaded
                       </p>
                     ) : null}
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-gray-600 mt-1">
                       Accepted: Lesson notes, worksheets, slides/PowerPoints, video clips (short), PDF summaries. Required.
                     </p>
                   </div>
@@ -774,7 +772,7 @@ export default function TeacherSignup() {
                       disabled={uploadingFiles['intro-video']}
                     />
                     {uploadingFiles['intro-video'] && (
-                      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-2">
+                      <p className="text-sm text-gray-600 mt-1 flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin" />
                         Uploading video...
                       </p>
@@ -785,7 +783,7 @@ export default function TeacherSignup() {
                         Video uploaded
                       </p>
                     )}
-                    <p className="text-sm text-muted-foreground mt-1">Helpful for approval. Optional.</p>
+                    <p className="text-sm text-gray-600 mt-1">Helpful for approval. Optional.</p>
                   </div>
                 </div>
               )}
@@ -794,10 +792,10 @@ export default function TeacherSignup() {
                 <div className="space-y-4">
                   <div className="bg-muted p-6 rounded-lg">
                     <h3 className="font-medium mb-3 text-lg">Choose Payout Method</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <p className="text-sm text-gray-600 mb-4">
                       To be completed after approval. Available options:
                     </p>
-                    <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+                    <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside">
                       <li>PayPal</li>
                       <li>Stripe</li>
                       <li>Bank transfer (if supported)</li>
@@ -806,7 +804,7 @@ export default function TeacherSignup() {
 
                   <div className="bg-muted p-6 rounded-lg">
                     <h3 className="font-medium mb-2">Tax Information</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Only required after approval. Optional during signup.
                     </p>
                   </div>
