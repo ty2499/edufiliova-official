@@ -1585,7 +1585,7 @@ export function CommunityChat() {
               Replies
             </DialogTitle>
             {repliesDialogPost && (
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-sm text-foreground font-medium mt-2">
                 "{repliesDialogPost.title}" by {repliesDialogPost.author.name}
               </p>
             )}
