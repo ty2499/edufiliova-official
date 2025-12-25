@@ -121,12 +121,17 @@ export class EmailService {
     html = html.replaceAll('[[Display Name]]', displayName);
     html = html.replaceAll('{{fullName}}', fullName);
     html = html.replaceAll('{{displayName}}', displayName);
+    html = html.replaceAll('${data.fullName}', fullName);
+    html = html.replaceAll('${fullName}', fullName);
+    html = html.replaceAll('{{data.fullName}}', fullName);
+    html = html.replaceAll('{{data.displayName}}', displayName);
     html = html.replaceAll('{{baseUrl}}', baseUrl);
     
     // Also catch potential hardcoded test names that might be in the template
     html = html.replaceAll('Test Teacher', fullName);
     html = html.replaceAll('Tyler Williams', fullName);
     html = html.replaceAll('Hallpt Design', fullName);
+    html = html.replaceAll('EduFiliova Teacher', fullName);
 
     // 1:1 replacement of EXACT relative paths from the provided HTML with CIDs
     html = html.replaceAll('images/c9513ccbbd620ff1cc148b9f159cd39d.png', 'cid:logo');
@@ -187,12 +192,17 @@ export class EmailService {
     // Replace standard placeholders
     html = html.replaceAll('{{fullName}}', fullName);
     html = html.replaceAll('{{displayName}}', displayName);
+    html = html.replaceAll('${data.fullName}', fullName);
+    html = html.replaceAll('${fullName}', fullName);
+    html = html.replaceAll('{{data.fullName}}', fullName);
+    html = html.replaceAll('{{data.displayName}}', displayName);
     html = html.replaceAll('{{baseUrl}}', baseUrl);
     
     // Also catch potential hardcoded test names
     html = html.replaceAll('Test Teacher', fullName);
     html = html.replaceAll('Tyler Williams', fullName);
     html = html.replaceAll('Hallpt Design', fullName);
+    html = html.replaceAll('EduFiliova Teacher', fullName);
 
     // 1:1 replacement of EXACT relative paths with CIDs (matching declined template images)
     html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
