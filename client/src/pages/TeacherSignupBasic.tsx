@@ -294,7 +294,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           <Button
             onClick={() => handleVerifyCode(verificationCode)}
             disabled={verificationCode.length !== 6 || isVerifying}
-            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base" transition-all duration-300
+            className="w-full h-12 bg-[#A0FAB2] hover:bg-[#b5e02c] text-black font-semibold rounded-xl text-base transition-all duration-300"
             data-testid="button-continue"
           >
             {isVerifying ? (
@@ -313,7 +313,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button
                 onClick={handleResendCode}
                 disabled={isResending}
-                className="font-medium text-foreground hover:underline disabled:opacity-50" transition-all duration-300
+                className="font-medium text-foreground hover:underline disabled:opacity-50 transition-all duration-300"
                 data-testid="button-resend-code"
               >
                 {isResending ? "Sending..." : "Resend Code"}
@@ -336,7 +336,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
       >
         <div className="space-y-6">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Get started</h2>
+            <h2 className="text-2xl font-bold mb-2" style={{ color: '#a0fab2' }}>Get started</h2>
             <p className="text-gray-500 text-sm">
               Register as a teacher and create amazing<br />
               learning experiences for students.
@@ -376,7 +376,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button 
                 type="button"
                 onClick={() => setCurrentView('login')} 
-                className="font-semibold text-foreground hover:underline" transition-all duration-300
+                className="font-semibold text-foreground hover:underline transition-all duration-300"
                 data-testid="link-login"
               >
                 Log in
@@ -400,7 +400,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
     >
       <div className="space-y-6">
         <div className="text-center mb-4">
-          <h2 className="text-xl font-bold text-gray-900 mb-1">
+          <h2 className="text-xl font-bold mb-1" style={{ color: '#a0fab2' }}>
             {signupMethod === 'email' ? 'Sign up with email' : 'Sign up with phone'}
           </h2>
           <p className="text-gray-500 text-sm">
@@ -489,7 +489,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                   <SelectItem 
                     key={country.id} 
                     value={country.name}
-                    className="text-gray-900 hover:bg-gray-100 focus:bg-gray-100" transition-all duration-300
+                    className="text-gray-900 hover:bg-gray-100 focus:bg-gray-100 transition-all duration-300"
                   >
                     {country.name}
                   </SelectItem>
@@ -515,7 +515,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" transition-all duration-300
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-all duration-300"
                 data-testid="button-toggle-password"
               >
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -540,7 +540,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" transition-all duration-300
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-all duration-300"
                 data-testid="button-toggle-confirm-password"
               >
                 {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -575,7 +575,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
             <button 
               type="button"
               onClick={() => setCurrentView('login')} 
-              className="text-foreground font-semibold hover:underline" transition-all duration-300
+              className="text-foreground font-semibold hover:underline transition-all duration-300"
               data-testid="link-login-form"
             >
               Sign in here
