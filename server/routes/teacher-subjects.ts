@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { db } from '../db.js';
-import { teacherSubjects, subjects, users, profiles } from '@shared/schema';
+import { teacherSubjects, subjects, users, profiles, teacherAvailability } from '@shared/schema';
 import { eq, and, inArray, sql } from 'drizzle-orm';
 import { requireAuth, type AuthenticatedRequest } from '../middleware/auth.js';
 
@@ -92,12 +92,12 @@ router.get('/api/subjects/available', requireAuth, async (req: AuthenticatedRequ
   }
 });
 
-// Get teachers by subject (for student discovery)
+// Get teachers by subject (for student discovery) - only teachers with availability in that subject
 router.get('/api/teachers/by-subject/:subjectId', async (req, res) => {
   try {
     const { subjectId } = req.params;
     
-    // Get teachers who teach this subject
+    // Get teachers who teach this subject and have availability for it
     const teachersForSubject = await db
       .select({
         teacherId: teacherSubjects.teacherId,
@@ -112,6 +112,11 @@ router.get('/api/teachers/by-subject/:subjectId', async (req, res) => {
       })
       .from(teacherSubjects)
       .innerJoin(profiles, eq(teacherSubjects.teacherId, profiles.userId))
+      .innerJoin(teacherAvailability, and(
+        eq(teacherAvailability.teacherId, teacherSubjects.teacherId),
+        eq(teacherAvailability.subjectId, subjectId),
+        eq(teacherAvailability.isActive, true)
+      ))
       .where(eq(teacherSubjects.subjectId, subjectId));
     
     // For each teacher, get ALL subjects they teach (their specializations)

@@ -17535,7 +17535,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/teachers/:teacherId/availability", requireAuth, async (req, res) => {
     try {
       const { teacherId } = req.params;
-      const { dayOfWeek, startTime, endTime, timeZone, isRecurring, specificDate } = req.body;
+      const { dayOfWeek, startTime, endTime, timeZone, isRecurring, specificDate, subjectId } = req.body;
       
       if (dayOfWeek === undefined || !startTime || !endTime) {
         return res.status(400).json({
@@ -17546,6 +17546,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const newAvailability = await db
         .insert(teacherAvailability)
+          subjectId: subjectId || null,
         .values({
           teacherId,
           dayOfWeek,
