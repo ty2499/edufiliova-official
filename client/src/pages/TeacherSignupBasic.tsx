@@ -556,7 +556,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
 
           <Button
             type="submit"
-            className="w-full h-12 bg-[#A0FAB2] text-black font-semibold rounded-xl text-base mt-6"
+            className="w-full h-12 bg-[#A0FAB2] text-black font-semibold rounded-xl text-base mt-6 hover:bg-[#A0FAB2]"
             disabled={submitMutation.isPending}
             data-testid="button-submit"
           >
