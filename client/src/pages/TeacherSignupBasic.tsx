@@ -337,7 +337,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
         <div className="space-y-6">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold mb-2" style={{ color: '#a0fab2' }}>Get started</h2>
-            <p className="text-gray-500 text-sm">
+            <p className="text-white text-sm">
               Register as a teacher and create amazing<br />
               learning experiences for students.
             </p>
