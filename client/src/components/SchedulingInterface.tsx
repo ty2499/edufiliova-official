@@ -236,11 +236,13 @@ export const SchedulingInterface: React.FC = () => {
       refetchAppointments();
       setBookingForm({
         teacherId: '',
+        subjectId: '',
         subject: '',
         description: '',
         scheduledAt: '',
         duration: 60
       });
+      setFilteredTeachers([]);
       // Show success message to user
       alert('Appointment booked successfully! Your session has been scheduled.');
     },

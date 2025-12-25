@@ -38,6 +38,14 @@ router.post('/api/teacher/:teacherId/subjects', requireAuth, async (req: Authent
     const { teacherId } = req.params;
     const { subjectIds } = req.body;
     
+    // Authorization check: only allow the teacher themselves or admins
+    const requestUserId = req.user?.id;
+    const userRole = req.user?.role;
+    
+    if (requestUserId !== teacherId && userRole !== 'admin') {
+      return res.status(403).json({ success: false, error: 'You can only update your own subjects' });
+    }
+    
     if (!Array.isArray(subjectIds)) {
       return res.status(400).json({ success: false, error: 'subjectIds must be an array' });
     }
