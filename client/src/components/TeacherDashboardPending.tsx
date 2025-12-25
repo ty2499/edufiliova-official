@@ -86,7 +86,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
             <div className="flex items-center gap-3">
               <Logo className="h-8 w-8" />
               <div>
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                   EduFiliova Teacher Portal
                 </h1>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
