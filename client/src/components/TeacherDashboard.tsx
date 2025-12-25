@@ -3166,7 +3166,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   </div>
                 </div>
                 <Button 
-                  className="w-full md:w-auto"
+                  className="w-full md:w-auto bg-[#2f5a4e] hover:bg-[#2f5a4e]/90 text-white"
                   onClick={handleUpdateAvailability}
                   disabled={availabilityLoading}
                   data-testid="button-update-availability"
