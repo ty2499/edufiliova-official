@@ -16610,18 +16610,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ success: false, error: "Failed to fetch subjects" });
     }
   });
-        .where(and(
-          eq(subjectChapters.subjectId, subjectId),
-          eq(subjectChapters.isActive, true)
-        ))
-        .orderBy(subjectChapters.order);
-      
-      res.json({ success: true, data: chaptersData });
-    } catch (error: any) {
-      console.error('Chapters fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch chapters" });
-    }
-  });
 
   // Get lessons for a specific chapter
   app.get("/api/chapters/:chapterId/lessons", async (req, res) => {
@@ -16861,53 +16849,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Subject creation error:", error);
       res.status(500).json({ success: false, error: "Failed to create subject" });
-    }
-  });
-        return res.status(404).json({ success: false, error: "Subject not found" });
-      }
-      
-      const chaptersData = await db
-        .select()
-        .from(subjectChapters)
-        .where(and(
-          eq(subjectChapters.subjectId, subjectId),
-          eq(subjectChapters.isActive, true)
-        ))
-        .orderBy(subjectChapters.order);
-      
-      const chaptersWithLessons = await Promise.all(
-        chaptersData.map(async (chapter) => {
-          const lessonsData = await db
-            .select()
-            .from(subjectLessons)
-            .where(and(
-              eq(subjectLessons.chapterId, chapter.id),
-              eq(subjectLessons.isActive, true)
-            ))
-            .orderBy(subjectLessons.order);
-          
-          const lessonsWithExercises = await Promise.all(
-            lessonsData.map(async (lesson) => {
-              const exercisesData = await db
-                .select()
-                .from(subjectExercises)
-                .where(eq(subjectExercises.lessonId, lesson.id))
-                .orderBy(subjectExercises.order);
-              return { ...lesson, exercises: exercisesData };
-            })
-          );
-          
-          return { ...chapter, lessons: lessonsWithExercises };
-        })
-      );
-      
-      res.json({ 
-        success: true, 
-        data: { ...subjectData[0], chapters: chaptersWithLessons } 
-      });
-    } catch (error: any) {
-      console.error('Subject fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch subject" });
     }
   });
 
