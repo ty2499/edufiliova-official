@@ -74,14 +74,14 @@ export default function AuthLayout({
         </div>
 
         {/* Right Side - Form Container */}
-        <div className="w-full md:w-1/2 md:ml-auto flex flex-col items-center justify-start p-6 md:p-8 bg-gray-100 md:bg-gray-50 min-h-[50vh] overflow-y-auto md:min-h-screen md:max-h-screen rounded-t-[2rem] -mt-6 md:mt-0 md:rounded-none relative z-10">
+        <div className="w-full md:w-1/2 md:ml-auto flex flex-col items-center justify-start p-6 md:p-8 bg-[#0d3931] min-h-[50vh] overflow-y-auto md:min-h-screen md:max-h-screen rounded-t-[2rem] -mt-6 md:mt-0 md:rounded-none relative z-10 text-white">
           <div className="w-full max-w-md py-4 md:py-8">
             {/* Desktop top bar with buttons */}
             <div className="hidden md:flex justify-between items-center mb-6">
               {showBackButton && onBack ? (
                 <button
                   onClick={onBack}
-                  className="p-2 text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                  className="p-2 text-white/70 hover:text-white transition-colors transition-all duration-300"
                   data-testid="button-back-desktop"
                 >
                   <ArrowLeft className="h-5 w-5" />
@@ -93,7 +93,7 @@ export default function AuthLayout({
               {showNotNow && (
                 <button
                   onClick={handleNotNow}
-                  className="px-5 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-full transition-all" transition-all duration-300
+                  className="px-5 py-2 text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 rounded-full transition-all transition-all duration-300 border border-white/20"
                   data-testid="button-skip-desktop"
                 >
                   Skip
@@ -102,7 +102,9 @@ export default function AuthLayout({
             </div>
 
             {/* Form Content */}
-            {children}
+            <div className="auth-form-content">
+              {children}
+            </div>
           </div>
         </div>
       </div>
