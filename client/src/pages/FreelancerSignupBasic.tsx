@@ -317,7 +317,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                 </div>
               )}
               <div>
-                <Label htmlFor="fullName">Full Name *</Label>
+                <Label htmlFor="fullName" className="text-white">Full Name *</Label>
                 <Input
                   id="fullName"
                   placeholder="e.g. John Doe"
@@ -330,7 +330,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="displayName">Display Name (Shown to Clients) *</Label>
+                <Label htmlFor="displayName" className="text-white">Display Name (Shown to Clients) *</Label>
                 <Input
                   id="displayName"
                   placeholder="e.g. John D."
@@ -343,7 +343,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="email">Email Address *</Label>
+                <Label htmlFor="email" className="text-white">Email Address *</Label>
                 <Input
                   id="email"
                   type="email"
@@ -357,7 +357,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="phoneNumber">Phone Number *</Label>
+                <Label htmlFor="phoneNumber" className="text-white">Phone Number *</Label>
                 <PhoneNumberInput
                   value={form.watch("phoneNumber") || ""}
                   onChange={(value) => form.setValue("phoneNumber", value)}
@@ -369,7 +369,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="country">Country of Residence *</Label>
+                <Label htmlFor="country" className="text-white">Country of Residence *</Label>
                 <Select
                   value={form.watch("country")}
                   onValueChange={(value) => form.setValue("country", value)}
@@ -391,7 +391,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="password">Password *</Label>
+                <Label htmlFor="password" className="text-white">Password *</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -415,7 +415,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               <div>
-                <Label htmlFor="confirmPassword">Confirm Password *</Label>
+                <Label htmlFor="confirmPassword" className="text-white">Confirm Password *</Label>
                 <div className="relative">
                   <Input
                     id="confirmPassword"

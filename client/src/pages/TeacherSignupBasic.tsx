@@ -406,7 +406,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           <h2 className="text-xl font-bold mb-1" style={{ color: '#a0fab2' }}>
             {signupMethod === 'email' ? 'Sign up with email' : 'Sign up with phone'}
           </h2>
-          <p className="text-gray-500 text-sm">
+          <p className="text-white text-sm">
             Enter your details to create your account
           </p>
         </div>
@@ -419,7 +419,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           )}
 
           <div className="space-y-1.5">
-            <Label htmlFor="fullName" className="text-gray-700 text-sm">Full Name</Label>
+            <Label htmlFor="fullName" className="text-white text-sm">Full Name</Label>
             <Input
               id="fullName"
               placeholder="e.g. Purity Johns"
@@ -433,7 +433,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="displayName" className="text-gray-700 text-sm">Display Name</Label>
+            <Label htmlFor="displayName" className="text-white text-sm">Display Name</Label>
             <Input
               id="displayName"
               placeholder="e.g. Mrs. P Johns"
@@ -447,7 +447,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="email" className="text-gray-700 text-sm">Email Address</Label>
+            <Label htmlFor="email" className="text-white text-sm">Email Address</Label>
             <Input
               id="email"
               type="email"
@@ -462,7 +462,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="phoneNumber" className="text-gray-700 text-sm">Phone Number</Label>
+            <Label htmlFor="phoneNumber" className="text-white text-sm">Phone Number</Label>
             <div className="[&_input]:bg-gray-50 [&_input]:border-gray-200 [&_input]:text-gray-900 [&_input]:placeholder:text-gray-400 [&_input]:rounded-xl [&_input]:h-12 [&_button]:bg-gray-50 [&_button]:border-gray-200 [&_button]:text-gray-700 [&_button]:h-12">
               <PhoneNumberInput
                 value={form.watch("phoneNumber") || ""}
@@ -476,7 +476,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="country" className="text-gray-700 text-sm">Country</Label>
+            <Label htmlFor="country" className="text-white text-sm">Country</Label>
             <Select
               value={form.watch("country")}
               onValueChange={(value) => form.setValue("country", value)}
@@ -505,7 +505,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="password" className="text-gray-700 text-sm">Password</Label>
+            <Label htmlFor="password" className="text-white text-sm">Password</Label>
             <div className="relative">
               <Input
                 id="password"
@@ -530,7 +530,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="confirmPassword" className="text-gray-700 text-sm">Confirm Password</Label>
+            <Label htmlFor="confirmPassword" className="text-white text-sm">Confirm Password</Label>
             <div className="relative">
               <Input
                 id="confirmPassword"
