@@ -760,6 +760,17 @@ router.post('/apply', upload.any(), async (req, res) => {
       html: emailHtml,
     });
 
+    // Send resubmission notification email
+    try {
+      await emailService.sendApplicationResubmittedEmail(applicationValidation.data.email, {
+        fullName: applicationValidation.data.fullName,
+        applicationType: 'freelancer'
+      });
+      console.log(`✅ Freelancer resubmission notification email sent to ${applicationValidation.data.email}`);
+    } catch (emailError) {
+      console.warn(`⚠️ Failed to send resubmission notification email to ${applicationValidation.data.email}:`, emailError);
+    }
+
     return res.status(200).json({ 
       success: true,
       message: 'Application submitted successfully. Check your email and WhatsApp for verification.',

@@ -630,6 +630,17 @@ router.post("/teacher-applications", async (req, res) => {
           .where(eq(teacherApplications.id, app.id))
           .returning();
 
+        // Send resubmission notification email
+        try {
+          await emailService.sendApplicationResubmittedEmail(validatedData.email, {
+            fullName: validatedData.fullName,
+            applicationType: 'teacher'
+          });
+          console.log(`✅ Teacher resubmission notification email sent to ${validatedData.email}`);
+        } catch (emailError) {
+          console.warn(`⚠️ Failed to send resubmission notification email to ${validatedData.email}:`, emailError);
+        }
+
         return res.status(200).json({
           success: true,
           message: "Teacher application resubmitted successfully",

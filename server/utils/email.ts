@@ -245,6 +245,39 @@ export class EmailService {
       ]
     });
   }
+
+  async sendApplicationResubmittedEmail(email: string, data: { fullName: string; applicationType: 'teacher' | 'freelancer' }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/resubmission_template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // Remove preloads and add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    // Dynamic Data Injection
+    const fullName = data.fullName || (data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer');
+    const appType = data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer';
+    
+    // Replace dynamic placeholders
+    html = html.replace(/Hi\s+\{\{FullName\}\}/gi, `Hi ${fullName}`);
+    html = html.replace(/\{\{FullName\}\}/gi, fullName);
+    html = html.replace(/\{\{appType\}\}/gi, appType);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    return this.sendEmail({
+      to: email,
+      subject: `Your ${appType} Application Resubmission Received - EduFiliova`,
+      html,
+      from: `"EduFiliova Support" <support@edufiliova.com>`
+    });
+  }
 }
 
 export const emailService = new EmailService();
