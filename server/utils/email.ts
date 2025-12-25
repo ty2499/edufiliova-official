@@ -265,7 +265,7 @@ export class EmailService {
     const fullName = data.fullName || (data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer');
     const appType = data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer';
     
-    // Replace dynamic placeholders
+    // Replace dynamic placeholders - multiple patterns for safety
     html = html.replace(/Hi\s+\{\{FullName\}\}/gi, `Hi ${fullName}`);
     html = html.replace(/\{\{FullName\}\}/gi, fullName);
     html = html.replace(/\{\{appType\}\}/gi, appType);
