@@ -394,30 +394,26 @@ export default function MeetingScheduler() {
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 sm:gap-2 p-2 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="flex flex-wrap gap-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
                         {GRADE_OPTIONS.map((grade) => {
                           const studentCount = gradeCounts[grade.value] || 0;
+                          const isSelected = selectedGrades.includes(grade.value);
                           return (
                             <div 
-                              key={grade.value} 
-                              className={`flex items-center justify-between p-1.5 sm:p-2 rounded border ${
-                                selectedGrades.includes(grade.value) 
-                                  ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-600' 
-                                  : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600'
-                              }`}
+                              key={grade.value}
+                              onClick={() => handleGradeToggle(grade.value)}
+                              className={`flex items-center gap-2 px-3 py-1.5 rounded-full border cursor-pointer transition-all duration-200 text-sm font-medium whitespace-nowrap
+                                ${isSelected 
+                                  ? 'bg-[#2f5a4e] text-white border-[#2f5a4e] shadow-sm' 
+                                  : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-gray-300'
+                                }`}
+                              data-testid={`grade-pill-${grade.value}`}
                             >
-                              <div className="flex items-center space-x-1.5 sm:space-x-2">
-                                <Checkbox
-                                  checked={selectedGrades.includes(grade.value)}
-                                  onCheckedChange={() => handleGradeToggle(grade.value)}
-                                  data-testid={`checkbox-grade-${grade.value}`}
-                                />
-                                <label className="text-xs sm:text-sm font-medium leading-none cursor-pointer">
-                                  {grade.label}
-                                </label>
-                              </div>
-                              <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">
-                                {isLoadingGradeCounts ? '...' : `${studentCount.toLocaleString()}`}
+                              <span>{grade.label}</span>
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                                isSelected ? 'bg-white/20 text-white' : 'bg-gray-100 dark:bg-gray-600 text-gray-500'
+                              }`}>
+                                {isLoadingGradeCounts ? '...' : studentCount.toLocaleString()}
                               </span>
                             </div>
                           );
