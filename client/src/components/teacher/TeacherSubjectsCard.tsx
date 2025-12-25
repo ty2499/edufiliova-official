@@ -16,55 +16,34 @@ interface TeacherCategoriesCardProps {
   teacherId?: string;
 }
 
-// 31+ Teaching Categories
-const TEACHING_CATEGORIES: Category[] = [
-  { id: '1', name: 'English' },
-  { id: '2', name: 'Spanish' },
-  { id: '3', name: 'Mathematics' },
-  { id: '4', name: 'Science' },
-  { id: '5', name: 'Physics' },
-  { id: '6', name: 'Chemistry' },
-  { id: '7', name: 'Biology' },
-  { id: '8', name: 'History' },
-  { id: '9', name: 'Geography' },
-  { id: '10', name: 'Computer Science' },
-  { id: '11', name: 'Art' },
-  { id: '12', name: 'Music' },
-  { id: '13', name: 'Physical Education' },
-  { id: '14', name: 'Philosophy' },
-  { id: '15', name: 'Economics' },
-  { id: '16', name: 'Accounting' },
-  { id: '17', name: 'Dutch' },
-  { id: '18', name: 'Chinese' },
-  { id: '19', name: 'Deutsch' },
-  { id: '20', name: 'Portuguese' },
-  { id: '21', name: 'Mooré' },
-  { id: '22', name: 'French' },
-  { id: '23', name: 'Italian' },
-  { id: '24', name: 'Japanese' },
-  { id: '25', name: 'Korean' },
-  { id: '26', name: 'Arabic' },
-  { id: '27', name: 'Statistics' },
-  { id: '28', name: 'Business' },
-  { id: '29', name: 'Law' },
-  { id: '30', name: 'Psychology' },
-  { id: '31', name: 'Literature' }
-];
-
 export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [specialization, setSpecialization] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
+    fetchCategories();
     if (teacherId) {
-      fetchData();
+      fetchTeacherData();
     }
   }, [teacherId]);
 
-  const fetchData = async () => {
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/categories/teaching');
+      const data = await response.json();
+      if (data.success) {
+        setCategories(data.categories || []);
+      }
+    } catch (error) {
+      console.error('Error fetching categories list:', error);
+    }
+  };
+
+  const fetchTeacherData = async () => {
     setLoading(true);
     try {
       const sessionId = localStorage.getItem('sessionId');
@@ -160,7 +139,7 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
                   <SelectValue placeholder="Choose a category to add..." />
                 </SelectTrigger>
                 <SelectContent className="max-h-[300px]">
-                  {TEACHING_CATEGORIES.map((category) => (
+                  {categories.map((category) => (
                     <SelectItem 
                       key={category.id} 
                       value={category.id}
@@ -181,7 +160,7 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
                 <p className="text-sm font-medium">Selected Categories ({selectedCategories.length})</p>
                 <div className="flex flex-wrap gap-2">
                   {selectedCategories.map((categoryId) => {
-                    const category = TEACHING_CATEGORIES.find(c => c.id === categoryId);
+                    const category = categories.find(c => c.id === categoryId);
                     return (
                       <Badge 
                         key={categoryId}

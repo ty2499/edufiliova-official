@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { db } from '../db.js';
-import { teacherSubjects, subjects, users, profiles, teacherAvailability } from '@shared/schema';
+import { teacherSubjects, subjects, users, profiles, teacherAvailability, subjectCategories } from '@shared/schema';
 import { eq, and, inArray, sql } from 'drizzle-orm';
 import { requireAuth, type AuthenticatedRequest } from '../middleware/auth.js';
 
@@ -187,7 +187,98 @@ router.get('/api/subjects/with-teachers', async (req, res) => {
   }
 });
 
-export default router;
+// Get teacher's categories
+router.get('/api/teacher/:teacherId/categories', requireAuth, async (req: AuthenticatedRequest, res) => {
+  try {
+    const { teacherId } = req.params;
+    
+    // Get distinct categories for this teacher from availability
+    const teacherCats = await db
+      .select({
+        id: subjectCategories.id,
+        name: subjectCategories.name,
+      })
+      .from(teacherAvailability)
+      .innerJoin(subjectCategories, eq(teacherAvailability.categoryId, subjectCategories.id))
+      .where(eq(teacherAvailability.teacherId, teacherId));
+    
+    // Get specialization from profile
+    const profile = await db
+      .select({ specialization: profiles.experience })
+      .from(profiles)
+      .where(eq(profiles.userId, teacherId));
+    
+    res.json({ 
+      success: true, 
+      categories: teacherCats,
+      specialization: profile[0]?.specialization || ''
+    });
+  } catch (error: any) {
+    console.error('Error fetching teacher categories:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch teacher categories' });
+  }
+});
+
+// Update teacher's categories
+router.post('/api/teacher/:teacherId/categories', requireAuth, async (req: AuthenticatedRequest, res) => {
+  try {
+    const { teacherId } = req.params;
+    const { categoryIds, specialization } = req.body;
+    
+    // Authorization check
+    if (req.user?.id !== teacherId && req.user?.role !== 'admin') {
+      return res.status(403).json({ success: false, error: 'Not authorized' });
+    }
+    
+    // Delete existing categories
+    await db.delete(teacherAvailability).where(eq(teacherAvailability.teacherId, teacherId));
+    
+    // Insert new categories with default availability
+    if (Array.isArray(categoryIds) && categoryIds.length > 0) {
+      const values = categoryIds.map(categoryId => ({
+        teacherId,
+        categoryId,
+        dayOfWeek: 0, // Default value
+        startTime: '09:00',
+        endTime: '17:00',
+        isActive: true,
+      }));
+      
+      await db.insert(teacherAvailability).values(values);
+    }
+    
+    // Update specialization in profile
+    if (specialization) {
+      await db.update(profiles)
+        .set({ experience: specialization })
+        .where(eq(profiles.userId, teacherId));
+    }
+    
+    res.json({ success: true, message: 'Categories updated successfully' });
+  } catch (error: any) {
+    console.error('Error updating teacher categories:', error);
+    res.status(500).json({ success: false, error: 'Failed to update categories' });
+  }
+});
+
+// Get teaching categories (31 core categories)
+router.get('/api/categories/teaching', async (req, res) => {
+  try {
+    const categories = await db
+      .select({
+        id: subjectCategories.id,
+        name: subjectCategories.name,
+      })
+      .from(subjectCategories)
+      .where(eq(subjectCategories.isActive, true))
+      .orderBy(subjectCategories.name);
+    
+    res.json({ success: true, categories });
+  } catch (error: any) {
+    console.error('Error fetching teaching categories:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch categories' });
+  }
+});
 
 // Get core subjects (main list for dropdowns - ~15 subjects)
 // PUBLIC
@@ -214,3 +305,5 @@ router.get('/api/subjects/core', async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to fetch subjects' });
   }
 });
+
+export default router;
