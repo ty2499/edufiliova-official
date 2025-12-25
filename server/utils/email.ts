@@ -116,10 +116,17 @@ export class EmailService {
     const displayName = data.displayName || data.fullName || 'Teacher';
     const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
 
-    // 1. Handle blocks first (most complex)
+    // 1. Handle blocks first
     html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
 
-    // 2. Standardize all name variants to the actual value
+    // 2. Aggressive fallback: Replace ANY occurrence of known hardcoded names or patterns
+    // This catches things that might be obscured by HTML tags
+    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
+    hardcodedNames.forEach(pattern => {
+      html = html.replace(pattern, fullName);
+    });
+
+    // 3. Standardize all dynamic variants
     const namePatterns = [
       /\{\{fullName\}\}/gi,
       /\{\{ fullName \}\}/gi,
@@ -136,18 +143,19 @@ export class EmailService {
       /\[\[Full Name\]\]/gi,
       /\[\[Display Name\]\]/gi,
       /\[\[data\.fullName\]\]/gi,
-      /\[\[data\.displayName\]\]/gi,
-      /Tyler Williams/gi,
-      /Test Teacher/gi,
-      /EduFiliova Teacher/gi,
-      /Hallpt Design/gi
+      /\[\[data\.displayName\]\]/gi
     ];
 
     namePatterns.forEach(pattern => {
       html = html.replace(pattern, fullName);
     });
 
-    // 3. Final cleanup and simple tags
+    // 4. Final catch-all: If "Hi" is followed by ANYTHING that looks like a placeholder, force replace it
+    html = html.replace(/Hi\s+[\$]?\{[^\}]+\}/gi, `Hi ${fullName}`);
+    html = html.replace(/Hi\s+\[\[[^\]]+\]\]/gi, `Hi ${fullName}`);
+    html = html.replace(/Hi\s+Tyler\s+Williams/gi, `Hi ${fullName}`);
+
+    // 5. Final cleanup
     html = html.replace(/\{\{reason\}\}/gi, reasonText);
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
     html = html.replace(/\{\{#if reason\}\}/gi, '');
@@ -206,7 +214,13 @@ export class EmailService {
     // 1. Handle blocks first
     html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
 
-    // 2. Standardize all name variants
+    // 2. Aggressive fallback: Replace ANY occurrence of known hardcoded names or patterns
+    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
+    hardcodedNames.forEach(pattern => {
+      html = html.replace(pattern, fullName);
+    });
+
+    // 3. Standardize all dynamic variants
     const namePatterns = [
       /\{\{fullName\}\}/gi,
       /\{\{ fullName \}\}/gi,
@@ -223,18 +237,19 @@ export class EmailService {
       /\[\[Full Name\]\]/gi,
       /\[\[Display Name\]\]/gi,
       /\[\[data\.fullName\]\]/gi,
-      /\[\[data\.displayName\]\]/gi,
-      /Tyler Williams/gi,
-      /Test Teacher/gi,
-      /EduFiliova Teacher/gi,
-      /Hallpt Design/gi
+      /\[\[data\.displayName\]\]/gi
     ];
 
     namePatterns.forEach(pattern => {
       html = html.replace(pattern, fullName);
     });
 
-    // 3. Final cleanup
+    // 4. Force replace greetings
+    html = html.replace(/Hi\s+[\$]?\{[^\}]+\}/gi, `Hi ${fullName}`);
+    html = html.replace(/Hi\s+\[\[[^\]]+\]\]/gi, `Hi ${fullName}`);
+    html = html.replace(/Hi\s+Tyler\s+Williams/gi, `Hi ${fullName}`);
+
+    // 5. Final cleanup
     html = html.replace(/\{\{reason\}\}/gi, reasonText);
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
     html = html.replace(/\{\{#if reason\}\}/gi, '');
