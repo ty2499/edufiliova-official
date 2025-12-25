@@ -188,11 +188,12 @@ export function TeacherMeetingsTab({ onNavigate }: TeacherMeetingsTabProps) {
         </div>
         <Button 
           size="lg"
+          className="bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white"
           onClick={() => setShowScheduler(true)}
           data-testid="button-create-meeting"
         >
-          <Plus className="mr-2 h-5 w-5" />
-          Schedule New Meeting
+          <Plus className="h-5 w-5 md:mr-2" />
+          <span className="hidden md:inline">Schedule New Meeting</span>
         </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
