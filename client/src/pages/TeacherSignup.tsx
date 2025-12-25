@@ -836,9 +836,6 @@ export default function TeacherSignup() {
                         I confirm all information is truthful and accurate.
                       </Label>
                     </div>
-                    {form.formState.errors.agreementTruthful && (
-                      <p className="text-sm text-destructive">{form.formState.errors.agreementTruthful.message}</p>
-                    )}
 
                     <div className="flex items-start space-x-2">
                       <Checkbox
@@ -851,9 +848,6 @@ export default function TeacherSignup() {
                         I agree that any content I upload is original or legally licensed.
                       </Label>
                     </div>
-                    {form.formState.errors.agreementContent && (
-                      <p className="text-sm text-destructive">{form.formState.errors.agreementContent.message}</p>
-                    )}
 
                     <div className="flex items-start space-x-2">
                       <Checkbox
@@ -876,9 +870,6 @@ export default function TeacherSignup() {
                         </button>.
                       </Label>
                     </div>
-                    {form.formState.errors.agreementTerms && (
-                      <p className="text-sm text-destructive">{form.formState.errors.agreementTerms.message}</p>
-                    )}
 
                     <div className="flex items-start space-x-2">
                       <Checkbox
@@ -891,9 +882,6 @@ export default function TeacherSignup() {
                         I understand EduFiliova may approve or reject my application.
                       </Label>
                     </div>
-                    {form.formState.errors.agreementUnderstand && (
-                      <p className="text-sm text-destructive">{form.formState.errors.agreementUnderstand.message}</p>
-                    )}
 
                     <div className="flex items-start space-x-2">
                       <Checkbox
@@ -906,9 +894,6 @@ export default function TeacherSignup() {
                         I understand students' safety is the highest priority.
                       </Label>
                     </div>
-                    {form.formState.errors.agreementSafety && (
-                      <p className="text-sm text-destructive">{form.formState.errors.agreementSafety.message}</p>
-                    )}
                   </div>
                 </div>
               )}
