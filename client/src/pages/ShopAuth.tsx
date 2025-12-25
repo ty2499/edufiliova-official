@@ -550,7 +550,8 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
 
           <Button 
             type="submit" 
-            className="w-full bg-white hover:bg-gray-50 text-black py-6 text-base font-semibold" transition-all duration-300
+            className="w-full py-6 text-base font-semibold" transition-all duration-300
+            style={{ backgroundColor: '#a0fab2', color: '#0c332c' }}
             disabled={isProcessing}
             data-testid={`button-${authMode}`}
           >
