@@ -190,6 +190,7 @@ router.get('/api/subjects/with-teachers', async (req, res) => {
 export default router;
 
 // Get core subjects (main list for dropdowns - ~15 subjects)
+// PUBLIC
 router.get('/api/subjects/core', async (req, res) => {
   try {
     const coreSubjects = await db

@@ -17546,7 +17546,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const newAvailability = await db
         .insert(teacherAvailability)
-          subjectId: subjectId || null,
         .values({
           teacherId,
           dayOfWeek,

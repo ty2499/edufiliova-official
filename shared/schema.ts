@@ -1179,7 +1179,7 @@ export const topics = pgTable("topics", {
 export const teacherAvailability = pgTable("teacher_availability", {
   id: uuid("id").primaryKey().defaultRandom(),
   teacherId: uuid("teacher_id").references(() => users.id).notNull(),
-  subjectId: text("subject_id").references(() => subjects.id), // Optional: subject they're teaching during this time
+  subjectId: uuid("subject_id").references(() => subjects.id), // Optional: subject they're teaching during this time
   dayOfWeek: integer("day_of_week").notNull(), // 0-6 (Sunday-Saturday)
   startTime: text("start_time").notNull(), // "09:00"
   endTime: text("end_time").notNull(), // "17:00"
