@@ -16606,16 +16606,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ success: true, data: subjectsData });
     } catch (error: any) {
-      
-      console.log(`📚 Found ${subjectsData.length} subjects for grade ${gradeLevel}`);
-      
+      console.error("Subjects fetch error:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch subjects" });
+    }
   });
-    try {
-      const { subjectId } = req.params;
-      
-      const chaptersData = await db
-        .select()
-        .from(subjectChapters)
         .where(and(
           eq(subjectChapters.subjectId, subjectId),
           eq(subjectChapters.isActive, true)
