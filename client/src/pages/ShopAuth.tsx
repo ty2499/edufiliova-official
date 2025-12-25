@@ -433,7 +433,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
       <div className="space-y-3">
         <div className="mb-8">
           <h1 className="font-bold mb-2 text-[20px] text-center" style={{ color: '#a0fab2' }}>
-            {authMode === 'signin' ? 'Welcome Back to EduFiliova Shop' : 'Join EduFiliova Shop'}
+            Explore our digital resources from our creators
           </h1>
         </div>
 
