@@ -202,6 +202,17 @@ router.post('/test-emails/send-all', async (req: Request, res: Response) => {
       errors.push({ type: 'Teacher Approval Email', error: error.message });
     }
 
+    // 9b. Teacher Rejection Email (support@edufiliova.com)
+    try {
+      const teacherRejectionResult = await emailService.sendTeacherRejectionEmail(testEmail, {
+        fullName: 'Test Teacher',
+        reason: 'Missing qualification documents'
+      });
+      results.push({ type: 'Teacher Rejection Email (support@)', success: teacherRejectionResult });
+    } catch (error: any) {
+      errors.push({ type: 'Teacher Rejection Email', error: error.message });
+    }
+
     // 10. Meeting Reminder Email (support@edufiliova.com)
     try {
       const meetingReminderResult = await emailService.sendMeetingReminderEmail(testEmail, {

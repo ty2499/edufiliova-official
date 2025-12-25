@@ -125,6 +125,7 @@ export class EmailService {
     html = html.replaceAll('${fullName}', fullName);
     html = html.replaceAll('{{data.fullName}}', fullName);
     html = html.replaceAll('{{data.displayName}}', displayName);
+    html = html.replaceAll('{{#if reason}} Reason provided:\n{{reason}}\n{{/if}}', `Reason provided:\n${data.reason || 'Missing documentation'}`);
     html = html.replaceAll('{{baseUrl}}', baseUrl);
     
     // Also catch potential hardcoded test names that might be in the template
