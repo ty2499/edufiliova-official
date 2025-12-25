@@ -686,9 +686,9 @@ function PaymentMethodsCard({ user }: { user: any }) {
                     type="button"
                     variant={selectedType === 'paypal' ? 'default' : 'outline'}
                     onClick={() => setSelectedType('paypal')}
-                    className="justify-start"
+                    className={`justify-start ${selectedType === 'paypal' ? 'bg-white text-[#2f5a4e] hover:bg-white border border-[#2f5a4e]' : ''}`}
                   >
-                    <div className="w-6 h-6 bg-primary rounded mr-2 flex items-center justify-center">
+                    <div className="w-6 h-6 bg-[#2f5a4e] rounded mr-2 flex items-center justify-center">
                       <SiPaypal className="text-white text-sm" />
                     </div>
                     PayPal
