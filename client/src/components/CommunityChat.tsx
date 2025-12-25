@@ -1578,7 +1578,7 @@ export function CommunityChat() {
 
       {/* Replies Popup Dialog */}
       <Dialog open={showRepliesDialog} onOpenChange={setShowRepliesDialog}>
-        <DialogContent className="max-w-2xl w-[90vw] h-[85vh] max-h-[700px] flex flex-col p-6">
+        <DialogContent className="max-w-2xl w-[90vw] h-[85vh] max-h-[700px] flex flex-col p-6 bg-white border-border">
           <DialogHeader className="pb-4">
             <DialogTitle className="flex items-center gap-2 text-lg">
               <MessageCircle className="h-5 w-5" />
@@ -1638,7 +1638,7 @@ export function CommunityChat() {
                   </div>
                 ) : (
                   dialogReplies.map((reply: Reply) => (
-                    <div key={reply.id} className="flex gap-4 p-4 rounded-xl bg-muted/50 border border-border/50">
+                    <div key={reply.id} className="flex gap-4 p-4 rounded-xl bg-white border border-border">
                       <Avatar className="h-10 w-10 flex-shrink-0">
                         <AvatarImage src={reply.author.profilePic} />
                         <AvatarFallback className="text-sm font-medium">
