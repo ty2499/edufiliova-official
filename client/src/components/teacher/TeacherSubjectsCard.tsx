@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { BookOpen, Loader2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 
 interface Category {
   id: string;
@@ -14,7 +15,7 @@ interface TeacherCategoriesCardProps {
   teacherId?: string;
 }
 
-// 15 Core Teaching Categories
+// Teaching Categories (21 categories)
 const TEACHING_CATEGORIES: Category[] = [
   { id: '1', name: 'English' },
   { id: '2', name: 'Spanish' },
@@ -30,11 +31,18 @@ const TEACHING_CATEGORIES: Category[] = [
   { id: '12', name: 'Music' },
   { id: '13', name: 'Physical Education' },
   { id: '14', name: 'Philosophy' },
-  { id: '15', name: 'Economics' }
+  { id: '15', name: 'Economics' },
+  { id: '16', name: 'Accounting' },
+  { id: '17', name: 'Dutch' },
+  { id: '18', name: 'Chinese' },
+  { id: '19', name: 'Deutsch' },
+  { id: '20', name: 'Portuguese' },
+  { id: '21', name: 'Mooré' }
 ];
 
 export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [specialization, setSpecialization] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -59,6 +67,7 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
       if (data.success) {
         const categoryIds = (data.categories || []).map((c: Category) => c.id);
         setSelectedCategories(categoryIds);
+        setSpecialization(data.specialization || '');
       }
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -89,13 +98,16 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
           'Authorization': `Bearer ${sessionId}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ categoryIds: selectedCategories })
+        body: JSON.stringify({ 
+          categoryIds: selectedCategories,
+          specialization: specialization.trim()
+        })
       });
       
       const result = await response.json();
       
       if (result.success) {
-        setMessage({ type: 'success', text: 'Teaching categories updated successfully!' });
+        setMessage({ type: 'success', text: 'Teaching categories and specialization updated successfully!' });
         setTimeout(() => setMessage(null), 3000);
       } else {
         setMessage({ type: 'error', text: result.error || 'Failed to update categories' });
@@ -116,33 +128,36 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
           Teaching Categories
         </CardTitle>
         <CardDescription>
-          Check the subjects you specialize in. Students will see you when they search for these categories.
+          Select the subjects you specialize in. Students will see you when they search for these categories.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         {loading ? (
           <div className="flex justify-center py-8">
             <Loader2 className="h-6 w-6 animate-spin" />
           </div>
         ) : (
           <>
-            <div className="flex flex-wrap gap-2">
-              {TEACHING_CATEGORIES.map((category) => {
-                const isSelected = selectedCategories.includes(category.id);
-                return (
-                  <button
-                    key={category.id}
-                    onClick={() => toggleCategory(category.id)}
-                    className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-green-500 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    {category.name}
-                  </button>
-                );
-              })}
+            <div className="space-y-3">
+              <Label className="text-base font-semibold">Select Categories</Label>
+              <div className="flex flex-wrap gap-2">
+                {TEACHING_CATEGORIES.map((category) => {
+                  const isSelected = selectedCategories.includes(category.id);
+                  return (
+                    <button
+                      key={category.id}
+                      onClick={() => toggleCategory(category.id)}
+                      className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-green-500 text-white shadow-md'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {category.name}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {selectedCategories.length > 0 && (
@@ -163,6 +178,26 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
                 </div>
               </div>
             )}
+
+            <div className="space-y-3 pt-4 border-t">
+              <Label htmlFor="specialization" className="text-base font-semibold">
+                What do you teach? (Optional)
+              </Label>
+              <p className="text-xs text-muted-foreground">
+                Add details about your teaching focus, experience, or specialization (e.g., "Advanced AP Physics", "IELTS Exam Prep")
+              </p>
+              <Textarea
+                id="specialization"
+                placeholder="Tell students about your specialization and what you can teach them..."
+                value={specialization}
+                onChange={(e) => setSpecialization(e.target.value)}
+                className="min-h-24 resize-none"
+                maxLength={500}
+              />
+              <p className="text-xs text-muted-foreground text-right">
+                {specialization.length}/500
+              </p>
+            </div>
             
             <div className="flex items-center gap-4 flex-wrap pt-4 border-t">
               <Button 
