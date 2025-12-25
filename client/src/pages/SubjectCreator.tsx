@@ -516,11 +516,11 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
           <Button 
             onClick={() => setViewMode('create')} 
             data-testid="button-create-subject"
-            className="text-white border-0 hover:bg-[#2f5a4e] active:bg-[#2f5a4e] focus:bg-[#2f5a4e] transition-none"
+            className="text-white border-0 hover:bg-[#2f5a4e] active:bg-[#2f5a4e] focus:bg-[#2f5a4e] transition-none p-2 sm:px-4 sm:py-2"
             style={{ backgroundColor: '#2f5a4e' }}
           >
-            <Plus className="h-4 w-4 mr-2" />
-            New Subject
+            <Plus className="h-4 w-4 sm:mr-2" />
+            <span className="hidden sm:inline">New Subject</span>
           </Button>
         )}
       </div>
