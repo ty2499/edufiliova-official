@@ -3007,7 +3007,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                 <Calendar className="h-5 w-5" />
                 <h2 className="text-lg sm:text-2xl font-semibold">Class Calendar</h2>
               </div>
-              <Button>
+              <Button className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100">
                 <Plus className="h-4 w-4 mr-2" />
                 Schedule Class
               </Button>
