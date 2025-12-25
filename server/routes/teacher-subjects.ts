@@ -97,7 +97,8 @@ router.get('/api/teachers/by-subject/:subjectId', async (req, res) => {
   try {
     const { subjectId } = req.params;
     
-    const result = await db
+    // Get teachers who teach this subject
+    const teachersForSubject = await db
       .select({
         teacherId: teacherSubjects.teacherId,
         isPrimary: teacherSubjects.isPrimary,
@@ -112,6 +113,42 @@ router.get('/api/teachers/by-subject/:subjectId', async (req, res) => {
       .from(teacherSubjects)
       .innerJoin(profiles, eq(teacherSubjects.teacherId, profiles.userId))
       .where(eq(teacherSubjects.subjectId, subjectId));
+    
+    // For each teacher, get ALL subjects they teach (their specializations)
+    const teacherIds = teachersForSubject.map(t => t.teacherId);
+    
+    let allTeacherSubjects: any[] = [];
+    if (teacherIds.length > 0) {
+      allTeacherSubjects = await db
+        .select({
+          teacherId: teacherSubjects.teacherId,
+          subjectName: subjects.name,
+          gradeSystem: subjects.gradeSystem,
+          gradeLevel: subjects.gradeLevel,
+          isPrimary: teacherSubjects.isPrimary,
+        })
+        .from(teacherSubjects)
+        .innerJoin(subjects, eq(teacherSubjects.subjectId, subjects.id))
+        .where(inArray(teacherSubjects.teacherId, teacherIds));
+    }
+    
+    // Group subjects by teacher
+    const subjectsByTeacher = allTeacherSubjects.reduce((acc: any, curr) => {
+      if (!acc[curr.teacherId]) acc[curr.teacherId] = [];
+      acc[curr.teacherId].push({
+        name: curr.subjectName,
+        gradeSystem: curr.gradeSystem,
+        gradeLevel: curr.gradeLevel,
+        isPrimary: curr.isPrimary,
+      });
+      return acc;
+    }, {});
+    
+    // Add subjects array to each teacher
+    const result = teachersForSubject.map(teacher => ({
+      ...teacher,
+      specializations: subjectsByTeacher[teacher.teacherId] || [],
+    }));
     
     res.json({ success: true, teachers: result });
   } catch (error: any) {

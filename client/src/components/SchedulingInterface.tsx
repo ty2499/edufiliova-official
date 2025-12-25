@@ -706,11 +706,17 @@ export const SchedulingInterface: React.FC = () => {
                       </SelectTrigger>
                       <SelectContent>
                         {filteredTeachers && filteredTeachers.length > 0 ? (
-                          filteredTeachers.map((teacher: any) => (
-                            <SelectItem key={teacher.teacherId} value={teacher.teacherId}>
-                              {teacher.name} {teacher.hourlyRate ? `- $${teacher.hourlyRate}/hr` : ''}
-                            </SelectItem>
-                          ))
+                          filteredTeachers.map((teacher: any) => {
+                            const specs = teacher.specializations?.map((s: any) => s.name).join(', ') || '';
+                            return (
+                              <SelectItem key={teacher.teacherId} value={teacher.teacherId}>
+                                <div className="flex flex-col items-start">
+                                  <span className="font-medium">{teacher.name} {teacher.hourlyRate ? `- $${teacher.hourlyRate}/hr` : ''}</span>
+                                  {specs && <span className="text-xs text-muted-foreground">Teaches: {specs}</span>}
+                                </div>
+                              </SelectItem>
+                            );
+                          })
                         ) : bookingForm.subjectId ? (
                           <SelectItem value="no-teachers" disabled>No teachers for this subject yet</SelectItem>
                         ) : (
