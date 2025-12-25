@@ -1400,7 +1400,7 @@ export function CommunityChat() {
                     onClick={() => selectedPost && replyMutation.mutate({ postId: selectedPost.id, content: replyContent })}
                     disabled={!replyContent.trim() || replyMutation.isPending}
                     size="sm"
-                    className="self-end bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
+                    className="self-end bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
                   >
                     {replyMutation.isPending ? (
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
@@ -1489,7 +1489,7 @@ export function CommunityChat() {
                               size="sm"
                               onClick={handleUpdateReply}
                               disabled={editReplyMutation.isPending}
-                              className="h-6 text-xs bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
+                              className="h-6 text-xs bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
                               data-testid={`button-save-reply-${reply.id}`}
                             >
                               {editReplyMutation.isPending ? 'Saving...' : 'Save'}
