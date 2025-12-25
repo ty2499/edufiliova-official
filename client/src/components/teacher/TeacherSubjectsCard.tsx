@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { BookOpen, Loader2 } from 'lucide-react';
+import { BookOpen, Loader2, X } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import { apiRequest } from '@/lib/queryClient';
 
 interface Subject {
@@ -141,34 +142,62 @@ export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
           <p className="text-muted-foreground text-center py-4">No subjects available yet.</p>
         ) : (
           <>
-            <div className="space-y-4 max-h-[400px] overflow-y-auto">
-              {Object.entries(groupedSubjects).map(([group, subjects]) => (
-                <div key={group} className="space-y-2">
-                  <h4 className="font-medium text-sm text-muted-foreground">{group}</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-                    {subjects.map(subject => (
-                      <div 
-                        key={subject.id}
-                        className="flex items-center gap-2 p-2 rounded-md border hover:bg-muted/50 cursor-pointer"
-                        onClick={() => toggleSubject(subject.id)}
-                      >
-                        <Checkbox 
-                          checked={selectedSubjectIds.includes(subject.id)}
-                          onCheckedChange={() => toggleSubject(subject.id)}
-                        />
-                        <span className="text-sm">{subject.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+            <div className="space-y-3">
+              <label className="text-sm font-medium">Select Subjects to Teach</label>
+              <Select onValueChange={(subjectId) => toggleSubject(subjectId)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Choose a subject to add..." />
+                </SelectTrigger>
+                <SelectContent className="max-h-[300px]">
+                  {availableSubjects.map((subject) => (
+                    <SelectItem 
+                      key={subject.id} 
+                      value={subject.id}
+                      disabled={selectedSubjectIds.includes(subject.id)}
+                    >
+                      <span className="text-sm">
+                        {subject.name} ({subject.gradeSystem} - Grade {subject.gradeLevel})
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
+
+            {selectedSubjectIds.length > 0 && (
+              <div className="space-y-3 pt-4 border-t">
+                <p className="text-sm font-medium">Selected Subjects ({selectedSubjectIds.length})</p>
+                <div className="flex flex-wrap gap-2">
+                  {selectedSubjectIds.map((subjectId) => {
+                    const subject = availableSubjects.find(s => s.id === subjectId);
+                    return (
+                      <Badge 
+                        key={subjectId}
+                        variant="secondary" 
+                        className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+                      >
+                        <span className="text-xs">
+                          {subject?.name} ({subject?.gradeSystem} G{subject?.gradeLevel})
+                        </span>
+                        <button
+                          onClick={() => toggleSubject(subjectId)}
+                          className="ml-1 hover:opacity-70 transition-opacity"
+                          aria-label="Remove subject"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </Badge>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
             
             <div className="flex items-center gap-4 flex-wrap pt-4 border-t">
               <Button 
                 className="bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white"
                 onClick={handleSave}
-                disabled={saving}
+                disabled={saving || selectedSubjectIds.length === 0}
               >
                 {saving ? (
                   <>
@@ -185,12 +214,6 @@ export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
                 </span>
               )}
             </div>
-            
-            {selectedSubjectIds.length > 0 && (
-              <p className="text-sm text-muted-foreground">
-                {selectedSubjectIds.length} subject{selectedSubjectIds.length !== 1 ? 's' : ''} selected
-              </p>
-            )}
           </>
         )}
       </CardContent>
