@@ -49,6 +49,7 @@ interface Appointment {
 interface TeacherAvailability {
   id: string;
   teacherId: string;
+  subjectId?: string;
   dayOfWeek: number;
   startTime: string;
   endTime: string;
@@ -100,7 +101,8 @@ export const SchedulingInterface: React.FC = () => {
     dayOfWeek: 1,
     startTime: '09:00',
     endTime: '17:00',
-    timeZone: 'UTC'
+    timeZone: 'UTC',
+    subjectId: ''
   });
   const [bookingForm, setBookingForm] = useState({
     teacherId: '',
@@ -178,6 +180,23 @@ export const SchedulingInterface: React.FC = () => {
     staleTime: 5 * 60 * 1000
   });
 
+  // Get core subjects for teacher availability (filtered list of ~15 main subjects)
+  const { data: allSubjects = [], isLoading: allSubjectsLoading } = useQuery({
+    queryKey: ['core-subjects'],
+    queryFn: async () => {
+      try {
+        const response = await fetch('/api/subjects/core');
+        const data = await response.json();
+        return data?.success ? data.subjects : [];
+      } catch (error) {
+        console.error('Error fetching subjects:', error);
+        return [];
+      }
+    },
+    enabled: !!profile,
+    staleTime: 5 * 60 * 1000
+  });
+
   // Fetch teachers when subject is selected
   const handleSubjectChange = async (subjectId: string, subjectName: string) => {
     setBookingForm(prev => ({ ...prev, subjectId, subject: subjectName, teacherId: '' }));
@@ -213,7 +232,8 @@ export const SchedulingInterface: React.FC = () => {
         dayOfWeek: 1,
         startTime: '09:00',
         endTime: '17:00',
-        timeZone: 'UTC'
+        timeZone: 'UTC',
+        subjectId: ''
       });
     }
   });
@@ -326,6 +346,10 @@ export const SchedulingInterface: React.FC = () => {
   });
 
   const handleAddAvailability = () => {
+    if (!newAvailability.subjectId) {
+      alert('Please select a subject');
+      return;
+    }
     addAvailabilityMutation.mutate(newAvailability);
   };
 
@@ -565,15 +589,31 @@ export const SchedulingInterface: React.FC = () => {
               </CardHeader>
               <CardContent className="px-3 py-4 md:px-6">
                 <div className="space-y-4">
-                  <div className="grid grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
                     <div>
-                      <Label>Day</Label>
+                      <Label className="text-xs md:text-sm">Subject</Label>
+                      <Select 
+                        value={newAvailability.subjectId} 
+                        onValueChange={(value) => setNewAvailability({...newAvailability, subjectId: value})}
+                      >
+                        <SelectTrigger data-testid="availability-subject-select" className="text-xs md:text-sm">
+                          <SelectValue placeholder="Select subject" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {allSubjects.map((subject: any) => (
+                            <SelectItem key={subject.id} value={subject.id}>{subject.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label className="text-xs md:text-sm">Day</Label>
                       <Select 
                         value={newAvailability.dayOfWeek.toString()} 
                         onValueChange={(value) => setNewAvailability({...newAvailability, dayOfWeek: parseInt(value)})}
                       >
-                        <SelectTrigger data-testid="availability-day-select">
-                          <SelectValue placeholder="Select day" />
+                        <SelectTrigger data-testid="availability-day-select" className="text-xs md:text-sm">
+                          <SelectValue placeholder="Day" />
                         </SelectTrigger>
                         <SelectContent>
                           {DAYS_OF_WEEK.map((day, index) => (
@@ -583,31 +623,34 @@ export const SchedulingInterface: React.FC = () => {
                       </Select>
                     </div>
                     <div>
-                      <Label>Start Time</Label>
+                      <Label className="text-xs md:text-sm">Start</Label>
                       <Input
                         type="time"
                         value={newAvailability.startTime}
                         onChange={(e) => setNewAvailability({...newAvailability, startTime: e.target.value})}
                         data-testid="availability-start-time"
+                        className="text-xs md:text-sm"
                       />
                     </div>
                     <div>
-                      <Label>End Time</Label>
+                      <Label className="text-xs md:text-sm">End</Label>
                       <Input
                         type="time"
                         value={newAvailability.endTime}
                         onChange={(e) => setNewAvailability({...newAvailability, endTime: e.target.value})}
                         data-testid="availability-end-time"
+                        className="text-xs md:text-sm"
                       />
                     </div>
                     <div className="flex items-end">
                       <Button 
                         onClick={handleAddAvailability}
-                        disabled={addAvailabilityMutation.isPending}
+                        disabled={addAvailabilityMutation.isPending || !newAvailability.subjectId}
                         data-testid="add-availability-btn"
+                        className="w-full text-xs md:text-sm"
                       >
-                        <Plus className="h-4 w-4 mr-1" />
-                        Add Slot
+                        <Plus className="h-3 w-3 md:h-4 md:w-4 mr-1" />
+                        Add
                       </Button>
                     </div>
                   </div>
@@ -629,24 +672,30 @@ export const SchedulingInterface: React.FC = () => {
                         No availability slots set
                       </div>
                     ) : (
-                      availability.map((slot: TeacherAvailability) => (
-                        <div key={slot.id} className="flex items-center justify-between p-3 border rounded" data-testid={`availability-slot-${slot.id}`}>
-                          <div>
-                            <span className="font-medium">{DAYS_OF_WEEK[slot.dayOfWeek]}</span>
-                            <span className="ml-2 text-muted-foreground">
-                              {slot.startTime} - {slot.endTime} ({slot.timeZone})
-                            </span>
+                      availability.map((slot: TeacherAvailability) => {
+                        const subjectName = allSubjects.find(s => s.id === slot.subjectId)?.name || 'All Subjects';
+                        return (
+                          <div key={slot.id} className="flex items-center justify-between p-3 border rounded" data-testid={`availability-slot-${slot.id}`}>
+                            <div>
+                              <div className="flex gap-2 items-center mb-1">
+                                <span className="font-medium">{DAYS_OF_WEEK[slot.dayOfWeek]}</span>
+                                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">{subjectName}</span>
+                              </div>
+                              <span className="text-sm text-muted-foreground">
+                                {slot.startTime} - {slot.endTime}
+                              </span>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleDeleteAvailability(slot.id)}
+                              data-testid={`delete-slot-${slot.id}`}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
                           </div>
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => handleDeleteAvailability(slot.id)}
-                            data-testid={`delete-slot-${slot.id}`}
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      ))
+                        );
+                      })
                     )}
                   </div>
                 </ScrollArea>
@@ -677,15 +726,15 @@ export const SchedulingInterface: React.FC = () => {
                       }}
                     >
                       <SelectTrigger data-testid="subject-select">
-                        <SelectValue placeholder="What subject do you want to learn?" />
+                        <SelectValue placeholder="Select a subject" />
                       </SelectTrigger>
                       <SelectContent>
-                        {subjectsLoading ? (
+                        {allSubjectsLoading ? (
                           <SelectItem value="loading" disabled>Loading subjects...</SelectItem>
-                        ) : subjectsWithTeachers && subjectsWithTeachers.length > 0 ? (
-                          subjectsWithTeachers.map((subject: any) => (
+                        ) : allSubjects && allSubjects.length > 0 ? (
+                          allSubjects.map((subject: any) => (
                             <SelectItem key={subject.id} value={subject.id}>
-                              {subject.name} ({subject.gradeSystem} - Grade {subject.gradeLevel}) - {subject.teacherCount} teacher{subject.teacherCount !== 1 ? 's' : ''}
+                              {subject.name}
                             </SelectItem>
                           ))
                         ) : (

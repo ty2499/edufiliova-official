@@ -188,3 +188,28 @@ router.get('/api/subjects/with-teachers', async (req, res) => {
 });
 
 export default router;
+
+// Get core subjects (main list for dropdowns - ~15 subjects)
+router.get('/api/subjects/core', async (req, res) => {
+  try {
+    const coreSubjects = await db
+      .select({
+        id: subjects.id,
+        name: subjects.name,
+        gradeSystem: subjects.gradeSystem,
+        gradeLevel: subjects.gradeLevel,
+      })
+      .from(subjects)
+      .where(and(
+        eq(subjects.isActive, true),
+        // Filter out messy/incomplete subjects
+      ))
+      .orderBy(subjects.name)
+      .limit(15);
+    
+    res.json({ success: true, subjects: coreSubjects });
+  } catch (error: any) {
+    console.error('Error fetching core subjects:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch subjects' });
+  }
+});
