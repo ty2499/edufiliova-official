@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f0f1f5; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background-color: #2f5a4e; padding: 30px 40px; text-align: center; }
+    .logo { max-width: 180px; height: auto; }
+    .content { padding: 40px; }
+    .alert-box { background: #fff5e6; border-left: 4px solid #ff9800; padding: 20px; margin: 20px 0; border-radius: 4px; }
+    .btn { display: inline-block; background: #2f5a4e; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .next-steps { background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    h1 { color: #1a1a1a; margin: 0 0 20px; }
+    p { color: #666; font-size: 16px; line-height: 1.6; }
+    ul, ol { color: #666; font-size: 16px; line-height: 1.8; }
+  </style>
+</head>
+<body style="width:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;background-color:#f0f1f5;margin:0;padding:0">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#f0f1f5" style="background-color:#f0f1f5">
+    <tbody>
+      <tr>
+        <td style="background-color:#f0f1f5">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:600px;margin:0 auto;background-color:#ffffff">
+            <tbody>
+              <tr>
+                <td style="vertical-align:top">
+                  <div class="header">
+                    <img src="cid:logo" alt="EduFiliova" class="logo" />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="vertical-align:top;padding:0">
+                  <div class="content">
+                    <h1>Thank You for Your Interest, {{fullName}}</h1>
+                    
+                    <p>We appreciate your enthusiasm and the time you invested in applying to become a teacher on EduFiliova. We've thoroughly reviewed your application, qualifications, and submitted materials.</p>
+                    
+                    <div class="alert-box">
+                      <p style="margin: 0; color: #e65100; font-weight: 600;">Unfortunately, we are unable to approve your application at this time.</p>
+                    </div>
+
+                    <p>This decision was made based on our comprehensive evaluation process where we assess teaching experience, qualifications, credentials, and platform requirements. While your application didn't meet our current acceptance criteria, this doesn't diminish your teaching abilities or potential.</p>
+
+                    <h2 style="color: #1a1a1a; font-size: 18px; margin-top: 30px;">Why Your Application Wasn't Approved</h2>
+                    <p>Our review process evaluates:</p>
+                    <ul>
+                      <li>Teaching credentials and certifications</li>
+                      <li>Relevant experience and qualifications</li>
+                      <li>Platform compatibility and availability</li>
+                      <li>Background verification results</li>
+                      <li>Sample teaching materials and approach</li>
+                    </ul>
+
+                    <div class="next-steps">
+                      <h3 style="color: #1a1a1a; margin-top: 0;">What You Can Do</h3>
+                      <p style="margin: 10px 0;">We encourage you to:</p>
+                      <ol style="margin: 10px 0;">
+                        <li>Review the feedback provided during the application process</li>
+                        <li>Consider developing additional certifications or qualifications</li>
+                        <li>Reapply in the future with enhanced credentials (minimum 6 months later)</li>
+                        <li>Contact us with questions about the decision</li>
+                      </ol>
+                    </div>
+
+                    <p style="margin-top: 30px;">We wish you the very best in your teaching career and future endeavors. If you have any questions about this decision or would like feedback on how to strengthen a future application, please don't hesitate to reach out to our support team.</p>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                      <a href="{{dashboardUrl}}" class="btn">Visit Your Dashboard</a>
+                    </div>
+
+                    <p style="color: #999; font-size: 14px; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+                      <strong>Support & Help:</strong><br/>
+                      If you have any questions, you can contact us at support@edufiliova.com<br/>
+                      or reply directly to this email.
+                    </p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="vertical-align:top">
+                  <div class="footer">
+                    <p>© 2025 EduFiliova. All rights reserved.</p>
+                    <p><a href="{{unsubscribeLink}}" style="color: #999;">Unsubscribe</a></p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -157,6 +157,46 @@ export class EmailService {
       ]
     });
   }
+
+  async sendTeacherRejectionEmail(email: string, data: { fullName: string; displayName?: string; reason?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_declined_template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // Remove preloads and add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    // Dynamic Data Injection
+    const fullName = data.fullName || 'Teacher';
+    const dashboardUrl = `${baseUrl}/teacher/dashboard`;
+    const unsubscribeLink = `${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}`;
+    
+    // Replace placeholders
+    html = html.replaceAll('{{fullName}}', fullName);
+    html = html.replaceAll('{{displayName}}', data.displayName || fullName);
+    html = html.replaceAll('{{dashboardUrl}}', dashboardUrl);
+    html = html.replaceAll('{{unsubscribeLink}}', unsubscribeLink);
+    html = html.replaceAll('{{baseUrl}}', baseUrl);
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Your EduFiliova Teacher Application - Next Steps',
+      html,
+      from: `"EduFiliova Support" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'logo.png', path: assetPath('c9513ccbbd620ff1cc148b9f159cd39d_1766617371531.png'), cid: 'logo', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();
