@@ -362,7 +362,8 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
                 setSignupMethod('phone');
                 setCurrentView('signup');
               }}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#A0FAB2] text-black font-medium rounded-xl"
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#A0FAB2] font-medium rounded-xl"
+              style={{ color: '#0C332C' }}
               data-testid="button-signup-phone"
             >
               <Phone className="h-5 w-5" />
