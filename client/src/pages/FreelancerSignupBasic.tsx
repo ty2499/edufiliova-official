@@ -440,7 +440,8 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold" transition-all duration-300
+                className="w-full font-semibold"
+                style={{ backgroundColor: '#a0fab2', color: '#0c332c' }}
                 disabled={submitMutation.isPending}
                 data-testid="button-submit"
               >
