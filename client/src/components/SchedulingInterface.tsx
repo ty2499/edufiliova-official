@@ -673,7 +673,7 @@ export const SchedulingInterface: React.FC = () => {
                       </div>
                     ) : (
                       availability.map((slot: TeacherAvailability) => {
-                        const category = allCategories.find(c => c.id === slot.categoryId);
+                        const category = allCategories.find((c: any) => c.id === slot.categoryId);
                         return (
                           <div key={slot.id} className="flex items-center justify-between p-3 border rounded" data-testid={`availability-slot-${slot.id}`}>
                             <div>
@@ -830,58 +830,89 @@ export const SchedulingInterface: React.FC = () => {
 
             <Card>
               <CardHeader className="px-3 md:px-6">
-                <CardTitle className="text-lg md:text-xl">Available Teachers</CardTitle>
+                <CardTitle className="text-lg md:text-xl">
+                  {bookingForm.subjectId ? 'Specialized Teachers' : 'Available Teachers'}
+                </CardTitle>
+                {bookingForm.subjectId && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Teachers specializing in {subjectsWithTeachers.find((s: any) => s.id === bookingForm.subjectId)?.name || 'this subject'}
+                  </p>
+                )}
               </CardHeader>
               <CardContent className="px-3 py-4 md:px-6">
-                <ScrollArea className="h-[300px]">
-                  <div className="space-y-3">
-                    {teachersLoading ? (
-                      <div className="text-center py-8">Loading teachers...</div>
-                    ) : !availableTeachers || availableTeachers.length === 0 ? (
-                      <div className="text-center py-8 text-muted-foreground">
-                        <p>No teachers available at the moment</p>
-                        {teachersError && <p className="text-primary text-sm">Error: {teachersError.message}</p>}
-                      </div>
-                    ) : (
-                      availableTeachers.map((teacher: any) => {
-                        // Get available days from weekly schedule
-                        const availableDays = Object.entries(teacher.availability.weeklyAvailability)
-                          .filter(([day, isAvailable]) => isAvailable)
-                          .map(([day]) => day)
-                          .join(', ');
-                        
-                        return (
-                          <div key={teacher.id} className="p-3 border rounded" data-testid={`teacher-${teacher.id}`}>
-                            <div className="flex items-center gap-3">
-                              {teacher.avatarUrl && (
-                                <Avatar className="h-10 w-10">
-                                  <AvatarImage src={teacher.avatarUrl} alt={teacher.name} />
-                                  <AvatarFallback>{teacher.name.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                              )}
-                              <div className="flex-1">
-                                <h4 className="font-medium">{teacher.name}</h4>
-                                <p className="text-sm text-muted-foreground">
-                                  Available: {availableDays || 'No days set'}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                  Time: {teacher.availability?.startTime} - {teacher.availability?.endTime} ({teacher.availability?.timezone})
-                                </p>
-                              </div>
-                              <Button
-                                size="sm"
-                                onClick={() => setBookingForm({...bookingForm, teacherId: teacher.id})}
-                                data-testid={`select-teacher-${teacher.id}`}
-                              >
-                                Select
-                              </Button>
-                            </div>
-                          </div>
-                        );
-                      })
-                    )}
+                {!bookingForm.subjectId ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <BookOpen className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p>Please select a subject first to see available teachers for that subject</p>
                   </div>
-                </ScrollArea>
+                ) : (
+                  <ScrollArea className="h-[300px]">
+                    <div className="space-y-3">
+                      {teachersLoading ? (
+                        <div className="text-center py-8">Loading teachers...</div>
+                      ) : !filteredTeachers || filteredTeachers.length === 0 ? (
+                        <div className="text-center py-8 text-muted-foreground">
+                          <p>No teachers available for this subject</p>
+                        </div>
+                      ) : (
+                        filteredTeachers.map((teacher: any) => {
+                          // Find matching teacher in availableTeachers to get full availability data
+                          const fullTeacherData = availableTeachers.find((t: any) => t.id === teacher.teacherId);
+                          const availableDays = fullTeacherData 
+                            ? Object.entries(fullTeacherData.availability.weeklyAvailability)
+                                .filter(([day, isAvailable]) => isAvailable)
+                                .map(([day]) => day)
+                                .join(', ')
+                            : 'Schedule not set';
+                          
+                          return (
+                            <div key={teacher.teacherId} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors" data-testid={`teacher-${teacher.teacherId}`}>
+                              <div className="flex items-start gap-3">
+                                {teacher.avatarUrl && (
+                                  <Avatar className="h-12 w-12">
+                                    <AvatarImage src={teacher.avatarUrl} alt={teacher.name} />
+                                    <AvatarFallback>{teacher.name.charAt(0)}</AvatarFallback>
+                                  </Avatar>
+                                )}
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-baseline gap-2 mb-1">
+                                    <h4 className="font-semibold">{teacher.name}</h4>
+                                    {teacher.hourlyRate && (
+                                      <span className="text-sm text-green-600 font-medium">${teacher.hourlyRate}/hr</span>
+                                    )}
+                                  </div>
+                                  <p className="text-sm text-muted-foreground mb-2">
+                                    {teacher.email}
+                                  </p>
+                                  <div className="space-y-1 text-sm">
+                                    <div className="flex items-center gap-2 text-muted-foreground">
+                                      <Calendar className="h-3 w-3" />
+                                      <span><strong>Available Days:</strong> {availableDays || 'Not set'}</span>
+                                    </div>
+                                    {fullTeacherData && (
+                                      <div className="flex items-center gap-2 text-muted-foreground">
+                                        <Clock className="h-3 w-3" />
+                                        <span><strong>Time Slot:</strong> {fullTeacherData.availability?.startTime} - {fullTeacherData.availability?.endTime} ({fullTeacherData.availability?.timezone})</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                <Button
+                                  size="sm"
+                                  onClick={() => setBookingForm({...bookingForm, teacherId: teacher.teacherId})}
+                                  data-testid={`select-teacher-${teacher.teacherId}`}
+                                  className="whitespace-nowrap"
+                                >
+                                  Select
+                                </Button>
+                              </div>
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+                  </ScrollArea>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
