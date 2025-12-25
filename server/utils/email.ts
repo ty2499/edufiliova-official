@@ -98,7 +98,7 @@ export class EmailService {
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_1766617362502.html');
+    const htmlPath = path.resolve(process.cwd(), 'server/utils/approval-template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
@@ -111,55 +111,16 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection - Unified high-reliability approach
+    // Dynamic Data Injection
     const fullName = data.fullName || 'Teacher';
-    const displayName = data.displayName || data.fullName || 'Teacher';
-    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
-
-    // 1. Handle blocks first
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
-
-    // 2. Aggressive fallback: Replace ANY occurrence of known hardcoded names or patterns
-    // This catches things that might be obscured by HTML tags
-    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
-    hardcodedNames.forEach(pattern => {
-      html = html.replace(pattern, fullName);
-    });
-
-    // 3. Standardize all dynamic variants
-    const namePatterns = [
-      /\{\{fullName\}\}/gi,
-      /\{\{ fullName \}\}/gi,
-      /\{\{data\.fullName\}\}/gi,
-      /\{\{ data\.fullName \}\}/gi,
-      /\{\{displayName\}\}/gi,
-      /\{\{ displayName \}\}/gi,
-      /\{\{data\.displayName\}\}/gi,
-      /\{\{ data\.displayName \}\}/gi,
-      /\$\{data\.fullName\}/gi,
-      /\$\{fullName\}/gi,
-      /\$\{data\.displayName\}/gi,
-      /\$\{displayName\}/gi,
-      /\[\[Full Name\]\]/gi,
-      /\[\[Display Name\]\]/gi,
-      /\[\[data\.fullName\]\]/gi,
-      /\[\[data\.displayName\]\]/gi
-    ];
-
-    namePatterns.forEach(pattern => {
-      html = html.replace(pattern, fullName);
-    });
-
-    // 4. Final catch-all: If "Hi" is followed by ANYTHING that looks like a placeholder, force replace it
-    html = html.replace(/Hi\s+[\$]?\{[^\}]+\}/gi, `Hi ${fullName}`);
-    html = html.replace(/Hi\s+\[\[[^\]]+\]\]/gi, `Hi ${fullName}`);
+    
+    // Explicitly replace the hardcoded "Hi {{FullName}}" or variations
+    html = html.replace(/Hi\s+\{\{FullName\}\}/gi, `Hi ${fullName}`);
     html = html.replace(/Hi\s+Tyler\s+Williams/gi, `Hi ${fullName}`);
+    html = html.replace(/Hi\s+\[\[Full Name\]\]/gi, `Hi ${fullName}`);
 
-    // 5. Final cleanup
-    html = html.replace(/\{\{reason\}\}/gi, reasonText);
+    // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{#if reason\}\}/gi, '');
-    html = html.replace(/\{\{\/if\}\}/gi, '');
 
     // 1:1 replacement of EXACT relative paths with CIDs
     html = html.replaceAll('images/0ac9744033a7e26f12e08d761c703308.png', 'cid:logo');
@@ -168,7 +129,6 @@ export class EmailService {
     html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
     html = html.replaceAll('images/7976503d64a3eef4169fe235111cdc57.png', 'cid:corner_graphic');
     html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9eefdace1f726880f93c5a973a54c2f6.png', 'cid:s_fb');
     html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
 
     const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
@@ -184,7 +144,6 @@ export class EmailService {
         { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766647041212.png'), cid: 'icon_db', contentType: 'image/png' },
         { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766647041216.png'), cid: 'icon_pf', contentType: 'image/png' },
         { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766647041186.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'fb.png', path: assetPath('9eefdace1f726880f93c5a973a54c2f6_1766617371524.png'), cid: 's_fb', contentType: 'image/png' },
         { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766647041190.png'), cid: 's_social', contentType: 'image/png' },
         { filename: 'corner.png', path: assetPath('7976503d64a3eef4169fe235111cdc57_1766647041205.png'), cid: 'corner_graphic', contentType: 'image/png' }
       ]

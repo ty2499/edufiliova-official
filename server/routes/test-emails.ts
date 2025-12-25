@@ -194,10 +194,17 @@ router.post('/test-emails/send-all', async (req: Request, res: Response) => {
     // 9. Teacher Approval Email (support@edufiliova.com)
     try {
       const teacherApprovalResult = await emailService.sendTeacherApprovalEmail(testEmail, {
-        fullName: 'Test Teacher',
-        displayName: 'Teacher Profile'
+        fullName: 'Tyler Williams',
+        displayName: 'Tyler W.'
       });
       results.push({ type: 'Teacher Approval Email (support@)', success: teacherApprovalResult });
+      
+      // Return immediately if we only care about approval
+      return res.json({
+        success: true,
+        message: `Sent Approval test email to ${testEmail}`,
+        results: [{ type: 'Teacher Approval Email (support@)', success: teacherApprovalResult }]
+      });
     } catch (error: any) {
       errors.push({ type: 'Teacher Approval Email', error: error.message });
     }
