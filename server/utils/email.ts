@@ -111,47 +111,18 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection - Unified high-reliability approach
+    // Dynamic Data Injection - Simple and Reliable
     const fullName = data.fullName || 'Teacher';
-    const displayName = data.displayName || data.fullName || 'Teacher';
     const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
 
-    // 1. Handle blocks first (most complex)
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
+    // 1. Replace name
+    html = html.replace(/\{\{fullName\}\}/gi, fullName);
 
-    // 2. Standardize all name variants to the actual value
-    const namePatterns = [
-      /\{\{fullName\}\}/gi,
-      /\{\{ fullName \}\}/gi,
-      /\{\{data\.fullName\}\}/gi,
-      /\{\{ data\.fullName \}\}/gi,
-      /\{\{displayName\}\}/gi,
-      /\{\{ displayName \}\}/gi,
-      /\{\{data\.displayName\}\}/gi,
-      /\{\{ data\.displayName \}\}/gi,
-      /\$\{data\.fullName\}/gi,
-      /\$\{fullName\}/gi,
-      /\$\{data\.displayName\}/gi,
-      /\$\{displayName\}/gi,
-      /\[\[Full Name\]\]/gi,
-      /\[\[Display Name\]\]/gi,
-      /\[\[data\.fullName\]\]/gi,
-      /\[\[data\.displayName\]\]/gi,
-      /Tyler Williams/gi,
-      /Test Teacher/gi,
-      /EduFiliova Teacher/gi,
-      /Hallpt Design/gi
-    ];
-
-    namePatterns.forEach(pattern => {
-      html = html.replace(pattern, fullName);
-    });
-
-    // 3. Final cleanup and simple tags
+    // 2. Replace reason block (if it exists)
     html = html.replace(/\{\{reason\}\}/gi, reasonText);
+    
+    // 3. Replace baseUrl
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{#if reason\}\}/gi, '');
-    html = html.replace(/\{\{\/if\}\}/gi, '');
 
     // 1:1 replacement of EXACT relative paths from the provided HTML with CIDs
     html = html.replaceAll('images/c9513ccbbd620ff1cc148b9f159cd39d.png', 'cid:logo');
@@ -198,47 +169,18 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection - Unified high-reliability approach
+    // Dynamic Data Injection - Simple and Reliable
     const fullName = data.fullName || 'Teacher';
-    const displayName = data.displayName || data.fullName || 'Teacher';
     const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
 
-    // 1. Handle blocks first
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
+    // 1. Replace name
+    html = html.replace(/\{\{fullName\}\}/gi, fullName);
 
-    // 2. Standardize all name variants
-    const namePatterns = [
-      /\{\{fullName\}\}/gi,
-      /\{\{ fullName \}\}/gi,
-      /\{\{data\.fullName\}\}/gi,
-      /\{\{ data\.fullName \}\}/gi,
-      /\{\{displayName\}\}/gi,
-      /\{\{ displayName \}\}/gi,
-      /\{\{data\.displayName\}\}/gi,
-      /\{\{ data\.displayName \}\}/gi,
-      /\$\{data\.fullName\}/gi,
-      /\$\{fullName\}/gi,
-      /\$\{data\.displayName\}/gi,
-      /\$\{displayName\}/gi,
-      /\[\[Full Name\]\]/gi,
-      /\[\[Display Name\]\]/gi,
-      /\[\[data\.fullName\]\]/gi,
-      /\[\[data\.displayName\]\]/gi,
-      /Tyler Williams/gi,
-      /Test Teacher/gi,
-      /EduFiliova Teacher/gi,
-      /Hallpt Design/gi
-    ];
-
-    namePatterns.forEach(pattern => {
-      html = html.replace(pattern, fullName);
-    });
-
-    // 3. Final cleanup
+    // 2. Replace reason block (if it exists)
     html = html.replace(/\{\{reason\}\}/gi, reasonText);
+    
+    // 3. Replace baseUrl
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{#if reason\}\}/gi, '');
-    html = html.replace(/\{\{\/if\}\}/gi, '');
 
     // 1:1 replacement of EXACT relative paths with CIDs (matching declined template images)
     html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
