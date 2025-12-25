@@ -306,9 +306,10 @@ router.get('/api/subjects/core', async (req, res) => {
 });
 
 // Get teachers by category
-router.get('/api/teachers/by-category/:categoryId', async (req, res) => {
+router.get('/teachers/by-category/:categoryId', async (req, res) => {
   try {
     const { categoryId } = req.params;
+    console.log('🔍 [API] Fetching teachers for category ID:', categoryId);
     
     const teachers = await db
       .select({
@@ -326,9 +327,10 @@ router.get('/api/teachers/by-category/:categoryId', async (req, res) => {
       ))
       .groupBy(profiles.userId, profiles.name, profiles.avatarUrl, profiles.bio, profiles.hourlyRate);
     
+    console.log('✅ [API] Found teachers for category:', teachers.length);
     res.json({ success: true, teachers });
   } catch (error: any) {
-    console.error('Error fetching teachers by category:', error);
+    console.error('❌ [API] Error fetching teachers by category:', error);
     res.status(500).json({ success: false, error: 'Failed to fetch teachers' });
   }
 });

@@ -210,7 +210,7 @@ app.use('/attached_assets', express.static('attached_assets'));
   console.log('🔧 [STARTUP] Subscription routes registered');
   
   // Register teacher subjects routes
-  app.use(teacherSubjectsRoutes);
+  app.use('/api', teacherSubjectsRoutes);
   app.use(subjectCategoriesRouter);
   console.log('🔧 [STARTUP] Teacher subjects routes registered');
   

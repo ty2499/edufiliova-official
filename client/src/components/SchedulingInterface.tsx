@@ -205,13 +205,31 @@ export const SchedulingInterface: React.FC = () => {
     
     if (categoryId) {
       try {
+        console.log('🌐 [UI] Fetching teachers for category:', categoryId);
+        // Explicitly use the full API path
         const response = await fetch(`/api/teachers/by-category/${categoryId}`);
+        
+        if (!response.ok) {
+          console.error(`❌ [UI] HTTP error! status: ${response.status}`);
+          return;
+        }
+        
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          const text = await response.text();
+          console.error('❌ [UI] Expected JSON but received HTML/Text. First 100 chars:', text.substring(0, 100));
+          return;
+        }
+
         const data = await response.json();
         if (data.success) {
+          console.log('✅ [UI] Received teachers:', data.teachers?.length);
           setFilteredTeachers(data.teachers || []);
+        } else {
+          console.error('❌ [UI] Server returned error:', data.error);
         }
       } catch (error) {
-        console.error('Error fetching teachers for category:', error);
+        console.error('❌ [UI] Fetch exception:', error);
       }
     }
   };
