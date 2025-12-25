@@ -1209,7 +1209,7 @@ export function CommunityChat() {
               <Button 
                 onClick={handleCreatePost} 
                 disabled={createPostMutation.isPending}
-                className="bg-[#0C332C] text-[#ffffff]"
+                className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
               >
                 {createPostMutation.isPending ? 'Creating...' : 'Create Topic'}
               </Button>
@@ -1263,7 +1263,7 @@ export function CommunityChat() {
               <Button 
                 onClick={handleUpdatePost} 
                 disabled={editPostMutation.isPending}
-                className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
+                className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
                 data-testid="button-update-post"
               >
                 {editPostMutation.isPending ? 'Updating...' : 'Update Topic'}
@@ -1306,7 +1306,7 @@ export function CommunityChat() {
               <Button 
                 onClick={handleCreateGroup} 
                 disabled={createGroupMutation.isPending}
-                className="bg-[#A0FAB2] hover:bg-[#0C332C] text-black" transition-all duration-300
+                className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
               >
                 {createGroupMutation.isPending ? 'Creating...' : 'Create Group'}
               </Button>
