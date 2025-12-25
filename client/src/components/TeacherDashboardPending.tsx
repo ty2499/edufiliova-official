@@ -21,9 +21,9 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
   const handleEditAndResubmit = () => {
     // Navigate to teacher application form page to edit and resubmit
     if (teacherApplicationStatus?.id) {
-      const url = `/?page=teacher-application&applicationId=${teacherApplicationStatus.id}`;
+      const url = `/?page=teacher-signup&applicationId=${teacherApplicationStatus.id}`;
       window.history.pushState({}, '', url);
-      onNavigate?.('teacher-application', 'slide');
+      onNavigate?.('teacher-signup', 'slide');
     }
   };
 
