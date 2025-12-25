@@ -776,12 +776,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           )}
         </Button>
 
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">or</span>
+        <div className="relative my-6 flex flex-col items-center">
+          <div className="w-full border-t border-white/20"></div>
+          <div className="mt-2 text-sm text-white font-medium">
+            or
           </div>
         </div>
 
