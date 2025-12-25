@@ -690,6 +690,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
                 onClick={handleCreateSubject}
                 disabled={createSubjectMutation.isPending}
                 data-testid="button-save-subject"
+                className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e]/90"
               >
                 {createSubjectMutation.isPending ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
                 Create Subject
