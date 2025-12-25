@@ -211,7 +211,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
   if (currentView === 'login') {
     return <AuthModern onLogin={() => {}} onNavigate={(page) => {
       if (page === 'signup') setCurrentView('signup');
-    }} userType="freelancer" />;
+    }} />;
   }
 
   if (verificationSent) {

@@ -11,6 +11,7 @@ import { Loader2, Eye, EyeOff, Mail, Phone, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "wouter";
 import TeacherLogin from "./TeacherLogin";
+import AuthModern from "./AuthModern";
 import VerificationCodeInput from "@/components/auth/VerificationCodeInput";
 import AuthLayout from "@/components/auth/AuthLayout";
 import { resolveApiUrl } from "@/lib/queryClient";
@@ -224,7 +225,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
   if (currentView === 'login') {
     return <AuthModern onLogin={() => {}} onNavigate={(page) => {
       if (page === 'signup') setCurrentView('choice');
-    }} userType="teacher" />;
+    }} />;
   }
 
   // Verification Screen
