@@ -1365,6 +1365,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
     endTime: '17:00'
   });
   const [availabilityLoading, setAvailabilityLoading] = useState(false);
+  const [availabilityMessage, setAvailabilityMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Close mobile menu when active tab changes
   useEffect(() => {
@@ -1749,6 +1750,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
     if (!user?.id) return;
 
     setAvailabilityLoading(true);
+    setAvailabilityMessage(null);
     try {
       const sessionId = localStorage.getItem('sessionId');
       const response = await fetch(`/api/teacher/availability/${user.id}`, {
@@ -1762,24 +1764,14 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
 
       const result = await response.json();
       if (result.success) {
-        toast({
-          title: "Availability Updated",
-          description: "Your availability settings have been saved successfully.",
-        });
+        setAvailabilityMessage({ type: 'success', text: 'Availability updated successfully!' });
+        setTimeout(() => setAvailabilityMessage(null), 3000);
       } else {
-        toast({
-          title: "Update Failed",
-          description: result.error || "Failed to update availability. Please try again.",
-          variant: "destructive",
-        });
+        setAvailabilityMessage({ type: 'error', text: result.error || 'Failed to update availability.' });
       }
     } catch (error) {
       console.error('Error updating availability:', error);
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
+      setAvailabilityMessage({ type: 'error', text: 'Something went wrong. Please try again.' });
     } finally {
       setAvailabilityLoading(false);
     }
@@ -3178,15 +3170,22 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                     />
                   </div>
                 </div>
-                <Button 
-                  className="w-full md:w-auto bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white"
-                  onClick={handleUpdateAvailability}
-                  disabled={availabilityLoading}
-                  data-testid="button-update-availability"
-                >
-                  <Clock className="h-4 w-4 mr-2" />
-                  {availabilityLoading ? 'Updating...' : 'Update Availability'}
-                </Button>
+                <div className="flex items-center gap-4 flex-wrap">
+                  <Button 
+                    className="w-full md:w-auto bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white"
+                    onClick={handleUpdateAvailability}
+                    disabled={availabilityLoading}
+                    data-testid="button-update-availability"
+                  >
+                    <Clock className="h-4 w-4 mr-2" />
+                    {availabilityLoading ? 'Updating...' : 'Update Availability'}
+                  </Button>
+                  {availabilityMessage && (
+                    <span className={`text-sm font-medium ${availabilityMessage.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                      {availabilityMessage.text}
+                    </span>
+                  )}
+                </div>
               </CardContent>
             </Card>
 
