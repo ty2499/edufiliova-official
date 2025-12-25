@@ -78,18 +78,18 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
   const StatusIcon = statusInfo.icon;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Logo className="h-8 w-8" />
               <div>
-                <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+                <h1 className="text-lg sm:text-xl font-bold text-gray-900">
                   EduFiliova Teacher Portal
                 </h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-600">
                   Application Status
                 </p>
               </div>
@@ -111,20 +111,19 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-6">
-          {teacherApplicationStatus?.status === 'rejected' && (
-            <Card className="mb-6" style={{ backgroundColor: '#a0fab2', borderColor: '#2f5a4e' }}>
-              <CardContent className="pt-6 text-center">
-                <XCircle className="w-16 h-16 mx-auto mb-4" style={{ color: '#2f5a4e' }} />
-                <h2 className="text-2xl font-bold mb-2" style={{ color: '#2f5a4e' }}>Application Not Approved</h2>
-                <p className="mb-4" style={{ color: '#2f5a4e' }}>
-                  We're sorry, but your application was not approved at this time.
-                </p>
-                {teacherApplicationStatus?.adminNotes && (
-                  <div className="bg-white/50 p-4 rounded-lg text-left mb-4 border" style={{ borderColor: '#2f5a4e' }}>
-                    <p className="font-medium mb-2" style={{ color: '#2f5a4e' }}>Feedback:</p>
-                    <p className="text-sm" style={{ color: '#2f5a4e' }}>{teacherApplicationStatus.adminNotes}</p>
-                  </div>
-                )}
+          <Card className="mb-6 bg-white border-gray-100 shadow-sm">
+            <CardContent className="pt-6 text-center">
+              <XCircle className="w-16 h-16 mx-auto mb-4" style={{ color: '#2f5a4e' }} />
+              <h2 className="text-2xl font-bold mb-2 text-gray-900">Application Not Approved</h2>
+              <p className="mb-4 text-gray-600">
+                We're sorry, but your application was not approved at this time.
+              </p>
+              {teacherApplicationStatus?.adminNotes && (
+                <div className="bg-gray-50 p-4 rounded-lg text-left mb-4 border border-gray-100">
+                  <p className="font-medium mb-2 text-gray-900">Feedback:</p>
+                  <p className="text-sm text-gray-600">{teacherApplicationStatus.adminNotes}</p>
+                </div>
+              )}
                 {resubmitError && (
                   <div className="bg-red-100 border border-red-300 p-3 rounded-lg text-left mb-4">
                     <p className="text-sm text-red-700">{resubmitError}</p>
@@ -143,14 +142,14 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
           )}
 
           {/* Status Card */}
-          <Card>
+          <Card className="border-gray-100 shadow-sm">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
-                  <CardTitle className="text-2xl">
+                  <CardTitle className="text-2xl text-gray-900">
                     {statusInfo.title}
                   </CardTitle>
-                  <CardDescription className="text-base">
+                  <CardDescription className="text-base text-gray-600">
                     {statusInfo.description}
                   </CardDescription>
                 </div>
@@ -167,8 +166,8 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
               {/* Progress Bar */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Application Progress</span>
-                  <span className="font-medium text-gray-900 dark:text-white">
+                  <span className="text-gray-600">Application Progress</span>
+                  <span className="font-medium text-gray-900">
                     {statusInfo.progressValue}%
                   </span>
                 </div>
@@ -177,7 +176,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
 
               {/* Timeline */}
               <div className="space-y-4 pt-4">
-                <h3 className="font-semibold text-gray-900 dark:text-white">Application Timeline</h3>
+                <h3 className="font-semibold text-gray-900">Application Timeline</h3>
                 
                 <div className="space-y-3">
                   {/* Step 1: Submitted */}
@@ -186,11 +185,11 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                       <div className="rounded-full p-1" style={{ backgroundColor: '#2f5a4e' }}>
                         <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
-                      <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1" />
+                      <div className="w-0.5 h-full bg-gray-100 my-1" />
                     </div>
                     <div className="pb-4">
-                      <p className="font-medium text-gray-900 dark:text-white">Application Submitted</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="font-medium text-gray-900">Application Submitted</p>
+                      <p className="text-sm text-gray-500">
                         {teacherApplicationStatus?.submittedAt 
                           ? new Date(teacherApplicationStatus.submittedAt).toLocaleDateString('en-US', {
                               month: 'long',
@@ -209,21 +208,21 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                       <div className="rounded-full p-1" style={{
                         backgroundColor: teacherApplicationStatus?.status === 'under_review' || teacherApplicationStatus?.status === 'approved' || teacherApplicationStatus?.status === 'rejected'
                           ? '#2f5a4e'
-                          : '#d1d5db'
+                          : '#e5e7eb'
                       }}>
                         <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
-                      <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1" />
+                      <div className="w-0.5 h-full bg-gray-100 my-1" />
                     </div>
                     <div className="pb-4">
                       <p className={`font-medium ${
                         teacherApplicationStatus?.status === 'under_review' || teacherApplicationStatus?.status === 'approved' || teacherApplicationStatus?.status === 'rejected'
-                          ? 'text-gray-900 dark:text-white'
-                          : 'text-gray-400 dark:text-gray-500'
+                          ? 'text-gray-900'
+                          : 'text-gray-400'
                       }`}>
                         Documents Under Review
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500">
                         {teacherApplicationStatus?.status === 'under_review' || teacherApplicationStatus?.status === 'approved' || teacherApplicationStatus?.status === 'rejected'
                           ? 'In progress'
                           : 'Pending'
@@ -240,7 +239,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                           ? '#2f5a4e'
                           : teacherApplicationStatus?.status === 'rejected'
                           ? '#2f5a4e'
-                          : '#d1d5db'
+                          : '#e5e7eb'
                       }}>
                         <CheckmarkIcon size="sm" variant="default" className="bg-transparent text-white" />
                       </div>
@@ -248,8 +247,8 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                     <div>
                       <p className={`font-medium ${
                         teacherApplicationStatus?.status === 'approved' || teacherApplicationStatus?.status === 'rejected'
-                          ? 'text-gray-900 dark:text-white'
-                          : 'text-gray-400 dark:text-gray-500'
+                          ? 'text-gray-900'
+                          : 'text-gray-400'
                       }`}>
                         {teacherApplicationStatus?.status === 'approved' 
                           ? 'Application Approved' 
@@ -258,7 +257,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                           : 'Final Decision'
                         }
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500">
                         {teacherApplicationStatus?.status === 'approved' || teacherApplicationStatus?.status === 'rejected'
                           ? teacherApplicationStatus?.reviewedAt
                             ? new Date(teacherApplicationStatus.reviewedAt).toLocaleDateString('en-US', {
@@ -278,13 +277,13 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
           </Card>
 
           {/* Info Card */}
-          <Card className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
+          <Card className="bg-white border-gray-100 shadow-sm">
             <CardContent className="pt-6">
               <div className="space-y-1">
                 <p className="font-medium" style={{ color: '#2f5a4e' }}>
                   Email Notification
                 </p>
-                <p className="text-sm" style={{ color: '#2f5a4e' }}>
+                <p className="text-sm text-gray-600">
                   You will receive an email notification once your application has been reviewed and approved. 
                   This typically takes 2-3 business days.
                 </p>
@@ -294,13 +293,13 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
 
           {/* Help Section */}
           {teacherApplicationStatus?.status === 'rejected' && (
-            <Card className="border-orange-200 dark:border-orange-800">
+            <Card className="bg-white border-gray-100 shadow-sm">
               <CardContent className="pt-6">
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">
+                  <h3 className="font-semibold text-gray-900">
                     What's Next?
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-600">
                     If you believe this decision was made in error or would like to reapply, please contact our support team 
                     at <a href="mailto:support@edufiliova.com" className="hover:underline" style={{ color: '#2f5a4e' }}>support@edufiliova.com</a>
                   </p>
