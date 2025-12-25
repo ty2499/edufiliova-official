@@ -16606,215 +16606,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ success: true, data: subjectsData });
     } catch (error: any) {
-      console.error("Subjects fetch error:", error);
-      res.status(500).json({ success: false, error: "Failed to fetch subjects" });
-    }
   });
-        .orderBy(subjectLessons.order);
-      
-      res.json({ success: true, data: lessonsData });
-    } catch (error: any) {
-      console.error('Lessons fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch lessons" });
-    }
-  });
-
-  // Get a specific lesson with full content
-  app.get("/api/lessons/:lessonId", async (req, res) => {
-    try {
-      const { lessonId } = req.params;
-      
-      const lessonData = await db
-        .select()
-        .from(subjectLessons)
-        .where(eq(subjectLessons.id, lessonId))
-        .limit(1);
-      
-      if (lessonData.length === 0) {
-        return res.status(404).json({ success: false, error: "Lesson not found" });
+  app.get("/api/subjects/:subjectId/chapters", async (req, res) => {
       }
-      
-      res.json({ success: true, data: lessonData[0] });
-    } catch (error: any) {
-      console.error('Lesson fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch lesson" });
-    }
-  });
-
-  // Get quiz exercises for a specific lesson
-  app.get("/api/lessons/:lessonId/exercises", async (req, res) => {
-    try {
-      const { lessonId } = req.params;
-      
-      const exercisesData = await db
-        .select()
-        .from(subjectExercises)
-        .where(and(
-          eq(subjectExercises.lessonId, lessonId),
-          eq(subjectExercises.isActive, true)
-        ))
-        .orderBy(subjectExercises.order);
-      
-      res.json({ success: true, data: exercisesData });
-    } catch (error: any) {
-      console.error('Exercises fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch exercises" });
-    }
-  });
-
-  // Save or update lesson progress and quiz score
-  app.post("/api/lessons/:lessonId/progress", async (req, res) => {
-    try {
-      const { lessonId } = req.params;
-      const { userId, status, score, correctAnswers, totalQuestions, timeSpent } = req.body;
-      
-      if (!userId) {
-        return res.status(400).json({ success: false, error: "User ID is required" });
-      }
-      
-      // Check if progress already exists
-      const existingProgress = await db
-        .select()
-        .from(subjectProgress)
-        .where(and(
-          eq(subjectProgress.userId, userId),
-          eq(subjectProgress.lessonId, lessonId)
-        ))
-        .limit(1);
-      
-      const progressData = {
-        userId,
-        lessonId,
-        status: status || 'in_progress',
-        score: score || null,
-        correctAnswers: correctAnswers || 0,
-        totalQuestions: totalQuestions || 15,
-        timeSpent: timeSpent || 0,
-        completedAt: status === 'completed' ? new Date() : null,
-        updatedAt: new Date()
-      };
-      
-      if (existingProgress.length > 0) {
-        // Update existing progress
-        await db
-          .update(subjectProgress)
-          .set(progressData)
-          .where(eq(subjectProgress.id, existingProgress[0].id));
-        
-        res.json({ success: true, message: "Progress updated successfully" });
-      } else {
-        // Create new progress record
-        await db.insert(subjectProgress).values(progressData);
-        res.json({ success: true, message: "Progress saved successfully" });
-      }
-    } catch (error: any) {
-      console.error('Progress save error:', error);
-      res.status(500).json({ success: false, error: "Failed to save progress" });
-    }
-  });
-
-  // Get student's progress across all subjects
-  app.get("/api/subjects/progress/:userId", async (req, res) => {
-    try {
-      const { userId } = req.params;
-      
-      const progressData = await db
-        .select({
-          lessonId: subjectProgress.lessonId,
-          status: subjectProgress.status,
-          score: subjectProgress.score,
-          correctAnswers: subjectProgress.correctAnswers,
-          totalQuestions: subjectProgress.totalQuestions,
-          completedAt: subjectProgress.completedAt,
-          timeSpent: subjectProgress.timeSpent,
-          lessonTitle: subjectLessons.title,
-          chapterTitle: subjectChapters.title,
-          subjectName: subjects.name
-        })
-        .from(subjectProgress)
-        .innerJoin(subjectLessons, eq(subjectProgress.lessonId, subjectLessons.id))
-        .innerJoin(subjectChapters, eq(subjectLessons.chapterId, subjectChapters.id))
-        .innerJoin(subjects, eq(subjectChapters.subjectId, subjects.id))
-        .where(eq(subjectProgress.userId, userId))
-        .orderBy(subjects.name, subjectChapters.order, subjectLessons.order);
-      
-      res.json({ success: true, data: progressData });
-    } catch (error: any) {
-      console.error('Progress fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch progress" });
-    }
-  });
-
-  // Get student's in-progress lessons for continue reading cards
-  app.get("/api/users/:userId/in-progress-lessons", async (req, res) => {
-    try {
-      const { userId } = req.params;
-      
-      const inProgressLessons = await db
-        .select({
-          lessonId: subjectProgress.lessonId,
-          progressPercent: sql<number>`COALESCE(
-            CASE 
-              WHEN ${subjectProgress.status} = 'completed' THEN 100
-              WHEN ${subjectProgress.totalQuestions} > 0 THEN 
-                ROUND((${subjectProgress.correctAnswers}::float / ${subjectProgress.totalQuestions}::float) * 100)
-              ELSE 0
-            END, 
-            0
-          )`.as('progressPercent'),
-          status: subjectProgress.status,
-          updatedAt: subjectProgress.updatedAt,
-          lessonTitle: subjectLessons.title,
-          lessonOrder: subjectLessons.order,
-          chapterTitle: subjectChapters.title,
-          chapterOrder: subjectChapters.order,
-          subjectName: subjects.name,
-          subjectId: subjects.id,
-          chapterId: subjectChapters.id
-        })
-        .from(subjectProgress)
-        .innerJoin(subjectLessons, eq(subjectProgress.lessonId, subjectLessons.id))
-        .innerJoin(subjectChapters, eq(subjectLessons.chapterId, subjectChapters.id))
-        .innerJoin(subjects, eq(subjectChapters.subjectId, subjects.id))
-        .where(
-          and(
-            eq(subjectProgress.userId, userId),
-            ne(subjectProgress.status, 'completed')
-          )
-        )
-        .orderBy(desc(subjectProgress.updatedAt))
-        .limit(10);
-      
-      res.json({ success: true, data: inProgressLessons });
-    } catch (error: any) {
-      console.error('In-progress lessons fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch in-progress lessons" });
-    }
-  });
-
-  // ============================================
-  // POST ENDPOINTS FOR SUBJECT-BASED EDUCATION
-  // ============================================
-
-  // Create a new subject
-  app.post("/api/subjects", async (req, res) => {
-    try {
-      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
-      
-      if (!name || !gradeSystem || !gradeLevel) {
-        return res.status(400).json({ 
-          success: false, 
-          error: "Missing required fields: name, gradeSystem, gradeLevel" 
-        });
-      }
-      
-      const newSubject = await db
-        .insert(subjects)
-        .values({
-          name,
-          createdBy: (req.user as any).id,
-      res.status(500).json({ success: false, error: "Failed to create subject" });
-    }
   });
 
   // Get a specific subject with its chapters and lessons
@@ -16869,37 +16663,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         // Delete lessons for these chapters
         await db
-          .delete(subjectLessons)
-          .where(inArray(subjectLessons.chapterId, chapterIds));
-      }
-      
-      // Delete chapters for this subject
-      await db
-        .delete(subjectChapters)
-        .where(eq(subjectChapters.subjectId, subjectId));
-      
-      // Delete the subject itself
-      await db
-        .delete(subjects)
-        .where(eq(subjects.id, subjectId));
-      
-      console.log('Subject deleted:', subjectId);
-      res.json({ success: true, message: "Subject deleted successfully" });
-    } catch (error: any) {
-      console.error('Subject deletion error:', error);
-      res.status(500).json({ success: false, error: "Failed to delete subject" });
-    }
-  });
-  // Create a new chapter
-  app.post("/api/subjects/:subjectId/chapters", async (req, res) => {
+  app.post("/api/subjects", async (req, res) => {
     try {
-      const { subjectId } = req.params;
-      const { title, description, order } = req.body;
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
       
-      if (!title) {
+      if (!name || !gradeSystem || !gradeLevel) {
         return res.status(400).json({ 
           success: false, 
-          error: "Missing required field: title" 
+          error: "Missing required fields: name, gradeSystem, gradeLevel" 
+        });
+      }
+      
+      const newSubject = await db
+        .insert(subjects)
+        .values({
+          name,
+          gradeSystem,
+          gradeLevel: parseInt(gradeLevel),
+          description: description || null,
+          iconUrl: iconUrl || null,
+          createdBy: (req.user as any).id,
         });
       }
       
@@ -16915,17 +16698,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .returning();
       
       res.json({ success: true, data: newChapter[0] });
-    } catch (error: any) {
-      console.error('Chapter creation error:', error);
-      res.status(500).json({ success: false, error: "Failed to create chapter" });
-    }
-  });
-
-  // Create a new lesson
-  app.post("/api/chapters/:chapterId/lessons", async (req, res) => {
-    try {
-      const { chapterId } = req.params;
-      const { title, notes, examples, cloudinaryImages, order, durationMinutes } = req.body;
+          createdBy: (req.user as any).id,
       
       if (!title || !notes) {
         return res.status(400).json({ 
@@ -16946,17 +16719,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           durationMinutes: durationMinutes || 30,
           isActive: true
         })
-        .returning();
-      
-      res.json({ success: true, data: newLesson[0] });
-    } catch (error: any) {
-      console.error('Lesson creation error:', error);
-      res.status(500).json({ success: false, error: "Failed to create lesson" });
-    }
-  });
-
-  // Update a lesson
-  app.put("/api/lessons/:lessonId", async (req, res) => {
+          createdBy: (req.user as any).id,
     try {
       const { lessonId } = req.params;
       const { title, notes, examples, cloudinaryImages, order, durationMinutes } = req.body;
@@ -16967,17 +16730,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (notes !== undefined) updateData.notes = notes;
       if (examples !== undefined) updateData.examples = examples;
       if (cloudinaryImages !== undefined) updateData.cloudinaryImages = cloudinaryImages;
-      if (order !== undefined) updateData.order = order;
-      if (durationMinutes !== undefined) updateData.durationMinutes = durationMinutes;
-      
-      const updatedLesson = await db
-        .update(subjectLessons)
-        .set(updateData)
-        .where(eq(subjectLessons.id, lessonId))
-        .returning();
-      
-      if (updatedLesson.length === 0) {
-        return res.status(404).json({ 
+          createdBy: (req.user as any).id,
           success: false, 
           error: "Lesson not found" 
         });
@@ -16990,139 +16743,132 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create quiz exercises for a lesson
-  app.post("/api/lessons/:lessonId/exercises", async (req, res) => {
+  app.post("/api/subjects", async (req, res) => {
     try {
-      const { lessonId } = req.params;
-      const { exercises } = req.body;
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
       
-      if (!exercises || !Array.isArray(exercises)) {
+      if (!name || !gradeSystem || !gradeLevel) {
         return res.status(400).json({ 
           success: false, 
-          error: "Missing required field: exercises (must be an array)" 
+          error: "Missing required fields: name, gradeSystem, gradeLevel" 
         });
       }
       
-      // Prepare exercises with lessonId and order
-      const exercisesToInsert = exercises.map((exercise, index) => ({
-        lessonId,
-        question: exercise.question,
-        options: exercise.options,
-        correctAnswer: exercise.correctAnswer,
-        explanation: exercise.explanation || null,
-        order: index + 1,
-        isActive: true
-      }));
+      const newSubject = await db
+        .insert(subjects)
+        .values({
+          name,
+          gradeSystem,
+          gradeLevel: parseInt(gradeLevel),
+          description: description || null,
+  app.post("/api/subjects", async (req, res) => {
+    try {
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
       
-      const newExercises = await db
-        .insert(subjectExercises)
-        .values(exercisesToInsert)
+      if (!name || !gradeSystem || !gradeLevel) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Missing required fields: name, gradeSystem, gradeLevel" 
+        });
+      }
+      
+      const newSubject = await db
+        .insert(subjects)
+        .values({
+          name,
+          gradeSystem,
+          gradeLevel: parseInt(gradeLevel),
+          description: description || null,
+          iconUrl: iconUrl || null,
+          createdBy: (req.user as any).id,
+          isActive: true
+  app.post("/api/subjects", async (req, res) => {
+    try {
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
+  app.post("/api/subjects", async (req, res) => {
+    try {
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
+      
+      if (!name || !gradeSystem || !gradeLevel) {
+        return res.status(400).json({ 
+          success: false, 
+  app.post("/api/subjects", async (req, res) => {
+    try {
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
+      
+      if (!name || !gradeSystem || !gradeLevel) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Missing required fields: name, gradeSystem, gradeLevel" 
+        });
+      }
+      
+  app.post("/api/subjects", async (req, res) => {
+    try {
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
+      
+      if (!name || !gradeSystem || !gradeLevel) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Missing required fields: name, gradeSystem, gradeLevel" 
+        });
+      }
+      
+      const newSubject = await db
+        .insert(subjects)
+        .values({
+          name,
+          gradeSystem,
+          gradeLevel: parseInt(gradeLevel),
+          description: description || null,
+          iconUrl: iconUrl || null,
+          createdBy: (req.user as any).id,
+          isActive: true
+        })
         .returning();
       
-      res.json({ success: true, data: newExercises });
+      res.json({ success: true, data: newSubject[0] });
     } catch (error: any) {
-      console.error('Exercises creation error:', error);
-      res.status(500).json({ success: false, error: "Failed to create exercises" });
+      console.error("Subject creation error:", error);
+      res.status(500).json({ success: false, error: "Failed to create subject" });
     }
   });
-
-  // ============================================
-  // COURSES API (College/University/Other)
-  // ============================================
-
-  // Courses API endpoints for college/university students
-  
-  // Get courses (for college/university/other education levels)
-  app.get("/api/courses", async (req, res) => {
-    try {
-      const { difficulty, category } = req.query;
-      
-      try {
-        // Try database first
-        let conditions = [eq(courses.isActive, true), eq(courses.approvalStatus, "approved")]; // Only show approved courses
-        
-        if (difficulty) {
-          conditions.push(eq(courses.difficulty, difficulty as string));
-        }
-        
-        if (category) {
-          conditions.push(eq(courses.categoryId, category as string));
-        }
-        
-        const coursesData = await db
-          .select()
-          .from(courses)
-          .where(and(...conditions))
-          .orderBy(courses.title);
-        
-        res.json({ success: true, data: coursesData, totalCount: coursesData.length });
-      } catch (dbError) {
-        console.error('Database error fetching courses:', dbError);
-        throw dbError;
-      }
-    } catch (error: any) {
-      console.error('Courses fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch courses" });
-    }
-  });
-
-  // Get featured courses for landing page
-  app.get("/api/courses/featured", async (req, res) => {
-    try {
-      const limit = parseInt(req.query.limit as string) || 8;
-      const featuredCourses = await storage.getFeaturedCourses(limit);
-      
-      res.json({ success: true, data: featuredCourses });
-    } catch (error: any) {
-      console.error('Featured courses fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch featured courses" });
-    }
-  });
-
-  // Admin: Feature/unfeature a course
-  app.patch("/api/courses/:id/feature", requireAuth, requireAdmin, async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { isFeatured } = req.body;
-
-      if (typeof isFeatured !== 'boolean') {
         return res.status(400).json({ success: false, error: "isFeatured must be a boolean" });
       }
 
       const updatedCourse = await storage.setCourseFeatured(id, isFeatured);
 
       if (!updatedCourse) {
-        return res.status(404).json({ success: false, error: "Course not found" });
+  app.post("/api/subjects", async (req, res) => {
+    try {
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
+      
+      if (!name || !gradeSystem || !gradeLevel) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Missing required fields: name, gradeSystem, gradeLevel" 
+        });
       }
-
-      res.json({ success: true, data: updatedCourse });
+      
+      const newSubject = await db
+        .insert(subjects)
+        .values({
+          name,
+          gradeSystem,
+          gradeLevel: parseInt(gradeLevel),
+          description: description || null,
+          iconUrl: iconUrl || null,
+          createdBy: (req.user as any).id,
+          isActive: true
+        })
+        .returning();
+      
+      res.json({ success: true, data: newSubject[0] });
     } catch (error: any) {
-      console.error('Course feature update error:', error);
-      res.status(500).json({ success: false, error: "Failed to update course featured status" });
+      console.error("Subject creation error:", error);
+      res.status(500).json({ success: false, error: "Failed to create subject" });
     }
   });
-
-  // Get Mathematics content (special endpoint for Grade 7 Mathematics)
-  app.get("/api/mathematics/content", async (req, res) => {
-    try {
-      const fs = await import('fs/promises');
-      const path = await import('path');
-      const filePath = path.join(process.cwd(), 'grade7_mathematics.json');
-      
-      const data = await fs.readFile(filePath, 'utf8');
-      const mathBook = JSON.parse(data);
-      
-      res.json({ success: true, data: mathBook });
-    } catch (error: any) {
-      console.error('Mathematics content fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch mathematics content" });
-    }
-  });
-
-  // Get English content (special endpoint for Grade 7 English)
-  app.get("/api/english/content", async (req, res) => {
-    try {
-      const fs = await import('fs/promises');
       const path = await import('path');
       const filePath = path.join(process.cwd(), 'grade7_english.json');
       
