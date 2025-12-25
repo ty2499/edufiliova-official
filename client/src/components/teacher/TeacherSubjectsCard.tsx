@@ -126,20 +126,23 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {TEACHING_CATEGORIES.map((category) => (
-                <div 
-                  key={category.id}
-                  className="flex items-center gap-2 p-3 rounded-lg border border-gray-200 hover:bg-muted/50 cursor-pointer transition-colors"
-                  onClick={() => toggleCategory(category.id)}
-                >
-                  <Checkbox 
-                    checked={selectedCategories.includes(category.id)}
-                    onCheckedChange={() => toggleCategory(category.id)}
-                  />
-                  <span className="text-sm font-medium">{category.name}</span>
-                </div>
-              ))}
+            <div className="flex flex-wrap gap-2">
+              {TEACHING_CATEGORIES.map((category) => {
+                const isSelected = selectedCategories.includes(category.id);
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => toggleCategory(category.id)}
+                    className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-green-500 text-white shadow-md'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                );
+              })}
             </div>
 
             {selectedCategories.length > 0 && (
