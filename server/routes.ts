@@ -16576,32 +16576,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get subjects filtered by grade level and system (for primary/secondary students)
   app.get("/api/subjects", async (req, res) => {
     try {
-      const { gradeLevel, gradeSystem } = req.query;
+      const { gradeLevel, gradeSystem, creatorOnly } = req.query;
       
-      console.log(`📚 Fetching subjects - gradeLevel: ${gradeLevel}, gradeSystem: ${gradeSystem}`);
-      
-      // Build conditions array
       let conditions = [eq(subjects.isActive, true)];
-      
-      if (gradeLevel) {
-        const parsedGrade = parseInt(gradeLevel as string);
-        console.log(`📚 Filtering by grade level: ${parsedGrade}`);
-        conditions.push(eq(subjects.gradeLevel, parsedGrade));
-      }
-      
-      // Handle grade system filtering - more flexible approach
-      if (gradeSystem && gradeSystem !== 'undefined' && gradeSystem !== 'null') {
-        console.log(`📚 User has gradeSystem: ${gradeSystem}, showing subjects for that system + "all"`);
-        // If user has a specific grade system, show subjects for that system + "all"
-        conditions.push(or(
-          eq(subjects.gradeSystem, gradeSystem as string),
-          eq(subjects.gradeSystem, 'all')
-        ));
+
+      if (creatorOnly === "true" && req.isAuthenticated()) {
+        conditions.push(eq(subjects.createdBy, (req.user as any).id));
       } else {
-        console.log(`📚 User has no gradeSystem, showing "all" subjects`);
-        // If user has no grade system (null), show subjects with "all" as fallback
-        // This ensures all students can see general subjects
-        conditions.push(eq(subjects.gradeSystem, 'all'));
+        if (gradeLevel) {
+          const parsedGrade = parseInt(gradeLevel as string);
+          conditions.push(eq(subjects.gradeLevel, parsedGrade));
+        }
+        
+        if (gradeSystem && gradeSystem !== "undefined" && gradeSystem !== "null") {
+          conditions.push(or(
+            eq(subjects.gradeSystem, gradeSystem as string),
+            eq(subjects.gradeSystem, "all")
+          ));
+        } else {
+          conditions.push(eq(subjects.gradeSystem, "all"));
+        }
       }
       
       const subjectsData = await db
@@ -16610,48 +16604,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(and(...conditions))
         .orderBy(subjects.name);
       
-      console.log(`📚 Found ${subjectsData.length} subjects for grade ${gradeLevel}`);
-      
       res.json({ success: true, data: subjectsData });
     } catch (error: any) {
-      console.error('Subjects fetch error:', error);
+      console.error("Subjects fetch error:", error);
       res.status(500).json({ success: false, error: "Failed to fetch subjects" });
     }
   });
-
-  // Get chapters for a specific subject
-  app.get("/api/subjects/:subjectId/chapters", async (req, res) => {
-    try {
-      const { subjectId } = req.params;
-      
-      const chaptersData = await db
-        .select()
-        .from(subjectChapters)
-        .where(and(
-          eq(subjectChapters.subjectId, subjectId),
-          eq(subjectChapters.isActive, true)
-        ))
-        .orderBy(subjectChapters.order);
-      
-      res.json({ success: true, data: chaptersData });
-    } catch (error: any) {
-      console.error('Chapters fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch chapters" });
-    }
-  });
-
-  // Get lessons for a specific chapter
-  app.get("/api/chapters/:chapterId/lessons", async (req, res) => {
-    try {
-      const { chapterId } = req.params;
-      
-      const lessonsData = await db
-        .select()
-        .from(subjectLessons)
-        .where(and(
-          eq(subjectLessons.chapterId, chapterId),
-          eq(subjectLessons.isActive, true)
-        ))
         .orderBy(subjectLessons.order);
       
       res.json({ success: true, data: lessonsData });
@@ -16854,46 +16812,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .insert(subjects)
         .values({
           name,
-          gradeSystem,
-          gradeLevel: parseInt(gradeLevel),
-          description: description || null,
-          iconUrl: iconUrl || null,
-          isActive: true
-        })
-        .returning();
-      
-      res.json({ success: true, data: newSubject[0] });
-    } catch (error: any) {
-      console.error('Subject creation error:', error);
+          createdBy: (req.user as any).id,
       res.status(500).json({ success: false, error: "Failed to create subject" });
     }
   });
 
   // Get a specific subject with its chapters and lessons
   app.get("/api/subjects/:subjectId", async (req, res) => {
-    try {
-      const { subjectId } = req.params;
-      
-      const subjectData = await db
-        .select()
-        .from(subjects)
-        .where(eq(subjects.id, subjectId))
-        .limit(1);
-      
-      if (!subjectData.length) {
-        return res.status(404).json({ success: false, error: "Subject not found" });
+          createdBy: (req.user as any).id,
       }
-      
-      const chaptersData = await db
-        .select()
-        .from(subjectChapters)
-        .where(and(
-          eq(subjectChapters.subjectId, subjectId),
-          eq(subjectChapters.isActive, true)
-        ))
-        .orderBy(subjectChapters.order);
-      
-      const chaptersWithLessons = await Promise.all(
+          createdBy: (req.user as any).id,
         chaptersData.map(async (chapter) => {
           const lessonsData = await db
             .select()
@@ -16908,55 +16836,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
             lessonsData.map(async (lesson) => {
               const exercisesData = await db
                 .select()
-                .from(subjectExercises)
-                .where(eq(subjectExercises.lessonId, lesson.id))
-                .orderBy(subjectExercises.order);
-              return { ...lesson, exercises: exercisesData };
-            })
-          );
-          
-          return { ...chapter, lessons: lessonsWithExercises };
-        })
-      );
+  app.post("/api/subjects", async (req, res) => {
+    try {
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
       
-      res.json({ 
-        success: true, 
-        data: { ...subjectData[0], chapters: chaptersWithLessons } 
-      });
+      if (!name || !gradeSystem || !gradeLevel) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Missing required fields: name, gradeSystem, gradeLevel" 
+        });
+      }
+      
+      const newSubject = await db
+        .insert(subjects)
+        .values({
+          name,
+          gradeSystem,
+          gradeLevel: parseInt(gradeLevel),
+          description: description || null,
+          iconUrl: iconUrl || null,
+          createdBy: (req.user as any).id,
+          isActive: true
+        })
+        .returning();
+      
+      res.json({ success: true, data: newSubject[0] });
     } catch (error: any) {
-      console.error('Subject fetch error:', error);
-      res.status(500).json({ success: false, error: "Failed to fetch subject" });
+      console.error("Subject creation error:", error);
+      res.status(500).json({ success: false, error: "Failed to create subject" });
     }
   });
-
-  // Delete a subject and all its related data
-  app.delete("/api/subjects/:subjectId", async (req, res) => {
-    try {
-      const { subjectId } = req.params;
-      
-      // Get all chapters for this subject
-      const chaptersToDelete = await db
-        .select({ id: subjectChapters.id })
-        .from(subjectChapters)
-        .where(eq(subjectChapters.subjectId, subjectId));
-      
-      const chapterIds = chaptersToDelete.map(c => c.id);
-      
-      if (chapterIds.length > 0) {
-        // Get all lessons for these chapters
-        const lessonsToDelete = await db
-          .select({ id: subjectLessons.id })
-          .from(subjectLessons)
-          .where(inArray(subjectLessons.chapterId, chapterIds));
-        
-        const lessonIds = lessonsToDelete.map(l => l.id);
-        
-        // Delete exercises for these lessons
-        if (lessonIds.length > 0) {
-          await db
-            .delete(subjectExercises)
-            .where(inArray(subjectExercises.lessonId, lessonIds));
-        }
         
         // Delete lessons for these chapters
         await db

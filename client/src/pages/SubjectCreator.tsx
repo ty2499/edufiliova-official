@@ -180,10 +180,10 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
 
   // Get user's subjects
   const { data: subjects, isLoading: subjectsLoading } = useQuery({
-    queryKey: ['/api/subjects'],
+    queryKey: ['/api/subjects', { creatorOnly: 'true' }],
     queryFn: async () => {
-      const subjects = await apiRequest('/api/subjects');
-      return subjects || [];
+      const subjects = await apiRequest('/api/subjects?creatorOnly=true');
+      return subjects.data || [];
     }
   });
 
