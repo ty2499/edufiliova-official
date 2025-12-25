@@ -59,7 +59,7 @@ export default function TeacherApplicationStatus() {
 
   if (!application) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <Card className="max-w-md">
           <CardContent className="pt-6 text-center">
             <XCircle className="w-16 h-16 text-destructive mx-auto mb-4" />
@@ -108,7 +108,7 @@ export default function TeacherApplicationStatus() {
   const isPending = application?.status === "pending" || application?.status === "under_review";
 
   return (
-    <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {isApproved && (
           <Card className="mb-6 border-green-500 bg-green-50 dark:bg-green-950/20">
