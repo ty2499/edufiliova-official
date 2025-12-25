@@ -1374,6 +1374,25 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
   }, [activeTab]);
   
 
+  // Get teacher appointments from API
+  const { data: appointments = [], isLoading: appointmentsLoading, refetch: refetchAppointments } = useQuery({
+    queryKey: ['teacher', 'appointments', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return [];
+      const sessionId = localStorage.getItem('sessionId');
+      const response = await apiRequest(`/api/appointments/${user.id}`, {
+        headers: { Authorization: `Bearer ${sessionId}` }
+      });
+      // Filter for upcoming appointments and sort by date
+      const appointmentsList = Array.isArray(response) ? response : (response?.data || []);
+      return appointmentsList
+        .filter((apt: Appointment) => ['scheduled', 'confirmed', 'pending'].includes(apt.status))
+        .sort((a: Appointment, b: Appointment) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
+    },
+    enabled: !!user?.id,
+    refetchInterval: 5 * 60 * 1000 // Refetch every 5 minutes
+  });
+
   // Get assigned students with progress
   const { data: allStudentsData = [], isLoading: studentsLoading } = useQuery({
     queryKey: ['teacher', 'students', 'progress'],
@@ -1391,8 +1410,8 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
   const students = React.useMemo(() => {
     // Get unique student IDs from approved/confirmed appointments
     const appointmentStudents = (appointments || [])
-      .filter((apt: Appointment) => ['scheduled', 'confirmed', 'approved'].includes(apt.status))
-      .map((apt: Appointment) => ({
+      .filter((apt: any) => ['scheduled', 'confirmed', 'approved'].includes(apt.status))
+      .map((apt: any) => ({
         studentId: apt.studentId,
         name: apt.studentName || 'Student',
         grade: 0, 
@@ -1497,25 +1516,6 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
   const { data: payoutAccountsData } = useQuery({
     queryKey: [`/api/payout-accounts/${user?.id}`],
     enabled: !!user?.id,
-  });
-
-  // Get teacher appointments from API
-  const { data: appointments = [], isLoading: appointmentsLoading, refetch: refetchAppointments } = useQuery({
-    queryKey: ['teacher', 'appointments', user?.id],
-    queryFn: async () => {
-      if (!user?.id) return [];
-      const sessionId = localStorage.getItem('sessionId');
-      const response = await apiRequest(`/api/appointments/${user.id}`, {
-        headers: { Authorization: `Bearer ${sessionId}` }
-      });
-      // Filter for upcoming appointments and sort by date
-      const appointmentsList = Array.isArray(response) ? response : (response?.data || []);
-      return appointmentsList
-        .filter((apt: Appointment) => ['scheduled', 'confirmed', 'pending'].includes(apt.status))
-        .sort((a: Appointment, b: Appointment) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
-    },
-    enabled: !!user?.id,
-    refetchInterval: 5 * 60 * 1000 // Refetch every 5 minutes
   });
 
   // Fetch teacher profile data
