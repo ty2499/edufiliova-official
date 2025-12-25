@@ -215,7 +215,7 @@ export class EmailService {
     html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
 
     // 2. Aggressive fallback: Replace ANY occurrence of known hardcoded names or patterns
-    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
+    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi, /\{\{FullName\}\}/gi];
     hardcodedNames.forEach(pattern => {
       html = html.replace(pattern, fullName);
     });
