@@ -428,6 +428,8 @@ const getInitialState = (): AppState => {
         'transaction-dashboard': 'transaction-dashboard',
         'checkout': 'checkout',
         'design-team-contact': 'design-team-contact',
+        'login': 'auth',
+        'signup': 'auth',
       };
       
       if (queryRoutes[pageParam]) {
