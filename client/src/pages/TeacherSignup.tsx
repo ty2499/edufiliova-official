@@ -502,13 +502,15 @@ export default function TeacherSignup() {
                     <div className="grid grid-cols-2 gap-3">
                       {teachingCategories.map((category) => (
                         <div key={category} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`category-${category}`}
-                            checked={form.watch("teachingCategories").includes(category)}
-                            onCheckedChange={() => handleCategoryToggle(category)}
-                            className="h-4 w-4 rounded-sm border-gray-300 !important"
-                            data-testid={`checkbox-category-${category.toLowerCase().replace(/\s+/g, "-")}`}
-                          />
+                          <div className="relative flex h-4 w-4 shrink-0 items-center justify-center">
+                            <Checkbox
+                              id={`category-${category}`}
+                              checked={form.watch("teachingCategories").includes(category)}
+                              onCheckedChange={() => handleCategoryToggle(category)}
+                              className="h-full w-full rounded-sm border-gray-300"
+                              data-testid={`checkbox-category-${category.toLowerCase().replace(/\s+/g, "-")}`}
+                            />
+                          </div>
                           <Label htmlFor={`category-${category}`} className="text-sm font-normal">
                             {category}
                           </Label>
@@ -526,13 +528,15 @@ export default function TeacherSignup() {
                     <div className="space-y-2">
                       {gradeLevels.map((level) => (
                         <div key={level} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`grade-${level}`}
-                            checked={form.watch("gradeLevels").includes(level)}
-                            onCheckedChange={() => handleGradeLevelToggle(level)}
-                            className="h-4 w-4 rounded-sm border-gray-300 !important"
-                            data-testid={`checkbox-grade-${level.toLowerCase().replace(/\s+/g, "-")}`}
-                          />
+                          <div className="relative flex h-4 w-4 shrink-0 items-center justify-center">
+                            <Checkbox
+                              id={`grade-${level}`}
+                              checked={form.watch("gradeLevels").includes(level)}
+                              onCheckedChange={() => handleGradeLevelToggle(level)}
+                              className="h-full w-full rounded-sm border-gray-300"
+                              data-testid={`checkbox-grade-${level.toLowerCase().replace(/\s+/g, "-")}`}
+                            />
+                          </div>
                           <Label htmlFor={`grade-${level}`} className="text-sm font-normal">
                             {level}
                           </Label>
