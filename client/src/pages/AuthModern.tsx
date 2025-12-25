@@ -653,7 +653,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
   const renderLoginForm = () => (
     <div>
       <div className="mb-6 text-center">
-        <h2 className="font-bold text-gray-900 mb-2 text-2xl">
+        <h2 className="font-bold mb-2 text-2xl text-[#a0fab2]">
           Sign in to your account
         </h2>
       </div>
@@ -833,14 +833,12 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             Join thousands of learners and unlock your potential
           </p>
         </div>
-
         {errors.general && (
           <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
             <AlertCircle className="h-4 w-4 flex-shrink-0" />
             <span>{errors.general}</span>
           </div>
         )}
-
         <form onSubmit={handleRegister} className="space-y-4">
           {/* Section A - Account Details */}
           <div className="border-b pb-4">
