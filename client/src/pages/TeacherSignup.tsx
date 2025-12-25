@@ -12,7 +12,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import PhoneNumberInput from "@/components/PhoneNumberInput";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Upload, ArrowLeft, ArrowRight, Loader2, X } from "lucide-react";
 import { CheckmarkIcon } from "@/components/ui/checkmark-icon";
@@ -327,12 +326,12 @@ export default function TeacherSignup() {
 
         <Progress value={progress} className="mb-6 h-1.5 [&>div]:bg-[#0C332C]" data-testid="progress-bar" />
 
-        <Card>
-          <CardHeader>
-            <CardTitle>
+        <div className="space-y-6">
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-foreground mb-2">
               Step {currentStep} of {totalSteps}
-            </CardTitle>
-            <CardDescription>
+            </h2>
+            <p className="text-muted-foreground text-sm">
               {currentStep === 1 && "Basic Personal Information"}
               {currentStep === 2 && "Teaching Details"}
               {currentStep === 3 && "Qualifications & Identity Verification"}
@@ -340,10 +339,9 @@ export default function TeacherSignup() {
               {currentStep === 5 && "Lesson Samples (Quality Check)"}
               {currentStep === 6 && "Account & Payment Setup (Later)"}
               {currentStep === 7 && "Agreements"}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            </p>
+          </div>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {errorMessage && (
                 <div className="p-3 bg-primary/10 border border-red-200 rounded-lg text-primary-700 text-sm">
                   {errorMessage}
@@ -947,8 +945,7 @@ export default function TeacherSignup() {
                 )}
               </div>
             </form>
-          </CardContent>
-        </Card>
+        </div>
       </div>
 
       <TeacherTermsModal
