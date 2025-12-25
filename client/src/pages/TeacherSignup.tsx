@@ -920,7 +920,7 @@ export default function TeacherSignup() {
                   <Button
                     type="button"
                     onClick={nextStep}
-                    className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-primary-foreground" transition-all duration-300
+                    className="bg-[#0c332c] text-white"
                     data-testid="button-next"
                   >
                     Next
@@ -930,7 +930,7 @@ export default function TeacherSignup() {
                   <Button
                     type="submit"
                     disabled={submitMutation.isPending}
-                    className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-primary-foreground" transition-all duration-300
+                    className="bg-[#0c332c] text-white"
                     data-testid="button-submit"
                   >
                     {submitMutation.isPending ? (
