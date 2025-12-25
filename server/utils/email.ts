@@ -117,7 +117,7 @@ export class EmailService {
     const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
 
     // 1. Handle blocks first
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
+    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
 
     // 2. Aggressive fallback: Replace ANY occurrence of known hardcoded names or patterns
     // This catches things that might be obscured by HTML tags
