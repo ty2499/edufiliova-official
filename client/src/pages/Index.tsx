@@ -1857,7 +1857,16 @@ const Index = () => {
         );
     
       case "auth":
-        return <div className="page-transition"><AuthModern onLogin={handleLogin} onNavigate={handleNavigation} /></div>;
+        return (
+          <PageTransition 
+            isActive={currentPage === "auth"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
+            <AuthModern onLogin={handleLogin} onNavigate={handleNavigation} />
+          </PageTransition>
+        );
     
       case "student-signup":
         return <div className="page-transition"><AuthModern onLogin={handleLogin} onNavigate={handleNavigation} userType="student" /></div>;
