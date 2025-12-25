@@ -162,11 +162,11 @@ export class EmailService {
     html = html.replace(/\{\{\/if\}\}/gi, '');
 
     // 1:1 replacement of EXACT relative paths with CIDs
-    html = html.replaceAll('images/c9513ccbbd620ff1cc148b9f159cd39d.png', 'cid:logo');
+    html = html.replaceAll('images/0ac9744033a7e26f12e08d761c703308.png', 'cid:logo');
     html = html.replaceAll('images/e4d45170731072cbb168266fca3fd470.png', 'cid:banner');
     html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
     html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
-    html = html.replaceAll('images/df1ad55cc4e451522007cfa4378c9bbd.png', 'cid:icon_cs');
+    html = html.replaceAll('images/7976503d64a3eef4169fe235111cdc57.png', 'cid:corner_graphic');
     html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
     html = html.replaceAll('images/9eefdace1f726880f93c5a973a54c2f6.png', 'cid:s_fb');
     html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
@@ -179,14 +179,14 @@ export class EmailService {
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'logo.png', path: assetPath('c9513ccbbd620ff1cc148b9f159cd39d_1766617371531.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'logo.png', path: assetPath('0ac9744033a7e26f12e08d761c703308_1766647041179.png'), cid: 'logo', contentType: 'image/png' },
         { filename: 'banner.png', path: assetPath('e4d45170731072cbb168266fca3fd470_1766617371537.png'), cid: 'banner', contentType: 'image/png' },
-        { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766617371529.png'), cid: 'icon_db', contentType: 'image/png' },
-        { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766617371533.png'), cid: 'icon_pf', contentType: 'image/png' },
-        { filename: 'icon_cs.png', path: assetPath('df1ad55cc4e451522007cfa4378c9bbd_1766617371535.png'), cid: 'icon_cs', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766617371523.png'), cid: 'footer_logo', contentType: 'image/png' },
+        { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766647041212.png'), cid: 'icon_db', contentType: 'image/png' },
+        { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766647041216.png'), cid: 'icon_pf', contentType: 'image/png' },
+        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766647041186.png'), cid: 'footer_logo', contentType: 'image/png' },
         { filename: 'fb.png', path: assetPath('9eefdace1f726880f93c5a973a54c2f6_1766617371524.png'), cid: 's_fb', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766617371526.png'), cid: 's_social', contentType: 'image/png' }
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766647041190.png'), cid: 's_social', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('7976503d64a3eef4169fe235111cdc57_1766647041205.png'), cid: 'corner_graphic', contentType: 'image/png' }
       ]
     });
   }
