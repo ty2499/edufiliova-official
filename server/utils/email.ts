@@ -117,14 +117,41 @@ export class EmailService {
     const displayName = data.displayName || data.fullName || 'Teacher';
     
     // Replace standard placeholders
-    html = html.replaceAll('[[Full Name]]', fullName);
-    html = html.replaceAll('[[Display Name]]', displayName);
-    html = html.replaceAll('{{fullName}}', fullName);
-    html = html.replaceAll('{{displayName}}', displayName);
-    html = html.replaceAll('${data.fullName}', fullName);
-    html = html.replaceAll('${fullName}', fullName);
-    html = html.replaceAll('{{data.fullName}}', fullName);
-    html = html.replaceAll('{{data.displayName}}', displayName);
+    const replacements = [
+      '[[Full Name]]', '[[Display Name]]',
+      '{{fullName}}', '{{displayName}}',
+      '${data.fullName}', '${fullName}',
+      '{{data.fullName}}', '{{data.displayName}}',
+      '{{ data.fullName }}', '{{ data.displayName }}',
+      '[[data.fullName]]', '[[data.displayName]]',
+      '${data?.fullName}', '${data?.displayName}'
+    ];
+
+    replacements.forEach(placeholder => {
+      // Use case-insensitive and escape characters for regex replacement to be safe
+      const escaped = placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escaped, 'gi');
+      html = html.replace(regex, fullName);
+    });
+
+    // Handle displayName specifically for those that have it
+    const displayReplacements = ['{{displayName}}', '{{data.displayName}}', '{{ data.displayName }}', '[[Display Name]]', '${data.displayName}', '${data?.displayName}'];
+    displayReplacements.forEach(placeholder => {
+      const escaped = placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escaped, 'gi');
+      html = html.replace(regex, displayName);
+    });
+
+    // Final direct search for the specific problematic string from the screenshot
+    html = html.replace(/\$\{data\.fullName\}/g, fullName);
+    html = html.replace(/\$\{fullName\}/g, fullName);
+    html = html.replace(/\$ \{data\.fullName\}/g, fullName);
+    html = html.replace(/Hi \$\{data\.fullName\}/g, `Hi ${fullName}`);
+    html = html.replace(/<strong>\$\{data\.fullName\}<\/strong>/g, `<strong>${fullName}</strong>`);
+    html = html.replace(/<span.*?>\$\{data\.fullName\}<\/span>/g, (match) => match.replace(/\$\{data\.fullName\}/, fullName));
+    html = html.replace(/\$\{data\.displayName\}/g, displayName);
+    html = html.replace(/\$\{displayName\}/g, displayName);
+
     html = html.replaceAll('{{#if reason}} Reason provided:\n{{reason}}\n{{/if}}', `Reason provided:\n${data.reason || 'Missing documentation'}`);
     html = html.replaceAll('{{baseUrl}}', baseUrl);
     
