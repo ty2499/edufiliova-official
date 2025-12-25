@@ -948,7 +948,7 @@ export default function TeacherSignup() {
                         Submitting...
                       </>
                     ) : (
-                      "Submit Teachership Application"
+                      "Submit Application"
                     )}
                   </Button>
                 )}
