@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Loader2 } from 'lucide-react';
+import { BookOpen, Loader2, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Category {
   id: string;
@@ -15,7 +16,7 @@ interface TeacherCategoriesCardProps {
   teacherId?: string;
 }
 
-// Teaching Categories (21 categories)
+// 31+ Teaching Categories
 const TEACHING_CATEGORIES: Category[] = [
   { id: '1', name: 'English' },
   { id: '2', name: 'Spanish' },
@@ -37,7 +38,17 @@ const TEACHING_CATEGORIES: Category[] = [
   { id: '18', name: 'Chinese' },
   { id: '19', name: 'Deutsch' },
   { id: '20', name: 'Portuguese' },
-  { id: '21', name: 'Mooré' }
+  { id: '21', name: 'Mooré' },
+  { id: '22', name: 'French' },
+  { id: '23', name: 'Italian' },
+  { id: '24', name: 'Japanese' },
+  { id: '25', name: 'Korean' },
+  { id: '26', name: 'Arabic' },
+  { id: '27', name: 'Statistics' },
+  { id: '28', name: 'Business' },
+  { id: '29', name: 'Law' },
+  { id: '30', name: 'Psychology' },
+  { id: '31', name: 'Literature' }
 ];
 
 export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
@@ -76,12 +87,14 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
     }
   };
 
-  const toggleCategory = (categoryId: string) => {
-    setSelectedCategories(prev => 
-      prev.includes(categoryId) 
-        ? prev.filter(id => id !== categoryId)
-        : [...prev, categoryId]
-    );
+  const addCategory = (categoryId: string) => {
+    if (!selectedCategories.includes(categoryId)) {
+      setSelectedCategories([...selectedCategories, categoryId]);
+    }
+  };
+
+  const removeCategory = (categoryId: string) => {
+    setSelectedCategories(selectedCategories.filter(id => id !== categoryId));
   };
 
   const handleSave = async () => {
@@ -139,25 +152,28 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
         ) : (
           <>
             <div className="space-y-3">
-              <Label className="text-base font-semibold">Select Categories</Label>
-              <div className="flex flex-wrap gap-2">
-                {TEACHING_CATEGORIES.map((category) => {
-                  const isSelected = selectedCategories.includes(category.id);
-                  return (
-                    <button
-                      key={category.id}
-                      onClick={() => toggleCategory(category.id)}
-                      className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-green-500 text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
+              <Label htmlFor="category-select" className="text-base font-semibold">
+                Select Categories
+              </Label>
+              <Select onValueChange={addCategory}>
+                <SelectTrigger id="category-select" className="w-full">
+                  <SelectValue placeholder="Choose a category to add..." />
+                </SelectTrigger>
+                <SelectContent className="max-h-[300px]">
+                  {TEACHING_CATEGORIES.map((category) => (
+                    <SelectItem 
+                      key={category.id} 
+                      value={category.id}
+                      disabled={selectedCategories.includes(category.id)}
                     >
                       {category.name}
-                    </button>
-                  );
-                })}
-              </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                Click the dropdown to select categories. You can add multiple.
+              </p>
             </div>
 
             {selectedCategories.length > 0 && (
@@ -169,9 +185,16 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
                     return (
                       <Badge 
                         key={categoryId}
-                        className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
+                        className="flex items-center gap-2 px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
                       >
-                        {category?.name}
+                        <span>{category?.name}</span>
+                        <button
+                          onClick={() => removeCategory(categoryId)}
+                          className="ml-1 hover:opacity-70 transition-opacity"
+                          aria-label="Remove category"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
                       </Badge>
                     );
                   })}
