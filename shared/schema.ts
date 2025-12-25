@@ -535,7 +535,6 @@ export const profiles = pgTable("profiles", {
   lastSeen: timestamp("last_seen"), // For online presence tracking
   lastPricingShown: timestamp("last_pricing_shown"), // Track when pricing was last shown for 24-hour delay
   availabilitySettings: text("availability_settings"), // JSON string for teacher availability settings
-  teachingSubjects: text("teaching_subjects").array(), // Array of subjects teacher can teach (e.g., ["Mathematics", "Science", "English"])
   // Freelancer approval workflow fields
   approvalStatus: approvalStatusEnum("approval_status").default("pending"),
   approvedBy: uuid("approved_by").references(() => users.id),
