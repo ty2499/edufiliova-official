@@ -332,6 +332,8 @@ const getFreelancerIdFromPath = (): string | null => {
 };
 
 // Smart initial state based on URL path - supports clean URLs for sharing
+import { BouncingBoxesLoader } from '@/components/loaders/BouncingBoxesLoader';
+
 const getInitialState = (): AppState => {
   try {
     const path = window.location.pathname;
@@ -480,10 +482,19 @@ const getInitialState = (): AppState => {
 function TeacherDashboardWithStatusCheck({ onNavigate, userId }: { onNavigate: any; userId: number }) {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [redirectId, setRedirectId] = useState<number | null>(null);
+  const [minLoadingComplete, setMinLoadingComplete] = useState(false);
   
   const { data: application, isLoading } = useQuery({
     queryKey: [`/api/teacher-applications/status/${userId}`],
   });
+
+  // Ensure minimum 2s loading time for the animation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMinLoadingComplete(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Check if application is incomplete using useEffect to avoid render-loop
   useEffect(() => {
@@ -511,9 +522,9 @@ function TeacherDashboardWithStatusCheck({ onNavigate, userId }: { onNavigate: a
     }
   }, [shouldRedirect, redirectId, onNavigate]);
 
-  // Show loading screen while checking profile status
-  if (isLoading) {
-    return null;
+  // Show loading screen while checking profile status or during min loading time
+  if (isLoading || !minLoadingComplete) {
+    return <BouncingBoxesLoader />;
   }
 
   // If redirecting, show nothing
@@ -536,10 +547,19 @@ function TeacherDashboardWithStatusCheck({ onNavigate, userId }: { onNavigate: a
 function FreelancerDashboardWithStatusCheck({ onNavigate, initialTab, userId }: { onNavigate: any; initialTab: string; userId: number }) {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [redirectId, setRedirectId] = useState<number | null>(null);
+  const [minLoadingComplete, setMinLoadingComplete] = useState(false);
   
   const { data: application, isLoading } = useQuery({
     queryKey: [`/api/freelancer/applications/status/${userId}`],
   });
+
+  // Ensure minimum 2s loading time for the animation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMinLoadingComplete(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Check if application is incomplete using useEffect to avoid render-loop
   useEffect(() => {
@@ -567,9 +587,9 @@ function FreelancerDashboardWithStatusCheck({ onNavigate, initialTab, userId }: 
     }
   }, [shouldRedirect, redirectId, onNavigate]);
 
-  // Show loading screen while checking profile status
-  if (isLoading) {
-    return null;
+  // Show loading screen while checking profile status or during min loading time
+  if (isLoading || !minLoadingComplete) {
+    return <BouncingBoxesLoader />;
   }
 
   // If redirecting, show nothing
