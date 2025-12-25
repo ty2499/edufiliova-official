@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
 import { openExternalUrl } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -1305,6 +1306,7 @@ interface TeacherDashboardProps {
 export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
   const { user, logout, teacherApplicationStatus } = useAuth();
   const queryClient = useQueryClient();
+  const { toast } = useToast();
   
   // Show pending view if teacher application is not approved
   if (teacherApplicationStatus && teacherApplicationStatus.status !== 'approved') {
@@ -1760,13 +1762,24 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
 
       const result = await response.json();
       if (result.success) {
-        console.log('Availability updated successfully');
-        // You might want to show a success message here
+        toast({
+          title: "Availability Updated",
+          description: "Your availability settings have been saved successfully.",
+        });
       } else {
-        console.error('Failed to update availability:', result.error);
+        toast({
+          title: "Update Failed",
+          description: result.error || "Failed to update availability. Please try again.",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error('Error updating availability:', error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setAvailabilityLoading(false);
     }
