@@ -720,7 +720,7 @@ export function StudentSettings() {
                         <Mail className="w-4 h-4 text-gray-500" />
                         <a 
                           href="mailto:erase@edufiliova.com" 
-                          className="text-sm text-[#a0fab2] hover:underline" transition-all duration-300
+                          className="text-sm text-[#2f5a4e] hover:underline" transition-all duration-300
                           data-testid="link-delete-email"
                         >
                           erase@edufiliova.com
