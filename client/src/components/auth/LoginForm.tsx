@@ -54,8 +54,8 @@ export default function LoginForm({
       // Validate based on login method
       if (formData.loginMethod === 'email' && !validateEmail(formData.loginIdentifier)) {
         newErrors.loginIdentifier = "Please enter a valid email address";
-      } else if (formData.loginMethod === 'phone' && !/^\+[\d]{7,15}$/.test(formData.loginIdentifier.replace(/[\s\-\(\)]/g, ''))) {
-        newErrors.loginIdentifier = "Please enter a valid phone number with country code";
+      } else if (formData.loginMethod === 'phone' && !/^[\+]?[\d\s\-\(\)]{7,20}$/.test(formData.loginIdentifier)) {
+        newErrors.loginIdentifier = "Please enter a valid phone number";
       } else if (formData.loginMethod === 'id' && !/^[0-9]{9}[A-Z]{2}$/.test(formData.loginIdentifier)) {
         newErrors.loginIdentifier = "Please enter a valid ID number (9 digits + 2 letters)";
       }
