@@ -13,7 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import PhoneNumberInput from "@/components/PhoneNumberInput";
 import { Progress } from "@/components/ui/progress";
-import { Upload, ArrowLeft, ArrowRight, Loader2, X } from "lucide-react";
+import { Upload, ArrowLeft, ArrowRight, Loader2, X, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { CheckmarkIcon } from "@/components/ui/checkmark-icon";
 import TeacherTermsModal from "@/components/TeacherTermsModal";
 
@@ -499,24 +500,23 @@ export default function TeacherSignup() {
                   <div>
                     <Label>Teaching Categories (Primary Focus Area) *</Label>
                     <p className="text-sm text-gray-600 mb-3">Must pick at least 1</p>
-                    <div className="grid grid-cols-2 gap-3">
-                      {teachingCategories.map((category) => (
-                        <div key={category} className="flex items-center space-x-2">
-                          <div className="relative flex h-4 w-4 shrink-0 items-center justify-center">
-                            <Checkbox
-                              id={`category-${category}`}
-                              checked={form.watch("teachingCategories").includes(category)}
-                              onCheckedChange={() => handleCategoryToggle(category)}
-                              className="h-full w-full rounded-sm border-gray-300"
-                              data-testid={`checkbox-category-${category.toLowerCase().replace(/\s+/g, "-")}`}
-                            />
+                          <div className="flex flex-wrap gap-2">
+                            {teachingCategories.map((category) => (
+                              <button
+                                key={category}
+                                type="button"
+                                onClick={() => handleCategoryToggle(category)}
+                                className={cn(
+                                  "px-3 py-1.5 rounded-full text-xs font-medium border transition-colors",
+                                  form.watch("teachingCategories").includes(category)
+                                    ? "bg-[#0c332c] text-white border-[#0c332c]"
+                                    : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
+                                )}
+                              >
+                                {category}
+                              </button>
+                            ))}
                           </div>
-                          <Label htmlFor={`category-${category}`} className="text-sm font-normal">
-                            {category}
-                          </Label>
-                        </div>
-                      ))}
-                    </div>
                     {form.formState.errors.teachingCategories && (
                       <p className="text-sm text-destructive mt-2">{form.formState.errors.teachingCategories.message}</p>
                     )}
@@ -525,24 +525,23 @@ export default function TeacherSignup() {
                   <div>
                     <Label>Grade Levels You Teach *</Label>
                     <p className="text-sm text-gray-600 mb-3">Select at least one</p>
-                    <div className="space-y-2">
-                      {gradeLevels.map((level) => (
-                        <div key={level} className="flex items-center space-x-2">
-                          <div className="relative flex h-4 w-4 shrink-0 items-center justify-center">
-                            <Checkbox
-                              id={`grade-${level}`}
-                              checked={form.watch("gradeLevels").includes(level)}
-                              onCheckedChange={() => handleGradeLevelToggle(level)}
-                              className="h-full w-full rounded-sm border-gray-300"
-                              data-testid={`checkbox-grade-${level.toLowerCase().replace(/\s+/g, "-")}`}
-                            />
+                          <div className="flex flex-wrap gap-2">
+                            {gradeLevels.map((level) => (
+                              <button
+                                key={level}
+                                type="button"
+                                onClick={() => handleGradeLevelToggle(level)}
+                                className={cn(
+                                  "px-3 py-1.5 rounded-full text-xs font-medium border transition-colors",
+                                  form.watch("gradeLevels").includes(level)
+                                    ? "bg-[#0c332c] text-white border-[#0c332c]"
+                                    : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
+                                )}
+                              >
+                                {level}
+                              </button>
+                            ))}
                           </div>
-                          <Label htmlFor={`grade-${level}`} className="text-sm font-normal">
-                            {level}
-                          </Label>
-                        </div>
-                      ))}
-                    </div>
                     {form.formState.errors.gradeLevels && (
                       <p className="text-sm text-destructive mt-2">{form.formState.errors.gradeLevels.message}</p>
                     )}
