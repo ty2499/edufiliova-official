@@ -9,14 +9,13 @@ const TopProgressBar = ({ isLoading, progress }: TopProgressBarProps) => {
   }
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[9999] h-1.5 bg-gray-200/30 dark:bg-gray-800/30">
+    <div className="fixed top-0 left-0 right-0 z-[9999] h-0.5 bg-gray-200/30 dark:bg-gray-800/30">
       <div 
         className="h-full transition-all duration-500 ease-out"
         style={{ 
           width: `${progress}%`,
           opacity: isLoading ? 1 : 0,
           backgroundColor: '#a0fab2',
-          boxShadow: '0 0 10px rgba(160, 250, 178, 0.5)'
         }}
       />
     </div>
