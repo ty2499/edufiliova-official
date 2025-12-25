@@ -786,7 +786,7 @@ function ReferralSection() {
   return (
     <div className="border rounded-lg p-4" data-testid="card-referral">
       <div className="flex items-center gap-2 mb-2">
-        <DollarSign className="h-5 w-5 text-[#fe5637]" />
+        <DollarSign className="h-5 w-5 text-[#2f5a4e]" />
         <h4 className="font-bold text-[#1F1E30] tracking-tight">Refer Friends & Earn</h4>
       </div>
       <p className="text-sm text-muted-foreground mb-4">
@@ -794,16 +794,16 @@ function ReferralSection() {
       </p>
 
       {/* Reward Progress */}
-      <div className="bg-gradient-to-r from-[#fe5637]/10 to-blue-50 rounded-lg p-4 mb-4">
+      <div className="bg-gradient-to-r from-[#2f5a4e]/10 to-blue-50 rounded-lg p-4 mb-4">
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm font-medium text-gray-700">Referral Progress</span>
-          <span className="text-sm font-bold text-[#fe5637]">
+          <span className="text-sm font-bold text-[#2f5a4e]">
             {stats?.referralCount || 0} / {stats?.rewardThreshold || 50}
           </span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
           <div
-            className="bg-gradient-to-r from-[#fe5637] to-blue-500 h-3 rounded-full transition-all duration-300"
+            className="bg-gradient-to-r from-[#2f5a4e] to-blue-500 h-3 rounded-full transition-all duration-300"
             style={{ width: `${((stats?.referralCount || 0) / (stats?.rewardThreshold || 50)) * 100}%` }}
           />
         </div>
@@ -822,8 +822,8 @@ function ReferralSection() {
           </p>
           <p className="text-xs text-gray-600 mt-1">Total Referrals</p>
         </div>
-        <div className="text-center p-4 bg-[#fe5637]/10 rounded-lg">
-          <p className="text-lg font-bold text-[#fe5637]" data-testid="text-earned-rewards">
+        <div className="text-center p-4 bg-[#2f5a4e]/10 rounded-lg">
+          <p className="text-lg font-bold text-[#2f5a4e]" data-testid="text-earned-rewards">
             ${stats?.earnedRewards || 0}
           </p>
           <p className="text-xs text-gray-600 mt-1">Earned Rewards</p>
