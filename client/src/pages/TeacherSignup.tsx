@@ -314,10 +314,10 @@ export default function TeacherSignup() {
     <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-lg sm:text-2xl font-bold text-foreground mb-2">
+          <h1 className="text-lg sm:text-2xl font-bold text-gray-900 mb-2">
             {applicationId ? "Complete Your Teacher Application" : "Apply as a Teacher on EduFiliova"}
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-lg">
+          <p className="text-gray-700 text-sm sm:text-lg">
             {applicationId 
               ? "Fill in the remaining details to complete your application"
               : "Teach globally, earn from your lessons, and help students progress with quality education."}
@@ -328,10 +328,10 @@ export default function TeacherSignup() {
 
         <div className="space-y-6">
           <div className="mb-6">
-            <h2 className="text-xl font-semibold text-foreground mb-2">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
               Step {currentStep} of {totalSteps}
             </h2>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-gray-700 text-sm">
               {currentStep === 1 && "Basic Personal Information"}
               {currentStep === 2 && "Teaching Details"}
               {currentStep === 3 && "Qualifications & Identity Verification"}
