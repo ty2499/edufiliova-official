@@ -459,7 +459,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                 Already have an account?{" "}
                 <button 
                   type="button"
-                  onClick={() => setCurrentView('login')}
+                  onClick={() => handleNavigate('auth')}
                   className="text-foreground hover:underline font-medium transition-all duration-300"
                 >
                   Sign in here
