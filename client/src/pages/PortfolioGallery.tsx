@@ -610,37 +610,6 @@ export function PortfolioGallery({ onNavigate, context = 'public' }: PortfolioGa
         />
       )}
       
-      {/* Back Navigation - Show when in dashboard context */}
-      {context === 'dashboard' && (
-        <div className="bg-white border-b border-gray-100 sticky top-0 z-50">
-          <div className="container mx-auto px-4 md:px-8">
-            <div className="flex items-center h-14">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  if (profile?.role === 'admin') {
-                    onNavigate?.('admin-dashboard', 'slide-right');
-                  } else if (profile?.role === 'teacher') {
-                    onNavigate?.('teacher-dashboard', 'slide-right');
-                  } else if (profile?.role === 'freelancer') {
-                    onNavigate?.('freelancer-dashboard', 'slide-right');
-                  } else if (profile?.role === 'general') {
-                    onNavigate?.('customer-dashboard', 'slide-right');
-                  } else {
-                    onNavigate?.('student-dashboard', 'slide-right');
-                  }
-                }}
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-900" transition-all duration-300
-                data-testid="button-back-to-dashboard"
-              >
-                <ChevronLeft className="h-4 w-4" />
-                <span>Back to Dashboard</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
       
       {/* Admin-Managed Hero Section */}
       <PortfolioHeroSection className="" />
