@@ -46,8 +46,8 @@ export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
       const sessionId = localStorage.getItem('sessionId');
       
       const [availableRes, teacherRes] = await Promise.all([
-        fetch('/api/subjects/available', {
-          headers: { Authorization: `Bearer ${sessionId}` }
+        fetch('/api/subjects/with-teachers', {
+          headers: sessionId ? { Authorization: `Bearer ${sessionId}` } : {}
         }),
         fetch(`/api/teacher/${teacherId}/subjects`, {
           headers: { Authorization: `Bearer ${sessionId}` }
