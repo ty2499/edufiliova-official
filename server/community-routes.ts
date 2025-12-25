@@ -281,7 +281,32 @@ router.delete('/posts/:id', async (req, res) => {
       return res.status(403).json({ error: 'You can only delete your own posts' });
     }
 
-    // Delete post (communityReplies and communityReactions cascade automatically)
+    // Delete post reactions first
+    await db.delete(communityReactions).where(and(
+      eq(communityReactions.targetId, req.params.id),
+      eq(communityReactions.targetType, 'post')
+    ));
+
+    // Delete post replies (and their reactions)
+    const postReplies = await db
+      .select({ id: communityReplies.id })
+      .from(communityReplies)
+      .where(eq(communityReplies.postId, req.params.id));
+    
+    if (postReplies.length > 0) {
+      const replyIds = postReplies.map(r => r.id as string);
+      
+      // Delete reactions for all replies
+      await db.delete(communityReactions).where(and(
+        inArray(communityReactions.targetId, replyIds),
+        eq(communityReactions.targetType, 'reply')
+      ));
+      
+      // Delete all replies
+      await db.delete(communityReplies).where(eq(communityReplies.postId, req.params.id));
+    }
+
+    // Delete post
     await db.delete(communityPosts).where(eq(communityPosts.id, req.params.id));
 
     res.status(204).send();
