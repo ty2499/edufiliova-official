@@ -157,8 +157,7 @@ export function TeacherDashboardPending({ onNavigate }: TeacherDashboardPendingP
                 <Badge 
                   variant={statusInfo.badgeVariant} 
                   data-testid="badge-status"
-                  style={{ backgroundColor: '#a0fab2', color: '#0d3931', borderColor: '#0d3931' }}
-                  className="border"
+                  style={{ backgroundColor: '#a0fab2', color: '#0d3931', border: 'none' }}
                 >
                   {statusInfo.badgeText}
                 </Badge>
