@@ -1326,6 +1326,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
   const [storeOpen, setStoreOpen] = useState(true);
   const [marketplaceOpen, setMarketplaceOpen] = useState(true);
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  const [studentSearchTerm, setStudentSearchTerm] = useState('');
   
   const [teacherProfile, setTeacherProfile] = useState<any>(null);
   const [profileLoading, setProfileLoading] = useState(false);
@@ -1432,6 +1433,17 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
 
     return combinedStudents;
   }, [appointments, allStudentsData]);
+
+  // Filter students by search term
+  const filteredStudents = React.useMemo(() => {
+    if (!studentSearchTerm.trim()) return students;
+    const term = studentSearchTerm.toLowerCase();
+    return students.filter(student => 
+      student.name.toLowerCase().includes(term) || 
+      (student.subjectName && student.subjectName.toLowerCase().includes(term)) ||
+      (student.subjects && student.subjects.some((s: string) => s.toLowerCase().includes(term)))
+    );
+  }, [students, studentSearchTerm]);
 
 
   // Get teacher assignments
@@ -2564,7 +2576,12 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <h2 className="text-lg sm:text-2xl font-bold">My Students</h2>
               <div className="flex gap-2 w-full sm:w-auto">
-                <Input placeholder="Search students..." className="flex-1 sm:w-64" />
+                <Input 
+                  placeholder="Search students..." 
+                  className="flex-1 sm:w-64" 
+                  value={studentSearchTerm}
+                  onChange={(e) => setStudentSearchTerm(e.target.value)}
+                />
               </div>
             </div>
             
@@ -2575,21 +2592,21 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               className="mb-6"
             />
             
-            {students.length === 0 ? (
+            {filteredStudents.length === 0 ? (
               <Card>
                 <CardContent className="pt-6">
                   <div className="text-center py-12">
                     <Users className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                    <h3 className="font-medium mb-2">No Students Assigned</h3>
+                    <h3 className="font-medium mb-2">{studentSearchTerm ? "No matching students found" : "No Students Assigned"}</h3>
                     <p className="text-sm text-muted-foreground">
-                      Contact an administrator to assign students to your classes.
+                      {studentSearchTerm ? "Try a different search term." : "Contact an administrator to assign students to your classes."}
                     </p>
                   </div>
                 </CardContent>
               </Card>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {students.map((student: Student) => (
+                {filteredStudents.map((student: Student) => (
                   <Card 
                     key={student.studentId} 
                     className=" transition-all duration-200 cursor-pointer group" transition-all duration-300
