@@ -325,7 +325,7 @@ export default function TeacherSignup() {
           </p>
         </div>
 
-        <Progress value={progress} className="mb-6 h-1.5 bg-gray-200 [&>div]:bg-[#0c332c]" data-testid="progress-bar" />
+        <Progress value={progress} className="mb-6 h-1.5 bg-gray-200" data-testid="progress-bar" />
 
         <div className="space-y-6">
           <div className="mb-6">
