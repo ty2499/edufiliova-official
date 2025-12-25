@@ -1617,6 +1617,7 @@ export function CommunityChat() {
                   }
                 }}
                 disabled={!replyContent.trim() || replyMutation.isPending}
+                className="bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] hover:scale-100 active:scale-100"
               >
                 <Send className="h-4 w-4" />
               </Button>
