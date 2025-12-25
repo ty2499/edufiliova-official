@@ -197,20 +197,21 @@ export const SchedulingInterface: React.FC = () => {
     staleTime: 5 * 60 * 1000
   });
 
-  // Fetch teachers when subject is selected
-  const handleSubjectChange = async (subjectId: string, subjectName: string) => {
-    setBookingForm(prev => ({ ...prev, subjectId, subject: subjectName, teacherId: '' }));
+  // Fetch teachers when category is selected
+  const handleCategoryChange = async (categoryId: string) => {
+    const category = allCategories.find((c: any) => c.id === categoryId);
+    setBookingForm(prev => ({ ...prev, subjectId: categoryId, subject: category?.name || '', teacherId: '' }));
     setFilteredTeachers([]);
     
-    if (subjectId) {
+    if (categoryId) {
       try {
-        const response = await fetch(`/api/teachers/by-subject/${subjectId}`);
+        const response = await fetch(`/api/teachers/by-category/${categoryId}`);
         const data = await response.json();
         if (data.success) {
           setFilteredTeachers(data.teachers || []);
         }
       } catch (error) {
-        console.error('Error fetching teachers for subject:', error);
+        console.error('Error fetching teachers for category:', error);
       }
     }
   };
@@ -719,13 +720,10 @@ export const SchedulingInterface: React.FC = () => {
               <CardContent className="px-3 py-4 md:px-6">
                 <div className="space-y-4">
                   <div>
-                    <Label>Select Subject</Label>
+                    <Label>Select Subject Category</Label>
                     <Select 
                       value={bookingForm.subjectId} 
-                      onValueChange={(value) => {
-                        const selected = subjectsWithTeachers.find((s: any) => s.id === value);
-                        handleSubjectChange(value, selected?.name || '');
-                      }}
+                      onValueChange={handleCategoryChange}
                     >
                       <SelectTrigger data-testid="category-select">
                         <SelectValue placeholder="Select a category" />
@@ -736,7 +734,7 @@ export const SchedulingInterface: React.FC = () => {
                         ) : allCategories && allCategories.length > 0 ? (
                           allCategories.map((cat: any) => (
                             <SelectItem key={cat.id} value={cat.id}>
-                              {cat.icon} {cat.name}
+                              {cat.name}
                             </SelectItem>
                           ))
                         ) : (

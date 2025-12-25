@@ -1,35 +1,40 @@
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Loader2, X } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { BookOpen, Loader2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { apiRequest } from '@/lib/queryClient';
 
-interface Subject {
+interface Category {
   id: string;
   name: string;
-  gradeSystem: string;
-  gradeLevel: number;
-  description?: string;
 }
 
-interface TeacherSubject {
-  id: string;
-  subjectId: string;
-  isPrimary: boolean;
-  subjectName: string;
-  gradeSystem: string;
-  gradeLevel: number;
-}
-
-interface TeacherSubjectsCardProps {
+interface TeacherCategoriesCardProps {
   teacherId?: string;
 }
 
-export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
-  const [availableSubjects, setAvailableSubjects] = useState<Subject[]>([]);
-  const [selectedSubjectIds, setSelectedSubjectIds] = useState<string[]>([]);
+// 15 Core Teaching Categories
+const TEACHING_CATEGORIES: Category[] = [
+  { id: '1', name: 'English' },
+  { id: '2', name: 'Spanish' },
+  { id: '3', name: 'Mathematics' },
+  { id: '4', name: 'Science' },
+  { id: '5', name: 'Physics' },
+  { id: '6', name: 'Chemistry' },
+  { id: '7', name: 'Biology' },
+  { id: '8', name: 'History' },
+  { id: '9', name: 'Geography' },
+  { id: '10', name: 'Computer Science' },
+  { id: '11', name: 'Art' },
+  { id: '12', name: 'Music' },
+  { id: '13', name: 'Physical Education' },
+  { id: '14', name: 'Philosophy' },
+  { id: '15', name: 'Economics' }
+];
+
+export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -45,38 +50,28 @@ export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
     try {
       const sessionId = localStorage.getItem('sessionId');
       
-      const [availableRes, teacherRes] = await Promise.all([
-        fetch('/api/subjects/with-teachers', {
-          headers: sessionId ? { Authorization: `Bearer ${sessionId}` } : {}
-        }),
-        fetch(`/api/teacher/${teacherId}/subjects`, {
-          headers: { Authorization: `Bearer ${sessionId}` }
-        })
-      ]);
+      const response = await fetch(`/api/teacher/${teacherId}/categories`, {
+        headers: { Authorization: `Bearer ${sessionId}` }
+      });
       
-      const availableData = await availableRes.json();
-      const teacherData = await teacherRes.json();
+      const data = await response.json();
       
-      if (availableData.success) {
-        setAvailableSubjects(availableData.subjects || []);
-      }
-      
-      if (teacherData.success) {
-        const selected = (teacherData.subjects || []).map((s: TeacherSubject) => s.subjectId);
-        setSelectedSubjectIds(selected);
+      if (data.success) {
+        const categoryIds = (data.categories || []).map((c: Category) => c.id);
+        setSelectedCategories(categoryIds);
       }
     } catch (error) {
-      console.error('Error fetching subjects:', error);
+      console.error('Error fetching categories:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const toggleSubject = (subjectId: string) => {
-    setSelectedSubjectIds(prev => 
-      prev.includes(subjectId) 
-        ? prev.filter(id => id !== subjectId)
-        : [...prev, subjectId]
+  const toggleCategory = (categoryId: string) => {
+    setSelectedCategories(prev => 
+      prev.includes(categoryId) 
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
     );
   };
 
@@ -88,49 +83,40 @@ export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
     
     try {
       const sessionId = localStorage.getItem('sessionId');
-      const response = await fetch(`/api/teacher/${teacherId}/subjects`, {
+      const response = await fetch(`/api/teacher/${teacherId}/categories`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${sessionId}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ subjectIds: selectedSubjectIds })
+        body: JSON.stringify({ categoryIds: selectedCategories })
       });
       
       const result = await response.json();
       
       if (result.success) {
-        setMessage({ type: 'success', text: 'Subjects updated successfully!' });
+        setMessage({ type: 'success', text: 'Teaching categories updated successfully!' });
         setTimeout(() => setMessage(null), 3000);
       } else {
-        setMessage({ type: 'error', text: result.error || 'Failed to update subjects' });
+        setMessage({ type: 'error', text: result.error || 'Failed to update categories' });
       }
     } catch (error) {
-      console.error('Error saving subjects:', error);
+      console.error('Error saving categories:', error);
       setMessage({ type: 'error', text: 'Something went wrong. Please try again.' });
     } finally {
       setSaving(false);
     }
   };
 
-  const groupedSubjects = availableSubjects.reduce((acc, subject) => {
-    const key = `${subject.gradeSystem} - Grade ${subject.gradeLevel}`;
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(subject);
-    return acc;
-  }, {} as Record<string, Subject[]>);
-
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BookOpen className="h-5 w-5 text-primary" />
-          Subjects I Teach
+          Teaching Categories
         </CardTitle>
         <CardDescription>
-          Select the subjects you teach. Students will see you when they search for these subjects.
+          Check the subjects you specialize in. Students will see you when they search for these categories.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -138,54 +124,36 @@ export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
           <div className="flex justify-center py-8">
             <Loader2 className="h-6 w-6 animate-spin" />
           </div>
-        ) : availableSubjects.length === 0 ? (
-          <p className="text-muted-foreground text-center py-4">No subjects available yet.</p>
         ) : (
           <>
-            <div className="space-y-3">
-              <label className="text-sm font-medium">Select Subjects to Teach</label>
-              <Select onValueChange={(subjectId) => toggleSubject(subjectId)}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose a subject to add..." />
-                </SelectTrigger>
-                <SelectContent className="max-h-[300px]">
-                  {availableSubjects.map((subject) => (
-                    <SelectItem 
-                      key={subject.id} 
-                      value={subject.id}
-                      disabled={selectedSubjectIds.includes(subject.id)}
-                    >
-                      <span className="text-sm">
-                        {subject.name} ({subject.gradeSystem} - Grade {subject.gradeLevel})
-                      </span>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {TEACHING_CATEGORIES.map((category) => (
+                <div 
+                  key={category.id}
+                  className="flex items-center gap-2 p-3 rounded-lg border border-gray-200 hover:bg-muted/50 cursor-pointer transition-colors"
+                  onClick={() => toggleCategory(category.id)}
+                >
+                  <Checkbox 
+                    checked={selectedCategories.includes(category.id)}
+                    onCheckedChange={() => toggleCategory(category.id)}
+                  />
+                  <span className="text-sm font-medium">{category.name}</span>
+                </div>
+              ))}
             </div>
 
-            {selectedSubjectIds.length > 0 && (
+            {selectedCategories.length > 0 && (
               <div className="space-y-3 pt-4 border-t">
-                <p className="text-sm font-medium">Selected Subjects ({selectedSubjectIds.length})</p>
+                <p className="text-sm font-medium">Selected Categories ({selectedCategories.length})</p>
                 <div className="flex flex-wrap gap-2">
-                  {selectedSubjectIds.map((subjectId) => {
-                    const subject = availableSubjects.find(s => s.id === subjectId);
+                  {selectedCategories.map((categoryId) => {
+                    const category = TEACHING_CATEGORIES.find(c => c.id === categoryId);
                     return (
                       <Badge 
-                        key={subjectId}
-                        variant="secondary" 
-                        className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+                        key={categoryId}
+                        className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
                       >
-                        <span className="text-xs">
-                          {subject?.name} ({subject?.gradeSystem} G{subject?.gradeLevel})
-                        </span>
-                        <button
-                          onClick={() => toggleSubject(subjectId)}
-                          className="ml-1 hover:opacity-70 transition-opacity"
-                          aria-label="Remove subject"
-                        >
-                          <X className="h-3 w-3" />
-                        </button>
+                        {category?.name}
                       </Badge>
                     );
                   })}
@@ -197,7 +165,7 @@ export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
               <Button 
                 className="bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white"
                 onClick={handleSave}
-                disabled={saving || selectedSubjectIds.length === 0}
+                disabled={saving || selectedCategories.length === 0}
               >
                 {saving ? (
                   <>
@@ -205,7 +173,7 @@ export function TeacherSubjectsCard({ teacherId }: TeacherSubjectsCardProps) {
                     Saving...
                   </>
                 ) : (
-                  'Save Subjects'
+                  'Save Categories'
                 )}
               </Button>
               {message && (
