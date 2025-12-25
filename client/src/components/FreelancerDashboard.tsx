@@ -2078,7 +2078,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                 setShowMobileMenu(false);
                 setTimeout(async () => {
                   await logout();
-                  onNavigate?.('shop-auth', 'fade');
+                  onNavigate?.('auth', 'fade');
                 }, 3000);
               }}
               disabled={isLoggingOut}

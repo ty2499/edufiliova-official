@@ -2281,7 +2281,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                 setShowMobileMenu(false);
                 setTimeout(async () => {
                   await logout();
-                  onNavigate?.('shop-auth');
+                  onNavigate?.('auth');
                 }, 3000);
               }}
               disabled={isLoggingOut}
