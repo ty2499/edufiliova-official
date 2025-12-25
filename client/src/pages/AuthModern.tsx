@@ -1126,7 +1126,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 data-testid="checkbox-agree-terms"
               />
               <Label htmlFor="agree-terms" className="text-sm text-white cursor-pointer">
-                I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-primary hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-primary hover:underline transition-all duration-300" data-testid="link-privacy-policy">Privacy Policy</button>
+                I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="hover:underline" style={{ color: '#a0fab2' }} data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="hover:underline transition-all duration-300" style={{ color: '#a0fab2' }} data-testid="link-privacy-policy">Privacy Policy</button>
               </Label>
             </div>
             {errors.agreeToTerms && <p className="text-sm text-primary-500">{errors.agreeToTerms}</p>}
