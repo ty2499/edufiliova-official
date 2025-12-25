@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import PhoneNumberInput from "@/components/PhoneNumberInput";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Eye, EyeOff, Mail, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import AuthLayout from "@/components/auth/AuthLayout";
@@ -311,9 +310,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
           <h1 className="font-bold text-foreground mb-2 text-[20px] text-center">Apply as a Freelancer on EduFiliova</h1>
         </div>
 
-        <Card>
-          <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               {errorMessage && (
                 <div className="p-3 bg-primary/10 border border-red-200 rounded-lg text-primary-700 text-sm">
                   {errorMessage}
@@ -467,9 +464,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                   Sign in here
                 </button>
               </p>
-            </form>
-          </CardContent>
-        </Card>
+        </form>
       </div>
     </AuthLayout>
   );
