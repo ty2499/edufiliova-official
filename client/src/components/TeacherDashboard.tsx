@@ -2314,7 +2314,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                   <div className="flex items-center gap-2">
                     <h1>{getWelcomeMessage()}</h1>
                   </div>
-                  <Badge variant="secondary" className="text-xs hidden sm:inline-flex">
+                  <Badge className="text-xs hidden sm:inline-flex text-white border-0" style={{ backgroundColor: '#2f5a4e' }}>
                     {new Date().toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' })}
                   </Badge>
                 </div>
