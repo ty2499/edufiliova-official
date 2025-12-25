@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Check, X, Loader2, Plus, Trash2, Edit, Upload, Download } from 'lucide-react';
+import { BouncingBoxLoader } from './bouncing-loader';
 
 export type AjaxOperation = 'loading' | 'adding' | 'updating' | 'deleting' | 'uploading' | 'downloading' | 'success' | 'error' | 'idle';
 
@@ -61,25 +62,23 @@ export const AjaxLoader: React.FC<AjaxLoaderProps> = ({
 
   const content = (
     <div className={cn(
-      'flex items-center gap-2 rounded-lg border transition-all duration-300',
-      config.bgColor,
-      config.color,
-      sizes.padding,
-      sizes.text,
-      inline ? 'inline-flex' : 'flex',
+      'flex flex-col items-center justify-center gap-4 rounded-xl border p-8 bg-white shadow-xl min-w-[200px]',
       className
     )}>
-      {showIcon && IconComponent && (
-        <IconComponent 
-          className={cn(
-            sizes.icon,
-            ['loading', 'adding', 'updating', 'deleting', 'uploading', 'downloading'].includes(operation) 
-              ? 'animate-spin' : 'animate-pulse'
-          )} 
-        />
-      )}
-      {displayMessage && (
-        <span className="font-medium">{displayMessage}</span>
+      {['loading', 'adding', 'updating', 'deleting', 'uploading', 'downloading'].includes(operation) ? (
+        <BouncingBoxLoader size="md" color="#2f5a4e" />
+      ) : (
+        <div className={cn(
+          'flex items-center gap-2',
+          config.color
+        )}>
+          {showIcon && IconComponent && (
+            <IconComponent className={sizes.icon} />
+          )}
+          {displayMessage && (
+            <span className="font-semibold">{displayMessage}</span>
+          )}
+        </div>
       )}
     </div>
   );
