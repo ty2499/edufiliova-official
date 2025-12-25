@@ -1175,11 +1175,23 @@ export const topics = pgTable("topics", {
 
 // Scheduling system tables
 
+// Subject categories (broad teaching categories like IT, English, Science, etc.)
+export const subjectCategories = pgTable("subject_categories", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull(), // "English", "Mathematics", "Science", "IT", etc.
+  icon: text("icon"), // Optional emoji or icon
+  color: text("color"), // Optional color code
+  description: text("description"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 // Teacher availability slots
 export const teacherAvailability = pgTable("teacher_availability", {
   id: uuid("id").primaryKey().defaultRandom(),
   teacherId: uuid("teacher_id").references(() => users.id).notNull(),
-  subjectId: uuid("subject_id").references(() => subjects.id), // Optional: subject they're teaching during this time
+  categoryId: uuid("category_id").references(() => subjectCategories.id), // What they teach
   dayOfWeek: integer("day_of_week").notNull(), // 0-6 (Sunday-Saturday)
   startTime: text("start_time").notNull(), // "09:00"
   endTime: text("end_time").notNull(), // "17:00"

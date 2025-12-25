@@ -49,7 +49,7 @@ interface Appointment {
 interface TeacherAvailability {
   id: string;
   teacherId: string;
-  subjectId?: string;
+  categoryId?: string;
   dayOfWeek: number;
   startTime: string;
   endTime: string;
@@ -102,7 +102,7 @@ export const SchedulingInterface: React.FC = () => {
     startTime: '09:00',
     endTime: '17:00',
     timeZone: 'UTC',
-    subjectId: ''
+    categoryId: ''
   });
   const [bookingForm, setBookingForm] = useState({
     teacherId: '',
@@ -180,16 +180,16 @@ export const SchedulingInterface: React.FC = () => {
     staleTime: 5 * 60 * 1000
   });
 
-  // Get core subjects for teacher availability (filtered list of ~15 main subjects)
-  const { data: allSubjects = [], isLoading: allSubjectsLoading } = useQuery({
-    queryKey: ['core-subjects'],
+  // Get subject categories for teacher availability & student search
+  const { data: allCategories = [], isLoading: allCategoriesLoading } = useQuery({
+    queryKey: ['subject-categories'],
     queryFn: async () => {
       try {
-        const response = await fetch('/api/subjects/core');
+        const response = await fetch('/api/subject-categories');
         const data = await response.json();
-        return data?.success ? data.subjects : [];
+        return data?.success ? data.categories : [];
       } catch (error) {
-        console.error('Error fetching subjects:', error);
+        console.error('Error fetching categories:', error);
         return [];
       }
     },
@@ -233,7 +233,7 @@ export const SchedulingInterface: React.FC = () => {
         startTime: '09:00',
         endTime: '17:00',
         timeZone: 'UTC',
-        subjectId: ''
+        categoryId: ''
       });
     }
   });
@@ -346,8 +346,8 @@ export const SchedulingInterface: React.FC = () => {
   });
 
   const handleAddAvailability = () => {
-    if (!newAvailability.subjectId) {
-      alert('Please select a subject');
+    if (!newAvailability.categoryId) {
+      alert('Please select a category');
       return;
     }
     addAvailabilityMutation.mutate(newAvailability);
@@ -591,17 +591,17 @@ export const SchedulingInterface: React.FC = () => {
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
                     <div>
-                      <Label className="text-xs md:text-sm">Subject</Label>
+                      <Label className="text-xs md:text-sm">Category</Label>
                       <Select 
-                        value={newAvailability.subjectId} 
-                        onValueChange={(value) => setNewAvailability({...newAvailability, subjectId: value})}
+                        value={newAvailability.categoryId} 
+                        onValueChange={(value) => setNewAvailability({...newAvailability, categoryId: value})}
                       >
-                        <SelectTrigger data-testid="availability-subject-select" className="text-xs md:text-sm">
-                          <SelectValue placeholder="Select subject" />
+                        <SelectTrigger data-testid="availability-category-select" className="text-xs md:text-sm">
+                          <SelectValue placeholder="Select category" />
                         </SelectTrigger>
                         <SelectContent>
-                          {allSubjects.map((subject: any) => (
-                            <SelectItem key={subject.id} value={subject.id}>{subject.name}</SelectItem>
+                          {allCategories.map((cat: any) => (
+                            <SelectItem key={cat.id} value={cat.id}>{cat.icon} {cat.name}</SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
@@ -645,7 +645,7 @@ export const SchedulingInterface: React.FC = () => {
                     <div className="flex items-end">
                       <Button 
                         onClick={handleAddAvailability}
-                        disabled={addAvailabilityMutation.isPending || !newAvailability.subjectId}
+                        disabled={addAvailabilityMutation.isPending || !newAvailability.categoryId}
                         data-testid="add-availability-btn"
                         className="w-full text-xs md:text-sm"
                       >
@@ -673,13 +673,15 @@ export const SchedulingInterface: React.FC = () => {
                       </div>
                     ) : (
                       availability.map((slot: TeacherAvailability) => {
-                        const subjectName = allSubjects.find(s => s.id === slot.subjectId)?.name || 'All Subjects';
+                        const category = allCategories.find(c => c.id === slot.categoryId);
                         return (
                           <div key={slot.id} className="flex items-center justify-between p-3 border rounded" data-testid={`availability-slot-${slot.id}`}>
                             <div>
                               <div className="flex gap-2 items-center mb-1">
                                 <span className="font-medium">{DAYS_OF_WEEK[slot.dayOfWeek]}</span>
-                                <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">{subjectName}</span>
+                                <span className="text-xs px-2 py-1 rounded" style={{ backgroundColor: category?.color + '20', color: category?.color }}>
+                                  {category?.icon} {category?.name}
+                                </span>
                               </div>
                               <span className="text-sm text-muted-foreground">
                                 {slot.startTime} - {slot.endTime}
@@ -725,20 +727,20 @@ export const SchedulingInterface: React.FC = () => {
                         handleSubjectChange(value, selected?.name || '');
                       }}
                     >
-                      <SelectTrigger data-testid="subject-select">
-                        <SelectValue placeholder="Select a subject" />
+                      <SelectTrigger data-testid="category-select">
+                        <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                       <SelectContent>
-                        {allSubjectsLoading ? (
-                          <SelectItem value="loading" disabled>Loading subjects...</SelectItem>
-                        ) : allSubjects && allSubjects.length > 0 ? (
-                          allSubjects.map((subject: any) => (
-                            <SelectItem key={subject.id} value={subject.id}>
-                              {subject.name}
+                        {allCategoriesLoading ? (
+                          <SelectItem value="loading" disabled>Loading categories...</SelectItem>
+                        ) : allCategories && allCategories.length > 0 ? (
+                          allCategories.map((cat: any) => (
+                            <SelectItem key={cat.id} value={cat.id}>
+                              {cat.icon} {cat.name}
                             </SelectItem>
                           ))
                         ) : (
-                          <SelectItem value="no-subjects" disabled>No subjects available</SelectItem>
+                          <SelectItem value="no-categories" disabled>No categories available</SelectItem>
                         )}
                       </SelectContent>
                     </Select>
