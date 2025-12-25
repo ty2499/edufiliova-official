@@ -160,7 +160,7 @@ export class EmailService {
 
   async sendTeacherRejectionEmail(email: string, data: { fullName: string; displayName?: string; reason?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_declined_1766645915384.html');
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_declined_teacher_1766645915384.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
@@ -173,12 +173,15 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection
+    // Dynamic Data Injection - ensure exact replacement for placeholders
     const fullName = data.fullName || 'Teacher';
+    const displayName = data.displayName || data.fullName || 'Teacher';
     
     // Replace standard placeholders
+    html = html.replaceAll('[[Full Name]]', fullName);
+    html = html.replaceAll('[[Display Name]]', displayName);
     html = html.replaceAll('{{fullName}}', fullName);
-    html = html.replaceAll('{{displayName}}', data.displayName || fullName);
+    html = html.replaceAll('{{displayName}}', displayName);
     html = html.replaceAll('{{baseUrl}}', baseUrl);
     
     // Also catch potential hardcoded test names that might be in the template
@@ -200,7 +203,7 @@ export class EmailService {
 
     return this.sendEmail({
       to: email,
-      subject: 'We Appreciate Your Interest in EduFiliova - Application Update',
+      subject: 'Update on Your EduFiliova Teacher Application',
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [
