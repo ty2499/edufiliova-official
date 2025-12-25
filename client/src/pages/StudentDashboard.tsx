@@ -3829,7 +3829,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                       </div>
 
                                       <Button 
-                                        className="w-full"
+                                        className="w-full bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white"
                                         onClick={() => {
                                           setSelectedMeeting(meeting);
                                           setIsMeetingDialogOpen(true);
@@ -3906,7 +3906,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                       </div>
 
                                       <Button 
-                                        className="w-full"
+                                        className="w-full bg-[#2f5a4e] hover:bg-[#2f5a4e] text-white"
                                         onClick={() => {
                                           setSelectedMeeting(meeting);
                                           setIsMeetingDialogOpen(true);
