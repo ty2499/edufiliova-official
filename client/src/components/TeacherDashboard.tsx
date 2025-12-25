@@ -1375,7 +1375,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
   
 
   // Get assigned students with progress
-  const { data: students = [], isLoading: studentsLoading } = useQuery({
+  const { data: allStudentsData = [], isLoading: studentsLoading } = useQuery({
     queryKey: ['teacher', 'students', 'progress'],
     queryFn: () => {
       const sessionId = localStorage.getItem('sessionId');
@@ -1386,6 +1386,33 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
     select: (data) => Array.isArray(data) ? data : [],
     enabled: !!user
   });
+
+  // Filter to get only students with approved appointments
+  const students = React.useMemo(() => {
+    // Get unique student IDs from approved/confirmed appointments
+    const appointmentStudents = (appointments || [])
+      .filter((apt: Appointment) => ['scheduled', 'confirmed', 'approved'].includes(apt.status))
+      .map((apt: Appointment) => ({
+        studentId: apt.studentId,
+        name: apt.studentName || 'Student',
+        grade: 0, 
+        assignedAt: apt.createdAt,
+        unreadCount: 0,
+        subjectName: apt.subject
+      }));
+
+    // Start with direct students
+    const combinedStudents = [...(allStudentsData || [])];
+    
+    // Add appointment students if they aren't already in the list
+    appointmentStudents.forEach(aptStudent => {
+      if (!combinedStudents.some(s => s.studentId === aptStudent.studentId)) {
+        combinedStudents.push(aptStudent);
+      }
+    });
+
+    return combinedStudents;
+  }, [appointments, allStudentsData]);
 
 
   // Get teacher assignments
