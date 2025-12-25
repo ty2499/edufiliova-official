@@ -5,6 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { MediaCarousel } from '@/components/MediaCarousel';
 import { 
   Plus, 
@@ -64,6 +73,7 @@ interface PortfolioManagerProps {
 export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
   const [activeTab, setActiveTab] = useState<'portfolio' | 'analytics'>('portfolio');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [pendingDeleteWork, setPendingDeleteWork] = useState<PortfolioWork | null>(null);
   const queryClient = useQueryClient();
 
   // Fetch portfolio works
@@ -113,6 +123,18 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
       onNavigate('portfolio-edit', '', { workId: work.id, work });
     } else {
       window.location.href = `?page=portfolio-edit&workId=${work.id}`;
+    }
+  };
+
+  // Delete work handler with confirmation
+  const handleDeleteClick = (work: PortfolioWork) => {
+    setPendingDeleteWork(work);
+  };
+
+  const confirmDelete = () => {
+    if (pendingDeleteWork) {
+      deleteWorkMutation.mutate(pendingDeleteWork.id);
+      setPendingDeleteWork(null);
     }
   };
 
@@ -337,7 +359,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                         </Button>
                         <Button
                           size="sm"
-                          onClick={() => deleteWorkMutation.mutate(work.id)}
+                          onClick={() => handleDeleteClick(work)}
                           disabled={deleteWorkMutation.isPending}
                           className="h-8 w-8 p-0 text-white border-0"
                           style={{ backgroundColor: '#0C332C' }}
@@ -406,7 +428,7 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
                             </Button>
                             <Button
                               size="sm"
-                              onClick={() => deleteWorkMutation.mutate(work.id)}
+                              onClick={() => handleDeleteClick(work)}
                               disabled={deleteWorkMutation.isPending}
                               className="h-8 w-8 p-0 text-white border-0"
                               style={{ backgroundColor: '#0C332C' }}
@@ -606,6 +628,34 @@ export function PortfolioManager({ onNavigate }: PortfolioManagerProps) {
           )}
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <AlertDialog open={!!pendingDeleteWork} onOpenChange={(open) => !open && setPendingDeleteWork(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-red-600">Delete Portfolio Work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-base mt-2">
+              <p className="font-semibold text-gray-900 mb-2">
+                Are you sure you want to delete "{pendingDeleteWork?.title}"?
+              </p>
+              <p className="text-gray-700">
+                This action cannot be undone. All associated data, including views, likes, and comments will be permanently removed.
+              </p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex gap-3 justify-end">
+            <AlertDialogCancel onClick={() => setPendingDeleteWork(null)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={confirmDelete}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              Delete Permanently
+            </AlertDialogAction>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
