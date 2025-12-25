@@ -114,7 +114,6 @@ router.get('/api/teachers/by-subject/:subjectId', async (req, res) => {
       .innerJoin(profiles, eq(teacherSubjects.teacherId, profiles.userId))
       .innerJoin(teacherAvailability, and(
         eq(teacherAvailability.teacherId, teacherSubjects.teacherId),
-        eq(teacherAvailability.subjectId, subjectId),
         eq(teacherAvailability.isActive, true)
       ))
       .where(eq(teacherSubjects.subjectId, subjectId));
