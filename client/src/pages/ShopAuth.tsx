@@ -430,104 +430,108 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
       notNowAction={() => onNavigate?.(returnUrl || 'product-shop', 'slide-right')}
       heroPlacement="shop_auth"
     >
-      <div className="space-y-6">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            {authMode === 'signin' ? 'Welcome Back!' : 'Join Our Shop'}
-          </h2>
-          <p className="text-gray-600">
-            {authMode === 'signin' 
-              ? 'Sign in to continue shopping' 
-              : 'Create an account to start shopping'
-            }
-          </p>
+      <div className="space-y-3">
+        <div className="mb-8">
+          <h1 className="font-bold text-foreground mb-2 text-[20px] text-center">
+            {authMode === 'signin' ? 'Welcome Back to EduFiliova Shop' : 'Join EduFiliova Shop'}
+          </h1>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5" data-testid="form-shop-auth">
+        <form onSubmit={handleSubmit} className="space-y-3" data-testid="form-shop-auth">
           {errors.general && (
-            <div className="p-4 bg-primary/10 border border-red-200 rounded-lg flex items-start gap-3 text-primary-700 text-sm">
-              <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
-              <span>{errors.general}</span>
+            <div className="p-3 bg-primary/10 border border-red-200 rounded-lg text-primary-700 text-sm">
+              {errors.general}
             </div>
           )}
 
           {authMode === 'signup' && (
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-gray-700 font-medium">Full Name</Label>
+            <div>
+              <Label htmlFor="name" className="text-sm font-medium text-white mb-1 block">Full Name *</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="Enter your full name"
+                placeholder="e.g. John Doe"
                 value={name}
                 onChange={(e) => { setName(e.target.value); clearError('name'); }}
-                className={errors.name ? 'border-primary' : ''}
+                className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                 disabled={isProcessing}
                 data-testid="input-name"
               />
-              {errors.name && <p className="text-sm text-primary-600">{errors.name}</p>}
+              {errors.name && <p className="text-sm text-destructive mt-1">{errors.name}</p>}
             </div>
           )}
 
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
+          <div>
+            <Label htmlFor="email" className="text-sm font-medium text-white mb-1 block">Email Address *</Label>
             <Input
               id="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder="e.g. you@example.com"
               value={email}
               onChange={(e) => { setEmail(e.target.value); clearError('email'); }}
-              className={errors.email ? 'border-primary' : ''}
+              className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               disabled={isProcessing}
               data-testid="input-email"
             />
-            {errors.email && <p className="text-sm text-primary-600">{errors.email}</p>}
+            {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
+          <div>
+            <Label htmlFor="password" className="text-sm font-medium text-white mb-1 block">Password *</Label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
-                placeholder={authMode === 'signin' ? 'Enter your password' : 'Create a password (min 8 characters)'}
+                placeholder="At least 8 characters"
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); clearError('password'); }}
-                className={`pr-10 ${errors.password ? 'border-primary' : ''}`}
+                className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white pr-12"
                 disabled={isProcessing}
                 data-testid="input-password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" transition-all duration-300
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700" transition-all duration-300
                 disabled={isProcessing}
                 data-testid="button-toggle-password"
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {errors.password && <p className="text-sm text-primary-600">{errors.password}</p>}
+            {errors.password && <p className="text-sm text-destructive mt-1">{errors.password}</p>}
           </div>
 
           {authMode === 'signup' && (
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="text-gray-700 font-medium">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Confirm your password"
-                value={confirmPassword}
-                onChange={(e) => { setConfirmPassword(e.target.value); clearError('confirmPassword'); }}
-                className={errors.confirmPassword ? 'border-primary' : ''}
-                disabled={isProcessing}
-                data-testid="input-confirm-password"
-              />
-              {errors.confirmPassword && <p className="text-sm text-primary-600">{errors.confirmPassword}</p>}
+            <div>
+              <Label htmlFor="confirmPassword" className="text-sm font-medium text-white mb-1 block">Confirm Password *</Label>
+              <div className="relative">
+                <Input
+                  id="confirmPassword"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Re-enter your password"
+                  value={confirmPassword}
+                  onChange={(e) => { setConfirmPassword(e.target.value); clearError('confirmPassword'); }}
+                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white pr-12"
+                  disabled={isProcessing}
+                  data-testid="input-confirm-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700" transition-all duration-300
+                  disabled={isProcessing}
+                  data-testid="button-toggle-confirm-password"
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              {errors.confirmPassword && <p className="text-sm text-destructive mt-1">{errors.confirmPassword}</p>}
             </div>
           )}
 
           {authMode === 'signup' && (
-            <div className="space-y-2">
+            <div>
               <div className="flex items-start gap-2">
                 <Checkbox
                   id="terms"
@@ -537,27 +541,27 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                   className="h-4 w-4 mt-0.5"
                   data-testid="checkbox-terms"
                 />
-                <label htmlFor="terms" className="text-xs sm:text-sm text-gray-600 leading-snug cursor-pointer">
+                <label htmlFor="terms" className="text-xs text-white leading-snug cursor-pointer">
                   I agree to the{' '}
-                  <a href="/terms" target="_blank" className="text-blue-600 hover:underline font-medium" transition-all duration-300>Terms of Service</a>{' '}
+                  <a href="/terms" target="_blank" className="hover:underline font-medium" style={{ color: '#a0fab2' }} transition-all duration-300>Terms of Service</a>{' '}
                   and{' '}
-                  <a href="/privacy" target="_blank" className="text-blue-600 hover:underline font-medium" transition-all duration-300>Privacy Policy</a>
+                  <a href="/privacy" target="_blank" className="hover:underline font-medium" style={{ color: '#a0fab2' }} transition-all duration-300>Privacy Policy</a>
                 </label>
               </div>
-              {errors.terms && <p className="text-sm text-primary-600">{errors.terms}</p>}
+              {errors.terms && <p className="text-sm text-destructive mt-1">{errors.terms}</p>}
             </div>
           )}
 
           <Button 
             type="submit" 
-            className="w-full py-6 text-base font-semibold" transition-all duration-300
+            className="w-full font-semibold hover:opacity-100"
             style={{ backgroundColor: '#a0fab2', color: '#0c332c' }}
             disabled={isProcessing}
             data-testid={`button-${authMode}`}
           >
             {isProcessing ? (
               <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 {authMode === 'signin' ? 'Signing In...' : 'Creating Account...'}
               </>
             ) : (
@@ -565,8 +569,9 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
             )}
           </Button>
 
-          <div className="text-center pt-4">
-            <button
+          <p className="text-sm text-white text-center mt-4">
+            {authMode === 'signin' ? "Don't have an account? " : 'Already have an account? '}
+            <button 
               type="button"
               onClick={() => {
                 setAuthMode(authMode === 'signin' ? 'signup' : 'signin');
@@ -576,13 +581,14 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 setConfirmPassword('');
                 setAgreeToTerms(false);
               }}
-              className="text-sm text-blue-600 hover:text-blue-800 font-medium hover:underline block w-full" transition-all duration-300
+              className="font-medium hover:underline transition-all duration-300"
+              style={{ color: '#a0fab2' }}
               disabled={isProcessing}
               data-testid={`button-switch-to-${authMode === 'signin' ? 'signup' : 'signin'}`}
             >
-              {authMode === 'signin' ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
+              {authMode === 'signin' ? 'Sign up' : 'Sign in'}
             </button>
-          </div>
+          </p>
         </form>
       </div>
     </AuthLayout>
