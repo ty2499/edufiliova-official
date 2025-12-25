@@ -179,14 +179,14 @@ export class EmailService {
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'logo.png', path: assetPath('c9513ccbbd620ff1cc148b9f159cd39d_1766660731446.png'), cid: 'logo', contentType: 'image/png' },
-        { filename: 'banner.png', path: assetPath('e4d45170731072cbb168266fca3fd470_1766660731456.png'), cid: 'banner', contentType: 'image/png' },
-        { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766660731440.png'), cid: 'icon_db', contentType: 'image/png' },
-        { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766660731448.png'), cid: 'icon_pf', contentType: 'image/png' },
-        { filename: 'icon_cs.png', path: assetPath('df1ad55cc4e451522007cfa4378c9bbd_1766660731455.png'), cid: 'icon_cs', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766660731424.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'fb.png', path: assetPath('9eefdace1f726880f93c5a973a54c2f6_1766660731426.png'), cid: 's_fb', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766647041190.png'), cid: 's_social', contentType: 'image/png' }
+        { filename: 'logo.png', path: assetPath('c9513ccbbd620ff1cc148b9f159cd39d_1766617371531.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'banner.png', path: assetPath('e4d45170731072cbb168266fca3fd470_1766617371537.png'), cid: 'banner', contentType: 'image/png' },
+        { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766617371529.png'), cid: 'icon_db', contentType: 'image/png' },
+        { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766617371533.png'), cid: 'icon_pf', contentType: 'image/png' },
+        { filename: 'icon_cs.png', path: assetPath('df1ad55cc4e451522007cfa4378c9bbd_1766617371535.png'), cid: 'icon_cs', contentType: 'image/png' },
+        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766617371523.png'), cid: 'footer_logo', contentType: 'image/png' },
+        { filename: 'fb.png', path: assetPath('9eefdace1f726880f93c5a973a54c2f6_1766617371524.png'), cid: 's_fb', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766617371526.png'), cid: 's_social', contentType: 'image/png' }
       ]
     });
   }
