@@ -601,9 +601,9 @@ export function CommunityChat() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-background">
+    <div className="h-full flex flex-col bg-white">
       {/* Header */}
-      <div className="p-6 bg-card border-b border-border">
+      <div className="p-6 bg-white border-b border-border">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Student Community</h1>
@@ -626,7 +626,7 @@ export function CommunityChat() {
       <div className="flex-1 overflow-hidden">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
           {/* Tab Navigation */}
-          <div className="px-6 py-4 bg-card border-b border-border">
+          <div className="px-6 py-4 bg-white border-b border-border">
             <div className="flex flex-col gap-3">
               {/* Search Bar */}
               <div className="relative">
@@ -1317,7 +1317,7 @@ export function CommunityChat() {
 
       {/* Post Details View */}
       {viewMode === 'post-details' && selectedPost && (
-        <div className="h-full flex flex-col bg-background">
+        <div className="h-full flex flex-col bg-white">
           {/* Back Navigation Header */}
           <div className="p-4 bg-card border-b border-border">
             <div className="flex items-center gap-3">
