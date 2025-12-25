@@ -185,7 +185,7 @@ export function TeacherSubjectsCard({ teacherId }: TeacherCategoriesCardProps) {
                     return (
                       <Badge 
                         key={categoryId}
-                        className="flex items-center gap-2 px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
+                        className="flex items-center gap-2 px-3 py-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 hover:bg-[#2f5a4e] hover:text-white transition-colors cursor-pointer"
                       >
                         <span>{category?.name}</span>
                         <button
