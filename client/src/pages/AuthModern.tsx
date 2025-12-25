@@ -667,14 +667,14 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
-          <Label htmlFor="login-method" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="login-method" className="text-sm font-medium text-white mb-1 block">
             Login Method
           </Label>
           <Select 
             value={formData.loginMethod} 
             onValueChange={(value: any) => handleInputChange('loginMethod', value)}
           >
-            <SelectTrigger className="h-12 text-base rounded-lg border-gray-300 text-gray-900" data-testid="select-login-method">
+            <SelectTrigger className="h-12 text-base rounded-lg border-white/20 bg-white/10 text-white" data-testid="select-login-method">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -701,7 +701,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </div>
 
         <div>
-          <Label htmlFor="login-identifier" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="login-identifier" className="text-sm font-medium text-white mb-1 block">
             {formData.loginMethod === 'email' ? 'Email Address' : 
              formData.loginMethod === 'phone' ? 'Phone Number' : 'ID Number'}*
           </Label>
@@ -711,14 +711,14 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             value={formData.loginIdentifier}
             onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
             placeholder={`Enter your ${formData.loginMethod === 'email' ? 'email address' : formData.loginMethod === 'phone' ? 'phone number' : 'ID number'}`}
-            className="h-12 text-base rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+            className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
             data-testid="input-login-identifier"
           />
           {errors.loginIdentifier && <p className="text-sm text-primary-500 mt-1">{errors.loginIdentifier}</p>}
         </div>
 
         <div>
-          <Label htmlFor="password" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="password" className="text-sm font-medium text-white mb-1 block">
             Password*
           </Label>
           <div className="relative">
@@ -728,14 +728,14 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Enter your password"
-              className="h-12 text-base pr-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+              className="h-12 text-base pr-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               data-testid="input-password"
             />
             <Button
               type="button"
               variant="ghost"
               size="sm"
-              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-gray-400" transition-all duration-300
+              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-white/70" transition-all duration-300
               onClick={() => setShowPassword(!showPassword)}
               data-testid="button-toggle-password"
             >
@@ -826,10 +826,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
     return (
       <div>
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl font-bold text-white mb-2">
             Create your student account
           </h2>
-          <p className="text-gray-900 text-sm">
+          <p className="text-white text-sm">
             Join thousands of learners and unlock your potential
           </p>
         </div>
@@ -842,22 +842,22 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         <form onSubmit={handleRegister} className="space-y-4">
           {/* Section A - Account Details */}
           <div className="border-b pb-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3">Account Details</h3>
+            <h3 className="text-sm font-semibold text-white mb-3">Account Details</h3>
             
             <div className="space-y-4">
               <div>
-                <Label htmlFor="name" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="name" className="text-sm font-medium text-white mb-1 block">
                   Full Name*
                 </Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
                   <Input
                     id="name"
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     placeholder="e.g. Keith Williams"
-                    className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+                    className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                     data-testid="input-name"
                   />
                 </div>
@@ -865,18 +865,18 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <Label htmlFor="email" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="email" className="text-sm font-medium text-white mb-1 block">
                   Email*
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
                   <Input
                     id="email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     placeholder="e.g. student@example.com"
-                    className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+                    className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                     data-testid="input-email"
                   />
                 </div>
@@ -884,7 +884,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <Label htmlFor="register-password" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="register-password" className="text-sm font-medium text-white mb-1 block">
                   Password*
                 </Label>
                 <div className="relative">
@@ -894,24 +894,24 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.password}
                     onChange={(e) => handleInputChange('password', e.target.value)}
                     placeholder="••••••••"
-                    className="h-12 text-base pr-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+                    className="h-12 text-base pr-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                     data-testid="input-register-password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900" transition-all duration-300
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white" transition-all duration-300
                     data-testid="button-toggle-register-password"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">Minimum 6-8 characters</p>
+                <p className="text-xs text-white/60 mt-1">Minimum 6-8 characters</p>
                 {errors.password && <p className="text-sm text-primary-500 mt-1">{errors.password}</p>}
               </div>
 
               <div>
-                <Label htmlFor="confirm-password" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="confirm-password" className="text-sm font-medium text-white mb-1 block">
                   Confirm Password*
                 </Label>
                 <Input
@@ -920,7 +920,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   value={formData.confirmPassword}
                   onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                   placeholder="••••••••"
-                  className="h-12 text-base rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                   data-testid="input-confirm-password"
                 />
                 {errors.confirmPassword && <p className="text-sm text-primary-500 mt-1">{errors.confirmPassword}</p>}
@@ -930,11 +930,11 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
           {/* Section B - Contact & WhatsApp */}
           <div className="border-b pb-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3">Contact & WhatsApp</h3>
+            <h3 className="text-sm font-semibold text-white mb-3">Contact & WhatsApp</h3>
             
             <div className="space-y-4">
               <div>
-                <Label htmlFor="phone" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="phone" className="text-sm font-medium text-white mb-1 block">
                   Phone Number (WhatsApp)*
                 </Label>
                 <PhoneNumberInput
@@ -943,18 +943,18 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   placeholder="e.g. +15551234567"
                   data-testid="input-phone"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-white/60 mt-1">
                   This number is used for login codes, homework and learning updates on WhatsApp.
                 </p>
                 {errors.phoneNumber && <p className="text-sm text-primary-500 mt-1">{errors.phoneNumber}</p>}
               </div>
 
               <div>
-                <Label htmlFor="age" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="age" className="text-sm font-medium text-white mb-1 block">
                   Age*
                 </Label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
                   <Input
                     id="age"
                     type="number"
@@ -963,7 +963,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.age}
                     onChange={(e) => handleInputChange('age', e.target.value)}
                     placeholder="e.g. 14"
-                    className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+                    className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                     data-testid="input-age"
                   />
                 </div>
@@ -979,7 +979,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-purple-500"
                   data-testid="checkbox-whatsapp-opt-in"
                 />
-                <Label htmlFor="whatsapp-opt-in" className="text-sm text-gray-900 cursor-pointer">
+                <Label htmlFor="whatsapp-opt-in" className="text-sm text-white cursor-pointer">
                   I agree to receive learning reminders and homework on WhatsApp
                 </Label>
               </div>
@@ -988,18 +988,18 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
           {/* Section C - Education Info */}
           <div className="border-b pb-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3">Education Info</h3>
+            <h3 className="text-sm font-semibold text-white mb-3">Education Info</h3>
             
             <div className="space-y-4">
               <div>
-                <Label htmlFor="country" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="country" className="text-sm font-medium text-white mb-1 block">
                   Country*
                 </Label>
                 <Select 
                   value={formData.country_id} 
                   onValueChange={(value: any) => handleInputChange('country_id', value)}
                 >
-                  <SelectTrigger className="h-12 text-base rounded-lg border-gray-300 text-gray-900" data-testid="select-country">
+                  <SelectTrigger className="h-12 text-base rounded-lg border-white/20 bg-white/10 text-white" data-testid="select-country">
                     <SelectValue placeholder="Select your country" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1014,14 +1014,14 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <Label htmlFor="education-system" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="education-system" className="text-sm font-medium text-white mb-1 block">
                   Education System*
                 </Label>
                 <Select 
                   value={formData.educationSystem} 
                   onValueChange={(value: any) => handleInputChange('educationSystem', value)}
                 >
-                  <SelectTrigger className="h-12 text-base rounded-lg border-gray-300 text-gray-900" data-testid="select-education-system">
+                  <SelectTrigger className="h-12 text-base rounded-lg border-white/20 bg-white/10 text-white" data-testid="select-education-system">
                     <SelectValue placeholder="Select your education system" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1035,14 +1035,14 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <Label htmlFor="grade" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="grade" className="text-sm font-medium text-white mb-1 block">
                   Current Grade / Level*
                 </Label>
                 <Select 
                   value={formData.grade} 
                   onValueChange={(value: any) => handleInputChange('grade', value)}
                 >
-                  <SelectTrigger className="h-12 text-base rounded-lg border-gray-300 text-gray-900" data-testid="select-grade">
+                  <SelectTrigger className="h-12 text-base rounded-lg border-white/20 bg-white/10 text-white" data-testid="select-grade">
                     <SelectValue placeholder="Select your grade" />
                   </SelectTrigger>
                   <SelectContent>
@@ -1057,7 +1057,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <Label htmlFor="school-name" className="text-sm font-medium text-gray-900 mb-1 block">
+                <Label htmlFor="school-name" className="text-sm font-medium text-white mb-1 block">
                   School Name (optional)
                 </Label>
                 <Input
@@ -1066,7 +1066,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   value={formData.schoolName}
                   onChange={(e) => handleInputChange('schoolName', e.target.value)}
                   placeholder="e.g. Greenwood High School"
-                  className="h-12 text-base rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                   data-testid="input-school-name"
                 />
               </div>
@@ -1075,8 +1075,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
           {/* Section D - Learning Preferences */}
           <div className="border-b pb-4">
-            <h3 className="text-sm font-semibold text-gray-900 mb-3">Learning Preferences (optional)</h3>
-            <Label className="text-sm text-gray-900 mb-2 block">What do you want to focus on?</Label>
+            <h3 className="text-sm font-semibold text-white mb-3">Learning Preferences (optional)</h3>
+            <Label className="text-sm text-white mb-2 block">What do you want to focus on?</Label>
             
             <div className="grid grid-cols-2 gap-2">
               {['Mathematics', 'English / Languages', 'Science', 'Exam preparation', 'Homework help', 'University / career prep'].map((pref) => (
@@ -1089,7 +1089,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-purple-500"
                     data-testid={`checkbox-pref-${pref.toLowerCase().replace(/[\s\/]/g, '-')}`}
                   />
-                  <Label htmlFor={`pref-${pref}`} className="text-sm text-gray-900 cursor-pointer">
+                  <Label htmlFor={`pref-${pref}`} className="text-sm text-white cursor-pointer">
                     {pref}
                   </Label>
                 </div>
@@ -1125,7 +1125,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 className="mt-1 h-4 w-4 rounded border-gray-300 text-primary"
                 data-testid="checkbox-agree-terms"
               />
-              <Label htmlFor="agree-terms" className="text-sm text-gray-900 cursor-pointer">
+              <Label htmlFor="agree-terms" className="text-sm text-white cursor-pointer">
                 I agree to EduFiliova's <button type="button" onClick={() => setActiveLegalModal('terms')} className="text-primary hover:underline" data-testid="link-student-terms">Student Terms of Use</button> and <button type="button" onClick={() => setActiveLegalModal('privacy')} className="text-primary hover:underline" transition-all duration-300 data-testid="link-privacy-policy">Privacy Policy</button>
               </Label>
             </div>
@@ -1140,7 +1140,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 className="mt-1 h-4 w-4 rounded border-gray-300 text-primary"
                 data-testid="checkbox-confirm-student"
               />
-              <Label htmlFor="confirm-student" className="text-sm text-gray-900 cursor-pointer">
+              <Label htmlFor="confirm-student" className="text-sm text-white cursor-pointer">
                 I confirm I am a student or signing up on behalf of a student
               </Label>
             </div>
@@ -1164,12 +1164,12 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             )}
           </Button>
 
-          <div className="text-center text-sm text-gray-900">
+          <div className="text-center text-sm text-white">
             Already have an account?{' '}
             <button
               type="button"
               onClick={() => setCurrentStep("login")}
-              className="text-gray-900 hover:text-gray-900 font-medium" transition-all duration-300
+              className="text-white hover:text-white font-medium" transition-all duration-300
               data-testid="link-login"
             >
               Sign in
@@ -1189,10 +1189,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
   const renderOldTeacherRegistrationForm_DEPRECATED = () => (
     <div>
       <div className="mb-6 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold text-white mb-2">
           Apply to Teach (OLD - DO NOT USE)
         </h2>
-        <p className="text-gray-900 text-sm">
+        <p className="text-white text-sm">
           Join our community of verified educators.
         </p>
       </div>
@@ -1206,18 +1206,18 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
       <form onSubmit={handleTeacherRegistration} className="space-y-4">
         <div>
-          <Label htmlFor="teacher-name" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="teacher-name" className="text-sm font-medium text-white mb-1 block">
             Full Name*
           </Label>
           <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
             <Input
               id="teacher-name"
               type="text"
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
               placeholder="Enter your full name"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+              className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               data-testid="input-teacher-name"
             />
           </div>
@@ -1225,18 +1225,18 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </div>
 
         <div>
-          <Label htmlFor="teacher-email" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="teacher-email" className="text-sm font-medium text-white mb-1 block">
             Email Address*
           </Label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
             <Input
               id="teacher-email"
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
               placeholder="Enter your email"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+              className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               data-testid="input-teacher-email"
             />
           </div>
@@ -1244,42 +1244,42 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </div>
 
         <div>
-          <Label htmlFor="teacher-phone" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="teacher-phone" className="text-sm font-medium text-white mb-1 block">
             Phone Number
           </Label>
           <div className="relative">
-            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
             <Input
               id="teacher-phone"
               type="tel"
               value={formData.phoneNumber}
               onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
               placeholder="Enter your phone number"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+              className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               data-testid="input-teacher-phone"
             />
           </div>
         </div>
 
         <div>
-          <Label htmlFor="teacher-password" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="teacher-password" className="text-sm font-medium text-white mb-1 block">
             Password*
           </Label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
             <Input
               id="teacher-password"
               type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Create a password"
-              className="h-12 text-base pl-10 pr-10 rounded-lg border-gray-300 placeholder:text-base text-gray-900"
+              className="h-12 text-base pl-10 pr-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
               data-testid="input-teacher-password"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900" transition-all duration-300
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white" transition-all duration-300
               data-testid="button-toggle-teacher-password"
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -1289,11 +1289,11 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </div>
 
         <div>
-          <Label htmlFor="confirm-teacher-password" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="confirm-teacher-password" className="text-sm font-medium text-white mb-1 block">
             Confirm Password*
           </Label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
             <Input
               id="confirm-teacher-password"
               type="password"
@@ -1327,11 +1327,11 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           )}
         </Button>
 
-        <div className="text-center text-sm text-gray-900">
+        <div className="text-center text-sm text-white">
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-gray-900 hover:text-gray-900 font-medium flex items-center justify-center gap-1" transition-all duration-300
+            className="text-white hover:text-white font-medium flex items-center justify-center gap-1" transition-all duration-300
             data-testid="link-back-to-login"
           >
             <ArrowLeft className="h-3 w-3" />
@@ -1409,10 +1409,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
           
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-gray-900">Verify Your Email</h1>
-            <p className="text-gray-900">
+            <h1 className="text-2xl font-bold text-white">Verify Your Email</h1>
+            <p className="text-white">
               We sent a 6-digit code to<br />
-              <span className="font-medium text-gray-900">{formData.email}</span>
+              <span className="font-medium text-white">{formData.email}</span>
             </p>
           </div>
 
@@ -1437,14 +1437,14 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
 
           {loading && (
-            <div className="flex items-center justify-center gap-2 text-gray-900">
+            <div className="flex items-center justify-center gap-2 text-white">
               <Loader2 className="h-4 w-4 animate-spin" />
               <span>Verifying...</span>
             </div>
           )}
 
           <div className="pt-4 space-y-3">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white/60">
               Didn't receive the code?{" "}
               <button
                 onClick={() => handleResendCode("email")}
@@ -1463,7 +1463,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 setVerificationCode("");
                 setErrors({});
               }}
-              className="flex items-center justify-center gap-2 text-sm text-gray-900 hover:text-gray-900 mx-auto" transition-all duration-300
+              className="flex items-center justify-center gap-2 text-sm text-white hover:text-white mx-auto" transition-all duration-300
               data-testid="button-back"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -1471,7 +1471,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             </button>
           </div>
 
-          <p className="text-xs text-gray-400 pt-4">
+          <p className="text-xs text-white/70 pt-4">
             Code expires in 10 minutes
           </p>
         </div>
@@ -1536,10 +1536,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
           
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-gray-900">Check Your WhatsApp</h1>
-            <p className="text-gray-900">
+            <h1 className="text-2xl font-bold text-white">Check Your WhatsApp</h1>
+            <p className="text-white">
               We sent a 6-digit code to<br />
-              <span className="font-medium text-gray-900">{formData.phoneNumber}</span>
+              <span className="font-medium text-white">{formData.phoneNumber}</span>
             </p>
           </div>
 
@@ -1564,14 +1564,14 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
 
           {loading && (
-            <div className="flex items-center justify-center gap-2 text-gray-900">
+            <div className="flex items-center justify-center gap-2 text-white">
               <Loader2 className="h-4 w-4 animate-spin" />
               <span>Verifying...</span>
             </div>
           )}
 
           <div className="pt-4 space-y-3">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white/60">
               Didn't receive the code?{" "}
               <button
                 onClick={() => handleResendCode("phone")}
@@ -1590,7 +1590,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 setVerificationCode("");
                 setErrors({});
               }}
-              className="flex items-center justify-center gap-2 text-sm text-gray-900 hover:text-gray-900 mx-auto" transition-all duration-300
+              className="flex items-center justify-center gap-2 text-sm text-white hover:text-white mx-auto" transition-all duration-300
               data-testid="button-back"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -1598,7 +1598,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             </button>
           </div>
 
-          <p className="text-xs text-gray-400 pt-4">
+          <p className="text-xs text-white/70 pt-4">
             Code expires in 10 minutes
           </p>
         </div>
@@ -1609,10 +1609,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
   const renderForgotPasswordForm = () => (
     <div>
       <div className="mb-6 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold text-white mb-2">
           Reset Password
         </h2>
-        <p className="text-gray-900 text-sm">
+        <p className="text-white text-sm">
           Enter your email to receive a reset link.
         </p>
       </div>
@@ -1626,11 +1626,11 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
       <form onSubmit={handleForgotPassword} className="space-y-4">
         <div>
-          <Label htmlFor="forgot-password-email" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="forgot-password-email" className="text-sm font-medium text-white mb-1 block">
             Email Address*
           </Label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
             <Input
               id="forgot-password-email"
               type="email"
@@ -1661,7 +1661,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           )}
         </Button>
 
-        <div className="text-center text-sm text-gray-900">
+        <div className="text-center text-sm text-white">
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
@@ -1684,17 +1684,17 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <Lock className="h-8 w-8 text-primary" />
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold text-white mb-2">
           Enter Reset Code
         </h2>
-        <p className="text-gray-900 text-sm">
+        <p className="text-white text-sm">
           We've sent a 6-digit code to <strong>{passwordResetEmail}</strong>
         </p>
       </div>
 
       <form className="space-y-4">
         <div>
-          <Label htmlFor="reset-pin" className="text-sm font-medium text-gray-900 mb-1 block">
+          <Label htmlFor="reset-pin" className="text-sm font-medium text-white mb-1 block">
             Reset Code*
           </Label>
           <Input
@@ -1738,7 +1738,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           )}
         </Button>
 
-        <div className="text-center text-sm text-gray-900">
+        <div className="text-center text-sm text-white">
           <p className="mb-2">Didn't receive the code?</p>
           <button
             type="button"
@@ -1800,7 +1800,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       <Dialog open={activeLegalModal === 'terms'} onOpenChange={(open) => !open && setActiveLegalModal(null)}>
         <DialogContent className="max-w-full md:max-w-5xl max-h-[90vh] p-0">
           <DialogHeader className="p-4 md:p-6 pb-3 border-b sticky top-0 bg-white z-10">
-            <DialogTitle className="text-lg md:text-xl font-bold text-gray-900">Student Terms of Use</DialogTitle>
+            <DialogTitle className="text-lg md:text-xl font-bold text-white">Student Terms of Use</DialogTitle>
           </DialogHeader>
           <ScrollArea className="h-[calc(90vh-70px)] px-4 md:px-6">
             <div className="py-4 space-y-4">
@@ -1855,13 +1855,13 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 }
               ].map((section, idx) => (
                 <div key={idx} className="border-l-4 border-orange-500 pl-3 py-2">
-                  <h3 className="text-sm font-semibold text-gray-900 mb-1">{section.title}</h3>
-                  <div className="text-sm text-gray-900 space-y-1">
+                  <h3 className="text-sm font-semibold text-white mb-1">{section.title}</h3>
+                  <div className="text-sm text-white space-y-1">
                     {section.content.map((line, i) => <p key={i}>{line}</p>)}
                   </div>
                 </div>
               ))}
-              <div className="border-t pt-4 text-center text-sm text-gray-900">
+              <div className="border-t pt-4 text-center text-sm text-white">
                 <p>Questions? Email us at <a href="mailto:support@edufiliova.com" className="text-primary hover:underline" transition-all duration-300>support@edufiliova.com</a></p>
               </div>
             </div>
@@ -1873,21 +1873,21 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       <Dialog open={activeLegalModal === 'privacy'} onOpenChange={(open) => !open && setActiveLegalModal(null)}>
         <DialogContent className="max-w-full md:max-w-5xl max-h-[90vh] p-0">
           <DialogHeader className="p-4 md:p-6 pb-3 border-b sticky top-0 bg-white z-10">
-            <DialogTitle className="text-lg md:text-xl font-bold text-gray-900">Privacy Policy</DialogTitle>
+            <DialogTitle className="text-lg md:text-xl font-bold text-white">Privacy Policy</DialogTitle>
           </DialogHeader>
           <ScrollArea className="h-[calc(90vh-70px)] px-4 md:px-6">
             <div className="py-4 space-y-4">
               <div className="bg-primary/10 border-l-4 border-orange-500 p-3 rounded">
-                <h3 className="text-sm font-semibold text-gray-900 mb-1">Your Privacy Matters to Us</h3>
-                <p className="text-sm text-gray-900">At EduFiliova, we're committed to protecting your privacy and ensuring your personal information is secure. This policy explains how we collect, use, and protect your data.</p>
+                <h3 className="text-sm font-semibold text-white mb-1">Your Privacy Matters to Us</h3>
+                <p className="text-sm text-white">At EduFiliova, we're committed to protecting your privacy and ensuring your personal information is secure. This policy explains how we collect, use, and protect your data.</p>
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">1. Information We Collect</h3>
+                <h3 className="text-sm font-semibold text-white mb-2">1. Information We Collect</h3>
                 <div className="grid gap-3 text-sm">
                   <div className="bg-primary/10 p-3 rounded border border-orange-200">
-                    <h4 className="text-sm font-medium text-gray-900 mb-1">Account Information</h4>
-                    <ul className="text-gray-900 space-y-1 text-sm">
+                    <h4 className="text-sm font-medium text-white mb-1">Account Information</h4>
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• Name and email address</li>
                       <li>• Profile photo (optional)</li>
                       <li>• Educational background</li>
@@ -1895,8 +1895,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     </ul>
                   </div>
                   <div className="bg-primary/10 p-3 rounded border border-orange-200">
-                    <h4 className="text-sm font-medium text-gray-900 mb-1">Learning Data</h4>
-                    <ul className="text-gray-900 space-y-1 text-sm">
+                    <h4 className="text-sm font-medium text-white mb-1">Learning Data</h4>
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• Course progress and scores</li>
                       <li>• Study time and patterns</li>
                       <li>• Quiz and test results</li>
@@ -1904,8 +1904,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     </ul>
                   </div>
                   <div className="bg-primary/10 p-3 rounded border border-orange-200">
-                    <h4 className="text-sm font-medium text-gray-900 mb-1">Technical Information</h4>
-                    <ul className="text-gray-900 space-y-1 text-sm">
+                    <h4 className="text-sm font-medium text-white mb-1">Technical Information</h4>
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• Device type and browser</li>
                       <li>• IP address and location</li>
                       <li>• Platform usage analytics</li>
@@ -1916,8 +1916,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">2. How We Use Your Information</h3>
-                <div className="text-sm text-gray-900 space-y-1">
+                <h3 className="text-sm font-semibold text-white mb-2">2. How We Use Your Information</h3>
+                <div className="text-sm text-white space-y-1">
                   <p>• Provide and improve our educational services</p>
                   <p>• Personalize your learning experience</p>
                   <p>• Process payments and subscriptions</p>
@@ -1928,8 +1928,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">3. Data Sharing</h3>
-                <div className="text-sm text-gray-900 space-y-1">
+                <h3 className="text-sm font-semibold text-white mb-2">3. Data Sharing</h3>
+                <div className="text-sm text-white space-y-1">
                   <p>We do not sell your personal information. We may share data with:</p>
                   <p>• Teachers (for course delivery and grading)</p>
                   <p>• Payment processors (Stripe, PayPal) for transactions</p>
@@ -1939,8 +1939,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">4. Data Security</h3>
-                <div className="text-sm text-gray-900 space-y-1">
+                <h3 className="text-sm font-semibold text-white mb-2">4. Data Security</h3>
+                <div className="text-sm text-white space-y-1">
                   <p>We protect your data using:</p>
                   <p>• Encrypted connections (HTTPS/SSL)</p>
                   <p>• Secure password hashing</p>
@@ -1950,8 +1950,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">5. Your Rights</h3>
-                <div className="text-sm text-gray-900 space-y-1">
+                <h3 className="text-sm font-semibold text-white mb-2">5. Your Rights</h3>
+                <div className="text-sm text-white space-y-1">
                   <p>You have the right to:</p>
                   <p>• Access your personal data</p>
                   <p>• Request data correction or deletion</p>
@@ -1962,11 +1962,11 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-2">6. Cookies</h3>
-                <p className="text-sm text-gray-900">We use cookies to improve your experience, remember your preferences, and analyze platform usage. You can control cookie settings in your browser.</p>
+                <h3 className="text-sm font-semibold text-white mb-2">6. Cookies</h3>
+                <p className="text-sm text-white">We use cookies to improve your experience, remember your preferences, and analyze platform usage. You can control cookie settings in your browser.</p>
               </div>
 
-              <div className="border-t pt-4 text-center text-sm text-gray-900">
+              <div className="border-t pt-4 text-center text-sm text-white">
                 <p>Privacy questions? Email us at <a href="mailto:privacy@edufiliova.com" className="text-primary hover:underline" transition-all duration-300>privacy@edufiliova.com</a></p>
               </div>
             </div>
