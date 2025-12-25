@@ -711,7 +711,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             value={formData.loginIdentifier}
             onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
             placeholder={`Enter your ${formData.loginMethod === 'email' ? 'email address' : formData.loginMethod === 'phone' ? 'phone number' : 'ID number'}`}
-            className="h-12 text-base rounded-lg border-gray-300"
+            className="h-12 text-base rounded-lg border-gray-300 placeholder:text-lg"
             data-testid="input-login-identifier"
           />
           {errors.loginIdentifier && <p className="text-sm text-primary-500 mt-1">{errors.loginIdentifier}</p>}
@@ -728,7 +728,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Enter your password"
-              className="h-12 text-base pr-10 rounded-lg border-gray-300"
+              className="h-12 text-base pr-10 rounded-lg border-gray-300 placeholder:text-lg"
               data-testid="input-password"
             />
             <Button
@@ -859,7 +859,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     placeholder="e.g. Keith Williams"
-                    className="h-12 text-base pl-10 rounded-lg border-gray-300"
+                    className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-lg"
                     data-testid="input-name"
                   />
                 </div>
@@ -878,7 +878,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
                     placeholder="e.g. student@example.com"
-                    className="h-12 text-base pl-10 rounded-lg border-gray-300"
+                    className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-lg"
                     data-testid="input-email"
                   />
                 </div>
@@ -896,7 +896,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.password}
                     onChange={(e) => handleInputChange('password', e.target.value)}
                     placeholder="••••••••"
-                    className="h-12 text-base pr-10 rounded-lg border-gray-300"
+                    className="h-12 text-base pr-10 rounded-lg border-gray-300 placeholder:text-lg"
                     data-testid="input-register-password"
                   />
                   <button
@@ -922,7 +922,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   value={formData.confirmPassword}
                   onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                   placeholder="••••••••"
-                  className="h-12 text-base rounded-lg border-gray-300"
+                  className="h-12 text-base rounded-lg border-gray-300 placeholder:text-lg"
                   data-testid="input-confirm-password"
                 />
                 {errors.confirmPassword && <p className="text-sm text-primary-500 mt-1">{errors.confirmPassword}</p>}
@@ -965,7 +965,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                     value={formData.age}
                     onChange={(e) => handleInputChange('age', e.target.value)}
                     placeholder="e.g. 14"
-                    className="h-12 text-base pl-10 rounded-lg border-gray-300"
+                    className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-lg"
                     data-testid="input-age"
                   />
                 </div>
@@ -1068,7 +1068,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                   value={formData.schoolName}
                   onChange={(e) => handleInputChange('schoolName', e.target.value)}
                   placeholder="e.g. Greenwood High School"
-                  className="h-12 text-base rounded-lg border-gray-300"
+                  className="h-12 text-base rounded-lg border-gray-300 placeholder:text-lg"
                   data-testid="input-school-name"
                 />
               </div>
@@ -1219,7 +1219,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
               placeholder="Enter your full name"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300"
+              className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-lg"
               data-testid="input-teacher-name"
             />
           </div>
@@ -1238,7 +1238,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
               placeholder="Enter your email"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300"
+              className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-lg"
               data-testid="input-teacher-email"
             />
           </div>
@@ -1257,7 +1257,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.phoneNumber}
               onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
               placeholder="Enter your phone number"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300"
+              className="h-12 text-base pl-10 rounded-lg border-gray-300 placeholder:text-lg"
               data-testid="input-teacher-phone"
             />
           </div>
@@ -1275,7 +1275,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Create a password"
-              className="h-12 text-base pl-10 pr-10 rounded-lg border-gray-300"
+              className="h-12 text-base pl-10 pr-10 rounded-lg border-gray-300 placeholder:text-lg"
               data-testid="input-teacher-password"
             />
             <button
