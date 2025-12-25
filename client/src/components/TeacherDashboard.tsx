@@ -2642,7 +2642,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                           </div>
                         )}
                         
-                        <Button size="sm" variant="outline" className="w-full mt-3 text-white border-gray-300 hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
+                        <Button size="sm" variant="outline" className="w-full mt-3 text-white border-gray-300 hover:opacity-80 hover:scale-100 active:scale-100" style={{backgroundColor: '#2f5a4e'}}>
                           <MessageCircle className="h-3 w-3 mr-2" />
                           Send Message
                         </Button>
