@@ -2339,7 +2339,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card className="text-white border-0" style={{background: '#2d5cdd'}}>
+              <Card className="text-white border-0" style={{background: '#2f5a4e'}}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
