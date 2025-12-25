@@ -653,9 +653,12 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
   const renderLoginForm = () => (
     <div>
       <div className="mb-6 text-center">
-        <h2 className="font-bold mb-2 text-2xl text-[#a0fab2]">
-          Sign in to your account
-        </h2>
+          <h2 className="text-2xl font-bold text-[#a0fab2] mb-2">
+            Sign in to your account
+          </h2>
+          <p className="text-white/80 text-sm">
+            Welcome back! Please enter your details
+          </p>
       </div>
 
       {errors.general && (
@@ -746,17 +749,14 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </div>
 
         <div className="flex items-center justify-between">
-          <button
-            type="button"
-            onClick={() => setCurrentStep("forgot-password")}
-            className="text-sm font-medium ml-auto transition-all duration-300"
-            style={{ color: '#2f5a4e' }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#2f5a4e'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#2f5a4e'}
-            data-testid="button-forgot-password"
-          >
-            Forgot password?
-          </button>
+            <button
+              type="button"
+              onClick={() => setCurrentStep("forgot-password")}
+              className="text-sm font-medium ml-auto transition-all duration-300 text-white/80 hover:text-white"
+              data-testid="button-forgot-password"
+            >
+              Forgot password?
+            </button>
         </div>
 
         <Button
@@ -826,10 +826,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
     return (
       <div>
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold text-white mb-2">
+          <h2 className="text-2xl font-bold text-[#a0fab2] mb-2">
             Create your student account
           </h2>
-          <p className="text-white text-sm">
+          <p className="text-white/80 text-sm">
             Join thousands of learners and unlock your potential
           </p>
         </div>
@@ -1169,7 +1169,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               type="button"
               onClick={() => setCurrentStep("login")}
-              className="text-white hover:text-white font-medium" transition-all duration-300
+              className="text-white hover:text-white/80 font-medium transition-all duration-300"
               data-testid="link-login"
             >
               Sign in
@@ -1189,10 +1189,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
   const renderOldTeacherRegistrationForm_DEPRECATED = () => (
     <div>
       <div className="mb-6 text-center">
-        <h2 className="text-2xl font-bold text-white mb-2">
-          Apply to Teach (OLD - DO NOT USE)
+        <h2 className="text-2xl font-bold text-[#a0fab2] mb-2">
+          Apply to Teach
         </h2>
-        <p className="text-white text-sm">
+        <p className="text-white/80 text-sm">
           Join our community of verified educators.
         </p>
       </div>
@@ -1536,7 +1536,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </div>
           
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-white">Check Your WhatsApp</h1>
+            <h1 className="text-2xl font-bold text-[#a0fab2]">Check Your WhatsApp</h1>
             <p className="text-white">
               We sent a 6-digit code to<br />
               <span className="font-medium text-white">{formData.phoneNumber}</span>
@@ -1573,13 +1573,12 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <div className="pt-4 space-y-3">
             <p className="text-sm text-white/60">
               Didn't receive the code?{" "}
-              <button
-                onClick={() => handleResendCode("phone")}
-                disabled={resendCooldown > 0 || loading}
-                className="font-medium hover:underline disabled:opacity-50" transition-all duration-300
-                style={{ color: '#0C332C' }}
-                data-testid="button-resend-phone"
-              >
+            <button
+              onClick={() => handleResendCode("phone")}
+              disabled={resendCooldown > 0 || loading}
+              className="font-medium hover:underline disabled:opacity-50 text-white" transition-all duration-300
+              data-testid="button-resend-phone"
+            >
                 {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code'}
               </button>
             </p>
@@ -1608,14 +1607,12 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
 
   const renderForgotPasswordForm = () => (
     <div>
-      <div className="mb-6 text-center">
-        <h2 className="text-2xl font-bold text-white mb-2">
-          Reset Password
-        </h2>
-        <p className="text-white text-sm">
-          Enter your email to receive a reset link.
-        </p>
-      </div>
+          <h2 className="text-2xl font-bold text-[#a0fab2] mb-2">
+            Reset Password
+          </h2>
+          <p className="text-white/80 text-sm">
+            Enter your email to receive a reset link.
+          </p>
 
       {errors.forgotPasswordEmail && (
         <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
@@ -1662,12 +1659,12 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </Button>
 
         <div className="text-center text-sm text-white">
-          <button
-            type="button"
-            onClick={() => setCurrentStep("login")}
-            className="text-primary hover:text-purple-800 font-medium flex items-center justify-center gap-1" transition-all duration-300
-            data-testid="link-back-to-login-from-forgot"
-          >
+            <button
+              type="button"
+              onClick={() => setCurrentStep("login")}
+              className="text-[#a0fab2] hover:text-[#a0fab2]/80 font-medium flex items-center justify-center gap-1" transition-all duration-300
+              data-testid="link-back-to-login-from-forgot"
+            >
             <ArrowLeft className="h-3 w-3" />
             Back to login
           </button>
@@ -1851,10 +1848,9 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 },
                 {
                   title: "Changes to Terms",
-                  content: ["EduFiliova may update these Terms from time to time.", "You will be notified of significant changes via email or on the platform.", "Continued use of the platform after changes means you accept the updated Terms."]
-                }
-              ].map((section, idx) => (
-                <div key={idx} className="border-l-4 border-orange-500 pl-3 py-2">
+              }
+            ].map((section, idx) => (
+              <div key={idx} className="border-white/20 pl-3 py-2">
                   <h3 className="text-sm font-semibold text-white mb-1">{section.title}</h3>
                   <div className="text-sm text-white space-y-1">
                     {section.content.map((line, i) => <p key={i}>{line}</p>)}
@@ -1877,7 +1873,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           </DialogHeader>
           <ScrollArea className="h-[calc(90vh-70px)] px-4 md:px-6">
             <div className="py-4 space-y-4">
-              <div className="bg-primary/10 border-l-4 border-orange-500 p-3 rounded">
+              <div className="bg-primary/10 border-white/20 p-3 rounded">
                 <h3 className="text-sm font-semibold text-white mb-1">Your Privacy Matters to Us</h3>
                 <p className="text-sm text-white">At EduFiliova, we're committed to protecting your privacy and ensuring your personal information is secure. This policy explains how we collect, use, and protect your data.</p>
               </div>
