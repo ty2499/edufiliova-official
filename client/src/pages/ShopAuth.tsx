@@ -335,7 +335,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
         <div className="w-full max-w-md mx-auto">
           <div className="text-center space-y-6">
             <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#e0f2fe' }}>
-              <Mail className="h-10 w-10" style={{ color: '#0C332C' }} />
+              <Mail className="h-10 w-10" style={{ color: 'white' }} />
             </div>
             
             <div className="space-y-2">
@@ -392,7 +392,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                   onClick={handleResendCode}
                   disabled={isResending}
                   className="font-medium hover:underline disabled:opacity-50" transition-all duration-300
-                  style={{ color: '#0C332C' }}
+                  style={{ color: 'white' }}
                   data-testid="button-resend-code"
                 >
                   {isResending ? "Sending..." : "Resend Code"}
@@ -550,7 +550,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
 
           <Button 
             type="submit" 
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-6 text-base font-semibold" transition-all duration-300
+            className="w-full bg-white hover:bg-gray-50 text-black py-6 text-base font-semibold" transition-all duration-300
             disabled={isProcessing}
             data-testid={`button-${authMode}`}
           >
