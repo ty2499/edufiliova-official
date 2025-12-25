@@ -143,14 +143,24 @@ export class EmailService {
     });
 
     // Final direct search for the specific problematic string from the screenshot
+    html = html.replace(/\{\{fullName\}\}/g, fullName);
+    html = html.replace(/\{\{ fullName \}\}/g, fullName);
+    html = html.replace(/\{\{data\.fullName\}\}/g, fullName);
+    html = html.replace(/\{\{ data\.fullName \}\}/g, fullName);
     html = html.replace(/\$\{data\.fullName\}/g, fullName);
     html = html.replace(/\$\{fullName\}/g, fullName);
     html = html.replace(/\$ \{data\.fullName\}/g, fullName);
     html = html.replace(/Hi \$\{data\.fullName\}/g, `Hi ${fullName}`);
+    html = html.replace(/Hi \{\{fullName\}\}/g, `Hi ${fullName}`);
+    html = html.replace(/Hi \{\{data\.fullName\}\}/g, `Hi ${fullName}`);
     html = html.replace(/<strong>\$\{data\.fullName\}<\/strong>/g, `<strong>${fullName}</strong>`);
+    html = html.replace(/<strong>\{\{fullName\}\}<\/strong>/g, `<strong>${fullName}</strong>`);
     html = html.replace(/<span.*?>\$\{data\.fullName\}<\/span>/g, (match) => match.replace(/\$\{data\.fullName\}/, fullName));
+    html = html.replace(/<span.*?>\{\{fullName\}\}<\/span>/g, (match) => match.replace(/\{\{fullName\}\}/, fullName));
     html = html.replace(/\$\{data\.displayName\}/g, displayName);
     html = html.replace(/\$\{displayName\}/g, displayName);
+    html = html.replace(/\{\{displayName\}\}/g, displayName);
+    html = html.replace(/\{\{data\.displayName\}\}/g, displayName);
 
     html = html.replaceAll('{{#if reason}} Reason provided:\n{{reason}}\n{{/if}}', `Reason provided:\n${data.reason || 'Missing documentation'}`);
     html = html.replaceAll('{{baseUrl}}', baseUrl);
@@ -211,12 +221,18 @@ export class EmailService {
     const displayName = data.displayName || data.fullName || 'Teacher';
     
     // Handle conditional reason block
-    if (data.reason && data.reason.trim()) {
-      html = html.replaceAll('{{#if reason}} Reason provided:\n{{reason}}\n{{/if}}', `Reason provided:\n${data.reason}`);
-    } else {
-      html = html.replaceAll('{{#if reason}} Reason provided:\n{{reason}}\n{{/if}}', '');
-    }
+    // We replace the entire block including the tags to ensure it works even if whitespace differs
+    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
     
+    // Replace the specific Handlebars-style conditional block with the actual reason
+    const reasonBlockRegex = /\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/g;
+    html = html.replace(reasonBlockRegex, `Reason provided:\n\n${reasonText}`);
+    
+    // Also catch variants without the "Reason provided" text if they exist
+    html = html.replace(/\{\{#if reason\}\}/g, '');
+    html = html.replace(/\{\{\/if\}\}/g, '');
+    html = html.replace(/\{\{reason\}\}/g, reasonText);
+
     // Replace standard placeholders
     html = html.replaceAll('{{fullName}}', fullName);
     html = html.replaceAll('{{displayName}}', displayName);
