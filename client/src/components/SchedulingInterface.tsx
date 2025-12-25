@@ -918,7 +918,8 @@ export const SchedulingInterface: React.FC = () => {
                                   size="sm"
                                   onClick={() => setBookingForm({...bookingForm, teacherId: teacher.teacherId})}
                                   data-testid={`select-teacher-${teacher.teacherId}`}
-                                  className="whitespace-nowrap"
+                                  className="whitespace-nowrap bg-[#2f5a4e] text-white hover:bg-[#2f5a4e] active:bg-[#2f5a4e]"
+                                  style={{ backgroundColor: '#2f5a4e', color: 'white', opacity: 1 }}
                                 >
                                   Select
                                 </Button>
