@@ -252,21 +252,20 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // AGGRESSIVE NAME REPLACEMENT - FORCE IT TO SHOW
+    // CLEAN - Replace ONLY the fullName placeholder with actual name
     const fullName = data.fullName || (data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer');
     const appType = data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer';
     
-    // 1. Replace all variations of the placeholder
+    // Replace the exact pattern: "{{ fullName}}" (with space and closing braces in different parts)
     html = html.replaceAll('{{ fullName}}', fullName);
     html = html.replaceAll('{{fullName}}', fullName);
     html = html.replaceAll('{{FullName}}', fullName);
-    html = html.replaceAll('{{ {{', '{{');
     
-    // 2. Aggressive fallback - Replace "Hi {" patterns
-    html = html.replace(/Hi\s*\{\{[^}]*\}\}/gi, `Hi ${fullName}`);
-    html = html.replace(/Hi\s*[{[\s]*/gi, `Hi ${fullName}`);
+    // Catch any remaining patterns with variations
+    html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
+    html = html.replace(/Hi\s*\{\{\s*fullName\s*\}\}/gi, `Hi ${fullName}`);
     
-    // 3. Final cleanup
+    // Final cleanup
     html = html.replace(/\{\{appType\}\}/gi, appType);
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
