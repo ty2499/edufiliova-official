@@ -1740,7 +1740,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-primary font-medium"
+            className="font-medium"
+            style={{ color: '#a0fab2' }}
             data-testid="button-resend-reset-code"
           >
             Request new code
@@ -1751,7 +1752,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="text-primary hover:text-purple-800 font-medium text-sm flex items-center justify-center gap-1 mx-auto transition-all duration-300"
+            className="font-medium text-sm flex items-center justify-center gap-1 mx-auto"
+            style={{ color: '#a0fab2' }}
             data-testid="link-back-to-login-from-reset"
           >
             <ArrowLeft className="h-3 w-3" />
