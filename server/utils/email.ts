@@ -98,11 +98,11 @@ export class EmailService {
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/teacher_approval_template.html');
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/teacher_approved_new.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
     
     const iphoneFontStack = `
     <style>
@@ -111,10 +111,10 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // SIMPLE & DIRECT - Just replace the placeholder
+    // Replace dynamic placeholders
     const fullName = data.fullName || 'Teacher';
     
-    // Replace {{FullName}} directly - case insensitive
+    // Replace {{FullName}} and variations
     html = html.replace(/\{\{FullName\}\}/gi, fullName);
     html = html.replace(/\{\{fullName\}\}/gi, fullName);
     
