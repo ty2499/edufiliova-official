@@ -1,3 +1,4 @@
+import path from 'path';
 import type { Express, Response, Request } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
@@ -757,11 +758,30 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         </body></html>
       `;
 
-    case 'password_reset_whatsapp':
-      return data.htmlContent
-        .replace(/\{\{fullName\}\}/g, data.fullName || 'User')
-        .replace(/\{\{code\}\}/g, data.code)
-        .replace(/\{\{expiresIn\}\}/g, data.expiresIn || '10');
+                    case 'password_reset_whatsapp':
+      const imageAssets = [
+        'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
+        '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
+        '83faf7f361d9ba8dfdc904427b5b6423_1766506747364.png',
+        '3d94f798ad2bd582f8c3afe175798088_1766506747360.png',
+        'afa2a8b912b8da2c69e49d9de4a30768_1766506747368.png',
+        '9f7291948d8486bdd26690d0c32796e0_1766506747363.png'
+      ];
+      
+      let rendered = data.htmlContent;
+      // Handle dynamics with absolute certainty
+      rendered = rendered.split('{{fullName}}').join(data.fullName || 'User').split('{fullName}').join(data.fullName || 'User');
+      rendered = rendered.split('{{code}}').join(data.code).split('{code}').join(data.code);
+      rendered = rendered.split('{{expiresIn}}').join(data.expiresIn || '10').split('{expiresIn}').join(data.expiresIn || '10');
+      
+      return {
+        html: rendered,
+        attachments: imageAssets.map(img => ({
+          filename: img,
+          path: path.join(process.cwd(), 'attached_assets', img),
+          cid: img.split('_')[0] + '.png'
+        }))
+      };
 
     case 'teacher-verification':
       return `
@@ -844,35 +864,39 @@ const sendSMS = async (phoneNumber: string, message: string) => {
   }
 };
 
-export const sendEmail = async (to: string, subject: string, html: string, fromAddress = 'verify@edufiliova.com') => {
+export const sendEmail = async (to: string, subject: string, html: any, fromAddress = 'verify@edufiliova.com') => {
   try {
-    // Extract verification code from HTML for console logging
-    const codeMatch = html.match(/<div class="code">(\d+)<\/div>/);
-    const verificationCode = codeMatch ? codeMatch[1] : 'Unknown';
+    const isObject = typeof html === 'object' && html !== null && !Array.isArray(html);
+    const actualHtml = isObject ? html.html : html;
+    const attachments = isObject ? (html.attachments || []) : [];
+
+    // Extract verification code safely
+    let verificationCode = 'Unknown';
+    if (typeof actualHtml === 'string') {
+      const codeMatch = actualHtml.match(/<div class="code">(\d+)<\/div>/) || 
+                        actualHtml.match(/{{code}}/) || 
+                        actualHtml.match(/>(\d{6})</);
+      verificationCode = codeMatch ? (codeMatch[1] || codeMatch[0]) : 'Unknown';
+    }
     
-    // Store verification code (for development - remove in production)
     console.log('📧 Subject:', subject);
     
-    // Try to send email, but don't fail if SMTP fails
     try {
       const transporter = await createEmailTransporter(fromAddress);
-      
       const mailOptions = {
         from: `"EduFiliova" <${fromAddress}>`,
         to,
         subject,
-        html,
+        html: actualHtml,
+        attachments: attachments
       };
-
       const info = await transporter.sendMail(mailOptions);
-      // Email sent successfully
       return { success: true, messageId: info.messageId };
     } catch (smtpError) {
-      // Email sending failed - log error and return failure
       console.error('❌ Email sending failed:', smtpError);
       return { success: false, error: 'Failed to send email' };
     }
-  } catch (error: any) {
+  } catch (error) {
     console.error('❌ Email processing failed:', error);
     return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
