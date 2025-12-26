@@ -672,10 +672,22 @@ export async function handleChangePasswordStart(
 
   const { sendEmail, getEmailTemplate } = await import('../routes');
   try {
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const templatePath = path.join(process.cwd(), 'server', 'templates', 'password_reset_whatsapp.html');
+    const htmlContent = await fs.readFile(templatePath, 'utf-8');
+
+    const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, authUser.id) });
+
     await sendEmail(
       authUser.email,
       'Password Change Verification Code',
-      getEmailTemplate('verification', { code: emailCode })
+      getEmailTemplate('password_reset_whatsapp' as any, { 
+        code: emailCode, 
+        fullName: profile?.name || 'User',
+        expiresIn: '10',
+        htmlContent 
+      })
     );
   } catch (error) {
     console.error('Failed to send password reset email:', error);
