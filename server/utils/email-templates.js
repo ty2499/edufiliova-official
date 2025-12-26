@@ -879,3 +879,65 @@ export async function sendShopPurchaseEmail(recipientEmail, recipientName, order
     return false;
   }
 }
+
+/**
+ * Send course completion email with certificate details
+ */
+export async function sendCourseCompletionEmail(recipientEmail, recipientName, courseData) {
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'course-completion', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Student';
+    const courseTitle = courseData.courseTitle || 'Course';
+    const completionDate = courseData.completionDate || new Date().toLocaleString('en-US', { 
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+    const finalScore = courseData.finalScore || '100';
+    const certificateType = courseData.certificateType || 'Certificate of Completion';
+    const verificationCode = courseData.verificationCode || 'N/A';
+    
+    // Replace placeholders - handle both normal and span-split formats
+    const replacements = {
+      'fullName': fullName,
+      'courseTitle': courseTitle,
+      'completionDate': completionDate,
+      'finalScore': finalScore,
+      'certificateType': certificateType,
+      'verificationCode': verificationCode
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
+    }
+    
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'course-completion', 'images');
+    
+    const attachments = [
+      { filename: 'spiral_left.png', path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral_left', contentType: 'image/png' },
+      { filename: 'logo_header.png', path: path.join(imagesDir, 'a0f41a0ecf16a144a8fae636842d4fcc.png'), cid: 'logo_header', contentType: 'image/png' },
+      { filename: 'spiral_right.png', path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral_right', contentType: 'image/png' },
+      { filename: 'check_icon.png', path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'check_icon', contentType: 'image/png' },
+      { filename: 'logo_full.png', path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logo_full', contentType: 'image/png' },
+      { filename: 'grad_banner.png', path: path.join(imagesDir, '371e2880c8a2b5b2073b1f18b5482c1f.png'), cid: 'grad_banner', contentType: 'image/png' }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Congratulations! You've Completed ${courseTitle}`,
+      html: emailHtml,
+      from: `"EduFiliova Certifications" <noreply@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Course completion email sent to ${recipientEmail} for ${courseTitle}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending course completion email:`, error);
+    return false;
+  }
+}

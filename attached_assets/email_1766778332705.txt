@@ -1,0 +1,36 @@
+Learning • Skills • Careers
+Hi {{fullName}},
+ Congratulations on successfully completing {{courseTitle}}!
+Your hard work and dedication have paid off, and we’re proud to recognize your achievement.
+ Your official EduFiliova certificate has now been issued and is available in your account.
+Certificate Information:
+ Course Title: {{courseTitle}}
+Completion Date: {{completionDate}}
+Final Score: {{finalScore}}%
+Certificate Type: {{certificateType}}
+Verification Code: {{verificationCode}}
+ This certificate can be verified online using the verification code above.
+What You Can Do With Your Certificate?
+
+ Download and save your certificate  Share it on LinkedIn, CVs, or professional profiles  Verify it publicly using the verification page  Access it anytime from your EduFiliova account
+Your certificate will always remain available in your Certificates Dashboard.
+
+
+Verification & Authenticity
+All EduFiliova certificates include:
+Unique verification codes
+Secure validation records
+Protection against duplication or misuse
+Anyone can verify your certificate through EduFiliova’s official verification system.
+Need Help?
+If you experience any issues accessing or downloading your certificate, our support team is here to help.
+Contact us at support@edufiliova.com
+Once again, congratulations on your achievement. We’re honored to be part of your learning journey and wish you continued success ahead.
+Warm regards, EduFiliova Certifications Team
+dd
+Thank you!
+Feel free to reach out if you have any questions.
+You can unsubscribe from these emails here. 
+ Visit the  Help Center
+ Or contact us anytime at support@edufiliova.com
+ 
