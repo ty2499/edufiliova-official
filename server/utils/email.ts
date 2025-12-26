@@ -702,150 +702,51 @@ export class EmailService {
     });
   }
 
-  async sendMeetingReminderEmail(email: string, data: { studentName: string; teacherName: string; meetingTime: Date; meetingLink: string; meetingTitle: string }): Promise<boolean> {
-    const studentName = data.studentName || 'Student';
-    const teacherName = data.teacherName || 'Your Teacher';
-    const meetingTime = data.meetingTime instanceof Date ? data.meetingTime.toLocaleString() : new Date(data.meetingTime).toLocaleString();
-    const meetingLink = data.meetingLink || '#';
-    const meetingTitle = data.meetingTitle || 'Class Meeting';
+  async sendMeetingReminderEmail(email: string, data: { studentName?: string; fullName?: string; teacherName: string; meetingTime: Date; meetingLink?: string; meetingTitle: string; meetingType?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/meeting_reminder_template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
 
-    const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meeting Reminder</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background-color: #f5f7fa;
-    }
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background-color: #ffffff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 40px;
-      text-align: center;
-      color: white;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    .content {
-      padding: 40px;
-    }
-    .greeting {
-      font-size: 18px;
-      color: #1a1a1a;
-      margin-bottom: 20px;
-    }
-    .meeting-details {
-      background-color: #f8f9fa;
-      border-left: 4px solid #667eea;
-      padding: 20px;
-      margin: 25px 0;
-      border-radius: 4px;
-    }
-    .detail-row {
-      margin: 12px 0;
-      color: #555;
-    }
-    .detail-label {
-      font-weight: bold;
-      color: #333;
-      display: inline-block;
-      width: 120px;
-    }
-    .cta-button {
-      display: inline-block;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 14px 32px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      margin: 20px 0;
-      transition: opacity 0.3s;
-    }
-    .cta-button:hover {
-      opacity: 0.9;
-    }
-    .footer {
-      background-color: #f8f9fa;
-      padding: 20px 40px;
-      text-align: center;
-      color: #666;
-      font-size: 12px;
-      border-top: 1px solid #e0e0e0;
-    }
-    .footer a {
-      color: #667eea;
-      text-decoration: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>📅 Meeting Reminder</h1>
-    </div>
-    <div class="content">
-      <div class="greeting">Hi {{studentName}},</div>
-      <p>This is a friendly reminder that you have an upcoming meeting!</p>
-      
-      <div class="meeting-details">
-        <div class="detail-row">
-          <span class="detail-label">📚 Topic:</span>
-          <span>{{meetingTitle}}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">👨‍🏫 Teacher:</span>
-          <span>{{teacherName}}</span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">⏰ Time:</span>
-          <span>{{meetingTime}}</span>
-        </div>
-      </div>
+    const fullName = data.fullName || data.studentName || 'Student';
+    const teacherName = data.teacherName || 'Your Instructor';
+    const meetingTime = data.meetingTime instanceof Date ? data.meetingTime.toLocaleString() : new Date(data.meetingTime).toLocaleString();
+    const meetingLink = data.meetingLink || `${baseUrl}/meetings/join`;
+    const meetingTitle = data.meetingTitle || 'Class Meeting';
+    const meetingType = data.meetingType || 'Standard Class';
 
-      <p>Don't miss this important class! Click the button below to join:</p>
-      <center>
-        <a href="{{meetingLink}}" class="cta-button">Join Meeting</a>
-      </center>
+    // Replace all dynamic placeholders
+    html = html.replace(/\{\{fullName\}\}/g, fullName);
+    html = html.replace(/\{\{teacherName\}\}/g, teacherName);
+    html = html.replace(/\{\{meetingTime\}\}/g, meetingTime);
+    html = html.replace(/\{\{meetingLink\}\}/g, meetingLink);
+    html = html.replace(/\{\{meetingTitle\}\}/g, meetingTitle);
+    html = html.replace(/\{\{meetingType\}\}/g, meetingType);
 
-      <p>If you have any questions about this meeting, please reach out to your instructor or contact our support team.</p>
-    </div>
-    <div class="footer">
-      <p>© 2025 EduFiliova. All rights reserved.</p>
-      <p><a href="${baseUrl}">Visit EduFiliova</a></p>
-    </div>
-  </div>
-</body>
-</html>
-    `;
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:icon1');
+    html = html.replaceAll('images/292db72c5a7a0299db100d17711b8c55.png', 'cid:logo1');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:icon2');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
+    html = html.replaceAll('images/53185829a16faf137a533f19db64d893.png', 'cid:logo2');
+    html = html.replaceAll('images/51cf8361f51fd7575b8d8390ef957e30.png', 'cid:hero');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
 
-    const processedHtml = html
-      .replace(/\{\{studentName\}\}/g, studentName)
-      .replace(/\{\{teacherName\}\}/g, teacherName)
-      .replace(/\{\{meetingTime\}\}/g, meetingTime)
-      .replace(/\{\{meetingLink\}\}/g, meetingLink)
-      .replace(/\{\{meetingTitle\}\}/g, meetingTitle);
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
 
     return this.sendEmail({
       to: email,
       subject: `Meeting Reminder: ${meetingTitle} with ${teacherName}`,
-      html: processedHtml,
-      from: `"EduFiliova" <support@edufiliova.com>`,
+      html,
+      from: `"EduFiliova Support" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'icon1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766739561052.png'), cid: 'icon1', contentType: 'image/png' },
+        { filename: 'logo1.png', path: assetPath('292db72c5a7a0299db100d17711b8c55_1766739561047.png'), cid: 'logo1', contentType: 'image/png' },
+        { filename: 'icon2.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766739561046.png'), cid: 'icon2', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766739561038.png'), cid: 'corner', contentType: 'image/png' },
+        { filename: 'logo2.png', path: assetPath('53185829a16faf137a533f19db64d893_1766739561049.png'), cid: 'logo2', contentType: 'image/png' },
+        { filename: 'hero.png', path: assetPath('51cf8361f51fd7575b8d8390ef957e30_1766739561045.png'), cid: 'hero', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766739561043.png'), cid: 'social', contentType: 'image/png' }
+      ]
     });
   }
 
