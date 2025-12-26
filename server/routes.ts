@@ -3078,6 +3078,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Verify Reset Code
+  app.post("/api/auth/verify-reset-code", async (req, res) => {
+    try {
+      const { email, code, newPassword } = req.body;
+
+      if (!email || !code || !newPassword) {
+        return res.status(400).json({ success: false, error: "Email, code, and password are required" });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({ success: false, error: "Password must be at least 6 characters long" });
+      }
+
+      // Find the verification code
+      const verifyCode = await db.query.verificationCodes.findFirst({
+        where: and(
+          eq(verificationCodes.contactInfo, email),
+          eq(verificationCodes.code, code),
+          eq(verificationCodes.type, "email_password_reset")
+        )
+      });
+
+      if (!verifyCode || new Date() > verifyCode.expiresAt) {
+        return res.status(400).json({ success: false, error: "Invalid or expired reset code" });
+      }
+
+      // Update password
+      const newPasswordHash = await bcrypt.hash(newPassword, 10);
+      await db
+        .update(users)
+        .set({ passwordHash: newPasswordHash })
+        .where(eq(users.id, verifyCode.userId));
+
+      // Delete the verification code
+      await db
+        .delete(verificationCodes)
+        .where(eq(verificationCodes.id, verifyCode.id));
+
+      res.json({ success: true, message: "Password reset successful" });
+    } catch (error: any) {
+      console.error("Verify reset code error:", error);
+      res.status(500).json({ success: false, error: "Password reset failed" });
+    }
+  });
+
   // Password Reset
   app.post("/api/auth/reset-password", async (req, res) => {
     try {
