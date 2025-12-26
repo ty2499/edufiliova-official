@@ -3126,55 +3126,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Send confirmation email
       try {
+        const confirmTemplatePath = path.join(process.cwd(), 'server', 'templates', 'password_changed_whatsapp.html');
+        const confirmHtml = fs.readFileSync(confirmTemplatePath, 'utf-8');
         const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, user.id) });
-        const fullName = profile?.name || 'User';
-        
-        const confirmationHtml = `
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          </head>
-          <body style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
-            <div style="max-width: 600px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              <h1 style="color: #2f5a4e; text-align: center; margin-bottom: 30px;">Password Changed Successfully</h1>
-              
-              <p style="color: #333; font-size: 16px; line-height: 1.6;">
-                Hello <strong>${fullName}</strong>,
-              </p>
-              
-              <p style="color: #333; font-size: 16px; line-height: 1.6;">
-                Your password has been changed successfully. Your account is now secure with your new password.
-              </p>
-              
-              <div style="background-color: #e8f5e9; border-left: 4px solid #2f5a4e; padding: 15px; margin: 20px 0; border-radius: 4px;">
-                <p style="color: #2f5a4e; font-size: 14px; margin: 0;">
-                  ✓ Your new password is now active
-                </p>
-              </div>
-              
-              <p style="color: #666; font-size: 14px; line-height: 1.6; margin-top: 30px;">
-                If you didn't request this password change, please contact our support team immediately at support@edufiliova.com
-              </p>
-              
-              <p style="color: #999; font-size: 12px; line-height: 1.6; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-                Best regards,<br>
-                The EduFiliova Team
-              </p>
-            </div>
-          </body>
-          </html>
-        `;
-        
+
         await sendEmail(
           email,
           'Password Changed Successfully',
-          confirmationHtml
+          getEmailTemplate('password_changed_confirmation_whatsapp' as any, { 
+            fullName: profile?.name || 'User',
+            htmlContent: confirmHtml 
+          })
         );
-        console.log('📧 Password change confirmation email sent to:', email);
       } catch (error) {
-        console.error('❌ Failed to send password change confirmation email:', error);
+        console.error('Failed to send password change confirmation email:', error);
       }
 
       res.json({ success: true, message: "Password reset successful" });
