@@ -695,4 +695,37 @@ router.post('/test-emails/freelancer-verification', async (req: Request, res: Re
   }
 });
 
+// Test endpoint specifically for customer verification email
+router.post('/test-emails/customer-verification', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, code, expiresIn } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing customer verification email to ${testEmail}...`);
+
+    const result = await emailService.sendCustomerVerificationEmail(testEmail, {
+      fullName: fullName || 'Test Customer',
+      code: code || '123456',
+      expiresIn: expiresIn || '10'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Customer verification email sent successfully' : 'Failed to send customer verification email',
+      details: {
+        recipientEmail: testEmail,
+        fullName: fullName || 'Test Customer',
+        code: code || '123456',
+        expiresIn: expiresIn || '10'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending customer verification test email:', error);
+    res.status(500).json({ error: 'Failed to send customer verification email', details: error.message });
+  }
+});
+
 export default router;
