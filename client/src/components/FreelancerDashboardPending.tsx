@@ -154,7 +154,10 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
                     {statusInfo.description}
                   </CardDescription>
                 </div>
-                <Badge variant={statusInfo.badgeVariant} data-testid="badge-status">
+                <Badge 
+                  style={{ backgroundColor: '#a0fab2', color: '#0c332c' }}
+                  data-testid="badge-status"
+                >
                   {statusInfo.badgeText}
                 </Badge>
               </div>
