@@ -566,6 +566,16 @@ export class EmailService {
     const nextBillingDate = data.nextBillingDate || '';
     const dashboardUrl = data.dashboardUrl || `${baseUrl}/dashboard`;
 
+    // Handle split placeholders (caused by HTML spans in middle of variable)
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>customerName<\/span><span[^>]*>[^}]*\}\}/gi, `{{${customerName}}}`);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>planName<\/span><span[^>]*>[^}]*\}\}/gi, `{{${planName}}}`);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>billingCycle<\/span><span[^>]*>[^}]*\}\}/gi, `{{${billingCycle}}}`);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>orderId<\/span><span[^>]*>[^}]*\}\}/gi, `{{${orderId}}}`);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>price<\/span><span[^>]*>[^}]*\}\}/gi, `{{${price}}}`);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>activationDate<\/span><span[^>]*>[^}]*\}\}/gi, `{{${activationDate}}}`);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>nextBillingDate<\/span><span[^>]*>[^}]*\}\}/gi, `{{${nextBillingDate}}}`);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>dashboardUrl<\/span><span[^>]*>[^}]*\}\}/gi, `{{${dashboardUrl}}}`);
+    
     // Replace all dynamic variables
     html = html.replace(/\{\{customerName\}\}/gi, customerName);
     html = html.replace(/\{\{planName\}\}/gi, planName);
