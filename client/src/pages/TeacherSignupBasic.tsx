@@ -251,7 +251,7 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </div>
           
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-gray-900">Enter code</h2>
+            <h2 className="text-2xl font-bold" style={{ color: '#a0fab2' }}>Enter code</h2>
             <p className="text-gray-500 text-sm">
               We sent a verification code to your email<br />
               <span className="font-medium text-gray-800">{userEmail}</span>
