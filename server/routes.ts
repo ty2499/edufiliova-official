@@ -34147,6 +34147,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     await whatsappWebhookHandler.handleWhatsAppWebhook(req, res);
   });
 
+  // WhatsApp Flow endpoint for Sign In/Sign Up flows
+  const whatsappFlowHandler = await import('./whatsapp-flow-handler.js');
+  
+  app.post('/api/whatsapp/flow', async (req, res) => {
+    await whatsappFlowHandler.handleFlowEndpoint(req, res);
+  });
+  
+  app.get('/api/whatsapp/flow/health', async (req, res) => {
+    await whatsappFlowHandler.handleFlowHealthCheck(req, res);
+  });
+
   // Engagement notification admin routes
   const engagementNotificationRoutes = (await import("./routes/engagement-notification-routes.js")).default;
   app.use("/api/admin", engagementNotificationRoutes);
