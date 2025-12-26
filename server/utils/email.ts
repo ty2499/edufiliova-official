@@ -999,17 +999,6 @@ export class EmailService {
       personalMessage: data.personalMessage || ''
     });
 
-    // Handle personalMessage conditional block manually after replacement
-    if (data.personalMessage) {
-      const personalMsgHtml = `
-        <strong>Message from ${data.senderName || 'EduFiliova Team'}:</strong><br/>
-        <em>“${data.personalMessage}”</em><br/><br/>
-      `;
-      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
-    } else {
-      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
-    }
-
     // Final replacements for non-standard variables
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
