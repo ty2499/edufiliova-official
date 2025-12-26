@@ -993,12 +993,11 @@ export class EmailService {
     expiresAt: string;
     personalMessage?: string;
   }): Promise<boolean> {
-    const templatePath = path.resolve(process.cwd(), 'public/email-assets/voucher/template.html');
+    const templatePath = path.resolve(process.cwd(), 'server/templates/voucher_purchase_template/email.html');
     let html = fs.readFileSync(templatePath, 'utf8');
 
     const { fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = data;
 
-    // Replace dynamic fields exactly as they appear in the template
     // ✅ USE BULLETPROOF NAME REPLACEMENT for fullName
     html = this.forceReplaceName(html, fullName);
     html = html.replace(/\{\{senderName\}\}/gi, senderName);
@@ -1009,8 +1008,8 @@ export class EmailService {
     // Handle personal message conditional block
     if (personalMessage) {
       const personalMsgHtml = `
-        <p style="margin:10px 0 0 0"><strong>Message from ${senderName}:</strong></p>
-        <p style="margin:5px 0 0 0; font-style:italic">"${personalMessage}"</p>
+        <strong>Message from ${senderName}:</strong><br/>
+        <em>“${personalMessage}”</em><br/><br/>
       `;
       html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
     } else {
