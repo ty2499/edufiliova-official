@@ -1,6 +1,8 @@
 import { emailService } from './email.ts';
+import * as fs from 'fs';
+import * as path from 'path';
 
-export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerName, voucherCode, amount, personalMessage) {
+export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerName, voucherCode, amount, personalMessage, expiresAt) {
   console.log(`📧 Sending gift voucher email to ${recipientEmail}...`);
   console.log(`   - Recipient: ${recipientName}`);
   console.log(`   - From: ${buyerName}`);
@@ -8,41 +10,114 @@ export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerN
   console.log(`   - Amount: $${amount}`);
   
   try {
-    const html = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-        <h2 style="color: #0C332C; text-align: center;">You've Received a Gift Voucher!</h2>
-        <p>Hi ${recipientName},</p>
-        <p>${buyerName} has sent you a gift voucher for <strong>EduFiliova</strong>!</p>
-        
-        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-          <h3 style="margin: 0; color: #666;">Voucher Amount</h3>
-          <div style="font-size: 32px; font-weight: bold; color: #e84a2a; margin: 10px 0;">$${amount}</div>
-          <h3 style="margin: 0; color: #666;">Your Voucher Code</h3>
-          <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px; color: #0C332C; margin: 10px 0; padding: 10px; border: 2px dashed #0C332C; display: inline-block;">${voucherCode}</div>
-        </div>
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'voucher', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const formatDate = (date) => {
+      if (!date) return 'No expiration';
+      const d = new Date(date);
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    };
+    
+    const fullName = recipientName || 'Friend';
+    const senderName = buyerName || 'Someone special';
+    const voucherAmount = typeof amount === 'number' ? amount.toFixed(2) : amount;
+    const expiryDate = formatDate(expiresAt);
+    const message = personalMessage || '';
+    
+    emailHtml = emailHtml.replace(/Hi \{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\},/gi, `Hi ${fullName},`);
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{ fullName \}\}/gi, fullName);
+    
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>senderName<\/span><span[^>]*>\}\}/gi, senderName);
+    emailHtml = emailHtml.replace(/\{\{senderName\}\}/gi, senderName);
+    emailHtml = emailHtml.replace(/\{\{SenderName\}\}/gi, senderName);
+    emailHtml = emailHtml.replace(/\{\{ senderName \}\}/gi, senderName);
+    
+    emailHtml = emailHtml.replace(/\$\{\{<\/span><span[^>]*>amount<\/span><span[^>]*>\}\}/gi, `$${voucherAmount}`);
+    emailHtml = emailHtml.replace(/\$\{\{amount\}\}/gi, `$${voucherAmount}`);
+    emailHtml = emailHtml.replace(/\{\{amount\}\}/gi, voucherAmount);
+    emailHtml = emailHtml.replace(/\{\{Amount\}\}/gi, voucherAmount);
+    emailHtml = emailHtml.replace(/\{\{ amount \}\}/gi, voucherAmount);
+    
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>voucherCode<\/span><span[^>]*>\}\}/gi, voucherCode);
+    emailHtml = emailHtml.replace(/\{\{voucherCode\}\}/gi, voucherCode);
+    emailHtml = emailHtml.replace(/\{\{VoucherCode\}\}/gi, voucherCode);
+    emailHtml = emailHtml.replace(/\{\{ voucherCode \}\}/gi, voucherCode);
+    
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>expiresAt<\/span><span[^>]*>\}\}/gi, expiryDate);
+    emailHtml = emailHtml.replace(/\{\{expiresAt\}\}/gi, expiryDate);
+    emailHtml = emailHtml.replace(/\{\{ExpiresAt\}\}/gi, expiryDate);
+    emailHtml = emailHtml.replace(/\{\{ expiresAt \}\}/gi, expiryDate);
+    
+    if (message) {
+      emailHtml = emailHtml.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, (match) => {
+        let content = match.replace(/\{\{#if personalMessage\}\}/gi, '').replace(/\{\{\/if\}\}/gi, '');
+        content = content.replace(/\{\{personalMessage\}\}/gi, message);
+        content = content.replace(/\{\{senderName\}\}/gi, senderName);
+        return content;
+      });
+      emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>personalMessage<\/span><span[^>]*>\}\}/gi, message);
+      emailHtml = emailHtml.replace(/\{\{personalMessage\}\}/gi, message);
+    } else {
+      emailHtml = emailHtml.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+    }
+    
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
+    emailHtml = emailHtml.replace(/images\/de07618f612ae3f3a960a43365f0d61d\.png/g, 'cid:logo');
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
+    emailHtml = emailHtml.replace(/images\/fe18318bf782f1266432dce6a1a46f60\.png/g, 'cid:promo');
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
 
-        ${personalMessage ? `
-        <div style="margin: 20px 0; font-style: italic; color: #555; border-left: 4px solid #eee; padding-left: 15px;">
-          "${personalMessage}"
-        </div>` : ''}
-
-        <p>You can use this code during checkout to apply the discount to your purchase.</p>
-        
-        <div style="text-align: center; margin-top: 30px;">
-          <a href="https://edufiliova.com" style="background-color: #0C332C; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Visit EduFiliova</a>
-        </div>
-        
-        <p style="margin-top: 30px; font-size: 12px; color: #888; text-align: center;">
-          © ${new Date().getFullYear()} EduFiliova. All rights reserved.
-        </p>
-      </div>
-    `;
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'voucher', 'images');
+    const attachments = [
+      {
+        filename: 'spiral1.png',
+        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
+        cid: 'spiral1',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logo.png',
+        path: path.join(imagesDir, 'de07618f612ae3f3a960a43365f0d61d.png'),
+        cid: 'logo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'spiral2.png',
+        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
+        cid: 'spiral2',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'corner.png',
+        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
+        cid: 'corner',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'promo.png',
+        path: path.join(imagesDir, 'fe18318bf782f1266432dce6a1a46f60.png'),
+        cid: 'promo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logofull.png',
+        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
+        cid: 'logofull',
+        contentType: 'image/png'
+      }
+    ];
 
     const result = await emailService.sendEmail({
       to: recipientEmail,
-      subject: `You've received a $${amount} Gift Voucher from ${buyerName}!`,
-      html,
-      from: `"EduFiliova" <orders@edufiliova.com>`
+      subject: `You've received a $${voucherAmount} Gift Voucher from ${senderName}!`,
+      html: emailHtml,
+      from: `"EduFiliova" <orders@edufiliova.com>`,
+      attachments
     });
     
     if (result) {

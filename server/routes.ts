@@ -7079,7 +7079,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           voucher.buyerName || 'Someone',
           voucherCode,
           parseFloat(voucher.amount),
-          voucher.personalMessage || undefined
+          voucher.personalMessage || undefined,
+          voucher.expiresAt
         );
       } catch (emailError) {
         console.error('Failed to send gift voucher email:', emailError);
