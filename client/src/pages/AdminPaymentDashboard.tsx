@@ -1763,10 +1763,13 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
   // Re-validate selectedTab when userRole changes (after profile loads)
   useEffect(() => {
     const allowedTabs = roleTabAccess[userRole] || ['dashboard'];
+    console.log('🔧 AdminDashboard: userRole=', userRole, 'selectedTab=', selectedTab, 'allowedTabs=', allowedTabs, 'isAllowed=', allowedTabs.includes(selectedTab));
     if (!allowedTabs.includes(selectedTab)) {
-      setSelectedTab(getDefaultTab(userRole));
+      const newTab = getDefaultTab(userRole);
+      console.log('🔧 AdminDashboard: Resetting to', newTab);
+      setSelectedTab(newTab);
     }
-  }, [userRole]);
+  }, [userRole, selectedTab]);
   const [userSearchQuery, setUserSearchQuery] = useState('');
   const [selectedUserId, setSelectedUserId] = useState<string>('');
   const [selectedRole, setSelectedRole] = useState<string>('');
