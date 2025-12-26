@@ -153,7 +153,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
-                  style={{ color: '#000000 !important', WebkitTextFillColor: '#000000 !important' }}
+                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                 />
                 {errors.email && <p className="text-sm text-primary">{errors.email}</p>}
               </div>
@@ -175,7 +175,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                   placeholder="123456"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  style={{ color: '#000000 !important', WebkitTextFillColor: '#000000 !important' }}
+                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white text-center"
                 />
                 {errors.code && <p className="text-sm text-primary">{errors.code}</p>}
               </div>
@@ -203,8 +203,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                     placeholder="Enter new password (8+ characters)"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className={`pr-10 ${errors.newPassword ? "border-primary" : ""}`}
-                    style={{ color: '#000000 !important', WebkitTextFillColor: '#000000 !important' }}
+                    className={`h-12 text-base pr-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white ${errors.newPassword ? "border-primary" : ""}`}
                     disabled={loading}
                   />
                   <button
@@ -227,8 +226,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                   placeholder="Confirm your new password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={errors.confirmPassword ? "border-primary" : ""}
-                  style={{ color: '#000000 !important', WebkitTextFillColor: '#000000 !important' }}
+                  className={`h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white ${errors.confirmPassword ? "border-primary" : ""}`}
                   disabled={loading}
                 />
                 {errors.confirmPassword && <p className="text-sm text-primary">{errors.confirmPassword}</p>}
