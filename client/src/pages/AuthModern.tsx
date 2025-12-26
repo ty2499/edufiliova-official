@@ -650,6 +650,49 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
     }
   };
 
+  const handleVerifyResetPin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!resetPin.trim()) {
+      setErrors({ resetPin: "Reset code is required" });
+      return;
+    }
+    
+    if (resetPin.length !== 6) {
+      setErrors({ resetPin: "Reset code must be 6 digits" });
+      return;
+    }
+    
+    setLoading(true);
+    setErrors({});
+    
+    try {
+      const response = await fetch(resolveApiUrl('/api/auth/verify-reset-pin'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: passwordResetEmail,
+          pin: resetPin
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        // Reset successful - redirect to login
+        setResetPin('');
+        setCurrentStep('login');
+        setErrors({ general: 'Password reset successful. Please log in with your new password.' });
+      } else {
+        setErrors({ resetPin: result.error || "Invalid reset code" });
+      }
+    } catch (error: any) {
+      setErrors({ resetPin: error.message || "Failed to verify reset code" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const renderLoginForm = () => (
     <div>
       <div className="mb-6 text-center">
@@ -1689,7 +1732,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </p>
       </div>
 
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleVerifyResetPin}>
         <div>
           <Label htmlFor="reset-pin" className="text-sm font-medium text-white mb-1 block">
             Reset Code*
@@ -1704,6 +1747,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             maxLength={6}
             data-testid="input-reset-pin"
           />
+          {errors.resetPin && <p className="text-sm text-red-400 mt-1">{errors.resetPin}</p>}
         </div>
 
         <div className="bg-green-50 border border-green-200 rounded-lg p-3">
