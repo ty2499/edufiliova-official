@@ -66,6 +66,33 @@ export class EmailService {
     }
   }
 
+  // ✅ BULLETPROOF NAME REPLACEMENT - Force all variations to display
+  private forceReplaceName(html: string, fullName: string): string {
+    // Replace ALL possible variations of {{fullName}} and {{FullName}}
+    const patterns = [
+      '{{fullName}}',
+      '{{FullName}}',
+      '{{ fullName}}',
+      '{{ FullName}}',
+      '{{fullName }}',
+      '{{FullName }}',
+      '{{ fullName }}',
+      '{{ FullName }}',
+      '{{fullname}}',
+      '{{FULLNAME}}',
+    ];
+    
+    patterns.forEach(pattern => {
+      html = html.replaceAll(pattern, fullName);
+    });
+    
+    // Regex fallback for edge cases with spaces/variations
+    html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
+    html = html.replace(/\{\{\s*FullName\s*\}\}/gi, fullName);
+    
+    return html;
+  }
+
   async sendEmail(options: EmailOptions): Promise<boolean> {
     if (this.transporters.size === 0) {
       await this.initializeFromDatabase();
@@ -111,12 +138,10 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // SIMPLE & DIRECT - Just replace the placeholder
     const fullName = data.fullName || 'Teacher';
     
-    // Replace {{FullName}} directly - case insensitive
-    html = html.replace(/\{\{FullName\}\}/gi, fullName);
-    html = html.replace(/\{\{fullName\}\}/gi, fullName);
+    // ✅ USE BULLETPROOF NAME REPLACEMENT
+    html = this.forceReplaceName(html, fullName);
     
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
@@ -156,50 +181,23 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection - Unified high-reliability approach
     const fullName = data.fullName || 'Teacher';
     const displayName = data.displayName || data.fullName || 'Teacher';
     const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
 
-    // 1. Handle blocks first
+    // ✅ USE BULLETPROOF NAME REPLACEMENT FIRST
+    html = this.forceReplaceName(html, fullName);
+
+    // 1. Handle blocks
     html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
 
-    // 2. Aggressive fallback: Replace ANY occurrence of known hardcoded names or patterns
-    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi, /\{\{FullName\}\}/gi];
+    // 2. Replace hardcoded placeholder names
+    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
     hardcodedNames.forEach(pattern => {
       html = html.replace(pattern, fullName);
     });
 
-    // 3. Standardize all dynamic variants
-    const namePatterns = [
-      /\{\{fullName\}\}/gi,
-      /\{\{ fullName \}\}/gi,
-      /\{\{data\.fullName\}\}/gi,
-      /\{\{ data\.fullName \}\}/gi,
-      /\{\{displayName\}\}/gi,
-      /\{\{ displayName \}\}/gi,
-      /\{\{data\.displayName\}\}/gi,
-      /\{\{ data\.displayName \}\}/gi,
-      /\$\{data\.fullName\}/gi,
-      /\$\{fullName\}/gi,
-      /\$\{data\.displayName\}/gi,
-      /\$\{displayName\}/gi,
-      /\[\[Full Name\]\]/gi,
-      /\[\[Display Name\]\]/gi,
-      /\[\[data\.fullName\]\]/gi,
-      /\[\[data\.displayName\]\]/gi
-    ];
-
-    namePatterns.forEach(pattern => {
-      html = html.replace(pattern, fullName);
-    });
-
-    // 4. Force replace greetings
-    html = html.replace(/Hi\s+[\$]?\{[^\}]+\}/gi, `Hi ${fullName}`);
-    html = html.replace(/Hi\s+\[\[[^\]]+\]\]/gi, `Hi ${fullName}`);
-    html = html.replace(/Hi\s+Tyler\s+Williams/gi, `Hi ${fullName}`);
-
-    // 5. Final cleanup
+    // 3. Final cleanup
     html = html.replace(/\{\{reason\}\}/gi, reasonText);
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
     html = html.replace(/\{\{#if reason\}\}/gi, '');
@@ -252,18 +250,11 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // CLEAN - Replace ONLY the fullName placeholder with actual name
     const fullName = data.fullName || (data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer');
     const appType = data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer';
     
-    // Replace the exact pattern: "{{ fullName}}" (with space and closing braces in different parts)
-    html = html.replaceAll('{{ fullName}}', fullName);
-    html = html.replaceAll('{{fullName}}', fullName);
-    html = html.replaceAll('{{FullName}}', fullName);
-    
-    // Catch any remaining patterns with variations
-    html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
-    html = html.replace(/Hi\s*\{\{\s*fullName\s*\}\}/gi, `Hi ${fullName}`);
+    // ✅ USE BULLETPROOF NAME REPLACEMENT
+    html = this.forceReplaceName(html, fullName);
     
     // Final cleanup
     html = html.replace(/\{\{appType\}\}/gi, appType);
