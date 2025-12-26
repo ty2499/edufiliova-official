@@ -910,8 +910,10 @@ export class EmailService {
     const teacherName = data.teacherName || 'Instructor';
     const category = data.category || 'General';
 
-    // Replace dynamic placeholders
-    html = html.replace(/\{\{fullName\}\}/gi, fullName);
+    // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
+    html = this.forceReplaceName(html, fullName);
+    
+    // Replace other dynamic placeholders
     html = html.replace(/\{\{courseTitle\}\}/gi, courseTitle);
     html = html.replace(/\{\{teacherName\}\}/gi, teacherName);
     html = html.replace(/\{\{category\}\}/gi, category);
