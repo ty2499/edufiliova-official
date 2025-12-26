@@ -1,15 +1,10 @@
-// GitHub Integration - Uses Personal Access Token or Replit Connector
+// GitHub Integration - Uses Replit Connector
 import { Octokit } from '@octokit/rest'
 
 let connectionSettings: any;
 
 async function getAccessToken(): Promise<string> {
-  // First, check for personal access token in environment
-  if (process.env.GITHUB_TOKEN) {
-    return process.env.GITHUB_TOKEN;
-  }
-
-  // Fallback to Replit connector
+  // Check if cached token is still valid
   if (connectionSettings && connectionSettings.settings?.expires_at && new Date(connectionSettings.settings.expires_at).getTime() > Date.now()) {
     return connectionSettings.settings.access_token;
   }
@@ -22,7 +17,7 @@ async function getAccessToken(): Promise<string> {
     : null;
 
   if (!xReplitToken) {
-    throw new Error('GITHUB_TOKEN not set and Replit connector not available');
+    throw new Error('X_REPLIT_TOKEN not found for repl/depl');
   }
 
   try {
@@ -43,7 +38,7 @@ async function getAccessToken(): Promise<string> {
     }
     return accessToken;
   } catch (error) {
-    throw new Error('GitHub not connected. Please set GITHUB_TOKEN environment variable.');
+    throw new Error('GitHub not connected. Please connect GitHub in Replit settings.');
   }
 }
 
