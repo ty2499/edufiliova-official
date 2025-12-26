@@ -717,8 +717,8 @@ export class EmailService {
     const loginTime = data.loginTime || new Date().toLocaleString();
     const changePasswordUrl = data.changePasswordUrl || `${baseUrl}/change-password`;
 
-    // Replace split placeholder for fullName (unique pattern in this template)
-    html = html.replace(/Hi\s*\{\{[^}]*?fullName\}[^}]*\}\}/gi, `Hi ${fullName}`);
+    // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
+    html = this.forceReplaceName(html, fullName);
     
     // Replace all other simple placeholders
     html = html.replace(/\{\{deviceName\}\}/gi, deviceName);
