@@ -282,6 +282,59 @@ function getCountryCodeFromName(countryName: string): string {
   return country ? country.code : 'US';
 }
 
+// Helper function to get user from session token
+async function getUserFromSession(authHeader: string) {
+  try {
+    if (!authHeader) return null;
+    
+    const sessionId = authHeader.replace('Bearer ', '');
+    if (!sessionId) return null;
+
+    // Verify session
+    const session = await db.select()
+      .from(userLoginSessions)
+      .where(and(
+        eq(userLoginSessions.sessionId, sessionId),
+        eq(userLoginSessions.isActive, true),
+        gt(userLoginSessions.expiresAt, new Date())
+      ))
+      .limit(1);
+
+    if (session.length === 0) return null;
+
+    // Get user and profile data
+    const userProfile = await db.select({
+      id: users.id,
+      userId: users.userId,
+      email: users.email,
+      name: profiles.name,
+      role: profiles.role,
+      avatarUrl: profiles.avatarUrl,
+      educationLevel: profiles.educationLevel,
+      subscriptionTier: profiles.subscriptionTier,
+      legacyPlan: profiles.legacyPlan,
+      planExpiry: profiles.planExpiry
+    })
+    .from(users)
+    .innerJoin(profiles, eq(users.id, profiles.userId))
+    .where(eq(users.id, session[0].userId))
+    .limit(1);
+
+    if (userProfile.length === 0) return null;
+
+    return {
+      id: userProfile[0].id,
+      userId: userProfile[0].userId,
+      email: userProfile[0].email,
+      role: userProfile[0].role || 'user',
+      profile: userProfile[0]
+    };
+  } catch (error) {
+    console.error('Error getting user from session:', error);
+    return null;
+  }
+}
+
 // Helper function to convert userId to UUID (handles both text ID and UUID formats)
 async function getUserUuidByTextId(userIdOrUuid: string): Promise<string | null> {
   try {
