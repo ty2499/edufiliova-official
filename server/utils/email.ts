@@ -975,6 +975,58 @@ export class EmailService {
     });
   }
 
+  async sendCoursePurchaseEmail(email: string, data: {
+    fullName: string;
+    courseName: string;
+    teacherName: string;
+    orderId: string;
+    price: number | string;
+    accessType: string;
+    purchaseDate: string;
+  }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'server/templates/course_purchase_template/email.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // ✅ USE BULLETPROOF VARIABLE REPLACEMENT
+    html = this.forceReplaceVariables(html, {
+      fullName: data.fullName || 'Learner',
+      courseName: data.courseName,
+      teacherName: data.teacherName,
+      orderId: data.orderId,
+      price: data.price.toString(),
+      accessType: data.accessType,
+      purchaseDate: data.purchaseDate
+    });
+
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    // Map images to CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve_top');
+    html = html.replaceAll('images/d003f0807fd61e8939ef89ef37a2a824.png', 'cid:logo');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:ring');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+    html = html.replaceAll('images/c986afbaeaa02e99d02feeac68f6b944.png', 'cid:hero');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: `Confirmation: You've enrolled in ${data.courseName}!`,
+      html,
+      from: '"EduFiliova Orders" <orders@edufiliova.com>',
+      attachments: [
+        { filename: 'curve_top.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766756681486.png'), cid: 'curve_top' },
+        { filename: 'logo.png', path: assetPath('d003f0807fd61e8939ef89ef37a2a824_1766756681484.png'), cid: 'logo' },
+        { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766756681481.png'), cid: 'ring' },
+        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766756681477.png'), cid: 'corner' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766756681480.png'), cid: 'social' },
+        { filename: 'hero.png', path: assetPath('c986afbaeaa02e99d02feeac68f6b944_1766756681482.png'), cid: 'hero' },
+      ]
+    });
+  }
+
   async sendVoucherEmail(to: string, data: {
     fullName: string;
     senderName: string;

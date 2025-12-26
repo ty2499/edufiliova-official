@@ -1,0 +1,37 @@
+Learning • Skills • Careers
+
+Hi {{fullName}},
+ Thank you for your purchase! We’re happy to confirm that your payment was successful and you now have full access to your course on EduFiliova.
+ You can start learning immediately at your own pace.
+
+Course Information:
+Course Name: {{courseName}}
+Instructor: {{teacherName}}
+Order ID: #{{orderId}}
+Amount Paid: ${{price}}
+Access Type: {{accessType}} (e.g. Lifetime / Subscription-based)
+Purchase Date: {{purchaseDate}}
+What You Can Do Now
+With your course access, you can:
+Watch lessons and view learning materials
+Complete quizzes, exercises, and assignments
+Track your learning progress
+Access your course anytime from your dashboard
+Earn a certificate upon successful completion (if applicable)
+ Your course will always be available in your My Courses section.
+Important Notes
+Your course access is linked to your EduFiliova account
+Please do not share your login details with others
+If this course includes live sessions, you’ll receive reminders before each session  
+Need Help?
+If you have any questions about your course or experience any issues accessing the content, our support team is here to help.
+Contact us at support@edufiliova.com
+We wish you a productive and enjoyable learning experience. Thank you for choosing EduFiliova to support your education and growth.
+Warm regards,  EduFiliova Orders Team
+
+Thank you!
+Feel free to reach out if you have any questions.
+You can unsubscribe from these emails here. 
+ Visit the  Help Center
+ Or contact us anytime at support@edufiliova.com
+ 

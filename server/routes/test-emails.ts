@@ -81,11 +81,13 @@ router.post('/test-emails/send-all', async (req: Request, res: Response) => {
     // 2. Course Purchase Email (orders@edufiliova.com)
     try {
       const coursePurchaseResult = await emailService.sendCoursePurchaseEmail(testEmail, {
+        fullName: 'Test User',
         courseName: 'Complete Web Development Bootcamp',
-        price: 149.99,
+        teacherName: 'John Instructor',
         orderId: 'TEST-COURSE-001',
-        customerName: 'Test User',
-        accessUrl: 'https://edufiliova.com/courses/web-dev'
+        price: 149.99,
+        accessType: 'Lifetime Access',
+        purchaseDate: new Date().toLocaleDateString()
       });
       results.push({ type: 'Course Purchase Email (orders@)', success: coursePurchaseResult });
     } catch (error: any) {
@@ -325,10 +327,13 @@ router.get('/test-emails/send-to-tyler', async (req: Request, res: Response) => 
         customerName: 'Tyler Williams'
       })},
       { type: 'Course Purchase', fn: () => emailService.sendCoursePurchaseEmail(testEmail, {
+        fullName: 'Tyler Williams',
         courseName: 'Complete Web Development Bootcamp',
-        price: 149.99,
+        teacherName: 'Sarah Smith',
         orderId: 'COURSE-' + Date.now(),
-        customerName: 'Tyler Williams'
+        price: 149.99,
+        accessType: 'Lifetime Access',
+        purchaseDate: new Date().toLocaleDateString()
       })},
       { type: 'Subscription', fn: () => emailService.sendSubscriptionEmail(testEmail, {
         planName: 'Premium Plan',
@@ -490,6 +495,41 @@ router.post('/test-emails/digital-purchase', async (req: Request, res: Response)
   } catch (error: any) {
     console.error('❌ Error sending digital purchase test email:', error);
     res.status(500).json({ error: 'Failed to send digital purchase email', details: error.message });
+  }
+});
+
+// Test endpoint for course purchase email
+router.post('/test-emails/course-purchase', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, courseName, teacherName, orderId, price, accessType, purchaseDate } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing course purchase email to ${testEmail}...`);
+
+    const result = await emailService.sendCoursePurchaseEmail(testEmail, {
+      fullName: fullName || 'John Doe',
+      courseName: courseName || 'Advanced Mathematics Masterclass',
+      teacherName: teacherName || 'Dr. Sarah Wilson',
+      orderId: orderId || 'EDU-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
+      price: price || '99.99',
+      accessType: accessType || 'Lifetime Access',
+      purchaseDate: purchaseDate || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Course purchase email sent successfully' : 'Failed to send course purchase email',
+      details: {
+        recipientEmail: testEmail,
+        courseName: courseName || 'Advanced Mathematics Masterclass'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending course purchase test email:', error);
+    res.status(500).json({ error: 'Failed to send course purchase email', details: error.message });
   }
 });
 
