@@ -14758,27 +14758,109 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/admin/users/:userId/status", requireAuth, requireAdmin, async (req, res) => {
     try {
       const { userId } = req.params;
-      const { status } = req.body;
+      const { status, reason } = req.body;
 
       if (!['active', 'banned', 'suspended'].includes(status)) {
         return res.status(400).json({ success: false, error: "Invalid status. Must be active, banned, or suspended" });
       }
 
-      // First get the UUID for the user
-      const user = await db
-        .select({ id: users.id })
+      // First get the UUID and email for the user
+      const userResult = await db
+        .select({ 
+          id: users.id, 
+          email: users.email 
+        })
         .from(users)
         .where(eq(users.userId, userId))
         .limit(1);
 
-      if (user.length === 0) {
+      if (userResult.length === 0) {
         return res.status(404).json({ success: false, error: "User not found" });
       }
+
+      const user = userResult[0];
+
+      // Get user profile for name
+      const profileResult = await db
+        .select({ 
+          displayName: profiles.displayName,
+          firstName: profiles.firstName,
+          lastName: profiles.lastName
+        })
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      const profile = profileResult[0];
+      const userName = profile?.displayName || profile?.firstName || 'User';
 
       await db
         .update(profiles)
         .set({ status, updatedAt: new Date() })
-        .where(eq(profiles.userId, user[0].id));
+        .where(eq(profiles.userId, user.id));
+
+      // Send email notification for ban/suspension
+      if (status === 'banned' || status === 'suspended') {
+        try {
+          const { emailService } = await import('./utils/email.js');
+          
+          const statusLabel = status === 'banned' ? 'Banned' : 'Suspended';
+          const actionText = status === 'banned' 
+            ? 'Your account has been permanently banned from EduFiliova.' 
+            : 'Your account has been temporarily suspended from EduFiliova.';
+          
+          const reasonText = reason 
+            ? `<p style="color: #666; font-size: 16px; line-height: 1.6;"><strong>Reason:</strong> ${reason}</p>` 
+            : '';
+
+          const appealText = status === 'suspended'
+            ? '<p style="color: #666; font-size: 16px; line-height: 1.6;">If you believe this was done in error, please contact our support team to appeal this decision.</p>'
+            : '<p style="color: #666; font-size: 16px; line-height: 1.6;">If you believe this was done in error, you may contact our support team.</p>';
+
+          const emailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa;">
+  <div style="max-width: 600px; margin: 0 auto; background: #ffffff;">
+    <div style="background-color: #0C332C; padding: 30px 40px; text-align: center;">
+      <h1 style="color: #ffffff; margin: 0; font-size: 24px;">EduFiliova</h1>
+    </div>
+    <div style="padding: 40px;">
+      <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 15px 20px; margin-bottom: 20px;">
+        <h2 style="color: #dc2626; margin: 0; font-size: 18px;">Account ${statusLabel}</h2>
+      </div>
+      <p style="color: #1a1a1a; font-size: 16px; line-height: 1.6;">Hi ${userName},</p>
+      <p style="color: #666; font-size: 16px; line-height: 1.6;">${actionText}</p>
+      ${reasonText}
+      ${appealText}
+      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+        Contact us at: <a href="mailto:support@edufiliova.com" style="color: #0C332C;">support@edufiliova.com</a>
+      </p>
+    </div>
+    <div style="background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px;">
+      <p style="margin: 0;">© ${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>`;
+
+          await emailService.sendEmail({
+            to: user.email,
+            subject: `Your EduFiliova Account Has Been ${statusLabel}`,
+            html: emailHtml,
+            from: '"EduFiliova Support" <support@edufiliova.com>'
+          });
+
+          console.log(`📧 ${statusLabel} notification email sent to ${user.email}`);
+        } catch (emailError) {
+          console.error('Failed to send status notification email:', emailError);
+          // Continue even if email fails - status update was successful
+        }
+      }
 
       const statusMessage = status === 'active' ? 'User unbanned successfully' : 
                            status === 'banned' ? 'User banned successfully' : 
@@ -14791,6 +14873,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ success: false, error: "Failed to update user status" });
     }
   });
+
 
   // Admin manually update user subscription plan
   app.put("/api/admin/users/:userId/plan", requireAdmin, async (req, res) => {
