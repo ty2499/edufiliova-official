@@ -14802,56 +14802,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (status === 'banned' || status === 'suspended') {
         try {
           const { emailService } = await import('./utils/email.js');
+          const fs = await import('fs');
+          const path = await import('path');
           
           const statusLabel = status === 'banned' ? 'Banned' : 'Suspended';
-          const actionText = status === 'banned' 
-            ? 'Your account has been permanently banned from EduFiliova.' 
-            : 'Your account has been temporarily suspended from EduFiliova.';
           
-          const reasonText = reason 
-            ? `<p style="color: #666; font-size: 16px; line-height: 1.6;"><strong>Reason:</strong> ${reason}</p>` 
-            : '';
-
-          const appealText = status === 'suspended'
-            ? '<p style="color: #666; font-size: 16px; line-height: 1.6;">If you believe this was done in error, please contact our support team to appeal this decision.</p>'
-            : '<p style="color: #666; font-size: 16px; line-height: 1.6;">If you believe this was done in error, you may contact our support team.</p>';
-
-          const emailHtml = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa;">
-  <div style="max-width: 600px; margin: 0 auto; background: #ffffff;">
-    <div style="background-color: #0C332C; padding: 30px 40px; text-align: center;">
-      <h1 style="color: #ffffff; margin: 0; font-size: 24px;">EduFiliova</h1>
-    </div>
-    <div style="padding: 40px;">
-      <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 15px 20px; margin-bottom: 20px;">
-        <h2 style="color: #dc2626; margin: 0; font-size: 18px;">Account ${statusLabel}</h2>
-      </div>
-      <p style="color: #1a1a1a; font-size: 16px; line-height: 1.6;">Hi ${userName},</p>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">${actionText}</p>
-      ${reasonText}
-      ${appealText}
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
-        Contact us at: <a href="mailto:support@edufiliova.com" style="color: #0C332C;">support@edufiliova.com</a>
-      </p>
-    </div>
-    <div style="background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px;">
-      <p style="margin: 0;">© ${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
-    </div>
-  </div>
-</body>
-</html>`;
+          // Read suspension email template
+          const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'suspension', 'template.html');
+          let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+          
+          // Replace dynamic placeholders
+          emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, userName);
+          emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, userName);
+          emailHtml = emailHtml.replace(/\{\{ fullName \}\}/gi, userName);
+          
+          // Replace image paths with CID references for embedded images
+          emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
+          emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, 'cid:logo');
+          emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
+          emailHtml = emailHtml.replace(/images\/53d788456ae4cc2800001f0737c2d843\.png/g, 'cid:arrow');
+          emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+          
+          // Prepare image attachments with CID
+          const imagesPath = path.join(process.cwd(), 'public', 'email-assets', 'suspension', 'images');
+          const attachments = [
+            {
+              filename: 'db561a55b2cf0bc6e877bb934b39b700.png',
+              path: path.join(imagesPath, 'db561a55b2cf0bc6e877bb934b39b700.png'),
+              cid: 'spiral1',
+              contentType: 'image/png'
+            },
+            {
+              filename: 'f28befc0a869e8a352bf79aa02080dc7.png',
+              path: path.join(imagesPath, 'f28befc0a869e8a352bf79aa02080dc7.png'),
+              cid: 'logo',
+              contentType: 'image/png'
+            },
+            {
+              filename: '83faf7f361d9ba8dfdc904427b5b6423.png',
+              path: path.join(imagesPath, '83faf7f361d9ba8dfdc904427b5b6423.png'),
+              cid: 'spiral2',
+              contentType: 'image/png'
+            },
+            {
+              filename: '53d788456ae4cc2800001f0737c2d843.png',
+              path: path.join(imagesPath, '53d788456ae4cc2800001f0737c2d843.png'),
+              cid: 'arrow',
+              contentType: 'image/png'
+            },
+            {
+              filename: '9f7291948d8486bdd26690d0c32796e0.png',
+              path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'),
+              cid: 'logofull',
+              contentType: 'image/png'
+            }
+          ];
 
           await emailService.sendEmail({
             to: user.email,
-            subject: `Your EduFiliova Account Has Been ${statusLabel}`,
+            subject: `Important: Your EduFiliova Account Has Been ${statusLabel}`,
             html: emailHtml,
-            from: '"EduFiliova Support" <support@edufiliova.com>'
+            from: '"EduFiliova Trust & Safety" <support@edufiliova.com>',
+            attachments
           });
 
           console.log(`📧 ${statusLabel} notification email sent to ${user.email}`);
@@ -14872,7 +14884,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ success: false, error: "Failed to update user status" });
     }
   });
-
 
   // Admin manually update user subscription plan
   app.put("/api/admin/users/:userId/plan", requireAdmin, async (req, res) => {
