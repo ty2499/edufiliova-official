@@ -420,3 +420,163 @@ export async function sendCoursePurchaseEmail(recipientEmail, recipientName, cou
     throw error;
   }
 }
+
+/**
+ * Send new course announcement email to Grade 11+ students
+ */
+export async function sendNewCourseAnnouncementEmail(recipientEmail, recipientName, courseData) {
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'new-course-announcement', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Student';
+    const courseTitle = courseData.courseTitle || 'New Course';
+    const teacherName = courseData.teacherName || 'EduFiliova Instructor';
+    const category = courseData.category || 'General';
+    
+    // Replace placeholders - handle split HTML spans
+    const replacements = {
+      'fullName': fullName,
+      'courseTitle': courseTitle,
+      'teacherName': teacherName,
+      'category': category
+    };
+    
+    // Handle various placeholder formats
+    for (const [key, value] of Object.entries(replacements)) {
+      // Standard format
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+      // Split span format
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
+    }
+    
+    // Replace image paths with CID references
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
+    emailHtml = emailHtml.replace(/images\/41506b29d7f0bbde9fcb0d4afb720c70\.png/g, 'cid:logo');
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
+    emailHtml = emailHtml.replace(/images\/dae012787ae5c5348c44bb83c0009419\.png/g, 'cid:promo');
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'new-course-announcement', 'images');
+    
+    const attachments = [
+      {
+        filename: 'spiral1.png',
+        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
+        cid: 'spiral1',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logo.png',
+        path: path.join(imagesDir, '41506b29d7f0bbde9fcb0d4afb720c70.png'),
+        cid: 'logo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'spiral2.png',
+        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
+        cid: 'spiral2',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'corner.png',
+        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
+        cid: 'corner',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'promo.png',
+        path: path.join(imagesDir, 'dae012787ae5c5348c44bb83c0009419.png'),
+        cid: 'promo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logofull.png',
+        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
+        cid: 'logofull',
+        contentType: 'image/png'
+      }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `New Course Available: ${courseTitle}`,
+      html: emailHtml,
+      from: `"EduFiliova" <noreply@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Course announcement email sent to ${recipientEmail}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending course announcement email:`, error);
+    return false;
+  }
+}
+
+/**
+ * Send course announcement to all Grade 11+ students
+ */
+export async function sendCourseAnnouncementToEligibleStudents(courseData) {
+  try {
+    // Import database connection
+    const { db } = await import('../db.js');
+    const { profiles, users } = await import('../../shared/schema.js');
+    const { eq, and, or, ilike, sql } = await import('drizzle-orm');
+    
+    // Find all students in Grade 11, 12, or college level
+    const eligibleStudents = await db
+      .select({
+        email: profiles.email,
+        name: profiles.name,
+        grade: profiles.grade
+      })
+      .from(profiles)
+      .innerJoin(users, eq(users.id, profiles.userId))
+      .where(
+        and(
+          eq(users.role, 'student'),
+          or(
+            ilike(profiles.grade, '%11%'),
+            ilike(profiles.grade, '%12%'),
+            ilike(profiles.grade, '%Form 5%'),
+            ilike(profiles.grade, '%Form 6%'),
+            ilike(profiles.grade, '%College%'),
+            ilike(profiles.grade, '%University%'),
+            ilike(profiles.grade, '%A-Level%'),
+            ilike(profiles.grade, '%AS-Level%'),
+            ilike(profiles.grade, '%A2-Level%')
+          )
+        )
+      );
+    
+    console.log(`📧 Found ${eligibleStudents.length} eligible students (Grade 11+ / College) for course announcement`);
+    
+    let successCount = 0;
+    let failCount = 0;
+    
+    for (const student of eligibleStudents) {
+      if (student.email) {
+        try {
+          await sendNewCourseAnnouncementEmail(student.email, student.name, courseData);
+          successCount++;
+        } catch (err) {
+          failCount++;
+          console.error(`Failed to send to ${student.email}:`, err.message);
+        }
+        // Small delay to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+    }
+    
+    console.log(`📧 Course announcement complete: ${successCount} sent, ${failCount} failed`);
+    return { sent: successCount, failed: failCount, total: eligibleStudents.length };
+  } catch (error) {
+    console.error('Error sending course announcements:', error);
+    return { sent: 0, failed: 0, total: 0, error: error.message };
+  }
+}

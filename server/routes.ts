@@ -27862,6 +27862,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      // Send course announcement to Grade 11+ students
+      try {
+        const { sendCourseAnnouncementToEligibleStudents } = await import('./utils/email-templates.js');
+        const adminProfile = await db.select().from(profiles).where(eq(profiles.userId, req.user.id)).limit(1);
+        
+        sendCourseAnnouncementToEligibleStudents({
+          courseTitle: title,
+          teacherName: adminProfile.length > 0 ? adminProfile[0].name : 'EduFiliova',
+          category: subject || 'General'
+        }).then(result => {
+          console.log(`📧 Course announcement sent: ${result.sent}/${result.total} students`);
+        }).catch(err => {
+          console.error('Course announcement background error:', err);
+        });
+      } catch (emailErr) {
+        console.error('Failed to trigger course announcement:', emailErr);
+      }
+
       res.json({ success: true,
         success: true,
         course: newCourse[0],
