@@ -1,4 +1,3 @@
-import path from 'path';
 import type { Express, Response, Request } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
@@ -503,22 +502,12 @@ const createEmailTransporter = async (senderEmail: string) => {
 };
 
 // Email templates with modern branding
-export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification' | 'password_reset_whatsapp' | 'password_changed_confirmation_whatsapp' | 'phone_linking_verification', data: any) => {
+export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification', data: any) => {
   const whiteLogoUrl = process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
   const baseUrl = process.env.REPLIT_DEV_DOMAIN 
     ? `https://${process.env.REPLIT_DEV_DOMAIN}`
     : process.env.BASE_URL || process.env.APP_URL || 'https://edufiliova.com';
   const currentYear = new Date().getFullYear();
-
-  const cleanReplace = (html: string, key: string, value: any) => {
-    const val = String(value);
-    const fuzzyRegex = new RegExp('\\{\\{[^{}]*?' + key + '[^{}]*?\\}\\}', 'g');
-    html = html.replace(fuzzyRegex, val);
-    const fuzzySingleRegex = new RegExp('\\{[^{}]*?' + key + '[^{}]*?\\}', 'g');
-    html = html.replace(fuzzySingleRegex, val);
-    const fallbackRegex = new RegExp('<span[^>]*>' + key + '<\\/span>', 'g');
-    return html.replace(fallbackRegex, val);
-  };
   
   const baseStyle = `
     <style>
@@ -535,7 +524,7 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
       }
       .header { 
-        background-color: #0C332C; 
+        background-color: #ff5834; 
         padding: 30px 40px; 
         text-align: center; 
       }
@@ -583,7 +572,7 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       }
       .button { 
         display: inline-block; 
-        background-color: #0C332C; 
+        background-color: #ff5834; 
         color: #ffffff !important; 
         padding: 14px 32px; 
         text-decoration: none; 
@@ -594,13 +583,13 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       }
       .alert-warning { 
         background-color: #fff4ed; 
-        border-left: 4px solid #0C332C; 
+        border-left: 4px solid #ff5834; 
         padding: 15px 20px; 
         border-radius: 6px; 
         margin: 20px 0; 
       }
       .footer { 
-        background: #0C332C; 
+        background: #ff5834; 
         padding: 40px; 
         color: #ffffff; 
       }
@@ -768,59 +757,6 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         </body></html>
       `;
 
-                                case 'password_reset_whatsapp':
-      const imageAssets = [
-        'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
-        '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
-        '83faf7f361d9ba8dfdc904427b5b6423_1766506747364.png',
-        '3d94f798ad2bd582f8c3afe175798088_1766506747360.png',
-        'afa2a8b912b8da2c69e49d9de4a30768_1766506747368.png',
-        '9f7291948d8486bdd26690d0c32796e0_1766506747363.png'
-      ];
-      
-      let rendered = data.htmlContent;
-      
-      // Ultra-aggressive placeholder cleanup
-      
-
-      rendered = cleanReplace(rendered, 'fullName', data.fullName || 'User');
-      rendered = cleanReplace(rendered, 'code', data.code);
-      rendered = cleanReplace(rendered, 'expiresIn', data.expiresIn || '10');
-      
-      return {
-        html: rendered,
-        attachments: imageAssets.map(img => ({
-          filename: img,
-          path: path.join(process.cwd(), 'attached_assets', img),
-          cid: img.split('_')[0] + '.png'
-        }))
-      };
-
-        case 'password_changed_confirmation_whatsapp':
-      const confirmImageAssets = [
-        'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
-        '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
-        '83faf7f361d9ba8dfdc904427b5b6423_1766506747364.png',
-        '230f9575641a060a9b3772a9085c3203_1766745461892.png',
-        '3d94f798ad2bd582f8c3afe175798088_1766506747360.png',
-        '9f7291948d8486bdd26690d0c32796e0_1766506747363.png'
-      ];
-      
-      let confirmRendered = data.htmlContent;
-      // Handle dynamics
-      
-
-      confirmRendered = cleanReplace(confirmRendered, 'fullName', data.fullName || 'User');
-      
-      return {
-        html: confirmRendered,
-        attachments: confirmImageAssets.map(img => ({
-          filename: img,
-          path: path.join(process.cwd(), 'attached_assets', img),
-          cid: img.split('_')[0] + '.png'
-        }))
-      };
-
     case 'teacher-verification':
       return `
         <!DOCTYPE html>
@@ -902,39 +838,35 @@ const sendSMS = async (phoneNumber: string, message: string) => {
   }
 };
 
-export const sendEmail = async (to: string, subject: string, html: any, fromAddress = 'verify@edufiliova.com') => {
+export const sendEmail = async (to: string, subject: string, html: string, fromAddress = 'verify@edufiliova.com') => {
   try {
-    const isObject = typeof html === 'object' && html !== null && !Array.isArray(html);
-    const actualHtml = isObject ? html.html : html;
-    const attachments = isObject ? (html.attachments || []) : [];
-
-    // Extract verification code safely
-    let verificationCode = 'Unknown';
-    if (typeof actualHtml === 'string') {
-      const codeMatch = actualHtml.match(/<div class="code">(\d+)<\/div>/) || 
-                        actualHtml.match(/{{code}}/) || 
-                        actualHtml.match(/>(\d{6})</);
-      verificationCode = codeMatch ? (codeMatch[1] || codeMatch[0]) : 'Unknown';
-    }
+    // Extract verification code from HTML for console logging
+    const codeMatch = html.match(/<div class="code">(\d+)<\/div>/);
+    const verificationCode = codeMatch ? codeMatch[1] : 'Unknown';
     
+    // Store verification code (for development - remove in production)
     console.log('📧 Subject:', subject);
     
+    // Try to send email, but don't fail if SMTP fails
     try {
       const transporter = await createEmailTransporter(fromAddress);
+      
       const mailOptions = {
         from: `"EduFiliova" <${fromAddress}>`,
         to,
         subject,
-        html: actualHtml,
-        attachments: attachments
+        html,
       };
+
       const info = await transporter.sendMail(mailOptions);
+      // Email sent successfully
       return { success: true, messageId: info.messageId };
     } catch (smtpError) {
+      // Email sending failed - log error and return failure
       console.error('❌ Email sending failed:', smtpError);
       return { success: false, error: 'Failed to send email' };
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ Email processing failed:', error);
     return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
@@ -2785,24 +2717,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         age: userData.age || 25, // Default age for freelancers
         grade: userData.grade || 12, // Add required grade field with default
         educationLevel: userData.educationLevel || "other", // Default education level
-      // Send welcome email with login credentials
-      });
-      const loginEmail = userData.email;
-      const loginPhone = userData.phone || undefined;
-      const welcomeHtml = `
-        ${getEmailTemplate('blue', {})}
-        <div class="content">
-          <h2 class="title">Welcome to EduFiliova!</h2>
-          <p class="message">Hi ${userData.name},<br><br>Thank you for joining EduFiliova! We're excited to have you as part of our learning community.</p>
-          <div class="alert-success" style="text-align: center; padding: 30px;"><div style="margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div style="color: #065f46; font-size: 18px; font-weight: bold; margin-bottom: 8px;">Account Created Successfully</div><div style="color: #047857; font-size: 14px;">You're all set to start your journey with us!</div></div>
-          <div style="background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 25px 0;"><div style="color: #1f2937; font-size: 16px; font-weight: 600; margin-bottom: 15px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Your Login Credentials</div><div style="background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; padding: 15px; margin-bottom: 12px;"><div style="color: #6b7280; font-size: 12px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">Email</div><div style="color: #1f2937; font-size: 14px; font-family: 'Monaco', 'Courier New', monospace; word-break: break-all;">${loginEmail}</div></div>${loginPhone ? `<div style="background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; padding: 15px; margin-bottom: 12px;"><div style="color: #6b7280; font-size: 12px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">Phone</div><div style="color: #1f2937; font-size: 14px; font-family: 'Monaco', 'Courier New', monospace;">${loginPhone}</div></div>` : ''}<div style="background-color: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; padding: 12px; margin-top: 12px;"><div style="color: #92400e; font-size: 13px; line-height: 1.6;"><strong>🔒 Security Reminder:</strong> Please keep your login credentials safe and secure. Never share them with anyone, including EduFiliova staff members. Always use the official login page to sign in.</div></div></div><div style="text-align: center; margin: 30px 0;"><a href="${req.protocol}://${req.get('host')}/login" class="button">Go to Dashboard</a></div><p class="message" style="font-size: 14px;">Need help? Check out our <a href="${req.protocol}://${req.get('host')}/help" style="color: #2d5ddd; text-decoration: none;">Help Center</a> or contact us at support@edufiliova.com</p>
-        </div>
-      `;
-      await sendEmail(
-        userData.email,
-        'Welcome to EduFiliova - Your Account is Ready!',
-        welcomeHtml
-      );
+        country: userData.country,
+        countryId: countryRecord.length > 0 ? countryRecord[0].id : null,
+        location: locationStr, // Save detected location
+        locationLat: detectedLocation?.latitude ? String(detectedLocation.latitude) : null,
+        locationLng: detectedLocation?.longitude ? String(detectedLocation.longitude) : null,
+        role: userData.skills ? "freelancer" : "student" // Set role based on registration type
+      }).returning();
+
+
       // Send welcome email
       await sendEmail(
         userData.email,
@@ -3029,39 +2952,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/forgot-password", async (req, res) => {
     try {
       const { email } = req.body;
-      const user = await db.query.users.findFirst({ where: eq(users.email, email) });
-      
-      if (!user) {
-        return res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
+
+      if (!email || !isValidEmail(email)) {
+        return res.status(400).json({ success: false, error: "Valid email is required" });
       }
 
-      const emailCode = Math.floor(100000 + Math.random() * 900000).toString();
-      
-      await db.insert(verificationCodes).values({
-        userId: user.id,
-        code: emailCode,
-        type: 'email_password_reset',
-        expiresAt: new Date(Date.now() + 10 * 60 * 1000),
-        userData: { email }
+      // Find user
+      const user = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+
+      if (user.length === 0) {
+        // Don't reveal if email exists
+        return res.json({ success: true, message: "If an account with this email exists, a reset link has been sent." });
+      }
+
+      // Generate reset token
+      const resetToken = uuidv4();
+      const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+      await db.insert(passwordResetTokens).values({
+        userId: user[0].id,
+        token: resetToken,
+        expiresAt
       });
 
-      const templatePath = path.join(process.cwd(), 'server', 'templates', 'phone_linking_verification.html');
-      const htmlContent = fs.readFileSync(templatePath, 'utf-8');
-      const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, user.id) });
-
+      // Send reset email
+      const resetUrl = `${req.protocol}://${req.get('host')}/reset-password?token=${resetToken}`;
       await sendEmail(
         email,
-        'Password Reset Verification Code',
-        getEmailTemplate('phone_linking_verification' as any, { 
-          code: emailCode, 
-          fullName: profile?.name || 'User',
-          expiresIn: '10',
-          htmlContent 
-        })
+        'Reset Your EduFiliova Password',
+        getEmailTemplate('password_reset', { resetUrl })
       );
 
-      res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
-    } catch (error) {
+      res.json({ success: true, message: "If an account with this email exists, a reset link has been sent." });
+
+    } catch (error: any) {
       console.error('Password reset request error:', error);
       res.status(500).json({ success: false, error: "Password reset request failed" });
     }
@@ -16639,26 +16567,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get subjects filtered by grade level and system (for primary/secondary students)
   app.get("/api/subjects", async (req, res) => {
     try {
-      const { gradeLevel, gradeSystem, creatorOnly } = req.query;
+      const { gradeLevel, gradeSystem } = req.query;
       
+      console.log(`📚 Fetching subjects - gradeLevel: ${gradeLevel}, gradeSystem: ${gradeSystem}`);
+      
+      // Build conditions array
       let conditions = [eq(subjects.isActive, true)];
-
-      if (creatorOnly === "true" && req.isAuthenticated()) {
-        conditions.push(eq(subjects.createdBy, (req.user as any).id));
+      
+      if (gradeLevel) {
+        const parsedGrade = parseInt(gradeLevel as string);
+        console.log(`📚 Filtering by grade level: ${parsedGrade}`);
+        conditions.push(eq(subjects.gradeLevel, parsedGrade));
+      }
+      
+      // Handle grade system filtering - more flexible approach
+      if (gradeSystem && gradeSystem !== 'undefined' && gradeSystem !== 'null') {
+        console.log(`📚 User has gradeSystem: ${gradeSystem}, showing subjects for that system + "all"`);
+        // If user has a specific grade system, show subjects for that system + "all"
+        conditions.push(or(
+          eq(subjects.gradeSystem, gradeSystem as string),
+          eq(subjects.gradeSystem, 'all')
+        ));
       } else {
-        if (gradeLevel) {
-          const parsedGrade = parseInt(gradeLevel as string);
-          conditions.push(eq(subjects.gradeLevel, parsedGrade));
-        }
-        
-        if (gradeSystem && gradeSystem !== "undefined" && gradeSystem !== "null") {
-          conditions.push(or(
-            eq(subjects.gradeSystem, gradeSystem as string),
-            eq(subjects.gradeSystem, "all")
-          ));
-        } else {
-          conditions.push(eq(subjects.gradeSystem, "all"));
-        }
+        console.log(`📚 User has no gradeSystem, showing "all" subjects`);
+        // If user has no grade system (null), show subjects with "all" as fallback
+        // This ensures all students can see general subjects
+        conditions.push(eq(subjects.gradeSystem, 'all'));
       }
       
       const subjectsData = await db
@@ -16667,10 +16601,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where(and(...conditions))
         .orderBy(subjects.name);
       
+      console.log(`📚 Found ${subjectsData.length} subjects for grade ${gradeLevel}`);
+      
       res.json({ success: true, data: subjectsData });
     } catch (error: any) {
-      console.error("Subjects fetch error:", error);
+      console.error('Subjects fetch error:', error);
       res.status(500).json({ success: false, error: "Failed to fetch subjects" });
+    }
+  });
+
+  // Get chapters for a specific subject
+  app.get("/api/subjects/:subjectId/chapters", async (req, res) => {
+    try {
+      const { subjectId } = req.params;
+      
+      const chaptersData = await db
+        .select()
+        .from(subjectChapters)
+        .where(and(
+          eq(subjectChapters.subjectId, subjectId),
+          eq(subjectChapters.isActive, true)
+        ))
+        .orderBy(subjectChapters.order);
+      
+      res.json({ success: true, data: chaptersData });
+    } catch (error: any) {
+      console.error('Chapters fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch chapters" });
     }
   });
 
@@ -16880,7 +16837,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!name || !gradeSystem || !gradeLevel) {
         return res.status(400).json({ 
           success: false, 
-          error: "Missing required fields" 
+          error: "Missing required fields: name, gradeSystem, gradeLevel" 
         });
       }
       
@@ -16892,15 +16849,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
           gradeLevel: parseInt(gradeLevel),
           description: description || null,
           iconUrl: iconUrl || null,
-          createdBy: (req.user as any).id,
           isActive: true
         })
         .returning();
       
       res.json({ success: true, data: newSubject[0] });
     } catch (error: any) {
-      console.error("Subject creation error:", error);
+      console.error('Subject creation error:', error);
       res.status(500).json({ success: false, error: "Failed to create subject" });
+    }
+  });
+
+  // Get a specific subject with its chapters and lessons
+  app.get("/api/subjects/:subjectId", async (req, res) => {
+    try {
+      const { subjectId } = req.params;
+      
+      const subjectData = await db
+        .select()
+        .from(subjects)
+        .where(eq(subjects.id, subjectId))
+        .limit(1);
+      
+      if (!subjectData.length) {
+        return res.status(404).json({ success: false, error: "Subject not found" });
+      }
+      
+      const chaptersData = await db
+        .select()
+        .from(subjectChapters)
+        .where(and(
+          eq(subjectChapters.subjectId, subjectId),
+          eq(subjectChapters.isActive, true)
+        ))
+        .orderBy(subjectChapters.order);
+      
+      const chaptersWithLessons = await Promise.all(
+        chaptersData.map(async (chapter) => {
+          const lessonsData = await db
+            .select()
+            .from(subjectLessons)
+            .where(and(
+              eq(subjectLessons.chapterId, chapter.id),
+              eq(subjectLessons.isActive, true)
+            ))
+            .orderBy(subjectLessons.order);
+          
+          const lessonsWithExercises = await Promise.all(
+            lessonsData.map(async (lesson) => {
+              const exercisesData = await db
+                .select()
+                .from(subjectExercises)
+                .where(eq(subjectExercises.lessonId, lesson.id))
+                .orderBy(subjectExercises.order);
+              return { ...lesson, exercises: exercisesData };
+            })
+          );
+          
+          return { ...chapter, lessons: lessonsWithExercises };
+        })
+      );
+      
+      res.json({ 
+        success: true, 
+        data: { ...subjectData[0], chapters: chaptersWithLessons } 
+      });
+    } catch (error: any) {
+      console.error('Subject fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch subject" });
     }
   });
 
@@ -17598,7 +17614,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/teachers/:teacherId/availability", requireAuth, async (req, res) => {
     try {
       const { teacherId } = req.params;
-      const { dayOfWeek, startTime, endTime, timeZone, isRecurring, specificDate, subjectId } = req.body;
+      const { dayOfWeek, startTime, endTime, timeZone, isRecurring, specificDate } = req.body;
       
       if (dayOfWeek === undefined || !startTime || !endTime) {
         return res.status(400).json({
