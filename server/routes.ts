@@ -14755,7 +14755,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin Dashboard - Update User Status (Ban/Unban)
-  app.put("/api/admin/users/:userId/status", requireAdmin, async (req, res) => {
+  app.put("/api/admin/users/:userId/status", requireAuth, requireAdmin, async (req, res) => {
     try {
       const { userId } = req.params;
       const { status } = req.body;
