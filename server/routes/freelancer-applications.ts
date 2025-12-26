@@ -675,100 +675,14 @@ router.post('/apply', upload.any(), async (req, res) => {
       throw new Error('Failed to create application');
     }
 
-    const emailHtml = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f3f4f6;">
-        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
-          <div style="background: linear-gradient(135deg, #0C332C 0%, #0C332C 100%); padding: 40px 30px; text-align: center;">
-            <h1 style="color: white; margin: 0;">EduFiliova</h1>
-            <p style="color: #ffffff; font-size: 14px; margin: 10px 0 0 0;">Creativity, Learning, and Growth in One Place</p>
-          </div>
-          
-          <div style="padding: 40px 30px;">
-            <h2 style="color: #111827; font-size: 24px; font-weight: bold; margin: 0 0 20px 0;">Application Received</h2>
-            <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
-              Hi ${applicationValidation.data.fullName},
-              <br><br>
-              Thank you for applying as a freelancer on EduFiliova. We have received your application and our team will review your profile and portfolio.
-            </p>
-            
-            <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 20px 0;">
-              <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
-                <span style="color: #6b7280; font-size: 14px; font-weight: 600;">Display Name</span>
-                <span style="color: #111827; font-size: 14px; font-weight: 700;">${applicationValidation.data.displayName}</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
-                <span style="color: #6b7280; font-size: 14px; font-weight: 600;">Primary Category</span>
-                <span style="color: #111827; font-size: 14px; font-weight: 700;">${applicationValidation.data.primaryCategory}</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
-                <span style="color: #6b7280; font-size: 14px; font-weight: 600;">Portfolio Samples</span>
-                <span style="color: #111827; font-size: 14px; font-weight: 700;">${samples.length} items</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding: 10px 0;">
-                <span style="color: #6b7280; font-size: 14px; font-weight: 600;">Application ID</span>
-                <span style="color: #111827; font-size: 14px; font-weight: 700;">#${application.id.substring(0, 12).toUpperCase()}</span>
-              </div>
-            </div>
-
-            <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
-              Our review process typically takes 2-3 business days. You will receive email and WhatsApp notifications once your freelancer account is approved.
-            </p>
-            
-            <div style="background-color: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; padding: 15px; margin: 20px 0;">
-              <div style="color: #065f46; font-size: 14px; font-weight: 600; margin-bottom: 5px;">
-                What happens next?
-              </div>
-              <div style="color: #047857; font-size: 13px;">
-                1. Our team reviews your portfolio samples<br>
-                2. We verify your skills and experience<br>
-                3. You receive approval notification via email and WhatsApp<br>
-                4. Start offering your services on EduFiliova
-              </div>
-            </div>
-          </div>
-          
-          <div style="background-color: #0C332C; color: #ffffff; padding: 30px; text-align: center;">
-            <div style="margin: 15px 0;">
-              <div style="font-weight: bold; font-size: 14px; margin-bottom: 8px;">Contact Us</div>
-              <div style="font-size: 12px; line-height: 1.5;">
-                Support: support@edufiliova.com<br>
-                Payments: payments@edufiliova.com
-              </div>
-            </div>
-            <div style="margin: 15px 0;">
-              <div style="font-weight: bold; font-size: 14px; margin-bottom: 8px;">Website</div>
-              <div style="font-size: 12px;">edufiliova.com</div>
-            </div>
-            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.2); font-size: 11px; opacity: 0.9;">
-              This is an automated email. For questions or concerns, please contact support@edufiliova.com
-            </div>
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
-
-    await emailService.sendEmail({
-      to: applicationValidation.data.email,
-      subject: 'Freelancer Application Received - EduFiliova',
-      html: emailHtml,
-    });
-
-    // Send resubmission notification email
+    // Send freelancer application submitted email with professional template
     try {
-      await emailService.sendApplicationResubmittedEmail(applicationValidation.data.email, {
-        fullName: applicationValidation.data.fullName,
-        applicationType: 'freelancer'
+      await emailService.sendFreelancerApplicationSubmittedEmail(applicationValidation.data.email, {
+        fullName: applicationValidation.data.fullName
       });
-      console.log(`✅ Freelancer resubmission notification email sent to ${applicationValidation.data.email}`);
+      console.log(`✅ Freelancer application submitted email sent to ${applicationValidation.data.email}`);
     } catch (emailError) {
-      console.warn(`⚠️ Failed to send resubmission notification email to ${applicationValidation.data.email}:`, emailError);
+      console.warn(`⚠️ Failed to send freelancer application email to ${applicationValidation.data.email}:`, emailError);
     }
 
     return res.status(200).json({ 

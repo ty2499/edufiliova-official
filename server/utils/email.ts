@@ -1324,6 +1324,64 @@ export class EmailService {
       return false;
     }
   }
+
+  async sendFreelancerApplicationSubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    try {
+      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'template.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
+
+      const fullName = data.fullName || 'Freelancer';
+
+      // ✅ USE BULLETPROOF NAME REPLACEMENT
+      html = this.forceReplaceName(html, fullName);
+
+      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'images');
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Application Received - Your Freelancer Application is Under Review',
+        html,
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        attachments: [
+          { filename: 'header.png', path: path.join(imagesDir, 'header.png'), cid: 'header', contentType: 'image/png' },
+          { filename: 'promo.png', path: path.join(imagesDir, 'promo.png'), cid: 'promo', contentType: 'image/png' },
+          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
+        ]
+      });
+    } catch (error) {
+      console.error('❌ Error sending freelancer application submitted email:', error);
+      return false;
+    }
+  }
+
+  async sendFreelancerApplicationResubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    try {
+      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'template.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
+
+      const fullName = data.fullName || 'Freelancer';
+
+      // ✅ USE BULLETPROOF NAME REPLACEMENT
+      html = this.forceReplaceName(html, fullName);
+
+      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'images');
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Application Resubmitted - Your Freelancer Application is Under Review',
+        html,
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        attachments: [
+          { filename: 'header.png', path: path.join(imagesDir, 'header.png'), cid: 'header', contentType: 'image/png' },
+          { filename: 'promo.png', path: path.join(imagesDir, 'promo.png'), cid: 'promo', contentType: 'image/png' },
+          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
+        ]
+      });
+    } catch (error) {
+      console.error('❌ Error sending freelancer application resubmitted email:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();
