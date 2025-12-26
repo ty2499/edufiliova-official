@@ -717,16 +717,7 @@ export class EmailService {
     const loginTime = data.loginTime || new Date().toLocaleString();
     const changePasswordUrl = data.changePasswordUrl || `${baseUrl}/change-password`;
 
-    // Replace split placeholders directly with values (handles various split patterns)
-    html = html.replace(/Hi\s*\{\{[^}]*?<\/span><span[^>]*>userName<\/span><span[^>]*>[^}]*\}\}?,?/gi, `Hi ${userName},`);
-    html = html.replace(/Device:\s*\{\{[^}]*?<\/span><span[^>]*>deviceName<\/span><span[^>]*>[^}]*\}\}?/gi, `Device: ${deviceName}`);
-    html = html.replace(/Browser:\s*\{\{[^}]*?<\/span><span[^>]*>browser<\/span><span[^>]*>[^}]*\}\}?/gi, `Browser: ${browser}`);
-    html = html.replace(/Operating System:\s*\{\{[^}]*?<\/span><span[^>]*>os<\/span><span[^>]*>[^}]*\}\}?/gi, `Operating System: ${os}`);
-    html = html.replace(/Location:\s*\{\{[^}]*?<\/span><span[^>]*>location<\/span><span[^>]*>[^}]*\}\}?/gi, `Location: ${location}`);
-    html = html.replace(/IP Address:\s*\{\{[^}]*?<\/span><span[^>]*>ipAddress<\/span><span[^>]*>[^}]*\}\}?/gi, `IP Address: ${ipAddress}`);
-    html = html.replace(/Date & Time:\s*\{\{[^}]*?<\/span><span[^>]*>loginTime<\/span><span[^>]*>[^}]*\}\}?/gi, `Date & Time: ${loginTime}`);
-    
-    // Replace any remaining simple placeholders
+    // Replace all placeholders with actual values (handles both simple and split patterns)
     html = html.replace(/\{\{userName\}\}/gi, userName);
     html = html.replace(/\{\{deviceName\}\}/gi, deviceName);
     html = html.replace(/\{\{browser\}\}/gi, browser);
