@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from './useAuth';
 
-export type SocialProvider = 'google' | 'twitter';
+export type SocialProvider = 'google' | 'twitter' | 'facebook';
 
 interface SocialAuthHook {
   signInWithProvider: (provider: SocialProvider, options?: { redirectTo?: string; isCheckout?: boolean }) => Promise<void>;

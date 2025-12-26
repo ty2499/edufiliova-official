@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useSocialAuth } from "@/hooks/useSocialAuth";
-import { SiGoogle, SiX } from "react-icons/si";
+import { SiGoogle, SiX, SiFacebook } from "react-icons/si";
 import { Loader2 } from "lucide-react";
 
 interface SocialAuthButtonsProps {
@@ -13,7 +13,7 @@ interface SocialAuthButtonsProps {
 export function SocialAuthButtons({ onSuccess, isCheckout = false, redirectTo, disabled }: SocialAuthButtonsProps) {
   const { signInWithProvider, loading } = useSocialAuth();
 
-  const handleSocialSignIn = async (provider: 'google' | 'twitter') => {
+  const handleSocialSignIn = async (provider: 'google' | 'twitter' | 'facebook') => {
     try {
       await signInWithProvider(provider, {
         redirectTo: redirectTo || '/auth/callback',
@@ -49,9 +49,24 @@ export function SocialAuthButtons({ onSuccess, isCheckout = false, redirectTo, d
           {loading ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           ) : (
-            <SiGoogle className="mr-2 h-4 w-4" />
+            <SiGoogle className="mr-2 h-4 w-4 text-[#4285F4]" />
           )}
           Continue with Google
+        </Button>
+
+        <Button
+          variant="outline"
+          onClick={() => handleSocialSignIn('facebook')}
+          disabled={disabled || loading}
+          className="w-full"
+          data-testid="button-facebook-signin"
+        >
+          {loading ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <SiFacebook className="mr-2 h-4 w-4 text-[#1877F2]" />
+          )}
+          Continue with Facebook
         </Button>
 
         <Button
