@@ -692,6 +692,79 @@ export class EmailService {
       ]
     });
   }
+
+  async sendDeviceLoginEmail(email: string, data: { userName: string; deviceName: string; browser: string; os: string; location: string; ipAddress: string; loginTime: string; changePasswordUrl?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/device_login_template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // Remove preloads and add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    const userName = data.userName || 'User';
+    const deviceName = data.deviceName || 'Unknown Device';
+    const browser = data.browser || 'Unknown Browser';
+    const os = data.os || 'Unknown OS';
+    const location = data.location || 'Unknown Location';
+    const ipAddress = data.ipAddress || 'N/A';
+    const loginTime = data.loginTime || new Date().toLocaleString();
+    const changePasswordUrl = data.changePasswordUrl || `${baseUrl}/change-password`;
+
+    // Replace split placeholders directly with values
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>userName<\/span><span[^>]*>[^}]*\}\}/gi, userName);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>deviceName<\/span><span[^>]*>[^}]*\}\}/gi, deviceName);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>browser<\/span><span[^>]*>[^}]*\}\}/gi, browser);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>os<\/span><span[^>]*>[^}]*\}\}/gi, os);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>location<\/span><span[^>]*>[^}]*\}\}/gi, location);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>ipAddress<\/span><span[^>]*>[^}]*\}\}/gi, ipAddress);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>loginTime<\/span><span[^>]*>[^}]*\}\}/gi, loginTime);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>changePasswordUrl<\/span><span[^>]*>[^}]*\}\}/gi, changePasswordUrl);
+    
+    // Replace any remaining simple placeholders
+    html = html.replace(/\{\{userName\}\}/gi, userName);
+    html = html.replace(/\{\{deviceName\}\}/gi, deviceName);
+    html = html.replace(/\{\{browser\}\}/gi, browser);
+    html = html.replace(/\{\{os\}\}/gi, os);
+    html = html.replace(/\{\{location\}\}/gi, location);
+    html = html.replace(/\{\{ipAddress\}\}/gi, ipAddress);
+    html = html.replace(/\{\{loginTime\}\}/gi, loginTime);
+    html = html.replace(/\{\{changePasswordUrl\}\}/gi, changePasswordUrl);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:icon1');
+    html = html.replaceAll('images/e76fe516a6e91a2aa475626bd50a37d8.png', 'cid:logo1');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:icon2');
+    html = html.replaceAll('images/53185829a16faf137a533f19db64d893.png', 'cid:logo2');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
+    html = html.replaceAll('images/ccc540df188352ef9b2d4fb790d0b4bb.png', 'cid:hero');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Security Alert: New Login Detected - EduFiliova',
+      html,
+      from: `"EduFiliova Security" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'icon1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766712317314.png'), cid: 'icon1', contentType: 'image/png' },
+        { filename: 'logo1.png', path: assetPath('e76fe516a6e91a2aa475626bd50a37d8_1766712317317.png'), cid: 'logo1', contentType: 'image/png' },
+        { filename: 'icon2.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766712317306.png'), cid: 'icon2', contentType: 'image/png' },
+        { filename: 'logo2.png', path: assetPath('53185829a16faf137a533f19db64d893_1766712317309.png'), cid: 'logo2', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766712317305.png'), cid: 'social', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766712317302.png'), cid: 'corner', contentType: 'image/png' },
+        { filename: 'hero.png', path: assetPath('ccc540df188352ef9b2d4fb790d0b4bb_1766712317311.png'), cid: 'hero', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();
