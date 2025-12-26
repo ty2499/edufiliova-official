@@ -2545,18 +2545,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
       } else {
-        // No WhatsApp opt-in: Send email verification only
-        emailResult = await sendEmail(
-          email,
-          'Verify Your EduFiliova Account',
-          getEmailTemplate('verification', { code: emailCode })
-        );
-
-        if (!emailResult.success) {
+        // No WhatsApp opt-in: Send email verification only using new HTML template
+        try {
+          const { sendStudentVerificationEmail } = await import('./utils/email-templates.js');
+          await sendStudentVerificationEmail(email, name, emailCode, 15);
+          console.log('✅ Student verification email sent successfully to:', email);
+        } catch (emailError) {
+          console.error('❌ Failed to send student verification email:', emailError);
           return res.status(500).json({
             success: false,
-            error: "Failed to send verification email. Please try again.",
-            details: emailResult.error
+            error: "Failed to send verification email. Please try again."
           });
         }
       }

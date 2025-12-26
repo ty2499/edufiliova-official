@@ -2,6 +2,104 @@ import { emailService } from './email.ts';
 import * as fs from 'fs';
 import * as path from 'path';
 
+export async function sendStudentVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
+  console.log(`📧 Sending student verification email to ${recipientEmail}...`);
+  console.log(`   - Recipient: ${recipientName}`);
+  console.log(`   - Code: ${verificationCode}`);
+  console.log(`   - Expires in: ${expiresInMinutes} minutes`);
+  
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'student-verification', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Student';
+    const code = verificationCode;
+    const expiresIn = expiresInMinutes.toString();
+    
+    emailHtml = emailHtml.replace(/Hi \{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\},/gi, `Hi ${fullName},`);
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{ fullName \}\}/gi, fullName);
+    
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>code<\/span><span[^>]*>\}\}/gi, code);
+    emailHtml = emailHtml.replace(/\{\{code\}\}/gi, code);
+    emailHtml = emailHtml.replace(/\{\{Code\}\}/gi, code);
+    emailHtml = emailHtml.replace(/\{\{ code \}\}/gi, code);
+    
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>expiresIn<\/span><span[^>]*>\}\}/gi, expiresIn);
+    emailHtml = emailHtml.replace(/\{\{expiresIn\}\}/gi, expiresIn);
+    emailHtml = emailHtml.replace(/\{\{ExpiresIn\}\}/gi, expiresIn);
+    emailHtml = emailHtml.replace(/\{\{ expiresIn \}\}/gi, expiresIn);
+    
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
+    emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, 'cid:logo');
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
+    emailHtml = emailHtml.replace(/images\/8c5dfa6f6ff7f681bbf586933883b270\.png/g, 'cid:corner');
+    emailHtml = emailHtml.replace(/images\/50df79cf94bcde6e18f9cb9ac1a740dd\.png/g, 'cid:promo');
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'student-verification', 'images');
+    const attachments = [
+      {
+        filename: 'spiral1.png',
+        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
+        cid: 'spiral1',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logo.png',
+        path: path.join(imagesDir, 'f28befc0a869e8a352bf79aa02080dc7.png'),
+        cid: 'logo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'spiral2.png',
+        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
+        cid: 'spiral2',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'corner.png',
+        path: path.join(imagesDir, '8c5dfa6f6ff7f681bbf586933883b270.png'),
+        cid: 'corner',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'promo.png',
+        path: path.join(imagesDir, '50df79cf94bcde6e18f9cb9ac1a740dd.png'),
+        cid: 'promo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logofull.png',
+        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
+        cid: 'logofull',
+        contentType: 'image/png'
+      }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Verify Your Student Account - EduFiliova',
+      html: emailHtml,
+      from: `"EduFiliova" <verify@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Student verification email sent successfully to ${recipientEmail}`);
+    } else {
+      console.error(`❌ Student verification email failed to send to ${recipientEmail}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending student verification email:`, error);
+    throw error;
+  }
+}
+
 export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerName, voucherCode, amount, personalMessage, expiresAt) {
   console.log(`📧 Sending gift voucher email to ${recipientEmail}...`);
   console.log(`   - Recipient: ${recipientName}`);
