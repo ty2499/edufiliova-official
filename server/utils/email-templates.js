@@ -820,3 +820,62 @@ export async function sendMeetingReminderEmail(recipientEmail, recipientName, me
     return false;
   }
 }
+
+/**
+ * Send shop product purchase confirmation email
+ */
+export async function sendShopPurchaseEmail(recipientEmail, recipientName, orderData) {
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'shop-purchase', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Customer';
+    const orderId = orderData.orderId || 'N/A';
+    const totalPrice = orderData.totalPrice || '0.00';
+    const purchaseDate = orderData.purchaseDate || new Date().toLocaleString('en-US', { 
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+    const downloadLink = orderData.downloadLink || 'https://edufiliova.com/downloads';
+    
+    // Replace placeholders - handle both normal and span-split formats
+    const replacements = {
+      'fullName': fullName,
+      'orderId': orderId,
+      'totalPrice': totalPrice,
+      'purchaseDate': purchaseDate,
+      'downloadLink': downloadLink
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
+    }
+    
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'shop-purchase', 'images');
+    
+    const attachments = [
+      { filename: 'spiral_left.png', path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral_left', contentType: 'image/png' },
+      { filename: 'logo_header.png', path: path.join(imagesDir, 'f4a85d998eb4f45ce242a7b73cf561d5.png'), cid: 'logo_header', contentType: 'image/png' },
+      { filename: 'spiral_right.png', path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral_right', contentType: 'image/png' },
+      { filename: 'check_icon.png', path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'check_icon', contentType: 'image/png' },
+      { filename: 'logo_full.png', path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logo_full', contentType: 'image/png' }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Order Confirmed - Your Digital Products Are Ready! #${orderId}`,
+      html: emailHtml,
+      from: `"EduFiliova Orders" <orders@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Shop purchase email sent to ${recipientEmail} for order #${orderId}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending shop purchase email:`, error);
+    return false;
+  }
+}
