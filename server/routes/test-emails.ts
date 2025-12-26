@@ -561,4 +561,39 @@ router.post('/test-emails/mobile-linked', async (req: Request, res: Response) =>
   }
 });
 
+// Test endpoint specifically for course notification email
+router.post('/test-emails/course-notification', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, courseTitle, teacherName, category } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing course notification email to ${testEmail}...`);
+
+    const result = await emailService.sendCourseNotificationEmail(testEmail, {
+      fullName: fullName || 'Test User',
+      courseTitle: courseTitle || 'Advanced Web Development',
+      teacherName: teacherName || 'Expert Instructor',
+      category: category || 'Technology'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Course notification email sent successfully' : 'Failed to send course notification email',
+      details: {
+        recipientEmail: testEmail,
+        fullName: fullName || 'Test User',
+        courseTitle: courseTitle || 'Advanced Web Development',
+        teacherName: teacherName || 'Expert Instructor',
+        category: category || 'Technology'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending course notification test email:', error);
+    res.status(500).json({ error: 'Failed to send course notification email', details: error.message });
+  }
+});
+
 export default router;

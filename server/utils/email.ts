@@ -900,6 +900,47 @@ export class EmailService {
       ]
     });
   }
+
+  async sendCourseNotificationEmail(email: string, data: { fullName: string; courseTitle: string; teacherName: string; category: string }): Promise<boolean> {
+    const htmlPath = path.resolve(process.cwd(), 'server/templates/course_notification_template/email.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    const fullName = data.fullName || 'User';
+    const courseTitle = data.courseTitle || 'New Course';
+    const teacherName = data.teacherName || 'Instructor';
+    const category = data.category || 'General';
+
+    // Replace dynamic placeholders
+    html = html.replace(/\{\{fullName\}\}/gi, fullName);
+    html = html.replace(/\{\{courseTitle\}\}/gi, courseTitle);
+    html = html.replace(/\{\{teacherName\}\}/gi, teacherName);
+    html = html.replace(/\{\{category\}\}/gi, category);
+
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:course1');
+    html = html.replaceAll('images/41506b29d7f0bbde9fcb0d4afb720c70.png', 'cid:course2');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:course3');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:course4');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:course5');
+    html = html.replaceAll('images/dae012787ae5c5348c44bb83c0009419.png', 'cid:course6');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: `New Course Alert: ${courseTitle} - EduFiliova`,
+      html,
+      from: `"EduFiliova Courses" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'course1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766749237272.png'), cid: 'course1', contentType: 'image/png' },
+        { filename: 'course2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_1766749237266.png'), cid: 'course2', contentType: 'image/png' },
+        { filename: 'course3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766749237264.png'), cid: 'course3', contentType: 'image/png' },
+        { filename: 'course4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766749237259.png'), cid: 'course4', contentType: 'image/png' },
+        { filename: 'course5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766749237262.png'), cid: 'course5', contentType: 'image/png' },
+        { filename: 'course6.png', path: assetPath('dae012787ae5c5348c44bb83c0009419_1766749237268.png'), cid: 'course6', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();

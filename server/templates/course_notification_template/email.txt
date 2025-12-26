@@ -1,0 +1,18 @@
+Learning • Skills • Careers
+
+Hi {{fullName}},
+A new course has just been added on EduFiliova, and it may be relevant to your interests. 
+New Course: {{courseTitle}}
+Instructor: {{teacherName}}
+Category: {{category}}
+ ignore this email
+
+
+You can explore the course details, preview lessons, and enroll anytime from your dashboard.
+
+Thank you!
+Feel free to reach out if you have any questions.
+You can unsubscribe from these emails here. 
+ Visit the  Help Center
+ Or contact us anytime at support@edufiliova.com
+ 
