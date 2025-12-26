@@ -1004,17 +1004,14 @@ export class EmailService {
     const restrictionType = data.restrictionType || 'Temporarily Restricted';
     const reasonText = data.reason || 'Account policy review';
 
-    // ✅ USE BULLETPROOF NAME REPLACEMENT
-    html = this.forceReplaceName(html, fullName);
+    // Replace dynamic fields manually to avoid any split span issues in this specific template
+    html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
+    html = html.replace(/\{\{\s*restrictionType\s*\}\}/gi, restrictionType);
+    html = html.replace(/\{\{\s*reason\s*\}\}/gi, reasonText);
     
-    // Replace dynamic fields
-    html = html.replaceAll('{{restrictionType}}', restrictionType);
-    html = html.replaceAll('{{reason}}', reasonText);
-    html = html.replaceAll('{{fullName}}', fullName);
-    html = html.replaceAll('{{userName}}', fullName); // Keeping this for backward compatibility if any old template still uses it
-    
-    html = html.replace(/\{\{#if restrictionType\}\}[\s\S]*?\{\{\/if\}\}/gi, restrictionType ? `Restriction Type: ${restrictionType}` : '');
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, reasonText ? `Reason: ${reasonText}` : '');
+    // Handle Handlebars-style if blocks
+    html = html.replace(/\{\{#if restrictionType\}\}[\s\S]*?\{\{\/if\}\}/gi, restrictionType ? `<p style="margin:0"><strong>Restriction Type:</strong> ${restrictionType}</p>` : '');
+    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, reasonText ? `<p style="margin:0"><strong>Reason:</strong></p><p style="margin:0">${reasonText}</p>` : '');
 
     // Replace image paths with CIDs
     html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve');
