@@ -66,54 +66,44 @@ export class EmailService {
     }
   }
 
-  // ✅ BULLETPROOF NAME REPLACEMENT - Force all variations to display
-  private forceReplaceName(html: string, fullName: string): string {
-    // 1️⃣ FIRST: Handle specific split pattern from device login template
-    // Pattern: Hi {{full</span><span...>Name}</span><span...>},
-    html = html.replace(/Hi {{full<\/span><span[^>]*>Name}<\/span><span[^>]*>},/gi, `Hi ${fullName},`);
-    html = html.replace(/Hi {{Full<\/span><span[^>]*>Name}<\/span><span[^>]*>},/gi, `Hi ${fullName},`);
+  // ✅ BULLETPROOF REPLACEMENT - Force all variations to display
+  private forceReplaceVariables(html: string, variables: Record<string, string>): string {
+    let result = html;
     
-    // Also handle without the comma/spans
-    html = html.replace(/\{\{full<\/span><span[^>]*>Name\}\}/gi, fullName);
-    html = html.replace(/\{\{Full<\/span><span[^>]*>Name\}\}/gi, fullName);
+    // Process each variable
+    for (const [key, value] of Object.entries(variables)) {
+      if (!value) continue;
+
+      // 1️⃣ Handle specific split patterns from various templates
+      // Pattern: Hi {{full</span><span...>Name}</span><span...>},
+      const splitRegex = new RegExp(`\\{\\{\\s*${key.split('').join('(?:</span><span[^>]*>)?')}\\s*\\}\\}`, 'gi');
+      result = result.replace(splitRegex, value);
+      
+      // 2️⃣ Merge split placeholders caused by HTML spans around braces
+      // Handles: {{</span><span...>key</span><span...>}} format
+      const braceSplitRegex = new RegExp(`\\{\\{[^<]*<\/span><span[^>]*>${key}<\/span><span[^>]*>[^}]*\\}\\}`, 'gi');
+      result = result.replace(braceSplitRegex, value);
+
+      // 3️⃣ Replace ALL possible common variations of the placeholder
+      const patterns = [
+        `{{${key}}}`,
+        `{{ ${key}}}`,
+        `{{${key} }}`,
+        `{{ ${key} }}`,
+        `{{${key.toLowerCase()}}}`,
+        `{{${key.toUpperCase()}}}`,
+      ];
+      
+      patterns.forEach(pattern => {
+        result = result.replaceAll(pattern, value);
+      });
+      
+      // 4️⃣ Regex fallback for edge cases with spaces/variations
+      const generalRegex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
+      result = result.replace(generalRegex, value);
+    }
     
-    // 2️⃣ SECOND: Merge split placeholders caused by HTML spans
-    // Handles: {{</span><span...>fullName</span><span...>}} format
-    // More flexible regex that captures any content before/after the key parts
-    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>fullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{fullName}}');
-    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>FullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{FullName}}');
-    
-    // Handle cases where fullName is the only content
-    html = html.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, '{{fullName}}');
-    html = html.replace(/\{\{<\/span><span[^>]*>FullName<\/span><span[^>]*>\}\}/gi, '{{FullName}}');
-    
-    // 3️⃣ THEN: Replace ALL possible variations of {{fullName}} and {{FullName}}
-    const patterns = [
-      '{{fullName}}',
-      '{{FullName}}',
-      '{{ fullName}}',
-      '{{ FullName}}',
-      '{{fullName }}',
-      '{{FullName }}',
-      '{{ fullName }}',
-      '{{ FullName }}',
-      '{{fullname}}',
-      '{{FULLNAME}}',
-    ];
-    
-    patterns.forEach(pattern => {
-      html = html.replaceAll(pattern, fullName);
-    });
-    
-    // 4️⃣ Regex fallback for edge cases with spaces/variations
-    html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
-    html = html.replace(/\{\{\s*FullName\s*\}\}/gi, fullName);
-    
-    // 5️⃣ Last resort: Look for any remaining {{ and }} that might contain variations
-    // This catches edge cases like {{  fullName  }} with extra spaces
-    html = html.replace(/\{\{\s*(?:full|Full)Name\s*\}\}/gi, fullName);
-    
-    return html;
+    return result;
   }
 
   async sendEmail(options: EmailOptions): Promise<boolean> {
@@ -993,55 +983,39 @@ export class EmailService {
     expiresAt: string;
     personalMessage?: string;
   }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
     const templatePath = path.resolve(process.cwd(), 'server/templates/voucher_purchase_template/email.html');
     let html = fs.readFileSync(templatePath, 'utf8');
 
     const { fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = data;
 
-    // ✅ ABSOLUTE NUCLEAR FORCE REPLACEMENT
-    // We replace every variation of the placeholders directly using multiple methods
-    const nuclearReplace = (content: string, key: string, value: string) => {
-      if (!content || !key) return content;
-      
-      // 1. Literal exact strings
-      content = content.split(`{{${key}}}`).join(value);
-      content = content.split(`{{ ${key} }}`).join(value);
-      
-      // 2. Case-insensitive regex for the placeholder with any internal whitespace
-      const baseRegex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
-      content = content.replace(baseRegex, value);
-      
-      // 3. NUCLEAR: Match anything starting with {{ and ending with }} that contains the key
-      // This is extremely aggressive but necessary if there's invisible HTML fragmentation
-      const extremeRegex = new RegExp(`\\{\\{[^}]*?${key.split('').join('[^}]*?')}[^}]*?\\}\\}`, 'gi');
-      content = content.replace(extremeRegex, value);
-      
-      return content;
-    };
+    // ✅ USE BULLETPROOF VARIABLE REPLACEMENT
+    html = this.forceReplaceVariables(html, { 
+      fullName: data.fullName || 'User',
+      senderName: data.senderName || 'EduFiliova Team',
+      amount: data.amount.toString(),
+      voucherCode: data.voucherCode,
+      expiresAt: data.expiresAt,
+      personalMessage: data.personalMessage || ''
+    });
 
-    html = nuclearReplace(html, 'fullName', fullName);
-    html = nuclearReplace(html, 'senderName', senderName);
-    html = nuclearReplace(html, 'amount', amount);
-    html = nuclearReplace(html, 'voucherCode', voucherCode);
-    html = nuclearReplace(html, 'expiresAt', expiresAt);
-
-    // Contextual sentence-level hard-coding (The "Nuclear Option")
-    // If the above failed, we search for the surrounding text and force the injection
-    html = html.replace(/Hi\s+[^,<]*?(?:fullName)[^,<]*?(?=[,<])/gi, `Hi ${fullName}`);
-    html = html.replace(/Great news!\s+[^!]*?(?:senderName)[^!]*?\s+has sent/gi, `Great news! ${senderName} has sent`);
-    html = html.replace(/Message from\s+[^:]*?(?:senderName)[^:]*?:/gi, `Message from ${senderName}:`);
-
-    // Handle personal message conditional block
-    if (personalMessage) {
+    // Handle personalMessage conditional block manually after replacement
+    if (data.personalMessage) {
       const personalMsgHtml = `
-        <strong>Message from ${senderName}:</strong><br/>
-        <em>“${personalMessage}”</em><br/><br/>
+        <strong>Message from ${data.senderName || 'EduFiliova Team'}:</strong><br/>
+        <em>“${data.personalMessage}”</em><br/><br/>
       `;
-      // Target the exact block from the template, handling any fragmentation
-      html = html.replace(/\{\{#if[^}]*?personalMessage[^}]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
+      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
     } else {
-      html = html.replace(/\{\{#if[^}]*?personalMessage[^}]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
     }
+
+    // Final replacements for non-standard variables
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    // Contextual sentence level safety (Hi and Great news sentences)
+    html = html.replace(/Hi\s+User,/gi, `Hi ${data.fullName || 'User'},`);
+    html = html.replace(/Great news!\s+EduFiliova Team\s+has sent/gi, `Great news! ${data.senderName || 'EduFiliova Team'} has sent`);
 
     // Map images to CIDs
     html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve_top');
