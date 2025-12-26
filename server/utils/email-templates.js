@@ -2,6 +2,90 @@ import { emailService } from './email.ts';
 import * as fs from 'fs';
 import * as path from 'path';
 
+export async function sendStudentWelcomeEmail(recipientEmail, recipientName) {
+  console.log(`📧 Sending student welcome email to ${recipientEmail}...`);
+  console.log(`   - Recipient: ${recipientName}`);
+  
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'student-welcome', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Student';
+    
+    emailHtml = emailHtml.replace(/Hi \{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\},/gi, `Hi ${fullName},`);
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{ fullName \}\}/gi, fullName);
+    
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
+    emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, 'cid:logo');
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
+    emailHtml = emailHtml.replace(/images\/dc84055d94aa2dc70856ec3b8b024828\.png/g, 'cid:promo');
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'student-welcome', 'images');
+    const attachments = [
+      {
+        filename: 'spiral1.png',
+        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
+        cid: 'spiral1',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logo.png',
+        path: path.join(imagesDir, 'f28befc0a869e8a352bf79aa02080dc7.png'),
+        cid: 'logo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'spiral2.png',
+        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
+        cid: 'spiral2',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'corner.png',
+        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
+        cid: 'corner',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'promo.png',
+        path: path.join(imagesDir, 'dc84055d94aa2dc70856ec3b8b024828.png'),
+        cid: 'promo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logofull.png',
+        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
+        cid: 'logofull',
+        contentType: 'image/png'
+      }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Welcome to EduFiliova - Your Learning Journey Begins!',
+      html: emailHtml,
+      from: `"EduFiliova" <welcome@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Student welcome email sent successfully to ${recipientEmail}`);
+    } else {
+      console.error(`❌ Student welcome email failed to send to ${recipientEmail}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending student welcome email:`, error);
+    throw error;
+  }
+}
+
 export async function sendStudentVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
   console.log(`📧 Sending student verification email to ${recipientEmail}...`);
   console.log(`   - Recipient: ${recipientName}`);

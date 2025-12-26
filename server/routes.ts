@@ -2796,20 +2796,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
           <div style="background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 25px 0;"><div style="color: #1f2937; font-size: 16px; font-weight: 600; margin-bottom: 15px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Your Login Credentials</div><div style="background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; padding: 15px; margin-bottom: 12px;"><div style="color: #6b7280; font-size: 12px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">Email</div><div style="color: #1f2937; font-size: 14px; font-family: 'Monaco', 'Courier New', monospace; word-break: break-all;">${loginEmail}</div></div>${loginPhone ? `<div style="background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; padding: 15px; margin-bottom: 12px;"><div style="color: #6b7280; font-size: 12px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">Phone</div><div style="color: #1f2937; font-size: 14px; font-family: 'Monaco', 'Courier New', monospace;">${loginPhone}</div></div>` : ''}<div style="background-color: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; padding: 12px; margin-top: 12px;"><div style="color: #92400e; font-size: 13px; line-height: 1.6;"><strong>🔒 Security Reminder:</strong> Please keep your login credentials safe and secure. Never share them with anyone, including EduFiliova staff members. Always use the official login page to sign in.</div></div></div><div style="text-align: center; margin: 30px 0;"><a href="${req.protocol}://${req.get('host')}/login" class="button">Go to Dashboard</a></div><p class="message" style="font-size: 14px;">Need help? Check out our <a href="${req.protocol}://${req.get('host')}/help" style="color: #2d5ddd; text-decoration: none;">Help Center</a> or contact us at support@edufiliova.com</p>
         </div>
       `;
-      await sendEmail(
-        userData.email,
-        'Welcome to EduFiliova - Your Account is Ready!',
-        welcomeHtml
-      );
-      // Send welcome email
-      await sendEmail(
-        userData.email,
-        'Welcome to EduFiliova!',
-        getEmailTemplate('welcome', { 
-          name: userData.name,
-          loginUrl: `${req.protocol}://${req.get('host')}`
-        })
-      );
+      // Send welcome email using new HTML template
+      try {
+        const { sendStudentWelcomeEmail } = await import('./utils/email-templates.js');
+        await sendStudentWelcomeEmail(userData.email, userData.name);
+        console.log('✅ Student welcome email sent successfully to:', userData.email);
+      } catch (welcomeEmailError) {
+        console.error('❌ Failed to send student welcome email:', welcomeEmailError);
+        // Don't fail the registration if welcome email fails
+      }
 
       res.json({ success: true,
         success: true,
