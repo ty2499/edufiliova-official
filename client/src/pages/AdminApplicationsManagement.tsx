@@ -963,6 +963,19 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                     </div>
                   )}
 
+                  {selectedTeacherApp.status === "rejected" && (
+                    <div className="flex gap-2 pt-4 border-t flex-wrap">
+                      <Button
+                        onClick={() => setReviewAction("approve")}
+                        className="flex-1 bg-primary hover:bg-primary"
+                        data-testid="btn-reapprove-teacher"
+                      >
+                        <Check className="w-4 h-4 mr-2" />
+                        Re-approve Application
+                      </Button>
+                    </div>
+                  )}
+
                   {selectedTeacherApp.adminNotes && (
                     <div>
                       <Label>Admin Notes</Label>
@@ -1169,6 +1182,19 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                       >
                         <XCircle className="w-4 h-4 mr-2" />
                         Reject Application
+                      </Button>
+                    </div>
+                  )}
+
+                  {selectedFreelancerApp.status === "rejected" && (
+                    <div className="flex gap-2 pt-4 border-t">
+                      <Button
+                        onClick={() => setReviewAction("approve")}
+                        className="flex-1 bg-primary hover:bg-primary"
+                        data-testid="btn-reapprove-freelancer"
+                      >
+                        <Check className="w-4 h-4 mr-2" />
+                        Re-approve Application
                       </Button>
                     </div>
                   )}
