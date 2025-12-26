@@ -1634,7 +1634,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={forgotPasswordEmail}
               onChange={(e) => setForgotPasswordEmail(e.target.value)}
               placeholder="Enter your email"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300 text-gray-900"
+              className="h-12 text-base pl-10 rounded-lg border-gray-300"
+              style={{ color: '#000000 !important', WebkitTextFillColor: '#000000 !important' }}
               data-testid="input-forgot-password-email"
             />
           </div>
