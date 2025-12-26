@@ -1002,19 +1002,36 @@ export class EmailService {
     html = this.forceReplaceName(html, fullName);
     
     // Force replacement of senderName and other fields
-    html = html.replaceAll('{{senderName}}', senderName);
-    html = html.replaceAll('{{sender_name}}', senderName);
-    html = html.replaceAll('{{sender}}', senderName);
+    const senderNamePatterns = [
+      '{{senderName}}',
+      '{{sender_name}}',
+      '{{sender}}',
+      '{{ senderName }}',
+      '{{ sender_name }}',
+      '{{ sender }}'
+    ];
+    senderNamePatterns.forEach(p => {
+      html = html.replaceAll(p, senderName);
+    });
     html = html.replace(/\{\{\s*senderName\s*\}\}/gi, senderName);
+    html = html.replace(/\{\{\s*sender_name\s*\}\}/gi, senderName);
     
-    html = html.replaceAll('{{amount}}', amount);
+    const amountPatterns = ['{{amount}}', '{{ amount }}'];
+    amountPatterns.forEach(p => html = html.replaceAll(p, amount));
     html = html.replace(/\{\{\s*amount\s*\}\}/gi, amount);
     
-    html = html.replaceAll('{{voucherCode}}', voucherCode);
+    const codePatterns = ['{{voucherCode}}', '{{ voucherCode }}'];
+    codePatterns.forEach(p => html = html.replaceAll(p, voucherCode));
     html = html.replace(/\{\{\s*voucherCode\s*\}\}/gi, voucherCode);
     
-    html = html.replaceAll('{{expiresAt}}', expiresAt);
+    const expiryPatterns = ['{{expiresAt}}', '{{ expiresAt }}'];
+    expiryPatterns.forEach(p => html = html.replaceAll(p, expiresAt));
     html = html.replace(/\{\{\s*expiresAt\s*\}\}/gi, expiresAt);
+
+    // Hardcoded replacements for common splitting patterns in templates
+    html = html.replace(/Hi\s*\{\{.*?fullName.*?\}\}/gi, `Hi ${fullName}`);
+    html = html.replace(/\{\{.*?senderName.*?\}\}\s*has\s*sent/gi, `${senderName} has sent`);
+    html = html.replace(/Message\s*from\s*\{\{.*?senderName.*?\}\}/gi, `Message from ${senderName}`);
 
     // Handle personal message conditional block
     if (personalMessage) {
