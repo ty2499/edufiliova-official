@@ -251,8 +251,8 @@ export default function AdminEmailManagement({ onNavigate }: AdminEmailManagemen
               data-testid="button-add-account"
               className="bg-[#a0fab2] text-[#0d3931] hover:bg-[#a0fab2] hover:text-[#0d3931]"
             >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Email Account
+              <Plus className="w-4 h-4 md:mr-2" />
+              <span className="hidden md:inline">Add Email Account</span>
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
