@@ -3272,5 +3272,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get enabled payment gateways
+  app.get('/api/payment-gateways/enabled', async (req, res) => {
+    try {
+      const gateways = await db.query.paymentGateways.findMany({
+        where: eq(paymentGateways.isEnabled, true)
+      });
+      
+      res.json(gateways);
+    } catch (error: any) {
+      console.error('Error fetching payment gateways:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch payment gateways' });
+    }
+  });
+
   return server;
 }
