@@ -65,7 +65,8 @@ import {
   LayoutGrid,
   Users,
   Gift,
-  Key
+  Key,
+  ShoppingCart
 } from 'lucide-react';
 import { AjaxLoader, type AjaxOperation } from '@/components/ui/ajax-loader';
 import VisitorHelpChat from '@/components/VisitorHelpChat';
