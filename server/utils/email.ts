@@ -1030,6 +1030,7 @@ export class EmailService {
       to,
       subject: `You've received an EduFiliova Gift Voucher from ${senderName}!`,
       html,
+      from: '"EduFiliova Orders" <orders@edufiliova.com>',
       attachments: [
         { filename: 'curve_top.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'curve_top' },
         { filename: 'logo.png', path: assetPath('de07618f612ae3f3a960a43365f0d61d.png'), cid: 'logo' },

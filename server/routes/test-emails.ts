@@ -8,10 +8,9 @@ const router = Router();
 
 // Bypass auth for all test-emails routes (public testing endpoint)
 router.use((req: Request, res: Response, next: NextFunction) => {
-  if (req.path.startsWith('/test-emails')) {
-    // Mark as authenticated to bypass auth middleware
-    (req as any).user = { id: 'test-user', role: 'admin' };
-  }
+  console.log(`[Test-Emails] Incoming request to: ${req.path}`);
+  // Mark as authenticated to bypass auth middleware
+  (req as any).user = { id: 'test-user', role: 'admin' };
   next();
 });
 
@@ -549,7 +548,7 @@ router.post('/test-emails/account-restriction', async (req: Request, res: Respon
 });
 
 // Test endpoint for voucher purchase email
-router.post('/api/test-emails/voucher-purchase', async (req: Request, res: Response) => {
+router.post('/test-emails/voucher-purchase', async (req: Request, res: Response) => {
   try {
     const { testEmail, fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = req.body;
     if (!testEmail) return res.status(400).json({ error: 'testEmail is required' });
