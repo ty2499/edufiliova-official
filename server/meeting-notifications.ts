@@ -11,8 +11,8 @@ const emailTransporter = nodemailer.createTransport({
   port: parseInt(process.env.SMTP_PORT || '465'),
   secure: true,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: 'noreply@edufiliova.com',
+    pass: process.env.SMTP_PASS_NOREPLY || process.env.SMTP_PASS,
   },
 });
 
@@ -141,7 +141,7 @@ Visit the <a href="https://edufiliova.com/help" style="color:#0d3931">Help Cente
           </center><![endif]--></td></tr></tbody></table></body></html>`;
 
     await emailTransporter.sendMail({
-      from: `"EduFiliova" <${process.env.SMTP_USER}>`,
+      from: `"EduFiliova" <noreply@edufiliova.com>`,
       to: email,
       subject: `[Reminder] "${meetingTitle}" starts in 15 minutes`,
       html: template,
