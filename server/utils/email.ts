@@ -1004,12 +1004,12 @@ export class EmailService {
     const restrictionType = data.restrictionType || 'Temporarily Restricted';
     const reasonText = data.reason || 'Account policy review';
 
-    // Replace dynamic fields manually to avoid any split span issues in this specific template
-    html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
-    html = html.replace(/\{\{\s*restrictionType\s*\}\}/gi, restrictionType);
-    html = html.replace(/\{\{\s*reason\s*\}\}/gi, reasonText);
+    // Replace dynamic fields exactly as they appear in the provided template
+    html = html.replace(/\{\{fullName\}\}/gi, fullName);
+    html = html.replace(/\{\{restrictionType\}\}/gi, restrictionType);
+    html = html.replace(/\{\{reason\}\}/gi, reasonText);
     
-    // Handle Handlebars-style if blocks
+    // Handle Handlebars-style if blocks precisely
     html = html.replace(/\{\{#if restrictionType\}\}[\s\S]*?\{\{\/if\}\}/gi, restrictionType ? `<p style="margin:0"><strong>Restriction Type:</strong> ${restrictionType}</p>` : '');
     html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, reasonText ? `<p style="margin:0"><strong>Reason:</strong></p><p style="margin:0">${reasonText}</p>` : '');
 
