@@ -758,7 +758,7 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         </body></html>
       `;
 
-                            case 'password_reset_whatsapp':
+                                case 'password_reset_whatsapp':
       const imageAssets = [
         'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
         '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
@@ -770,29 +770,30 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       
       let rendered = data.htmlContent;
       
-      const replacePlaceholder = (html, key, value) => {
-        const escapedValue = String(value);
+      // Ultra-aggressive placeholder cleanup
+      const cleanReplace = (html, key, value) => {
+        const val = String(value);
         
-        // Handle standard replacements first
-        html = html.split('{{' + key + '}}').join(escapedValue);
-        html = html.split('{' + key + '}').join(escapedValue);
+        // 1. Target any sequence of chars that looks like it starts with {{ and ends with }} 
+        // and contains the key, even if split by tags.
+        // This regex looks for: {{, followed by anything that isn't }} (lazy), then key, then anything that isn't }} (lazy), then }}
+        const fuzzyRegex = new RegExp('\\{\\{[^{}]*?' + key + '[^{}]*?\\}\\}', 'g');
+        html = html.replace(fuzzyRegex, val);
         
-        // Handle HTML-encoded replacements (handling spans and styling inside the tag)
-        // This regex looks for the key, potentially wrapped in tags, and specifically looks for the {{ and }} parts
-        // and replaces the entire construct (including the braces) with the value.
-        const regex = new RegExp('(\{\{|<span[^>]*>\\{\\{<\\/span>)[^<{]*?' + key + '[^<{]*?(\}\}|<\\/span><span[^>]*>\\}\\}<\\/span>)', 'g');
-        html = html.replace(regex, escapedValue);
-
-        // Fallback for just the key wrapped in spans
+        // 2. Also handle single braces { ... key ... }
+        const fuzzySingleRegex = new RegExp('\\{[^{}]*?' + key + '[^{}]*?\\}', 'g');
+        html = html.replace(fuzzySingleRegex, val);
+        
+        // 3. Fallback for the key itself if it's still there wrapped in spans (clean up remaining bits)
         const fallbackRegex = new RegExp('<span[^>]*>' + key + '<\\/span>', 'g');
-        html = html.replace(fallbackRegex, escapedValue);
+        html = html.replace(fallbackRegex, val);
         
         return html;
       };
 
-      rendered = replacePlaceholder(rendered, 'fullName', data.fullName || 'User');
-      rendered = replacePlaceholder(rendered, 'code', data.code);
-      rendered = replacePlaceholder(rendered, 'expiresIn', data.expiresIn || '10');
+      rendered = cleanReplace(rendered, 'fullName', data.fullName || 'User');
+      rendered = cleanReplace(rendered, 'code', data.code);
+      rendered = cleanReplace(rendered, 'expiresIn', data.expiresIn || '10');
       
       return {
         html: rendered,
