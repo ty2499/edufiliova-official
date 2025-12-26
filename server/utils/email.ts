@@ -1011,6 +1011,7 @@ export class EmailService {
     html = html.replaceAll('{{restrictionType}}', restrictionType);
     html = html.replaceAll('{{reason}}', reasonText);
     html = html.replaceAll('{{fullName}}', fullName);
+    html = html.replaceAll('{{userName}}', fullName); // Keeping this for backward compatibility if any old template still uses it
     
     html = html.replace(/\{\{#if restrictionType\}\}[\s\S]*?\{\{\/if\}\}/gi, restrictionType ? `Restriction Type: ${restrictionType}` : '');
     html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, reasonText ? `Reason: ${reasonText}` : '');
