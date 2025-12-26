@@ -662,4 +662,37 @@ router.post('/test-emails/teacher-verification', async (req: Request, res: Respo
   }
 });
 
+// Test endpoint specifically for freelancer verification email
+router.post('/test-emails/freelancer-verification', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, code, expiresIn } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing freelancer verification email to ${testEmail}...`);
+
+    const result = await emailService.sendFreelancerVerificationEmail(testEmail, {
+      fullName: fullName || 'Test Freelancer',
+      code: code || '123456',
+      expiresIn: expiresIn || '10'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Freelancer verification email sent successfully' : 'Failed to send freelancer verification email',
+      details: {
+        recipientEmail: testEmail,
+        fullName: fullName || 'Test Freelancer',
+        code: code || '123456',
+        expiresIn: expiresIn || '10'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending freelancer verification test email:', error);
+    res.status(500).json({ error: 'Failed to send freelancer verification email', details: error.message });
+  }
+});
+
 export default router;

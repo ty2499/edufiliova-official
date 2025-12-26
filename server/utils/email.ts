@@ -1025,6 +1025,47 @@ export class EmailService {
       ]
     });
   }
+
+  async sendFreelancerVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
+    const htmlPath = path.resolve(process.cwd(), 'server/templates/freelancer_verification_template/email.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    const fullName = data.fullName || 'User';
+    const code = data.code || '000000';
+    const expiresIn = data.expiresIn || '10';
+
+    // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
+    html = this.forceReplaceName(html, fullName);
+    
+    // Replace other dynamic placeholders
+    html = html.replace(/\{\{code\}\}/gi, code);
+    html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
+
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:freelancer1');
+    html = html.replaceAll('images/9564092012b952eb113aed5a5f2f67f8.png', 'cid:freelancer2');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:freelancer3');
+    html = html.replaceAll('images/53d788456ae4cc2800001f0737c2d843.png', 'cid:freelancer4');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:freelancer5');
+    html = html.replaceAll('images/1bf5815502d2621deb8af9e7b0187f86.png', 'cid:freelancer6');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Verify Your Freelancer Account - EduFiliova',
+      html,
+      from: `"EduFiliova Security" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'freelancer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766749969172.png'), cid: 'freelancer1', contentType: 'image/png' },
+        { filename: 'freelancer2.png', path: assetPath('9564092012b952eb113aed5a5f2f67f8_1766749969170.png'), cid: 'freelancer2', contentType: 'image/png' },
+        { filename: 'freelancer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766749969169.png'), cid: 'freelancer3', contentType: 'image/png' },
+        { filename: 'freelancer4.png', path: assetPath('53d788456ae4cc2800001f0737c2d843_1766749969168.png'), cid: 'freelancer4', contentType: 'image/png' },
+        { filename: 'freelancer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766749969167.png'), cid: 'freelancer5', contentType: 'image/png' },
+        { filename: 'freelancer6.png', path: assetPath('1bf5815502d2621deb8af9e7b0187f86_1766749969164.png'), cid: 'freelancer6', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();
