@@ -538,10 +538,12 @@ function TeacherDashboardWithStatusCheck({ onNavigate, userId }: { onNavigate: a
     if (app.status === 'pending' || app.status === 'under_review' || app.status === 'rejected') {
       return <TeacherDashboardPending onNavigate={onNavigate} />;
     }
+    // Show dashboard when approved
+    return <TeacherDashboard onNavigate={onNavigate} />;
   }
 
-  // Show dashboard when approved
-  return <TeacherDashboard onNavigate={onNavigate} />;
+  // No application found - show pending dashboard (will show default state)
+  return <TeacherDashboardPending onNavigate={onNavigate} />;
 }
 
 function FreelancerDashboardWithStatusCheck({ onNavigate, initialTab, userId }: { onNavigate: any; initialTab: string; userId: number }) {
@@ -603,10 +605,12 @@ function FreelancerDashboardWithStatusCheck({ onNavigate, initialTab, userId }: 
     if (app.status === 'pending' || app.status === 'under_review' || app.status === 'rejected') {
       return <FreelancerDashboardPending onNavigate={onNavigate} />;
     }
+    // Show dashboard when approved
+    return <FreelancerDashboard onNavigate={onNavigate} initialTab={initialTab} />;
   }
 
-  // Show dashboard when approved
-  return <FreelancerDashboard onNavigate={onNavigate} initialTab={initialTab} />;
+  // No application found - show pending dashboard (will show default state)
+  return <FreelancerDashboardPending onNavigate={onNavigate} />;
 }
 
 const Index = () => {
