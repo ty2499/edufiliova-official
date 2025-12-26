@@ -566,7 +566,7 @@ export class EmailService {
     const nextBillingDate = data.nextBillingDate || '';
     const dashboardUrl = data.dashboardUrl || `${baseUrl}/dashboard`;
 
-    // ✅ Replace all subscription variables
+    // Replace all dynamic variables
     html = html.replace(/\{\{customerName\}\}/gi, customerName);
     html = html.replace(/\{\{planName\}\}/gi, planName);
     html = html.replace(/\{\{billingCycle\}\}/gi, billingCycle);
@@ -585,13 +585,13 @@ export class EmailService {
     }
 
     // Replace image paths with CIDs
-    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:subscription_icon1');
-    html = html.replaceAll('images/292db72c5a7a0299db100d17711b8c55.png', 'cid:logo1');
-    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:subscription_icon2');
+    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon1');
+    html = html.replaceAll('images/292db72c5a7a0299db100d17711b8c55.png', 'cid:logo');
+    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon2');
     html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
-    html = html.replaceAll('images/21c7f785caa53e237dcae6848c7f0f88.png', 'cid:subscription_hero');
     html = html.replaceAll('images/970fad9d41d01c4ad6d96829f4d86901.png', 'cid:footer_logo');
+    html = html.replaceAll('images/21c7f785caa53e237dcae6848c7f0f88.png', 'cid:hero');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
 
     const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
 
@@ -601,13 +601,13 @@ export class EmailService {
       html,
       from: `"EduFiliova Billing" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'subscription_icon1.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766711046597.png'), cid: 'subscription_icon1', contentType: 'image/png' },
-        { filename: 'logo1.png', path: assetPath('292db72c5a7a0299db100d17711b8c55_1766711046593.png'), cid: 'logo1', contentType: 'image/png' },
-        { filename: 'subscription_icon2.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766711046599.png'), cid: 'subscription_icon2', contentType: 'image/png' },
+        { filename: 'icon1.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766711046597.png'), cid: 'icon1', contentType: 'image/png' },
+        { filename: 'logo.png', path: assetPath('292db72c5a7a0299db100d17711b8c55_1766711046593.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'icon2.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766711046599.png'), cid: 'icon2', contentType: 'image/png' },
         { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766711046588.png'), cid: 'corner', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766711046589.png'), cid: 'social', contentType: 'image/png' },
-        { filename: 'subscription_hero.png', path: assetPath('21c7f785caa53e237dcae6848c7f0f88_1766711046592.png'), cid: 'subscription_hero', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('970fad9d41d01c4ad6d96829f4d86901_1766711046595.png'), cid: 'footer_logo', contentType: 'image/png' }
+        { filename: 'footer_logo.png', path: assetPath('970fad9d41d01c4ad6d96829f4d86901_1766711046595.png'), cid: 'footer_logo', contentType: 'image/png' },
+        { filename: 'hero.png', path: assetPath('21c7f785caa53e237dcae6848c7f0f88_1766711046592.png'), cid: 'hero', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766711046589.png'), cid: 'social', contentType: 'image/png' }
       ]
     });
   }
