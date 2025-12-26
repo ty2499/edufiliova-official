@@ -3092,6 +3092,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Find the verification code
+      console.log("DEBUG: Looking for code:", code, "email:", email);
       const verifyCode = await db.query.verificationCodes.findFirst({
         where: and(
           eq(verificationCodes.contactInfo, email),
@@ -3100,6 +3101,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         )
       });
 
+      console.log("DEBUG: Found verifyCode:", verifyCode);
       if (!verifyCode || new Date() > verifyCode.expiresAt) {
         return res.status(400).json({ success: false, error: "Invalid or expired reset code" });
       }
