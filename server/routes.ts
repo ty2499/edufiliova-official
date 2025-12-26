@@ -3070,14 +3070,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-      res.json({ success: true, message: "If an account with this email exists, a reset link has been sent." });
-
-    } catch (error: any) {
-      console.error('Password reset request error:', error);
-      res.status(500).json({ success: false, error: "Password reset request failed" });
-    }
-  });
-
   // Password Reset
   app.post("/api/auth/reset-password", async (req, res) => {
     try {
