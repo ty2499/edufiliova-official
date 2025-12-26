@@ -47,60 +47,7 @@ async function sendEmailNotification(
       to: email,
       subject: `[Reminder] "${meetingTitle}" starts in 15 minutes`,
       html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center; }
-            .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px; }
-            .meeting-info { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea; }
-            .button { display: inline-block; padding: 15px 30px; background: #667eea; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
-            .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1 style="margin: 0;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 10px;">
-                  <rect x="4" y="10" width="30" height="28" rx="4" fill="white"/>
-                  <path d="M34 20L44 14V34L34 28V20Z" fill="white"/>
-                </svg>
-                Your meeting is starting soon!
-              </h1>
-            </div>
-            <div class="content">
-              <p>Hi <strong>${name}</strong>,</p>
-              <p>This is a reminder that your video meeting is starting in <strong>15 minutes</strong>.</p>
-              
-              <div class="meeting-info">
-                <h3 style="margin-top: 0; color: #667eea;">Meeting Details</h3>
-                <p><strong>Title:</strong> ${meetingTitle}</p>
-                <p><strong>Time:</strong> ${timeString}</p>
-              </div>
-
-              <p>Make sure you:</p>
-              <ul>
-                <li>Have a stable internet connection</li>
-                <li>Test your camera and microphone</li>
-                <li>Find a quiet space</li>
-              </ul>
-
-              <center>
-                <a href="${meetingUrl}" class="button">Join Meeting Now</a>
-              </center>
-
-              <p style="margin-top: 30px; color: #666; font-size: 14px;">You can join up to 15 minutes before the scheduled time.</p>
-            </div>
-            <div class="footer">
-              <p>© ${new Date().getFullYear()} EduFiliova - Excellence in Online Education</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="format-detection" content="telephone=no, date=no, address=no, email=no"><meta name="x-apple-disable-message-reformatting"><style>@media (max-width: 1px) { .layout-0 { display: none !important; } } @media (max-width: 1px) and (min-width: 0px) { .layout-0-under-1 { display: table !important; } } @media (max-width: 450px) { .layout-1 { display: none !important; } } @media (max-width: 450px) and (min-width: 0px) { .layout-1-under-450 { display: table !important; } } @media (max-width: 200px) { .layout-2 { display: none !important; } } @media (max-width: 200px) and (min-width: 0px) { .layout-2-under-200 { display: table !important; } } @media (max-width: 450px) { .layout-3 { display: none !important; } } @media (max-width: 450px) and (min-width: 0px) { .layout-3-under-450 { display: table !important; } } @media (max-width: 1px) { .layout-4 { display: none !important; } } @media (max-width: 1px) and (min-width: 0px) { .layout-4-under-1 { display: table !important; } }</style></head><body style="width:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;background-color:#f0f1f5;margin:0;padding:0"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#f0f1f5" style="background-color:#f0f1f5"><tbody><tr><td style="background-color:#f0f1f5"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:600px;min-height:600px;margin:0 auto;background-color:#ffffff"><tbody><tr><td style="vertical-align:top;padding:10px 0px 0px 0px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:10px 0 10px 0;vertical-align:top"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="color:#000;font-style:normal;font-weight:normal;font-size:16px;line-height:1.4;letter-spacing:0;text-align:left;direction:ltr;border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;white-space:normal;word-wrap:break-word;word-break:break-word"><tbody><tr><td><table border="0" cellpadding="0" cellspacing="0" align="center" style="display:table;width:100%;background-color:#0d3931;padding:20px"><tbody><tr><td style="color:#ffffff;text-align:center"><h2>Learning • Skills • Careers</h2></td></tr></tbody></table><div style="padding:20px;color:#333"><p>Hi ${name},</p><p>This is a friendly reminder that your scheduled meeting on EduFiliova will begin in 15 minutes. Please review the details below and get ready to join.</p><div style="background:#f8f9fa;padding:15px;border-radius:8px;margin:20px 0"><h3>Meeting Information:</h3><p><strong>Meeting Title:</strong> ${meetingTitle}</p><p><strong>Date & Time:</strong> ${timeString}</p></div><div style="text-align:center;margin:30px 0"><a href="${meetingUrl}" style="background-color:#0d3931;color:#ffffff;padding:15px 30px;text-decoration:none;border-radius:5px;font-weight:bold">Join Meeting Now</a></div><h3>Helpful Tips Before Joining</h3><ul><li>Check your internet connection</li><li>Test your camera and microphone</li><li>Join a few minutes early if possible</li><li>Use a quiet environment for better audio quality</li></ul><h3>Important Notes</h3><ul><li>Meetings are hosted securely within EduFiliova</li><li>Late arrivals may miss part of the session</li></ul><p>We wish you a productive and successful session.</p><p>Best regards,<br>The EduFiliova Team</p></div></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></body></html>`
     });
 
     console.log(`✅ Email sent to ${email} for meeting ${meetingId}`);
