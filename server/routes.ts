@@ -758,7 +758,7 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         </body></html>
       `;
 
-                        case 'password_reset_whatsapp':
+                            case 'password_reset_whatsapp':
       const imageAssets = [
         'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
         '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
@@ -772,16 +772,18 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       
       const replacePlaceholder = (html, key, value) => {
         const escapedValue = String(value);
-        // 1. Standard replacements
+        
+        // Handle standard replacements first
         html = html.split('{{' + key + '}}').join(escapedValue);
         html = html.split('{' + key + '}').join(escapedValue);
         
-        // 2. HTML-encoded replacements (handling spans and styling inside the tag)
-        // This is a more robust regex that looks for the key surrounded by common HTML noise
+        // Handle HTML-encoded replacements (handling spans and styling inside the tag)
+        // This regex looks for the key, potentially wrapped in tags, and specifically looks for the {{ and }} parts
+        // and replaces the entire construct (including the braces) with the value.
         const regex = new RegExp('(\{\{|<span[^>]*>\\{\\{<\\/span>)[^<{]*?' + key + '[^<{]*?(\}\}|<\\/span><span[^>]*>\\}\\}<\\/span>)', 'g');
         html = html.replace(regex, escapedValue);
 
-        // 3. Fallback for the specific pattern observed: span wrapping the key only
+        // Fallback for just the key wrapped in spans
         const fallbackRegex = new RegExp('<span[^>]*>' + key + '<\\/span>', 'g');
         html = html.replace(fallbackRegex, escapedValue);
         
