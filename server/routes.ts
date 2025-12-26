@@ -14784,15 +14784,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const profileResult = await db
         .select({ 
           displayName: profiles.displayName,
-          firstName: profiles.firstName,
-          lastName: profiles.lastName
+          name: profiles.name
         })
         .from(profiles)
         .where(eq(profiles.userId, user.id))
         .limit(1);
 
       const profile = profileResult[0];
-      const userName = profile?.displayName || profile?.firstName || 'User';
+      const userName = profile?.displayName || profile?.name || 'User';
 
       await db
         .update(profiles)
