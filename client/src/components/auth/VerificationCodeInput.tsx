@@ -115,19 +115,19 @@ export default function VerificationCodeInput({
               focus:outline-none
               ${darkMode 
                 ? disabled 
-                  ? 'bg-gray-800 cursor-not-allowed opacity-60' 
-                  : 'bg-gray-900/80 text-white'
+                  ? 'bg-gray-700 border-gray-600 cursor-not-allowed opacity-60' 
+                  : 'bg-white border-[#A0FAB2] text-gray-900'
                 : disabled 
-                  ? 'bg-gray-100 cursor-not-allowed opacity-60' 
-                  : 'bg-white'
+                  ? 'bg-gray-100 border-gray-300 cursor-not-allowed opacity-60' 
+                  : 'bg-white border-[#A0FAB2]'
               }
               ${error 
-                ? 'text-primary shake-animation' 
+                ? 'border-red-500 text-red-600 shake-animation' 
                 : darkMode
-                  ? 'text-white'
+                  ? 'text-gray-900'
                   : 'text-gray-900'
               }
-              ${focused && !error && !digit ? darkMode ? 'ring-2 ring-amber-400/30' : 'ring-2 ring-[#0C332C]/20' : ''}
+              ${focused && !error ? 'ring-2 ring-[#A0FAB2]/50 border-[#A0FAB2]' : ''}
             `}
             data-testid={`input-code-digit-${index}`}
             aria-label={`Digit ${index + 1}`}

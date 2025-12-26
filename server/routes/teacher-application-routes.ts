@@ -384,8 +384,13 @@ router.post("/teacher-applications/verify-code", async (req, res) => {
       });
     }
 
-    // Check if code matches
-    if (pending.verificationCode !== code) {
+    // Check if code matches (trim both to handle any whitespace)
+    const storedCode = (pending.verificationCode || '').toString().trim();
+    const submittedCode = (code || '').toString().trim();
+    
+    console.log(`🔐 Teacher verify - Stored: "${storedCode}", Submitted: "${submittedCode}", Match: ${storedCode === submittedCode}`);
+    
+    if (storedCode !== submittedCode) {
       return res.status(400).json({
         success: false,
         error: "Invalid verification code. Please check and try again."
