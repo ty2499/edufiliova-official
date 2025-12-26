@@ -44,7 +44,6 @@ import Subscribe from "./Subscribe";
 import Checkout from "./Checkout";
 import LearnMorePage from "./LearnMorePage";
 import StudentDashboard from "./StudentDashboard";
-import AdminPaymentDashboard from "./AdminPaymentDashboard";
 import AdminShowcaseDashboard from "./AdminShowcaseDashboard";
 import { FindTalent } from "./FindTalent";
 import StudentNetworking from "./StudentNetworking";
@@ -2009,7 +2008,7 @@ const Index = () => {
         }
         return (
           <div className="instant-transition">
-            <AdminPaymentDashboard onNavigate={handleNavigation} />
+            <AdminContactMessages onNavigate={handleNavigation} />
           </div>
         );
 
