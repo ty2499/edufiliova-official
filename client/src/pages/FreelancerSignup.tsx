@@ -624,7 +624,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   <Label className="text-sm font-medium text-gray-700 mb-3 block">
                     What do you want to offer? <span className="text-primary-600">*</span>
                   </Label>
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     {[
                       'Ready-made templates & designs',
                       'Code components / starter projects',
@@ -633,15 +633,16 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                     ].map((service) => (
                       <label
                         key={service}
-                        className="flex items-center gap-3 cursor-pointer group"
+                        className="flex items-center gap-2 cursor-pointer group"
                       >
-                        <Checkbox
+                        <input
+                          type="checkbox"
                           checked={servicesOffered.includes(service)}
-                          onCheckedChange={() => toggleService(service)}
-                          className="data-[state=checked]:bg-[#0C332C]"
+                          onChange={() => toggleService(service)}
+                          className="h-4 w-4 rounded border-gray-300 text-[#0C332C] focus:ring-[#0C332C] accent-[#0C332C]"
                           data-testid={`service-${service.toLowerCase().replace(/\s+/g, '-')}`}
                         />
-                        <span className="text-gray-700 group-hover:text-gray-900" transition-all duration-300>{service}</span>
+                        <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-all duration-300">{service}</span>
                       </label>
                     ))}
                   </div>
