@@ -174,6 +174,27 @@ router.post('/subscriptions/create', async (req: AuthenticatedRequest, res: Resp
           })
           .where(eq(profiles.userId, userId));
 
+        // Send plan upgrade email
+        try {
+          const { sendPlanUpgradeEmail } = await import('../utils/email-templates.js');
+          const userEmail = profile.email || user.email;
+          const userName = profile.name || 'Student';
+          
+          if (userEmail) {
+            await sendPlanUpgradeEmail(userEmail, userName, {
+              planName: planDetails.name,
+              previousPlan: profile.subscriptionTier || 'Free',
+              price: planDetails.amount.toFixed(2),
+              billingCycle: billingCycle === 'monthly' ? 'Monthly' : 'Yearly',
+              expiryDate: planExpiry.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+              upgradeDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+            });
+            console.log(`✅ Plan upgrade email sent to ${userEmail}`);
+          }
+        } catch (emailErr) {
+          console.error('Failed to send plan upgrade email:', emailErr);
+        }
+
         return res.json({
           success: true,
           gateway: 'wallet',
