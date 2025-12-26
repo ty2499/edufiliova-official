@@ -728,4 +728,35 @@ router.post('/test-emails/customer-verification', async (req: Request, res: Resp
   }
 });
 
+// Test endpoint specifically for account restriction email
+router.post('/test-emails/account-restriction', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, restrictionType, reason } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing account restriction email to ${testEmail}...`);
+
+    const result = await emailService.sendAccountRestrictionEmail(testEmail, {
+      fullName: fullName || 'Test User',
+      restrictionType: restrictionType || 'Temporarily Restricted',
+      reason: reason || 'Routine compliance review'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Account restriction email sent successfully' : 'Failed to send account restriction email',
+      details: {
+        recipientEmail: testEmail,
+        fullName: fullName || 'Test User'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending account restriction test email:', error);
+    res.status(500).json({ error: 'Failed to send account restriction email', details: error.message });
+  }
+});
+
 export default router;

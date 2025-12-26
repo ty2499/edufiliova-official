@@ -985,6 +985,59 @@ export class EmailService {
     });
   }
 
+  async sendAccountRestrictionEmail(email: string, data: { fullName: string; restrictionType?: string; reason?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/restriction/template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // Remove preloads and add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    const fullName = data.fullName || 'User';
+    const restrictionType = data.restrictionType || 'Temporarily Restricted';
+    const reasonText = data.reason || 'Account policy review';
+
+    // ✅ USE BULLETPROOF NAME REPLACEMENT
+    html = this.forceReplaceName(html, fullName);
+    
+    // Replace dynamic fields
+    html = html.replaceAll('{{restrictionType}}', restrictionType);
+    html = html.replaceAll('{{reason}}', reasonText);
+    html = html.replaceAll('{{userName}}', fullName);
+    html = html.replace(/\{\{#if restrictionType\}\}[\s\S]*?\{\{\/if\}\}/gi, restrictionType ? `Restriction Type: ${restrictionType}` : '');
+    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, reasonText ? `Reason: ${reasonText}` : '');
+
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve');
+    html = html.replaceAll('images/f28befc0a869e8a352bf79aa02080dc7.png', 'cid:logo');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:ring');
+    html = html.replaceAll('images/53d788456ae4cc2800001f0737c2d843.png', 'cid:arrow');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets/restriction', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Important: Your EduFiliova Account Status - Temporary Restriction',
+      html,
+      from: `"EduFiliova Trust & Safety" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'logo.png', path: assetPath('logo.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'curve.png', path: assetPath('curve.png'), cid: 'curve', contentType: 'image/png' },
+        { filename: 'ring.png', path: assetPath('ring.png'), cid: 'ring', contentType: 'image/png' },
+        { filename: 'arrow.png', path: assetPath('arrow.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('social.png'), cid: 'social', contentType: 'image/png' }
+      ]
+    });
+  }
+
   async sendTeacherVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
     const htmlPath = path.resolve(process.cwd(), 'server/templates/teacher_verification_template/email.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
