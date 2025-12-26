@@ -596,4 +596,37 @@ router.post('/test-emails/course-notification', async (req: Request, res: Respon
   }
 });
 
+// Test endpoint specifically for student verification email
+router.post('/test-emails/student-verification', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, code, expiresIn } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing student verification email to ${testEmail}...`);
+
+    const result = await emailService.sendStudentVerificationEmail(testEmail, {
+      fullName: fullName || 'Test Student',
+      code: code || '123456',
+      expiresIn: expiresIn || '10'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Student verification email sent successfully' : 'Failed to send student verification email',
+      details: {
+        recipientEmail: testEmail,
+        fullName: fullName || 'Test Student',
+        code: code || '123456',
+        expiresIn: expiresIn || '10'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending student verification test email:', error);
+    res.status(500).json({ error: 'Failed to send student verification email', details: error.message });
+  }
+});
+
 export default router;

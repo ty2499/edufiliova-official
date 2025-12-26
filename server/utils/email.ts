@@ -943,6 +943,47 @@ export class EmailService {
       ]
     });
   }
+
+  async sendStudentVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
+    const htmlPath = path.resolve(process.cwd(), 'server/templates/student_verification_template/email.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    const fullName = data.fullName || 'User';
+    const code = data.code || '000000';
+    const expiresIn = data.expiresIn || '10';
+
+    // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
+    html = this.forceReplaceName(html, fullName);
+    
+    // Replace other dynamic placeholders
+    html = html.replace(/\{\{code\}\}/gi, code);
+    html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
+
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:verify1');
+    html = html.replaceAll('images/f28befc0a869e8a352bf79aa02080dc7.png', 'cid:verify2');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:verify3');
+    html = html.replaceAll('images/8c5dfa6f6ff7f681bbf586933883b270.png', 'cid:verify4');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:verify5');
+    html = html.replaceAll('images/50df79cf94bcde6e18f9cb9ac1a740dd.png', 'cid:verify6');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Verify Your Student Account - EduFiliova',
+      html,
+      from: `"EduFiliova Security" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'verify1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766749617228.png'), cid: 'verify1', contentType: 'image/png' },
+        { filename: 'verify2.png', path: assetPath('f28befc0a869e8a352bf79aa02080dc7_1766749617230.png'), cid: 'verify2', contentType: 'image/png' },
+        { filename: 'verify3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766749617221.png'), cid: 'verify3', contentType: 'image/png' },
+        { filename: 'verify4.png', path: assetPath('8c5dfa6f6ff7f681bbf586933883b270_1766749617209.png'), cid: 'verify4', contentType: 'image/png' },
+        { filename: 'verify5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766749617212.png'), cid: 'verify5', contentType: 'image/png' },
+        { filename: 'verify6.png', path: assetPath('50df79cf94bcde6e18f9cb9ac1a740dd_1766749617214.png'), cid: 'verify6', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();
