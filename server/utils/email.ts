@@ -68,7 +68,12 @@ export class EmailService {
 
   // ✅ BULLETPROOF NAME REPLACEMENT - Force all variations to display
   private forceReplaceName(html: string, fullName: string): string {
-    // 1️⃣ FIRST: Handle specific split pattern {{full</span><span>Name}}
+    // 1️⃣ FIRST: Handle specific split pattern from device login template
+    // Pattern: Hi {{full</span><span...>Name}</span><span...>},
+    html = html.replace(/Hi {{full<\/span><span[^>]*>Name}<\/span><span[^>]*>},/gi, `Hi ${fullName},`);
+    html = html.replace(/Hi {{Full<\/span><span[^>]*>Name}<\/span><span[^>]*>},/gi, `Hi ${fullName},`);
+    
+    // Also handle without the comma/spans
     html = html.replace(/\{\{full<\/span><span[^>]*>Name\}\}/gi, fullName);
     html = html.replace(/\{\{Full<\/span><span[^>]*>Name\}\}/gi, fullName);
     
