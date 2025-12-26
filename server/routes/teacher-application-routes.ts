@@ -125,7 +125,8 @@ router.post("/teacher-applications/initiate", async (req, res) => {
     // Send verification email with code
     const emailSent = await emailService.sendTeacherVerificationEmail(email, {
       fullName,
-      verificationCode
+      code: verificationCode,
+      expiresIn: '24 hours'
     });
 
     if (emailSent) {
@@ -527,7 +528,8 @@ router.post("/teacher-applications/resend-code", async (req, res) => {
 
     const emailSent = await emailService.sendTeacherVerificationEmail(email, {
       fullName: pending.fullName,
-      verificationCode: newVerificationCode
+      code: newVerificationCode,
+      expiresIn: '24 hours'
     });
 
     if (emailSent) {
