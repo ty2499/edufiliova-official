@@ -2783,7 +2783,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         age: userData.age || 25, // Default age for freelancers
         grade: userData.grade || 12, // Add required grade field with default
         educationLevel: userData.educationLevel || "other", // Default education level
-      // Send welcome email with login credentials
+        country: userData.country || (detectedLocation?.country) || "Unknown", // Add country
+        countryId: countryRecord.length > 0 ? countryRecord[0].id : null, // Add country ID
+        location: locationStr, // Add detected location
       });
       const loginEmail = userData.email;
       const loginPhone = userData.phone || undefined;
