@@ -694,7 +694,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 </Button>
                 <Button
                   onClick={handleNext}
-                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white" transition-all duration-300
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white transition-all duration-300"
                   data-testid="button-next-2"
                 >
                   Next <ChevronRight className="ml-2 w-4 h-4" />
@@ -795,7 +795,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
 
                     <Button
                       onClick={addPortfolioSample}
-                      className="w-full bg-[#0C332C] hover:bg-[#2448b8] text-white" transition-all duration-300
+                      className="w-full bg-[#0C332C] hover:bg-[#2448b8] text-white transition-all duration-300"
                       data-testid="button-add-sample"
                     >
                       <Upload className="w-4 h-4 mr-2" />
@@ -818,7 +818,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                               onClick={() => removePortfolioSample(index)}
                               variant="ghost"
                               size="sm"
-                              className="text-primary-600 hover:text-primary-700 hover:bg-primary/50" transition-all duration-300
+                              className="text-primary-600 hover:text-primary-700 hover:bg-primary/50 transition-all duration-300"
                               data-testid={`button-remove-sample-${index}`}
                             >
                               <Trash2 className="w-4 h-4" />
@@ -858,7 +858,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 </Button>
                 <Button
                   onClick={handleNext}
-                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white" transition-all duration-300
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white transition-all duration-300"
                   data-testid="button-next-3"
                 >
                   Next <ChevronRight className="ml-2 w-4 h-4" />
@@ -879,70 +879,73 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                   type="button"
                   variant="outline"
                   onClick={() => setTermsModalOpen(true)}
-                  className="text-[#0C332C] border-[#0C332C] hover:bg-[#0C332C] hover:text-white" transition-all duration-300
+                  className="text-[#0C332C] border-[#0C332C] hover:bg-[#0C332C] hover:text-white transition-all duration-300"
                   data-testid="button-view-terms"
                 >
                   View Freelancer Terms & Policies
                 </Button>
               </div>
 
-              <div className="space-y-4 mb-6">
-                <label className="flex items-start gap-3 cursor-pointer group">
-                  <Checkbox
+              <div className="space-y-3 mb-6">
+                <label className="flex items-start gap-2 cursor-pointer group">
+                  <input
+                    type="checkbox"
                     checked={termsAccepted}
-                    onCheckedChange={(checked) => { setTermsAccepted(!!checked); clearError('terms'); }}
-                    className="mt-1 data-[state=checked]:bg-[#0C332C]"
+                    onChange={(e) => { setTermsAccepted(e.target.checked); clearError('terms'); }}
+                    className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#0C332C] focus:ring-[#0C332C] accent-[#0C332C]"
                     data-testid="checkbox-terms"
                   />
-                  <span className="text-gray-700 group-hover:text-gray-900" transition-all duration-300>
+                  <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-all duration-300">
                     I confirm that all work I upload is my own or I have the legal right to sell it.
                   </span>
                 </label>
                 {errorMessages.terms && (
-                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-8">
+                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-6">
                     <AlertCircle className="w-4 h-4" />
                     {errorMessages.terms}
                   </p>
                 )}
 
-                <label className="flex items-start gap-3 cursor-pointer group">
-                  <Checkbox
+                <label className="flex items-start gap-2 cursor-pointer group">
+                  <input
+                    type="checkbox"
                     checked={policyAccepted}
-                    onCheckedChange={(checked) => { setPolicyAccepted(!!checked); clearError('policy'); }}
-                    className="mt-1 data-[state=checked]:bg-[#0C332C]"
+                    onChange={(e) => { setPolicyAccepted(e.target.checked); clearError('policy'); }}
+                    className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#0C332C] focus:ring-[#0C332C] accent-[#0C332C]"
                     data-testid="checkbox-policy"
                   />
-                  <span className="text-gray-700 group-hover:text-gray-900" transition-all duration-300>
+                  <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-all duration-300">
                     I agree to EduFiliova's{' '}
                     <button
                       type="button"
                       onClick={() => setTermsModalOpen(true)}
-                      className="text-[#0C332C] underline hover:text-[#2448b8]" transition-all duration-300
+                      className="text-[#0C332C] underline hover:text-[#2448b8] transition-all duration-300"
                     >
                       Freelancer Terms, Commission Policy, and Refund Policy
                     </button>.
                   </span>
                 </label>
                 {errorMessages.policy && (
-                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-8">
+                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-6">
                     <AlertCircle className="w-4 h-4" />
                     {errorMessages.policy}
                   </p>
                 )}
 
-                <label className="flex items-start gap-3 cursor-pointer group">
-                  <Checkbox
+                <label className="flex items-start gap-2 cursor-pointer group">
+                  <input
+                    type="checkbox"
                     checked={reviewAccepted}
-                    onCheckedChange={(checked) => { setReviewAccepted(!!checked); clearError('review'); }}
-                    className="mt-1 data-[state=checked]:bg-[#0C332C]"
+                    onChange={(e) => { setReviewAccepted(e.target.checked); clearError('review'); }}
+                    className="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#0C332C] focus:ring-[#0C332C] accent-[#0C332C]"
                     data-testid="checkbox-review"
                   />
-                  <span className="text-gray-700 group-hover:text-gray-900" transition-all duration-300>
+                  <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-all duration-300">
                     I understand that EduFiliova may review, approve or reject my freelancer application.
                   </span>
                 </label>
                 {errorMessages.review && (
-                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-8">
+                  <p className="text-sm text-primary-600 flex items-center gap-1 ml-6">
                     <AlertCircle className="w-4 h-4" />
                     {errorMessages.review}
                   </p>
@@ -969,7 +972,7 @@ export default function FreelancerSignup({ onNavigate }: FreelancerSignupProps) 
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting || portfolioSamples.length < 9}
-                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white disabled:opacity-50 disabled:cursor-not-allowed" transition-all duration-300
+                  className="bg-[#0C332C] hover:bg-[#2448b8] text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
                   data-testid="button-submit"
                 >
                   {isSubmitting ? (
