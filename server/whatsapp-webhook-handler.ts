@@ -297,6 +297,13 @@ async function routeMessage(
         await authHandler.handleLinkAccountPassword(phone, conversation, message);
         break;
 
+      case 'change_password_verify':
+        await authHandler.handleChangePasswordVerify(phone, conversation, message);
+        break;
+      case 'change_password_new':
+        await authHandler.handleChangePasswordNew(phone, conversation, message);
+        break;
+
       case 'voucher_type':
         await studentHandler.handleVoucherType(phone, conversation, message);
         break;
@@ -469,6 +476,11 @@ async function handleMenuSelection(
         phone,
         `Share your referral link with friends and earn rewards!\n\nType REFERRAL to see your referral code, or MENU to go back.`
       );
+      return;
+    }
+
+    if (selection.endsWith('_chgpwd')) {
+      await authHandler.handleChangePasswordStart(phone, conversation);
       return;
     }
 

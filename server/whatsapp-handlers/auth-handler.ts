@@ -641,6 +641,122 @@ export async function handleVerifyEmailCode(
   await chatbot.sendStudentMenu(phone, userData.name);
 }
 
+export async function handleChangePasswordStart(
+  phone: string,
+  conversation: WhatsAppConversation
+): Promise<void> {
+  const userId = conversation.userId;
+  if (!userId) {
+    await whatsappService.sendTextMessage(phone, "You must be logged in to change your password.");
+    return;
+  }
+
+  const authUser = await db.query.users.findFirst({
+    where: eq(users.id, userId)
+  });
+
+  if (!authUser) {
+    await whatsappService.sendTextMessage(phone, "User not found.");
+    return;
+  }
+
+  const emailCode = generateVerificationCode();
+  await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, authUser.email));
+  await db.insert(verificationCodes).values({
+    contactInfo: authUser.email,
+    type: 'email_password_reset',
+    code: emailCode,
+    expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+    userData: { userId: authUser.id, email: authUser.email }
+  });
+
+  const { sendEmail, getEmailTemplate } = await import('../routes');
+  try {
+    await sendEmail(
+      authUser.email,
+      'Password Change Verification Code',
+      getEmailTemplate('verification', { code: emailCode })
+    );
+  } catch (error) {
+    console.error('Failed to send password reset email:', error);
+  }
+
+  await chatbot.updateConversationFlow(conversation.id, 'change_password_verify', { 
+    email: authUser.email,
+    userId: authUser.id
+  });
+
+  await whatsappService.sendTextMessage(
+    phone,
+    `Security Check\n\nWe've sent a 6-digit verification code to your registered email: ${authUser.email}\n\nPlease enter the code to continue:`
+  );
+}
+
+export async function handleChangePasswordVerify(
+  phone: string,
+  conversation: WhatsAppConversation,
+  message: ParsedMessage
+): Promise<void> {
+  const code = message.text?.trim().replace(/\s/g, '');
+  const flowState = conversation.flowState as FlowState;
+  const { email, userId } = flowState.data;
+
+  const verification = await db.query.verificationCodes.findFirst({
+    where: and(
+      eq(verificationCodes.contactInfo, email),
+      eq(verificationCodes.type, 'email_password_reset'),
+      eq(verificationCodes.isUsed, false)
+    )
+  });
+
+  if (!verification || verification.code !== code || new Date() > verification.expiresAt) {
+    await whatsappService.sendButtonMessage(
+      phone,
+      "Invalid or expired code. Please try again or resend.",
+      [
+        { id: 'btn_resend_chgpwd', title: 'Resend Code' },
+        { id: 'btn_cancel', title: 'Cancel' }
+      ]
+    );
+    return;
+  }
+
+  await db.update(verificationCodes)
+    .set({ isUsed: true })
+    .where(eq(verificationCodes.id, verification.id));
+
+  await chatbot.updateConversationFlow(conversation.id, 'change_password_new', { userId });
+  await whatsappService.sendTextMessage(phone, "Code verified!\n\nPlease enter your new password (minimum 8 characters):");
+}
+
+export async function handleChangePasswordNew(
+  phone: string,
+  conversation: WhatsAppConversation,
+  message: ParsedMessage
+): Promise<void> {
+  const password = message.text?.trim();
+  if (!password || password.length < 8) {
+    await whatsappService.sendTextMessage(phone, "Password must be at least 8 characters. Please try again:");
+    return;
+  }
+
+  const flowState = conversation.flowState as FlowState;
+  const { userId } = flowState.data;
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  await db.update(users)
+    .set({ passwordHash, updatedAt: new Date() })
+    .where(eq(users.id, userId));
+
+  await chatbot.updateConversationFlow(conversation.id, 'idle', {});
+  await whatsappService.sendTextMessage(phone, "✅ Your password has been changed successfully!");
+  
+  const user = await db.query.profiles.findFirst({ where: eq(profiles.userId, userId) });
+  if (user?.role === 'teacher') await chatbot.sendTeacherMenu(phone, user.name);
+  else if (user?.role === 'freelancer') await chatbot.sendFreelancerMenu(phone, user.name);
+  else await chatbot.sendStudentMenu(phone, user?.name || 'User');
+}
+
 export async function handleLinkAccountEmail(
   phone: string,
   conversation: WhatsAppConversation,

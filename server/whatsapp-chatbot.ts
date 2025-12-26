@@ -57,7 +57,11 @@ export type ConversationFlow =
   | 'admin_delete_user'
   | 'admin_delete_confirm'
   | 'admin_broadcast'
-  | 'admin_broadcast_confirm';
+  | 'admin_broadcast_confirm'
+  | 'change_password_email'
+  | 'change_password_verify'
+  | 'change_password_new'
+  | 'change_password_confirm';
 
 export interface FlowState {
   flow: ConversationFlow;
@@ -244,6 +248,7 @@ export async function sendStudentMenu(phone: string, name: string): Promise<void
         { id: 'stu_wallet', title: 'My Wallet', description: 'Check balance' },
         { id: 'stu_certificates', title: 'Certificates', description: 'View certificates' },
         { id: 'stu_referral', title: 'Referral Program', description: 'Earn rewards' },
+        { id: 'stu_chgpwd', title: 'Change Password', description: 'Update your password' },
         { id: 'stu_download', title: 'Download App', description: 'Get mobile app' },
         { id: 'stu_help', title: 'Help & Support', description: 'Get assistance' },
         { id: 'stu_signout', title: 'Sign Out', description: 'Log out of your account' }
@@ -267,6 +272,7 @@ export async function sendTeacherMenu(phone: string, name: string): Promise<void
         { id: 'tch_availability', title: 'Availability', description: 'Update schedule' },
         { id: 'tch_earnings', title: 'Earnings', description: 'View earnings' },
         { id: 'tch_withdraw', title: 'Withdraw', description: 'Request payout' },
+        { id: 'tch_chgpwd', title: 'Change Password', description: 'Update your password' },
         { id: 'tch_help', title: 'Help & Support', description: 'Get assistance' },
         { id: 'tch_signout', title: 'Sign Out', description: 'Log out of your account' }
       ]
@@ -288,6 +294,7 @@ export async function sendFreelancerMenu(phone: string, name: string): Promise<v
         { id: 'frl_wallet', title: 'Wallet & Earnings', description: 'Check balance' },
         { id: 'frl_upgrade', title: 'Upgrade Plan', description: 'View plans' },
         { id: 'frl_withdraw', title: 'Withdraw', description: 'Request payout' },
+        { id: 'frl_chgpwd', title: 'Change Password', description: 'Update your password' },
         { id: 'frl_help', title: 'Help & Support', description: 'Get assistance' },
         { id: 'frl_signout', title: 'Sign Out', description: 'Log out of your account' }
       ]
