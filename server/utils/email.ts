@@ -1267,6 +1267,63 @@ export class EmailService {
       ]
     });
   }
+
+  async sendApplicationSubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    try {
+      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'template.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
+
+      const fullName = data.fullName || 'Teacher';
+
+      // ✅ USE BULLETPROOF NAME REPLACEMENT
+      html = this.forceReplaceName(html, fullName);
+
+      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'images');
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Application Received - Your Teacher Application is Under Review',
+        html,
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        attachments: [
+          { filename: 'header.png', path: path.join(imagesDir, 'header.png'), cid: 'header', contentType: 'image/png' },
+          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
+        ]
+      });
+    } catch (error) {
+      console.error('❌ Error sending application submitted email:', error);
+      return false;
+    }
+  }
+
+  async sendApplicationResubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    // Use same template but different subject for resubmissions
+    try {
+      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'template.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
+
+      const fullName = data.fullName || 'Teacher';
+
+      // ✅ USE BULLETPROOF NAME REPLACEMENT
+      html = this.forceReplaceName(html, fullName);
+
+      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'images');
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Application Resubmitted - Your Teacher Application is Under Review',
+        html,
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        attachments: [
+          { filename: 'header.png', path: path.join(imagesDir, 'header.png'), cid: 'header', contentType: 'image/png' },
+          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
+        ]
+      });
+    } catch (error) {
+      console.error('❌ Error sending application resubmitted email:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();

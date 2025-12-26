@@ -941,3 +941,43 @@ export async function sendCourseCompletionEmail(recipientEmail, recipientName, c
     return false;
   }
 }
+
+/**
+ * Send teacher application submitted confirmation email
+ */
+export async function sendTeacherApplicationSubmittedEmail(recipientEmail, recipientName) {
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Teacher';
+    
+    // Replace placeholders - handle both normal and span-split formats
+    emailHtml = emailHtml.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, fullName);
+    
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'images');
+    
+    const attachments = [
+      { filename: 'header.png', path: path.join(imagesDir, 'header.png'), cid: 'header', contentType: 'image/png' },
+      { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Application Received - Your Teacher Application is Under Review`,
+      html: emailHtml,
+      from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Teacher application submitted email sent to ${recipientEmail}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending teacher application submitted email:`, error);
+    return false;
+  }
+}

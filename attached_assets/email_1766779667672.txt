@@ -1,0 +1,34 @@
+Learning • Skills • Careers
+ Hi {{customerName}},
+ We attempted to process your payment, but unfortunately the transaction did not go through, so your order was not completed.
+This can happen for several reasons, including bank restrictions, insufficient funds, network issues, or your payment method being declined by the provider.
+Order Details
+ Order ID: #{{orderId}}
+Amount: ${{amount}}  {{#if reason}}- Reason: {{reason}}{{/if}}
+Status: Payment Failed
+
+
+
+Action Required
+To complete your purchase, please try one of the following:
+ Retry the payment using the same method
+ Use a different card or payment option
+Confirm your bank allows online/international payments (if applicable)
+Ensure your billing details are correct Once payment is successful, your access/downloads will be activated automatically.
+
+Important Notes
+Your account is safe — no changes were made to your subscription or access
+If you were charged but still see “Payment Failed,” please contact support with your transaction reference so we can investigate immediately.
+
+ Retry Payment  ➔
+ Need Help?  If you need assistance, contact our support team at support@edufiliova.com and include your Order ID (#{{orderId}}) for faster help.
+ Warm regards,
+EduFiliova Billing Team
+ 
+
+Thank you!
+Feel free to reach out if you have any questions.
+You can unsubscribe from these emails here. 
+ Visit the  Help Center
+ Or contact us anytime at support@edufiliova.com
+ 
