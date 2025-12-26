@@ -717,8 +717,10 @@ export class EmailService {
     const loginTime = data.loginTime || new Date().toLocaleString();
     const changePasswordUrl = data.changePasswordUrl || `${baseUrl}/change-password`;
 
-    // Replace all placeholders with actual values (handles both simple and split patterns)
-    html = html.replace(/\{\{userName\}\}/gi, userName);
+    // Replace split placeholder for userName (unique pattern in this template)
+    html = html.replace(/Hi\s*\{\{[^}]*?userName\}[^}]*\}\}/gi, `Hi ${userName}`);
+    
+    // Replace all other simple placeholders
     html = html.replace(/\{\{deviceName\}\}/gi, deviceName);
     html = html.replace(/\{\{browser\}\}/gi, browser);
     html = html.replace(/\{\{os\}\}/gi, os);
