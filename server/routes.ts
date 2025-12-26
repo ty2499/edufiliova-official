@@ -3038,6 +3038,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate 6-digit code
       const emailCode = Math.floor(100000 + Math.random() * 900000).toString();
       
+      // Delete any existing verification codes for this email (to handle unique constraint)
+      await db.delete(verificationCodes)
+        .where(and(
+          eq(verificationCodes.contactInfo, email),
+          eq(verificationCodes.type, 'email_password_reset')
+        ));
       // Store code in verification_codes table
       await db.insert(verificationCodes).values({
         contactInfo: email,
