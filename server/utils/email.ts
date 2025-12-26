@@ -68,7 +68,11 @@ export class EmailService {
 
   // ✅ BULLETPROOF NAME REPLACEMENT - Force all variations to display
   private forceReplaceName(html: string, fullName: string): string {
-    // 1️⃣ FIRST: Merge split placeholders caused by HTML spans
+    // 1️⃣ FIRST: Handle specific split pattern {{full</span><span>Name}}
+    html = html.replace(/\{\{full<\/span><span[^>]*>Name\}\}/gi, fullName);
+    html = html.replace(/\{\{Full<\/span><span[^>]*>Name\}\}/gi, fullName);
+    
+    // 2️⃣ SECOND: Merge split placeholders caused by HTML spans
     // Handles: {{</span><span...>fullName</span><span...>}} format
     // More flexible regex that captures any content before/after the key parts
     html = html.replace(/\{\{[^<]*<\/span><span[^>]*>fullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{fullName}}');
@@ -78,7 +82,7 @@ export class EmailService {
     html = html.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, '{{fullName}}');
     html = html.replace(/\{\{<\/span><span[^>]*>FullName<\/span><span[^>]*>\}\}/gi, '{{FullName}}');
     
-    // 2️⃣ THEN: Replace ALL possible variations of {{fullName}} and {{FullName}}
+    // 3️⃣ THEN: Replace ALL possible variations of {{fullName}} and {{FullName}}
     const patterns = [
       '{{fullName}}',
       '{{FullName}}',
@@ -96,11 +100,11 @@ export class EmailService {
       html = html.replaceAll(pattern, fullName);
     });
     
-    // 3️⃣ Regex fallback for edge cases with spaces/variations
+    // 4️⃣ Regex fallback for edge cases with spaces/variations
     html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
     html = html.replace(/\{\{\s*FullName\s*\}\}/gi, fullName);
     
-    // 4️⃣ Last resort: Look for any remaining {{ and }} that might contain variations
+    // 5️⃣ Last resort: Look for any remaining {{ and }} that might contain variations
     // This catches edge cases like {{  fullName  }} with extra spaces
     html = html.replace(/\{\{\s*(?:full|Full)Name\s*\}\}/gi, fullName);
     
