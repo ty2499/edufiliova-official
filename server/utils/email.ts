@@ -703,33 +703,30 @@ export class EmailService {
   }
 
   async sendMeetingReminderEmail(email: string, data: { studentName?: string; fullName?: string; teacherName: string; meetingTime: Date; meetingLink?: string; meetingTitle: string; meetingType?: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/meeting_reminder_template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     const fullName = data.fullName || data.studentName || 'Student';
     const teacherName = data.teacherName || 'Your Instructor';
     const meetingTime = data.meetingTime instanceof Date ? data.meetingTime.toLocaleString() : new Date(data.meetingTime).toLocaleString();
-    const meetingLink = data.meetingLink || `${baseUrl}/meetings/join`;
     const meetingTitle = data.meetingTitle || 'Class Meeting';
     const meetingType = data.meetingType || 'Standard Class';
 
-    // Replace all dynamic placeholders
+    // Replace dynamic placeholders in template
     html = html.replace(/\{\{fullName\}\}/g, fullName);
     html = html.replace(/\{\{teacherName\}\}/g, teacherName);
     html = html.replace(/\{\{meetingTime\}\}/g, meetingTime);
-    html = html.replace(/\{\{meetingLink\}\}/g, meetingLink);
     html = html.replace(/\{\{meetingTitle\}\}/g, meetingTitle);
     html = html.replace(/\{\{meetingType\}\}/g, meetingType);
 
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:icon1');
-    html = html.replaceAll('images/292db72c5a7a0299db100d17711b8c55.png', 'cid:logo1');
-    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:icon2');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
-    html = html.replaceAll('images/53185829a16faf137a533f19db64d893.png', 'cid:logo2');
-    html = html.replaceAll('images/51cf8361f51fd7575b8d8390ef957e30.png', 'cid:hero');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+    // Replace image paths with CIDs for embedded images
+    html = html.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:img1');
+    html = html.replace(/images\/292db72c5a7a0299db100d17711b8c55\.png/g, 'cid:img2');
+    html = html.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:img3');
+    html = html.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:img4');
+    html = html.replace(/images\/53185829a16faf137a533f19db64d893\.png/g, 'cid:img5');
+    html = html.replace(/images\/51cf8361f51fd7575b8d8390ef957e30\.png/g, 'cid:img6');
+    html = html.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:img7');
 
     const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
 
@@ -739,13 +736,13 @@ export class EmailService {
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'icon1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766739561052.png'), cid: 'icon1', contentType: 'image/png' },
-        { filename: 'logo1.png', path: assetPath('292db72c5a7a0299db100d17711b8c55_1766739561047.png'), cid: 'logo1', contentType: 'image/png' },
-        { filename: 'icon2.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766739561046.png'), cid: 'icon2', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766739561038.png'), cid: 'corner', contentType: 'image/png' },
-        { filename: 'logo2.png', path: assetPath('53185829a16faf137a533f19db64d893_1766739561049.png'), cid: 'logo2', contentType: 'image/png' },
-        { filename: 'hero.png', path: assetPath('51cf8361f51fd7575b8d8390ef957e30_1766739561045.png'), cid: 'hero', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766739561043.png'), cid: 'social', contentType: 'image/png' }
+        { filename: 'img1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766739561052.png'), cid: 'img1' },
+        { filename: 'img2.png', path: assetPath('292db72c5a7a0299db100d17711b8c55_1766739561047.png'), cid: 'img2' },
+        { filename: 'img3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766739561046.png'), cid: 'img3' },
+        { filename: 'img4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766739561038.png'), cid: 'img4' },
+        { filename: 'img5.png', path: assetPath('53185829a16faf137a533f19db64d893_1766739561049.png'), cid: 'img5' },
+        { filename: 'img6.png', path: assetPath('51cf8361f51fd7575b8d8390ef957e30_1766739561045.png'), cid: 'img6' },
+        { filename: 'img7.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766739561043.png'), cid: 'img7' }
       ]
     });
   }
