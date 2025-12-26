@@ -712,12 +712,23 @@ export class EmailService {
     const meetingTitle = data.meetingTitle || 'Class Meeting';
     const meetingType = data.meetingType || 'Standard Class';
 
-    // Replace dynamic placeholders in template (handling HTML tags that may break up placeholders)
-    html = html.replace(/\{\{[\s\S]*?fullName\}\}/g, fullName);
-    html = html.replace(/\{\{[\s\S]*?teacherName\}\}/g, teacherName);
-    html = html.replace(/\{\{[\s\S]*?meetingTime\}\}/g, meetingTime);
-    html = html.replace(/\{\{[\s\S]*?meetingTitle\}\}/g, meetingTitle);
-    html = html.replace(/\{\{[\s\S]*?meetingType\}\}/g, meetingType);
+    // Replace all dynamic placeholders - force {{fullName}} and {{teacherName}} to show correctly
+    html = html.replace(/\{\{fullName\}\}/g, fullName);
+    html = html.replace(/\{\{\/\/[\s\S]*?fullName[\s\S]*?\}\}/g, fullName);
+    html = html.replace(/\{\{[^}]*fullName[^}]*\}\}/g, fullName);
+    
+    html = html.replace(/\{\{teacherName\}\}/g, teacherName);
+    html = html.replace(/\{\{\/\/[\s\S]*?teacherName[\s\S]*?\}\}/g, teacherName);
+    html = html.replace(/\{\{[^}]*teacherName[^}]*\}\}/g, teacherName);
+    
+    html = html.replace(/\{\{meetingTime\}\}/g, meetingTime);
+    html = html.replace(/\{\{[^}]*meetingTime[^}]*\}\}/g, meetingTime);
+    
+    html = html.replace(/\{\{meetingTitle\}\}/g, meetingTitle);
+    html = html.replace(/\{\{[^}]*meetingTitle[^}]*\}\}/g, meetingTitle);
+    
+    html = html.replace(/\{\{meetingType\}\}/g, meetingType);
+    html = html.replace(/\{\{[^}]*meetingType[^}]*\}\}/g, meetingType);
 
     // Replace image paths with CIDs for embedded images
     html = html.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:img1');
