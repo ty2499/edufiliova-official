@@ -629,4 +629,37 @@ router.post('/test-emails/student-verification', async (req: Request, res: Respo
   }
 });
 
+// Test endpoint specifically for teacher verification email
+router.post('/test-emails/teacher-verification', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, code, expiresIn } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing teacher verification email to ${testEmail}...`);
+
+    const result = await emailService.sendTeacherVerificationEmail(testEmail, {
+      fullName: fullName || 'Test Teacher',
+      code: code || '123456',
+      expiresIn: expiresIn || '10'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Teacher verification email sent successfully' : 'Failed to send teacher verification email',
+      details: {
+        recipientEmail: testEmail,
+        fullName: fullName || 'Test Teacher',
+        code: code || '123456',
+        expiresIn: expiresIn || '10'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending teacher verification test email:', error);
+    res.status(500).json({ error: 'Failed to send teacher verification email', details: error.message });
+  }
+});
+
 export default router;

@@ -1,0 +1,26 @@
+Learning • Skills • Careers
+
+Hi {{fullName}},
+ To continue using EduFiliova and complete verification for your Teacher account, please enter the verification code below. 
+Your Verification Code: 
+{{code}}
+Code Expiry & Safety
+This code will expire in {{expiresIn}} minutes.
+For your security:
+Do not share this code with anyone
+EduFiliova support will never ask you for your code or password
+If you didn’t request this code, you can ignore this email
+
+Need Help?
+
+If you’re having trouble verifying your account, contact us at:
+support@edufiliova.com
+ Thank you, 
+EduFiliova Security Team 
+
+Thank you!
+Feel free to reach out if you have any questions.
+You can unsubscribe from these emails here. 
+ Visit the  Help Center
+ Or contact us anytime at support@edufiliova.com
+ 
