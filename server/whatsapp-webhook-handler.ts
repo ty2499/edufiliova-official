@@ -546,24 +546,25 @@ async function handleMenuSelection(
     } else if (selection === 'btn_cancel') {
       await chatbot.updateConversationFlow(conversation.id, 'idle', {});
       await chatbot.sendNewUserMenu(phone);
-    } else if (selection === 'btn_resend_code') {
+    } else if (selection === 'btn_resend_code' || selection === 'btn_resend_chgpwd') {
       const flowState = conversation.flowState as FlowState | null;
       const email = flowState?.data?.email;
       
       if (!email) {
         await chatbot.updateConversationFlow(conversation.id, 'idle', {});
-        await whatsappService.sendTextMessage(phone, "Session expired. Please start registration again.");
+        await whatsappService.sendTextMessage(phone, "Session expired. Please start again.");
         await chatbot.sendNewUserMenu(phone);
         return;
       }
       
       const newCode = generateVerificationCode();
+      const type = selection === 'btn_resend_chgpwd' ? 'email_password_reset' : 'email';
       
       await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
       
       await db.insert(verificationCodes).values({
         contactInfo: email,
-        type: 'email',
+        type,
         code: newCode,
         expiresAt: new Date(Date.now() + 10 * 60 * 1000),
         userData: {
@@ -577,7 +578,7 @@ async function handleMenuSelection(
       try {
         await sendEmail(
           email,
-          'Verify Your EduFiliova Account',
+          type === 'email' ? 'Verify Your EduFiliova Account' : 'Password Change Verification Code',
           getEmailTemplate('verification', { code: newCode })
         );
         console.log(`[Resend Code] Successfully sent verification email to ${email}`);
