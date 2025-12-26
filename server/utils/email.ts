@@ -252,12 +252,12 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    // Dynamic Data Injection
+    // SIMPLE & DIRECT - Replace the dynamic name placeholder
     const fullName = data.fullName || (data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer');
     const appType = data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer';
     
-    // Replace dynamic placeholders - multiple patterns for safety
-    html = html.replace(/Hi\s+\{\{FullName\}\}/gi, `Hi ${fullName}`);
+    // Replace {{fullName}} with actual name - case insensitive for both fullName and FullName
+    html = html.replace(/\{\{fullName\}\}/gi, fullName);
     html = html.replace(/\{\{FullName\}\}/gi, fullName);
     html = html.replace(/\{\{appType\}\}/gi, appType);
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
@@ -270,14 +270,12 @@ export class EmailService {
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766647041212.png'), cid: 'icon_db', contentType: 'image/png' },
-        { filename: 'icon_curve.png', path: assetPath('c9513ccbbd620ff1cc148b9f159cd39d_1766706140594.png'), cid: 'icon_curve', contentType: 'image/png' },
-        { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766647041216.png'), cid: 'icon_pf', contentType: 'image/png' },
-        { filename: 'banner.png', path: assetPath('e4d45170731072cbb168266fca3fd470_1766706140600.png'), cid: 'banner', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('df1ad55cc4e451522007cfa4378c9bbd_1766706140598.png'), cid: 'corner', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766706140574.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'teacher_img.png', path: assetPath('9eefdace1f726880f93c5a973a54c2f6_1766706140581.png'), cid: 'teacher_img', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766706140583.png'), cid: 'social', contentType: 'image/png' }
+        { filename: 'corner1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766707814016.png'), cid: 'corner1', contentType: 'image/png' },
+        { filename: 'footer_logo.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_1766707814016.png'), cid: 'footer_logo', contentType: 'image/png' },
+        { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766707814014.png'), cid: 'ring', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766707814013.png'), cid: 'social', contentType: 'image/png' },
+        { filename: 'corner2.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766707814012.png'), cid: 'corner2', contentType: 'image/png' },
+        { filename: 'student_img.png', path: assetPath('e521c0bfaebd7131cd0f55ee3686e87f_1766707814018.png'), cid: 'student_img', contentType: 'image/png' }
       ]
     });
   }
