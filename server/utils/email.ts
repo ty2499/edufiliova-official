@@ -999,11 +999,12 @@ export class EmailService {
     const { fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = data;
 
     // Replace dynamic fields exactly as they appear in the template
-    html = html.replace('{{fullName}}', fullName);
-    html = html.replace('{{senderName}}', senderName);
-    html = html.replace('{{amount}}', amount);
-    html = html.replace('{{voucherCode}}', voucherCode);
-    html = html.replace('{{expiresAt}}', expiresAt);
+    // ✅ USE BULLETPROOF NAME REPLACEMENT for fullName
+    html = this.forceReplaceName(html, fullName);
+    html = html.replace(/\{\{senderName\}\}/gi, senderName);
+    html = html.replace(/\{\{amount\}\}/gi, amount);
+    html = html.replace(/\{\{voucherCode\}\}/gi, voucherCode);
+    html = html.replace(/\{\{expiresAt\}\}/gi, expiresAt);
 
     // Handle personal message conditional block
     if (personalMessage) {
