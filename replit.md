@@ -1,29 +1,45 @@
-# Teacher Availability & Student Search System
+# Edufiliova Educational Platform
 
-## ✅ COMPLETE IMPLEMENTATION
+## Project Overview
+Educational platform with course management, user authentication, payment processing, and real-time collaboration features.
 
-### 1. Subject Categories (15 Categories)
-- English 📚, Mathematics 🔢, Science 🔬, IT 💻, History 📜
-- Geography 🌍, French 🇫🇷, Spanish 🇪🇸, Arts 🎨, Music 🎵
-- Physical Education ⚽, Business Studies 💼, Psychology 🧠, Law ⚖️, Health Sciences ⚕️
+## Recent Changes (December 26, 2025)
 
-### 2. Teacher Availability Setting
-- Teachers select a **category** from dropdown (not system subjects)
-- Choose day of week, start/end time
-- Availability is tied to the teaching category
-- Displayed with category icon, name, and time
+### Password Reset Functionality Fixed
+**Issue:** The `/api/auth/verify-reset-code` endpoint was being blocked by authentication middleware, returning "Invalid or expired session" error.
 
-### 3. Student Teacher Search
-- Students select a category to browse teachers
-- Only teachers with active availability in that category show up
-- Clean, category-based discovery flow
+**Root Cause:** The endpoint definition was nested inside another endpoint (`/api/course-creator/confirm-dodopay-purchase`) that required authentication, causing the auth middleware to protect the password reset endpoint incorrectly.
 
-### API Endpoints
-- `GET /api/subject-categories` - Get all 15 categories (PUBLIC)
-- `POST /api/teachers/:teacherId/availability` - Save availability with categoryId
-- `GET /api/teachers/by-category/:categoryId` - Find teachers by category
+**Solution:** 
+- Fixed the endpoint structure in `server/routes.ts` (lines 3084-3135)
+- Moved `verify-reset-code` endpoint outside of the requireAuth-protected dodopay endpoint
+- Endpoint now properly accepts POST requests without authentication
+- Password reset flow now works: forgot-password → email with 6-digit code → verify-reset-code updates password → user can login with new password
 
-### Database Schema
-- `subject_categories` table: 15 clean categories with icons and colors
-- `teacher_availability` table: now uses `category_id` instead of subjects
-- Each teacher can have multiple availability slots across categories
+### Current Password Reset Flow
+1. User clicks "Forgot password?" on login page
+2. Form accepts email and sends verification code via email (10-minute expiry)
+3. User navigates to reset form with reset code field
+4. Form accepts: Reset Code (6-digit), New Password, Confirm Password
+5. Backend verifies code and updates password hash in database
+6. Verification code is deleted after use
+7. User can login with new password
+
+## Architecture Notes
+- Password reset endpoints (`/api/auth/forgot-password`, `/api/auth/verify-reset-code`) do NOT require authentication
+- Verification codes stored in `verification_codes` table with 10-minute expiry
+- Password hashing uses bcrypt with 10 salt rounds
+- UI styled with #a0fab2 buttons and #0c332c icons
+
+## Key Files
+- `server/routes.ts` - Backend API endpoints
+- `client/src/pages/AuthModern.tsx` - Login/auth UI components
+- `server/middleware/auth.ts` - Authentication middleware
+
+## Technology Stack
+- Frontend: React + TypeScript + Vite
+- Backend: Express.js + Drizzle ORM
+- Database: PostgreSQL (Neon)
+- Email: Nodemailer (custom email accounts)
+- Authentication: Session-based with JWT option
+- Payments: Stripe, PayPal integration

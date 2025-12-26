@@ -3078,9 +3078,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Verify Reset Code
-  app.post('/api/course-creator/confirm-dodopay-purchase', requireAuth, async (req, res) => {
-  // Verify Reset Code
+  // Verify Reset Code - Password Reset (no auth required)
   app.post("/api/auth/verify-reset-code", async (req, res) => {
     try {
       const { email, code, newPassword } = req.body;
@@ -3132,6 +3130,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ success: false, error: "Password reset failed" });
     }
   });
+
+  // Confirm Dodopay Purchase
+  app.post('/api/course-creator/confirm-dodopay-purchase', requireAuth, async (req, res) => {
     try {
       const { paymentId, courseId, amount } = req.body;
       const user = req.user;
