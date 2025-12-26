@@ -519,7 +519,7 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700" transition-all duration-300
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-all duration-300"
                   disabled={isProcessing}
                   data-testid="button-toggle-confirm-password"
                 >
@@ -533,24 +533,20 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
           {authMode === 'signup' && (
             <div>
               <div className="flex items-start gap-2">
-                <Checkbox
+                <input
+                  type="checkbox"
                   id="terms"
                   checked={agreeToTerms}
-                  onCheckedChange={(checked) => { setAgreeToTerms(checked as boolean); clearError('terms'); }}
+                  onChange={(e) => { setAgreeToTerms(e.target.checked); clearError('terms'); }}
                   disabled={isProcessing}
-                  className="h-4 w-4 mt-0.5"
-                  style={{
-                    backgroundColor: agreeToTerms ? '#a0fab2' : 'transparent',
-                    borderColor: '#a0fab2',
-                    borderWidth: '2px'
-                  }}
+                  className="h-4 w-4 mt-0.5 rounded border-gray-300 accent-[#a0fab2]"
                   data-testid="checkbox-terms"
                 />
                 <label htmlFor="terms" className="text-xs text-white leading-snug cursor-pointer">
                   I agree to the{' '}
-                  <a href="/terms" target="_blank" className="hover:underline font-medium" style={{ color: '#a0fab2' }} transition-all duration-300>Terms of Service</a>{' '}
+                  <a href="/terms" target="_blank" className="hover:underline font-medium transition-all duration-300" style={{ color: '#a0fab2' }}>Terms of Service</a>{' '}
                   and{' '}
-                  <a href="/privacy" target="_blank" className="hover:underline font-medium" style={{ color: '#a0fab2' }} transition-all duration-300>Privacy Policy</a>
+                  <a href="/privacy" target="_blank" className="hover:underline font-medium transition-all duration-300" style={{ color: '#a0fab2' }}>Privacy Policy</a>
                 </label>
               </div>
               {errors.terms && <p className="text-sm text-destructive mt-1">{errors.terms}</p>}
