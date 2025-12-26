@@ -247,7 +247,10 @@ export default function AdminEmailManagement({ onNavigate }: AdminEmailManagemen
         </div>
         <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
           <DialogTrigger asChild>
-            <Button data-testid="button-add-account">
+            <Button 
+              data-testid="button-add-account"
+              className="bg-[#a0fab2] text-[#0d3931] hover:bg-[#a0fab2] hover:text-[#0d3931]"
+            >
               <Plus className="w-4 h-4 mr-2" />
               Add Email Account
             </Button>
