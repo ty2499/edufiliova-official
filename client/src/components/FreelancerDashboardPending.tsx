@@ -276,17 +276,14 @@ export function FreelancerDashboardPending({ onNavigate }: FreelancerDashboardPe
           {/* Info Card */}
           <Card className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
             <CardContent className="pt-6">
-              <div className="flex gap-3">
-                <Mail className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: '#2f5a4e' }} />
-                <div className="space-y-1">
-                  <p className="font-medium" style={{ color: '#2f5a4e' }}>
-                    Email Notification
-                  </p>
-                  <p className="text-sm" style={{ color: '#2f5a4e' }}>
-                    You will receive an email notification once your application has been reviewed and approved. 
-                    This typically takes 2-3 business days.
-                  </p>
-                </div>
+              <div className="space-y-1">
+                <p className="font-medium" style={{ color: '#2f5a4e' }}>
+                  Email Notification
+                </p>
+                <p className="text-sm" style={{ color: '#2f5a4e' }}>
+                  You will receive an email notification once your application has been reviewed and approved. 
+                  This typically takes 2-3 business days.
+                </p>
               </div>
             </CardContent>
           </Card>
