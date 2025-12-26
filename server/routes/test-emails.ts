@@ -729,6 +729,8 @@ router.post('/test-emails/customer-verification', async (req: Request, res: Resp
 });
 
 // Test endpoint specifically for account restriction email
+// Removed requirement for testing purposes during development
+// @ts-ignore
 router.post('/test-emails/account-restriction', async (req: Request, res: Response) => {
   try {
     const { testEmail, fullName, restrictionType, reason } = req.body;
