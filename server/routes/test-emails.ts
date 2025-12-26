@@ -445,6 +445,55 @@ router.get('/test-emails/send-to-tyler', async (req: Request, res: Response) => 
   }
 });
 
+// Test endpoint for digital purchase order email
+router.post('/test-emails/digital-purchase', async (req: Request, res: Response) => {
+  try {
+    const { testEmail } = req.body;
+    const emailToTest = testEmail || 'admin@pacreatives.co.za';
+    
+    console.log(`📧 Testing digital purchase email to ${emailToTest}...`);
+
+    const digitalPurchaseTemplate = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="format-detection" content="telephone=no, date=no, address=no, email=no"><meta name="x-apple-disable-message-reformatting"><style>@media (max-width: 1px) { .layout-0 { display: none !important; } } @media (max-width: 1px) and (min-width: 0px) { .layout-0-under-1 { display: table !important; } }</style></head><body style="width:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;background-color:#f0f1f5;margin:0;padding:0"><table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#f0f1f5" style="background-color:#f0f1f5"><tbody><tr><td style="background-color:#f0f1f5"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="max-width:600px;margin:0 auto;background-color:#ffffff"><tbody><tr><td style="vertical-align:top;padding:20px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#0d3931;border-radius:12px"><tbody><tr><td style="padding:20px;vertical-align:top;text-align:center"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td dir="ltr" style="color:#ffffff;font-size:20px;font-weight:700;font-family:Arial, Helvetica, sans-serif;white-space:pre-wrap;text-align:center">Thank you for your purchase!</td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:20px 20px 20px 20px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td dir="ltr" style="color:#545454;font-size:16px;font-family:Arial, Helvetica, sans-serif;text-align:center">Hi {{customerName}},<br><br>Thank you for your purchase! Your order has been successfully processed, and your digital products are now ready for download. You can access your files immediately from the links below or anytime from your EduFiliova account.</td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:20px 20px 20px 20px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#f0f1f5;border-radius:12px"><tbody><tr><td style="padding:20px;vertical-align:top"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td dir="ltr" style="color:#2f5a4e;font-size:18px;font-weight:700;font-family:Arial, Helvetica, sans-serif;">Order Details</td></tr><tr><td style="padding-top:15px"><table cellpadding="0" cellspacing="0" border="0" style="width:100%"><tbody><tr><td style="width:50%;padding-right:10px"><span style="color:#545454;">Order ID:</span></td><td style="width:50%;padding-left:10px"><span style="font-weight:700;color:#2f5a4e;">#{{orderId}}</span></td></tr><tr><td style="width:50%;padding-right:10px;padding-top:10px"><span style="color:#545454;">Total Paid:</span></td><td style="width:50%;padding-left:10px;padding-top:10px"><span style="font-weight:700;color:#2f5a4e;">\${{totalPrice}}</span></td></tr><tr><td style="width:50%;padding-right:10px;padding-top:10px"><span style="color:#545454;">Purchase Date:</span></td><td style="width:50%;padding-left:10px;padding-top:10px"><span style="font-weight:700;color:#2f5a4e;">{{purchaseDate}}</span></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:20px 20px 20px 20px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#fef3e2;border-radius:12px;border-left:4px solid #a0fab2"><tbody><tr><td style="padding:20px;vertical-align:top"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td dir="ltr" style="color:#2f5a4e;font-size:18px;font-weight:700;font-family:Arial, Helvetica, sans-serif;">Important Download Information</td></tr><tr><td style="padding-top:15px"><dir ltr" style="color:#545454;font-size:16px;font-family:Arial, Helvetica, sans-serif;"><span>• Download links are time-limited and may expire after 48 hours<br>• You can re-download your purchases anytime from your account dashboard<br>• Keep a backup of your files after downloading<br>• Do not share your download links with others<br><br>If a download link expires or you experience any issues, our support team can assist you.</span></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:20px 20px 0px 20px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:20px;vertical-align:top;background-color:#0d3931;border-radius:8px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td style="padding:0 0 0 0;text-align:center"><a href="https://edufiliova.com/my-downloads" target="_blank" rel="noopener noreferrer" style="color:#ffffff;text-decoration:none;font-weight:700;font-size:16px">Go to My Downloads</a></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top;padding:20px"><table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"><tbody><tr><td dir="ltr" style="color:#2f5a4e;font-size:18px;font-weight:700;font-family:Arial, Helvetica, sans-serif;">Need Help?</td></tr><tr><td style="padding-top:15px"><dir ltr" style="color:#545454;font-size:16px;font-family:Arial, Helvetica, sans-serif;"><span>If you're unable to download your files or have questions about your order, contact us at <a href="mailto:support@edufiliova.com" target="_blank" style="color:#2f5a4e;text-decoration:underline;">support@edufiliova.com</a> and include your Order ID (#{{orderId}}) for faster assistance.<br><br>Thank you for choosing EduFiliova. We hope your digital products help you learn, create, and grow.<br><br><strong>Warm regards,<br>EduFiliova Orders Team</strong></span></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></body></html>`;
+
+    // Replace template variables with test data
+    const customerName = 'Test User';
+    const orderId = 'TEST-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+    const totalPrice = '$99.99';
+    const purchaseDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const emailContent = digitalPurchaseTemplate
+      .replace(/{{customerName}}/g, customerName)
+      .replace(/{{orderId}}/g, orderId)
+      .replace(/{{totalPrice}}/g, totalPrice)
+      .replace(/{{purchaseDate}}/g, purchaseDate);
+
+    const transporter = await (await import('../email.js')).createEmailTransporter();
+    const mailOptions = {
+      from: `"EduFiliova Orders" <orders@edufiliova.com>`,
+      to: emailToTest,
+      subject: 'Your Digital Purchase Receipt - Download Your Files Now 📥',
+      html: emailContent
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log(`✅ Digital purchase test email sent to ${emailToTest}`);
+
+    res.json({
+      success: true,
+      message: `Digital purchase email sent successfully to ${emailToTest}`,
+      details: {
+        orderId,
+        totalPrice,
+        purchaseDate,
+        customerName
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending digital purchase test email:', error);
+    res.status(500).json({ error: 'Failed to send digital purchase email', details: error.message });
+  }
+});
+
 // Test endpoint specifically for device login email
 router.post('/test-emails/device-login', async (req: Request, res: Response) => {
   try {
