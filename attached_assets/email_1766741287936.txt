@@ -1,0 +1,31 @@
+Learning • Skills • Careers
+Hi {{customerName}},
+Thank you for your purchase! Your order has been successfully processed, and your digital products are now ready for download.
+You can access your files immediately from the links below or anytime from your EduFiliova account.
+Order Details:
+Order ID: #{{orderId}}
+Total Paid: ${{totalPrice}}
+Purchase Date: {{purchaseDate}}
+Your Digital Products
+{{#each items}}
+Download Now {{this.name}} {{/each}}
+
+
+
+ Important Download Information
+Download links are time-limited and may expire after {{expiryHours}} hours You can re-download your purchases anytime from your account dashboard Keep a backup of your files after downloading Do not share your download links with others
+If a download link expires or you experience any issues, our support team can assist you.
+
+Go to My Downloads
+
+Need Help?
+If you’re unable to download your files or have questions about your order, contact us at support@edufiliova.com and include your Order ID (#{{orderId}}) for faster assistance.
+Thank you for choosing EduFiliova. We hope your digital products help you learn, create, and grow.
+Warm regards,  EduFiliova Orders Team
+
+Thank you!
+Feel free to reach out if you have any questions.
+You can unsubscribe from these emails here. 
+ Visit the  Help Center
+ Or contact us anytime at support@edufiliova.com
+ 

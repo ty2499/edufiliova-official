@@ -750,6 +750,55 @@ export class EmailService {
     });
   }
 
+  async sendDigitalProductsPurchaseReceiptEmail(email: string, data: { customerName: string; orderId: string; totalPrice: string; purchaseDate: string; items: Array<{ name: string; downloadLink?: string }>; expiryHours?: number }): Promise<boolean> {
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/digital_products_receipt_template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    const customerName = data.customerName || 'Valued Customer';
+    const orderId = data.orderId || 'N/A';
+    const totalPrice = data.totalPrice || '0.00';
+    const purchaseDate = data.purchaseDate || new Date().toLocaleString();
+    const expiryHours = data.expiryHours || 72;
+
+    // Build items list HTML
+    const itemsList = data.items
+      .map(item => `<div style="margin:8px 0"><a href="${item.downloadLink || '#'}" style="color:#0d3931;text-decoration:underline;font-weight:bold">Download Now</a> <span style="color:#545454">${item.name}</span></div>`)
+      .join('\n');
+
+    // Replace all dynamic placeholders
+    html = html.replace(/\{\{customerName\}\}/g, customerName);
+    html = html.replace(/\{\{orderId\}\}/g, orderId);
+    html = html.replace(/\{\{totalPrice\}\}/g, totalPrice);
+    html = html.replace(/\{\{purchaseDate\}\}/g, purchaseDate);
+    html = html.replace(/\{\{expiryHours\}\}/g, expiryHours.toString());
+    html = html.replace(/\{\{itemsList\}\}/g, itemsList);
+
+    // Replace image paths with CIDs for embedded images
+    html = html.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:img1');
+    html = html.replace(/images\/f4a85d998eb4f45ce242a7b73cf561d5\.png/g, 'cid:img2');
+    html = html.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:img3');
+    html = html.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:img4');
+    html = html.replace(/images\/53185829a16faf137a533f19db64d893\.png/g, 'cid:img5');
+    html = html.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:img6');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: `Order Confirmation #${orderId} - Digital Products Ready - EduFiliova`,
+      html,
+      from: `"EduFiliova Orders" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'img1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766741303510.png'), cid: 'img1' },
+        { filename: 'img2.png', path: assetPath('f4a85d998eb4f45ce242a7b73cf561d5_1766741303511.png'), cid: 'img2' },
+        { filename: 'img3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766741303506.png'), cid: 'img3' },
+        { filename: 'img4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766741303501.png'), cid: 'img4' },
+        { filename: 'img5.png', path: assetPath('53185829a16faf137a533f19db64d893_1766741303508.png'), cid: 'img5' },
+        { filename: 'img6.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766741303504.png'), cid: 'img6' }
+      ]
+    });
+  }
+
   async sendDeviceLoginEmail(email: string, data: { fullName: string; deviceName: string; browser: string; os: string; location: string; ipAddress: string; loginTime: string; changePasswordUrl?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/device_login_template.html');
