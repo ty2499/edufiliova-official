@@ -998,40 +998,31 @@ export class EmailService {
 
     const { fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = data;
 
-    // ✅ USE BULLETPROOF NAME REPLACEMENT for fullName
-    html = this.forceReplaceName(html, fullName);
-    
-    // Force replacement of senderName and other fields
-    const senderNamePatterns = [
-      '{{senderName}}',
-      '{{sender_name}}',
-      '{{sender}}',
-      '{{ senderName }}',
-      '{{ sender_name }}',
-      '{{ sender }}'
-    ];
-    senderNamePatterns.forEach(p => {
-      html = html.replaceAll(p, senderName);
-    });
-    html = html.replace(/\{\{\s*senderName\s*\}\}/gi, senderName);
-    html = html.replace(/\{\{\s*sender_name\s*\}\}/gi, senderName);
-    
-    const amountPatterns = ['{{amount}}', '{{ amount }}'];
-    amountPatterns.forEach(p => html = html.replaceAll(p, amount));
-    html = html.replace(/\{\{\s*amount\s*\}\}/gi, amount);
-    
-    const codePatterns = ['{{voucherCode}}', '{{ voucherCode }}'];
-    codePatterns.forEach(p => html = html.replaceAll(p, voucherCode));
-    html = html.replace(/\{\{\s*voucherCode\s*\}\}/gi, voucherCode);
-    
-    const expiryPatterns = ['{{expiresAt}}', '{{ expiresAt }}'];
-    expiryPatterns.forEach(p => html = html.replaceAll(p, expiresAt));
-    html = html.replace(/\{\{\s*expiresAt\s*\}\}/gi, expiresAt);
+    // ✅ ABSOLUTE FORCE REPLACEMENT for all fields
+    // This handles any potential HTML fragmentation/spans within placeholders
+    const forceReplace = (text: string, key: string, value: string) => {
+      // 1. Exact match
+      text = text.replaceAll(`{{${key}}}`, value);
+      // 2. Case-insensitive regex for the placeholder
+      const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
+      text = text.replace(regex, value);
+      // 3. Fragmentation-aware regex: catches cases where tags are split by spans or other markup
+      // e.g. {{f</span><span>ullName}}
+      const fragRegex = new RegExp(`\\{\\{[\\s\\S]*?${key.split('').join('[\\s\\S]*?')}[\\s\\S]*?\\}\\}`, 'gi');
+      text = text.replace(fragRegex, value);
+      return text;
+    };
 
-    // Hardcoded replacements for common splitting patterns in templates
-    html = html.replace(/Hi\s*\{\{.*?fullName.*?\}\}/gi, `Hi ${fullName}`);
-    html = html.replace(/\{\{.*?senderName.*?\}\}\s*has\s*sent/gi, `${senderName} has sent`);
-    html = html.replace(/Message\s*from\s*\{\{.*?senderName.*?\}\}/gi, `Message from ${senderName}`);
+    html = forceReplace(html, 'fullName', fullName);
+    html = forceReplace(html, 'senderName', senderName);
+    html = forceReplace(html, 'amount', amount);
+    html = forceReplace(html, 'voucherCode', voucherCode);
+    html = forceReplace(html, 'expiresAt', expiresAt);
+
+    // Contextual patterns for maximum reliability
+    html = html.replace(/Hi\s+[\s\S]*?fullName[\s\S]*?(?=[,<])/gi, `Hi ${fullName}`);
+    html = html.replace(/[\s\S]*?senderName[\s\S]*?has sent/gi, `${senderName} has sent`);
+    html = html.replace(/Message from\s+[\s\S]*?senderName[\s\S]*?(?=[<])/gi, `Message from ${senderName}`);
 
     // Handle personal message conditional block
     if (personalMessage) {
@@ -1039,9 +1030,15 @@ export class EmailService {
         <strong>Message from ${senderName}:</strong><br/>
         <em>“${personalMessage}”</em><br/><br/>
       `;
+      // Target the exact block from the template
       html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
+      // Fallback if the block was fragmented
+      if (html.includes('personalMessage')) {
+        html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
+      }
     } else {
       html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+      html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
     }
 
     // Map images to CIDs
