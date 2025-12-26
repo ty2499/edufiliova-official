@@ -436,4 +436,40 @@ router.get('/test-emails/send-to-tyler', async (req: Request, res: Response) => 
   }
 });
 
+// Test endpoint specifically for device login email
+router.post('/test-emails/device-login', async (req: Request, res: Response) => {
+  try {
+    const { testEmail } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing device login email to ${testEmail}...`);
+
+    const result = await emailService.sendDeviceLoginEmail(testEmail, {
+      fullName: 'Test User',
+      deviceName: 'Chrome on Windows',
+      browser: 'Chrome 120',
+      os: 'Windows 11',
+      location: 'New York, United States',
+      ipAddress: '203.0.113.45',
+      loginTime: new Date().toLocaleString()
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Device login email sent successfully' : 'Failed to send device login email',
+      details: {
+        recipientEmail: testEmail,
+        deviceName: 'Chrome on Windows',
+        location: 'New York, United States'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending device login test email:', error);
+    res.status(500).json({ error: 'Failed to send device login email', details: error.message });
+  }
+});
+
 export default router;
