@@ -1010,11 +1010,7 @@ export class EmailService {
     // Replace dynamic fields
     html = html.replaceAll('{{restrictionType}}', restrictionType);
     html = html.replaceAll('{{reason}}', reasonText);
-    
-    // ✅ Handle specific split pattern for userName in this template
-    // Pattern found in template: {{</span><span ...>userName</span><span ...>}}
-    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>userName<\/span><span[^>]*>[^}]*\}\}/gi, fullName);
-    html = html.replaceAll('{{userName}}', fullName);
+    html = html.replaceAll('{{fullName}}', fullName);
     
     html = html.replace(/\{\{#if restrictionType\}\}[\s\S]*?\{\{\/if\}\}/gi, restrictionType ? `Restriction Type: ${restrictionType}` : '');
     html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, reasonText ? `Reason: ${reasonText}` : '');
