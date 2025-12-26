@@ -3040,6 +3040,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Store code in verification_codes table
       await db.insert(verificationCodes).values({
+        contactInfo: email,
         userId: user.id,
         code: emailCode,
         type: 'email_password_reset',
