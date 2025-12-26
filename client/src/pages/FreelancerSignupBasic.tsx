@@ -307,7 +307,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
     <AuthLayout>
       <div>
         <div className="mb-8">
-          <h1 className="font-bold text-foreground mb-2 text-[20px] text-center">Apply as a Freelancer on EduFiliova</h1>
+          <h1 className="font-bold mb-2 text-[20px] text-center" style={{ color: '#a0fab2' }}>Apply as a Freelancer on EduFiliova</h1>
         </div>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
