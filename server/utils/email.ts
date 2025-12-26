@@ -702,6 +702,153 @@ export class EmailService {
     });
   }
 
+  async sendMeetingReminderEmail(email: string, data: { studentName: string; teacherName: string; meetingTime: Date; meetingLink: string; meetingTitle: string }): Promise<boolean> {
+    const studentName = data.studentName || 'Student';
+    const teacherName = data.teacherName || 'Your Teacher';
+    const meetingTime = data.meetingTime instanceof Date ? data.meetingTime.toLocaleString() : new Date(data.meetingTime).toLocaleString();
+    const meetingLink = data.meetingLink || '#';
+    const meetingTitle = data.meetingTitle || 'Class Meeting';
+    const baseUrl = this.getBaseUrl();
+
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meeting Reminder</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f5f7fa;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      text-align: center;
+      color: white;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .content {
+      padding: 40px;
+    }
+    .greeting {
+      font-size: 18px;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+    }
+    .meeting-details {
+      background-color: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 4px;
+    }
+    .detail-row {
+      margin: 12px 0;
+      color: #555;
+    }
+    .detail-label {
+      font-weight: bold;
+      color: #333;
+      display: inline-block;
+      width: 120px;
+    }
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 14px 32px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin: 20px 0;
+      transition: opacity 0.3s;
+    }
+    .cta-button:hover {
+      opacity: 0.9;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 20px 40px;
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .footer a {
+      color: #667eea;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📅 Meeting Reminder</h1>
+    </div>
+    <div class="content">
+      <div class="greeting">Hi {{studentName}},</div>
+      <p>This is a friendly reminder that you have an upcoming meeting!</p>
+      
+      <div class="meeting-details">
+        <div class="detail-row">
+          <span class="detail-label">📚 Topic:</span>
+          <span>{{meetingTitle}}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">👨‍🏫 Teacher:</span>
+          <span>{{teacherName}}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">⏰ Time:</span>
+          <span>{{meetingTime}}</span>
+        </div>
+      </div>
+
+      <p>Don't miss this important class! Click the button below to join:</p>
+      <center>
+        <a href="{{meetingLink}}" class="cta-button">Join Meeting</a>
+      </center>
+
+      <p>If you have any questions about this meeting, please reach out to your instructor or contact our support team.</p>
+    </div>
+    <div class="footer">
+      <p>© 2025 EduFiliova. All rights reserved.</p>
+      <p><a href="${baseUrl}">Visit EduFiliova</a></p>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+
+    const processedHtml = html
+      .replace(/\{\{studentName\}\}/g, studentName)
+      .replace(/\{\{teacherName\}\}/g, teacherName)
+      .replace(/\{\{meetingTime\}\}/g, meetingTime)
+      .replace(/\{\{meetingLink\}\}/g, meetingLink)
+      .replace(/\{\{meetingTitle\}\}/g, meetingTitle);
+
+    return this.sendEmail({
+      to: email,
+      subject: `Meeting Reminder: ${meetingTitle} with ${teacherName}`,
+      html: processedHtml,
+      from: `"EduFiliova" <support@edufiliova.com>`,
+    });
+  }
+
   async sendDeviceLoginEmail(email: string, data: { fullName: string; deviceName: string; browser: string; os: string; location: string; ipAddress: string; loginTime: string; changePasswordUrl?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/device_login_template.html');

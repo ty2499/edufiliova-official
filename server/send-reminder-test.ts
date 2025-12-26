@@ -1,26 +1,21 @@
-import { EmailService } from './utils/email';
+import { emailService } from './utils/email';
 
 async function sendReminderEmail() {
   const testEmail = 'hallpt7@gmail.com';
-  const emailService = new EmailService();
   
   try {
-    console.log('📧 Sending reminder email to', testEmail, '...\n');
+    console.log('📧 Sending meeting reminder email to', testEmail, '...\n');
     
-    // Send a subscription confirmation email as a reminder test
-    const success = await emailService.sendSubscriptionConfirmationEmail(testEmail, {
-      customerName: 'Test User',
-      planName: 'Premium Learning Plan',
-      billingCycle: 'Monthly',
-      orderId: 'REMINDER-TEST-001',
-      price: '29.99',
-      activationDate: new Date().toLocaleDateString(),
-      nextBillingDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-      dashboardUrl: 'https://edufiliova.com/dashboard'
+    const success = await emailService.sendMeetingReminderEmail(testEmail, {
+      studentName: 'Test User',
+      teacherName: 'Dr. Sarah Johnson',
+      meetingTime: new Date(Date.now() + 15 * 60 * 1000),
+      meetingLink: 'https://edufiliova.com/meetings/join/abc123',
+      meetingTitle: 'JavaScript Advanced Concepts Review',
     });
     
     if (success) {
-      console.log('✅ Email sent successfully to', testEmail);
+      console.log('✅ Meeting reminder email sent successfully to', testEmail);
     } else {
       console.log('⚠️ Email sending returned false');
     }
