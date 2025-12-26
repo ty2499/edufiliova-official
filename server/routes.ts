@@ -503,12 +503,22 @@ const createEmailTransporter = async (senderEmail: string) => {
 };
 
 // Email templates with modern branding
-export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification' | 'password_reset_whatsapp', data: any) => {
+export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification' | 'password_reset_whatsapp' | 'password_changed_confirmation_whatsapp', data: any) => {
   const whiteLogoUrl = process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
   const baseUrl = process.env.REPLIT_DEV_DOMAIN 
     ? `https://${process.env.REPLIT_DEV_DOMAIN}`
     : process.env.BASE_URL || process.env.APP_URL || 'https://edufiliova.com';
   const currentYear = new Date().getFullYear();
+
+  const cleanReplace = (html: string, key: string, value: any) => {
+    const val = String(value);
+    const fuzzyRegex = new RegExp('\\{\\{[^{}]*?' + key + '[^{}]*?\\}\\}', 'g');
+    html = html.replace(fuzzyRegex, val);
+    const fuzzySingleRegex = new RegExp('\\{[^{}]*?' + key + '[^{}]*?\\}', 'g');
+    html = html.replace(fuzzySingleRegex, val);
+    const fallbackRegex = new RegExp('<span[^>]*>' + key + '<\\/span>', 'g');
+    return html.replace(fallbackRegex, val);
+  };
   
   const baseStyle = `
     <style>
@@ -771,25 +781,7 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       let rendered = data.htmlContent;
       
       // Ultra-aggressive placeholder cleanup
-      const cleanReplace = (html, key, value) => {
-        const val = String(value);
-        
-        // 1. Target any sequence of chars that looks like it starts with {{ and ends with }} 
-        // and contains the key, even if split by tags.
-        // This regex looks for: {{, followed by anything that isn't }} (lazy), then key, then anything that isn't }} (lazy), then }}
-        const fuzzyRegex = new RegExp('\\{\\{[^{}]*?' + key + '[^{}]*?\\}\\}', 'g');
-        html = html.replace(fuzzyRegex, val);
-        
-        // 2. Also handle single braces { ... key ... }
-        const fuzzySingleRegex = new RegExp('\\{[^{}]*?' + key + '[^{}]*?\\}', 'g');
-        html = html.replace(fuzzySingleRegex, val);
-        
-        // 3. Fallback for the key itself if it's still there wrapped in spans (clean up remaining bits)
-        const fallbackRegex = new RegExp('<span[^>]*>' + key + '<\\/span>', 'g');
-        html = html.replace(fallbackRegex, val);
-        
-        return html;
-      };
+      
 
       rendered = cleanReplace(rendered, 'fullName', data.fullName || 'User');
       rendered = cleanReplace(rendered, 'code', data.code);
@@ -798,6 +790,31 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       return {
         html: rendered,
         attachments: imageAssets.map(img => ({
+          filename: img,
+          path: path.join(process.cwd(), 'attached_assets', img),
+          cid: img.split('_')[0] + '.png'
+        }))
+      };
+
+        case 'password_changed_confirmation_whatsapp':
+      const confirmImageAssets = [
+        'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
+        '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
+        '83faf7f361d9ba8dfdc904427b5b6423_1766506747364.png',
+        '230f9575641a060a9b3772a9085c3203_1766745461892.png',
+        '3d94f798ad2bd582f8c3afe175798088_1766506747360.png',
+        '9f7291948d8486bdd26690d0c32796e0_1766506747363.png'
+      ];
+      
+      let confirmRendered = data.htmlContent;
+      // Handle dynamics
+      
+
+      confirmRendered = cleanReplace(confirmRendered, 'fullName', data.fullName || 'User');
+      
+      return {
+        html: confirmRendered,
+        attachments: confirmImageAssets.map(img => ({
           filename: img,
           path: path.join(process.cwd(), 'attached_assets', img),
           cid: img.split('_')[0] + '.png'
