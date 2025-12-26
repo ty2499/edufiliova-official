@@ -1000,10 +1000,21 @@ export class EmailService {
 
     // ✅ USE BULLETPROOF NAME REPLACEMENT for fullName
     html = this.forceReplaceName(html, fullName);
-    html = html.replace(/\{\{senderName\}\}/gi, senderName);
-    html = html.replace(/\{\{amount\}\}/gi, amount);
-    html = html.replace(/\{\{voucherCode\}\}/gi, voucherCode);
-    html = html.replace(/\{\{expiresAt\}\}/gi, expiresAt);
+    
+    // Force replacement of senderName and other fields
+    html = html.replaceAll('{{senderName}}', senderName);
+    html = html.replaceAll('{{sender_name}}', senderName);
+    html = html.replaceAll('{{sender}}', senderName);
+    html = html.replace(/\{\{\s*senderName\s*\}\}/gi, senderName);
+    
+    html = html.replaceAll('{{amount}}', amount);
+    html = html.replace(/\{\{\s*amount\s*\}\}/gi, amount);
+    
+    html = html.replaceAll('{{voucherCode}}', voucherCode);
+    html = html.replace(/\{\{\s*voucherCode\s*\}\}/gi, voucherCode);
+    
+    html = html.replaceAll('{{expiresAt}}', expiresAt);
+    html = html.replace(/\{\{\s*expiresAt\s*\}\}/gi, expiresAt);
 
     // Handle personal message conditional block
     if (personalMessage) {
