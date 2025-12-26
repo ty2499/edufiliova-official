@@ -1499,6 +1499,34 @@ export class EmailService {
       return false;
     }
   }
+
+  async sendFreelancerUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    try {
+      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-under-review', 'template.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
+
+      const fullName = data.fullName || 'Freelancer';
+
+      // USE BULLETPROOF NAME REPLACEMENT
+      html = this.forceReplaceName(html, fullName);
+
+      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-under-review', 'images');
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Your Application is Now Under Review - EduFiliova',
+        html,
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        attachments: [
+          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
+          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
+        ]
+      });
+    } catch (error) {
+      console.error('❌ Error sending freelancer under review email:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();

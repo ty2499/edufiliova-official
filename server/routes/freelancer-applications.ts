@@ -907,17 +907,33 @@ router.put('/applications/:id/status', async (req, res) => {
 
     // Send email notifications based on status change
     try {
-      const emailSent = await emailService.sendFreelancerApplicationStatusEmail(
-        updatedApplication.email,
-        {
-          fullName: updatedApplication.fullName,
-          status: status as 'pending' | 'under_review' | 'approved' | 'rejected',
-          rejectionReason: rejectionReason
+      let emailSent = false;
+      if (status === 'under_review') {
+        emailSent = await emailService.sendFreelancerUnderReviewEmail(
+          updatedApplication.email,
+          { fullName: updatedApplication.fullName }
+        );
+        if (emailSent) {
+          console.log(`✅ Under review email sent to ${updatedApplication.email}`);
         }
-      );
-      if (emailSent) {
-        console.log(`✅ Status update email sent to ${updatedApplication.email} for status: ${status}`);
-      } else {
+      } else if (status === 'approved') {
+        emailSent = await emailService.sendFreelancerApplicationStatusEmail(
+          updatedApplication.email,
+          { fullName: updatedApplication.fullName, status: 'approved' }
+        );
+        if (emailSent) {
+          console.log(`✅ Approval email sent to ${updatedApplication.email}`);
+        }
+      } else if (status === 'rejected') {
+        emailSent = await emailService.sendFreelancerApplicationStatusEmail(
+          updatedApplication.email,
+          { fullName: updatedApplication.fullName, status: 'rejected', rejectionReason }
+        );
+        if (emailSent) {
+          console.log(`✅ Rejection email sent to ${updatedApplication.email}`);
+        }
+      }
+      if (!emailSent && status !== 'pending') {
         console.warn(`⚠️ Failed to send status email to ${updatedApplication.email}`);
       }
     } catch (emailError) {
