@@ -621,6 +621,77 @@ export class EmailService {
       ]
     });
   }
+
+  async sendPaymentFailedEmail(email: string, data: { customerName: string; orderId: string; amount: string; reason?: string; retryPaymentUrl?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/payment_failed_template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // Remove preloads and add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    const customerName = data.customerName || 'Valued Customer';
+    const orderId = data.orderId || 'N/A';
+    const amount = data.amount || '0';
+    const reason = data.reason || '';
+    const retryPaymentUrl = data.retryPaymentUrl || `${baseUrl}/retry-payment`;
+
+    // Replace split placeholders directly with values
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>customerName<\/span><span[^>]*>[^}]*\}\}/gi, customerName);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>orderId<\/span><span[^>]*>[^}]*\}\}/gi, orderId);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>amount<\/span><span[^>]*>[^}]*\}\}/gi, amount);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>reason<\/span><span[^>]*>[^}]*\}\}/gi, reason);
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>retryPaymentUrl<\/span><span[^>]*>[^}]*\}\}/gi, retryPaymentUrl);
+    
+    // Replace any remaining simple placeholders
+    html = html.replace(/\{\{customerName\}\}/gi, customerName);
+    html = html.replace(/\{\{orderId\}\}/gi, orderId);
+    html = html.replace(/\{\{amount\}\}/gi, amount);
+    html = html.replace(/\{\{reason\}\}/gi, reason);
+    html = html.replace(/\{\{retryPaymentUrl\}\}/gi, retryPaymentUrl);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    // Handle conditional reason
+    if (reason && reason.trim()) {
+      html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, ` - Reason: ${reason}`);
+    } else {
+      html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+    }
+
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon1');
+    html = html.replaceAll('images/2f9cbc8b998ed01d09dd6fe1193c00f1.png', 'cid:logo1');
+    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon2');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
+    html = html.replaceAll('images/53185829a16faf137a533f19db64d893.png', 'cid:logo2');
+    html = html.replaceAll('images/bdcb48fcab505623e33c405af5c98429.png', 'cid:hero');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Payment Failed - Please Retry - EduFiliova',
+      html,
+      from: `"EduFiliova Billing" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'icon1.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766712061938.png'), cid: 'icon1', contentType: 'image/png' },
+        { filename: 'logo1.png', path: assetPath('2f9cbc8b998ed01d09dd6fe1193c00f1_1766712061927.png'), cid: 'logo1', contentType: 'image/png' },
+        { filename: 'icon2.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766712061942.png'), cid: 'icon2', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766712061929.png'), cid: 'corner', contentType: 'image/png' },
+        { filename: 'logo2.png', path: assetPath('53185829a16faf137a533f19db64d893_1766712061936.png'), cid: 'logo2', contentType: 'image/png' },
+        { filename: 'hero.png', path: assetPath('bdcb48fcab505623e33c405af5c98429_1766712061940.png'), cid: 'hero', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766712061933.png'), cid: 'social', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();
