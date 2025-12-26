@@ -1700,7 +1700,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             value={resetPin}
             onChange={(e) => setResetPin(e.target.value.toUpperCase())}
             placeholder="Enter 6-digit code"
-            className="h-12 text-base text-center text-lg tracking-wider rounded-lg border-gray-300"
+            className="h-12 text-base text-center text-lg tracking-wider rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
             maxLength={6}
             data-testid="input-reset-pin"
           />
