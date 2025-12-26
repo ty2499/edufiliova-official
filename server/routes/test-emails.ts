@@ -1,10 +1,19 @@
 import { Router } from 'express';
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { emailService } from '../utils/email.js';
 import { sendVoucherEmail, sendBulkVouchersEmail } from '../email.js';
 import { sendGiftVoucherEmail } from '../utils/email-templates.js';
 
 const router = Router();
+
+// Bypass auth for all test-emails routes (public testing endpoint)
+router.use((req: Request, res: Response, next: NextFunction) => {
+  if (req.path.startsWith('/test-emails')) {
+    // Mark as authenticated to bypass auth middleware
+    (req as any).user = { id: 'test-user', role: 'admin' };
+  }
+  next();
+});
 
 // Test endpoint specifically for gift voucher email (the one sent when buying for someone)
 router.post('/test-emails/gift-voucher', async (req: Request, res: Response) => {
