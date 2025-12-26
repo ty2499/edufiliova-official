@@ -585,11 +585,12 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <Button 
                     size="lg" 
                     onClick={() => onNavigate('course-browse')}
-                    className="group"
+                    style={{ backgroundColor: '#0c332c', color: 'white' }}
+                    className="hover:bg-[#0c332c]"
                     data-testid="button-explore-courses"
                   >
                     Explore More Courses
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" transition-all duration-300 />
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </>
@@ -700,11 +701,12 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   <Button 
                     size="lg" 
                     onClick={() => onNavigate('products')}
-                    className="group"
+                    style={{ backgroundColor: '#0c332c', color: 'white' }}
+                    className="hover:bg-[#0c332c]"
                     data-testid="button-explore-products"
                   >
                     Explore More
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" transition-all duration-300 />
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </>
