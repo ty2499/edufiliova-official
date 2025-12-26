@@ -86,13 +86,18 @@ router.post("/teacher-applications/initiate", async (req, res) => {
       });
     }
 
-    // Check if email already exists in approved teacher applications
+    // Check if email already exists in teacher applications
     const existingApplication = await storage.getTeacherApplicationByEmail(email);
     if (existingApplication) {
-      return res.status(400).json({
-        success: false,
-        error: "An application with this email already exists"
-      });
+      // Only block if application is approved - allow resubmission for pending/rejected
+      if (existingApplication.status === 'approved') {
+        return res.status(400).json({
+          success: false,
+          error: "Your teacher application has already been approved. Please log in to your account."
+        });
+      }
+      // For pending or rejected applications, allow the user to continue (will update existing application)
+      console.log(`📝 Existing ${existingApplication.status} application found for ${email}, allowing resubmission flow`);
     }
 
     // Delete any existing pending registration for this email (allows re-registration)
@@ -625,38 +630,48 @@ router.post("/teacher-applications", async (req, res) => {
 
     if (existingApplication.length > 0) {
       const app = existingApplication[0];
-      if (app.status === 'rejected') {
-        // Allow updating rejected applications via the main POST endpoint
-        const [updatedApplication] = await db
-          .update(teacherApplications)
-          .set({
-            ...validatedData,
-            status: "pending",
-            updatedAt: new Date(),
-          })
-          .where(eq(teacherApplications.id, app.id))
-          .returning();
+      
+      // Only block if already approved
+      if (app.status === 'approved') {
+        return res.status(400).json({
+          error: "Your teacher application has already been approved. Please log in to your account.",
+        });
+      }
+      
+      // Allow updating pending or rejected applications (resubmission)
+      const [updatedApplication] = await db
+        .update(teacherApplications)
+        .set({
+          ...validatedData,
+          status: "pending",
+          updatedAt: new Date(),
+        })
+        .where(eq(teacherApplications.id, app.id))
+        .returning();
 
-        // Send resubmission notification email
-        try {
+      // Send appropriate email based on previous status
+      try {
+        if (app.status === 'rejected') {
           await emailService.sendApplicationResubmittedEmail(validatedData.email, {
             fullName: validatedData.fullName,
             applicationType: 'teacher'
           });
           console.log(`✅ Teacher resubmission notification email sent to ${validatedData.email}`);
-        } catch (emailError) {
-          console.warn(`⚠️ Failed to send resubmission notification email to ${validatedData.email}:`, emailError);
+        } else {
+          await emailService.sendApplicationSubmittedEmail(validatedData.email, {
+            fullName: validatedData.fullName
+          });
+          console.log(`✅ Teacher application update email sent to ${validatedData.email}`);
         }
-
-        return res.status(200).json({
-          success: true,
-          message: "Teacher application resubmitted successfully",
-          id: updatedApplication.id,
-          application: updatedApplication,
-        });
+      } catch (emailError) {
+        console.warn(`⚠️ Failed to send notification email to ${validatedData.email}:`, emailError);
       }
-      return res.status(400).json({
-        error: "An application with this email already exists. Please check your application status.",
+
+      return res.status(200).json({
+        success: true,
+        message: app.status === 'rejected' ? "Teacher application resubmitted successfully" : "Teacher application updated successfully",
+        id: updatedApplication.id,
+        application: updatedApplication,
       });
     }
 
