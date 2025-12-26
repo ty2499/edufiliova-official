@@ -875,15 +875,15 @@ export class EmailService {
     html = html.replace(/\{\{userName\}\}/gi, userName);
     html = html.replace(/\{\{maskedMobileNumber\}\}/gi, maskedMobileNumber);
 
-    // Replace image CIDs - map to server email-images directory
-    html = html.replaceAll('cid:logo-white', 'cid:logo-white');
-    html = html.replaceAll('cid:circle-1', 'cid:circle-1');
-    html = html.replaceAll('cid:circle-2', 'cid:circle-2');
-    html = html.replaceAll('cid:checkmark', 'cid:checkmark');
-    html = html.replaceAll('cid:diagonal', 'cid:diagonal');
-    html = html.replaceAll('cid:hero-image', 'cid:hero-image');
+    // Replace image paths with CIDs - map original image paths to CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:img1');
+    html = html.replaceAll('images/41506b29d7f0bbde9fcb0d4afb720c70.png', 'cid:img2');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:img3');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:img4');
+    html = html.replaceAll('images/2fcb5438f3a66f5b8a9aad39bcd49e69.png', 'cid:img5');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:img6');
 
-    const imagePath = (filename: string) => path.resolve(process.cwd(), 'server/email-images', filename);
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
 
     return this.sendEmail({
       to: email,
@@ -891,12 +891,12 @@ export class EmailService {
       html,
       from: `"EduFiliova Security" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'logo-white.png', path: imagePath('logo-white.png'), cid: 'logo-white', contentType: 'image/png' },
-        { filename: 'circles.png', path: imagePath('circles.png'), cid: 'circle-1', contentType: 'image/png' },
-        { filename: 'circles-alt.png', path: imagePath('circles-alt.png'), cid: 'circle-2', contentType: 'image/png' },
-        { filename: 'circles.png', path: imagePath('circles.png'), cid: 'checkmark', contentType: 'image/png' },
-        { filename: 'diagonal.png', path: imagePath('diagonal.png'), cid: 'diagonal', contentType: 'image/png' },
-        { filename: 'hero-image.png', path: imagePath('hero-image.png'), cid: 'hero-image', contentType: 'image/png' }
+        { filename: 'img1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766748234011.png'), cid: 'img1', contentType: 'image/png' },
+        { filename: 'img2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_1766748234010.png'), cid: 'img2', contentType: 'image/png' },
+        { filename: 'img3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766748234009.png'), cid: 'img3', contentType: 'image/png' },
+        { filename: 'img4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766748234008.png'), cid: 'img4', contentType: 'image/png' },
+        { filename: 'img5.png', path: assetPath('2fcb5438f3a66f5b8a9aad39bcd49e69_1766748234007.png'), cid: 'img5', contentType: 'image/png' },
+        { filename: 'img6.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766748234008.png'), cid: 'img6', contentType: 'image/png' }
       ]
     });
   }
