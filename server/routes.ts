@@ -758,7 +758,7 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         </body></html>
       `;
 
-                    case 'password_reset_whatsapp':
+                        case 'password_reset_whatsapp':
       const imageAssets = [
         'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
         '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
@@ -769,10 +769,28 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
       ];
       
       let rendered = data.htmlContent;
-      // Handle dynamics with absolute certainty
-      rendered = rendered.split('{{fullName}}').join(data.fullName || 'User').split('{fullName}').join(data.fullName || 'User');
-      rendered = rendered.split('{{code}}').join(data.code).split('{code}').join(data.code);
-      rendered = rendered.split('{{expiresIn}}').join(data.expiresIn || '10').split('{expiresIn}').join(data.expiresIn || '10');
+      
+      const replacePlaceholder = (html, key, value) => {
+        const escapedValue = String(value);
+        // 1. Standard replacements
+        html = html.split('{{' + key + '}}').join(escapedValue);
+        html = html.split('{' + key + '}').join(escapedValue);
+        
+        // 2. HTML-encoded replacements (handling spans and styling inside the tag)
+        // This is a more robust regex that looks for the key surrounded by common HTML noise
+        const regex = new RegExp('(\{\{|<span[^>]*>\\{\\{<\\/span>)[^<{]*?' + key + '[^<{]*?(\}\}|<\\/span><span[^>]*>\\}\\}<\\/span>)', 'g');
+        html = html.replace(regex, escapedValue);
+
+        // 3. Fallback for the specific pattern observed: span wrapping the key only
+        const fallbackRegex = new RegExp('<span[^>]*>' + key + '<\\/span>', 'g');
+        html = html.replace(fallbackRegex, escapedValue);
+        
+        return html;
+      };
+
+      rendered = replacePlaceholder(rendered, 'fullName', data.fullName || 'User');
+      rendered = replacePlaceholder(rendered, 'code', data.code);
+      rendered = replacePlaceholder(rendered, 'expiresIn', data.expiresIn || '10');
       
       return {
         html: rendered,
