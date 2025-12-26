@@ -1013,17 +1013,13 @@ export class EmailService {
     // Final replacements for non-standard variables
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
-    // Contextual sentence level safety (Hi and Great news sentences)
-    html = html.replace(/Hi\s+User,/gi, `Hi ${data.fullName || 'User'},`);
-    html = html.replace(/Great news!\s+EduFiliova Team\s+has sent/gi, `Great news! ${data.senderName || 'EduFiliova Team'} has sent`);
-
-    // Map images to CIDs
+    // Map images to CIDs (using original template paths)
     html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve_top');
     html = html.replaceAll('images/de07618f612ae3f3a960a43365f0d61d.png', 'cid:logo');
     html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:ring');
     html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:curve_bottom');
     html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
-    html = html.replaceAll('images/fe18318bf782f1266432dce6a1a46f60.png', 'cid:promo');
+    html = html.replaceAll('images/afa2a8b912b8da2c69e49d9de4a30768.png', 'cid:promo');
 
     const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets/voucher', filename);
 
@@ -1038,7 +1034,7 @@ export class EmailService {
         { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'ring' },
         { filename: 'curve_bottom.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088.png'), cid: 'curve_bottom' },
         { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0.png'), cid: 'social' },
-        { filename: 'promo.png', path: assetPath('fe18318bf782f1266432dce6a1a46f60.png'), cid: 'promo' },
+        { filename: 'promo.png', path: assetPath('afa2a8b912b8da2c69e49d9de4a30768.png'), cid: 'promo' },
       ]
     });
   }
