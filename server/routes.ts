@@ -14811,7 +14811,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'suspension', 'template.html');
           let emailHtml = fs.readFileSync(templatePath, 'utf-8');
           
-          // Replace dynamic placeholders
+          // Replace dynamic placeholders - handle split span pattern from email builder
+          // Pattern: Hi {{</span><span...>fullName</span><span...>}},
+          emailHtml = emailHtml.replace(/Hi \{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\},/gi, `Hi ${userName},`);
+          emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, userName);
           emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, userName);
           emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, userName);
           emailHtml = emailHtml.replace(/\{\{ fullName \}\}/gi, userName);
