@@ -348,12 +348,12 @@ export class EmailService {
 
   async sendFreelancerRejectionEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    // Using same template as teacher rejection for consistency
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_declined_teacher_1766647033808.html');
+    // Use freelancer-specific decline template
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/freelancer_decline_template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
     
     const iphoneFontStack = `
     <style>
@@ -368,43 +368,37 @@ export class EmailService {
     // ✅ USE BULLETPROOF NAME REPLACEMENT FIRST - THIS IS CRITICAL
     html = this.forceReplaceName(html, fullName);
 
-    // Handle blocks
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
+    // Handle conditional reason blocks
+    html = html.replace(/\{\{#if rejectionReason\}\}[\s\S]*?\{\{rejectionReason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided: ${reasonText}`);
 
     // Final cleanup
-    html = html.replace(/\{\{reason\}\}/gi, reasonText);
+    html = html.replace(/\{\{rejectionReason\}\}/gi, reasonText);
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{#if reason\}\}/gi, '');
+    html = html.replace(/\{\{#if rejectionReason\}\}/gi, '');
     html = html.replace(/\{\{\/if\}\}/gi, '');
 
-    // Replace image paths
-    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
-    html = html.replaceAll('images/0ac9744033a7e26f12e08d761c703308.png', 'cid:logo');
-    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
-    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
-    html = html.replaceAll('images/917a6e905cf83da447efc0f5c2780aca.png', 'cid:teacher_img');
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/b3f1ba1bfd2e78319f53bcae30119f17.png', 'cid:freelancer_working');
     html = html.replaceAll('images/de497c5361453604d8a15c4fd9bde086.png', 'cid:rejection_icon');
-    html = html.replaceAll('images/e06e238bd6d74a3e48f94e5b0b81388d.png', 'cid:support_img');
-    html = html.replaceAll('images/7976503d64a3eef4169fe235111cdc57.png', 'cid:corner_graphic');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
+    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+    html = html.replaceAll('images/8889f49340b6e80a36b597a426a461b7.png', 'cid:freelancer_label');
 
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
 
     return this.sendEmail({
       to: email,
-      subject: 'Application Status Update - EduFiliova Freelancer Application',
+      subject: 'Freelancer Application Status Update - EduFiliova',
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'logo.png', path: assetPath('0ac9744033a7e26f12e08d761c703308_1766647041179.png'), cid: 'logo', contentType: 'image/png' },
-        { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766647041212.png'), cid: 'icon_db', contentType: 'image/png' },
-        { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766647041216.png'), cid: 'icon_pf', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766647041186.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766647041190.png'), cid: 's_social', contentType: 'image/png' },
-        { filename: 'teacher_img.png', path: assetPath('917a6e905cf83da447efc0f5c2780aca_1766647041197.png'), cid: 'teacher_img', contentType: 'image/png' },
-        { filename: 'rejection_icon.png', path: assetPath('de497c5361453604d8a15c4fd9bde086_1766647041219.png'), cid: 'rejection_icon', contentType: 'image/png' },
-        { filename: 'support_img.png', path: assetPath('e06e238bd6d74a3e48f94e5b0b81388d_1766647041222.png'), cid: 'support_img', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('7976503d64a3eef4169fe235111cdc57_1766647041205.png'), cid: 'corner_graphic', contentType: 'image/png' }
+        { filename: 'freelancer_working.png', path: assetPath('b3f1ba1bfd2e78319f53bcae30119f17_1766709122259.png'), cid: 'freelancer_working', contentType: 'image/png' },
+        { filename: 'rejection_icon.png', path: assetPath('de497c5361453604d8a15c4fd9bde086_1766709122260.png'), cid: 'rejection_icon', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766709122256.png'), cid: 'corner', contentType: 'image/png' },
+        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766709122257.png'), cid: 'footer_logo', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766709122257.png'), cid: 'social', contentType: 'image/png' },
+        { filename: 'freelancer_label.png', path: assetPath('8889f49340b6e80a36b597a426a461b7_1766709122258.png'), cid: 'freelancer_label', contentType: 'image/png' }
       ]
     });
   }
