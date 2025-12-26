@@ -1001,15 +1001,29 @@ export class EmailService {
     // ✅ ABSOLUTE FORCE REPLACEMENT for all fields
     // This handles any potential HTML fragmentation/spans within placeholders
     const forceReplace = (text: string, key: string, value: string) => {
-      // 1. Exact match
-      text = text.replaceAll(`{{${key}}}`, value);
-      // 2. Case-insensitive regex for the placeholder
-      const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
-      text = text.replace(regex, value);
+      // 1. Contextual injection for Hi {{fullName}}
+      if (key === 'fullName') {
+        text = text.replace(/Hi\s+[\s\S]*?(?:fullName|fullname|Fullname|FULLNAME)[\s\S]*?(?=[,<])/gi, `Hi ${value}`);
+      }
+      
+      // 2. Contextual injection for senderName has sent
+      if (key === 'senderName') {
+        text = text.replace(/[\s\S]*?(?:senderName|sendername|Sendername|SENDERNAME)[\s\S]*?has sent/gi, `${value} has sent`);
+        text = text.replace(/Message from\s+[\s\S]*?(?:senderName|sendername|Sendername|SENDERNAME)[\s\S]*?(?=[<])/gi, `Message from ${value}`);
+      }
+
       // 3. Fragmentation-aware regex: catches cases where tags are split by spans or other markup
       // e.g. {{f</span><span>ullName}}
       const fragRegex = new RegExp(`\\{\\{[\\s\\S]*?${key.split('').join('[\\s\\S]*?')}[\\s\\S]*?\\}\\}`, 'gi');
       text = text.replace(fragRegex, value);
+      
+      // 4. Case-insensitive regex for the placeholder
+      const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
+      text = text.replace(regex, value);
+      
+      // 5. Exact match
+      text = text.replaceAll(`{{${key}}}`, value);
+      
       return text;
     };
 
@@ -1018,11 +1032,6 @@ export class EmailService {
     html = forceReplace(html, 'amount', amount);
     html = forceReplace(html, 'voucherCode', voucherCode);
     html = forceReplace(html, 'expiresAt', expiresAt);
-
-    // Contextual patterns for maximum reliability
-    html = html.replace(/Hi\s+[\s\S]*?fullName[\s\S]*?(?=[,<])/gi, `Hi ${fullName}`);
-    html = html.replace(/[\s\S]*?senderName[\s\S]*?has sent/gi, `${senderName} has sent`);
-    html = html.replace(/Message from\s+[\s\S]*?senderName[\s\S]*?(?=[<])/gi, `Message from ${senderName}`);
 
     // Handle personal message conditional block
     if (personalMessage) {
@@ -1033,9 +1042,7 @@ export class EmailService {
       // Target the exact block from the template
       html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
       // Fallback if the block was fragmented
-      if (html.includes('personalMessage')) {
-        html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
-      }
+      html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
     } else {
       html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
       html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
