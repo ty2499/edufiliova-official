@@ -125,8 +125,8 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader className="text-center space-y-4">
+      <Card className="w-full max-w-md mx-auto bg-white border border-gray-200 shadow-lg">
+        <CardHeader className="text-center space-y-4 bg-white">
           <div className="flex justify-center">
             <Logo size="lg" />
           </div>
@@ -141,9 +141,15 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
             </CardDescription>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="bg-white">
           {step === 'email' && (
             <form onSubmit={handleSendCode} className="space-y-4">
+              {errors.general && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                  <span>{errors.general}</span>
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
                 <Input
@@ -166,6 +172,12 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
 
           {step === 'code' && (
             <form onSubmit={handleVerifyCode} className="space-y-4">
+              {errors.general && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
+                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                  <span>{errors.general}</span>
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="code">6-Digit Code</Label>
                 <Input
