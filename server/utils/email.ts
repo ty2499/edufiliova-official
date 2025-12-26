@@ -1286,7 +1286,7 @@ export class EmailService {
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
         attachments: [
-          { filename: 'header.png', path: path.join(imagesDir, 'header.png'), cid: 'header', contentType: 'image/png' },
+          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
           { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
         ]
       });
@@ -1315,7 +1315,7 @@ export class EmailService {
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
         attachments: [
-          { filename: 'header.png', path: path.join(imagesDir, 'header.png'), cid: 'header', contentType: 'image/png' },
+          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
           { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
         ]
       });
