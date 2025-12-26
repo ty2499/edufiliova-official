@@ -502,7 +502,7 @@ const createEmailTransporter = async (senderEmail: string) => {
 };
 
 // Email templates with modern branding
-export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification', data: any) => {
+export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification' | 'password_reset_whatsapp', data: any) => {
   const whiteLogoUrl = process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
   const baseUrl = process.env.REPLIT_DEV_DOMAIN 
     ? `https://${process.env.REPLIT_DEV_DOMAIN}`
@@ -756,6 +756,12 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
           </div>
         </body></html>
       `;
+
+    case 'password_reset_whatsapp':
+      return data.htmlContent
+        .replace(/\{\{fullName\}\}/g, data.fullName || 'User')
+        .replace(/\{\{code\}\}/g, data.code)
+        .replace(/\{\{expiresIn\}\}/g, data.expiresIn || '10');
 
     case 'teacher-verification':
       return `
