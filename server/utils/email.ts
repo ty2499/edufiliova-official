@@ -998,40 +998,38 @@ export class EmailService {
 
     const { fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = data;
 
-    // ✅ ABSOLUTE FORCE REPLACEMENT for all fields
-    // This handles any potential HTML fragmentation/spans within placeholders
-    const forceReplace = (text: string, key: string, value: string) => {
-      // 1. Contextual injection for Hi {{fullName}}
-      if (key === 'fullName') {
-        text = text.replace(/Hi\s+[\s\S]*?(?:fullName|fullname|Fullname|FULLNAME)[\s\S]*?(?=[,<])/gi, `Hi ${value}`);
-      }
+    // ✅ ABSOLUTE NUCLEAR FORCE REPLACEMENT
+    // We replace every variation of the placeholders directly using multiple methods
+    const nuclearReplace = (content: string, key: string, value: string) => {
+      if (!content || !key) return content;
       
-      // 2. Contextual injection for senderName has sent
-      if (key === 'senderName') {
-        text = text.replace(/[\s\S]*?(?:senderName|sendername|Sendername|SENDERNAME)[\s\S]*?has sent/gi, `${value} has sent`);
-        text = text.replace(/Message from\s+[\s\S]*?(?:senderName|sendername|Sendername|SENDERNAME)[\s\S]*?(?=[<])/gi, `Message from ${value}`);
-      }
-
-      // 3. Fragmentation-aware regex: catches cases where tags are split by spans or other markup
-      // e.g. {{f</span><span>ullName}}
-      const fragRegex = new RegExp(`\\{\\{[\\s\\S]*?${key.split('').join('[\\s\\S]*?')}[\\s\\S]*?\\}\\}`, 'gi');
-      text = text.replace(fragRegex, value);
+      // 1. Literal exact strings
+      content = content.split(`{{${key}}}`).join(value);
+      content = content.split(`{{ ${key} }}`).join(value);
       
-      // 4. Case-insensitive regex for the placeholder
-      const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
-      text = text.replace(regex, value);
+      // 2. Case-insensitive regex for the placeholder with any internal whitespace
+      const baseRegex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
+      content = content.replace(baseRegex, value);
       
-      // 5. Exact match
-      text = text.replaceAll(`{{${key}}}`, value);
+      // 3. NUCLEAR: Match anything starting with {{ and ending with }} that contains the key
+      // This is extremely aggressive but necessary if there's invisible HTML fragmentation
+      const extremeRegex = new RegExp(`\\{\\{[^}]*?${key.split('').join('[^}]*?')}[^}]*?\\}\\}`, 'gi');
+      content = content.replace(extremeRegex, value);
       
-      return text;
+      return content;
     };
 
-    html = forceReplace(html, 'fullName', fullName);
-    html = forceReplace(html, 'senderName', senderName);
-    html = forceReplace(html, 'amount', amount);
-    html = forceReplace(html, 'voucherCode', voucherCode);
-    html = forceReplace(html, 'expiresAt', expiresAt);
+    html = nuclearReplace(html, 'fullName', fullName);
+    html = nuclearReplace(html, 'senderName', senderName);
+    html = nuclearReplace(html, 'amount', amount);
+    html = nuclearReplace(html, 'voucherCode', voucherCode);
+    html = nuclearReplace(html, 'expiresAt', expiresAt);
+
+    // Contextual sentence-level hard-coding (The "Nuclear Option")
+    // If the above failed, we search for the surrounding text and force the injection
+    html = html.replace(/Hi\s+[^,<]*?(?:fullName)[^,<]*?(?=[,<])/gi, `Hi ${fullName}`);
+    html = html.replace(/Great news!\s+[^!]*?(?:senderName)[^!]*?\s+has sent/gi, `Great news! ${senderName} has sent`);
+    html = html.replace(/Message from\s+[^:]*?(?:senderName)[^:]*?:/gi, `Message from ${senderName}:`);
 
     // Handle personal message conditional block
     if (personalMessage) {
@@ -1039,13 +1037,10 @@ export class EmailService {
         <strong>Message from ${senderName}:</strong><br/>
         <em>“${personalMessage}”</em><br/><br/>
       `;
-      // Target the exact block from the template
-      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
-      // Fallback if the block was fragmented
-      html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
+      // Target the exact block from the template, handling any fragmentation
+      html = html.replace(/\{\{#if[^}]*?personalMessage[^}]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
     } else {
-      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
-      html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+      html = html.replace(/\{\{#if[^}]*?personalMessage[^}]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
     }
 
     // Map images to CIDs
