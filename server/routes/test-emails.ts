@@ -498,6 +498,40 @@ router.post('/test-emails/digital-purchase', async (req: Request, res: Response)
   }
 });
 
+// Test endpoint for course completion email
+router.post('/test-emails/course-completion', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, courseTitle, completionDate, finalScore, certificateType, verificationCode } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing course completion email to ${testEmail}...`);
+
+    const result = await emailService.sendCourseCompletionEmail(testEmail, {
+      fullName: fullName || 'John Doe',
+      courseTitle: courseTitle || 'Advanced Mathematics Masterclass',
+      completionDate: completionDate || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      finalScore: finalScore || '98',
+      certificateType: certificateType || 'Certificate of Excellence',
+      verificationCode: verificationCode || 'CERT-' + Math.random().toString(36).substring(2, 8).toUpperCase()
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Course completion email sent successfully' : 'Failed to send course completion email',
+      details: {
+        recipientEmail: testEmail,
+        courseTitle: courseTitle || 'Advanced Mathematics Masterclass'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending course completion test email:', error);
+    res.status(500).json({ error: 'Failed to send course completion email', details: error.message });
+  }
+});
+
 // Test endpoint for course purchase email
 router.post('/test-emails/course-purchase', async (req: Request, res: Response) => {
   try {

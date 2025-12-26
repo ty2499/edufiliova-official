@@ -975,6 +975,56 @@ export class EmailService {
     });
   }
 
+  async sendCourseCompletionEmail(email: string, data: {
+    fullName: string;
+    courseTitle: string;
+    completionDate: string;
+    finalScore: number | string;
+    certificateType: string;
+    verificationCode: string;
+  }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'server/templates/course_completion_template/email.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // ✅ USE BULLETPROOF VARIABLE REPLACEMENT
+    html = this.forceReplaceVariables(html, {
+      fullName: data.fullName || 'Learner',
+      courseTitle: data.courseTitle,
+      completionDate: data.completionDate,
+      finalScore: data.finalScore.toString(),
+      certificateType: data.certificateType,
+      verificationCode: data.verificationCode
+    });
+
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    // Map images to CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve_top');
+    html = html.replaceAll('images/a0f41a0ecf16a144a8fae636842d4fcc.png', 'cid:logo');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:ring');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+    html = html.replaceAll('images/371e2880c8a2b5b2073b1f18b5482c1f.png', 'cid:hero');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: `Congratulations! You've completed ${data.courseTitle}`,
+      html,
+      from: '"EduFiliova Certifications" <support@edufiliova.com>',
+      attachments: [
+        { filename: 'curve_top.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766757072870.png'), cid: 'curve_top' },
+        { filename: 'logo.png', path: assetPath('a0f41a0ecf16a144a8fae636842d4fcc_1766757072867.png'), cid: 'logo' },
+        { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766757072860.png'), cid: 'ring' },
+        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766757072855.png'), cid: 'corner' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766757072856.png'), cid: 'social' },
+        { filename: 'hero.png', path: assetPath('371e2880c8a2b5b2073b1f18b5482c1f_1766757072865.png'), cid: 'hero' },
+      ]
+    });
+  }
+
   async sendCoursePurchaseEmail(email: string, data: {
     fullName: string;
     courseName: string;
