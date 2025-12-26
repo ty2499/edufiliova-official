@@ -3124,6 +3124,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await db.delete(verificationCodes)
         .where(eq(verificationCodes.id, verifyCode.id));
 
+      // Send confirmation email
+      try {
+        const confirmTemplatePath = path.join(process.cwd(), 'server', 'templates', 'password_changed_whatsapp.html');
+        const confirmHtml = fs.readFileSync(confirmTemplatePath, 'utf-8');
+        const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, user.id) });
+
+        await sendEmail(
+          email,
+          'Password Changed Successfully',
+          getEmailTemplate('password_changed_confirmation_whatsapp' as any, { 
+            fullName: profile?.name || 'User',
+            htmlContent: confirmHtml 
+          })
+        );
+      } catch (error) {
+        console.error('Failed to send password change confirmation email:', error);
+      }
+
       res.json({ success: true, message: "Password reset successful" });
     } catch (error: any) {
       console.error("Verify reset code error:", error);
