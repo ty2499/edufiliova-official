@@ -8,8 +8,8 @@ import { Vonage } from '@vonage/server-sdk';
 // Email transporter
 const emailTransporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: false,
+  port: parseInt(process.env.SMTP_PORT || '465'),
+  secure: true,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -43,7 +43,7 @@ async function sendEmailNotification(
     const meetingUrl = `${process.env.FRONTEND_URL || 'http://localhost:5000'}/meeting/${meetingId}`;
 
     await emailTransporter.sendMail({
-      from: `"EduFiliova" <noreply@edufiliova.com>`,
+      from: `"EduFiliova" <${process.env.SMTP_USER}>`,
       to: email,
       subject: `[Reminder] "${meetingTitle}" starts in 15 minutes`,
       html: `
