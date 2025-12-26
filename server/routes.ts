@@ -503,7 +503,7 @@ const createEmailTransporter = async (senderEmail: string) => {
 };
 
 // Email templates with modern branding
-export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification' | 'password_reset_whatsapp' | 'password_changed_confirmation_whatsapp', data: any) => {
+export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification' | 'password_reset_whatsapp' | 'password_changed_confirmation_whatsapp' | 'phone_linking_verification', data: any) => {
   const whiteLogoUrl = process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
   const baseUrl = process.env.REPLIT_DEV_DOMAIN 
     ? `https://${process.env.REPLIT_DEV_DOMAIN}`

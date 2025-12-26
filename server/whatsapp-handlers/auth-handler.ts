@@ -823,14 +823,82 @@ export async function handleLinkAccountEmail(
     where: eq(profiles.userId, authUser.id)
   });
 
-  await chatbot.updateConversationFlow(conversation.id, 'link_account_password', {
+  // Generate 6-digit code
+  const emailCode = Math.floor(100000 + Math.random() * 900000).toString();
+  
+  // Store code
+  await db.insert(verificationCodes).values({
+    userId: authUser.id,
+    code: emailCode,
+    type: 'phone_linking',
+    expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+    userData: { phone }
+  });
+
+  // Send email
+  try {
+    const templatePath = path.join(process.cwd(), 'server', 'templates', 'phone_linking_verification.html');
+    const htmlContent = fs.readFileSync(templatePath, 'utf-8');
+    
+    await sendEmail(
+      email,
+      'EduFiliova Account Security - Link Mobile Number',
+      getEmailTemplate('phone_linking_verification' as any, { 
+        code: emailCode, 
+        fullName: userProfile?.name || 'User',
+        expiresIn: '10',
+        htmlContent 
+      })
+    );
+  } catch (err) {
+    console.error('Failed to send linking email:', err);
+  }
+
+  await chatbot.updateConversationFlow(conversation.id, 'link_account_verify_code', {
     userId: authUser.id,
     userEmail: authUser.email,
     userName: userProfile?.name || 'User',
     userRole: userProfile?.role || 'student'
   });
 
-  await whatsappService.sendTextMessage(phone, "Please enter your password to link this number:");
+  await whatsappService.sendTextMessage(phone, "A verification code has been sent to your email.\n\nPlease enter the 6-digit code to continue:");
+}
+
+
+export async function handleVerifyLinkCode(
+  phone: string,
+  conversation: WhatsAppConversation,
+  message: ParsedMessage
+): Promise<void> {
+  const code = message.text?.trim();
+  const flowState = conversation.flowState as FlowState;
+  const { userId } = flowState.data;
+
+  if (!code || code.length !== 6) {
+    await whatsappService.sendTextMessage(phone, "Please enter a valid 6-digit code:");
+    return;
+  }
+
+  const [verificationRecord] = await db
+    .select()
+    .from(verificationCodes)
+    .where(and(
+      eq(verificationCodes.code, code),
+      eq(verificationCodes.userId, userId),
+      eq(verificationCodes.type, 'phone_linking'),
+      gt(verificationCodes.expiresAt, new Date())
+    ))
+    .limit(1);
+
+  if (!verificationRecord) {
+    await whatsappService.sendTextMessage(phone, "Invalid or expired code. Please try again.");
+    return;
+  }
+
+  await db.delete(verificationCodes).where(eq(verificationCodes.id, verificationRecord.id));
+
+  await chatbot.updateConversationFlow(conversation.id, 'link_account_password', flowState.data);
+  await whatsappService.sendTextMessage(phone, "Code verified!\n\nNow, please enter your password to complete linking:");
 }
 
 export async function handleLinkAccountPassword(
@@ -938,6 +1006,7 @@ export default {
   handleRegisterGrade,
   handleVerifyEmailCode,
   handleLinkAccountEmail,
+  handleVerifyLinkCode,
   handleLinkAccountPassword,
   startLoginFlow,
   startRegisterFlow,
