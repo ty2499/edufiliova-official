@@ -5160,23 +5160,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.error('Wallet payment error:', updateError);
           return res.status(500).json({ error: "Failed to process wallet payment. Your balance has not been deducted." });
         }
-
         // Send confirmation email
         try {
-          const { emailService } = await import('./utils/email.js');
+          const { sendPlanUpgradeEmail } = await import('./utils/email-templates.js');
           const userProfile = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
           const userEmail = userProfile[0]?.email || customer.email;
+          const userName = customer.fullName || userProfile[0]?.name || 'Student';
           
           const membership = await storage.getShopMembershipByCustomerId(customer.id);
+          const expiryDate = new Date(membership?.endDate || Date.now() + 30*24*60*60*1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
           
           if (userEmail) {
-            await emailService.sendSubscriptionEmail(userEmail, {
+            await sendPlanUpgradeEmail(userEmail, userName, {
               planName: plan.name,
-              price: price,
+              previousPlan: membership?.plan || 'Free',
+              price: price.toFixed(2),
               billingCycle: billingCycle === 'monthly' ? 'Monthly' : 'Yearly',
-              orderId: membership?.id || '',
-              customerName: customer.fullName || userProfile[0]?.name || undefined,
-              features: plan.features || []
+              expiryDate: expiryDate,
+              upgradeDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
             });
           }
         } catch (emailError) {

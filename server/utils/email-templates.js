@@ -580,3 +580,104 @@ export async function sendCourseAnnouncementToEligibleStudents(courseData) {
     return { sent: 0, failed: 0, total: 0, error: error.message };
   }
 }
+
+/**
+ * Send plan upgrade confirmation email to student
+ */
+export async function sendPlanUpgradeEmail(recipientEmail, recipientName, upgradeData) {
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'plan-upgrade', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Student';
+    const planName = upgradeData.planName || 'Premium';
+    const previousPlan = upgradeData.previousPlan || 'Free';
+    const price = upgradeData.price || '0.00';
+    const billingCycle = upgradeData.billingCycle || 'Monthly';
+    const expiryDate = upgradeData.expiryDate || new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const upgradeDate = upgradeData.upgradeDate || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    
+    // Replace placeholders - handle split HTML spans
+    const replacements = {
+      'fullName': fullName,
+      'planName': planName,
+      'previousPlan': previousPlan,
+      'price': price,
+      'billingCycle': billingCycle,
+      'expiryDate': expiryDate,
+      'upgradeDate': upgradeDate
+    };
+    
+    // Handle various placeholder formats
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
+    }
+    
+    // Replace image paths with CID references
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
+    emailHtml = emailHtml.replace(/images\/41506b29d7f0bbde9fcb0d4afb720c70\.png/g, 'cid:logo');
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
+    emailHtml = emailHtml.replace(/images\/fcf514453cb3c939b52a8a2bcbb97b94\.png/g, 'cid:promo');
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'plan-upgrade', 'images');
+    
+    const attachments = [
+      {
+        filename: 'spiral1.png',
+        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
+        cid: 'spiral1',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logo.png',
+        path: path.join(imagesDir, '41506b29d7f0bbde9fcb0d4afb720c70.png'),
+        cid: 'logo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'spiral2.png',
+        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
+        cid: 'spiral2',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'corner.png',
+        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
+        cid: 'corner',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'promo.png',
+        path: path.join(imagesDir, 'fcf514453cb3c939b52a8a2bcbb97b94.png'),
+        cid: 'promo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logofull.png',
+        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
+        cid: 'logofull',
+        contentType: 'image/png'
+      }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Welcome to ${planName} - Your Subscription is Active!`,
+      html: emailHtml,
+      from: `"EduFiliova" <noreply@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Plan upgrade email sent to ${recipientEmail}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending plan upgrade email:`, error);
+    return false;
+  }
+}
