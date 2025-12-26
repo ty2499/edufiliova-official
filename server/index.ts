@@ -153,7 +153,7 @@ app.use('/attached_assets', express.static('attached_assets'));
   const { log } = await import("./static-server");
   const { locationDetectionMiddleware } = await import("./middleware/location");
   const { r2RedirectMiddleware } = await import("./r2-redirect-middleware");
-  const { seedEmailTemplates } = await import("./seed-email-templates");
+//   const { seedEmailTemplates } = await import("./seed-email-templates");
   const { seedEmailSegments } = await import("./seed-email-segments");
   console.log('🔧 [STARTUP] ✅ All env-dependent modules loaded');
   
@@ -220,7 +220,7 @@ app.use('/attached_assets', express.static('attached_assets'));
   
   // Seed email marketing templates
   try {
-    await seedEmailTemplates();
+//     await seedEmailTemplates();
     console.log('✅ Email marketing templates seeded');
   } catch (error) {
     console.error('❌ Email template seeding failed:', error);

@@ -863,6 +863,43 @@ export class EmailService {
       ]
     });
   }
+
+  async sendMobileLinkedEmail(email: string, data: { userName: string; maskedMobileNumber: string }): Promise<boolean> {
+    const htmlPath = path.resolve(process.cwd(), 'server/templates/mobile_linked_template/email.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    const userName = data.userName || 'User';
+    const maskedMobileNumber = data.maskedMobileNumber || '••••••••';
+
+    // Replace dynamic placeholders
+    html = html.replace(/\{\{userName\}\}/gi, userName);
+    html = html.replace(/\{\{maskedMobileNumber\}\}/gi, maskedMobileNumber);
+
+    // Replace image CIDs - map to server email-images directory
+    html = html.replaceAll('cid:logo-white', 'cid:logo-white');
+    html = html.replaceAll('cid:circle-1', 'cid:circle-1');
+    html = html.replaceAll('cid:circle-2', 'cid:circle-2');
+    html = html.replaceAll('cid:checkmark', 'cid:checkmark');
+    html = html.replaceAll('cid:diagonal', 'cid:diagonal');
+    html = html.replaceAll('cid:hero-image', 'cid:hero-image');
+
+    const imagePath = (filename: string) => path.resolve(process.cwd(), 'server/email-images', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Mobile Number Successfully Linked - EduFiliova',
+      html,
+      from: `"EduFiliova Security" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'logo-white.png', path: imagePath('logo-white.png'), cid: 'logo-white', contentType: 'image/png' },
+        { filename: 'circles.png', path: imagePath('circles.png'), cid: 'circle-1', contentType: 'image/png' },
+        { filename: 'circles-alt.png', path: imagePath('circles-alt.png'), cid: 'circle-2', contentType: 'image/png' },
+        { filename: 'circles.png', path: imagePath('circles.png'), cid: 'checkmark', contentType: 'image/png' },
+        { filename: 'diagonal.png', path: imagePath('diagonal.png'), cid: 'diagonal', contentType: 'image/png' },
+        { filename: 'hero-image.png', path: imagePath('hero-image.png'), cid: 'hero-image', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();

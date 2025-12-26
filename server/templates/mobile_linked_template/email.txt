@@ -1,0 +1,38 @@
+Learning • Skills • Careers
+
+Hi {{userName}},
+
+We're happy to confirm that your mobile number has been successfully linked to your EduFiliova account.
+
+This helps us improve account security and ensures you receive important notifications and alerts when needed.
+
+Linked Mobile Number:
+{{maskedMobileNumber}}
+
+(For security reasons, we only display part of the number.)
+
+What This Means for You
+
+With your mobile number now linked:
+• You may receive important security notifications
+• Account recovery becomes easier and more secure
+• You'll be notified about critical account activity when applicable
+
+Your mobile number is stored securely and used only according to our privacy policy.
+
+Didn't Make This Change?
+
+If you did not link a mobile number to your account, please contact our support team immediately so we can review and secure your account.
+
+support@edufiliova.com
+
+Thank you for helping us keep your EduFiliova account secure.
+
+Kind regards,
+EduFiliova Security Team
+
+Feel free to reach out if you have any questions.
+
+Visit the Help Center: https://edufiliova.com/help
+Or contact us anytime at support@edufiliova.com
+Unsubscribe: https://edufiliova.com/unsubscribe

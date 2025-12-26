@@ -530,4 +530,35 @@ router.post('/test-emails/device-login', async (req: Request, res: Response) => 
   }
 });
 
+// Test endpoint specifically for mobile linked email
+router.post('/test-emails/mobile-linked', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, userName, maskedMobileNumber } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing mobile linked email to ${testEmail}...`);
+
+    const result = await emailService.sendMobileLinkedEmail(testEmail, {
+      userName: userName || 'Test User',
+      maskedMobileNumber: maskedMobileNumber || '+1 (***) ***-5432'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Mobile linked email sent successfully' : 'Failed to send mobile linked email',
+      details: {
+        recipientEmail: testEmail,
+        userName: userName || 'Test User',
+        maskedMobileNumber: maskedMobileNumber || '+1 (***) ***-5432'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending mobile linked test email:', error);
+    res.status(500).json({ error: 'Failed to send mobile linked email', details: error.message });
+  }
+});
+
 export default router;
