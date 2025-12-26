@@ -541,6 +541,76 @@ export class EmailService {
       ]
     });
   }
+
+  async sendSubscriptionConfirmationEmail(email: string, data: { customerName: string; planName: string; billingCycle: string; orderId: string; price: string; activationDate: string; nextBillingDate?: string; dashboardUrl?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/subscription_confirmation_template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // Remove preloads and add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    const customerName = data.customerName || 'Valued Customer';
+    const planName = data.planName || 'Premium Plan';
+    const billingCycle = data.billingCycle || 'Monthly';
+    const orderId = data.orderId || 'N/A';
+    const price = data.price || '0';
+    const activationDate = data.activationDate || new Date().toLocaleDateString();
+    const nextBillingDate = data.nextBillingDate || '';
+    const dashboardUrl = data.dashboardUrl || `${baseUrl}/dashboard`;
+
+    // ✅ Replace all subscription variables
+    html = html.replace(/\{\{customerName\}\}/gi, customerName);
+    html = html.replace(/\{\{planName\}\}/gi, planName);
+    html = html.replace(/\{\{billingCycle\}\}/gi, billingCycle);
+    html = html.replace(/\{\{orderId\}\}/gi, orderId);
+    html = html.replace(/\{\{price\}\}/gi, price);
+    html = html.replace(/\{\{activationDate\}\}/gi, activationDate);
+    html = html.replace(/\{\{nextBillingDate\}\}/gi, nextBillingDate);
+    html = html.replace(/\{\{dashboardUrl\}\}/gi, dashboardUrl);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    // Handle conditional next billing date
+    if (nextBillingDate && nextBillingDate.trim()) {
+      html = html.replace(/\{\{#if nextBillingDate\}\}[\s\S]*?\{\{\/if\}\}/gi, ` - Next Billing Date: ${nextBillingDate}`);
+    } else {
+      html = html.replace(/\{\{#if nextBillingDate\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+    }
+
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:subscription_icon1');
+    html = html.replaceAll('images/292db72c5a7a0299db100d17711b8c55.png', 'cid:logo1');
+    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:subscription_icon2');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+    html = html.replaceAll('images/21c7f785caa53e237dcae6848c7f0f88.png', 'cid:subscription_hero');
+    html = html.replaceAll('images/970fad9d41d01c4ad6d96829f4d86901.png', 'cid:footer_logo');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: `Welcome to ${planName}! Your Subscription is Active - EduFiliova`,
+      html,
+      from: `"EduFiliova Billing" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'subscription_icon1.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766711046597.png'), cid: 'subscription_icon1', contentType: 'image/png' },
+        { filename: 'logo1.png', path: assetPath('292db72c5a7a0299db100d17711b8c55_1766711046593.png'), cid: 'logo1', contentType: 'image/png' },
+        { filename: 'subscription_icon2.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766711046599.png'), cid: 'subscription_icon2', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766711046588.png'), cid: 'corner', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766711046589.png'), cid: 'social', contentType: 'image/png' },
+        { filename: 'subscription_hero.png', path: assetPath('21c7f785caa53e237dcae6848c7f0f88_1766711046592.png'), cid: 'subscription_hero', contentType: 'image/png' },
+        { filename: 'footer_logo.png', path: assetPath('970fad9d41d01c4ad6d96829f4d86901_1766711046595.png'), cid: 'footer_logo', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();
