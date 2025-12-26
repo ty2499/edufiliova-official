@@ -756,3 +756,67 @@ export async function sendNewDeviceLoginEmail(recipientEmail, recipientName, log
     return false;
   }
 }
+
+/**
+ * Send meeting reminder email (15 minutes before)
+ */
+export async function sendMeetingReminderEmail(recipientEmail, recipientName, meetingData) {
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'meeting-reminder', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'User';
+    const meetingTitle = meetingData.meetingTitle || 'Scheduled Meeting';
+    const teacherName = meetingData.teacherName || 'Your Teacher';
+    const meetingTime = meetingData.meetingTime || new Date().toLocaleString('en-US', { 
+      year: 'numeric', month: 'long', day: 'numeric', 
+      hour: '2-digit', minute: '2-digit', timeZoneName: 'short' 
+    });
+    const meetingType = meetingData.meetingType || 'Video Call';
+    const joinLink = meetingData.joinLink || 'https://edufiliova.com/meetings';
+    
+    // Replace placeholders - handle both normal and span-split formats
+    const replacements = {
+      'fullName': fullName,
+      'meetingTitle': meetingTitle,
+      'teacherName': teacherName,
+      'meetingTime': meetingTime,
+      'meetingType': meetingType,
+      'joinLink': joinLink
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
+    }
+    
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'meeting-reminder', 'images');
+    
+    const attachments = [
+      { filename: 'spiral_left.png', path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral_left', contentType: 'image/png' },
+      { filename: 'logo_small.png', path: path.join(imagesDir, '292db72c5a7a0299db100d17711b8c55.png'), cid: 'logo_small', contentType: 'image/png' },
+      { filename: 'spiral_right.png', path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral_right', contentType: 'image/png' },
+      { filename: 'check_icon.png', path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'check_icon', contentType: 'image/png' },
+      { filename: 'logo_footer.png', path: path.join(imagesDir, '53185829a16faf137a533f19db64d893.png'), cid: 'logo_footer', contentType: 'image/png' },
+      { filename: 'whatsapp_promo.png', path: path.join(imagesDir, '51cf8361f51fd7575b8d8390ef957e30.png'), cid: 'whatsapp_promo', contentType: 'image/png' },
+      { filename: 'logo_main.png', path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logo_main', contentType: 'image/png' }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Reminder: Your Meeting Starts in 15 Minutes - ${meetingTitle}`,
+      html: emailHtml,
+      from: `"EduFiliova" <noreply@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Meeting reminder email sent to ${recipientEmail}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending meeting reminder email:`, error);
+    return false;
+  }
+}
