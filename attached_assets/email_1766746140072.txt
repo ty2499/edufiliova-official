@@ -1,36 +1,0 @@
-Learning • Skills • Careers
-
-Hi {{fullName}},
-You recently added a mobile phone number to your existing EduFiliova account.
- To complete the linking process and keep your account secure, please verify your mobile number using the verification code below.
- 
-Your Verification Code:
-{{code}}
- Expiry & Security Notice
-  This verification code will expire in {{expiresIn}} minutes.
- For your security:
-Do not share this code with anyone
-EduFiliova staff will never ask for your verification code
-This code can only be used once. this email
-
-
-What Happens After Verification?
-Once verified:
-Your mobile number will be securely linked to your account
- It can be used for important notifications and security alerts
-It helps improve account recovery and protection
-Didn’t Add a Mobile Number?
- If you did not request to link a mobile number, please ignore this email.
-No changes will be made to your account.
- If you believe someone else attempted this action without permission, contact us immediately.
-support@edufiliova.com
-Thank you for helping us keep your EduFiliova account secure.
- Regards,
-EduFiliova Security Team
-
-Thank you!
-Feel free to reach out if you have any questions.
-You can unsubscribe from these emails here. 
- Visit the  Help Center
- Or contact us anytime at support@edufiliova.com
- 

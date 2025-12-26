@@ -1,33 +1,0 @@
- Hi {{fullName}},
- Thank you for submitting your application on EduFiliova.
- We’re writing to confirm that your application has been successfully received and is currently marked as pending in our system.
-
-Application Status: Pending
-Your application is now queued for review by our verification team. This step ensures that all applications meet EduFiliova’s quality, safety, and professional standards.
-
-
-
-What “Pending” Means
-While your application is pending:
-Your submission has been recorded successfully No additional action is required from you right now Our team will review your details in the order received
-Please note that pending does not mean rejected. It simply means your application is waiting to be reviewed.
- Expected Review Time:  Most applications are reviewed within up to 2 working days, depending on application volume and verification requirements.
-You will receive an email notification as soon as your application status changes.
- Go to Dashboard  ➔
-
-Important Notes
-Please avoid submitting multiple applications during this period
-Ensure your contact email remains active so you don’t miss updates
-Your existing EduFiliova user account (if applicable) remains active
-Need to Update or Ask Something?
-If you believe you need to update your application details or have questions about the process, our support team is here to help.
-Contact us at support@edufiliova.com
-Thank you for your patience and interest in EduFiliova. We appreciate your time and will be in touch as soon as your application review is complete.
-Kind regards, EduFiliova Applications Team
-
-Thank you!
-Feel free to reach out if you have any questions.
-You can unsubscribe from these emails here. 
- Visit the Freelancers Help Center
- Or contact us anytime at support@edufiliova.com
- 

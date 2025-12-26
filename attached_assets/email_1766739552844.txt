@@ -1,39 +1,0 @@
-Learning • Skills • Careers
-Hi {{fullName}},
- This is a friendly reminder that your scheduled meeting on EduFiliova will begin in 15 minutes.
-Please review the details below and get ready to join.
-Meeting Information:
-Meeting Title: {{meetingTitle}}
-With: {{teacherName}}
-Date & Time: {{meetingTime}}
-Meeting Type: {{meetingType}}
-
-Join Meeting Now
-
-
-
-
- Helpful Tips Before Joining
-To ensure a smooth experience:
-Check your internet connection
-Test your camera and microphone
-Join a few minutes early if possible
-Use a quiet environment for better audio quality
- Need to Reschedule or Cancel?
- If you’re unable to attend, please notify {{teacherName}} 
-
- Security Tips
-Important Notes
-Meetings are hosted securely within EduFiliova
-Late arrivals may miss part of the session
-Recording availability depends on the meeting type
- We wish you a productive and successful session.
-Best regards,
-The EduFiliova Team
-
-Thank you!
-Feel free to reach out if you have any questions.
-You can unsubscribe from these emails here. 
- Visit the  Help Center
- Or contact us anytime at support@edufiliova.com
- 

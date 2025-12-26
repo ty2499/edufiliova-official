@@ -1,41 +1,0 @@
-Learning • Skills • Careers
- Hi {{customerName}},
- Welcome to {{planName}}! We’re happy to confirm that your subscription has been successfully activated, and your account now has access to all features included in your plan.
-
-Subscription Status: Active
- Plan: {{planName}}
-Billing Cycle: {{billingCycle}}
-Order ID: #{{orderId}}
-Amount Paid: ${{price}}
-Activation Date: {{activationDate}}  {{#if nextBillingDate}}- Next Billing Date: {{nextBillingDate}}{{/if}}
-
-
-
-What You Can Do Now
-Your premium access is now enabled. Depending on your plan, you can enjoy benefits such as:
- Access to premium learning content and tools
-Higher or unlimited downloads (where applicable)
-Priority support and faster help responses
-Enhanced learning features (progress tools, advanced resources)
-Additional creator or professional options (if included in your plan)
- You can start using your premium benefits immediately from your dashboard.
- Manage Your Subscription
-  You can manage your plan anytime from your account settings, including:
-Viewing billing history and receipts
-Updating your payment method
-Switching plans (if available)
-Canceling renewal (your access will remain active until the end of the billing period)
- Go to Dashboard  ➔
- Need Help?  If you have any questions about your plan, billing, or included features, our support team is here to help.
- Contact: support@edufiliova.com
- Thank you for choosing EduFiliova. We’re excited to support your learning and growth with your new premium subscription.
- Warm regards,
-EduFiliova Billing Team
- 
-
-Thank you!
-Feel free to reach out if you have any questions.
-You can unsubscribe from these emails here. 
- Visit the  Help Center
- Or contact us anytime at support@edufiliova.com
- 

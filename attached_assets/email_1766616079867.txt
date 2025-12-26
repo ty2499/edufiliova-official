@@ -1,32 +1,0 @@
-Learning • Skills • Careers
-
-Hi {{fullName}},
- We received a request to change the password for your EduFiliova account. Before proceeding, we need to confirm that you initiated this request.
-
- Your Confirmation Code:
-{{code}}
- How This Works
- Please enter the verification code above to confirm your password change request.
-This code is required before your password can be changed
-The password change will not proceed without confirmation
-  Code Expiry & Security Notice   This code will expire in {{expiresIn}} minutes.
- For your security:
-Do not share this code with anyone
-EduFiliova staff will never ask for this code
-This code can only be used once
-
-
-Didn’t Make This Change?
-If you did not change your password, this could indicate unauthorized access.
- Please take action immediately:
- Reset your password
-Review your recent account activity
-Contact our support team for assistance
- support@edufiliova.com
-
-Thank you!
-Feel free to reach out if you have any questions.
-You can unsubscribe from these emails here. 
- Visit the  Help Center
- Or contact us anytime at support@edufiliova.com
- 

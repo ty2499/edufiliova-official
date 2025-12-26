@@ -1,24 +1,0 @@
-Learning • Skills • Careers
-
-Hi {{fullName}},
- This email confirms that the password for your EduFiliova account has been successfully changed.
- If you made this change, no further action is required.
-
- Why You’re Receiving This Email
-We send this confirmation to help keep your account secure and to notify you of important account activity.
-
-
-Didn’t Make This Change?
-If you did not change your password, this could indicate unauthorized access.
- Please take action immediately:
- Reset your password
-Review your recent account activity
-Contact our support team for assistance
- support@edufiliova.com
-
-Thank you!
-Feel free to reach out if you have any questions.
-You can unsubscribe from these emails here. 
- Visit the  Help Center
- Or contact us anytime at support@edufiliova.com
- 

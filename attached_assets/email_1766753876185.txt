@@ -1,38 +1,0 @@
-Learning • Skills • Careers
-Hi {{fullName}},
- Great news! {{senderName}} has sent you an EduFiliova Gift Voucher to use on learning, subscriptions, or digital products available on our platform.
- {{#if personalMessage}}
- Message from {{senderName}}:
-“{{personalMessage}}”
-{{/if}}
-   Voucher Value:
-${{amount}}
- Your Voucher Code
- {{voucherCode}}
- Please keep this code safe. You’ll need it to redeem your voucher.
-How to Redeem Your Voucher
- Redeeming your gift is easy:
- 1. Log in to your EduFiliova account
-2. Go to the Vouchers or Wallet section
-3. Enter the voucher code above
-4. Choose a course, subscription, or digital product
-5. Your voucher balance will be applied automatically at checkout
-
-Voucher Details & Conditions
- Important Information
-Valid for courses, subscriptions, and digital products
-Voucher expires on {{expiresAt}}
-Voucher balance is non-refundable and cannot be exchanged for cash
-If the purchase exceeds the voucher value, you can pay the remaining balance. 
-Need Help?
-If you experience any issues redeeming your voucher or have questions, our support team is happy to help.
-Contact us at support@edufiliova.com
-Enjoy your gift, and we hope it helps you learn, grow, and achieve your goals with EduFiliova.
-Warm regards, The EduFiliova Team
-
-Thank you!
-Feel free to reach out if you have any questions.
-You can unsubscribe from these emails here. 
- Visit the  Help Center
- Or contact us anytime at support@edufiliova.com
- 
