@@ -271,8 +271,8 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                   <button
                     onClick={handleResendCode}
                     disabled={isResending}
-                    className="font-medium hover:underline disabled:opacity-50" transition-all duration-300
-                    style={{ color: '#0C332C' }}
+                    className="font-medium hover:underline disabled:opacity-50 transition-all duration-300"
+                    style={{ color: '#a0fab2' }}
                     data-testid="button-resend-code"
                   >
                     {isResending ? "Sending..." : "Resend Code"}
