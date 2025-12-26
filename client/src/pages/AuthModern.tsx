@@ -1740,7 +1740,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-primary hover:text-purple-800 font-medium transition-all duration-300"
+            className="text-primary font-medium"
             data-testid="button-resend-reset-code"
           >
             Request new code
