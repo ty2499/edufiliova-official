@@ -3029,40 +3029,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/forgot-password", async (req, res) => {
     try {
       const { email } = req.body;
-
-      if (!email || !isValidEmail(email)) {
-        return res.status(400).json({ success: false, error: "Valid email is required" });
+      const user = await db.query.users.findFirst({ where: eq(users.email, email) });
+      
+      if (!user) {
+        return res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
       }
 
-      // Find user
-      const user = await db
-        .select()
-        .from(users)
-        .where(eq(users.email, email))
-        .limit(1);
-
-      if (user.length === 0) {
-        // Don't reveal if email exists
-        return res.json({ success: true, message: "If an account with this email exists, a reset link has been sent." });
-      }
-
-      // Generate reset token
-      const resetToken = uuidv4();
-      const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
-
-      await db.insert(passwordResetTokens).values({
-        userId: user[0].id,
-        token: resetToken,
-        expiresAt
+      // Generate 6-digit code
+      const emailCode = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      // Store code in verification_codes table
+      await db.insert(verificationCodes).values({
+        userId: user.id,
+        code: emailCode,
+        type: 'email_password_reset',
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+        userData: { email }
       });
 
-      // Send reset email
-      const resetUrl = `${req.protocol}://${req.get('host')}/reset-password?token=${resetToken}`;
+      // Send reset email using new template
+      const templatePath = path.join(process.cwd(), 'server', 'templates', 'password_reset_whatsapp.html');
+      const htmlContent = fs.readFileSync(templatePath, 'utf-8');
+      const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, user.id) });
+
       await sendEmail(
         email,
-        'Reset Your EduFiliova Password',
-        getEmailTemplate('password_reset', { resetUrl })
+        'Password Reset Verification Code',
+        getEmailTemplate('password_reset_whatsapp' as any, { 
+          code: emailCode, 
+          fullName: profile?.name || 'User',
+          expiresIn: '10',
+          htmlContent 
+        })
       );
+
+      res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
+    } catch (error) {
+      console.error('Password reset request error:', error);
+      res.status(500).json({ success: false, error: "Password reset request failed" });
+    }
+  });
 
       res.json({ success: true, message: "If an account with this email exists, a reset link has been sent." });
 

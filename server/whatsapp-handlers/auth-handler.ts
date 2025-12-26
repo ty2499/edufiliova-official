@@ -761,6 +761,27 @@ export async function handleChangePasswordNew(
     .where(eq(users.id, userId));
 
   await chatbot.updateConversationFlow(conversation.id, 'idle', {});
+  // Send confirmation email
+  try {
+    const confirmTemplatePath = path.join(process.cwd(), 'server', 'templates', 'password_changed_whatsapp.html');
+    const confirmHtml = await fs.readFile(confirmTemplatePath, 'utf-8');
+    const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, userId) });
+    const user = await db.query.users.findFirst({ where: eq(users.id, userId) });
+
+    if (user?.email) {
+      await sendEmail(
+        user.email,
+        'Password Changed Successfully',
+        getEmailTemplate('password_changed_confirmation_whatsapp' as any, { 
+          fullName: profile?.name || 'User',
+          htmlContent: confirmHtml 
+        })
+      );
+    }
+  } catch (error) {
+    console.error('Failed to send password change confirmation email:', error);
+  }
+
   await whatsappService.sendTextMessage(phone, "✅ Your password has been changed successfully!");
   
   const user = await db.query.profiles.findFirst({ where: eq(profiles.userId, userId) });
