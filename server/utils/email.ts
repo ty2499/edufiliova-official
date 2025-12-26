@@ -985,6 +985,62 @@ export class EmailService {
     });
   }
 
+  async sendVoucherEmail(to: string, data: {
+    fullName: string;
+    senderName: string;
+    amount: string;
+    voucherCode: string;
+    expiresAt: string;
+    personalMessage?: string;
+  }): Promise<boolean> {
+    const templatePath = path.resolve(process.cwd(), 'public/email-assets/voucher/template.html');
+    let html = fs.readFileSync(templatePath, 'utf8');
+
+    const { fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = data;
+
+    // Replace dynamic fields exactly as they appear in the template
+    html = html.replace('{{fullName}}', fullName);
+    html = html.replace('{{senderName}}', senderName);
+    html = html.replace('{{amount}}', amount);
+    html = html.replace('{{voucherCode}}', voucherCode);
+    html = html.replace('{{expiresAt}}', expiresAt);
+
+    // Handle personal message conditional block
+    if (personalMessage) {
+      const personalMsgHtml = `
+        <p style="margin:10px 0 0 0"><strong>Message from ${senderName}:</strong></p>
+        <p style="margin:5px 0 0 0; font-style:italic">"${personalMessage}"</p>
+      `;
+      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
+    } else {
+      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+    }
+
+    // Map images to CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve_top');
+    html = html.replaceAll('images/de07618f612ae3f3a960a43365f0d61d.png', 'cid:logo');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:ring');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:curve_bottom');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
+    html = html.replaceAll('images/fe18318bf782f1266432dce6a1a46f60.png', 'cid:promo');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets/voucher', filename);
+
+    return this.sendEmail({
+      to,
+      subject: `You've received an EduFiliova Gift Voucher from ${senderName}!`,
+      html,
+      attachments: [
+        { filename: 'curve_top.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'curve_top' },
+        { filename: 'logo.png', path: assetPath('de07618f612ae3f3a960a43365f0d61d.png'), cid: 'logo' },
+        { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'ring' },
+        { filename: 'curve_bottom.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088.png'), cid: 'curve_bottom' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0.png'), cid: 'social' },
+        { filename: 'promo.png', path: assetPath('fe18318bf782f1266432dce6a1a46f60.png'), cid: 'promo' },
+      ]
+    });
+  }
+
   async sendAccountRestrictionEmail(email: string, data: { fullName: string; restrictionType?: string; reason?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'public/email-assets/restriction/template.html');

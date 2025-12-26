@@ -530,6 +530,45 @@ router.post('/test-emails/device-login', async (req: Request, res: Response) => 
   }
 });
 
+// Test endpoint for account restriction email
+router.post('/test-emails/account-restriction', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, restrictionType, reason } = req.body;
+    if (!testEmail) return res.status(400).json({ error: 'testEmail is required' });
+
+    const success = await emailService.sendAccountRestrictionEmail(testEmail, {
+      fullName: fullName || 'Test User',
+      restrictionType: restrictionType || 'Temporarily Restricted',
+      reason: reason || 'Routine security review'
+    });
+
+    res.json({ success, message: success ? 'Account restriction email sent' : 'Failed to send' });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Test endpoint for voucher purchase email
+router.post('/api/test-emails/voucher-purchase', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = req.body;
+    if (!testEmail) return res.status(400).json({ error: 'testEmail is required' });
+
+    const success = await emailService.sendVoucherEmail(testEmail, {
+      fullName: fullName || 'Test User',
+      senderName: senderName || 'A Friend',
+      amount: amount || '100.00',
+      voucherCode: voucherCode || 'VOUCH-1234-TEST',
+      expiresAt: expiresAt || 'December 31, 2026',
+      personalMessage: personalMessage || 'Enjoy your gift!'
+    });
+
+    res.json({ success, message: success ? 'Voucher email sent' : 'Failed to send' });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Test endpoint specifically for mobile linked email
 router.post('/test-emails/mobile-linked', async (req: Request, res: Response) => {
   try {
