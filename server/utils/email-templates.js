@@ -681,3 +681,78 @@ export async function sendPlanUpgradeEmail(recipientEmail, recipientName, upgrad
     return false;
   }
 }
+
+/**
+ * Send new device login alert email
+ */
+export async function sendNewDeviceLoginEmail(recipientEmail, recipientName, loginData) {
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'new-device-login', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'User';
+    const deviceName = loginData.deviceName || 'Unknown Device';
+    const browser = loginData.browser || 'Unknown Browser';
+    const os = loginData.os || 'Unknown OS';
+    const location = loginData.location || 'Unknown Location';
+    const ipAddress = loginData.ipAddress || 'Unknown IP';
+    const loginTime = loginData.loginTime || new Date().toLocaleString('en-US', { 
+      year: 'numeric', month: 'long', day: 'numeric', 
+      hour: '2-digit', minute: '2-digit', timeZoneName: 'short' 
+    });
+    
+    // Replace placeholders
+    const replacements = {
+      'fullName': fullName,
+      'deviceName': deviceName,
+      'browser': browser,
+      'os': os,
+      'location': location,
+      'ipAddress': ipAddress,
+      'loginTime': loginTime
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
+    }
+    
+    // Replace image paths with CID references
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
+    emailHtml = emailHtml.replace(/images\/e76fe516a6e91a2aa475626bd50a37d8\.png/g, 'cid:logo');
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
+    emailHtml = emailHtml.replace(/images\/ccc540df188352ef9b2d4fb790d0b4bb\.png/g, 'cid:promo');
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    emailHtml = emailHtml.replace(/images\/53185829a16faf137a533f19db64d893\.png/g, 'cid:logofull2');
+    
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'new-device-login', 'images');
+    
+    const attachments = [
+      { filename: 'spiral1.png', path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral1', contentType: 'image/png' },
+      { filename: 'logo.png', path: path.join(imagesDir, 'e76fe516a6e91a2aa475626bd50a37d8.png'), cid: 'logo', contentType: 'image/png' },
+      { filename: 'spiral2.png', path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral2', contentType: 'image/png' },
+      { filename: 'corner.png', path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'corner', contentType: 'image/png' },
+      { filename: 'promo.png', path: path.join(imagesDir, 'ccc540df188352ef9b2d4fb790d0b4bb.png'), cid: 'promo', contentType: 'image/png' },
+      { filename: 'logofull.png', path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull', contentType: 'image/png' },
+      { filename: 'logofull2.png', path: path.join(imagesDir, '53185829a16faf137a533f19db64d893.png'), cid: 'logofull2', contentType: 'image/png' }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Security Alert: New Login Detected - EduFiliova',
+      html: emailHtml,
+      from: `"EduFiliova Security" <noreply@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ New device login alert sent to ${recipientEmail}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending new device login email:`, error);
+    return false;
+  }
+}

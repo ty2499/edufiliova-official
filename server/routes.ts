@@ -2993,6 +2993,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
         sameSite: isEdufiliovaRequest && isCrossOrigin ? 'none' : 'lax'
       });
       
+      // New device/location detection and security email
+      try {
+        const currentIp = req.ip || req.connection.remoteAddress || 'Unknown';
+        const currentUserAgent = req.headers['user-agent'] || 'Unknown';
+        
+        // Check previous sessions for this user
+        const previousSessions = await db.select()
+          .from(userLoginSessions)
+          .where(eq(userLoginSessions.userId, user[0].id))
+          .orderBy(desc(userLoginSessions.createdAt))
+          .limit(10);
+        
+        // Check if this IP/UserAgent combination is new
+        const isNewDevice = previousSessions.length === 0 || !previousSessions.some(s => 
+          s.ipAddress === currentIp && s.userAgent === currentUserAgent
+        );
+        
+        if (isNewDevice && previousSessions.length > 0 && profile[0]?.email) {
+          // Parse user agent for device info
+          const ua = currentUserAgent;
+          let browserName = 'Unknown Browser';
+          let osName = 'Unknown OS';
+          let deviceType = 'Desktop';
+          
+          if (ua.includes('Chrome')) browserName = 'Chrome';
+          else if (ua.includes('Firefox')) browserName = 'Firefox';
+          else if (ua.includes('Safari')) browserName = 'Safari';
+          else if (ua.includes('Edge')) browserName = 'Edge';
+          
+          if (ua.includes('Windows')) osName = 'Windows';
+          else if (ua.includes('Mac OS')) osName = 'macOS';
+          else if (ua.includes('Linux')) osName = 'Linux';
+          else if (ua.includes('Android')) { osName = 'Android'; deviceType = 'Mobile'; }
+          else if (ua.includes('iPhone') || ua.includes('iPad')) { osName = 'iOS'; deviceType = 'Mobile'; }
+          
+          // Get location from IP (using geoip-lite if available)
+          let locationStr = 'Unknown Location';
+          try {
+            const geoip = await import('geoip-lite');
+            const geo = geoip.default.lookup(currentIp.replace('::ffff:', '')); 
+            if (geo) locationStr = `${geo.city || ''}, ${geo.country || ''}`;
+          } catch (e) { /* geoip not available */ }
+          
+          const { sendNewDeviceLoginEmail } = await import('./utils/email-templates.js');
+          sendNewDeviceLoginEmail(profile[0].email, profile[0].name || 'User', {
+            deviceName: deviceType,
+            browser: browserName,
+            os: osName,
+            location: locationStr,
+            ipAddress: currentIp,
+            loginTime: new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })
+          }).catch(err => console.error('New device email error:', err));
+          
+          console.log(`🔐 New device login detected for ${profile[0].email} from ${currentIp}`);
+        }
+      } catch (deviceCheckError) {
+        console.error('Device check error (non-blocking):', deviceCheckError);
+      }
+
       res.cookie('sessionId', sessionId, {
         httpOnly: false,
         secure: isProduction,
