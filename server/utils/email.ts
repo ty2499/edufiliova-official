@@ -277,6 +277,49 @@ export class EmailService {
       ]
     });
   }
+
+  async sendFreelancerApprovalEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/freelancer_approval_template.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // Remove preloads and add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    const fullName = data.fullName || 'Freelancer';
+    
+    // ✅ USE BULLETPROOF NAME REPLACEMENT
+    html = this.forceReplaceName(html, fullName);
+    
+    // Final cleanup
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Welcome Aboard! Your Freelancer Application is Approved - EduFiliova',
+      html,
+      from: `"EduFiliova Support" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'ring_green.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766708445700.png'), cid: 'ring_green', contentType: 'image/png' },
+        { filename: 'logo.png', path: assetPath('3c3a32d57b55881831d31127dddaf32b_1766708445697.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'ring_green2.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766708445702.png'), cid: 'ring_green2', contentType: 'image/png' },
+        { filename: 'edu_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766708445698.png'), cid: 'edu_logo', contentType: 'image/png' },
+        { filename: 'edu_logo2.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766708445699.png'), cid: 'edu_logo2', contentType: 'image/png' },
+        { filename: 'freelancer_img.png', path: assetPath('5079c2203be6bb217e9e7c150f5f0d60_1766708445700.png'), cid: 'freelancer_img', contentType: 'image/png' },
+        { filename: 'money_img.png', path: assetPath('c147000ffb2efef7ba64fa6ce5415a30_1766708445701.png'), cid: 'money_img', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766708445698.png'), cid: 'corner', contentType: 'image/png' }
+      ]
+    });
+  }
 }
 
 export const emailService = new EmailService();
