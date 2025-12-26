@@ -1,0 +1,39 @@
+Learning • Skills • Careers
+Hi {{fullName}},
+We detected a new login to your EduFiliova account from a device or location we don’t recognize.
+This email is sent to help keep your account secure.
+Login Information:
+Device: {{deviceName}}
+Browser: {{browser}}
+Operating System: {{os}}
+Location: {{location}}
+IP Address: {{ipAddress}}
+Date & Time: {{loginTime}}
+
+Review Account Security
+Change Password
+
+
+
+
+Was This You?
+If this login was made by you, no action is required.  You can safely ignore this message.
+Didn’t Recognize This Login?
+If you do not recognize this activity, we strongly recommend taking action immediately:
+Change your account password Review your recent account activity Ensure your email and contact details are secure
+Additional Security Tips
+Never share your login credentials with anyone
+Always log out when using shared or public devices
+Use a strong, unique password for your EduFiliova account
+Need Help?
+If you believe your account may have been accessed without authorization or need help securing your account, please contact our security team immediately.
+support@edufiliova.com
+This message was sent automatically to help protect your EduFiliova account.
+Stay safe, EduFiliova Security Team
+
+Thank you!
+Feel free to reach out if you have any questions.
+You can unsubscribe from these emails here. 
+ Visit the  Help Center
+ Or contact us anytime at support@edufiliova.com
+ 

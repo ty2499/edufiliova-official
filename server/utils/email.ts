@@ -693,7 +693,7 @@ export class EmailService {
     });
   }
 
-  async sendDeviceLoginEmail(email: string, data: { userName: string; deviceName: string; browser: string; os: string; location: string; ipAddress: string; loginTime: string; changePasswordUrl?: string }): Promise<boolean> {
+  async sendDeviceLoginEmail(email: string, data: { fullName: string; deviceName: string; browser: string; os: string; location: string; ipAddress: string; loginTime: string; changePasswordUrl?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/device_login_template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
@@ -708,7 +708,7 @@ export class EmailService {
     </style>`;
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
-    const userName = data.userName || 'User';
+    const fullName = data.fullName || 'User';
     const deviceName = data.deviceName || 'Unknown Device';
     const browser = data.browser || 'Unknown Browser';
     const os = data.os || 'Unknown OS';
@@ -717,8 +717,8 @@ export class EmailService {
     const loginTime = data.loginTime || new Date().toLocaleString();
     const changePasswordUrl = data.changePasswordUrl || `${baseUrl}/change-password`;
 
-    // Replace split placeholder for userName (unique pattern in this template)
-    html = html.replace(/Hi\s*\{\{[^}]*?userName\}[^}]*\}\}/gi, `Hi ${userName}`);
+    // Replace split placeholder for fullName (unique pattern in this template)
+    html = html.replace(/Hi\s*\{\{[^}]*?fullName\}[^}]*\}\}/gi, `Hi ${fullName}`);
     
     // Replace all other simple placeholders
     html = html.replace(/\{\{deviceName\}\}/gi, deviceName);
