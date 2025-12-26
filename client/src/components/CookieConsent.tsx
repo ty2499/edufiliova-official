@@ -107,7 +107,7 @@ const CookieConsent = () => {
             <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Privacy Preference Center</h2>
             <button
               onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors flex-shrink-0 transition-all duration-300"
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors flex-shrink-0" transition-all duration-300
               data-testid="button-close-cookies"
             >
               <X className="w-5 h-5" />
@@ -122,7 +122,7 @@ const CookieConsent = () => {
             For more information, please read our{" "}
             <button 
               onClick={() => handleNavigate('privacy-policy')} 
-              className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer bg-transparent border-none p-0 font-inherit inline transition-all duration-300"
+              className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer bg-transparent border-none p-0 font-inherit inline" transition-all duration-300
               data-testid="link-privacy-policy"
             >
               Privacy Policy
@@ -130,7 +130,7 @@ const CookieConsent = () => {
             {" "}and{" "}
             <button 
               onClick={() => handleNavigate('cookies-policy')} 
-              className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer bg-transparent border-none p-0 font-inherit inline transition-all duration-300"
+              className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer bg-transparent border-none p-0 font-inherit inline" transition-all duration-300
               data-testid="link-cookies-policy"
             >
               Cookie Policy
@@ -208,7 +208,7 @@ const CookieConsent = () => {
           <div className="flex flex-col gap-3">
             <Button
               onClick={handleAcceptAll}
-              className="w-full h-10 bg-primary hover:bg-primary text-white text-sm font-medium transition-all duration-300"
+              className="w-full h-10 bg-primary hover:bg-primary text-white text-sm font-medium" transition-all duration-300
               data-testid="button-accept-all"
             >
               Accept all
@@ -216,7 +216,7 @@ const CookieConsent = () => {
             <Button
               onClick={handleConfirmPreferences}
               variant="outline"
-              className="w-full h-10 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium transition-all duration-300"
+              className="w-full h-10 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium" transition-all duration-300
               data-testid="button-confirm-preferences"
             >
               Confirm my preferences
@@ -224,7 +224,7 @@ const CookieConsent = () => {
             <Button
               onClick={handleRejectAll}
               variant="outline"
-              className="w-full h-10 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium transition-all duration-300"
+              className="w-full h-10 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium" transition-all duration-300
               data-testid="button-reject-all"
             >
               Reject all
@@ -249,7 +249,7 @@ const CookieConsent = () => {
             <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">Privacy Preferences</h2>
             <button
               onClick={handleClose}
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors flex-shrink-0 transition-all duration-300"
+              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors flex-shrink-0" transition-all duration-300
               data-testid="button-close-cookies-mobile"
             >
               <X className="w-5 h-5" />
@@ -264,7 +264,7 @@ const CookieConsent = () => {
             Read our{" "}
             <button 
               onClick={() => handleNavigate('privacy-policy')} 
-              className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer bg-transparent border-none p-0 font-inherit inline transition-all duration-300"
+              className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer bg-transparent border-none p-0 font-inherit inline" transition-all duration-300
               data-testid="link-privacy-policy-mobile"
             >
               Privacy Policy
@@ -272,7 +272,7 @@ const CookieConsent = () => {
             {" "}and{" "}
             <button 
               onClick={() => handleNavigate('cookies-policy')} 
-              className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer bg-transparent border-none p-0 font-inherit inline transition-all duration-300"
+              className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer bg-transparent border-none p-0 font-inherit inline" transition-all duration-300
               data-testid="link-cookies-policy-mobile"
             >
               Cookie Policy
@@ -348,7 +348,7 @@ const CookieConsent = () => {
           <div className="flex flex-col gap-2">
             <Button
               onClick={handleAcceptAll}
-              className="w-full h-9 bg-primary hover:bg-primary text-white text-xs font-medium transition-all duration-300"
+              className="w-full h-9 bg-primary hover:bg-primary text-white text-xs font-medium" transition-all duration-300
               data-testid="button-accept-all-mobile"
             >
               Accept all
@@ -356,7 +356,7 @@ const CookieConsent = () => {
             <Button
               onClick={handleConfirmPreferences}
               variant="outline"
-              className="w-full h-9 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-xs font-medium transition-all duration-300"
+              className="w-full h-9 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-xs font-medium" transition-all duration-300
               data-testid="button-confirm-preferences-mobile"
             >
               Confirm preferences
@@ -364,7 +364,7 @@ const CookieConsent = () => {
             <Button
               onClick={handleRejectAll}
               variant="outline"
-              className="w-full h-9 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-xs font-medium transition-all duration-300"
+              className="w-full h-9 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-xs font-medium" transition-all duration-300
               data-testid="button-reject-all-mobile"
             >
               Reject all

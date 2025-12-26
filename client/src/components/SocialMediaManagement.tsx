@@ -235,7 +235,7 @@ function SocialMediaManagement() {
         <Button
           onClick={handleSave}
           disabled={updateSocialMediaMutation.isPending || loadingSocialMedia}
-          className="bg-primary hover:bg-primary text-white transition-all duration-300"
+          className="bg-primary hover:bg-primary text-white" transition-all duration-300
           data-testid="button-save-social-links"
         >
           <Save className="h-4 w-4 mr-2" />
@@ -255,47 +255,47 @@ function SocialMediaManagement() {
         <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Preview</h3>
         <div className="flex flex-wrap gap-3">
           {facebookUrl && (
-            <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#1778f2] rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-facebook">
+            <a href={facebookUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#1778f2] rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-facebook">
               <SiFacebook className="h-5 w-5 text-white" />
             </a>
           )}
           {xUrl && (
-            <a href={xUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-black rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-x">
+            <a href={xUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-black rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-x">
               <SiX className="h-5 w-5 text-white" />
             </a>
           )}
           {instagramUrl && (
-            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-instagram">
+            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-instagram">
               <SiInstagram className="h-5 w-5 text-white" />
             </a>
           )}
           {pinterestUrl && (
-            <a href={pinterestUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#ff3635] rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-pinterest">
+            <a href={pinterestUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#ff3635] rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-pinterest">
               <SiPinterest className="h-5 w-5 text-white" />
             </a>
           )}
           {behanceUrl && (
-            <a href={behanceUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#2a5afc] rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-behance">
+            <a href={behanceUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#2a5afc] rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-behance">
               <SiBehance className="h-5 w-5 text-white" />
             </a>
           )}
           {dribbbleUrl && (
-            <a href={dribbbleUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#ea4c89] rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-dribbble">
+            <a href={dribbbleUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#ea4c89] rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-dribbble">
               <SiDribbble className="h-5 w-5 text-white" />
             </a>
           )}
           {threadsUrl && (
-            <a href={threadsUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-black rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-threads">
+            <a href={threadsUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-black rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-threads">
               <SiThreads className="h-5 w-5 text-white" />
             </a>
           )}
           {whatsappUrl && (
-            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#25D366] rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-whatsapp">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#25D366] rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-whatsapp">
               <SiWhatsapp className="h-5 w-5 text-white" />
             </a>
           )}
           {telegramUrl && (
-            <a href={telegramUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#0088cc] rounded-lg hover:opacity-80 transition-opacity transition-all duration-300" data-testid="preview-telegram">
+            <a href={telegramUrl} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center bg-[#0088cc] rounded-lg hover:opacity-80 transition-opacity" transition-all duration-300 data-testid="preview-telegram">
               <SiTelegram className="h-5 w-5 text-white" />
             </a>
           )}

@@ -511,7 +511,7 @@ export default function NewCommunity() {
                     const replyCount = post.replyCount || post.replies || 0;
                     
                     return (
-                      <Card key={post.id} className="cursor-pointer hover:shadow-md transition-shadow transition-all duration-300" data-testid={`post-${post.id}`}>
+                      <Card key={post.id} className="cursor-pointer hover:shadow-md transition-shadow" transition-all duration-300 data-testid={`post-${post.id}`}>
                         <CardHeader>
                           <div className="flex items-start justify-between">
                             <div className="flex items-center gap-3">
@@ -718,7 +718,7 @@ export default function NewCommunity() {
                   <p className="text-muted-foreground mb-6">
                     Upgrade to premium to discover and connect with students worldwide.
                   </p>
-                  <Button className="w-full bg-primary hover:bg-primary h-12 text-base transition-all duration-300">
+                  <Button className="w-full bg-primary hover:bg-primary h-12 text-base" transition-all duration-300>
                     <MessageSquare className="h-4 w-4 mr-2" />
                     Upgrade Now
                   </Button>

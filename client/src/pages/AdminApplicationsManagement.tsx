@@ -243,7 +243,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
         <Button
           variant="ghost"
           size="icon"
-          className="text-white hover:bg-white/20 transition-all duration-300"
+          className="text-white hover:bg-white/20" transition-all duration-300
           onClick={() => setShowMobileMenu(!showMobileMenu)}
           data-testid="mobile-menu-button"
         >
@@ -268,7 +268,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-white hover:bg-white/20 transition-all duration-300"
+              className="md:hidden text-white hover:bg-white/20" transition-all duration-300
               onClick={() => setShowMobileMenu(false)}
               data-testid="close-mobile-menu"
             >
@@ -281,7 +281,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
             <nav className="flex flex-col space-y-2">
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { 
                   if (onNavigate) onNavigate("admin-dashboard"); 
                   setShowMobileMenu(false); 
@@ -294,7 +294,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
               
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-black bg-[#c4ee3d] hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-black bg-[#c4ee3d] hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 data-testid="nav-applications"
               >
                 <FileCheck className="w-5 h-5 mr-3" />
@@ -303,7 +303,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
 
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { 
                   if (onNavigate) onNavigate("admin-contact-messages"); 
                   setShowMobileMenu(false); 
@@ -316,7 +316,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
 
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { 
                   if (onNavigate) onNavigate("admin-email-management"); 
                   setShowMobileMenu(false); 
@@ -332,7 +332,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
             <div className="mt-auto pt-4 border-t border-white/20">
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={handleLogout}
                 disabled={isLoggingOut}
                 data-testid="nav-logout"
@@ -621,7 +621,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                               href={selectedTeacherApp.passportPhotoUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                              className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                             >
                               <ExternalLink className="w-3 h-3" />
                               Open in new tab
@@ -660,7 +660,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                 href={selectedTeacherApp.idPassportDocument}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                               >
                                 <ExternalLink className="w-3 h-3" />
                                 Open in new tab
@@ -668,7 +668,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                               <a
                                 href={selectedTeacherApp.idPassportDocument}
                                 download
-                                className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                               >
                                 <Download className="w-3 h-3" />
                                 Download
@@ -708,7 +708,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                 href={selectedTeacherApp.cvResume}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                               >
                                 <ExternalLink className="w-3 h-3" />
                                 Open in new tab
@@ -716,7 +716,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                               <a
                                 href={selectedTeacherApp.cvResume}
                                 download
-                                className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                               >
                                 <Download className="w-3 h-3" />
                                 Download
@@ -759,7 +759,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                     href={cert}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                    className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                                   >
                                     <ExternalLink className="w-3 h-3" />
                                     Open in new tab
@@ -767,7 +767,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                   <a
                                     href={cert}
                                     download
-                                    className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                    className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                                   >
                                     <Download className="w-3 h-3" />
                                     Download
@@ -812,7 +812,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                     href={proof}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                    className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                                   >
                                     <ExternalLink className="w-3 h-3" />
                                     Open in new tab
@@ -820,7 +820,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                   <a
                                     href={proof}
                                     download
-                                    className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                    className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                                   >
                                     <Download className="w-3 h-3" />
                                     Download
@@ -865,7 +865,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                     href={material}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                    className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                                   >
                                     <ExternalLink className="w-3 h-3" />
                                     Open in new tab
@@ -873,7 +873,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                   <a
                                     href={material}
                                     download
-                                    className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                    className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                                   >
                                     <Download className="w-3 h-3" />
                                     Download
@@ -904,7 +904,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                 href={selectedTeacherApp.introductionVideo}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                               >
                                 <ExternalLink className="w-3 h-3" />
                                 Open in new tab
@@ -912,7 +912,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                               <a
                                 href={selectedTeacherApp.introductionVideo}
                                 download
-                                className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                               >
                                 <Download className="w-3 h-3" />
                                 Download
@@ -936,7 +936,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                             });
                           }}
                           variant="outline"
-                          className="flex-1 border-orange-500 text-primary hover:bg-primary/10 transition-all duration-300"
+                          className="flex-1 border-orange-500 text-primary hover:bg-primary/10" transition-all duration-300
                           disabled={updateTeacherStatus.isPending}
                           data-testid="btn-mark-under-review-teacher"
                         >
@@ -946,7 +946,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                       )}
                       <Button
                         onClick={() => setReviewAction("approve")}
-                        className="flex-1 bg-primary hover:bg-primary transition-all duration-300"
+                        className="flex-1 bg-primary hover:bg-primary" transition-all duration-300
                         data-testid="btn-approve-teacher"
                       >
                         Approve Application
@@ -1057,19 +1057,19 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                     <div className="space-y-2">
                       <Label>External Links</Label>
                       {selectedFreelancerApp.behanceUrl && (
-                        <a href={selectedFreelancerApp.behanceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-blue-600 hover:underline transition-all duration-300">
+                        <a href={selectedFreelancerApp.behanceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-blue-600 hover:underline" transition-all duration-300>
                           <ExternalLink className="w-4 h-4" />
                           Behance Portfolio
                         </a>
                       )}
                       {selectedFreelancerApp.githubUrl && (
-                        <a href={selectedFreelancerApp.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-blue-600 hover:underline transition-all duration-300">
+                        <a href={selectedFreelancerApp.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-blue-600 hover:underline" transition-all duration-300>
                           <ExternalLink className="w-4 h-4" />
                           GitHub Profile
                         </a>
                       )}
                       {selectedFreelancerApp.websiteUrl && (
-                        <a href={selectedFreelancerApp.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-blue-600 hover:underline transition-all duration-300">
+                        <a href={selectedFreelancerApp.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-blue-600 hover:underline" transition-all duration-300>
                           <ExternalLink className="w-4 h-4" />
                           Personal Website
                         </a>
@@ -1127,7 +1127,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                           href={url}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                          className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                                         >
                                           <ExternalLink className="w-3 h-3" />
                                           Open in new tab
@@ -1135,7 +1135,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                                         <a
                                           href={url}
                                           download
-                                          className="flex items-center gap-2 text-blue-600 hover:underline transition-all duration-300"
+                                          className="flex items-center gap-2 text-blue-600 hover:underline" transition-all duration-300
                                         >
                                           <Download className="w-3 h-3" />
                                           Download
@@ -1156,7 +1156,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                     <div className="flex gap-2 pt-4 border-t">
                       <Button
                         onClick={() => setReviewAction("approve")}
-                        className="flex-1 bg-primary hover:bg-primary transition-all duration-300"
+                        className="flex-1 bg-primary hover:bg-primary" transition-all duration-300
                         data-testid="btn-approve-freelancer"
                       >
                         Approve Application

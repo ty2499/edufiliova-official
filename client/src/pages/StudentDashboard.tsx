@@ -311,7 +311,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
                     <Button
                       onClick={handleQuizSubmit}
                       disabled={Object.keys(selectedAnswers).length !== exercises.length}
-                      className="hover:bg-[#1f4038] bg-[#2f5a4e] text-white w-full sm:w-auto text-xs sm:text-sm transition-all duration-300"
+                      className="hover:bg-[#1f4038] bg-[#2f5a4e] text-white w-full sm:w-auto text-xs sm:text-sm" transition-all duration-300
                       size="sm"
                     >
                       Submit Quiz
@@ -631,7 +631,7 @@ const LessonViewer = ({ lesson, exercises, onBack, userId }: LessonViewerProps) 
             <Button
               onClick={() => setShowQuiz(true)}
               size="lg"
-              className="hover:bg-[#1f4038] hover:scale-105 bg-[#2f5a4e] text-white transition-all duration-300"
+              className="hover:bg-[#1f4038] hover:scale-105 bg-[#2f5a4e] text-white" transition-all duration-300
               data-testid="take-quiz-button"
             >
               <Trophy className="w-5 h-5 mr-2" />
@@ -790,11 +790,11 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
     
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
-        stars.push(<Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400 group-hover:fill-white group-hover:text-white transition-all duration-300" />);
+        stars.push(<Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400 group-hover:fill-white group-hover:text-white" transition-all duration-300 />);
       } else if (i === fullStars && hasHalfStar) {
-        stars.push(<Star key={i} className="w-3 h-3 fill-yellow-400/50 text-yellow-400 group-hover:fill-white/50 group-hover:text-white transition-all duration-300" />);
+        stars.push(<Star key={i} className="w-3 h-3 fill-yellow-400/50 text-yellow-400 group-hover:fill-white/50 group-hover:text-white" transition-all duration-300 />);
       } else {
-        stars.push(<Star key={i} className="w-3 h-3 text-gray-300 group-hover:text-white transition-all duration-300" />);
+        stars.push(<Star key={i} className="w-3 h-3 text-gray-300 group-hover:text-white" transition-all duration-300 />);
       }
     }
     return stars;
@@ -917,7 +917,7 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
                       onClick={() => {
                         onNavigate(`course-detail-${course.id}`);
                       }}
-                      className="bg-white hover:bg-gray-50 text-gray-900 rounded-full px-5 py-2 flex items-center gap-2 font-medium w-full justify-center transition-all duration-300"
+                      className="bg-white hover:bg-gray-50 text-gray-900 rounded-full px-5 py-2 flex items-center gap-2 font-medium w-full justify-center" transition-all duration-300
                       data-testid={`button-view-${course.id}`}
                     >
                       Start Learning
@@ -984,7 +984,7 @@ export const CoursesSection = ({ profile, onNavigate }: CoursesSectionProps) => 
                           window.history.pushState({}, '', `?page=course-player&courseId=${course.courseId}`);
                           onNavigate('course-player');
                         }}
-                        className="bg-white hover:bg-gray-50 text-gray-900 rounded-full px-5 py-2 flex items-center gap-2 font-medium w-full justify-center transition-all duration-300"
+                        className="bg-white hover:bg-gray-50 text-gray-900 rounded-full px-5 py-2 flex items-center gap-2 font-medium w-full justify-center" transition-all duration-300
                         data-testid={`button-continue-${course.courseId}`}
                       >
                         {isCompleted ? 'Review Course' : 'Continue Learning'}
@@ -1165,7 +1165,7 @@ function OrderSlipViewer({
                     </thead>
                     <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                       {orderDetails.items.map((item: any, index: number) => (
-                        <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors transition-all duration-300" data-testid={`order-item-${index}`}>
+                        <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors" transition-all duration-300 data-testid={`order-item-${index}`}>
                           <td className="px-4 py-4">
                             <p className="font-medium text-gray-900 dark:text-white">{item.product?.name || 'Unknown Item'}</p>
                             {item.product?.description && (
@@ -1386,7 +1386,7 @@ function PurchasesPage() {
                     <Button 
                       size="sm" 
                       onClick={() => setSelectedOrderId(purchase.orderId)}
-                      className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-full px-4 py-1 h-8 text-xs transition-all duration-300"
+                      className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-full px-4 py-1 h-8 text-xs" transition-all duration-300
                       data-testid={`button-view-slip-${purchase.id}`}
                     >
                       <Receipt className="h-3 w-3 mr-1.5" />
@@ -1395,7 +1395,7 @@ function PurchasesPage() {
                     <Button 
                       size="sm" 
                       onClick={() => purchase.orderId && handleDownloadSlip(purchase.orderId)}
-                      className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-full px-4 py-1 h-8 text-xs transition-all duration-300"
+                      className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-full px-4 py-1 h-8 text-xs" transition-all duration-300
                       data-testid={`button-download-${purchase.id}`}
                     >
                       <Download className="h-3 w-3 mr-1.5" />
@@ -2179,7 +2179,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="text-white hover:text-gray-200 transition-all duration-300"
+                className="text-white hover:text-gray-200" transition-all duration-300
                 data-testid="button-mobile-menu"
               >
                 {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -2316,7 +2316,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               <MessageCircle className="w-5 h-5 mr-3" />
               <span className="text-sm font-medium">Messages</span>
               {unreadMessagesCount > 0 && (
-                <Badge className="ml-auto bg-primary text-white hover:bg-primary transition-all duration-300">
+                <Badge className="ml-auto bg-primary text-white hover:bg-primary" transition-all duration-300>
                   {unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}
                 </Badge>
               )}
@@ -2347,7 +2347,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
               <Bell className="w-5 h-5 mr-3" />
               <span className="text-sm font-medium">Announcements</span>
               {unreadAnnouncementsCount > 0 && (
-                <Badge className="ml-auto bg-primary text-white hover:bg-primary transition-all duration-300">
+                <Badge className="ml-auto bg-primary text-white hover:bg-primary" transition-all duration-300>
                   {unreadAnnouncementsCount > 9 ? '9+' : unreadAnnouncementsCount}
                 </Badge>
               )}
@@ -2373,7 +2373,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
             <div className="pt-3">
               <button
                 onClick={() => setMoneyOpen(!moneyOpen)}
-                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors transition-all duration-300"
+                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors" transition-all duration-300
                 data-testid="nav-money-toggle"
               >
                 <span>Money</span>
@@ -2433,7 +2433,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
             <div className="pt-3">
               <button
                 onClick={() => setStoreOpen(!storeOpen)}
-                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors transition-all duration-300"
+                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors" transition-all duration-300
                 data-testid="nav-store-toggle"
               >
                 <span>Store</span>
@@ -2495,7 +2495,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                 <div className="pt-3">
                   <button
                     onClick={() => setMarketplaceOpen(!marketplaceOpen)}
-                    className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors transition-all duration-300"
+                    className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors" transition-all duration-300
                     data-testid="nav-marketplace-toggle"
                   >
                     <span>Marketplace</span>
@@ -2572,7 +2572,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
           <div className="p-3 border-t border-white/20 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium transition-all duration-300"
+              className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium" transition-all duration-300
               onClick={() => { 
                 setIsLoggingOut(true);
                 setShowMobileMenu(false);
@@ -2794,7 +2794,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                 
                                 {/* Upgrade Button */}
                                 <Button
-                                  className="w-full bg-[#3b82f6] hover:bg-[#2563eb] text-[#faf2f2] font-bold transition-all duration-300"
+                                  className="w-full bg-[#3b82f6] hover:bg-[#2563eb] text-[#faf2f2] font-bold" transition-all duration-300
                                   size="lg"
                                   onClick={() => {
                                     setSelectedPlan({
@@ -2864,7 +2864,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                           return (
                             <div 
                               key={lesson.lessonId} 
-                              className="rounded-2xl p-5 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between transition-all duration-300"
+                              className="rounded-2xl p-5 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between" transition-all duration-300
                                 style={{ backgroundColor: bgColor }}
                                 onClick={() => {
                                   setSelectedSubject(lesson.subjectId);
@@ -2982,7 +2982,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                       <div className="flex gap-4 overflow-x-auto pb-4">
                         {/* Today's Progress Card */}
                         <div 
-                          className="rounded-2xl p-5 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between transition-all duration-300"
+                          className="rounded-2xl p-5 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between" transition-all duration-300
                           style={{ backgroundColor: '#0C332C' }}
                           data-testid="daily-questions-today"
                           onClick={() => setShowDailyQuestions(true)}
@@ -3044,7 +3044,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                           return (
                             <div 
                               key={day.dayNumber}
-                              className="rounded-2xl p-4 transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between transition-all duration-300"
+                              className="rounded-2xl p-4 transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between" transition-all duration-300
                                 style={{ backgroundColor: bgColor }}
                                 data-testid={`daily-progress-${day.dayNumber}`}
                               >
@@ -3112,7 +3112,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                           return (
                             <div 
                               key={note.id} 
-                              className="rounded-2xl p-5 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between transition-all duration-300"
+                              className="rounded-2xl p-5 cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg flex-shrink-0 w-64 h-64 flex flex-col justify-between" transition-all duration-300
                               style={{ backgroundColor: bgColor }}
                               onClick={() => setShowStudyNotes(true)}
                             >
@@ -3155,7 +3155,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                   {/* Quick Actions & Stats - 2 Column Layout on Desktop */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Quick Actions */}
-                    <Card className="border-dashed border-2 border-muted hover:border-primary/50 transition-colors transition-all duration-300" data-testid="quick-actions-card">
+                    <Card className="border-dashed border-2 border-muted hover:border-primary/50 transition-colors" transition-all duration-300 data-testid="quick-actions-card">
                       <CardContent className="p-6 text-center">
                         <div className="space-y-3">
                           <Target className="w-8 h-8 text-muted-foreground mx-auto" />
@@ -3175,7 +3175,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                             <Button 
                               variant="default" 
                               size="sm" 
-                              className="inline-flex items-center justify-center whitespace-nowrap font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:focus-visible:ring-success h-9 px-3 sm:px-4 py-2 text-xs w-full rounded-full hover:bg-primary/80  hover:scale-105 bg-[#0C332C] text-[#ffffff] transition-all duration-300" 
+                              className="inline-flex items-center justify-center whitespace-nowrap font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:focus-visible:ring-success h-9 px-3 sm:px-4 py-2 text-xs w-full rounded-full hover:bg-primary/80  hover:scale-105 bg-[#0C332C] text-[#ffffff]" transition-all duration-300 
                               data-testid="request-help"
                               onClick={() => setActiveTab("messages")}
                             >
@@ -3185,7 +3185,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                             
                             <Button 
                               size="sm" 
-                              className="w-full rounded-full bg-[#151314] text-white hover:bg-[#2a2629] transition-all duration-300" 
+                              className="w-full rounded-full bg-[#151314] text-white hover:bg-[#2a2629]" transition-all duration-300 
                               data-testid="support-button"
                               onClick={() => setActiveTab("messages")}
                             >
@@ -3198,7 +3198,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                     </Card>
 
                     {/* Stats Card */}
-                    <Card className="border-dashed border-2 border-muted hover:border-primary/50 transition-colors transition-all duration-300" data-testid="stats-card">
+                    <Card className="border-dashed border-2 border-muted hover:border-primary/50 transition-colors" transition-all duration-300 data-testid="stats-card">
                       <CardContent className="p-6">
                         <div className="space-y-3">
                           <Trophy className="w-8 h-8 text-muted-foreground mx-auto" />
@@ -3425,8 +3425,8 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                 
                                 {/* Hover Arrow */}
                                 {!isLocked && (
-                                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center transition-all duration-300">
-                                    <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 shadow-lg transition-all duration-300">
+                                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center" transition-all duration-300>
+                                    <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 shadow-lg" transition-all duration-300>
                                       <ArrowRight className="w-6 h-6 text-gray-800" />
                                     </div>
                                   </div>
@@ -3461,7 +3461,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                         Upgrade to unlock
                                       </span>
                                     </div>
-                                    <Button size="sm" variant="outline" className="h-8 text-xs rounded-full border-amber-300 text-amber-600 hover:bg-amber-50 dark:border-amber-600 dark:text-amber-400 transition-all duration-300">
+                                    <Button size="sm" variant="outline" className="h-8 text-xs rounded-full border-amber-300 text-amber-600 hover:bg-amber-50 dark:border-amber-600 dark:text-amber-400" transition-all duration-300>
                                       Upgrade
                                     </Button>
                                   </div>
@@ -3473,7 +3473,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                       </div>
                                       <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">Available</span>
                                     </div>
-                                    <Button size="sm" className="h-8 text-xs rounded-full bg-primary hover:bg-primary/80  hover:scale-105 text-white transition-all duration-300">
+                                    <Button size="sm" className="h-8 text-xs rounded-full bg-primary hover:bg-primary/80  hover:scale-105 text-white" transition-all duration-300>
                                       <Play className="w-3.5 h-3.5 mr-1" />
                                       Start
                                     </Button>
@@ -3526,7 +3526,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                         return (
                           <div
                             key={chapter.id}
-                            className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300 cursor-pointer hover:-translate-y-1 group transition-all duration-300"
+                            className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300 cursor-pointer hover:-translate-y-1 group" transition-all duration-300
                             onClick={() => {
                               setSelectedChapter(chapter.id);
                               setSubjectViewLevel('lessons');
@@ -3551,7 +3551,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                               </div>
                               
                               {/* Hover Arrow */}
-                              <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                              <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0" transition-all duration-300>
                                 <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                                   <ArrowRight className="w-5 h-5 text-white" />
                                 </div>
@@ -3569,7 +3569,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                   <BookOpen className="w-4 h-4" />
                                   <span>View Lessons</span>
                                 </div>
-                                <Button size="sm" className="h-8 text-xs rounded-full bg-primary hover:bg-primary/80  hover:scale-105 text-white transition-all duration-300">
+                                <Button size="sm" className="h-8 text-xs rounded-full bg-primary hover:bg-primary/80  hover:scale-105 text-white" transition-all duration-300>
                                   <Play className="w-3.5 h-3.5 mr-1" />
                                   Start
                                 </Button>
@@ -3613,7 +3613,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                         return (
                           <div
                             key={lesson.id}
-                            className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300 cursor-pointer hover:border-primary/30 group transition-all duration-300"
+                            className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300 cursor-pointer hover:border-primary/30 group" transition-all duration-300
                             onClick={() => {
                               setSelectedLesson(lesson.id);
                               setViewingLesson(true);
@@ -3631,7 +3631,7 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                               <div className="flex-1 p-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                                 <div className="flex-1 min-w-0">
                                   <h3 
-                                    className="font-bold text-gray-900 dark:text-white group-hover:text-foreground transition-colors text-base sm:text-lg line-clamp-1 transition-all duration-300"
+                                    className="font-bold text-gray-900 dark:text-white group-hover:text-foreground transition-colors text-base sm:text-lg line-clamp-1" transition-all duration-300
                                     style={{ fontFamily: "'StackSans Headline', sans-serif" }}
                                   >
                                     {lesson.title}
@@ -3659,12 +3659,12 @@ const StudentDashboard = ({ onNavigate }: StudentDashboardProps) => {
                                 <div className="flex items-center gap-3 shrink-0">
                                   <Button 
                                     size="sm" 
-                                    className="h-10 px-4 text-sm rounded-full bg-primary hover:bg-primary/80  hover:scale-105 text-white group-hover:transition-all transition-all duration-300"
+                                    className="h-10 px-4 text-sm rounded-full bg-primary hover:bg-primary/80  hover:scale-105 text-white group-hover:transition-all" transition-all duration-300
                                   >
                                     <Play className="w-4 h-4 mr-1.5" />
                                     Start Lesson
                                   </Button>
-                                  <div className="hidden sm:flex w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                                  <div className="hidden sm:flex w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0" transition-all duration-300>
                                     <ArrowRight className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                                   </div>
                                 </div>
@@ -4379,7 +4379,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
           <Button 
             variant="ghost" 
             onClick={onClose}
-            className="text-[#ffffff] hover:bg-white/10 p-1 sm:p-2 flex-shrink-0 transition-all duration-300"
+            className="text-[#ffffff] hover:bg-white/10 p-1 sm:p-2 flex-shrink-0" transition-all duration-300
             data-testid="button-close-assignment"
           >
             <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -4577,7 +4577,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                                 <CheckCircle2 className="h-4 w-4 text-blue-600" />
                                 <span className="font-semibold text-sm">Correct Answer:</span>
                                 <span className="font-bold text-blue-700">{question.correctAnswer}</span>
-                                <Badge className="bg-blue-100 text-blue-800 text-xs ml-auto hover:bg-blue-100 hover:text-blue-800 transition-all duration-300">Answer Key</Badge>
+                                <Badge className="bg-blue-100 text-blue-800 text-xs ml-auto hover:bg-blue-100 hover:text-blue-800" transition-all duration-300>Answer Key</Badge>
                               </div>
                             </div>
                           )}
@@ -4704,7 +4704,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                     <Button 
                       onClick={handleSubmission}
                       disabled={isSubmitting}
-                      className="w-full bg-[#0C332C] text-white font-semibold py-3 text-lg hover:bg-[#0C332C] active:bg-[#0C332C] transition-all duration-300"
+                      className="w-full bg-[#0C332C] text-white font-semibold py-3 text-lg hover:bg-[#0C332C] active:bg-[#0C332C]" transition-all duration-300
                       data-testid="button-submit-assignment"
                     >
                       {isSubmitting ? (
@@ -4765,7 +4765,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                 variant="ghost" 
                 size="sm" 
                 onClick={() => setViewingAttachment(null)}
-                className="text-gray-500 hover:text-gray-700 transition-all duration-300"
+                className="text-gray-500 hover:text-gray-700" transition-all duration-300
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -4789,7 +4789,7 @@ const AssignmentDetailDialog = ({ assignment, isOpen, onClose, onSubmissionUpdat
                   <p className="text-gray-600 mb-4">Preview not available for this file type.</p>
                   <Button 
                     onClick={() => window.open(viewingAttachment.url, '_blank')}
-                    className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-black transition-all duration-300"
+                    className="bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-black" transition-all duration-300
                   >
                     Download {viewingAttachment.name}
                   </Button>

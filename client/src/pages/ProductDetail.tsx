@@ -878,7 +878,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
             {/* Home Link */}
             <Button
               variant="ghost"
-              className="flex items-center gap-2 text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors transition-all duration-300"
+              className="flex items-center gap-2 text-lg font-semibold text-gray-800 hover:text-blue-600 transition-colors" transition-all duration-300
               onClick={() => onNavigate('home')}
               data-testid="link-home"
             >
@@ -926,7 +926,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="px-3 py-2 rounded-full font-medium text-sm text-gray-700 hover:text-gray-800 hover:scale-105 transform transition-all duration-200 transition-all duration-300"
+                        className="px-3 py-2 rounded-full font-medium text-sm text-gray-700 hover:text-gray-800 hover:scale-105 transform transition-all duration-200" transition-all duration-300
                         onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                         data-testid="nav-more-categories"
@@ -992,7 +992,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
               <Button
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform relative transition-all duration-300"
+                className="flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform relative" transition-all duration-300
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                 onClick={() => onNavigate('cart')}
@@ -1011,7 +1011,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                 <Button
                   variant="default"
                   size="sm"
-                  className="flex items-center gap-2 px-5 py-2 rounded-full font-medium text-sm text-white transition-all duration-200 hover:scale-105 transform transition-all duration-300" style={{backgroundColor: '#0C332C'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#0C332C'}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full font-medium text-sm text-white transition-all duration-200 hover:scale-105 transform" transition-all duration-300 style={{backgroundColor: '#0C332C'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#0C332C'}
                   onClick={() => onNavigate('shop-auth')}
                   data-testid="button-login"
                 >
@@ -1096,14 +1096,14 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
           <div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
             <button 
               onClick={() => onNavigate('product-shop')}
-              className="hover:text-gray-700 transition-colors transition-all duration-300"
+              className="hover:text-gray-700 transition-colors" transition-all duration-300
             >
               Shop
             </button>
             <span>/</span>
             <button 
               onClick={() => onNavigate('product-shop', 'fade', { category: selectedProduct.category })}
-              className="capitalize hover:text-gray-700 transition-colors transition-all duration-300"
+              className="capitalize hover:text-gray-700 transition-colors" transition-all duration-300
             >
               {selectedProduct.category?.replace(/_/g, ' ')}
             </button>
@@ -1152,7 +1152,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                       gallery.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
                     }
                   }}
-                  className="absolute left-2 top-1/3 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center z-10 transition-all transition-all duration-300"
+                  className="absolute left-2 top-1/3 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center z-10 transition-all" transition-all duration-300
                   aria-label="Previous image"
                   data-testid="button-previous"
                 >
@@ -1167,7 +1167,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                       gallery.scrollBy({ left: scrollAmount, behavior: 'smooth' });
                     }
                   }}
-                  className="absolute right-2 top-1/3 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center z-10 transition-all transition-all duration-300"
+                  className="absolute right-2 top-1/3 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center z-10 transition-all" transition-all duration-300
                   aria-label="Next image"
                   data-testid="button-next"
                 >
@@ -1189,7 +1189,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                       const imageElement = gallery?.children[index] as HTMLElement;
                       imageElement?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
                     }}
-                    className="relative flex-shrink-0 w-16 h-20 rounded overflow-hidden transition-all border-2 border-gray-300 hover:border-gray-400 opacity-70 hover:opacity-100 transition-all duration-300"
+                    className="relative flex-shrink-0 w-16 h-20 rounded overflow-hidden transition-all border-2 border-gray-300 hover:border-gray-400 opacity-70 hover:opacity-100" transition-all duration-300
                     style={{ aspectRatio: '3/4' }}
                     data-testid={`thumbnail-${index}`}
                   >
@@ -1296,7 +1296,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   <Button
                     variant="outline"
                     size="sm"
-                    className="bg-white border-gray-300 hover:bg-gray-50 text-gray-900 h-8 px-2 md:h-9 md:px-3 transition-all duration-300"
+                    className="bg-white border-gray-300 hover:bg-gray-50 text-gray-900 h-8 px-2 md:h-9 md:px-3" transition-all duration-300
                     onClick={() => handleShare(selectedProduct)}
                     data-testid="button-share"
                   >
@@ -1327,7 +1327,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         <img
                           src={product.images?.[0] || ''}
                           alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200 transition-all duration-300"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" transition-all duration-300
                         />
                       </div>
                       <h4 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1 font-['StackSans_Headline']">
@@ -1360,7 +1360,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
               <div className="space-y-2">
                 {selectedProduct.type === 'digital' && parseFloat(selectedProduct.price) === 0 ? (
                   <Button
-                    className="w-full h-12 bg-[#151314] hover:bg-[#2a2728] font-medium text-white border-0 transition-all duration-300"
+                    className="w-full h-12 bg-[#151314] hover:bg-[#2a2728] font-medium text-white border-0" transition-all duration-300
                     onClick={() => {
                       setDownloadType('free');
                       setShowDownloadModal(true);
@@ -1382,7 +1382,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   </Button>
                 ) : membershipEligibility?.canDownload && membershipEligibility?.method === 'membership' ? (
                   <Button
-                    className="w-full h-12 bg-[#151314] hover:bg-[#2a2728] font-medium text-white border-0 transition-all duration-300"
+                    className="w-full h-12 bg-[#151314] hover:bg-[#2a2728] font-medium text-white border-0" transition-all duration-300
                     onClick={() => {
                       setDownloadType('membership');
                       setShowDownloadModal(true);
@@ -1415,7 +1415,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         }
                       }}
                       disabled={pendingAddIds.has(selectedProduct.id) || (selectedProduct.type === 'physical' && selectedProduct.stock === 0)}
-                      className="w-full h-12 font-medium transition-all bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900 transition-all duration-300"
+                      className="w-full h-12 font-medium transition-all bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900" transition-all duration-300
                       data-testid="button-add-to-cart"
                     >
                       {pendingAddIds.has(selectedProduct.id) ? (
@@ -1435,7 +1435,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                     
                     {selectedProduct.type === 'digital' && (
                       <Button
-                        className="w-full h-12 bg-[#0C332C] hover:bg-[#1e3d99] font-medium text-white border-0 transition-all duration-300"
+                        className="w-full h-12 bg-[#0C332C] hover:bg-[#1e3d99] font-medium text-white border-0" transition-all duration-300
                         onClick={async () => {
                           if (selectedProduct) {
                             try {
@@ -1520,7 +1520,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         setShowPricingModal(true);
                       }
                     }}
-                    className="w-full h-12 font-medium bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900 rounded-2xl transition-all duration-300"
+                    className="w-full h-12 font-medium bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900 rounded-2xl" transition-all duration-300
                     data-testid="button-subscribe-now"
                   >
                     <ShoppingCart className="h-4 w-4 mr-2" />
@@ -1582,7 +1582,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                 }
               }}
               disabled={isDownloading || downloadMessage.type === 'success'}
-              className="flex-1 h-12 bg-[#0C332C] hover:bg-[#2554cc] text-white font-semibold border-0 disabled:opacity-50 transition-all duration-300"
+              className="flex-1 h-12 bg-[#0C332C] hover:bg-[#2554cc] text-white font-semibold border-0 disabled:opacity-50" transition-all duration-300
               data-testid="button-confirm-download"
             >
               {isDownloading ? (
@@ -1602,7 +1602,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
               }}
               disabled={isDownloading}
               variant="outline"
-              className="flex-1 h-12 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold disabled:opacity-50 transition-all duration-300"
+              className="flex-1 h-12 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold disabled:opacity-50" transition-all duration-300
               data-testid="button-explore-more"
             >
               {downloadMessage.type === 'error' ? 'Close' : 'Explore More'}
@@ -1881,7 +1881,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                   onClick={handlePaymentMethodSubmit}
                   disabled={upgradeMutation.isPending || 
                     (paymentMethod === 'wallet' && parseFloat(wallet?.balance || '0') < (upgradeCosts[selectedPlan.planId]?.upgradeCost !== undefined ? upgradeCosts[selectedPlan.planId].upgradeCost : parseFloat(billingCycle === 'monthly' ? selectedPlan.monthlyPrice || '0' : selectedPlan.yearlyPrice || '0')))}
-                  className="w-full h-12 bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white font-semibold rounded-lg text-base transition-all duration-300"
+                  className="w-full h-12 bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white font-semibold rounded-lg text-base" transition-all duration-300
                   data-testid="button-confirm-payment-selection"
                 >
                   {upgradeMutation.isPending ? 'Processing...' : 'Continue to Payment'}
@@ -2020,7 +2020,7 @@ export function ProductDetail({ onNavigate = () => {}, productId: initialProduct
                         <Button
                           onClick={() => studentPlanMutation.mutate({ tier: tier as keyof typeof GRADE_SUBSCRIPTION_PLANS, isUpgrade })}
                           disabled={studentPlanMutation.isPending}
-                          className="w-full h-8 text-xs bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white transition-all duration-300"
+                          className="w-full h-8 text-xs bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white" transition-all duration-300
                           data-testid={`button-select-student-plan-${tier}`}
                         >
                           {studentPlanMutation.isPending ? 'Processing...' : 

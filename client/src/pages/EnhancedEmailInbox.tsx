@@ -667,7 +667,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-6 w-6 opacity-0 group-hover:opacity-100 hover:bg-primary/100 dark:hover:bg-primary/80 hover:shadow-xl hover:scale-1050/30 hover:text-primary-600 transition-opacity transition-all duration-300"
+                            className="h-6 w-6 opacity-0 group-hover:opacity-100 hover:bg-primary/100 dark:hover:bg-primary/80 hover:shadow-xl hover:scale-1050/30 hover:text-primary-600 transition-opacity" transition-all duration-300
                             onClick={(e) => handleDeleteThread(e, thread)}
                             disabled={deleteConversationMutation.isPending}
                             data-testid={`button-delete-thread-${idx}`}
@@ -707,7 +707,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
               {/* Mobile back button */}
               <button
                 onClick={() => setSelectedThreadSubject(null)}
-                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors transition-all duration-300"
+                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors" transition-all duration-300
                 data-testid="button-back-mobile"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -831,7 +831,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                       <span className="truncate max-w-[200px]">{attachment.fileName}</span>
                       <button
                         onClick={() => setAttachments(attachments.filter((_, i) => i !== idx))}
-                        className="text-primary-500 hover:text-primary-700 transition-all duration-300"
+                        className="text-primary-500 hover:text-primary-700" transition-all duration-300
                       >
                         ×
                       </button>
@@ -917,7 +917,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                 <Button
                   onClick={handleSendMessage}
                   disabled={(!messageInput.trim() && attachments.length === 0) || sendReplyMutation.isPending}
-                  className="bg-gradient-to-r from-primary to-red-500 hover:opacity-80 hover:shadow-lg hover:scale-105 text-white h-10 w-10 p-0 flex-shrink-0 transition-all duration-300"
+                  className="bg-gradient-to-r from-primary to-red-500 hover:opacity-80 hover:shadow-lg hover:scale-105 text-white h-10 w-10 p-0 flex-shrink-0" transition-all duration-300
                   data-testid="button-send"
                 >
                   {sendReplyMutation.isPending ? (
@@ -1057,7 +1057,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                     <span className="text-sm truncate max-w-[200px]">{attachment.fileName}</span>
                     <button
                       onClick={() => setComposeAttachments(composeAttachments.filter((_, i) => i !== idx))}
-                      className="text-primary-500 hover:text-primary-700 transition-all duration-300"
+                      className="text-primary-500 hover:text-primary-700" transition-all duration-300
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -1128,7 +1128,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
                 <Button
                   onClick={handleSendCompose}
                   disabled={!composeToValue.trim() || !composeSubject.trim() || !composeMessage.trim() || !composeAccountId || sendNewEmailMutation.isPending}
-                  className="bg-gradient-to-r from-primary to-red-500 hover:opacity-80 hover:shadow-lg hover:scale-105 text-white transition-all duration-300"
+                  className="bg-gradient-to-r from-primary to-red-500 hover:opacity-80 hover:shadow-lg hover:scale-105 text-white" transition-all duration-300
                   data-testid="button-compose-send"
                 >
                   {sendNewEmailMutation.isPending ? (
@@ -1165,7 +1165,7 @@ export default function EnhancedEmailInbox({ onNavigate }: EnhancedEmailInboxPro
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={confirmDelete}
-              className="bg-primary hover:bg-primary/700 transition-all duration-300"
+              className="bg-primary hover:bg-primary/700" transition-all duration-300
               disabled={deleteConversationMutation.isPending}
               data-testid="button-delete-confirm"
             >

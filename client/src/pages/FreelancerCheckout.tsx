@@ -311,7 +311,7 @@ export default function FreelancerCheckout({ onNavigate }: FreelancerCheckoutPro
                 <Button
                   onClick={handleCardPayment}
                   disabled={processing}
-                  className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white py-6 text-base font-semibold rounded-xl transition-all duration-300"
+                  className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white py-6 text-base font-semibold rounded-xl" transition-all duration-300
                   data-testid="button-dodopay-checkout"
                 >
                   {processing ? (

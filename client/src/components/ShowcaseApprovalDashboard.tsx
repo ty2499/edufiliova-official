@@ -262,7 +262,7 @@ export function ShowcaseApprovalDashboard() {
       ) : (
         <div className="space-y-4">
           {filteredProjects.map((project) => (
-            <Card key={project.id} className="hover:shadow-md transition-shadow transition-all duration-300">
+            <Card key={project.id} className="hover:shadow-md transition-shadow" transition-all duration-300>
               <CardContent className="p-6">
                 <div className="flex gap-4">
                   {/* Project Thumbnail */}
@@ -441,7 +441,7 @@ export function ShowcaseApprovalDashboard() {
                                         <Button
                                           onClick={() => handleApproval(selectedProject.id, 'approved')}
                                           disabled={approvalMutation.isPending}
-                                          className="bg-primary hover:bg-primary transition-all duration-300"
+                                          className="bg-primary hover:bg-primary" transition-all duration-300
                                           data-testid="button-approve"
                                         >
                                           {approvalMutation.isPending ? (
@@ -479,7 +479,7 @@ export function ShowcaseApprovalDashboard() {
                               size="sm"
                               onClick={() => handleApproval(project.id, 'approved')}
                               disabled={approvalMutation.isPending}
-                              className="bg-primary hover:bg-primary transition-all duration-300"
+                              className="bg-primary hover:bg-primary" transition-all duration-300
                               data-testid={`button-quick-approve-${project.id}`}
                             >
                               <CheckmarkIcon size="sm" />

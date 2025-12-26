@@ -69,13 +69,13 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
           <AlertDialogFooter className="gap-2">
             <AlertDialogCancel 
               onClick={handleCancel}
-              className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-300"
+              className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white" transition-all duration-300
             >
               {config.cancelText}
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleConfirm}
-              className="bg-primary text-white hover:bg-primary transition-all duration-300"
+              className="bg-primary text-white hover:bg-primary" transition-all duration-300
             >
               {config.confirmText}
             </AlertDialogAction>

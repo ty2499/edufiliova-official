@@ -244,7 +244,7 @@ export default function CoverImageUpload({
           <Button
             variant="secondary"
             size="sm"
-            className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-300"
+            className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm hover:bg-white" transition-all duration-300
             onClick={() => fileInputRef.current?.click()}
           >
             <Edit3 className="h-4 w-4 mr-1" />
@@ -257,7 +257,7 @@ export default function CoverImageUpload({
           <Button
             variant="destructive"
             size="sm"
-            className="absolute top-2 right-20 bg-primary/90 backdrop-blur-sm hover:bg-primary transition-all duration-300"
+            className="absolute top-2 right-20 bg-primary/90 backdrop-blur-sm hover:bg-primary" transition-all duration-300
             onClick={handleRemoveCover}
           >
             <X className="h-4 w-4 mr-1" />

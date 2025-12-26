@@ -102,7 +102,7 @@ export default function TeacherLayout({
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="text-white hover:text-gray-200 transition-all duration-300"
+                className="text-white hover:text-gray-200" transition-all duration-300
                 data-testid="button-mobile-menu"
               >
                 {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -171,7 +171,7 @@ export default function TeacherLayout({
           <div className="p-4 border-t border-white/10 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium transition-all duration-300"
+              className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium" transition-all duration-300
               onClick={async () => {
                 setIsLoggingOut(true);
                 setShowMobileMenu(false);

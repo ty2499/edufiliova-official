@@ -351,7 +351,7 @@ export function HeroSectionDisplay({ placement, className, showOverlay = true }:
                     <Button
                       onClick={() => handleHeroClick(currentHero, currentHero.linkUrl)}
                       size="lg"
-                      className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 transition-all duration-300"
+                      className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200" transition-all duration-300
                       style={{
                         backgroundColor: currentHero.textColor === '#FFFFFF' ? '#000000' : '#FFFFFF',
                         color: currentHero.textColor === '#FFFFFF' ? '#FFFFFF' : '#000000',
@@ -373,7 +373,7 @@ export function HeroSectionDisplay({ placement, className, showOverlay = true }:
                       onClick={() => handleHeroClick(currentHero, currentHero.secondButtonUrl)}
                       size="lg"
                       variant="outline"
-                      className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 transition-all duration-300"
+                      className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2" transition-all duration-300
                       style={{
                         backgroundColor: 'transparent',
                         borderColor: currentHero.textColor,

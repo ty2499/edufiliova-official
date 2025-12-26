@@ -12,7 +12,7 @@ const ChatTermsPage = ({ onNavigate }: ChatTermsPageProps) => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => window.close()}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors transition-all duration-300"
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors" transition-all duration-300
               data-testid="back-button"
             >
               <ArrowLeft className="h-5 w-5 text-gray-600" />

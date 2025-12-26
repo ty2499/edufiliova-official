@@ -123,7 +123,7 @@ export default function TeacherApplicationStatus() {
               </p>
               <Button
                 onClick={() => navigate("/?page=teacher-dashboard")}
-                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105" transition-all duration-300
                 data-testid="button-go-dashboard"
               >
                 Access Teaching Dashboard

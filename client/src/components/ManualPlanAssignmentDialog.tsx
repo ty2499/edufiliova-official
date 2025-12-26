@@ -382,7 +382,7 @@ export default function ManualPlanAssignmentDialog({
                               setSearchQuery("");
                               setSelectedPlan(""); // Reset plan when changing user
                             }}
-                            className="w-full p-3 hover:bg-gray-100 dark:hover:bg-gray-800 border-b last:border-b-0 text-left transition-colors transition-all duration-300"
+                            className="w-full p-3 hover:bg-gray-100 dark:hover:bg-gray-800 border-b last:border-b-0 text-left transition-colors" transition-all duration-300
                             data-testid={`user-option-${user.userId}`}
                           >
                             <div className="flex items-center gap-3">

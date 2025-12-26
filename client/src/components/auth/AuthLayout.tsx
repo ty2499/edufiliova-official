@@ -47,7 +47,7 @@ export default function AuthLayout({
           {showNotNow && (
             <button
               onClick={handleNotNow}
-              className="absolute top-4 right-4 z-[100] px-4 py-2 text-sm font-medium text-white bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full transition-all md:hidden transition-all duration-300"
+              className="absolute top-4 right-4 z-[100] px-4 py-2 text-sm font-medium text-white bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full transition-all md:hidden" transition-all duration-300
               data-testid="button-skip-mobile"
             >
               Skip
@@ -58,7 +58,7 @@ export default function AuthLayout({
           {showBackButton && onBack && (
             <button
               onClick={onBack}
-              className="absolute top-4 left-4 z-[100] p-2 text-white bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full transition-all md:hidden transition-all duration-300"
+              className="absolute top-4 left-4 z-[100] p-2 text-white bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full transition-all md:hidden" transition-all duration-300
               data-testid="button-back-mobile"
             >
               <ArrowLeft className="h-5 w-5" />

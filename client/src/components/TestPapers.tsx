@@ -62,7 +62,7 @@ const TestPapers = ({ countryId, subject, gradeLevel, onBack }: TestPapersProps)
             <Button 
               onClick={() => setSelectedPaper(null)}
               variant="outline" 
-              className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/20 transition-all duration-300"
+              className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/20" transition-all duration-300
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Test Papers
@@ -160,7 +160,7 @@ const TestPapers = ({ countryId, subject, gradeLevel, onBack }: TestPapersProps)
           <Button 
             onClick={onBack}
             variant="outline" 
-            className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/20 transition-all duration-300"
+            className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/20" transition-all duration-300
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Dashboard
@@ -190,12 +190,12 @@ const TestPapers = ({ countryId, subject, gradeLevel, onBack }: TestPapersProps)
               {subjectPapers.map((paper) => (
                 <Card 
                   key={paper.id} 
-                  className="bg-white/95 backdrop-blur-sm hover:bg-white transition-all duration-200 cursor-pointer group transition-all duration-300"
+                  className="bg-white/95 backdrop-blur-sm hover:bg-white transition-all duration-200 cursor-pointer group" transition-all duration-300
                   onClick={() => setSelectedPaper(paper)}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <FileText className="h-8 w-8 text-foreground group-hover:text-foreground/80 transition-all duration-300" />
+                      <FileText className="h-8 w-8 text-foreground group-hover:text-foreground/80" transition-all duration-300 />
                       <div className="text-right">
                         <Badge variant={paper.paper_type === 'paper_1' ? 'default' : 'secondary'}>
                           {paper.paper_type.replace('_', ' ').toUpperCase()}

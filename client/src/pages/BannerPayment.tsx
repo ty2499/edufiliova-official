@@ -307,7 +307,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
         <div className="flex justify-end p-4 pb-0">
           <button
             onClick={onCancel}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors transition-all duration-300"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
             disabled={isLoading}
             data-testid="button-close-modal"
           >
@@ -443,7 +443,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
                   <Button
                     type="submit"
                     disabled={!stripe || isLoading || stripeLoading}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-complete-purchase"
                   >
                     {isLoading ? 'Processing...' : `Pay $${paymentData.amount}`}
@@ -535,7 +535,7 @@ const PaymentForm = ({ paymentData, onSuccess, onCancel, onNavigate }: PaymentFo
                   <Button
                     onClick={handleSubmit}
                     disabled={walletBalance < paymentData.amount || isLoading}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-wallet-payment"
                   >
                     {isLoading ? 'Processing...' : `Pay $${paymentData.amount}`}

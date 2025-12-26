@@ -167,7 +167,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
     const config = statusConfig[status as keyof typeof statusConfig] || statusConfig['new'];
     
     return (
-      <Badge style={{ backgroundColor: config.bg, color: config.text }} className="hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-300">
+      <Badge style={{ backgroundColor: config.bg, color: config.text }} className="hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300>
         {config.label}
       </Badge>
     );
@@ -175,7 +175,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
 
   const getFormTypeBadge = (formType: string) => {
     return (
-      <Badge className="bg-[#151314] text-white hover:bg-[#151314] transition-all duration-300">
+      <Badge className="bg-[#151314] text-white hover:bg-[#151314]" transition-all duration-300>
         {formType === 'contact' ? 'Contact Form' : 'Design Team'}
       </Badge>
     );
@@ -188,7 +188,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
         <Button
           variant="ghost"
           size="icon"
-          className="text-white hover:bg-white/20 transition-all duration-300"
+          className="text-white hover:bg-white/20" transition-all duration-300
           onClick={() => setShowMobileMenu(!showMobileMenu)}
           data-testid="mobile-menu-button"
         >
@@ -209,7 +209,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-white hover:bg-white/20 transition-all duration-300"
+              className="md:hidden text-white hover:bg-white/20" transition-all duration-300
               onClick={() => setShowMobileMenu(false)}
               data-testid="close-mobile-menu"
             >
@@ -222,7 +222,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
             <nav className="flex flex-col space-y-2">
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-dashboard"
               >
@@ -232,7 +232,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
               
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-users"
               >
@@ -242,7 +242,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
               
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-courses"
               >
@@ -254,7 +254,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
                 <>
                   <Button
                     variant="ghost"
-                    className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                    className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                     onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                     data-testid="nav-transactions"
                   >
@@ -264,7 +264,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
                   
                   <Button
                     variant="ghost"
-                    className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                    className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                     onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                     data-testid="nav-pricing"
                   >
@@ -274,7 +274,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
                   
                   <Button
                     variant="ghost"
-                    className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                    className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                     onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                     data-testid="nav-wallet-management"
                   >
@@ -287,7 +287,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
               {userRole === 'admin' && (
                 <Button
                   variant="ghost"
-                  className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                  className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                   onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                   data-testid="nav-manual-plan"
                 >
@@ -298,7 +298,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
               
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                 data-testid="nav-communication"
               >
@@ -308,7 +308,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
               
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 onClick={() => { onNavigate?.('admin-email-inbox'); setShowMobileMenu(false); }}
                 data-testid="nav-email-inbox"
               >
@@ -318,7 +318,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
               
               <Button
                 variant="ghost"
-                className="w-full h-11 rounded-lg transition-colors justify-start text-black hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                className="w-full h-11 rounded-lg transition-colors justify-start text-black hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                 style={{ backgroundColor: "#c4ee3d" }}
                 data-testid="nav-contact-messages"
               >
@@ -329,7 +329,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
               {userRole === 'admin' && (
                 <Button
                   variant="ghost"
-                  className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                  className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                   onClick={() => { onNavigate?.('admin-dashboard'); setShowMobileMenu(false); }}
                   data-testid="nav-advertisements"
                 >
@@ -467,24 +467,24 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-start gap-3 flex-1">
                         {submission.isRead ? (
-                          <MailOpen className="h-5 w-5 text-muted-foreground group-hover:text-white mt-1 transition-all duration-300" />
+                          <MailOpen className="h-5 w-5 text-muted-foreground group-hover:text-white mt-1" transition-all duration-300 />
                         ) : (
-                          <Mail className="h-5 w-5 text-blue-600 group-hover:text-white mt-1 transition-all duration-300" />
+                          <Mail className="h-5 w-5 text-blue-600 group-hover:text-white mt-1" transition-all duration-300 />
                         )}
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-semibold text-foreground group-hover:text-white transition-all duration-300">{submission.name}</h3>
+                            <h3 className="font-semibold text-foreground group-hover:text-white" transition-all duration-300>{submission.name}</h3>
                             {getFormTypeBadge(submission.formType)}
                             {getStatusBadge(submission.status)}
                           </div>
-                          <p className="text-sm text-muted-foreground group-hover:text-white mb-1 transition-all duration-300">{submission.email}</p>
-                          <p className="text-sm text-foreground font-medium group-hover:text-white mb-1 transition-all duration-300">
+                          <p className="text-sm text-muted-foreground group-hover:text-white mb-1" transition-all duration-300>{submission.email}</p>
+                          <p className="text-sm text-foreground font-medium group-hover:text-white mb-1" transition-all duration-300>
                             {submission.subject || submission.projectType}
                           </p>
-                          <p className="text-sm text-muted-foreground group-hover:text-white line-clamp-2 transition-all duration-300">
+                          <p className="text-sm text-muted-foreground group-hover:text-white line-clamp-2" transition-all duration-300>
                             {submission.message}
                           </p>
-                          <p className="text-xs text-muted-foreground group-hover:text-white mt-2 transition-all duration-300">
+                          <p className="text-xs text-muted-foreground group-hover:text-white mt-2" transition-all duration-300>
                             {new Date(submission.createdAt).toLocaleString()}
                           </p>
                         </div>
@@ -528,7 +528,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
                   </div>
                   <div className="flex gap-2">
                     <span className="font-medium min-w-[100px]">Email:</span>
-                    <a href={`mailto:${selectedMessage.email}`} className="text-blue-600 hover:underline transition-all duration-300">
+                    <a href={`mailto:${selectedMessage.email}`} className="text-blue-600 hover:underline" transition-all duration-300>
                       {selectedMessage.email}
                     </a>
                   </div>
@@ -541,7 +541,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
                   {selectedMessage.phone && (
                     <div className="flex gap-2">
                       <span className="font-medium min-w-[100px]">Phone:</span>
-                      <a href={`tel:${selectedMessage.phone}`} className="text-blue-600 hover:underline transition-all duration-300">
+                      <a href={`tel:${selectedMessage.phone}`} className="text-blue-600 hover:underline" transition-all duration-300>
                         {selectedMessage.phone}
                       </a>
                     </div>
@@ -587,7 +587,7 @@ export default function AdminContactMessages({ onNavigate }: AdminContactMessage
                           href={selectedMessage.fileUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline flex items-center gap-1 transition-all duration-300"
+                          className="text-blue-600 hover:underline flex items-center gap-1" transition-all duration-300
                         >
                           View File <ExternalLink className="h-3 w-3" />
                         </a>

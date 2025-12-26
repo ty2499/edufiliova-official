@@ -479,7 +479,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
 
             {/* More like this link - Navigate to category */}
             <button 
-              className="w-full text-left text-sm text-gray-600 hover:text-gray-900 flex items-center justify-between group transition-all duration-300"
+              className="w-full text-left text-sm text-gray-600 hover:text-gray-900 flex items-center justify-between group" transition-all duration-300
               onClick={(e) => {
                 e.stopPropagation();
                 if (productCategory && onNavigate) {
@@ -488,7 +488,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
               }}
             >
               <span>Explore More</span>
-              <span className="text-gray-400 group-hover:text-gray-600 transition-colors transition-all duration-300">→</span>
+              <span className="text-gray-400 group-hover:text-gray-600 transition-colors" transition-all duration-300>→</span>
             </button>
           </div>
         </CardContent>
@@ -590,7 +590,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                   </Button>
                 )}
                 <button 
-                  className="text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1 group transition-all duration-300"
+                  className="text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1 group" transition-all duration-300
                   onClick={(e) => {
                     e.stopPropagation();
                     if (productCategory && onNavigate) {
@@ -599,7 +599,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                   }}
                 >
                   <span>Explore More</span>
-                  <span className="text-gray-400 group-hover:text-gray-600 transition-colors transition-all duration-300">→</span>
+                  <span className="text-gray-400 group-hover:text-gray-600 transition-colors" transition-all duration-300>→</span>
                 </button>
               </div>
             </div>
@@ -622,7 +622,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
           <div className="flex-1 font-medium">{notification.message}</div>
           <button
             onClick={() => setNotification({ show: false, message: '', type: 'success' })}
-            className="p-1 hover:bg-white/20 rounded transition-colors transition-all duration-300"
+            className="p-1 hover:bg-white/20 rounded transition-colors" transition-all duration-300
             data-testid="button-close-notification"
           >
             <X className="h-4 w-4" />
@@ -693,7 +693,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="px-3 py-2 rounded-full font-medium text-sm text-gray-700 hover:text-gray-800 hover:scale-105 transform transition-all duration-200 transition-all duration-300"
+                        className="px-3 py-2 rounded-full font-medium text-sm text-gray-700 hover:text-gray-800 hover:scale-105 transform transition-all duration-200" transition-all duration-300
                         onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                         data-testid="nav-more-categories"
@@ -780,7 +780,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
               <Button
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform relative transition-all duration-300"
+                className="flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform relative" transition-all duration-300
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                 onClick={() => onNavigate && onNavigate('cart')}
@@ -809,7 +809,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex items-center justify-center px-3 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform transition-all duration-300"
+                  className="flex items-center justify-center px-3 py-2 rounded-full font-medium text-sm border-gray-300 text-gray-700 transition-all duration-200 hover:scale-105 transform" transition-all duration-300
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#b7f2b8')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                   onClick={() => onNavigate && onNavigate(getDashboardForRole())}
@@ -821,7 +821,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                 <Button
                   variant="default"
                   size="sm"
-                  className="flex items-center gap-2 px-5 py-2 rounded-full font-medium text-sm text-white transition-all duration-200 hover:scale-105 transform transition-all duration-300" style={{backgroundColor: '#0C332C'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#0C332C'}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full font-medium text-sm text-white transition-all duration-200 hover:scale-105 transform" transition-all duration-300 style={{backgroundColor: '#0C332C'}} onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#e04a2a'} onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#0C332C'}
                   onClick={() => onNavigate && onNavigate('shop-auth')}
                   data-testid="button-login"
                 >
@@ -1027,25 +1027,25 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
             {/* Right side - Stats/Features cards */}
             <div className="hidden md:grid grid-cols-2 gap-4">
               {/* Stat Card 1 */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
                 <h3 className="text-lg font-bold text-white mb-1">Free Products</h3>
                 <p className="text-sm text-slate-400">Available for Everyone</p>
               </div>
               
               {/* Stat Card 2 */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
                 <h3 className="text-lg font-bold text-white mb-1">Premium Products</h3>
                 <p className="text-sm text-slate-400">Exclusive Collections</p>
               </div>
               
               {/* Stat Card 3 */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
                 <h3 className="text-2xl font-bold text-white mb-1">50K+</h3>
                 <p className="text-sm text-slate-400">Products Sold</p>
               </div>
               
               {/* Stat Card 4 */}
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300 transition-all duration-300">
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-all duration-300" transition-all duration-300>
                 <h3 className="text-2xl font-bold text-white mb-1">25K+</h3>
                 <p className="text-sm text-slate-400">Happy Customers</p>
               </div>
@@ -1191,7 +1191,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                   <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
                     {/* All mockups option */}
                     <div className="mb-2">
-                      <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm transition-all duration-300">
+                      <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm" transition-all duration-300>
                         <input 
                           type="radio" 
                           name="filter-all" 
@@ -1212,7 +1212,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                             {/* Main category with arrow */}
                             <button
                               onClick={() => toggleCategory(category.id)}
-                              className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-sm font-medium transition-all duration-300"
+                              className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-sm font-medium" transition-all duration-300
                               data-testid={`filter-category-${category.id}`}
                             >
                               <span>{category.name.charAt(0).toUpperCase() + category.name.slice(1)}</span>
@@ -1229,7 +1229,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                                 {category.subcategories.map((sub) => (
                                   <label 
                                     key={sub} 
-                                    className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded transition-all duration-300"
+                                    className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded" transition-all duration-300
                                     data-testid={`filter-subcategory-${sub.toLowerCase().replace(/\s+/g, '-')}`}
                                   >
                                     <input 
@@ -1253,7 +1253,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                         ) : (
                           /* Standalone categories without subcategories */
                           <label 
-                            className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded transition-all duration-300"
+                            className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded" transition-all duration-300
                             data-testid={`filter-category-${category.id}`}
                           >
                             <input 
@@ -1311,7 +1311,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
 
                     {/* All mockups option */}
                     <div className="mb-2">
-                      <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm transition-all duration-300">
+                      <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm" transition-all duration-300>
                         <input 
                           type="radio" 
                           name="filter-all-mobile" 
@@ -1332,7 +1332,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                               {/* Main category with arrow */}
                               <button
                                 onClick={() => toggleCategory(category.id)}
-                                className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-sm font-medium transition-all duration-300"
+                                className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-sm font-medium" transition-all duration-300
                               >
                                 <span>{category.name.charAt(0).toUpperCase() + category.name.slice(1)}</span>
                                 <ChevronDown 
@@ -1348,7 +1348,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                                   {category.subcategories.map((sub) => (
                                     <label 
                                       key={sub} 
-                                      className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded transition-all duration-300"
+                                      className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded" transition-all duration-300
                                     >
                                       <input 
                                         type="checkbox" 
@@ -1371,7 +1371,7 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
                           ) : (
                             /* Standalone categories without subcategories */
                             <label 
-                              className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded transition-all duration-300"
+                              className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded" transition-all duration-300
                             >
                               <input 
                                 type="checkbox" 

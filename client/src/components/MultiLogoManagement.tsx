@@ -262,7 +262,7 @@ function LogoSection({ type, title, description, icon }: LogoSectionProps) {
             <Button
               onClick={() => handleUpload('square')}
               disabled={!selectedSquareFile || uploadLogoMutation.isPending}
-              className="bg-[#c4ee3d] hover:bg-[#b8e234] text-black flex-1 transition-all duration-300"
+              className="bg-[#c4ee3d] hover:bg-[#b8e234] text-black flex-1" transition-all duration-300
               data-testid={`upload-${type}-square-logo-button`}
             >
               <Upload className="h-4 w-4 mr-2" />
@@ -329,7 +329,7 @@ function LogoSection({ type, title, description, icon }: LogoSectionProps) {
             <Button
               onClick={() => handleUpload('wide')}
               disabled={!selectedWideFile || uploadLogoMutation.isPending}
-              className="bg-[#c4ee3d] hover:bg-[#b8e234] text-black flex-1 transition-all duration-300"
+              className="bg-[#c4ee3d] hover:bg-[#b8e234] text-black flex-1" transition-all duration-300
               data-testid={`upload-${type}-wide-logo-button`}
             >
               <Upload className="h-4 w-4 mr-2" />

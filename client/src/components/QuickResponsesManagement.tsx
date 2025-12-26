@@ -539,7 +539,7 @@ export default function QuickResponsesManagement() {
             <Button 
               onClick={() => setIsCreateDialogOpen(true)} 
               data-testid="empty-create-button"
-              className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 transition-all duration-300"
+              className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105" transition-all duration-300
             >
               <Plus className="h-4 w-4 mr-2" />
               Create Quick Response
@@ -638,7 +638,7 @@ export default function QuickResponsesManagement() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="text-destructive hover:text-destructive transition-all duration-300"
+                            className="text-destructive hover:text-destructive" transition-all duration-300
                             data-testid={`delete-${response.id}`}
                           >
                             <Trash2 className="h-3 w-3" />

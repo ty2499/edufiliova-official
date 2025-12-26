@@ -381,7 +381,7 @@ function CommentItem({
             <div className="flex items-center gap-4">
               <button
                 onClick={() => user && likeCommentMutation.mutate(comment.id)}
-                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors transition-all duration-300"
+                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors" transition-all duration-300
                 data-testid={`button-like-comment-${comment.id}`}
                 disabled={!user}
               >
@@ -391,7 +391,7 @@ function CommentItem({
               
               <button
                 onClick={() => user ? setReplyingTo(comment.id) : null}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors transition-all duration-300"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors" transition-all duration-300
                 data-testid={`button-reply-${comment.id}`}
                 disabled={!user}
               >
@@ -401,7 +401,7 @@ function CommentItem({
               {comment.repliesCount > 0 && (
                 <button
                   onClick={() => toggleReplies(comment.id)}
-                  className="text-sm text-[#0d3d6b] dark:text-blue-400 hover:underline transition-all duration-300"
+                  className="text-sm text-[#0d3d6b] dark:text-blue-400 hover:underline" transition-all duration-300
                   data-testid={`button-toggle-replies-${comment.id}`}
                 >
                   {isExpanded ? 'Hide' : 'View'} {comment.repliesCount} {comment.repliesCount === 1 ? 'reply' : 'replies'}
@@ -470,7 +470,7 @@ function CommentItem({
                       
                       <button
                         onClick={() => user && likeReplyMutation.mutate(reply.id)}
-                        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors transition-all duration-300"
+                        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors" transition-all duration-300
                         data-testid={`button-like-reply-${reply.id}`}
                         disabled={!user}
                       >

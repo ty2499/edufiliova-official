@@ -66,44 +66,54 @@ export class EmailService {
     }
   }
 
-  // ✅ BULLETPROOF REPLACEMENT - Force all variations to display
-  private forceReplaceVariables(html: string, variables: Record<string, string>): string {
-    let result = html;
+  // ✅ BULLETPROOF NAME REPLACEMENT - Force all variations to display
+  private forceReplaceName(html: string, fullName: string): string {
+    // 1️⃣ FIRST: Handle specific split pattern from device login template
+    // Pattern: Hi {{full</span><span...>Name}</span><span...>},
+    html = html.replace(/Hi {{full<\/span><span[^>]*>Name}<\/span><span[^>]*>},/gi, `Hi ${fullName},`);
+    html = html.replace(/Hi {{Full<\/span><span[^>]*>Name}<\/span><span[^>]*>},/gi, `Hi ${fullName},`);
     
-    // Process each variable
-    for (const [key, value] of Object.entries(variables)) {
-      if (!value) continue;
-
-      // 1️⃣ Handle specific split patterns from various templates
-      // Pattern: Hi {{full</span><span...>Name}</span><span...>},
-      const splitRegex = new RegExp(`\\{\\{\\s*${key.split('').join('(?:</span><span[^>]*>)?')}\\s*\\}\\}`, 'gi');
-      result = result.replace(splitRegex, value);
-      
-      // 2️⃣ Merge split placeholders caused by HTML spans around braces
-      // Handles: {{</span><span...>key</span><span...>}} format
-      const braceSplitRegex = new RegExp(`\\{\\{[^<]*<\/span><span[^>]*>${key}<\/span><span[^>]*>[^}]*\\}\\}`, 'gi');
-      result = result.replace(braceSplitRegex, value);
-
-      // 3️⃣ Replace ALL possible common variations of the placeholder
-      const patterns = [
-        `{{${key}}}`,
-        `{{ ${key}}}`,
-        `{{${key} }}`,
-        `{{ ${key} }}`,
-        `{{${key.toLowerCase()}}}`,
-        `{{${key.toUpperCase()}}}`,
-      ];
-      
-      patterns.forEach(pattern => {
-        result = result.replaceAll(pattern, value);
-      });
-      
-      // 4️⃣ Regex fallback for edge cases with spaces/variations
-      const generalRegex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
-      result = result.replace(generalRegex, value);
-    }
+    // Also handle without the comma/spans
+    html = html.replace(/\{\{full<\/span><span[^>]*>Name\}\}/gi, fullName);
+    html = html.replace(/\{\{Full<\/span><span[^>]*>Name\}\}/gi, fullName);
     
-    return result;
+    // 2️⃣ SECOND: Merge split placeholders caused by HTML spans
+    // Handles: {{</span><span...>fullName</span><span...>}} format
+    // More flexible regex that captures any content before/after the key parts
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>fullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{fullName}}');
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>FullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{FullName}}');
+    
+    // Handle cases where fullName is the only content
+    html = html.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, '{{fullName}}');
+    html = html.replace(/\{\{<\/span><span[^>]*>FullName<\/span><span[^>]*>\}\}/gi, '{{FullName}}');
+    
+    // 3️⃣ THEN: Replace ALL possible variations of {{fullName}} and {{FullName}}
+    const patterns = [
+      '{{fullName}}',
+      '{{FullName}}',
+      '{{ fullName}}',
+      '{{ FullName}}',
+      '{{fullName }}',
+      '{{FullName }}',
+      '{{ fullName }}',
+      '{{ FullName }}',
+      '{{fullname}}',
+      '{{FULLNAME}}',
+    ];
+    
+    patterns.forEach(pattern => {
+      html = html.replaceAll(pattern, fullName);
+    });
+    
+    // 4️⃣ Regex fallback for edge cases with spaces/variations
+    html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
+    html = html.replace(/\{\{\s*FullName\s*\}\}/gi, fullName);
+    
+    // 5️⃣ Last resort: Look for any remaining {{ and }} that might contain variations
+    // This catches edge cases like {{  fullName  }} with extra spaces
+    html = html.replace(/\{\{\s*(?:full|Full)Name\s*\}\}/gi, fullName);
+    
+    return html;
   }
 
   async sendEmail(options: EmailOptions): Promise<boolean> {
@@ -975,108 +985,6 @@ export class EmailService {
     });
   }
 
-  async sendCourseCompletionEmail(email: string, data: {
-    fullName: string;
-    courseTitle: string;
-    completionDate: string;
-    finalScore: number | string;
-    certificateType: string;
-    verificationCode: string;
-  }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'server/templates/course_completion_template/email.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    // ✅ USE BULLETPROOF VARIABLE REPLACEMENT
-    html = this.forceReplaceVariables(html, {
-      fullName: data.fullName || 'Learner',
-      courseTitle: data.courseTitle,
-      completionDate: data.completionDate,
-      finalScore: data.finalScore.toString(),
-      certificateType: data.certificateType,
-      verificationCode: data.verificationCode
-    });
-
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
-    // Map images to CIDs
-    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve_top');
-    html = html.replaceAll('images/a0f41a0ecf16a144a8fae636842d4fcc.png', 'cid:logo');
-    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:ring');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
-    html = html.replaceAll('images/371e2880c8a2b5b2073b1f18b5482c1f.png', 'cid:hero');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
-    return this.sendEmail({
-      to: email,
-      subject: `Congratulations! You've completed ${data.courseTitle}`,
-      html,
-      from: '"EduFiliova Certifications" <support@edufiliova.com>',
-      attachments: [
-        { filename: 'curve_top.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766757072870.png'), cid: 'curve_top' },
-        { filename: 'logo.png', path: assetPath('a0f41a0ecf16a144a8fae636842d4fcc_1766757072867.png'), cid: 'logo' },
-        { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766757072860.png'), cid: 'ring' },
-        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766757072855.png'), cid: 'corner' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766757072856.png'), cid: 'social' },
-        { filename: 'hero.png', path: assetPath('371e2880c8a2b5b2073b1f18b5482c1f_1766757072865.png'), cid: 'hero' },
-      ]
-    });
-  }
-
-  async sendCoursePurchaseEmail(email: string, data: {
-    fullName: string;
-    courseName: string;
-    teacherName: string;
-    orderId: string;
-    price: number | string;
-    accessType: string;
-    purchaseDate: string;
-  }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'server/templates/course_purchase_template/email.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    // ✅ USE BULLETPROOF VARIABLE REPLACEMENT
-    html = this.forceReplaceVariables(html, {
-      fullName: data.fullName || 'Learner',
-      courseName: data.courseName,
-      teacherName: data.teacherName,
-      orderId: data.orderId,
-      price: data.price.toString(),
-      accessType: data.accessType,
-      purchaseDate: data.purchaseDate
-    });
-
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
-    // Map images to CIDs
-    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve_top');
-    html = html.replaceAll('images/d003f0807fd61e8939ef89ef37a2a824.png', 'cid:logo');
-    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:ring');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
-    html = html.replaceAll('images/c986afbaeaa02e99d02feeac68f6b944.png', 'cid:hero');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
-    return this.sendEmail({
-      to: email,
-      subject: `Confirmation: You've enrolled in ${data.courseName}!`,
-      html,
-      from: '"EduFiliova Orders" <orders@edufiliova.com>',
-      attachments: [
-        { filename: 'curve_top.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766756681486.png'), cid: 'curve_top' },
-        { filename: 'logo.png', path: assetPath('d003f0807fd61e8939ef89ef37a2a824_1766756681484.png'), cid: 'logo' },
-        { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766756681481.png'), cid: 'ring' },
-        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766756681477.png'), cid: 'corner' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766756681480.png'), cid: 'social' },
-        { filename: 'hero.png', path: assetPath('c986afbaeaa02e99d02feeac68f6b944_1766756681482.png'), cid: 'hero' },
-      ]
-    });
-  }
-
   async sendVoucherEmail(to: string, data: {
     fullName: string;
     senderName: string;
@@ -1085,37 +993,62 @@ export class EmailService {
     expiresAt: string;
     personalMessage?: string;
   }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
     const templatePath = path.resolve(process.cwd(), 'server/templates/voucher_purchase_template/email.html');
     let html = fs.readFileSync(templatePath, 'utf8');
 
     const { fullName, senderName, amount, voucherCode, expiresAt, personalMessage } = data;
 
-    // ✅ USE BULLETPROOF VARIABLE REPLACEMENT
-    html = this.forceReplaceVariables(html, { 
-      fullName: data.fullName || 'User',
-      senderName: data.senderName || 'EduFiliova Team',
-      amount: data.amount.toString(),
-      voucherCode: data.voucherCode,
-      expiresAt: data.expiresAt,
-      personalMessage: data.personalMessage || ''
-    });
+    // ✅ ABSOLUTE FORCE REPLACEMENT for all fields
+    // This handles any potential HTML fragmentation/spans within placeholders
+    const forceReplace = (text: string, key: string, value: string) => {
+      // 1. Contextual injection for Hi {{fullName}}
+      if (key === 'fullName') {
+        text = text.replace(/Hi\s+[\s\S]*?(?:fullName|fullname|Fullname|FULLNAME)[\s\S]*?(?=[,<])/gi, `Hi ${value}`);
+      }
+      
+      // 2. Contextual injection for senderName has sent
+      if (key === 'senderName') {
+        text = text.replace(/[\s\S]*?(?:senderName|sendername|Sendername|SENDERNAME)[\s\S]*?has sent/gi, `${value} has sent`);
+        text = text.replace(/Message from\s+[\s\S]*?(?:senderName|sendername|Sendername|SENDERNAME)[\s\S]*?(?=[<])/gi, `Message from ${value}`);
+      }
 
-    // Handle personalMessage conditional block manually for the well-designed template
-    if (data.personalMessage) {
-      // Keep the block, just strip the tags
-      html = html.replace(/\{\{#if personalMessage\}\}/gi, '');
-      html = html.replace(/\{\{\/if\}\}/gi, '');
+      // 3. Fragmentation-aware regex: catches cases where tags are split by spans or other markup
+      // e.g. {{f</span><span>ullName}}
+      const fragRegex = new RegExp(`\\{\\{[\\s\\S]*?${key.split('').join('[\\s\\S]*?')}[\\s\\S]*?\\}\\}`, 'gi');
+      text = text.replace(fragRegex, value);
+      
+      // 4. Case-insensitive regex for the placeholder
+      const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi');
+      text = text.replace(regex, value);
+      
+      // 5. Exact match
+      text = text.replaceAll(`{{${key}}}`, value);
+      
+      return text;
+    };
+
+    html = forceReplace(html, 'fullName', fullName);
+    html = forceReplace(html, 'senderName', senderName);
+    html = forceReplace(html, 'amount', amount);
+    html = forceReplace(html, 'voucherCode', voucherCode);
+    html = forceReplace(html, 'expiresAt', expiresAt);
+
+    // Handle personal message conditional block
+    if (personalMessage) {
+      const personalMsgHtml = `
+        <strong>Message from ${senderName}:</strong><br/>
+        <em>“${personalMessage}”</em><br/><br/>
+      `;
+      // Target the exact block from the template
+      html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
+      // Fallback if the block was fragmented
+      html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, personalMsgHtml);
     } else {
-      // Remove the entire block if no message
       html = html.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+      html = html.replace(/\{\{#if[\s\S]*?personalMessage[\s\S]*?\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
     }
 
-    // Final replacements for non-standard variables
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
-    // Map images to CIDs (using original well-designed template paths)
-    // The well-designed template uses images/ paths that need mapping to the attached_assets
+    // Map images to CIDs
     html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:curve_top');
     html = html.replaceAll('images/de07618f612ae3f3a960a43365f0d61d.png', 'cid:logo');
     html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:ring');
@@ -1136,7 +1069,7 @@ export class EmailService {
         { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'ring' },
         { filename: 'curve_bottom.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088.png'), cid: 'curve_bottom' },
         { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0.png'), cid: 'social' },
-        { filename: 'promo.png', path: assetPath('afa2a8b912b8da2c69e49d9de4a30768.png'), cid: 'promo' },
+        { filename: 'promo.png', path: assetPath('fe18318bf782f1266432dce6a1a46f60.png'), cid: 'promo' },
       ]
     });
   }

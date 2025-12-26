@@ -125,8 +125,8 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="w-full max-w-md mx-auto bg-white border border-gray-200 shadow-lg">
-        <CardHeader className="text-center space-y-4 bg-white">
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
             <Logo size="lg" />
           </div>
@@ -141,15 +141,9 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
             </CardDescription>
           </div>
         </CardHeader>
-        <CardContent className="bg-white">
+        <CardContent>
           {step === 'email' && (
             <form onSubmit={handleSendCode} className="space-y-4">
-              {errors.general && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
-                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                  <span>{errors.general}</span>
-                </div>
-              )}
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
                 <Input
@@ -159,7 +153,6 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
-                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
                 />
                 {errors.email && <p className="text-sm text-primary">{errors.email}</p>}
               </div>
@@ -172,12 +165,6 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
 
           {step === 'code' && (
             <form onSubmit={handleVerifyCode} className="space-y-4">
-              {errors.general && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700 text-sm">
-                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                  <span>{errors.general}</span>
-                </div>
-              )}
               <div className="space-y-2">
                 <Label htmlFor="code">6-Digit Code</Label>
                 <Input
@@ -187,7 +174,6 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                   placeholder="123456"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white text-center"
                 />
                 {errors.code && <p className="text-sm text-primary">{errors.code}</p>}
               </div>
@@ -215,7 +201,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                     placeholder="Enter new password (8+ characters)"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className={`h-12 text-base pr-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white ${errors.newPassword ? "border-primary" : ""}`}
+                    className={`pr-10 ${errors.newPassword ? "border-primary" : ""}`}
                     disabled={loading}
                   />
                   <button
@@ -238,7 +224,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onComplete, token: propTo
                   placeholder="Confirm your new password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={`h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white ${errors.confirmPassword ? "border-primary" : ""}`}
+                  className={errors.confirmPassword ? "border-primary" : ""}
                   disabled={loading}
                 />
                 {errors.confirmPassword && <p className="text-sm text-primary">{errors.confirmPassword}</p>}

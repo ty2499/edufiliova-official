@@ -389,7 +389,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
           <div className="flex items-center justify-between gap-2">
             <Button
               variant="ghost"
-              className="flex items-center gap-1 sm:gap-2 text-sm sm:text-lg font-semibold text-gray-800 hover:text-blue-600 p-1 sm:p-2 transition-all duration-300"
+              className="flex items-center gap-1 sm:gap-2 text-sm sm:text-lg font-semibold text-gray-800 hover:text-blue-600 p-1 sm:p-2" transition-all duration-300
               onClick={() => onNavigate('product-shop')}
               data-testid="button-back-to-shop"
             >
@@ -418,7 +418,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
             </p>
             <Button 
               onClick={() => onNavigate('product-shop')}
-              className="bg-primary hover:bg-primary text-white px-8 py-3 transition-all duration-300"
+              className="bg-primary hover:bg-primary text-white px-8 py-3" transition-all duration-300
               data-testid="button-continue-shopping"
             >
               Continue Shopping
@@ -469,7 +469,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                               size="sm"
                               onClick={() => handleRemoveItem(item.id)}
                               disabled={removeItemMutation.isPending}
-                              className="text-primary-600 hover:text-primary-700 hover:bg-primary/50 p-1 sm:p-2 transition-all duration-300"
+                              className="text-primary-600 hover:text-primary-700 hover:bg-primary/50 p-1 sm:p-2" transition-all duration-300
                               data-testid={`button-remove-${item.id}`}
                             >
                               {removeItemMutation.isPending ? (
@@ -583,7 +583,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                               <Button
                                 onClick={handleApplyCoupon}
                                 disabled={applyCouponMutation.isPending || !couponCode.trim()}
-                                className="bg-primary hover:bg-primary text-white transition-all duration-300"
+                                className="bg-primary hover:bg-primary text-white" transition-all duration-300
                                 data-testid="button-apply-coupon"
                               >
                                 {applyCouponMutation.isPending ? 'Applying...' : 'Apply'}
@@ -606,7 +606,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                                 variant="ghost"
                                 size="sm"
                                 onClick={handleRemoveCoupon}
-                                className="text-green-700 hover:text-green-900 hover:bg-green-100 transition-all duration-300"
+                                className="text-green-700 hover:text-green-900 hover:bg-green-100" transition-all duration-300
                                 data-testid="button-remove-coupon"
                               >
                                 <Trash2 className="h-4 w-4" />
@@ -669,7 +669,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                           }, 500);
                         }}
                         disabled={claimStatus === 'loading' || claimStatus === 'success'}
-                        className="w-full hover:bg-[#a8cc32] py-3 text-base font-medium bg-[#A0FAB2] text-[#151314] transition-all duration-300"
+                        className="w-full hover:bg-[#a8cc32] py-3 text-base font-medium bg-[#A0FAB2] text-[#151314]" transition-all duration-300
                         data-testid="button-claim-free"
                       >
                         <Download className="h-5 w-5 mr-2" />
@@ -687,7 +687,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                       <Button 
                         onClick={handleCheckout}
                         disabled={isCheckingOut || checkoutMutation.isPending || isEmpty}
-                        className="w-full bg-primary hover:bg-primary text-white py-3 text-base font-medium disabled:opacity-50 transition-all duration-300"
+                        className="w-full bg-primary hover:bg-primary text-white py-3 text-base font-medium disabled:opacity-50" transition-all duration-300
                         data-testid="button-checkout"
                       >
                         {isCheckingOut || checkoutMutation.isPending ? (
@@ -710,7 +710,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                       You can checkout as a guest or 
                       <button 
                         onClick={() => onNavigate('auth')}
-                        className="text-blue-600 hover:text-blue-700 underline ml-1 transition-all duration-300"
+                        className="text-blue-600 hover:text-blue-700 underline ml-1" transition-all duration-300
                       >
                         sign in
                       </button>
@@ -720,7 +720,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                   <div className="text-center space-y-3">
                     <Button 
                       onClick={() => onNavigate('product-shop')}
-                      className="w-full bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900 transition-all duration-300"
+                      className="w-full bg-[#A0FAB2] hover:bg-[#a8cc32] text-gray-900" transition-all duration-300
                       data-testid="button-continue-shopping-summary"
                     >
                       Continue Shopping
@@ -730,7 +730,7 @@ export function Cart({ onNavigate = () => {} }: CartProps = {}) {
                       <Button
                         onClick={() => clearCartMutation.mutate()}
                         disabled={clearCartMutation.isPending}
-                        className="w-full bg-white hover:bg-gray-100 text-gray-900 border border-gray-300 transition-all duration-300"
+                        className="w-full bg-white hover:bg-gray-100 text-gray-900 border border-gray-300" transition-all duration-300
                         data-testid="button-empty-cart"
                       >
                         {clearCartMutation.isPending ? (

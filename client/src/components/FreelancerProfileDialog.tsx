@@ -145,7 +145,7 @@ export function FreelancerProfileDialog({
                   </AvatarFallback>
                 </Avatar>
                 <button
-                  className="absolute bottom-0 right-0 rounded-full p-2 shadow-md transition-all group-hover:scale-110 hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-300"
+                  className="absolute bottom-0 right-0 rounded-full p-2 shadow-md transition-all group-hover:scale-110 hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300
                   style={{ backgroundColor: '#c4f03b' }}
                   aria-label="Change profile photo"
                   data-testid="button-edit-avatar"
@@ -189,7 +189,7 @@ export function FreelancerProfileDialog({
                     <Badge 
                       key={idx} 
                       variant="secondary" 
-                      className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300 border border-gray-300 transition-all duration-300"
+                      className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300 border border-gray-300" transition-all duration-300
                       data-testid={`badge-skill-${idx}`}
                     >
                       {skill}
@@ -235,7 +235,7 @@ export function FreelancerProfileDialog({
                 {!isEditing && (
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="text-gray-700 hover:text-gray-900 transition-colors transition-all duration-300"
+                    className="text-gray-700 hover:text-gray-900 transition-colors" transition-all duration-300
                     aria-label="Edit profile"
                     data-testid="button-edit-profile"
                   >
@@ -418,7 +418,7 @@ export function FreelancerProfileDialog({
                   </Button>
                   <Button
                     type="submit"
-                    className="px-8 shadow-md text-gray-900 hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-300"
+                    className="px-8 shadow-md text-gray-900 hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300
                     style={{ backgroundColor: '#c4f03b' }}
                     disabled={updateProfileMutation.isPending}
                     data-testid="button-save-changes"

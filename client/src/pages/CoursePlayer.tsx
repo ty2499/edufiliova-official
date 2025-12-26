@@ -718,7 +718,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
             <button 
               onClick={() => onNavigate(`course-detail-${courseId}`)}
               data-testid="button-back-to-course"
-              className="text-white hover:bg-white/10 p-1.5 rounded-lg transition-colors transition-all duration-300"
+              className="text-white hover:bg-white/10 p-1.5 rounded-lg transition-colors" transition-all duration-300
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -747,7 +747,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
               <Button
                 size="sm"
                 onClick={() => onNavigate(`course-detail-${courseId}`)}
-                className="bg-blue-500 hover:bg-primary text-white transition-all duration-300"
+                className="bg-blue-500 hover:bg-primary text-white" transition-all duration-300
                 data-testid="button-enroll-now"
               >
                 Enroll Now
@@ -901,7 +901,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
           {!showSidebar && (
             <button
               onClick={() => setShowSidebar(true)}
-              className="lg:hidden fixed bottom-6 right-6 z-30 bg-[#0C332C] text-white p-4 rounded-full shadow-lg hover:bg-[#1e3a8a] transition-colors transition-all duration-300"
+              className="lg:hidden fixed bottom-6 right-6 z-30 bg-[#0C332C] text-white p-4 rounded-full shadow-lg hover:bg-[#1e3a8a] transition-colors" transition-all duration-300
               data-testid="button-show-menu"
             >
               <Menu className="h-6 w-6" />
@@ -1179,7 +1179,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                       <Button 
                         onClick={() => onNavigate('claim-certificate-' + courseId)}
                         size="sm"
-                        className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-300"
+                        className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105" transition-all duration-300
                         style={{ backgroundColor: '#0C332C' }}
                         data-testid="button-view-certificate"
                       >
@@ -1201,7 +1201,7 @@ export default function CoursePlayer({ courseId, onNavigate }: CoursePlayerProps
                         }}
                         size="sm"
                         variant="outline"
-                        className="border-orange-500 text-primary hover:bg-primary/10 transition-all duration-300"
+                        className="border-orange-500 text-primary hover:bg-primary/10" transition-all duration-300
                         data-testid="button-retake-course"
                       >
                         <Target className="h-4 w-4 mr-2" />

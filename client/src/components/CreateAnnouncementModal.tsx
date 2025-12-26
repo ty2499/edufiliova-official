@@ -149,7 +149,7 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
       <DialogTrigger asChild>
         {trigger || (
           <Button 
-            className="bg-[#A0FAB2] text-black hover:bg-[#A0FAB2]/90 transition-all duration-300"
+            className="bg-[#A0FAB2] text-black hover:bg-[#A0FAB2]/90" transition-all duration-300
             data-testid="create-announcement-button"
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -323,7 +323,7 @@ export const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = (
             <Button
               type="submit"
               disabled={!title.trim() || !content.trim() || createAnnouncementMutation.isPending}
-              className="bg-[#A0FAB2] text-black hover:bg-[#A0FAB2]/90 transition-all duration-300"
+              className="bg-[#A0FAB2] text-black hover:bg-[#A0FAB2]/90" transition-all duration-300
               data-testid="submit-announcement-button"
             >
               {createAnnouncementMutation.isPending ? (

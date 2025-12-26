@@ -534,7 +534,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               variant="outline" 
               size="sm" 
               onClick={() => setShowNotifications(!showNotifications)}
-              className="ml-auto text-white border-gray-300 hover:opacity-80  hover:scale-105 transition-all duration-300" style={{backgroundColor: '#0C332C'}}
+              className="ml-auto text-white border-gray-300 hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
             >
               <AlertCircle className="h-4 w-4 mr-1" />
               {notifications.length} Alert{notifications.length > 1 ? 's' : ''}
@@ -579,7 +579,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   variant="outline" 
                   size="sm" 
                   onClick={handleShowAddForm}
-                  className="text-white border-gray-300 hover:opacity-80  hover:scale-105 transition-all duration-300" style={{backgroundColor: '#0C332C'}}
+                  className="text-white border-gray-300 hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                 >
                   <Plus className="h-4 w-4 mr-1" />
                   Add Method
@@ -587,7 +587,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
               )}
             </div>
             {payoutAccounts.map((account) => (
-              <div key={account.id} className="border rounded-lg p-4 flex items-center justify-between transition-all duration-200  transition-all duration-300">
+              <div key={account.id} className="border rounded-lg p-4 flex items-center justify-between transition-all duration-200 " transition-all duration-300>
                 <div className="flex items-center gap-3">
                   {account.type === 'paypal' ? (
                     <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
@@ -621,11 +621,11 @@ function PaymentMethodsCard({ user }: { user: any }) {
                 </div>
                 <div className="flex items-center gap-2">
                   {!account.isDefault && (
-                    <Button variant="outline" size="sm" onClick={() => handleSetDefault(account.id)} className="text-white border-gray-300 hover:opacity-80 hover:scale-105 transition-all duration-300" style={{backgroundColor: '#0C332C'}}>
+                    <Button variant="outline" size="sm" onClick={() => handleSetDefault(account.id)} className="text-white border-gray-300 hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                       Set Default
                     </Button>
                   )}
-                  <Button variant="outline" size="sm" onClick={() => handleDeleteAccount(account.id)} className="text-white border-gray-300 hover:opacity-80 hover:scale-105 transition-all duration-300" style={{backgroundColor: '#0C332C'}}>
+                  <Button variant="outline" size="sm" onClick={() => handleDeleteAccount(account.id)} className="text-white border-gray-300 hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                     Delete
                   </Button>
                 </div>
@@ -642,7 +642,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
             <p className="text-sm text-muted-foreground mb-4">
               Add a payment method to receive your earnings
             </p>
-            <Button onClick={handleShowAddForm} className="text-white hover:opacity-80 hover:scale-105 transition-all duration-300" style={{backgroundColor: '#0C332C'}}>
+            <Button onClick={handleShowAddForm} className="text-white hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
               <Plus className="h-4 w-4 mr-2" />
               Add Your First Payment Method
             </Button>
@@ -654,7 +654,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
           <div className="border rounded-lg p-4 space-y-4 bg-blue-50/50 border-blue-200 transition-all duration-300">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-blue-800">Add New Payment Method</h4>
-              <Button variant="outline" size="sm" onClick={handleHideAddForm} className="border-gray-300 text-white hover:opacity-80 hover:scale-105 transition-all duration-300" style={{backgroundColor: '#0C332C'}}>
+              <Button variant="outline" size="sm" onClick={handleHideAddForm} className="border-gray-300 text-white hover:opacity-80 hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}>
                 Cancel
               </Button>
             </div>
@@ -671,7 +671,7 @@ function PaymentMethodsCard({ user }: { user: any }) {
                   variant="outline" 
                   size="sm" 
                   onClick={() => window.open(window.location.origin + '?page=payout-policy', '_blank')}
-                  className="text-white border-gray-300 hover:opacity-80  hover:scale-105 transition-all duration-300" style={{backgroundColor: '#0C332C'}}
+                  className="text-white border-gray-300 hover:opacity-80  hover:scale-105" transition-all duration-300 style={{backgroundColor: '#0C332C'}}
                 >
                   View Policy
                 </Button>
@@ -1084,7 +1084,7 @@ function PurchasesView({ onNavigate }: { onNavigate?: (page: string) => void }) 
                         </Button>
                       )}
                       {purchase.type === 'course' && (
-                        <Button size="sm" className="bg-primary hover:bg-primary text-white transition-all duration-300" onClick={() => {
+                        <Button size="sm" className="bg-primary hover:bg-primary text-white" transition-all duration-300 onClick={() => {
                           const courseId = purchase.originalData.courseId;
                           if (courseId) {
                             navigate(`/course/${courseId}/player`);
@@ -1914,7 +1914,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="text-white hover:text-gray-200 transition-all duration-300"
+                className="text-white hover:text-gray-200" transition-all duration-300
                 data-testid="button-mobile-menu"
               >
                 {showMobileMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -2115,7 +2115,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <div className="pt-3">
               <button
                 onClick={() => setMoneyOpen(!moneyOpen)}
-                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors transition-all duration-300"
+                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors" transition-all duration-300
                 data-testid="nav-money-toggle"
               >
                 <span>Money</span>
@@ -2173,7 +2173,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <div className="pt-3">
               <button
                 onClick={() => setStoreOpen(!storeOpen)}
-                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors transition-all duration-300"
+                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors" transition-all duration-300
                 data-testid="nav-store-toggle"
               >
                 <span>Store</span>
@@ -2245,7 +2245,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <div className="pt-3">
               <button
                 onClick={() => setMarketplaceOpen(!marketplaceOpen)}
-                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors transition-all duration-300"
+                className="w-full flex items-center justify-between px-3 py-2 text-xs text-white/50 uppercase tracking-wider hover:text-white/70 transition-colors" transition-all duration-300
                 data-testid="nav-marketplace-toggle"
               >
                 <span>Marketplace</span>
@@ -2320,7 +2320,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
           <div className="p-4 border-t border-white/10 space-y-2 flex-shrink-0">
             <Button
               size="sm"
-              className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium transition-all duration-300"
+              className="w-full bg-[#fe5831] hover:bg-[#e64d2e] text-white font-medium" transition-all duration-300
               onClick={() => {
                 setIsLoggingOut(true);
                 setShowMobileMenu(false);
@@ -2609,7 +2609,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                 {filteredStudents.map((student: Student) => (
                   <Card 
                     key={student.studentId} 
-                    className=" transition-all duration-200 cursor-pointer group transition-all duration-300"
+                    className=" transition-all duration-200 cursor-pointer group" transition-all duration-300
                     onClick={() => {
                       setSelectedStudent(student.studentId);
                       setActiveTab('messages');
@@ -2625,7 +2625,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold truncate group-hover:text-green-600 transition-colors transition-all duration-300">
+                          <h3 className="font-semibold truncate group-hover:text-green-600 transition-colors" transition-all duration-300>
                             {student.name}
                           </h3>
                           {student.pronouns && student.pronouns.toLowerCase() !== 'prefer not to say' && student.pronouns.toLowerCase() !== 'prefer_not_to_say' && (
@@ -2726,7 +2726,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             <Button 
               size="lg"
               onClick={() => setActiveTab('meetings')}
-              className="mb-4 bg-gradient-to-r from-primary to-red-500 hover:from-orange-600 hover:to-primary text-white transition-all duration-300"
+              className="mb-4 bg-gradient-to-r from-primary to-red-500 hover:from-orange-600 hover:to-primary text-white" transition-all duration-300
               data-testid="button-view-meetings"
             >
               View & Manage Meetings
@@ -2839,7 +2839,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
             {/* Earnings Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Available Balance */}
-              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow transition-all duration-300">
+              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
                     <Banknote className="h-5 w-5 text-green-600" />
@@ -2855,7 +2855,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               </div>
 
               {/* Pending Balance */}
-              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow transition-all duration-300">
+              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-10 h-10 bg-yellow-50 rounded-full flex items-center justify-center">
                     <Clock className="h-5 w-5 text-yellow-600" />
@@ -2871,7 +2871,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               </div>
 
               {/* Lifetime Earnings */}
-              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow transition-all duration-300">
+              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
                     <TrendingUp className="h-5 w-5 text-blue-600" />
@@ -2887,7 +2887,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               </div>
 
               {/* Total Withdrawn */}
-              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow transition-all duration-300">
+              <div className="bg-white rounded-lg border border-gray-200 p-5  transition-shadow" transition-all duration-300>
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center">
                     <CreditCard className="h-5 w-5 text-gray-600" />
@@ -2926,7 +2926,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                     </thead>
                     <tbody>
                       {(downloadStatsData as any)?.data?.map((stat: ProductDownloadStats) => (
-                        <tr key={stat.productId} className="border-b hover:bg-gray-50 transition-all duration-300">
+                        <tr key={stat.productId} className="border-b hover:bg-gray-50" transition-all duration-300>
                           <td className="py-3 px-4 text-sm font-medium text-gray-900">{stat.productName}</td>
                           <td className="py-3 px-4 text-sm text-right font-semibold text-gray-900">{stat.totalDownloads}</td>
                           <td className="py-3 px-4 text-sm text-right text-gray-600">{stat.freeDownloads}</td>
@@ -2965,7 +2965,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
               ) : (
                 <div className="space-y-3">
                   {(creatorBalanceData as any)?.data?.recentEarnings?.map((earning: CreatorEarningEvent) => (
-                    <div key={earning.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors transition-all duration-300">
+                    <div key={earning.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors" transition-all duration-300>
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <p className="font-medium text-gray-900">
@@ -3379,7 +3379,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                         appointments
                           .filter((appointment: Appointment) => appointment.status === 'pending')
                           .map((appointment: Appointment) => (
-                            <div key={appointment.id} className="p-4 border rounded-lg  transition-shadow transition-all duration-300" data-testid={`pending-appointment-${appointment.id}`}>
+                            <div key={appointment.id} className="p-4 border rounded-lg  transition-shadow" transition-all duration-300 data-testid={`pending-appointment-${appointment.id}`}>
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
                                   <div className="flex items-center gap-2 mb-2">
@@ -3418,7 +3418,7 @@ export function TeacherDashboard({ onNavigate }: TeacherDashboardProps = {}) {
                                     size="sm"
                                     variant="outline"
                                     onClick={() => handleDeclineAppointment(appointment.id)}
-                                    className="text-primary border-red-200 hover:bg-primary/10 transition-all duration-300"
+                                    className="text-primary border-red-200 hover:bg-primary/10" transition-all duration-300
                                     data-testid={`decline-appointment-${appointment.id}`}
                                   >
                                     <XCircle className="h-3 w-3 mr-1" />

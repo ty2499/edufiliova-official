@@ -213,7 +213,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
     if (variant === 'list') {
       return (
         <Card 
-          className="rounded-2xl bg-white text-[#1F1E30] border-gray-100 group cursor-pointer transition-all duration-300 overflow-hidden border-0 w-full hover:shadow-lg transition-all duration-300"
+          className="rounded-2xl bg-white text-[#1F1E30] border-gray-100 group cursor-pointer transition-all duration-300 overflow-hidden border-0 w-full hover:shadow-lg" transition-all duration-300
           onClick={handleClick}
           data-testid={`freelancer-card-${freelancer.id}`}
         >
@@ -231,7 +231,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
                 <div className="flex-1 min-w-0">
                   {/* Name with Verification Badge */}
                   <div className="flex items-center gap-1.5 mb-1">
-                    <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate transition-all duration-300">
+                    <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate" transition-all duration-300>
                       {(() => {
                         const fullName = freelancer.displayName || freelancer.name;
                         const nameParts = fullName.split(' ');
@@ -310,7 +310,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
               {/* Right: Contact Button */}
               <div className="flex items-center sm:w-40 flex-shrink-0">
                 <Button
-                  className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-full text-sm h-10 transition-all duration-300"
+                  className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-full text-sm h-10" transition-all duration-300
                   onClick={(e) => {
                     e.stopPropagation();
                     handleContactFreelancer(freelancer);
@@ -353,7 +353,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
             <div className="flex-1 min-w-0 pt-2 relative z-10">
               {/* Name with Verification Badge */}
               <div className="flex items-center gap-1.5 mb-1">
-                <h3 className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate transition-all duration-300">
+                <h3 className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors truncate" transition-all duration-300>
                   {(() => {
                     const fullName = freelancer.displayName || freelancer.name;
                     const nameParts = fullName.split(' ');
@@ -431,7 +431,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
 
           {/* Contact Button - Hidden on mobile */}
           <Button
-            className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-full text-sm h-8 hidden md:block transition-all duration-300"
+            className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-full text-sm h-8 hidden md:block" transition-all duration-300
             onClick={(e) => {
               e.stopPropagation();
               handleContactFreelancer(freelancer);
@@ -475,7 +475,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
                   variant="outline"
                   size="sm"
                   onClick={() => setShowFilters(!showFilters)}
-                  className="h-10 px-4 rounded-full border-gray-300 bg-white hover:bg-gray-50 font-['StackSans_Text'] transition-all duration-300"
+                  className="h-10 px-4 rounded-full border-gray-300 bg-white hover:bg-gray-50 font-['StackSans_Text']" transition-all duration-300
                   data-testid="button-filters"
                 >
                   <SlidersHorizontal className="h-4 w-4 mr-2" />
@@ -651,7 +651,7 @@ export function FindTalent({ onNavigate, context = 'public' }: FindTalentProps) 
             </div>
             <Button
               onClick={() => refetch()}
-              className="bg-primary hover:bg-primary text-white transition-all duration-300"
+              className="bg-primary hover:bg-primary text-white" transition-all duration-300
               data-testid="button-retry-freelancers"
             >
               Try Again

@@ -140,7 +140,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries, isAdmi
                 variant="outline"
                 size="sm"
                 onClick={() => handleQuickRegionSelect(codes)}
-                className="text-xs hover:bg-primary hover:text-white hover:border-primary transition-all transition-all duration-300"
+                className="text-xs hover:bg-primary hover:text-white hover:border-primary transition-all" transition-all duration-300
               >
                 {region} ({codes.length})
               </Button>
@@ -152,7 +152,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries, isAdmi
               variant="outline"
               size="sm"
               onClick={clearSelection}
-              className="text-xs hover:bg-destructive hover:text-white hover:border-destructive transition-all transition-all duration-300"
+              className="text-xs hover:bg-destructive hover:text-white hover:border-destructive transition-all" transition-all duration-300
             >
               Clear All ({selectedCountries.length})
             </Button>
@@ -169,7 +169,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries, isAdmi
         <PopoverTrigger asChild>
           <Button
             variant="outline"
-            className="w-full h-12 justify-between border-gray-200 hover:bg-gray-50 transition-all duration-300"
+            className="w-full h-12 justify-between border-gray-200 hover:bg-gray-50" transition-all duration-300
           >
             <span className="text-sm">
               {selectedCountries.length > 0
@@ -611,7 +611,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                             />
                             <label
                               htmlFor="banner-image-upload"
-                              className="cursor-pointer inline-flex items-center px-6 py-2.5 border border-primary/20 rounded-lg shadow-sm text-sm font-semibold text-foreground bg-primary/5 hover:bg-primary hover:text-white transition-all transition-all duration-300"
+                              className="cursor-pointer inline-flex items-center px-6 py-2.5 border border-primary/20 rounded-lg shadow-sm text-sm font-semibold text-foreground bg-primary/5 hover:bg-primary hover:text-white transition-all" transition-all duration-300
                             >
                               {selectedFile ? 'Change File' : 'Choose File'}
                             </label>
@@ -694,7 +694,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                           <PopoverTrigger asChild>
                             <Button
                               variant="outline"
-                              className="w-full h-12 justify-between border-gray-200 hover:bg-gray-50 transition-all duration-300"
+                              className="w-full h-12 justify-between border-gray-200 hover:bg-gray-50" transition-all duration-300
                             >
                               <span className="text-sm">
                                 {form.watch('targetDashboards')?.length > 0
@@ -789,7 +789,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                           <PopoverTrigger asChild>
                             <Button
                               variant="outline"
-                              className="w-full h-12 justify-between border-gray-200 hover:bg-gray-50 transition-all duration-300"
+                              className="w-full h-12 justify-between border-gray-200 hover:bg-gray-50" transition-all duration-300
                             >
                               <span className="text-sm">
                                 {selectedGrades.length > 0
@@ -988,7 +988,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                       <Button
                         type="submit"
                         disabled={isButtonDisabled}
-                        className="flex-1 h-12 bg-primary text-white hover:bg-primary/80 hover:shadow-xl hover:scale-105 font-semibold shadow-lg shadow-primary/20 transition-all duration-300"
+                        className="flex-1 h-12 bg-primary text-white hover:bg-primary/80 hover:shadow-xl hover:scale-105 font-semibold shadow-lg shadow-primary/20" transition-all duration-300
                         size="lg"
                         data-testid="checkout-button"
                         onClick={() => {
@@ -1185,7 +1185,7 @@ export default function BannerCreator({ onNavigate }: BannerCreatorProps) {
                       onNavigate('customer-dashboard');
                     }
                   }}
-                  className="flex-1 bg-primary hover:bg-primary text-white transition-all duration-300"
+                  className="flex-1 bg-primary hover:bg-primary text-white" transition-all duration-300
                   data-testid="button-view-my-ads"
                 >
                   View My Ads
@@ -1314,7 +1314,7 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
         <div className="flex justify-end p-4 pb-0">
           <button
             onClick={onCancel}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-xl transition-all duration-300"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-xl" transition-all duration-300
             disabled={isProcessing}
             data-testid="button-close-modal"
           >
@@ -1420,7 +1420,7 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
                   <Button
                     type="submit"
                     disabled={!stripe || isProcessing}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-complete-purchase"
                   >
                     {isProcessing ? 'Processing...' : 'Complete Purchase'}
@@ -1453,7 +1453,7 @@ function PaymentModalContent({ paymentData, onSuccess, onCancel }: PaymentModalC
                   <Button
                     onClick={handleWalletPayment}
                     disabled={isProcessing || walletBalance < paymentData.amount}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-wallet-pay"
                   >
                     {isProcessing ? 'Processing...' : `Pay $${paymentData.amount.toFixed(2)} from Wallet`}

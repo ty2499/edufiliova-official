@@ -140,7 +140,7 @@ const BehanceImageLightbox = ({ images, currentIndex, isOpen, onClose, projectNa
           onClick={onClose}
           data-testid="button-close-lightbox"
           aria-label="Close lightbox"
-          className="absolute top-6 right-6 z-50 w-12 h-12 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/30 shadow-lg transition-all duration-300"
+          className="absolute top-6 right-6 z-50 w-12 h-12 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/30 shadow-lg" transition-all duration-300
         >
           <X className="h-6 w-6 text-white" />
         </button>
@@ -152,7 +152,7 @@ const BehanceImageLightbox = ({ images, currentIndex, isOpen, onClose, projectNa
             disabled={zoom <= 0.5}
             data-testid="button-zoom-out"
             aria-label="Zoom out"
-            className="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed border border-white/20 transition-all duration-300"
+            className="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed border border-white/20" transition-all duration-300
           >
             <ZoomOut className="h-5 w-5 text-white" />
           </button>
@@ -162,7 +162,7 @@ const BehanceImageLightbox = ({ images, currentIndex, isOpen, onClose, projectNa
             disabled={zoom >= 3}
             data-testid="button-zoom-in"
             aria-label="Zoom in"
-            className="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed border border-white/20 transition-all duration-300"
+            className="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed border border-white/20" transition-all duration-300
           >
             <ZoomIn className="h-5 w-5 text-white" />
           </button>
@@ -186,7 +186,7 @@ const BehanceImageLightbox = ({ images, currentIndex, isOpen, onClose, projectNa
         {images.length > 1 && (
           <>
             <button
-              className="absolute left-6 top-1/2 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 border border-white/20 transition-all duration-300"
+              className="absolute left-6 top-1/2 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 border border-white/20" transition-all duration-300
               onClick={goToPrevious}
               data-testid="button-previous-image"
               aria-label="Previous image"
@@ -195,7 +195,7 @@ const BehanceImageLightbox = ({ images, currentIndex, isOpen, onClose, projectNa
             </button>
             
             <button
-              className="absolute right-6 top-1/2 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 border border-white/20 transition-all duration-300"
+              className="absolute right-6 top-1/2 transform -translate-y-1/2 z-50 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 border border-white/20" transition-all duration-300
               onClick={goToNext}
               data-testid="button-next-image"
               aria-label="Next image"
@@ -307,7 +307,7 @@ export function BehanceStyleFeed({
             <img
               src={image}
               alt={`Portfolio image ${index + 1}`}
-              className="w-full h-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] block select-none transition-all duration-300"
+              className="w-full h-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] block select-none" transition-all duration-300
               loading="lazy"
               decoding="async"
               draggable={false}

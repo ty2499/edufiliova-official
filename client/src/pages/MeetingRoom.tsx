@@ -542,7 +542,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
               variant="outline"
               size="sm"
               onClick={() => setShowEndConfirmation(true)}
-              className="text-primary-600 dark:text-primary-400 border-red-300 dark:border-red-800 hover:bg-primary/50 dark:hover:bg-primary/80 hover:shadow-xl hover:scale-1050/20 transition-all duration-300"
+              className="text-primary-600 dark:text-primary-400 border-red-300 dark:border-red-800 hover:bg-primary/50 dark:hover:bg-primary/80 hover:shadow-xl hover:scale-1050/20" transition-all duration-300
               data-testid="button-end-meeting"
             >
               End Meeting
@@ -651,7 +651,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
                       <Button
                         size="icon"
                         variant="secondary"
-                        className="rounded-lg bg-black/50 hover:bg-black/70 backdrop-blur-sm border-none h-10 w-10 transition-all duration-300"
+                        className="rounded-lg bg-black/50 hover:bg-black/70 backdrop-blur-sm border-none h-10 w-10" transition-all duration-300
                         onClick={isFullscreen ? exitFullscreen : enterFullscreen}
                         data-testid="button-toggle-fullscreen"
                       >
@@ -957,7 +957,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
           onClick={() => meeting.expand(navigate)}
           data-testid="minimized-meeting-window"
         >
-          <div className="relative bg-gray-900 rounded-lg overflow-hidden shadow-2xl border-2 border-white dark:border-gray-700 w-80 h-52 transition-transform hover:scale-105 transition-all duration-300">
+          <div className="relative bg-gray-900 rounded-lg overflow-hidden shadow-2xl border-2 border-white dark:border-gray-700 w-80 h-52 transition-transform hover:scale-105" transition-all duration-300>
             <div 
               ref={meeting.minimizedVideoRef} 
               className="w-full h-full"
@@ -976,7 +976,7 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-between p-3">
               <div className="flex items-center justify-between">
                 <Badge className="bg-primary text-white text-xs">Live</Badge>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity transition-all duration-300">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300>
                   <Button
                     size="icon"
                     variant="secondary"
@@ -1028,12 +1028,12 @@ export default function MeetingRoom({ meetingId }: MeetingRoomProps) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300">
+            <AlertDialogCancel className="bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600" transition-all duration-300>
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleEndMeeting}
-              className="bg-primary hover:bg-primary/700 text-white transition-all duration-300"
+              className="bg-primary hover:bg-primary/700 text-white" transition-all duration-300
               data-testid="confirm-end-meeting"
             >
               End Meeting

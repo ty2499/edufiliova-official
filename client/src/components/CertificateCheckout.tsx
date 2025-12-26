@@ -421,7 +421,7 @@ function CertificateCheckoutForm({
             value={certificateFormat} 
             onValueChange={(value: string) => setCertificateFormat(value as 'soft_copy' | 'hard_copy')}
           >
-            <div className="flex items-start space-x-3 p-4 border-2 rounded-lg mb-3 cursor-pointer hover:border-primary transition-all duration-300" data-testid="option-soft-copy">
+            <div className="flex items-start space-x-3 p-4 border-2 rounded-lg mb-3 cursor-pointer hover:border-primary" transition-all duration-300 data-testid="option-soft-copy">
               <RadioGroupItem value="soft_copy" id="soft_copy" />
               <div className="flex-1">
                 <Label htmlFor="soft_copy" className="cursor-pointer">
@@ -437,7 +437,7 @@ function CertificateCheckoutForm({
               </div>
             </div>
 
-            <div className="flex items-start space-x-3 p-4 border-2 rounded-lg cursor-pointer hover:border-primary transition-all duration-300" data-testid="option-hard-copy">
+            <div className="flex items-start space-x-3 p-4 border-2 rounded-lg cursor-pointer hover:border-primary" transition-all duration-300 data-testid="option-hard-copy">
               <RadioGroupItem value="hard_copy" id="hard_copy" />
               <div className="flex-1">
                 <Label htmlFor="hard_copy" className="cursor-pointer">

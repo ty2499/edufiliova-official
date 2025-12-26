@@ -286,7 +286,7 @@ const FreelancerTermsModal = ({ isOpen, onClose }: FreelancerTermsModalProps) =>
             <Button 
               onClick={onClose}
               disabled={!hasScrolledToBottom}
-              className="flex-1 bg-[#0C332C] hover:bg-[#2448b8] transition-all duration-300"
+              className="flex-1 bg-[#0C332C] hover:bg-[#2448b8]" transition-all duration-300
             >
               <CheckCircle2 className="w-4 h-4 mr-2" />
               I Have Read & Understood

@@ -70,8 +70,6 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
   // Password Reset PIN entry state
   const [passwordResetEmail, setPasswordResetEmail] = useState('');
   const [resetPin, setResetPin] = useState('');
-  const [resetNewPassword, setResetNewPassword] = useState('');
-  const [resetConfirmPassword, setResetConfirmPassword] = useState('');
   // Countries data - fetch from API
   const [countries, setCountries] = useState<Array<{id: number, name: string}>>([]);
   const [gradeSystems, setGradeSystems] = useState<Array<{id: number, gradeNumber: number, displayName: string}>>([]);
@@ -649,67 +647,6 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       setErrors({ forgotPasswordEmail: "An unexpected error occurred. Please try again." });
     } finally {
       setForgotPasswordLoading(false);
-    }
-  };
-
-  const handleVerifyResetPin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!resetPin.trim()) {
-      setErrors({ resetPin: "Reset code is required" });
-      return;
-    }
-    
-    if (resetPin.length !== 6) {
-      setErrors({ resetPin: "Reset code must be 6 digits" });
-      return;
-    }
-
-    if (!resetNewPassword.trim()) {
-      setErrors({ resetNewPassword: "New password is required" });
-      return;
-    }
-
-    if (resetNewPassword.length < 6) {
-      setErrors({ resetNewPassword: "Password must be at least 6 characters" });
-      return;
-    }
-
-    if (resetNewPassword !== resetConfirmPassword) {
-      setErrors({ resetConfirmPassword: "Passwords do not match" });
-      return;
-    }
-    
-    setLoading(true);
-    setErrors({});
-    
-    try {
-      const response = await fetch(resolveApiUrl('/api/auth/verify-reset-code'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: passwordResetEmail,
-          code: resetPin,
-          newPassword: resetNewPassword
-        }),
-      });
-      
-      const result = await response.json();
-      
-      if (response.ok && result.success) {
-        // Reset successful - redirect to login
-        setResetPin('');
-        setResetNewPassword('');
-        setResetConfirmPassword('');
-        setCurrentStep('login');
-        setErrors({ general: 'Password reset successful. Please log in with your new password.' });
-      } else {
-        setErrors({ resetPin: result.error || "Invalid reset code" });
-      }
-    } catch (error: any) {
-      setErrors({ resetPin: error.message || "Failed to verify reset code" });
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -1697,7 +1634,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={forgotPasswordEmail}
               onChange={(e) => setForgotPasswordEmail(e.target.value)}
               placeholder="Enter your email"
-              className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
+              className="h-12 text-base pl-10 rounded-lg border-gray-300"
               data-testid="input-forgot-password-email"
             />
           </div>
@@ -1741,7 +1678,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       <div className="mb-6 text-center">
         <div className="flex justify-center mb-4">
           <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
-            <Lock className="h-8 w-8" style={{ color: '#0c332c' }} />
+            <Lock className="h-8 w-8 text-primary" />
           </div>
         </div>
         <h2 className="text-2xl font-bold text-white mb-2">
@@ -1752,7 +1689,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
         </p>
       </div>
 
-      <form className="space-y-4" onSubmit={handleVerifyResetPin}>
+      <form className="space-y-4">
         <div>
           <Label htmlFor="reset-pin" className="text-sm font-medium text-white mb-1 block">
             Reset Code*
@@ -1763,43 +1700,10 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             value={resetPin}
             onChange={(e) => setResetPin(e.target.value.toUpperCase())}
             placeholder="Enter 6-digit code"
-            className="h-12 text-base text-center text-lg tracking-wider rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
+            className="h-12 text-base text-center text-lg tracking-wider rounded-lg border-gray-300"
             maxLength={6}
             data-testid="input-reset-pin"
           />
-          {errors.resetPin && <p className="text-sm text-red-400 mt-1">{errors.resetPin}</p>}
-        </div>
-
-        <div>
-          <Label htmlFor="reset-new-password" className="text-sm font-medium text-white mb-1 block">
-            New Password*
-          </Label>
-          <Input
-            id="reset-new-password"
-            type="password"
-            value={resetNewPassword}
-            onChange={(e) => setResetNewPassword(e.target.value)}
-            placeholder="Enter new password"
-            className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
-            data-testid="input-reset-new-password"
-          />
-          {errors.resetNewPassword && <p className="text-sm text-red-400 mt-1">{errors.resetNewPassword}</p>}
-        </div>
-
-        <div>
-          <Label htmlFor="reset-confirm-password" className="text-sm font-medium text-white mb-1 block">
-            Confirm Password*
-          </Label>
-          <Input
-            id="reset-confirm-password"
-            type="password"
-            value={resetConfirmPassword}
-            onChange={(e) => setResetConfirmPassword(e.target.value)}
-            placeholder="Confirm new password"
-            className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
-            data-testid="input-reset-confirm-password"
-          />
-          {errors.resetConfirmPassword && <p className="text-sm text-red-400 mt-1">{errors.resetConfirmPassword}</p>}
         </div>
 
         <div className="bg-green-50 border border-green-200 rounded-lg p-3">
@@ -1836,8 +1740,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="font-medium"
-            style={{ color: '#a0fab2' }}
+            className="text-primary hover:text-purple-800 font-medium transition-all duration-300"
             data-testid="button-resend-reset-code"
           >
             Request new code
@@ -1848,8 +1751,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("login")}
-            className="font-medium text-sm flex items-center justify-center gap-1 mx-auto"
-            style={{ color: '#a0fab2' }}
+            className="text-primary hover:text-purple-800 font-medium text-sm flex items-center justify-center gap-1 mx-auto transition-all duration-300"
             data-testid="link-back-to-login-from-reset"
           >
             <ArrowLeft className="h-3 w-3" />

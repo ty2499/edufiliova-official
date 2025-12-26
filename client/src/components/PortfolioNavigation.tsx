@@ -48,7 +48,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className="flex items-center gap-1 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors duration-200 transition-all duration-300"
+                  className="flex items-center gap-1 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors duration-200" transition-all duration-300
                   data-testid={`nav-${item.id}`}
                 >
                   {item.label}
@@ -73,7 +73,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
                 onNavigate(item.id);
                 setIsMobileMenuOpen(false);
               }}
-              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-all duration-300"
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" transition-all duration-300
               data-testid={`mobile-nav-${item.id}`}
             >
               {item.label}
@@ -98,7 +98,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
                     setIsMobileMenuOpen(false);
                   }}
                   size="sm"
-                  className="w-full bg-[#0C332C] hover:bg-[#1e3a8a] text-white transition-all duration-300"
+                  className="w-full bg-[#0C332C] hover:bg-[#1e3a8a] text-white" transition-all duration-300
                   data-testid="mobile-nav-dashboard"
                 >
                   Dashboard
@@ -113,7 +113,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
                   setIsMobileMenuOpen(false);
                 }}
                 size="sm"
-                className="w-full bg-[#0C332C] hover:bg-[#e14a2b] text-white transition-all duration-300"
+                className="w-full bg-[#0C332C] hover:bg-[#e14a2b] text-white" transition-all duration-300
               >
                 Sign up
               </Button>
@@ -123,7 +123,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
                   setIsMobileMenuOpen(false);
                 }}
                 size="sm"
-                className="w-full bg-[#0C332C] hover:bg-[#1e3a8a] text-white transition-all duration-300"
+                className="w-full bg-[#0C332C] hover:bg-[#1e3a8a] text-white" transition-all duration-300
               >
                 Log in
               </Button>

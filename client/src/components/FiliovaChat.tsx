@@ -688,7 +688,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="text-white hover:bg-white/10 md:hidden transition-all duration-300"
+                    className="text-white hover:bg-white/10 md:hidden" transition-all duration-300
                     onClick={() => setSelectedConversation(null)}
                   >
                     <ArrowLeft className="h-4 w-4" />
@@ -727,13 +727,13 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                   <Button 
                     size="sm" 
                     variant="ghost" 
-                    className="text-white hover:bg-white/10 transition-all duration-300"
+                    className="text-white hover:bg-white/10" transition-all duration-300
                     onClick={handleClearChat}
                     data-testid="button-clear-chat-filiova"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
-                  <Button size="sm" variant="ghost" className="text-white hover:bg-white/10 transition-all duration-300">
+                  <Button size="sm" variant="ghost" className="text-white hover:bg-white/10" transition-all duration-300>
                     <MoreVertical className="h-4 w-4" />
                   </Button>
                 </div>
@@ -814,7 +814,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="text-white hover:bg-white/10 transition-all duration-300"
+                      className="text-white hover:bg-white/10" transition-all duration-300
                       onClick={cancelRecording}
                     >
                       <X className="h-4 w-4" />
@@ -822,7 +822,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="text-white hover:bg-white/10 transition-all duration-300"
+                      className="text-white hover:bg-white/10" transition-all duration-300
                       onClick={stopRecording}
                     >
                       <Send className="h-4 w-4" />
@@ -908,7 +908,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                           key={index}
                           variant="ghost"
                           size="sm"
-                          className="h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-700 text-lg transition-colors transition-all duration-300"
+                          className="h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-700 text-lg transition-colors" transition-all duration-300
                           onClick={() => handleEmojiSelect(emoji)}
                           data-testid={`emoji-${emoji}`}
                         >
@@ -952,7 +952,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                       type="button"
                       size="sm"
                       variant="ghost"
-                      className="h-9 w-9 p-0 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-full transition-all duration-300"
+                      className="h-9 w-9 p-0 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-full" transition-all duration-300
                       onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                       data-testid="emoji-button"
                       title="Add emoji"
@@ -963,7 +963,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                       type="button"
                       size="sm"
                       variant="ghost"
-                      className="h-9 w-9 p-0 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-full transition-all duration-300"
+                      className="h-9 w-9 p-0 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded-full" transition-all duration-300
                       onClick={() => setShowAttachMenu(!showAttachMenu)}
                       data-testid="attach-button"
                       title="Attach file"
@@ -989,7 +989,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                     <Button 
                       type="submit" 
                       size="sm"
-                      className="h-9 w-9 p-0 rounded-full bg-[#25d366] hover:bg-[#128c7e] shadow-sm transition-all duration-300"
+                      className="h-9 w-9 p-0 rounded-full bg-[#25d366] hover:bg-[#128c7e] shadow-sm" transition-all duration-300
                       disabled={sendTextMutation.isPending}
                       data-testid="send-button"
                     >
@@ -999,7 +999,7 @@ export function FiliovaChat({ userRole }: FiliovaChatProps) {
                     <Button
                       type="button"
                       size="sm"
-                      className="h-9 w-9 p-0 rounded-full bg-[#25d366] hover:bg-[#128c7e] shadow-sm transition-all duration-300"
+                      className="h-9 w-9 p-0 rounded-full bg-[#25d366] hover:bg-[#128c7e] shadow-sm" transition-all duration-300
                       onClick={startRecording}
                       data-testid="mic-button"
                       title="Record voice message"

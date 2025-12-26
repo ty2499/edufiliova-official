@@ -128,7 +128,7 @@ export function BannerAdDisplay({ placement, className }: BannerAdDisplayProps) 
           <img
             src={currentAd.imageUrl}
             alt="Advertisement"
-            className="w-full h-full object-cover cursor-pointer transition-opacity duration-300 hover:opacity-80 transition-all duration-300"
+            className="w-full h-full object-cover cursor-pointer transition-opacity duration-300 hover:opacity-80" transition-all duration-300
             loading="lazy"
             onError={(e) => {
               (e.target as HTMLImageElement).src = '/placeholder.svg';

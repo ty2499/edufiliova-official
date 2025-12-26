@@ -29,7 +29,7 @@ export default function Testimonials() {
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-rows-2">
-                    <div className="sm:col-span-2 lg:row-span-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all transition-all duration-300" data-testid="card-testimonial-0">
+                    <div className="sm:col-span-2 lg:row-span-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all" transition-all duration-300 data-testid="card-testimonial-0">
                         <blockquote className="flex flex-col h-full gap-3">
                             <p className="text-sm text-white/90 leading-relaxed flex-1">As a high school teacher, I've tried many platforms, but EduFiliova stands out. The ability to create and sell my own courses while accessing premium content has been incredible. My students love the interactive lessons, and I've built a side income doing what I'm passionate about. The platform truly understands educators' needs—from course creation tools to student engagement features. I've seen my students' test scores improve by 25% since implementing these resources. The community support is exceptional, and the analytics help me track progress effectively. What started as a teaching tool has become a thriving side business. I can now reach students globally while maintaining my full-time position. The flexible payment options and fair revenue sharing make it sustainable for educators at any level.</p>
                             <div className="flex items-center gap-2 mt-2">
@@ -45,7 +45,7 @@ export default function Testimonials() {
                         </blockquote>
                     </div>
                     
-                    <div className="md:col-span-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all transition-all duration-300" data-testid="card-testimonial-1">
+                    <div className="md:col-span-2 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all" transition-all duration-300 data-testid="card-testimonial-1">
                         <blockquote className="flex flex-col h-full gap-3">
                             <p className="text-sm text-white/90 leading-relaxed flex-1">EduFiliova helped me transition from corporate to freelance teaching. The subscription model is fair, the student base is engaged, and the support is outstanding. I'm now earning more while having complete flexibility.</p>
                             <div className="flex items-center gap-2 mt-2">
@@ -61,7 +61,7 @@ export default function Testimonials() {
                         </blockquote>
                     </div>
                     
-                    <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all transition-all duration-300" data-testid="card-testimonial-2">
+                    <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all" transition-all duration-300 data-testid="card-testimonial-2">
                         <blockquote className="flex flex-col h-full gap-3">
                             <p className="text-sm text-white/90 leading-relaxed flex-1">I'm a college student juggling multiple subjects. EduFiliova's subscription gives me access to everything I need at an affordable price. The tutoring sessions saved my GPA!</p>
                             <div className="flex items-center gap-2 mt-2">
@@ -77,7 +77,7 @@ export default function Testimonials() {
                         </blockquote>
                     </div>
                     
-                    <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all transition-all duration-300" data-testid="card-testimonial-3">
+                    <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all" transition-all duration-300 data-testid="card-testimonial-3">
                         <blockquote className="flex flex-col h-full gap-3">
                             <p className="text-sm text-white/90 leading-relaxed flex-1">The digital marketplace is brilliant! I sell study guides and templates while learning from top instructors. EduFiliova has become my one-stop platform for education.</p>
                             <div className="flex items-center gap-2 mt-2">

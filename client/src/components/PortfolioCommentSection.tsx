@@ -103,7 +103,7 @@ const CommentItem = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-xs text-gray-600 hover:text-blue-600 transition-all duration-300"
+                className="h-7 text-xs text-gray-600 hover:text-blue-600" transition-all duration-300
                 onClick={() => setReplyingTo(comment.id)}
                 data-testid={`button-reply-${comment.id}`}
               >
@@ -116,7 +116,7 @@ const CommentItem = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-xs text-gray-600 hover:text-primary transition-all duration-300"
+                className="h-7 text-xs text-gray-600 hover:text-primary" transition-all duration-300
                 onClick={() => handleDeleteComment(comment.id)}
                 disabled={deleteCommentMutation.isPending}
                 data-testid={`button-delete-comment-${comment.id}`}
@@ -130,7 +130,7 @@ const CommentItem = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-xs text-blue-600 hover:text-blue-700 font-medium transition-all duration-300"
+                className="h-7 text-xs text-blue-600 hover:text-blue-700 font-medium" transition-all duration-300
                 onClick={() => toggleReplies(comment.id)}
                 data-testid={`button-toggle-replies-${comment.id}`}
               >
@@ -299,7 +299,7 @@ export default function PortfolioCommentSection({ workId, currentUserId }: Portf
           <Button
             onClick={handlePostComment}
             disabled={!newComment.trim() || createCommentMutation.isPending}
-            className="bg-primary hover:bg-primary text-white transition-all duration-300"
+            className="bg-primary hover:bg-primary text-white" transition-all duration-300
             data-testid="button-post-comment"
           >
             <Send className="h-4 w-4 mr-2" />
@@ -351,7 +351,7 @@ export default function PortfolioCommentSection({ workId, currentUserId }: Portf
               <Button
                 variant="outline"
                 onClick={() => setShowAllComments(true)}
-                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 transition-all duration-300"
+                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50" transition-all duration-300
                 data-testid="button-show-more-comments"
               >
                 Show More Comments ({comments.length - INITIAL_COMMENTS_COUNT} more)

@@ -923,7 +923,7 @@ const GroupApproval = () => {
                     size="sm"
                     onClick={() => approveGroupMutation.mutate({ groupId: group.id, action: 'approve' })}
                     disabled={approveGroupMutation.isPending}
-                    className="bg-green-600 hover:bg-green-700 text-white transition-all duration-300"
+                    className="bg-green-600 hover:bg-green-700 text-white" transition-all duration-300
                   >
                     {approveGroupMutation.isPending ? (
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
@@ -1001,7 +1001,7 @@ const UserCard = ({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 md:p-4 rounded-lg border hover:bg-muted/50 transition-all duration-300" data-testid={`user-row-${user.userId}`}>
+    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 md:p-4 rounded-lg border hover:bg-muted/50" transition-all duration-300 data-testid={`user-row-${user.userId}`}>
       <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
         <Avatar className="h-9 w-9 sm:h-10 sm:w-10 flex-shrink-0">
           <AvatarImage src={user.avatarUrl} />
@@ -1030,7 +1030,7 @@ const UserCard = ({
             size="sm"
             onClick={() => onLoginAsUser(user)}
             data-testid={`login-as-user-${user.userId}`}
-            className="h-8 px-2.5 sm:px-3 text-xs bg-blue-50 hover:bg-blue-100 flex-1 sm:flex-initial min-w-[70px] transition-all duration-300"
+            className="h-8 px-2.5 sm:px-3 text-xs bg-blue-50 hover:bg-blue-100 flex-1 sm:flex-initial min-w-[70px]" transition-all duration-300
             style={{ borderColor: '#0C332C', color: '#0C332C' }}
           >
             <User className="h-3.5 w-3.5 sm:mr-1.5" />
@@ -1177,7 +1177,7 @@ const ProductApprovalCard = ({
           <Button
             onClick={() => onApprove(product.id)}
             disabled={loading}
-            className="flex-1 bg-green-600 hover:bg-green-700 transition-all duration-300"
+            className="flex-1 bg-green-600 hover:bg-green-700" transition-all duration-300
             data-testid={`approve-product-${product.id}`}
           >
             <CheckCircle2 className="h-4 w-4 mr-2" />
@@ -1475,7 +1475,7 @@ const ProductsList = ({
                               size="sm"
                               onClick={() => handleStatusChange(product.id, 'approved')}
                               disabled={changeProductStatusMutation.isPending}
-                              className="text-green-600 border-green-600 hover:bg-green-50 transition-all duration-300"
+                              className="text-green-600 border-green-600 hover:bg-green-50" transition-all duration-300
                               data-testid={`publish-product-${product.id}`}
                             >
                               <CheckCircle2 className="h-3 w-3 mr-1" />
@@ -1487,7 +1487,7 @@ const ProductsList = ({
                               size="sm"
                               onClick={() => handleStatusChange(product.id, 'approved')}
                               disabled={changeProductStatusMutation.isPending}
-                              className="text-green-600 border-green-600 hover:bg-green-50 transition-all duration-300"
+                              className="text-green-600 border-green-600 hover:bg-green-50" transition-all duration-300
                               data-testid={`approve-product-${product.id}`}
                             >
                               <CheckCircle2 className="h-3 w-3 mr-1" />
@@ -1759,17 +1759,6 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
   // State declarations
   const [selectedTab, setSelectedTab] = useState(getDefaultTab(userRole));
   const [messageSearchQuery, setMessageSearchQuery] = useState('');
-  
-  // Re-validate selectedTab when userRole changes (after profile loads)
-  useEffect(() => {
-    const allowedTabs = roleTabAccess[userRole] || ['dashboard'];
-    console.log('🔧 AdminDashboard: userRole=', userRole, 'selectedTab=', selectedTab, 'allowedTabs=', allowedTabs, 'isAllowed=', allowedTabs.includes(selectedTab));
-    if (!allowedTabs.includes(selectedTab)) {
-      const newTab = getDefaultTab(userRole);
-      console.log('🔧 AdminDashboard: Resetting to', newTab);
-      setSelectedTab(newTab);
-    }
-  }, [userRole, selectedTab]);
   const [userSearchQuery, setUserSearchQuery] = useState('');
   const [selectedUserId, setSelectedUserId] = useState<string>('');
   const [selectedRole, setSelectedRole] = useState<string>('');
@@ -2080,12 +2069,8 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
   const supportTickets = supportTicketsResponse || [];
 
   // Voucher queries and mutations
-  const { data: vouchersData, isLoading: loadingVouchers } = useQuery<any[]>({
+  const { data: vouchersData, isLoading: loadingVouchers } = useQuery({
     queryKey: ["/api/admin/vouchers"],
-    queryFn: async () => {
-      const response = await apiRequest('/api/admin/vouchers');
-      return Array.isArray(response) ? response : [];
-    },
     enabled: selectedTab === "vouchers"
   });
 
@@ -2621,7 +2606,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
         <Button
           variant="ghost"
           size="icon"
-          className="text-white hover:bg-white/20 transition-all duration-300"
+          className="text-white hover:bg-white/20" transition-all duration-300
           onClick={() => setShowMobileMenu(!showMobileMenu)}
           data-testid="mobile-menu-button"
         >
@@ -2646,7 +2631,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-white hover:bg-white/20 transition-all duration-300"
+              className="md:hidden text-white hover:bg-white/20" transition-all duration-300
               onClick={() => setShowMobileMenu(false)}
               data-testid="close-mobile-menu"
             >
@@ -2815,7 +2800,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
             {isTabVisible('payments') && userRole === 'admin' && (
             <Button
               variant="ghost"
-              className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+              className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
               onClick={() => { setShowManualPlanDialog(true); setShowMobileMenu(false); }}
               data-testid="nav-manual-plan"
             >
@@ -2854,14 +2839,14 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                     <Button
                       variant="ghost"
-                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                       onClick={() => { onNavigate?.('admin-email-inbox'); setShowMobileMenu(false); }}
                       data-testid="nav-email-inbox-admin"
                     >
                       <Mail className="w-5 h-5 mr-3" />
                       <span>Email Inbox</span>
                       {unreadMessagesCount > 0 && (
-                        <Badge className="ml-auto bg-primary text-white hover:bg-primary transition-all duration-300">
+                        <Badge className="ml-auto bg-primary text-white hover:bg-primary" transition-all duration-300>
                           {unreadMessagesCount}
                         </Badge>
                       )}
@@ -2869,14 +2854,14 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                     <Button
                       variant="ghost"
-                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                       onClick={() => { onNavigate?.('admin-contact-messages'); setShowMobileMenu(false); }}
                       data-testid="nav-contact-messages-admin"
                     >
                       <FileText className="w-5 h-5 mr-3" />
                       <span>Contact Messages</span>
                       {newContactMessagesCount > 0 && (
-                        <Badge className="ml-auto bg-primary text-white hover:bg-primary transition-all duration-300">
+                        <Badge className="ml-auto bg-primary text-white hover:bg-primary" transition-all duration-300>
                           {newContactMessagesCount}
                         </Badge>
                       )}
@@ -2884,7 +2869,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                     <Button
                       variant="ghost"
-                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                       onClick={() => { onNavigate?.('admin-applications-management'); setShowMobileMenu(false); }}
                       data-testid="nav-applications-admin"
                     >
@@ -2894,7 +2879,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                     <Button
                       variant="ghost"
-                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                       onClick={() => { onNavigate?.('admin-subject-approval'); setShowMobileMenu(false); }}
                       data-testid="nav-subject-approval"
                     >
@@ -2999,14 +2984,14 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                     <Button
                       variant="ghost"
-                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                       onClick={() => { onNavigate?.('admin-email-inbox'); setShowMobileMenu(false); }}
                       data-testid="nav-email-inbox"
                     >
                       <Mail className="w-5 h-5 mr-3" />
                       <span>Email Inbox</span>
                       {unreadMessagesCount > 0 && (
-                        <Badge className="ml-auto bg-primary text-white hover:bg-primary transition-all duration-300">
+                        <Badge className="ml-auto bg-primary text-white hover:bg-primary" transition-all duration-300>
                           {unreadMessagesCount}
                         </Badge>
                       )}
@@ -3014,14 +2999,14 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                     <Button
                       variant="ghost"
-                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black transition-all duration-300"
+                      className="w-full h-11 rounded-lg transition-colors justify-start text-white hover:bg-[#c4ee3d] hover:text-black" transition-all duration-300
                       onClick={() => { onNavigate?.('admin-contact-messages'); setShowMobileMenu(false); }}
                       data-testid="nav-contact-messages"
                     >
                       <FileText className="w-5 h-5 mr-3" />
                       <span>Contact Messages</span>
                       {newContactMessagesCount > 0 && (
-                        <Badge className="ml-auto bg-primary text-white hover:bg-primary transition-all duration-300">
+                        <Badge className="ml-auto bg-primary text-white hover:bg-primary" transition-all duration-300>
                           {newContactMessagesCount}
                         </Badge>
                       )}
@@ -3149,7 +3134,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <FileText className="w-5 h-5 mr-3" />
               <span>Support Tickets</span>
               {newSupportTicketsCount > 0 && (
-                <Badge className="ml-auto bg-primary text-white hover:bg-primary transition-all duration-300">
+                <Badge className="ml-auto bg-primary text-white hover:bg-primary" transition-all duration-300>
                   {newSupportTicketsCount}
                 </Badge>
               )}
@@ -3204,7 +3189,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
           <div className="flex-shrink-0 mt-4 space-y-2">
             <Button
               size="sm"
-              className="w-full bg-[#0C332C] hover:bg-[#e64d2e] text-white transition-all duration-300"
+              className="w-full bg-[#0C332C] hover:bg-[#e64d2e] text-white" transition-all duration-300
               onClick={handleLogout}
               disabled={isLoggingOut}
               data-testid="button-logout"
@@ -3254,7 +3239,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 <div className="grid grid-cols-2 gap-3 md:gap-4">
                   {/* Messages */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C]" transition-all duration-300 
                     data-testid="card-messages"
                     onClick={() => setSelectedTab("messaging")}
                   >
@@ -3271,7 +3256,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* News */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#c4ee3d] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#c4ee3d] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#c4ee3d] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#c4ee3d]" transition-all duration-300 
                     data-testid="card-news"
                     onClick={() => setSelectedTab("announcements")}
                   >
@@ -3288,7 +3273,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Mod */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C]" transition-all duration-300 
                     data-testid="card-mod"
                     onClick={() => setSelectedTab("moderation")}
                   >
@@ -3305,7 +3290,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Community */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2]" transition-all duration-300 
                     data-testid="card-community"
                     onClick={() => setSelectedTab("community")}
                   >
@@ -3322,7 +3307,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Groups */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C]" transition-all duration-300 
                     data-testid="card-groups"
                     onClick={() => setSelectedTab("groups")}
                   >
@@ -3339,7 +3324,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Support */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#0C332C] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#0C332C]" transition-all duration-300 
                     data-testid="card-support"
                     onClick={() => setSelectedTab("help-chat")}
                   >
@@ -3356,7 +3341,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Profiles */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#c4ee3d] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#c4ee3d] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#c4ee3d] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#c4ee3d]" transition-all duration-300 
                     data-testid="card-profiles"
                     onClick={() => setSelectedTab("support-profiles")}
                   >
@@ -3373,7 +3358,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Mode */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2]" transition-all duration-300 
                     data-testid="card-mode"
                     onClick={() => setSelectedTab("assignment-mode")}
                   >
@@ -3390,7 +3375,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Quick */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#c4ee3d] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#c4ee3d] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#c4ee3d] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#c4ee3d]" transition-all duration-300 
                     data-testid="card-quick"
                     onClick={() => setSelectedTab("quick-responses")}
                   >
@@ -3407,7 +3392,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Blog */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#A0FAB2] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#A0FAB2]" transition-all duration-300 
                     data-testid="card-blog"
                     onClick={() => onNavigate?.('admin-blog-management')}
                   >
@@ -3424,7 +3409,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Courses */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#3b82f6] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#3b82f6] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#3b82f6] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#3b82f6]" transition-all duration-300 
                     data-testid="card-courses"
                     onClick={() => onNavigate?.('admin-course-management')}
                   >
@@ -3441,7 +3426,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Applications */}
                   <Card 
-                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#f59e0b] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#f59e0b] transition-all duration-300" 
+                    className="p-4 md:p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-[#f59e0b] dark:bg-gray-800 dark:border-gray-700 dark:hover:border-[#f59e0b]" transition-all duration-300 
                     data-testid="card-applications"
                     onClick={() => onNavigate?.('admin-applications-management')}
                   >
@@ -4167,7 +4152,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                       <div className="text-center py-8 text-muted-foreground">No assignments found</div>
                     ) : (
                       assignments.map((assignment: TeacherStudent, index: number) => (
-                        <div key={`${assignment.teacherId}-${assignment.studentId}-${index}`} className="flex items-center gap-4 p-4 rounded-lg border hover:bg-muted/50 transition-all duration-300">
+                        <div key={`${assignment.teacherId}-${assignment.studentId}-${index}`} className="flex items-center gap-4 p-4 rounded-lg border hover:bg-muted/50" transition-all duration-300>
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                               <span className="font-medium">{assignment.teacherName}</span>
@@ -5005,7 +4990,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
             <Accordion type="multiple" className="space-y-4">
               {/* Admin Profile Settings Section */}
               <AccordionItem value="profile-settings" className="border rounded-lg px-6">
-                <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                   <div className="flex items-center gap-3 text-left">
                     <User className="h-5 w-5 flex-shrink-0" />
                     <div>
@@ -5026,7 +5011,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                 <>
                   {/* API Keys Section */}
                   <AccordionItem value="api-keys" className="border rounded-lg px-6">
-                    <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                    <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                       <div className="flex items-center gap-3 text-left">
                         <Key className="h-5 w-5 flex-shrink-0" />
                         <div>
@@ -5044,7 +5029,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Payment Gateway Configuration Section */}
                   <AccordionItem value="payment-gateways" className="border rounded-lg px-6">
-                    <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                    <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                       <div className="flex items-center gap-3 text-left">
                         <CreditCard className="h-5 w-5 flex-shrink-0" />
                         <div>
@@ -5062,7 +5047,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Theme & Branding Section */}
                   <AccordionItem value="theme-branding" className="border rounded-lg px-6">
-                    <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                    <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                       <div className="flex items-center gap-3 text-left">
                         <Palette className="h-5 w-5 flex-shrink-0" />
                         <div>
@@ -5080,7 +5065,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Social Media Section */}
                   <AccordionItem value="social-media" className="border rounded-lg px-6">
-                    <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                    <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                       <div className="flex items-center gap-3 text-left">
                         <Share2 className="h-5 w-5 flex-shrink-0" />
                         <div>
@@ -5098,7 +5083,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Default Freelancer Cover Section */}
                   <AccordionItem value="default-cover" className="border rounded-lg px-6">
-                    <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                    <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                       <div className="flex items-center gap-3 text-left">
                         <ImageIcon className="h-5 w-5 flex-shrink-0" />
                         <div>
@@ -5116,7 +5101,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Logo Management Section */}
                   <AccordionItem value="logo-management" className="border rounded-lg px-6">
-                    <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                    <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                       <div className="flex items-center gap-3 text-left">
                         <Settings className="h-5 w-5 flex-shrink-0" />
                         <div>
@@ -5134,7 +5119,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* Coupon Management Section */}
                   <AccordionItem value="coupon-management" className="border rounded-lg px-6">
-                    <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                    <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                       <div className="flex items-center gap-3 text-left">
                         <Star className="h-5 w-5 flex-shrink-0" />
                         <div>
@@ -5152,7 +5137,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
 
                   {/* App Downloads Section */}
                   <AccordionItem value="app-downloads" className="border rounded-lg px-6">
-                    <AccordionTrigger className="hover:no-underline py-4 transition-all duration-300">
+                    <AccordionTrigger className="hover:no-underline py-4" transition-all duration-300>
                       <div className="flex items-center gap-3 text-left">
                         <Download className="h-5 w-5 flex-shrink-0" />
                         <div>
@@ -5251,7 +5236,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                           window.location.href = url.toString();
                         }
                       }}
-                      className="bg-primary hover:bg-primary text-white transition-all duration-300"
+                      className="bg-primary hover:bg-primary text-white" transition-all duration-300
                       data-testid="admin-create-product-button"
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -5531,7 +5516,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                     <Button 
                                       variant="default"
                                       size="sm"
-                                      className="bg-primary hover:bg-primary text-white transition-all duration-300"
+                                      className="bg-primary hover:bg-primary text-white" transition-all duration-300
                                       data-testid={`button-reply-${ticket.id}`}
                                     >
                                       <MessageSquare className="h-4 w-4 mr-2 text-white" />
@@ -5628,7 +5613,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                   <AjaxButton
                                     operation={activeTicketId === ticket.id ? ticketAjaxOperation : 'idle'}
                                     variant="default"
-                                    className="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1.5 transition-all duration-300"
+                                    className="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1.5" transition-all duration-300
                                     onClick={() => {
                                       setTicketToResolve(ticket);
                                       setResolveDialogOpen(true);
@@ -5648,7 +5633,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                                 <AjaxButton
                                   operation={activeTicketId === ticket.id ? ticketAjaxOperation : 'idle'}
                                   variant="destructive"
-                                  className="bg-primary hover:bg-primary/700 text-white text-sm px-3 py-1.5 transition-all duration-300"
+                                  className="bg-primary hover:bg-primary/700 text-white text-sm px-3 py-1.5" transition-all duration-300
                                   onClick={() => {
                                     setTicketToDelete(ticket);
                                     setDeleteDialogOpen(true);
@@ -5696,7 +5681,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                         }
                       }}
                       disabled={closeTicketMutation.isPending}
-                      className="bg-green-600 hover:bg-green-700 transition-all duration-300"
+                      className="bg-green-600 hover:bg-green-700" transition-all duration-300
                       data-testid="button-confirm-resolve"
                       loadingText="Resolving ticket..."
                       successText="Resolved!"

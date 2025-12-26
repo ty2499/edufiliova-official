@@ -329,7 +329,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden text-gray-500 hover:text-gray-700 px-3 py-2 transition-all duration-300"
+                className="lg:hidden text-gray-500 hover:text-gray-700 px-3 py-2" transition-all duration-300
                 data-testid="button-mobile-menu"
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -400,7 +400,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
             <div className="p-4 border-t border-gray-200 space-y-2 flex-shrink-0">
               <Button
                 size="sm"
-                className="w-full bg-[#0C332C] hover:bg-[#e64d2e] text-white transition-all duration-300"
+                className="w-full bg-[#0C332C] hover:bg-[#e64d2e] text-white" transition-all duration-300
                 onClick={handleLogout}
                 disabled={isLoggingOut}
                 data-testid="button-logout"
@@ -554,19 +554,19 @@ function DashboardHome({ onNavigate, userName }: { onNavigate: (page: DashboardP
           <CardTitle>Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white transition-all duration-300" data-testid="button-view-purchases" onClick={() => onNavigate('purchases')}>
+          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white" transition-all duration-300 data-testid="button-view-purchases" onClick={() => onNavigate('purchases')}>
             <ShoppingBag className="h-4 w-4 mr-2" />
             View Purchases
           </Button>
-          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white transition-all duration-300" data-testid="button-create-ad" onClick={() => onNavigate('ads')}>
+          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white" transition-all duration-300 data-testid="button-create-ad" onClick={() => onNavigate('ads')}>
             <Plus className="h-4 w-4 mr-2" />
             Create Ad
           </Button>
-          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white transition-all duration-300" data-testid="button-add-funds" onClick={() => onNavigate('wallet')}>
+          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white" transition-all duration-300 data-testid="button-add-funds" onClick={() => onNavigate('wallet')}>
             <DollarSign className="h-4 w-4 mr-2" />
             Add Funds
           </Button>
-          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white transition-all duration-300" data-testid="button-contact-support" onClick={() => onNavigate('support')}>
+          <Button size="sm" className="justify-start bg-primary hover:bg-primary text-white" transition-all duration-300 data-testid="button-contact-support" onClick={() => onNavigate('support')}>
             <HeadphonesIcon className="h-4 w-4 mr-2" />
             Contact Support
           </Button>
@@ -730,7 +730,7 @@ function OrderSlipViewer({
                     </thead>
                     <tbody className="divide-y divide-gray-200">
                       {orderDetails.items.map((item: any, index: number) => (
-                        <tr key={item.id} className="hover:bg-gray-50 transition-colors transition-all duration-300" data-testid={`order-item-${index}`}>
+                        <tr key={item.id} className="hover:bg-gray-50 transition-colors" transition-all duration-300 data-testid={`order-item-${index}`}>
                           <td className="px-4 py-4">
                             <p className="font-medium text-gray-900">{item.product?.name || 'Unknown Item'}</p>
                             {item.product?.description && (
@@ -786,20 +786,20 @@ function OrderSlipViewer({
                     <h4 className="font-semibold mb-2">Contact Us</h4>
                     <p className="mb-1 opacity-90 flex items-center gap-1.5">
                       <HeadphonesIcon className="h-3.5 w-3.5 flex-shrink-0" />
-                      <a href="mailto:support@edufiliova.com" className="text-[#C4F03B] hover:underline transition-all duration-300">
+                      <a href="mailto:support@edufiliova.com" className="text-[#C4F03B] hover:underline" transition-all duration-300>
                         support@edufiliova.com
                       </a>
                     </p>
                     <p className="opacity-90 flex items-center gap-1.5">
                       <CreditCard className="h-3.5 w-3.5 flex-shrink-0" />
-                      <a href="mailto:payments@edufiliova.com" className="text-[#C4F03B] hover:underline transition-all duration-300">
+                      <a href="mailto:payments@edufiliova.com" className="text-[#C4F03B] hover:underline" transition-all duration-300>
                         payments@edufiliova.com
                       </a>
                     </p>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Website</h4>
-                    <a href="https://edufiliova.com" target="_blank" rel="noopener noreferrer" className="text-[#C4F03B] hover:underline opacity-90 flex items-center gap-1.5 transition-all duration-300">
+                    <a href="https://edufiliova.com" target="_blank" rel="noopener noreferrer" className="text-[#C4F03B] hover:underline opacity-90 flex items-center gap-1.5" transition-all duration-300>
                       <Globe className="h-3.5 w-3.5 flex-shrink-0" />
                       <span>edufiliova.com</span>
                     </a>
@@ -813,7 +813,7 @@ function OrderSlipViewer({
                 <div className="pt-4 border-t border-white/20 text-center">
                   <p className="text-xs opacity-75">
                     This is an automated invoice. For questions or concerns, please contact{' '}
-                    <a href="mailto:support@edufiliova.com" className="text-[#C4F03B] hover:underline transition-all duration-300">
+                    <a href="mailto:support@edufiliova.com" className="text-[#C4F03B] hover:underline" transition-all duration-300>
                       support@edufiliova.com
                     </a>
                   </p>
@@ -1050,7 +1050,7 @@ function PurchasesPage({ onNavigate }: { onNavigate?: (page: string) => void }) 
                         <Button 
                           size="sm" 
                           onClick={() => setSelectedOrderId(purchase.orderId)}
-                          className="bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-full px-4 py-1 h-8 text-xs transition-all duration-300"
+                          className="bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-full px-4 py-1 h-8 text-xs" transition-all duration-300
                           data-testid={`button-view-slip-${purchase.id}`}
                         >
                           <Receipt className="h-3 w-3 mr-1.5" />
@@ -1059,7 +1059,7 @@ function PurchasesPage({ onNavigate }: { onNavigate?: (page: string) => void }) 
                         <Button 
                           size="sm" 
                           onClick={() => purchase.orderId && handleDownloadSlip(purchase.orderId)}
-                          className="bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-full px-4 py-1 h-8 text-xs transition-all duration-300"
+                          className="bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-full px-4 py-1 h-8 text-xs" transition-all duration-300
                           data-testid={`button-download-${purchase.id}`}
                         >
                           <Download className="h-3 w-3 mr-1.5" />
@@ -1076,7 +1076,7 @@ function PurchasesPage({ onNavigate }: { onNavigate?: (page: string) => void }) 
                             onNavigate?.('course-player');
                           }
                         }}
-                        className="bg-primary hover:bg-primary text-white font-medium rounded-full px-4 py-1 h-8 text-xs transition-all duration-300"
+                        className="bg-primary hover:bg-primary text-white font-medium rounded-full px-4 py-1 h-8 text-xs" transition-all duration-300
                         data-testid={`button-view-course-${purchase.id}`}
                       >
                         View Course
@@ -1312,7 +1312,7 @@ function AdsPage({ onNavigateExternal, onNavigateInternal }: { onNavigateExterna
         <CardContent>
           <Button
             onClick={() => onNavigateInternal?.('create-ad')}
-            className="hover:bg-primary bg-[#1d4ed8] text-[#ffffff] transition-all duration-300"
+            className="hover:bg-primary bg-[#1d4ed8] text-[#ffffff]" transition-all duration-300
             data-testid="button-create-banner-ad"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -1481,7 +1481,7 @@ function OldCoursesPage({ onNavigate }: { onNavigate?: (page: string) => void })
               <p className="text-gray-600 dark:text-gray-400 mb-6">Start learning by browsing our course catalog</p>
               <Button 
                 onClick={() => onNavigate?.('courses')} 
-                className="bg-primary hover:bg-primary text-white transition-all duration-300"
+                className="bg-primary hover:bg-primary text-white" transition-all duration-300
                 data-testid="button-explore-courses"
               >
                 <BookOpen className="h-4 w-4 mr-2" />
@@ -1491,7 +1491,7 @@ function OldCoursesPage({ onNavigate }: { onNavigate?: (page: string) => void })
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {courses.map((course: any, index: number) => (
-                <Card key={course.courseId || index} className="hover:shadow-lg transition-shadow transition-all duration-300" data-testid={`card-course-${index}`}>
+                <Card key={course.courseId || index} className="hover:shadow-lg transition-shadow" transition-all duration-300 data-testid={`card-course-${index}`}>
                   {course.thumbnailUrl && (
                     <div className="aspect-video bg-gray-100 overflow-hidden rounded-t-lg">
                       <img 
@@ -1531,7 +1531,7 @@ function OldCoursesPage({ onNavigate }: { onNavigate?: (page: string) => void })
                         window.history.pushState({}, '', `?page=course-player&courseId=${course.courseId}`);
                         onNavigate?.('course-player');
                       }}
-                      className="w-full bg-primary hover:bg-primary text-white transition-all duration-300"
+                      className="w-full bg-primary hover:bg-primary text-white" transition-all duration-300
                       size="sm"
                       data-testid={`button-continue-course-${index}`}
                     >
@@ -2172,7 +2172,7 @@ function EmbeddedPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { am
         <h2 className="text-2xl font-bold text-gray-900">Add Funds to Wallet</h2>
         <button
           onClick={onCancel}
-          className="text-gray-400 hover:text-gray-600 transition-colors transition-all duration-300"
+          className="text-gray-400 hover:text-gray-600 transition-colors" transition-all duration-300
           data-testid="button-close-modal"
         >
           <X className="w-5 h-5" />
@@ -2334,7 +2334,7 @@ function EmbeddedPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { am
                     handleSubmit(e as any);
                   }}
                   disabled={!stripe || isLoading}
-                  className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
+                  className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
                   data-testid="button-complete-payment"
                 >
                   {isLoading ? (
@@ -2358,7 +2358,7 @@ function EmbeddedPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { am
                 <p className="text-sm text-muted-foreground">You will be redirected to PayPal to complete your payment</p>
                 <Button
                   disabled={isLoading}
-                  className="w-full bg-[#0070ba] hover:bg-[#003087] text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
+                  className="w-full bg-[#0070ba] hover:bg-[#003087] text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
                   data-testid="button-paypal-checkout"
                 >
                   {isLoading ? 'Redirecting...' : 'Continue with PayPal'}
@@ -2380,7 +2380,7 @@ function EmbeddedPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { am
                     handleSubmit(e as any);
                   }}
                   disabled={!stripe || isLoading}
-                  className="w-full bg-gray-900 hover:bg-gray-800 text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
+                  className="w-full bg-gray-900 hover:bg-gray-800 text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
                   data-testid="button-wallet-pay"
                 >
                   {isLoading ? (
@@ -2451,7 +2451,7 @@ function MembershipPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { 
         <h2 className="text-2xl font-bold text-gray-900">Membership Upgrade</h2>
         <button
           onClick={onCancel}
-          className="text-gray-400 hover:text-gray-600 transition-colors transition-all duration-300"
+          className="text-gray-400 hover:text-gray-600 transition-colors" transition-all duration-300
           data-testid="button-close-modal"
         >
           <X className="w-5 h-5" />
@@ -2613,7 +2613,7 @@ function MembershipPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { 
                     handleSubmit(e as any);
                   }}
                   disabled={!stripe || isLoading}
-                  className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
+                  className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
                   data-testid="button-complete-payment"
                 >
                   {isLoading ? (
@@ -2637,7 +2637,7 @@ function MembershipPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { 
                 <p className="text-sm text-muted-foreground">You will be redirected to PayPal to complete your upgrade</p>
                 <Button
                   disabled={isLoading}
-                  className="w-full bg-[#0070ba] hover:bg-[#003087] text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
+                  className="w-full bg-[#0070ba] hover:bg-[#003087] text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
                   data-testid="button-paypal-checkout"
                 >
                   {isLoading ? 'Redirecting...' : 'Continue with PayPal'}
@@ -2659,7 +2659,7 @@ function MembershipPaymentForm({ amount, clientSecret, onSuccess, onCancel }: { 
                     handleSubmit(e as any);
                   }}
                   disabled={!stripe || isLoading}
-                  className="w-full bg-gray-900 hover:bg-gray-800 text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
+                  className="w-full bg-gray-900 hover:bg-gray-800 text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
                   data-testid="button-wallet-pay"
                 >
                   {isLoading ? (
@@ -2839,7 +2839,7 @@ function WalletPage() {
                 onClick={handleAddFunds}
                 disabled={!addAmount || createPaymentIntentMutation.isPending}
                 data-testid="button-add-funds"
-                className="bg-primary text-white hover:bg-primary transition-all duration-300"
+                className="bg-primary text-white hover:bg-primary" transition-all duration-300
               >
                 Add Funds
               </Button>
@@ -2873,7 +2873,7 @@ function WalletPage() {
                 onClick={handleRedeemVoucher}
                 disabled={!voucherCode.trim() || voucherAjax.isLoading}
                 data-testid="button-redeem-voucher"
-                className="bg-primary text-white hover:bg-primary transition-all duration-300"
+                className="bg-primary text-white hover:bg-primary" transition-all duration-300
               >
                 {voucherAjax.isLoading ? 'Redeeming...' : 'Redeem'}
               </Button>
@@ -3528,7 +3528,7 @@ function SettingsPage() {
         {!isEditing && (
           <Button
             onClick={() => setIsEditing(true)}
-            className="bg-[#0C332C] hover:bg-[#e64d2e] text-white transition-all duration-300"
+            className="bg-[#0C332C] hover:bg-[#e64d2e] text-white" transition-all duration-300
             data-testid="button-edit-profile"
           >
             Edit Profile
@@ -3669,7 +3669,7 @@ function SettingsPage() {
                 <Button
                   type="submit"
                   disabled={updateMutation.isPending}
-                  className="bg-primary hover:bg-primary text-white transition-all duration-300"
+                  className="bg-primary hover:bg-primary text-white" transition-all duration-300
                   data-testid="button-save-settings"
                 >
                   {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
@@ -3795,7 +3795,7 @@ function ReferralSection() {
             />
             <Button
               onClick={handleCopy}
-              className="bg-primary hover:bg-primary text-white transition-all duration-300"
+              className="bg-primary hover:bg-primary text-white" transition-all duration-300
               data-testid="button-copy-referral"
             >
               {copied ? (
@@ -4005,7 +4005,7 @@ function BecomeStudentPage() {
             <Button
               type="submit"
               disabled={upgradeMutation.isPending}
-              className="w-full bg-primary hover:bg-primary text-white font-semibold transition-all duration-300"
+              className="w-full bg-primary hover:bg-primary text-white font-semibold" transition-all duration-300
               data-testid="button-upgrade-student"
             >
               {upgradeMutation.isPending ? 'Upgrading...' : 'Upgrade to Student Account'}

@@ -610,7 +610,7 @@ export default function SubscriptionPaymentModal({
           <div className="flex justify-end p-4 pb-0">
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors transition-all duration-300"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors" transition-all duration-300
               data-testid="button-close-receipt"
             >
               <X className="w-5 h-5" />
@@ -780,7 +780,7 @@ export default function SubscriptionPaymentModal({
         <div className="flex justify-end p-4 pb-0">
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors transition-all duration-300"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
             disabled={processing}
             data-testid="button-close-modal"
           >
@@ -1019,7 +1019,7 @@ export default function SubscriptionPaymentModal({
                   <Button
                     onClick={handlePayPalPayment}
                     disabled={processing}
-                    className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-[#0070ba] hover:bg-[#005ea6] text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-paypal-checkout"
                   >
                     {processing ? 'Redirecting...' : 'Continue with PayPal'}
@@ -1082,7 +1082,7 @@ export default function SubscriptionPaymentModal({
                   <Button
                     type="submit"
                     disabled={!stripe || !clientSecret || processing}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-submit-payment"
                   >
                     {processing ? 'Processing...' : `Complete Purchase`}
@@ -1111,7 +1111,7 @@ export default function SubscriptionPaymentModal({
                   <Button 
                     onClick={handleSavedCardPayment}
                     disabled={processing}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-saved-card-checkout"
                   >
                     {processing ? "Processing..." : "Complete Purchase"}
@@ -1192,7 +1192,7 @@ export default function SubscriptionPaymentModal({
                       }
                     }}
                     disabled={processing || !hasSufficientBalance}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-wallet-checkout"
                   >
                     {processing ? 'Processing...' : `Pay $${plan.price.toFixed(2)} from Wallet`}
@@ -1227,7 +1227,7 @@ export default function SubscriptionPaymentModal({
                       });
                     }}
                     disabled={processing}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-paystack-checkout"
                   >
                     {processing ? 'Processing...' : 'Complete Purchase'}
@@ -1261,7 +1261,7 @@ export default function SubscriptionPaymentModal({
                   <Button
                     onClick={handleDodoCardPayment}
                     disabled={processing}
-                    className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white py-6 text-base font-semibold rounded-xl transition-all duration-300"
+                    className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white py-6 text-base font-semibold rounded-xl" transition-all duration-300
                     data-testid="button-dodopay-checkout"
                   >
                     {processing ? (
@@ -1327,7 +1327,7 @@ export default function SubscriptionPaymentModal({
                       }
                     }}
                     disabled={processing}
-                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold transition-all duration-300"
+                    className="w-full bg-primary hover:bg-primary text-white py-6 text-base font-semibold" transition-all duration-300
                     data-testid="button-vodapay-checkout"
                   >
                     {processing ? 'Redirecting...' : 'Continue with VodaPay'}

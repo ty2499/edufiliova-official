@@ -170,7 +170,7 @@ export function PostItem({ post, currentUserId, onLike, onEdit, onDelete }: Post
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-destructive hover:text-destructive transition-all duration-300"
+                      className="h-8 w-8 text-destructive hover:text-destructive" transition-all duration-300
                       onClick={onDelete}
                       data-testid={`delete-post-${post.id}`}
                     >
@@ -210,7 +210,7 @@ export function PostItem({ post, currentUserId, onLike, onEdit, onDelete }: Post
                     setShowRepliesDialog(true);
                     setShowReplyInput(true);
                   }}
-                  className="h-8 px-2 text-muted-foreground hover:text-foreground transition-all duration-300"
+                  className="h-8 px-2 text-muted-foreground hover:text-foreground" transition-all duration-300
                   data-testid={`reply-button-${post.id}`}
                 >
                   <Reply className="h-4 w-4 mr-1" />
@@ -221,7 +221,7 @@ export function PostItem({ post, currentUserId, onLike, onEdit, onDelete }: Post
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowRepliesDialog(true)}
-                  className="h-8 px-2 text-foreground hover:text-foreground/80 font-medium transition-all duration-300"
+                  className="h-8 px-2 text-foreground hover:text-foreground/80 font-medium" transition-all duration-300
                   data-testid={`replies-post-${post.id}`}
                 >
                   <MessageCircle className="h-4 w-4 mr-1" />

@@ -54,7 +54,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
             <button
               key={index}
               onClick={() => handleNavigate(item.page)}
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-100/70 dark:hover:bg-gray-800/70 transition-all duration-200 group text-left transition-all duration-300"
+              className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-100/70 dark:hover:bg-gray-800/70 transition-all duration-200 group text-left" transition-all duration-300
               data-testid={`megamenu-pricing-${index}`}
             >
               <div className={`flex-shrink-0 w-12 h-12 ${item.iconBg} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
@@ -63,7 +63,7 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold text-sm text-[#a0fab2] dark:text-[#a0fab2] group-hover:text-[#a0fab2] transition-colors transition-all duration-300">
+                <h4 className="font-semibold text-sm text-[#a0fab2] dark:text-[#a0fab2] group-hover:text-[#a0fab2] transition-colors" transition-all duration-300>
                   {item.title}
                 </h4>
                 <p className="text-xs text-white dark:text-white mt-0.5">
