@@ -1127,11 +1127,11 @@ export default function SubscriptionPaymentModal({
               {/* System Wallet Payment */}
               {selectedMethod === 'system_wallet' && (
                 <div className="space-y-4">
-                  <div className="p-4 bg-green-50 dark:bg-green-950/20 rounded-lg">
-                    <p className="text-sm font-medium text-green-800 dark:text-green-100">
+                  <div className="p-4 bg-[#0d3931]/10 dark:bg-[#0d3931]/20 rounded-lg">
+                    <p className="text-sm font-medium text-[#0d3931] dark:text-[#0d3931]">
                       Pay with your wallet balance
                     </p>
-                    <p className="text-lg font-bold text-green-700 dark:text-green-300 mt-1">
+                    <p className="text-lg font-bold text-[#0d3931] dark:text-[#0d3931]/80 mt-1">
                       Available: ${walletBalance.toFixed(2)}
                     </p>
                     {!hasSufficientBalance && (
