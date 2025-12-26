@@ -151,7 +151,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries }: {
               variant="outline"
               size="sm"
               onClick={() => handleQuickRegionSelect(codes)}
-              className="text-xs bg-white hover:bg-primary/10 border-white text-gray-900" transition-all duration-300
+              className="text-xs bg-white hover:bg-primary/10 border-white text-gray-900 transition-all duration-300"
             >
               {region} ({codes.length})
             </Button>
@@ -163,7 +163,7 @@ const CountrySelector = ({ selectedCountries, onCountryToggle, countries }: {
             variant="outline"
             size="sm"
             onClick={clearSelection}
-            className="text-xs bg-white hover:bg-primary/100 border-white text-primary-600" transition-all duration-300
+            className="text-xs bg-white hover:bg-primary/100 border-white text-primary-600 transition-all duration-300"
           >
             Clear All ({selectedCountries.length})
           </Button>
@@ -556,7 +556,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
               />
               <label
                 htmlFor="banner-image-upload"
-                className="cursor-pointer inline-flex items-center px-3 py-2 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm text-xs md:text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" transition-all duration-300
+                className="cursor-pointer inline-flex items-center px-3 py-2 md:px-4 md:py-2 border border-gray-300 rounded-md shadow-sm text-xs md:text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-all duration-300"
               >
                 Choose File
               </label>
@@ -837,7 +837,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
               onSubmit(submitData);
             }}
             disabled={createAdMutation.isPending || uploadingImage || (!ad && !selectedFile && !formData.imageUrl)}
-            className="w-full sm:w-auto bg-primary hover:bg-primary text-white font-medium px-6 py-2 rounded-lg" transition-all duration-300
+            className="w-full sm:w-auto bg-primary hover:bg-primary text-white font-medium px-6 py-2 rounded-lg transition-all duration-300"
             data-testid="create-ad-button"
           >
             {uploadingImage ? 'Uploading...' : createAdMutation.isPending ? 'Processing...' : 'Create Ad'}
@@ -1087,7 +1087,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
                             size="sm"
                             variant="ghost"
                             onClick={() => deleteAdMutation.mutate(ad.id)}
-                            className="text-primary-600 hover:text-primary-700 hover:bg-primary/50" transition-all duration-300
+                            className="text-primary-600 hover:text-primary-700 hover:bg-primary/50 transition-all duration-300"
                             data-testid={`button-delete-ad-${ad.id}`}
                             title="Delete Ad"
                           >
@@ -1099,7 +1099,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
                                 size="sm"
                                 variant="ghost"
                                 onClick={() => approveAdMutation.mutate(ad.id)}
-                                className="text-green-600 hover:text-green-700 hover:bg-green-50" transition-all duration-300
+                                className="text-green-600 hover:text-green-700 hover:bg-green-50 transition-all duration-300"
                                 data-testid={`button-approve-ad-${ad.id}`}
                                 title="Approve Ad"
                               >
@@ -1109,7 +1109,7 @@ export default function AdsDashboard({ onNavigate }: AdsDashboardProps) {
                                 size="sm"
                                 variant="ghost"
                                 onClick={() => rejectAdMutation.mutate(ad.id)}
-                                className="text-primary-600 hover:text-primary-700 hover:bg-primary/50" transition-all duration-300
+                                className="text-primary-600 hover:text-primary-700 hover:bg-primary/50 transition-all duration-300"
                                 data-testid={`button-reject-ad-${ad.id}`}
                                 title="Reject Ad"
                               >

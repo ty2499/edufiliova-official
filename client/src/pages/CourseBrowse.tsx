@@ -425,16 +425,16 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredCourses?.map((course: Course) => {
                   return (
-                    <Card key={course.id} className="group transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden" transition-all duration-300 data-testid={`card-course-${course.id}`}>
+                    <Card key={course.id} className="group transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300" data-testid={`card-course-${course.id}`}>
                       <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 flex items-center justify-center overflow-hidden relative">
                         {course.thumbnailUrl ? (
                           <img 
                             src={course.thumbnailUrl} 
                             alt={course.title}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" transition-all duration-300
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 transition-all duration-300"
                           />
                         ) : (
-                          <BookOpen className="h-16 w-16 text-muted-foreground transition-all duration-300 group-hover:h-20 group-hover:w-20" transition-all duration-300 />
+                          <BookOpen className="h-16 w-16 text-muted-foreground transition-all duration-300 group-hover:h-20 group-hover:w-20 transition-all duration-300" />
                         )}
                       </div>
                       
@@ -469,7 +469,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                             /* Not Logged In */
                             <Button
                               onClick={() => onNavigate('auth')}
-                              className="flex-1 bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-gray-900 border-0" transition-all duration-300
+                              className="flex-1 bg-[#A0FAB2] hover:bg-[#A0FAB2]/90 text-gray-900 border-0 transition-all duration-300"
                               data-testid={`button-login-${course.id}`}
                             >
                               <LogIn className="h-4 w-4 mr-2" />
@@ -478,7 +478,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                           ) : isEnrolled(course.id) ? (
                             /* Already Enrolled */
                             <Button
-                              className="flex-1 bg-[#151314] hover:bg-[#151314]/90 text-white border-0" transition-all duration-300
+                              className="flex-1 bg-[#151314] hover:bg-[#151314]/90 text-white border-0 transition-all duration-300"
                               disabled
                               data-testid={`button-enrolled-${course.id}`}
                             >
@@ -532,7 +532,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                               onNavigate(`course-detail-${course.id}`);
                             }}
                             data-testid={`button-view-${course.id}`}
-                            className="bg-[#0C332C] hover:bg-[#0C332C]/90 text-white border-0" transition-all duration-300
+                            className="bg-[#0C332C] hover:bg-[#0C332C]/90 text-white border-0 transition-all duration-300"
                           >
                             View
                           </Button>
@@ -577,13 +577,13 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                 {enrolledCourses?.map((course: EnrolledCourse) => {
                   const isCompleted = Number(course.progress) >= 100;
                   return (
-                    <Card key={course.courseId} className="group transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700" transition-all duration-300>
+                    <Card key={course.courseId} className="group transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300">
                       <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 flex items-center justify-center overflow-hidden relative">
                         {course.thumbnailUrl ? (
                           <img 
                             src={course.thumbnailUrl} 
                             alt={course.title}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" transition-all duration-300
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 transition-all duration-300"
                           />
                         ) : (
                           <BookOpen className="h-12 w-12 text-muted-foreground" />
@@ -626,7 +626,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                               window.history.pushState({}, '', `?page=course-player&courseId=${course.courseId}`);
                               onNavigate('course-player');
                             }}
-                            className="flex-1 bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white border-0" transition-all duration-300 
+                            className="flex-1 bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white border-0 transition-all duration-300" 
                             data-testid={`button-continue-${course.courseId}`}
                           >
                             {isCompleted ? (
@@ -686,7 +686,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {completedCoursesWithCertificates.map((course: CompletedCourseWithCertificate) => (
-                  <Card key={course.courseId} className="group transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700" transition-all duration-300 data-testid={`card-certificate-${course.courseId}`}>
+                  <Card key={course.courseId} className="group transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 transition-all duration-300" data-testid={`card-certificate-${course.courseId}`}>
                     {/* Certificate Preview */}
                     <div className="aspect-video bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 flex items-center justify-center border-b-2 border-gray-200 dark:border-gray-700 relative overflow-hidden">
                       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM5Q0EzQUYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItaDJ2LTJoLTJ6bS0yIDBoLTJ2Mmgydi0yaC0yem0tMiAwdi0yaC0ydjJoMnptMC0yaDJ2LTJoLTJ2MnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
@@ -755,7 +755,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                         {course.hasCertificate && course.certificate ? (
                           <Button
                             onClick={() => handleClaimCertificate(course.courseId)}
-                            className="w-full bg-primary hover:bg-primary text-white" transition-all duration-300
+                            className="w-full bg-primary hover:bg-primary text-white transition-all duration-300"
                             data-testid={`button-download-cert-${course.courseId}`}
                           >
                             <Download className="h-4 w-4 mr-2" />
@@ -764,7 +764,7 @@ export default function CourseBrowse({ onNavigate, hideFooter = false }: CourseB
                         ) : (
                           <Button
                             onClick={() => handleClaimCertificate(course.courseId)}
-                            className="w-full bg-[#0C332C] hover:bg-[#0C332C]/90 text-white" transition-all duration-300
+                            className="w-full bg-[#0C332C] hover:bg-[#0C332C]/90 text-white transition-all duration-300"
                             data-testid={`button-claim-cert-${course.courseId}`}
                           >
                             <Award className="h-4 w-4 mr-2" />

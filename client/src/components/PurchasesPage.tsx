@@ -161,7 +161,7 @@ function OrderSlipViewer({
                     </thead>
                     <tbody className="divide-y divide-gray-200">
                       {orderDetails.items.map((item: any, index: number) => (
-                        <tr key={item.id} className="hover:bg-gray-50 transition-colors" transition-all duration-300 data-testid={`order-item-${index}`}>
+                        <tr key={item.id} className="hover:bg-gray-50 transition-colors transition-all duration-300" data-testid={`order-item-${index}`}>
                           <td className="px-4 py-4">
                             <p className="font-medium text-gray-900">{item.product?.name || 'Unknown Item'}</p>
                             {item.product?.description && (
@@ -385,7 +385,7 @@ export default function PurchasesPage() {
                     <Button 
                       size="sm" 
                       onClick={() => setSelectedOrderId(purchase.orderId)}
-                      className="bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-full px-4 py-1 h-8 text-xs border border-gray-200" transition-all duration-300
+                      className="bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-full px-4 py-1 h-8 text-xs border border-gray-200 transition-all duration-300"
                       data-testid={`button-view-slip-${purchase.id}`}
                     >
                       <Receipt className="h-3 w-3 mr-1.5" />
@@ -394,7 +394,7 @@ export default function PurchasesPage() {
                     <Button 
                       size="sm" 
                       onClick={() => purchase.orderId && handleDownloadSlip(purchase.orderId)}
-                      className="bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-full px-4 py-1 h-8 text-xs border border-gray-200" transition-all duration-300
+                      className="bg-white hover:bg-gray-100 text-gray-700 font-medium rounded-full px-4 py-1 h-8 text-xs border border-gray-200 transition-all duration-300"
                       data-testid={`button-download-receipt-${purchase.id}`}
                     >
                       <Download className="h-3 w-3 mr-1.5" />

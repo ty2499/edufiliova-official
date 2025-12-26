@@ -317,7 +317,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
     
     return (
       <Card 
-        className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 bg-white" transition-all duration-300
+        className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 bg-white transition-all duration-300"
         data-testid={`product-card-${product.id}`}
       >
         {/* Product Image - Click to navigate to detail page */}
@@ -339,7 +339,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
           <div className="space-y-3">
             {/* Product Title */}
             <h3 
-              className="font-bold text-lg text-gray-900 line-clamp-2 leading-tight cursor-pointer hover:text-blue-600" transition-all duration-300
+              className="font-bold text-lg text-gray-900 line-clamp-2 leading-tight cursor-pointer hover:text-blue-600 transition-all duration-300"
               onClick={() => onNavigate('product-detail', 'slide-left', { productId: product.id })}
             >
               {product.name}
@@ -401,7 +401,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
 
             {/* More like this link - Navigate to category */}
             <button 
-              className="w-full text-left text-sm text-gray-600 hover:text-gray-900 flex items-center justify-between group" transition-all duration-300
+              className="w-full text-left text-sm text-gray-600 hover:text-gray-900 flex items-center justify-between group transition-all duration-300"
               onClick={(e) => {
                 e.stopPropagation();
                 if (productCategory && onNavigate) {
@@ -410,7 +410,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
               }}
             >
               <span>Explore More</span>
-              <span className="text-gray-400 group-hover:text-gray-600 transition-colors" transition-all duration-300>→</span>
+              <span className="text-gray-400 group-hover:text-gray-600 transition-colors transition-all duration-300">→</span>
             </button>
           </div>
         </CardContent>
@@ -450,7 +450,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
 
       {/* All mockups option */}
       <div className="mb-2">
-        <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm" transition-all duration-300>
+        <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded text-sm transition-all duration-300">
           <input 
             type="radio" 
             name="filter-all-category" 
@@ -471,7 +471,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
                 {/* Main category with arrow */}
                 <button
                   onClick={() => toggleCategory(category.id)}
-                  className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-base font-medium" transition-all duration-300
+                  className="w-full flex items-center justify-between px-2 py-1.5 hover:bg-gray-50 rounded text-base font-medium transition-all duration-300"
                 >
                   <span>{category.name}</span>
                   <ChevronDown 
@@ -487,7 +487,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
                     {category.subcategories.map((sub) => (
                       <label 
                         key={sub} 
-                        className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded" transition-all duration-300
+                        className="flex items-center gap-1.5 cursor-pointer hover:bg-gray-50 px-1.5 py-1 rounded transition-all duration-300"
                       >
                         <input 
                           type="checkbox" 
@@ -510,7 +510,7 @@ export function CategoryDetail({ categoryId, onNavigate }: CategoryDetailProps) 
             ) : (
               /* Standalone categories without subcategories */
               <label 
-                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded" transition-all duration-300
+                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded transition-all duration-300"
               >
                 <input 
                   type="checkbox" 

@@ -235,7 +235,7 @@ export function FreelancerChatWidget() {
             variant="ghost"
             size="icon"
             onClick={onClose}
-            className="text-white hover:bg-white/20 h-9 w-9" transition-all duration-300
+            className="text-white hover:bg-white/20 h-9 w-9 transition-all duration-300"
             data-testid="button-close-chat"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -336,7 +336,7 @@ export function FreelancerChatWidget() {
               onClick={handleSendMessage}
               disabled={!newMessage.trim() || isLoading || isSending}
               size="icon"
-              className="rounded-full bg-[#0C332C] hover:bg-[#2548c9] text-white h-10 w-10 flex-shrink-0" transition-all duration-300
+              className="rounded-full bg-[#0C332C] hover:bg-[#2548c9] text-white h-10 w-10 flex-shrink-0 transition-all duration-300"
               data-testid="button-send"
             >
               <Send className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -385,7 +385,7 @@ export function FreelancerChatWidget() {
               variant="ghost"
               size="icon"
               onClick={() => setIsMinimized(!isMinimized)}
-              className="text-white hover:bg-white/20 h-8 w-8" transition-all duration-300
+              className="text-white hover:bg-white/20 h-8 w-8 transition-all duration-300"
               data-testid="button-minimize"
             >
               {isMinimized ? <Maximize2 className="h-4 w-4" /> : <Minimize2 className="h-4 w-4" />}
@@ -394,7 +394,7 @@ export function FreelancerChatWidget() {
               variant="ghost"
               size="icon"
               onClick={onClose}
-              className="text-white hover:bg-white/20 h-8 w-8" transition-all duration-300
+              className="text-white hover:bg-white/20 h-8 w-8 transition-all duration-300"
               data-testid="button-close"
             >
               <X className="h-4 w-4" />
@@ -484,7 +484,7 @@ export function FreelancerChatWidget() {
                   onClick={handleSendMessage}
                   disabled={!newMessage.trim() || isLoading || isSending}
                   size="icon"
-                  className="rounded-full bg-[#0C332C] hover:bg-[#2548c9] text-white h-9 w-9 flex-shrink-0" transition-all duration-300
+                  className="rounded-full bg-[#0C332C] hover:bg-[#2548c9] text-white h-9 w-9 flex-shrink-0 transition-all duration-300"
                   data-testid="button-send"
                 >
                   <Send className="h-4 w-4" />

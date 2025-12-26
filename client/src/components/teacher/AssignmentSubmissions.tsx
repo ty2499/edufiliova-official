@@ -711,7 +711,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                     <Button
                       onClick={() => handleGradeSubmission(selectedSubmission.id)}
                       disabled={gradingLoading || !gradingData.grade}
-                      className="bg-[#0C332C] hover:bg-[#2447b8] text-white" transition-all duration-300
+                      className="bg-[#0C332C] hover:bg-[#2447b8] text-white transition-all duration-300"
                       data-testid="button-submit-grade"
                     >
                       {gradingLoading ? 'Grading...' : 'Submit Grade'}
@@ -753,7 +753,7 @@ export function AssignmentSubmissions({ open, onOpenChange, assignment }: Assign
                   {submissions.map((submission) => (
                     <Card 
                       key={submission.id} 
-                      className="hover:shadow-md transition-shadow cursor-pointer" transition-all duration-300
+                      className="hover:shadow-md transition-shadow cursor-pointer transition-all duration-300"
                       onClick={() => setSelectedSubmission(submission)}
                       data-testid={`submission-card-${submission.studentId}`}
                     >

@@ -150,7 +150,7 @@ function SortableImage({ image, onDelete, onPreview }: SortableImageProps) {
       <div 
         {...attributes} 
         {...listeners}
-        className="absolute top-2 left-2 z-10 p-1 bg-black/50 rounded cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300
+        className="absolute top-2 left-2 z-10 p-1 bg-black/50 rounded cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity transition-all duration-300"
       >
         <GripVertical className="h-4 w-4 text-white" />
       </div>
@@ -181,17 +181,17 @@ function SortableImage({ image, onDelete, onPreview }: SortableImageProps) {
             <img
               src={image.thumbUrl || image.url}
               alt={image.originalName}
-              className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" transition-all duration-300
+              className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105 transition-all duration-300"
               loading="lazy"
             />
             
             {/* Success Indicator */}
-            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300>
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity transition-all duration-300">
               <CheckCircle2 className="h-5 w-5 text-green-500 bg-white rounded-full" />
             </div>
 
             {/* Overlay Actions */}
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2" transition-all duration-300>
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 transition-all duration-300">
               <Button
                 size="sm"
                 variant="secondary"
@@ -573,7 +573,7 @@ export default function BehanceStyleUpload({
 
             <Button
               type="button"
-              className="bg-primary hover:bg-primary text-white" transition-all duration-300
+              className="bg-primary hover:bg-primary text-white transition-all duration-300"
               onClick={() => fileInputRef.current?.click()}
               data-testid="button-browse-files"
             >

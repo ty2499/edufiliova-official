@@ -206,7 +206,7 @@ export default function LoginForm({
               type="button"
               variant="ghost"
               size="sm"
-              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-gray-400" transition-all duration-300
+              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-gray-400 transition-all duration-300"
               onClick={() => setShowPassword(!showPassword)}
               data-testid="button-toggle-password"
             >
@@ -221,7 +221,7 @@ export default function LoginForm({
             <button
               type="button"
               onClick={onForgotPassword}
-              className="text-primary hover:text-purple-800 font-medium" transition-all duration-300
+              className="text-primary hover:text-purple-800 font-medium transition-all duration-300"
               data-testid="button-forgot-password"
             >
               Forgot password?
@@ -258,7 +258,7 @@ export default function LoginForm({
         <Button
           type="button"
           variant="outline"
-          className="w-full h-11 border-gray-300 hover:bg-gray-50 rounded-lg font-medium text-gray-900" transition-all duration-300
+          className="w-full h-11 border-gray-300 hover:bg-gray-50 rounded-lg font-medium text-gray-900 transition-all duration-300"
           disabled={loading}
           data-testid="button-google-login"
         >
@@ -277,7 +277,7 @@ export default function LoginForm({
             <button
               type="button"
               onClick={onSwitchToRegister}
-              className="text-primary hover:text-purple-800 font-medium" transition-all duration-300
+              className="text-primary hover:text-purple-800 font-medium transition-all duration-300"
               data-testid="link-register"
             >
               Sign up

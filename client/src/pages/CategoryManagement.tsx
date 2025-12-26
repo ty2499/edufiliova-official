@@ -423,7 +423,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
           {canCreateCategories ? (
             <Button 
               onClick={handleCreateNew}
-              className="bg-primary hover:bg-primary" transition-all duration-300
+              className="bg-primary hover:bg-primary transition-all duration-300"
               data-testid="button-create-category"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -467,7 +467,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
               .map((category) => (
                 <Card 
                   key={category.id} 
-                  className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow" transition-all duration-300
+                  className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow transition-all duration-300"
                   data-testid={`category-card-${category.id}`}
                 >
                   {/* Category Preview */}
@@ -586,7 +586,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
                         variant="outline"
                         size="sm"
                         onClick={() => handleDelete(category.id, category.displayName)}
-                        className="text-primary-600 hover:text-primary-700 hover:border-red-200" transition-all duration-300
+                        className="text-primary-600 hover:text-primary-700 hover:border-red-200 transition-all duration-300"
                         data-testid={`button-delete-${category.id}`}
                         disabled={deleteCategoryMutation.isPending}
                       >
@@ -608,7 +608,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
             <p className="text-gray-500 mb-6">
               Create your first shop category to get started with the marketplace.
             </p>
-            <Button onClick={handleCreateNew} className="bg-primary hover:bg-primary" transition-all duration-300>
+            <Button onClick={handleCreateNew} className="bg-primary hover:bg-primary transition-all duration-300">
               <Plus className="h-4 w-4 mr-2" />
               Create First Category
             </Button>
@@ -858,7 +858,7 @@ export function CategoryManagement({ embedded = false, allowedRoles = ['admin', 
                               onClick={() => handleDeleteFilter(filterIndex)} 
                               variant="outline" 
                               size="sm"
-                              className="text-primary-600 hover:text-primary-700" transition-all duration-300
+                              className="text-primary-600 hover:text-primary-700 transition-all duration-300"
                             >
                               <Trash2 className="h-3 w-3" />
                             </Button>
@@ -1107,7 +1107,7 @@ function FilterEditDialog({ filter, isOpen, onClose, onSave }: FilterEditDialogP
                       onClick={() => handleDeleteOption(index)}
                       variant="outline"
                       size="sm"
-                      className="text-primary-600 hover:text-primary-700" transition-all duration-300
+                      className="text-primary-600 hover:text-primary-700 transition-all duration-300"
                     >
                       <Trash2 className="h-3 w-3" />
                     </Button>

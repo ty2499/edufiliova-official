@@ -351,7 +351,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                 size="sm"
                 onClick={() => onNavigate?.('back')}
                 data-testid="button-back-to-gallery"
-                className="hover:bg-gray-100 transition-colors flex-shrink-0 px-2 sm:px-3" transition-all duration-300
+                className="hover:bg-gray-100 transition-colors flex-shrink-0 px-2 sm:px-3 transition-all duration-300"
               >
                 <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
                 <span className="hidden xs:inline">Back</span>
@@ -377,7 +377,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                 size="sm"
                 onClick={handleShare}
                 data-testid="button-share-work"
-                className="hover:bg-gray-100 px-2 sm:px-3" transition-all duration-300
+                className="hover:bg-gray-100 px-2 sm:px-3 transition-all duration-300"
               >
                 <Share className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 <span className="hidden sm:inline">Share</span>
@@ -390,7 +390,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                   onClick={handleLike}
                   disabled={likeMutation.isPending}
                   data-testid="button-like-work"
-                  className="hover:bg-primary/50 hover:text-primary-600 px-2 sm:px-3" transition-all duration-300
+                  className="hover:bg-primary/50 hover:text-primary-600 px-2 sm:px-3 transition-all duration-300"
                 >
                   <Heart className={`h-3 w-3 sm:h-4 sm:w-4 mr-1 ${likeMutation.isPending ? 'animate-pulse' : ''}`} />
                   <span className="text-sm">{work.likesCount}</span>
@@ -418,7 +418,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                       <Button
                         variant="secondary"
                         size="sm"
-                        className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm p-2 sm:p-3" transition-all duration-300
+                        className="absolute left-2 sm:left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm p-2 sm:p-3 transition-all duration-300"
                         onClick={() => navigateMedia('prev')}
                         data-testid="button-prev-media"
                       >
@@ -427,7 +427,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                       <Button
                         variant="secondary"
                         size="sm"
-                        className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm p-2 sm:p-3" transition-all duration-300
+                        className="absolute right-2 sm:right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm p-2 sm:p-3 transition-all duration-300"
                         onClick={() => navigateMedia('next')}
                         data-testid="button-next-media"
                       >
@@ -470,7 +470,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
               {work.media.map((media, index) => (
                 <div 
                   key={media.id}
-                  className="break-inside-avoid group cursor-pointer rounded-lg sm:rounded-xl overflow-hidden bg-gray-50 hover:shadow-xl transition-all duration-300" transition-all duration-300
+                  className="break-inside-avoid group cursor-pointer rounded-lg sm:rounded-xl overflow-hidden bg-gray-50 hover:shadow-xl transition-all duration-300 transition-all duration-300"
                   onClick={() => {
                     setSelectedMediaIndex(index);
                     setShowImageViewer(true);
@@ -481,8 +481,8 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                     {renderMedia(media, false)}
                     
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center" transition-all duration-300>
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/95 rounded-full p-2 sm:p-3 backdrop-blur-sm" transition-all duration-300>
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center transition-all duration-300">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/95 rounded-full p-2 sm:p-3 backdrop-blur-sm transition-all duration-300">
                         <Maximize2 className="h-4 w-4 sm:h-6 sm:w-6 text-gray-700" />
                       </div>
                     </div>
@@ -516,7 +516,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                   <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Skills & Tools</h3>
                   <div className="flex flex-wrap gap-2 sm:gap-3">
                     {work.tags.map((tag) => (
-                      <Badge key={tag} variant="outline" className="px-2 sm:px-3 py-1 text-xs sm:text-sm border-gray-300 hover:border-gray-400 transition-colors" transition-all duration-300>
+                      <Badge key={tag} variant="outline" className="px-2 sm:px-3 py-1 text-xs sm:text-sm border-gray-300 hover:border-gray-400 transition-colors transition-all duration-300">
                         {tag}
                       </Badge>
                     ))}
@@ -623,7 +623,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                   .map((project: any) => (
                     <div 
                       key={project.id}
-                      className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border-0 shadow-sm bg-white rounded-lg" transition-all duration-300
+                      className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border-0 shadow-sm bg-white rounded-lg transition-all duration-300"
                       onClick={() => onNavigate?.('portfolio-preview', 'slide-left', { workId: project.id })}
                     >
                       <div className="aspect-[4/3] relative overflow-hidden bg-gray-100">
@@ -631,7 +631,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                           <img 
                             src={project.media[0]} 
                             alt={project.title}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" transition-all duration-300
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 transition-all duration-300"
                           />
                         ) : (
                           <div className="w-full h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
@@ -652,7 +652,7 @@ export default function PortfolioPreview({ onNavigate, workId, commentId }: Port
                       </div>
 
                       <div className="p-4">
-                        <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2" transition-all duration-300>
+                        <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 transition-all duration-300">
                           {project.title}
                         </h4>
                         <div className="flex items-center gap-2">

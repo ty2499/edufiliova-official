@@ -142,7 +142,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
       return (
         <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mb-4">
           <div className="bg-card dark:bg-card border border-border rounded-lg overflow-hidden">
-            <CollapsibleTrigger className="w-full p-4 hover:bg-muted/50 transition-colors" transition-all duration-300>
+            <CollapsibleTrigger className="w-full p-4 hover:bg-muted/50 transition-colors transition-all duration-300">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 font-medium text-left text-foreground">
                   <ChevronRight className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`} />
@@ -174,7 +174,7 @@ function BlockRenderer({ block }: { block: ContentBlock }) {
               href={block.content.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 hover:shadow-xl hover:scale-105 transition-colors" transition-all duration-300
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 hover:shadow-xl hover:scale-105 transition-colors transition-all duration-300"
             >
               <Download className="h-4 w-4" />
               Download

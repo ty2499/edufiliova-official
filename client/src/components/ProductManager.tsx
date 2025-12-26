@@ -149,7 +149,7 @@ const ProductCard = ({
   const isCurrentVideo = currentMedia ? isVideoUrl(currentMedia) : false;
   
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300 h-full" transition-all duration-300>
+    <Card className="group hover:shadow-lg transition-all duration-300 h-full transition-all duration-300">
       <CardContent className="p-3 sm:p-4 h-full flex flex-col">
         {/* Premium Cover & Hover Image Effect */}
         {hasHoverEffect ? (
@@ -537,7 +537,7 @@ export const ProductForm = ({
             <button 
               type="button"
               onClick={() => setNotification(null)}
-              className="text-sm hover:opacity-70" transition-all duration-300
+              className="text-sm hover:opacity-70 transition-all duration-300"
             >
               ✕
             </button>
@@ -840,7 +840,7 @@ export const ProductForm = ({
                       type="button"
                       variant="destructive"
                       size="sm"
-                      className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity" transition-all duration-300
+                      className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity transition-all duration-300"
                       onClick={() => setFormData({
                         ...formData,
                         images: formData.images.filter((_, i) => i !== index)

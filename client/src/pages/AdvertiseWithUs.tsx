@@ -40,7 +40,7 @@ export default function AdvertiseWithUs({ onNavigate }: AdvertiseWithUsProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {showContactButton && (
                 <Button 
-                  className="bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors" transition-all duration-300
+                  className="bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors transition-all duration-300"
                   onClick={() => onNavigate?.('design-team-contact')}
                   data-testid="button-contact-design-team"
                 >
@@ -50,7 +50,7 @@ export default function AdvertiseWithUs({ onNavigate }: AdvertiseWithUsProps) {
               {showBannerButton && (
                 <Button 
                   variant="outline" 
-                  className="border-2 border-gray-300 bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors" transition-all duration-300
+                  className="border-2 border-gray-300 bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors transition-all duration-300"
                   onClick={() => onNavigate?.('banner-creator')}
                   data-testid="button-create-banner"
                 >

@@ -290,7 +290,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                     <div className="flex items-center gap-4">
                       <label
                         htmlFor="file-upload"
-                        className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-gray-800 transition-colors" transition-all duration-300
+                        className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-gray-800 transition-colors transition-all duration-300"
                       >
                         <Upload className="h-4 w-4" />
                         <span className="text-sm">
@@ -312,7 +312,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
                           <button
                             type="button"
                             onClick={() => setAttachedFile(null)}
-                            className="text-primary-500 hover:text-primary-700 text-xl" transition-all duration-300
+                            className="text-primary-500 hover:text-primary-700 text-xl transition-all duration-300"
                           >
                             ×
                           </button>
@@ -332,7 +332,7 @@ const DesignTeamContact = ({ onNavigate }: DesignTeamContactProps) => {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-black text-white hover:bg-gray-800 rounded-lg py-6 text-base font-medium mt-8" transition-all duration-300
+                    className="w-full bg-black text-white hover:bg-gray-800 rounded-lg py-6 text-base font-medium mt-8 transition-all duration-300"
                     disabled={mutation.isPending || uploading}
                     data-testid="button-submit-form"
                   >

@@ -29,7 +29,7 @@ export default function MyAdsPage({ onNavigate, userRole = 'customer' }: MyAdsPa
         </div>
         <Button
           onClick={() => setShowCreator(true)}
-          className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 gap-2 text-white" transition-all duration-300
+          className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 gap-2 text-white transition-all duration-300"
           data-testid="button-create-new-ad"
         >
           <Plus className="h-4 w-4" />

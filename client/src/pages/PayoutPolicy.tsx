@@ -236,7 +236,7 @@ export function PayoutPolicy({ onNavigate }: PayoutPolicyProps) {
                 <span className="font-semibold text-sm md:text-base">Email:</span>
                 <a 
                   href="mailto:payments@edufiliova.com" 
-                  className="text-primary-foreground/90 hover:text-primary-foreground underline text-sm md:text-base transition-colors" transition-all duration-300
+                  className="text-primary-foreground/90 hover:text-primary-foreground underline text-sm md:text-base transition-colors transition-all duration-300"
                   data-testid="link-payments-email"
                 >
                   payments@edufiliova.com
@@ -248,7 +248,7 @@ export function PayoutPolicy({ onNavigate }: PayoutPolicyProps) {
                   href="https://www.edufiliova.com" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary-foreground/90 hover:text-primary-foreground underline text-sm md:text-base transition-colors" transition-all duration-300
+                  className="text-primary-foreground/90 hover:text-primary-foreground underline text-sm md:text-base transition-colors transition-all duration-300"
                   data-testid="link-website"
                 >
                   www.edufiliova.com

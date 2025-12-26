@@ -729,7 +729,7 @@ export default function NewPaymentModal({
           <div className="flex justify-end p-4 pb-0">
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors" transition-all duration-300
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors transition-all duration-300"
               data-testid="button-close-receipt"
             >
               <X className="w-5 h-5" />
@@ -904,7 +904,7 @@ export default function NewPaymentModal({
         <div className="flex justify-end p-4 pb-0">
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors" transition-all duration-300
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors transition-all duration-300"
             disabled={processing}
             data-testid="button-close-modal"
           >
@@ -1019,7 +1019,7 @@ export default function NewPaymentModal({
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-green-100 dark:hover:bg-green-900" transition-all duration-300
+                      className="h-6 w-6 p-0 hover:bg-green-100 dark:hover:bg-green-900 transition-all duration-300"
                       onClick={() => {
                         setAppliedCoupon(null);
                         setPromoCode('');
@@ -1179,7 +1179,7 @@ export default function NewPaymentModal({
                     <Button
                       onClick={handlePayPalPayment}
                       disabled={processing}
-                      className="w-full bg-[#0070ba] hover:bg-[#003087] text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
+                      className="w-full bg-[#0070ba] hover:bg-[#003087] text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
                       data-testid="button-paypal-checkout"
                     >
                       {processing ? 'Redirecting...' : 'Continue with PayPal'}
@@ -1203,7 +1203,7 @@ export default function NewPaymentModal({
                         });
                       }}
                       disabled={processing || !profile?.email}
-                      className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
+                      className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
                       data-testid="button-paystack-checkout"
                     >
                       {processing ? (
@@ -1251,7 +1251,7 @@ export default function NewPaymentModal({
                     <Button
                       onClick={handleSystemWalletPayment}
                       disabled={processing || !hasSufficientBalance}
-                      className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
+                      className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
                       data-testid="button-wallet-checkout"
                     >
                       {processing ? (
@@ -1280,7 +1280,7 @@ export default function NewPaymentModal({
                     <Button
                       onClick={handleCardPayment}
                       disabled={processing}
-                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
+                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
                       data-testid="button-dodopay-checkout"
                     >
                       {processing ? (
@@ -1344,7 +1344,7 @@ export default function NewPaymentModal({
                         }
                       }}
                       disabled={processing}
-                      className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
+                      className="w-full bg-[#6366f1] hover:bg-[#5558e3] text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
                       data-testid="button-vodapay-checkout"
                     >
                       {processing ? (
@@ -1417,7 +1417,7 @@ export default function NewPaymentModal({
                         <Button
                           onClick={handleEcocashPayment}
                           disabled={processing || !ecocashPhone || ecocashPhone.length < 9}
-                          className="w-full bg-green-600 hover:bg-green-700 text-white h-12 text-base font-semibold rounded-xl" transition-all duration-300
+                          className="w-full bg-green-600 hover:bg-green-700 text-white h-12 text-base font-semibold rounded-xl transition-all duration-300"
                           data-testid="button-ecocash-checkout"
                         >
                           {processing ? (
@@ -1481,7 +1481,7 @@ export default function NewPaymentModal({
                               );
                               window.open(`https://wa.me/${ecocashManualSettings.whatsappNumber.replace(/\D/g, '')}?text=${message}`, '_blank');
                             }}
-                            className="w-full bg-green-600 hover:bg-green-700 text-white h-12 text-base font-semibold rounded-xl flex items-center justify-center gap-2" transition-all duration-300
+                            className="w-full bg-green-600 hover:bg-green-700 text-white h-12 text-base font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
                             data-testid="button-ecocash-whatsapp"
                           >
                             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -1551,7 +1551,7 @@ export default function NewPaymentModal({
                   href="/terms" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline" transition-all duration-300
+                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline transition-all duration-300"
                 >
                   Terms of Service
                 </a>
@@ -1560,7 +1560,7 @@ export default function NewPaymentModal({
                   href="/privacy" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline" transition-all duration-300
+                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline transition-all duration-300"
                 >
                   Privacy Policy
                 </a>

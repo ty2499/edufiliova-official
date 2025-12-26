@@ -215,7 +215,7 @@ export function LogoManagement() {
             <Button
               onClick={handleUpload}
               disabled={!selectedFile || uploadLogoMutation.isPending}
-              className="bg-[#c4ee3d] hover:bg-[#b8e234] text-black" transition-all duration-300
+              className="bg-[#c4ee3d] hover:bg-[#b8e234] text-black transition-all duration-300"
               data-testid="upload-logo-button"
             >
               <Upload className="h-4 w-4 mr-2" />

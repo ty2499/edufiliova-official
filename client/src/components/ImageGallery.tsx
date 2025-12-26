@@ -198,7 +198,7 @@ const ImageLightbox = ({ images, currentIndex, isOpen, onClose, productName }: L
               {/* Navigation Arrows */}
               <button
                 onClick={goToPrevious}
-                className="pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all" transition-all duration-300
+                className="pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all transition-all duration-300"
                 aria-label="Previous image"
                 data-testid="button-lightbox-previous"
               >
@@ -207,7 +207,7 @@ const ImageLightbox = ({ images, currentIndex, isOpen, onClose, productName }: L
               
               <button
                 onClick={goToNext}
-                className="pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all" transition-all duration-300
+                className="pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all transition-all duration-300"
                 aria-label="Next image"
                 data-testid="button-lightbox-next"
               >

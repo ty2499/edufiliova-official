@@ -445,7 +445,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                 }
               }}
               style={{ backgroundColor: '#0C332C' }}
-              className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold rounded-full p-2 hover:scale-110 self-start" transition-all duration-300
+              className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold rounded-full p-2 hover:scale-110 self-start transition-all duration-300"
               data-testid="button-back-to-dashboard"
             >
               <ArrowLeft className="h-5 w-5" />
@@ -695,7 +695,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                         <button
                           type="button"
                           onClick={() => removeTag(tag)}
-                          className="ml-2 hover:text-primary-500" transition-all duration-300
+                          className="ml-2 hover:text-primary-500 transition-all duration-300"
                           data-testid={`button-remove-tag-${tag}`}
                         >
                           <X className="h-3 w-3" />
@@ -724,7 +724,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                     onClick={() => addTag(currentTag)}
                     disabled={!currentTag.trim()}
                     style={{ backgroundColor: '#0C332C' }}
-                    className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold" transition-all duration-300
+                    className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold transition-all duration-300"
                     data-testid="button-add-tag"
                   >
                     <Plus className="h-4 w-4" />
@@ -743,7 +743,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                         onClick={() => addTag(tag)}
                         disabled={(form.watch('tags') || []).includes(tag)}
                         style={{ backgroundColor: '#0C332C' }}
-                        className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold rounded-full px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-[11px] font-medium flex items-center gap-1 disabled:opacity-50" transition-all duration-300
+                        className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold rounded-full px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-[11px] font-medium flex items-center gap-1 disabled:opacity-50 transition-all duration-300"
                         data-testid={`button-common-tag-${tag.replace(/\s+/g, '-').toLowerCase()}`}
                       >
                         <Plus className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
@@ -787,7 +787,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                             size="sm"
                             onClick={() => removeVideoUrl(video.id)}
                             style={{ backgroundColor: '#0C332C' }}
-                            className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold" transition-all duration-300
+                            className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold transition-all duration-300"
                             data-testid={`button-remove-video-${video.id}`}
                           >
                             <X className="h-4 w-4" />
@@ -841,7 +841,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
                         onClick={addVideoUrl}
                         disabled={!newVideoUrl.trim()}
                         style={{ backgroundColor: '#0C332C' }}
-                        className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold" transition-all duration-300
+                        className="text-white hover:opacity-80 hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold transition-all duration-300"
                         data-testid="button-add-video"
                       >
                         <Plus className="h-4 w-4" />

@@ -2024,7 +2024,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                   }
                 }
               }}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors transition-all duration-300"
               data-testid="back-to-dashboard"
             >
               <ChevronLeft className="h-6 w-6 text-gray-700" />
@@ -2518,13 +2518,13 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               <div className="flex items-center gap-3">
                 <button 
                   onClick={() => setSelectedConversation(null)}
-                  className="p-2 mr-3 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
+                  className="p-2 mr-3 hover:bg-gray-100 rounded-full transition-colors transition-all duration-300"
                   data-testid="back-to-contacts"
                 >
                   <ChevronLeft className="h-6 w-6 text-black stroke-[3]" style={{ color: '#000000' }} />
                 </button>
                 <Avatar 
-                  className="h-10 w-10 rounded-full hover:ring-2 hover:ring-[#A0FAB2] hover:ring-offset-1 transition-all cursor-pointer" transition-all duration-300
+                  className="h-10 w-10 rounded-full hover:ring-2 hover:ring-[#A0FAB2] hover:ring-offset-1 transition-all cursor-pointer transition-all duration-300"
                   onClick={() => {
                     if (selectedUser && !isGroupConversation) {
                       handleOpenUserProfile(selectedUser.userId, selectedUser.name);
@@ -2653,7 +2653,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                           {/* Receiver's Avatar - Left Side */}
                           {!isFromCurrentUser && (
                             <Avatar 
-                              className="h-10 w-10 flex-shrink-0 rounded-full mb-1 cursor-pointer hover:ring-2 hover:ring-[#A0FAB2] hover:ring-offset-2 transition-all" transition-all duration-300
+                              className="h-10 w-10 flex-shrink-0 rounded-full mb-1 cursor-pointer hover:ring-2 hover:ring-[#A0FAB2] hover:ring-offset-2 transition-all transition-all duration-300"
                               onClick={() => handleOpenUserProfile(message.senderId, message.senderName)}
                             >
                               <AvatarImage src={message.senderAvatarUrl} className="rounded-full" />
@@ -2769,17 +2769,17 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                                       src={message.fileMetadata?.url || ''}
                                       type="image"
                                       alt={message.fileMetadata?.fileName || "Shared image"}
-                                      className="w-full h-auto max-h-[400px] object-cover transition-transform duration-200 hover:scale-105" transition-all duration-300
+                                      className="w-full h-auto max-h-[400px] object-cover transition-transform duration-200 hover:scale-105 transition-all duration-300"
                                     />
                                     
                                     {/* WhatsApp-style overlay on hover */}
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-200 cursor-pointer" transition-all duration-300>
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-200 cursor-pointer transition-all duration-300">
                                       {/* Download/View button */}
-                                      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" transition-all duration-300>
+                                      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 transition-all duration-300">
                                         <Button
                                           size="sm"
                                           variant="ghost"
-                                          className="h-8 w-8 p-0 bg-black/50 hover:bg-black/70 text-white border-0" transition-all duration-300
+                                          className="h-8 w-8 p-0 bg-black/50 hover:bg-black/70 text-white border-0 transition-all duration-300"
                                           onClick={() => window.open(message.fileMetadata?.url, '_blank')}
                                         >
                                           <Download className="h-4 w-4" />
@@ -2914,7 +2914,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                         key={index}
                         variant="ghost"
                         size="sm"
-                        className="h-8 w-8 p-0 hover:bg-gray-100 rounded-lg text-base transition-all" transition-all duration-300
+                        className="h-8 w-8 p-0 hover:bg-gray-100 rounded-lg text-base transition-all transition-all duration-300"
                         onClick={() => handleEmojiSelect(emoji)}
                         data-testid={`emoji-${index}`}
                       >
@@ -2944,7 +2944,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                   <div className="grid grid-cols-2 gap-4">
                     <Button
                       variant="ghost"
-                      className="flex flex-col items-center gap-3 h-auto p-4 hover:bg-gray-50 rounded-xl transition-all" transition-all duration-300
+                      className="flex flex-col items-center gap-3 h-auto p-4 hover:bg-gray-50 rounded-xl transition-all transition-all duration-300"
                       onClick={() => {
                         documentInputRef.current?.click();
                         setShowAttachMenu(false);
@@ -2956,7 +2956,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                     </Button>
                     <Button
                       variant="ghost"
-                      className="flex flex-col items-center gap-3 h-auto p-4 hover:bg-gray-50 rounded-xl transition-all" transition-all duration-300
+                      className="flex flex-col items-center gap-3 h-auto p-4 hover:bg-gray-50 rounded-xl transition-all transition-all duration-300"
                       onClick={() => {
                         imageInputRef.current?.click();
                         setShowAttachMenu(false);
@@ -3025,7 +3025,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                   <button
                     type="submit"
                     disabled={sendMessageMutation.isPending}
-                    className="h-10 w-10 p-0 hover:bg-[#3ae374] text-white rounded-full flex-shrink-0 flex items-center justify-center transition-colors bg-[#0C332C]" transition-all duration-300
+                    className="h-10 w-10 p-0 hover:bg-[#3ae374] text-white rounded-full flex-shrink-0 flex items-center justify-center transition-colors bg-[#0C332C] transition-all duration-300"
                     data-testid="send-button"
                   >
                     <Send className="h-4 w-4 text-white" />
@@ -3137,7 +3137,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                           variant="ghost"
                           size="sm"
                           onClick={() => setPreviewFiles(prev => prev.filter(p => p.id !== fileData.id))}
-                          className="h-6 w-6 p-0 bg-primary text-white hover:bg-primary rounded-full" transition-all duration-300
+                          className="h-6 w-6 p-0 bg-primary text-white hover:bg-primary rounded-full transition-all duration-300"
                           data-testid={`remove-preview-${fileData.id}`}
                         >
                           <X className="h-3 w-3" />
@@ -3147,7 +3147,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                           variant="ghost"
                           size="sm"
                           onClick={() => sendFileWithPreview(fileData)}
-                          className="h-6 w-6 p-0 bg-[#2D5DDC] text-white hover:bg-[#2D5DDC]/80 rounded-full" transition-all duration-300
+                          className="h-6 w-6 p-0 bg-[#2D5DDC] text-white hover:bg-[#2D5DDC]/80 rounded-full transition-all duration-300"
                           data-testid={`send-preview-${fileData.id}`}
                         >
                           <Send className="h-3 w-3" />
@@ -3372,7 +3372,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               {/* Decline Button */}
               <Button
                 onClick={rejectCall}
-                className="h-14 w-14 rounded-full bg-primary hover:bg-primary text-white p-0 shadow-lg border-2 border-primary transition-all duration-200 hover:scale-105" transition-all duration-300
+                className="h-14 w-14 rounded-full bg-primary hover:bg-primary text-white p-0 shadow-lg border-2 border-primary transition-all duration-200 hover:scale-105 transition-all duration-300"
                 data-testid="reject-call-button"
               >
                 <X className="h-6 w-6" />
@@ -3381,7 +3381,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               {/* Accept Button */}
               <Button
                 onClick={acceptCall}
-                className="h-14 w-14 rounded-full bg-green-500 hover:bg-green-600 text-white p-0 shadow-lg border-2 border-green-400 transition-all duration-200 hover:scale-105" transition-all duration-300
+                className="h-14 w-14 rounded-full bg-green-500 hover:bg-green-600 text-white p-0 shadow-lg border-2 border-green-400 transition-all duration-200 hover:scale-105 transition-all duration-300"
                 data-testid="accept-call-button"
               >
                 <Phone className="h-6 w-6" />
@@ -3393,7 +3393,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-gray-400 hover:text-white text-xs" transition-all duration-300
+                className="text-gray-400 hover:text-white text-xs transition-all duration-300"
                 onClick={() => {
                   // Could add message functionality here
                 }}
@@ -3471,7 +3471,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
                   
                   <Button
                     onClick={endCall}
-                    className="h-12 w-12 rounded-full bg-primary hover:bg-primary text-white p-0" transition-all duration-300
+                    className="h-12 w-12 rounded-full bg-primary hover:bg-primary text-white p-0 transition-all duration-300"
                     data-testid="end-call-button"
                   >
                     <X className="h-6 w-6" />
@@ -3480,7 +3480,7 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               ) : (
                 <Button
                   onClick={endCall}
-                  className="h-12 w-12 rounded-full bg-primary hover:bg-primary text-white p-0" transition-all duration-300
+                  className="h-12 w-12 rounded-full bg-primary hover:bg-primary text-white p-0 transition-all duration-300"
                   data-testid="end-call-button"
                 >
                   <X className="h-6 w-6" />

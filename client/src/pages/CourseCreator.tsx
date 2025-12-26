@@ -1648,7 +1648,7 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
                     <img 
                       src={course.thumbnailUrl} 
                       alt={course.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" transition-all duration-300
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 transition-all duration-300"
                     />
                   </div>
                 )}
@@ -1664,7 +1664,7 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-2">
                     <CardTitle 
-                      className="text-lg line-clamp-2 cursor-pointer hover:text-foreground transition-colors" transition-all duration-300
+                      className="text-lg line-clamp-2 cursor-pointer hover:text-foreground transition-colors transition-all duration-300"
                       onClick={() => handleEditCourse(course)}
                       data-testid={`course-title-${course.id}`}
                     >
@@ -1731,7 +1731,7 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
                       <Button
                         variant="default"
                         size="sm"
-                        className="bg-green-600 hover:bg-green-700 text-white" transition-all duration-300
+                        className="bg-green-600 hover:bg-green-700 text-white transition-all duration-300"
                         onClick={(e) => {
                           e.stopPropagation();
                           approveCourseMutation.mutate(course.id);
@@ -1777,7 +1777,7 @@ export default function CourseCreator({ onNavigate, userRole = 'student' }: Cour
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-destructive hover:text-destructive hover:bg-destructive/10" transition-all duration-300
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10 transition-all duration-300"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDeleteCourse(course.id, course.title);

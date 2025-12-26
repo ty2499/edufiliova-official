@@ -639,7 +639,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
                                   href={url} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
-                                  className="text-blue-600 hover:underline text-sm" transition-all duration-300
+                                  className="text-blue-600 hover:underline text-sm transition-all duration-300"
                                 >
                                   {url}
                                 </a>
@@ -662,7 +662,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
                                   href={url} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
-                                  className="text-blue-600 hover:underline text-sm" transition-all duration-300
+                                  className="text-blue-600 hover:underline text-sm transition-all duration-300"
                                 >
                                   PDF Resource {index + 1}
                                 </a>
@@ -685,7 +685,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
                                   href={url} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
-                                  className="text-blue-600 hover:underline text-sm" transition-all duration-300
+                                  className="text-blue-600 hover:underline text-sm transition-all duration-300"
                                 >
                                   Video Resource {index + 1}
                                 </a>
@@ -844,7 +844,7 @@ export default function CourseDetail({ courseId, onNavigate, onBack, hideFooter 
 
                   {isEnrolled ? (
                     <Button 
-                      className="w-full mb-4 bg-[#0C332C] hover:bg-[#0C332C]/90 text-white" transition-all duration-300
+                      className="w-full mb-4 bg-[#0C332C] hover:bg-[#0C332C]/90 text-white transition-all duration-300"
                       onClick={() => onNavigate(`course-player-${courseId}`)}
                       data-testid="button-go-to-course"
                     >

@@ -988,7 +988,7 @@ const HelpCenter = ({ onNavigate }: HelpCenterProps) => {
                           value={`${category.id}-${faqIndex}`} 
                           className="border rounded-lg px-4"
                         >
-                          <AccordionTrigger className="text-left hover:no-underline" transition-all duration-300 data-testid={`accordion-trigger-${category.id}-${faqIndex}`}>
+                          <AccordionTrigger className="text-left hover:no-underline transition-all duration-300" data-testid={`accordion-trigger-${category.id}-${faqIndex}`}>
                             {searchQuery ? highlightText(faq.question, searchQuery) : faq.question}
                           </AccordionTrigger>
                           <AccordionContent className="leading-relaxed" style={{ color: '#1F1E30' }}>

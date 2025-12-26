@@ -53,7 +53,7 @@ export const MegaMenuItem = ({ icon, title, description, onClick, badge, testId,
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-sm text-[#a0fab2] dark:text-[#a0fab2] group-hover:text-[#a0fab2] transition-colors whitespace-nowrap" transition-all duration-300>
+          <h4 className="font-semibold text-sm text-[#a0fab2] dark:text-[#a0fab2] group-hover:text-[#a0fab2] transition-colors whitespace-nowrap transition-all duration-300">
             {title}
           </h4>
           {description && (
@@ -135,7 +135,7 @@ export const MegaMenuHighlight = ({ image, title, description, buttonText, onCli
       )}
       <button
         onClick={onClick}
-        className="w-full bg-[#a0fab2] hover:bg-[#a0fab2]/90 hover:shadow-xl hover:scale-105 text-[#2f5a4e] font-semibold py-2.5 px-4 rounded-lg transition-all duration-200" transition-all duration-300
+        className="w-full bg-[#a0fab2] hover:bg-[#a0fab2]/90 hover:shadow-xl hover:scale-105 text-[#2f5a4e] font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 transition-all duration-300"
         data-testid="megamenu-highlight-action"
       >
         {buttonText}

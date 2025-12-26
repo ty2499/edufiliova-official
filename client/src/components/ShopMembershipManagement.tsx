@@ -399,7 +399,7 @@ export default function ShopMembershipManagement() {
           </Button>
           <Button 
             type="submit" 
-            className="bg-primary text-white hover:bg-primary" transition-all duration-300
+            className="bg-primary text-white hover:bg-primary transition-all duration-300"
             disabled={createPlanMutation.isPending || updatePlanMutation.isPending}
             data-testid="button-save"
           >
@@ -426,7 +426,7 @@ export default function ShopMembershipManagement() {
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
             <Button 
-              className="bg-primary text-white hover:bg-primary" transition-all duration-300
+              className="bg-primary text-white hover:bg-primary transition-all duration-300"
               data-testid="button-create-plan"
             >
               <Plus className="h-4 w-4 mr-2" />

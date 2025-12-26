@@ -77,7 +77,7 @@ export function TeacherMeetingsTab({ onNavigate }: TeacherMeetingsTabProps) {
     const isLive = meeting.status === 'live';
 
     return (
-      <Card className="hover:shadow-lg transition-shadow" transition-all duration-300 data-testid={`meeting-card-${meeting.id}`}>
+      <Card className="hover:shadow-lg transition-shadow transition-all duration-300" data-testid={`meeting-card-${meeting.id}`}>
         <CardHeader>
           <div className="flex items-start justify-between">
             <div className="flex-1">

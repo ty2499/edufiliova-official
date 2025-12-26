@@ -549,7 +549,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Freelancer Not Found</h2>
           <p className="text-gray-600 mb-4">The freelancer profile you're looking for doesn't exist.</p>
-          <Button onClick={handleClose} className="bg-primary hover:bg-primary text-white" transition-all duration-300>
+          <Button onClick={handleClose} className="bg-primary hover:bg-primary text-white transition-all duration-300">
             Go to Find Talent
           </Button>
         </div>
@@ -569,7 +569,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                 variant="ghost"
                 size="sm"
                 onClick={handleClose}
-                className="p-2 hover:bg-gray-100 rounded-full" transition-all duration-300
+                className="p-2 hover:bg-gray-100 rounded-full transition-all duration-300"
                 data-testid={user ? "button-close" : "button-back"}
               >
                 {user ? (
@@ -663,7 +663,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                     <Button 
                       onClick={handleContactFreelancer}
                       disabled={user?.id === freelancerData.id}
-                      className="flex-1 bg-primary hover:bg-primary text-white" transition-all duration-300
+                      className="flex-1 bg-primary hover:bg-primary text-white transition-all duration-300"
                       data-testid="button-hire-freelancer-mobile"
                     >
                       <MessageCircle className="h-4 w-4 mr-2" />
@@ -684,7 +684,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                         }
                       }}
                       disabled={followMutation.isPending}
-                      className="border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-3" transition-all duration-300
+                      className="border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-3 transition-all duration-300"
                       data-testid="button-follow-mobile"
                     >
                       {followMutation.isPending ? (
@@ -810,7 +810,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                       return (
                         <Card 
                           key={work.id}
-                          className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border-0 shadow-sm touch-manipulation active:scale-[0.98]" transition-all duration-300
+                          className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border-0 shadow-sm touch-manipulation active:scale-[0.98] transition-all duration-300"
                           style={{ width: '369px', height: '460px', minWidth: '369px' }}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -832,7 +832,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                             />
                           </div>
                           <CardContent className="p-3 sm:p-4">
-                            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 text-sm sm:text-base" transition-all duration-300>
+                            <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 text-sm sm:text-base transition-all duration-300">
                               {work.title}
                             </h3>
                             <div className="flex items-center justify-between">
@@ -1019,7 +1019,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
               variant="ghost"
               size="sm"
               onClick={handleClose}
-              className="p-2 hover:bg-gray-100 rounded-full" transition-all duration-300
+              className="p-2 hover:bg-gray-100 rounded-full transition-all duration-300"
               data-testid={user ? "button-close-desktop" : "button-back-desktop"}
             >
               {user ? (
@@ -1135,7 +1135,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                     <Button 
                       onClick={handleContactFreelancer}
                       disabled={user?.id === freelancerData.id}
-                      className="bg-primary hover:bg-primary text-white px-6" transition-all duration-300
+                      className="bg-primary hover:bg-primary text-white px-6 transition-all duration-300"
                       data-testid="button-hire-desktop"
                     >
                       <MessageCircle className="h-4 w-4 mr-2" />
@@ -1145,7 +1145,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                       variant="outline"
                       onClick={handleFollowClick}
                       disabled={followMutation.isPending}
-                      className="border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-6" transition-all duration-300 
+                      className="border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white px-6 transition-all duration-300" 
                       data-testid="button-follow-desktop"
                     >
                       {followMutation.isPending ? (
@@ -1234,7 +1234,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm" transition-all duration-300
+                          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm transition-all duration-300"
                           data-testid={`desktop-social-${platform.toLowerCase()}`}
                         >
                           <ExternalLink className="h-3 w-3" />
@@ -1293,7 +1293,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                       return (
                         <Card 
                           key={work.id}
-                          className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border-0 shadow-sm touch-manipulation active:scale-[0.98]" transition-all duration-300
+                          className="group cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden border-0 shadow-sm touch-manipulation active:scale-[0.98] transition-all duration-300"
                           style={{ width: '369px', height: '460px', minWidth: '369px' }}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -1315,7 +1315,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                           />
                         </div>
                         <CardContent className="p-3 sm:p-4">
-                          <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 text-sm sm:text-base" transition-all duration-300>
+                          <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 text-sm sm:text-base transition-all duration-300">
                             {work.title}
                           </h3>
                           <div className="flex items-center justify-between">
@@ -1415,7 +1415,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                         {freelancerData.contactEmail && (
                           <div className="flex items-center gap-2 text-gray-700" data-testid="contact-email">
                             <Mail className="h-4 w-4" />
-                            <a href={`mailto:${freelancerData.contactEmail}`} className="text-blue-600 hover:text-blue-800" transition-all duration-300>
+                            <a href={`mailto:${freelancerData.contactEmail}`} className="text-blue-600 hover:text-blue-800 transition-all duration-300">
                               {freelancerData.contactEmail}
                             </a>
                           </div>
@@ -1429,7 +1429,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                         {freelancerData.websiteUrl && (
                           <div className="flex items-center gap-2 text-gray-700" data-testid="website-url">
                             <Globe className="h-4 w-4" />
-                            <a href={freelancerData.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800" transition-all duration-300>
+                            <a href={freelancerData.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 transition-all duration-300">
                               {freelancerData.websiteUrl}
                             </a>
                           </div>
@@ -1467,7 +1467,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                       variant="ghost"
                       size="sm"
                       onClick={() => setSelectedProject(null)}
-                      className="lg:hidden flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors" transition-all duration-300
+                      className="lg:hidden flex-shrink-0 p-2 rounded-full hover:bg-gray-100 transition-colors transition-all duration-300"
                       data-testid="button-close-modal-mobile"
                       aria-label="Close"
                     >
@@ -1516,7 +1516,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                     </div>
                     <Button 
                       size="sm" 
-                      className="hidden lg:flex bg-primary hover:bg-primary text-white px-3 sm:px-4 py-2 text-xs sm:text-sm" transition-all duration-300
+                      className="hidden lg:flex bg-primary hover:bg-primary text-white px-3 sm:px-4 py-2 text-xs sm:text-sm transition-all duration-300"
                       data-testid="button-contact-freelancer" 
                       onClick={handleContactFreelancer} 
                       disabled={user?.id === freelancerData?.id}
@@ -1560,7 +1560,7 @@ export default function FreelancerProfile({ freelancerId, profileId, onNavigate,
                         <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">Skills & Tools</h3>
                         <div className="flex flex-wrap gap-2 sm:gap-3">
                           {selectedProject.tags.map((tag: string) => (
-                            <Badge key={tag} variant="outline" className="px-2 sm:px-3 py-1 text-xs sm:text-sm border-gray-300 hover:border-gray-400 transition-colors" transition-all duration-300>
+                            <Badge key={tag} variant="outline" className="px-2 sm:px-3 py-1 text-xs sm:text-sm border-gray-300 hover:border-gray-400 transition-colors transition-all duration-300">
                               {tag}
                             </Badge>
                           ))}

@@ -352,7 +352,7 @@ const StudyNotes = () => {
         </div>
         <Button 
           onClick={() => setIsCreating(true)}
-          className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white" transition-all duration-300
+          className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white transition-all duration-300"
           disabled={isCreating}
           data-testid="create-note-btn"
         >
@@ -454,7 +454,7 @@ const StudyNotes = () => {
               <Button 
                 onClick={createNote} 
                 disabled={loading}
-                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white" transition-all duration-300
+                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white transition-all duration-300"
                 data-testid="save-note-btn"
               >
                 <Save className="w-4 h-4 mr-2" />
@@ -498,7 +498,7 @@ const StudyNotes = () => {
             {notes.length === 0 && !isCreating && (
               <Button 
                 onClick={() => setIsCreating(true)}
-                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white" transition-all duration-300
+                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 text-white transition-all duration-300"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Create Your First Note
@@ -517,7 +517,7 @@ const StudyNotes = () => {
             return (
               <div
                 key={note.id}
-                className="rounded-2xl p-5 transition-all duration-200 hover:scale-105 hover:shadow-lg" transition-all duration-300
+                className="rounded-2xl p-5 transition-all duration-200 hover:scale-105 hover:shadow-lg transition-all duration-300"
                 style={{ backgroundColor: bgColor }}
               >
                 <div className="flex items-start justify-between mb-3">
@@ -552,7 +552,7 @@ const StudyNotes = () => {
                           variant="ghost"
                           onClick={() => updateNote(note.id)}
                           disabled={loading}
-                          className="p-2 hover:bg-white/20" transition-all duration-300
+                          className="p-2 hover:bg-white/20 transition-all duration-300"
                           style={{ color: textColor }}
                           data-testid={`save-edit-${note.id}`}
                         >
@@ -563,7 +563,7 @@ const StudyNotes = () => {
                           variant="ghost"
                           onClick={cancelEditing}
                           disabled={loading}
-                          className="p-2 hover:bg-white/20" transition-all duration-300
+                          className="p-2 hover:bg-white/20 transition-all duration-300"
                           style={{ color: textColor }}
                           data-testid={`cancel-edit-${note.id}`}
                         >
@@ -577,7 +577,7 @@ const StudyNotes = () => {
                           variant="ghost"
                           onClick={() => startEditing(note)}
                           disabled={loading}
-                          className="p-2 hover:bg-white/20" transition-all duration-300
+                          className="p-2 hover:bg-white/20 transition-all duration-300"
                           style={{ color: textColor }}
                           data-testid={`edit-${note.id}`}
                         >
@@ -588,7 +588,7 @@ const StudyNotes = () => {
                           variant="ghost"
                           onClick={() => deleteNote(note.id)}
                           disabled={loading}
-                          className="p-2 hover:bg-white/20" transition-all duration-300
+                          className="p-2 hover:bg-white/20 transition-all duration-300"
                           style={{ color: textColor }}
                           data-testid={`delete-${note.id}`}
                         >

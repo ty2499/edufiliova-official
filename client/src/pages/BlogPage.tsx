@@ -126,7 +126,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                   <DropdownMenuTrigger asChild>
                     <Button
                       size="sm"
-                      className="rounded-full px-4 h-10 bg-white/10 text-white border border-white/20 hover:bg-white/20" transition-all duration-300
+                      className="rounded-full px-4 h-10 bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all duration-300"
                       data-testid="dropdown-more-categories"
                     >
                       More
@@ -173,7 +173,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                         <img 
                           src={filteredPosts[0].coverImage} 
                           alt={filteredPosts[0].title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" transition-all duration-300
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 transition-all duration-300"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#2f5a4e] to-[#1a3a33]">
@@ -185,10 +185,10 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                     </div>
                     {/* Content */}
                     <CardContent className="p-6 md:p-8 flex flex-col justify-center">
-                      <Badge className="w-fit mb-4 bg-[#2f5a4e]/10 text-[#2f5a4e] hover:bg-[#2f5a4e]/10 border-0" transition-all duration-300>
+                      <Badge className="w-fit mb-4 bg-[#2f5a4e]/10 text-[#2f5a4e] hover:bg-[#2f5a4e]/10 border-0 transition-all duration-300">
                         {filteredPosts[0].category}
                       </Badge>
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#2f5a4e] transition-colors line-clamp-2 font-['StackSans_Headline']" transition-all duration-300>
+                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-[#2f5a4e] transition-colors line-clamp-2 font-['StackSans_Headline'] transition-all duration-300">
                         {filteredPosts[0].title}
                       </h2>
                       <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3 text-base leading-relaxed">
@@ -212,7 +212,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                 {filteredPosts.slice(1).map((post) => (
                   <Card 
                     key={post.id}
-                    className="group cursor-pointer overflow-hidden border border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600 transition-all bg-white dark:bg-gray-800" transition-all duration-300
+                    className="group cursor-pointer overflow-hidden border border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600 transition-all bg-white dark:bg-gray-800 transition-all duration-300"
                     onClick={() => handleNavigateToPost(post.slug)}
                     data-testid={`blog-card-${post.id}`}
                   >
@@ -222,7 +222,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                         <img 
                           src={post.coverImage} 
                           alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" transition-all duration-300
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 transition-all duration-300"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600">
@@ -236,7 +236,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                     <CardContent className="p-5">
                       {/* Category & Date */}
                       <div className="flex items-center justify-between mb-3">
-                        <Badge className="bg-slate-100 text-slate-600 hover:bg-slate-100 border-0 text-xs" transition-all duration-300>
+                        <Badge className="bg-slate-100 text-slate-600 hover:bg-slate-100 border-0 text-xs transition-all duration-300">
                           {post.category}
                         </Badge>
                         <span className="text-xs text-gray-400">
@@ -245,7 +245,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-[#2f5a4e] transition-colors font-['StackSans_Headline']" transition-all duration-300>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-[#2f5a4e] transition-colors font-['StackSans_Headline'] transition-all duration-300">
                         {post.title}
                       </h3>
 
@@ -255,7 +255,7 @@ function BlogPage({ onNavigate }: BlogPageProps) {
                       </p>
 
                       {/* Read More */}
-                      <div className="flex items-center gap-1 text-[#2f5a4e] dark:text-[#2f5a4e] text-sm font-medium group-hover:gap-2 transition-all" transition-all duration-300>
+                      <div className="flex items-center gap-1 text-[#2f5a4e] dark:text-[#2f5a4e] text-sm font-medium group-hover:gap-2 transition-all transition-all duration-300">
                         Read article
                         <ArrowRight className="h-4 w-4" />
                       </div>

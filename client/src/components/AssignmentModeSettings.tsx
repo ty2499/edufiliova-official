@@ -352,7 +352,7 @@ export default function AssignmentModeSettings() {
             onValueChange={(value) => setAssignmentMode(value as AssignmentMode)}
             className="grid grid-cols-1 md:grid-cols-2 gap-4"
           >
-            <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-muted/50" transition-all duration-300>
+            <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-muted/50 transition-all duration-300">
               <RadioGroupItem value="auto" id="auto" data-testid="radio-auto-assignment" />
               <div className="grid gap-1.5">
                 <Label htmlFor="auto" className="flex items-center gap-2 font-medium cursor-pointer">
@@ -366,7 +366,7 @@ export default function AssignmentModeSettings() {
               </div>
             </div>
             
-            <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-muted/50" transition-all duration-300>
+            <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-muted/50 transition-all duration-300">
               <RadioGroupItem value="manual" id="manual" data-testid="radio-manual-assignment" />
               <div className="grid gap-1.5">
                 <Label htmlFor="manual" className="flex items-center gap-2 font-medium cursor-pointer">
@@ -552,7 +552,7 @@ export default function AssignmentModeSettings() {
                         .map((agent: any) => (
                         <div
                           key={agent.id}
-                          className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800" transition-all duration-300
+                          className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300"
                         >
                           <Checkbox
                             id={`agent-${agent.id}`}

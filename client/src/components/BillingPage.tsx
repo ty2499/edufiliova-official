@@ -122,7 +122,7 @@ function AddPaymentMethodForm({ onSuccess, onCancel }: { onSuccess: () => void; 
         <Button
           type="submit"
           disabled={!stripe || isSubmitting}
-          className="bg-primary hover:bg-primary" transition-all duration-300
+          className="bg-primary hover:bg-primary transition-all duration-300"
           data-testid="button-save-payment"
         >
           {isSubmitting ? (
@@ -467,7 +467,7 @@ export default function BillingPage() {
               </p>
               <Button
                 onClick={() => setShowAddDialog(true)}
-                className="bg-primary hover:bg-primary text-[#ffffff]" transition-all duration-300
+                className="bg-primary hover:bg-primary text-[#ffffff] transition-all duration-300"
                 data-testid="button-add-first-payment"
               >
                 <Plus className="w-4 h-4 mr-2" />
@@ -521,7 +521,7 @@ export default function BillingPage() {
                           size="sm"
                           onClick={() => handleDelete(method.id)}
                           disabled={deleteMutation.isPending}
-                          className="text-primary hover:text-primary hover:bg-primary/10" transition-all duration-300
+                          className="text-primary hover:text-primary hover:bg-primary/10 transition-all duration-300"
                           data-testid={`button-delete-${index}`}
                         >
                           <Trash2 className="w-4 h-4" />
@@ -581,7 +581,7 @@ export default function BillingPage() {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmCancelSubscription}
-              className="bg-primary hover:bg-red-700 text-white" transition-all duration-300
+              className="bg-primary hover:bg-red-700 text-white transition-all duration-300"
               data-testid="button-cancel-dialog-yes"
             >
               Yes, Cancel Plan

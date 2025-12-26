@@ -206,7 +206,7 @@ export default function MyAds({ userRole = 'customer' }: MyAdsProps) {
               {filteredAds.map((ad) => (
                 <div
                   key={ad.id}
-                  className="border rounded-lg p-4 hover:shadow-md transition-shadow" transition-all duration-300
+                  className="border rounded-lg p-4 hover:shadow-md transition-shadow transition-all duration-300"
                   data-testid={`ad-card-${ad.id}`}
                 >
                   <div className="flex flex-col md:flex-row gap-4">
@@ -325,7 +325,7 @@ export default function MyAds({ userRole = 'customer' }: MyAdsProps) {
                           size="sm"
                           onClick={() => handleDeleteClick(ad.id)}
                           disabled={deleteMutation.isPending}
-                          className="text-primary hover:text-primary hover:bg-primary/10" transition-all duration-300
+                          className="text-primary hover:text-primary hover:bg-primary/10 transition-all duration-300"
                           data-testid={`button-delete-${ad.id}`}
                         >
                           <Trash2 className="w-4 h-4 mr-2" />
@@ -354,7 +354,7 @@ export default function MyAds({ userRole = 'customer' }: MyAdsProps) {
             <AlertDialogCancel data-testid="button-cancel-delete">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-primary hover:bg-red-700 text-white" transition-all duration-300
+              className="bg-primary hover:bg-red-700 text-white transition-all duration-300"
               data-testid="button-confirm-delete"
             >
               Delete

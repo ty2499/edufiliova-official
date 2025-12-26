@@ -273,7 +273,7 @@ export default function OptimizedMessagingInterface({
           <p className="text-primary mb-2">Failed to load messages</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-primary" transition-all duration-300
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-primary transition-all duration-300"
           >
             Retry
           </button>
@@ -298,7 +298,7 @@ export default function OptimizedMessagingInterface({
           {onBack && (
             <button
               onClick={onBack}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors" transition-all duration-300
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors transition-all duration-300"
               data-testid="back-button"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -320,21 +320,21 @@ export default function OptimizedMessagingInterface({
         <div className="flex items-center space-x-2">
           <button
             onClick={() => setShowSearch(!showSearch)}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors" transition-all duration-300
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors transition-all duration-300"
             data-testid="search-button"
           >
             <Search className="w-5 h-5" />
           </button>
           
-          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors" transition-all duration-300>
+          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors transition-all duration-300">
             <Phone className="w-5 h-5" />
           </button>
           
-          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors" transition-all duration-300>
+          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors transition-all duration-300">
             <Video className="w-5 h-5" />
           </button>
           
-          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors" transition-all duration-300>
+          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors transition-all duration-300">
             <MoreVertical className="w-5 h-5" />
           </button>
         </div>

@@ -125,7 +125,7 @@ export default function FreelancerApplicationStatus() {
               </p>
               <Button
                 onClick={() => navigate("/?page=freelancer-dashboard")}
-                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105" transition-all duration-300
+                className="bg-primary hover:bg-primary/80 hover:shadow-xl hover:scale-105 transition-all duration-300"
                 data-testid="button-go-dashboard"
               >
                 Access Freelancer Dashboard

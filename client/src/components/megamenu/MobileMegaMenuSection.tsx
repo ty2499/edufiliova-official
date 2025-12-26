@@ -15,7 +15,7 @@ export const MobileMegaMenuSection = ({ title, children, icon, isDefaultOpen = f
     <div className="border-b border-gray-200 dark:border-gray-700">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-3 px-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" transition-all duration-300
+        className="w-full flex items-center justify-between py-3 px-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors transition-all duration-300"
         data-testid={`mobile-menu-${title.toLowerCase().replace(/\s+/g, '-')}`}
       >
         <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ export const MobileMegaMenuItem = ({ icon, title, description, onClick, badge }:
   return (
     <button
       onClick={onClick}
-      className="w-full text-left p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all" transition-all duration-300
+      className="w-full text-left p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all transition-all duration-300"
       data-testid={`mobile-megamenu-item-${title.toLowerCase().replace(/\s+/g, '-')}`}
     >
       <div className="flex items-start gap-3">
