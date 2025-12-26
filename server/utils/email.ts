@@ -68,7 +68,17 @@ export class EmailService {
 
   // ✅ BULLETPROOF NAME REPLACEMENT - Force all variations to display
   private forceReplaceName(html: string, fullName: string): string {
-    // Replace ALL possible variations of {{fullName}} and {{FullName}}
+    // 1️⃣ FIRST: Merge split placeholders caused by HTML spans
+    // Handles: {{</span><span...>fullName</span><span...>}} format
+    // More flexible regex that captures any content before/after the key parts
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>fullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{fullName}}');
+    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>FullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{FullName}}');
+    
+    // Handle cases where fullName is the only content
+    html = html.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, '{{fullName}}');
+    html = html.replace(/\{\{<\/span><span[^>]*>FullName<\/span><span[^>]*>\}\}/gi, '{{FullName}}');
+    
+    // 2️⃣ THEN: Replace ALL possible variations of {{fullName}} and {{FullName}}
     const patterns = [
       '{{fullName}}',
       '{{FullName}}',
@@ -86,9 +96,13 @@ export class EmailService {
       html = html.replaceAll(pattern, fullName);
     });
     
-    // Regex fallback for edge cases with spaces/variations
+    // 3️⃣ Regex fallback for edge cases with spaces/variations
     html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
     html = html.replace(/\{\{\s*FullName\s*\}\}/gi, fullName);
+    
+    // 4️⃣ Last resort: Look for any remaining {{ and }} that might contain variations
+    // This catches edge cases like {{  fullName  }} with extra spaces
+    html = html.replace(/\{\{\s*(?:full|Full)Name\s*\}\}/gi, fullName);
     
     return html;
   }
@@ -317,6 +331,80 @@ export class EmailService {
         { filename: 'freelancer_img.png', path: assetPath('5079c2203be6bb217e9e7c150f5f0d60_1766708445700.png'), cid: 'freelancer_img', contentType: 'image/png' },
         { filename: 'money_img.png', path: assetPath('c147000ffb2efef7ba64fa6ce5415a30_1766708445701.png'), cid: 'money_img', contentType: 'image/png' },
         { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766708445698.png'), cid: 'corner', contentType: 'image/png' }
+      ]
+    });
+  }
+
+  async sendFreelancerApplicationStatusEmail(email: string, data: { fullName: string; status: 'pending' | 'under_review' | 'approved' | 'rejected'; rejectionReason?: string }): Promise<boolean> {
+    // Route to appropriate email based on status
+    if (data.status === 'approved') {
+      return this.sendFreelancerApprovalEmail(email, { fullName: data.fullName });
+    } else if (data.status === 'rejected') {
+      // Use teacher rejection template for now as fallback
+      return this.sendFreelancerRejectionEmail(email, { fullName: data.fullName, reason: data.rejectionReason });
+    }
+    return false;
+  }
+
+  async sendFreelancerRejectionEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    // Using same template as teacher rejection for consistency
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_declined_teacher_1766647033808.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // Remove preloads and add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    const fullName = data.fullName || 'Freelancer';
+    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
+
+    // ✅ USE BULLETPROOF NAME REPLACEMENT FIRST - THIS IS CRITICAL
+    html = this.forceReplaceName(html, fullName);
+
+    // Handle blocks
+    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
+
+    // Final cleanup
+    html = html.replace(/\{\{reason\}\}/gi, reasonText);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+    html = html.replace(/\{\{#if reason\}\}/gi, '');
+    html = html.replace(/\{\{\/if\}\}/gi, '');
+
+    // Replace image paths
+    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
+    html = html.replaceAll('images/0ac9744033a7e26f12e08d761c703308.png', 'cid:logo');
+    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
+    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
+    html = html.replaceAll('images/917a6e905cf83da447efc0f5c2780aca.png', 'cid:teacher_img');
+    html = html.replaceAll('images/de497c5361453604d8a15c4fd9bde086.png', 'cid:rejection_icon');
+    html = html.replaceAll('images/e06e238bd6d74a3e48f94e5b0b81388d.png', 'cid:support_img');
+    html = html.replaceAll('images/7976503d64a3eef4169fe235111cdc57.png', 'cid:corner_graphic');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Application Status Update - EduFiliova Freelancer Application',
+      html,
+      from: `"EduFiliova Support" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'logo.png', path: assetPath('0ac9744033a7e26f12e08d761c703308_1766647041179.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_1766647041212.png'), cid: 'icon_db', contentType: 'image/png' },
+        { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_1766647041216.png'), cid: 'icon_pf', contentType: 'image/png' },
+        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_1766647041186.png'), cid: 'footer_logo', contentType: 'image/png' },
+        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766647041190.png'), cid: 's_social', contentType: 'image/png' },
+        { filename: 'teacher_img.png', path: assetPath('917a6e905cf83da447efc0f5c2780aca_1766647041197.png'), cid: 'teacher_img', contentType: 'image/png' },
+        { filename: 'rejection_icon.png', path: assetPath('de497c5361453604d8a15c4fd9bde086_1766647041219.png'), cid: 'rejection_icon', contentType: 'image/png' },
+        { filename: 'support_img.png', path: assetPath('e06e238bd6d74a3e48f94e5b0b81388d_1766647041222.png'), cid: 'support_img', contentType: 'image/png' },
+        { filename: 'corner.png', path: assetPath('7976503d64a3eef4169fe235111cdc57_1766647041205.png'), cid: 'corner_graphic', contentType: 'image/png' }
       ]
     });
   }
