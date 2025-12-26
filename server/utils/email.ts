@@ -1382,6 +1382,51 @@ export class EmailService {
       return false;
     }
   }
+
+  async sendPaymentFailedEmail(email: string, data: { 
+    customerName: string; 
+    orderId: string; 
+    amount: string; 
+    retryUrl?: string;
+  }): Promise<boolean> {
+    try {
+      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'payment-failed', 'template.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
+
+      const customerName = data.customerName || 'Customer';
+      const orderId = data.orderId || 'N/A';
+      const amount = data.amount || '$0.00';
+      const retryUrl = data.retryUrl || 'https://edufiliova.com/billing';
+
+      // ✅ USE BULLETPROOF NAME REPLACEMENT for customerName
+      html = html.replace(/\{\{\s*customerName\s*\}\}/gi, customerName);
+      html = html.replace(/\{\{<\/span><span[^>]*>customerName<\/span><span[^>]*>\}\}/gi, customerName);
+      
+      // Replace other placeholders
+      html = html.replace(/\{\{\s*orderId\s*\}\}/gi, orderId);
+      html = html.replace(/\{\{\s*amount\s*\}\}/gi, amount);
+      html = html.replace(/\{\{\s*retryUrl\s*\}\}/gi, retryUrl);
+
+      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'payment-failed', 'images');
+
+      return this.sendEmail({
+        to: email,
+        subject: `Payment Failed - Order #${orderId}`,
+        html,
+        from: `"EduFiliova Billing" <orders@edufiliova.com>`,
+        attachments: [
+          { filename: 'spiral-left.png', path: path.join(imagesDir, 'spiral-left.png'), cid: 'spiral-left', contentType: 'image/png' },
+          { filename: 'spiral-right.png', path: path.join(imagesDir, 'spiral-right.png'), cid: 'spiral-right', contentType: 'image/png' },
+          { filename: 'logo-header.png', path: path.join(imagesDir, 'logo-header.png'), cid: 'logo-header', contentType: 'image/png' },
+          { filename: 'whatsapp-promo.png', path: path.join(imagesDir, 'whatsapp-promo.png'), cid: 'whatsapp-promo', contentType: 'image/png' },
+          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
+        ]
+      });
+    } catch (error) {
+      console.error('❌ Error sending payment failed email:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();
