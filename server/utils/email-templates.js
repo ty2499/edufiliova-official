@@ -69,7 +69,7 @@ export async function sendStudentWelcomeEmail(recipientEmail, recipientName) {
       to: recipientEmail,
       subject: 'Welcome to EduFiliova - Your Learning Journey Begins!',
       html: emailHtml,
-      from: `"EduFiliova" <welcome@edufiliova.com>`,
+      from: `"EduFiliova" <noreply@edufiliova.com>`,
       attachments
     });
     
