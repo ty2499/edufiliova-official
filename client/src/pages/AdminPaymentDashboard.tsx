@@ -1759,6 +1759,14 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
   // State declarations
   const [selectedTab, setSelectedTab] = useState(getDefaultTab(userRole));
   const [messageSearchQuery, setMessageSearchQuery] = useState('');
+  
+  // Re-validate selectedTab when userRole changes (after profile loads)
+  useEffect(() => {
+    const allowedTabs = roleTabAccess[userRole] || ['dashboard'];
+    if (!allowedTabs.includes(selectedTab)) {
+      setSelectedTab(getDefaultTab(userRole));
+    }
+  }, [userRole]);
   const [userSearchQuery, setUserSearchQuery] = useState('');
   const [selectedUserId, setSelectedUserId] = useState<string>('');
   const [selectedRole, setSelectedRole] = useState<string>('');
