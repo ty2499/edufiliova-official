@@ -409,7 +409,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700" transition-all duration-300
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-all duration-300"
                     data-testid="button-toggle-password"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -434,7 +434,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700" transition-all duration-300
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-all duration-300"
                     data-testid="button-toggle-confirm-password"
                   >
                     {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
