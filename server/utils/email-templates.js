@@ -314,3 +314,109 @@ export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerN
     throw error;
   }
 }
+
+export async function sendCoursePurchaseEmail(recipientEmail, recipientName, courseData) {
+  console.log(`📧 Sending course purchase email to ${recipientEmail}...`);
+  console.log(`   - Recipient: ${recipientName}`);
+  console.log(`   - Course: ${courseData.courseName}`);
+  
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'course-purchase', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Student';
+    const courseName = courseData.courseName || 'Your Course';
+    const teacherName = courseData.teacherName || 'EduFiliova Instructor';
+    const orderId = courseData.orderId || 'N/A';
+    const price = courseData.price || '0.00';
+    const accessType = courseData.accessType || 'Lifetime Access';
+    const purchaseDate = courseData.purchaseDate || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    
+    // Replace placeholders - handle split HTML spans
+    const replacements = {
+      'fullName': fullName,
+      'courseName': courseName,
+      'teacherName': teacherName,
+      'orderId': orderId,
+      'price': price,
+      'accessType': accessType,
+      'purchaseDate': purchaseDate
+    };
+    
+    // Handle various placeholder formats
+    for (const [key, value] of Object.entries(replacements)) {
+      // Standard format
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+      // Split span format
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
+    }
+    
+    // Replace image paths with CID references
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
+    emailHtml = emailHtml.replace(/images\/d003f0807fd61e8939ef89ef37a2a824\.png/g, 'cid:logo');
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
+    emailHtml = emailHtml.replace(/images\/c986afbaeaa02e99d02feeac68f6b944\.png/g, 'cid:promo');
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    
+    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'course-purchase');
+    
+    const attachments = [
+      {
+        filename: 'spiral1.png',
+        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
+        cid: 'spiral1',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logo.png',
+        path: path.join(imagesDir, 'd003f0807fd61e8939ef89ef37a2a824.png'),
+        cid: 'logo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'spiral2.png',
+        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
+        cid: 'spiral2',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'corner.png',
+        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
+        cid: 'corner',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'promo.png',
+        path: path.join(imagesDir, 'c986afbaeaa02e99d02feeac68f6b944.png'),
+        cid: 'promo',
+        contentType: 'image/png'
+      },
+      {
+        filename: 'logofull.png',
+        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
+        cid: 'logofull',
+        contentType: 'image/png'
+      }
+    ];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Course Purchase Confirmed - ${courseName}`,
+      html: emailHtml,
+      from: `"EduFiliova Orders" <orders@edufiliova.com>`,
+      attachments
+    });
+    
+    if (result) {
+      console.log(`✅ Course purchase email sent successfully to ${recipientEmail}`);
+    } else {
+      console.error(`❌ Course purchase email failed to send to ${recipientEmail}`);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending course purchase email:`, error);
+    throw error;
+  }
+}

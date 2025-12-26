@@ -6884,6 +6884,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log(`✅ Course ${courseId} purchased with wallet by user ${userId}`);
 
+      // Send purchase confirmation email
+      try {
+        const userProfile = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
+        const teacherProfile = course.userId ? await db.select().from(profiles).where(eq(profiles.userId, course.userId)).limit(1) : [];
+        
+        if (userProfile.length > 0 && userProfile[0].email) {
+          const { sendCoursePurchaseEmail } = await import('./utils/email-templates.js');
+          await sendCoursePurchaseEmail(
+            userProfile[0].email,
+            userProfile[0].name || 'Student',
+            {
+              courseName: course.title,
+              teacherName: teacherProfile.length > 0 ? teacherProfile[0].name : 'EduFiliova Instructor',
+              orderId: transactionId,
+              price: amount.toFixed(2),
+              accessType: 'Lifetime Access',
+              purchaseDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+            }
+          );
+        }
+      } catch (emailError) {
+        console.error('Email sending failed (non-blocking):', emailError);
+      }
+
+
       res.json({ success: true,
         success: true,
         transactionId,
