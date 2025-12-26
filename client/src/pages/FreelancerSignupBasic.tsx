@@ -220,15 +220,15 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
         <div className="flex items-center justify-center py-8">
           <div className="w-full max-w-md mx-auto">
             <div className="text-center space-y-6">
-              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#e0f2fe' }}>
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#a0fab2' }}>
                 <Mail className="h-10 w-10" style={{ color: '#0C332C' }} />
               </div>
               
               <div className="space-y-2">
-                <h1 className="text-2xl font-bold text-gray-900">Verify Your Email</h1>
-                <p className="text-gray-600">
+                <h1 className="text-2xl font-bold" style={{ color: '#a0fab2' }}>Verify Your Email</h1>
+                <p className="text-white/80">
                   We sent a 6-digit code to<br />
-                  <span className="font-medium text-gray-900">{userEmail}</span>
+                  <span className="font-medium" style={{ color: '#a0fab2' }}>{userEmail}</span>
                 </p>
               </div>
 
@@ -259,14 +259,14 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
               </div>
 
               {isVerifying && (
-                <div className="flex items-center justify-center gap-2 text-gray-600">
+                <div className="flex items-center justify-center gap-2 text-white/80">
                   <Loader2 className="h-4 w-4 animate-spin" />
                   <span>Verifying...</span>
                 </div>
               )}
 
               <div className="pt-4 space-y-3">
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-white/70">
                   Didn't receive the code?{" "}
                   <button
                     onClick={handleResendCode}
@@ -285,7 +285,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                     setVerificationCode("");
                     setErrorMessage("");
                   }}
-                  className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-gray-900 mx-auto" transition-all duration-300
+                  className="flex items-center justify-center gap-2 text-sm text-white/70 hover:text-white mx-auto transition-all duration-300"
                   data-testid="button-back"
                 >
                   <ArrowLeft className="h-4 w-4" />
@@ -293,7 +293,7 @@ export default function FreelancerSignupBasic({ onNavigate }: FreelancerSignupBa
                 </button>
               </div>
 
-              <p className="text-xs text-gray-400 pt-4">
+              <p className="text-xs text-white/50 pt-4">
                 Code expires in 24 hours
               </p>
             </div>
