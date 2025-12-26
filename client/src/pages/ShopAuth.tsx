@@ -334,10 +334,6 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
         <div className="w-full max-w-md mx-auto">
           <div className="text-center space-y-6">
-            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#e0f2fe' }}>
-              <Mail className="h-10 w-10" style={{ color: 'white' }} />
-            </div>
-            
             <div className="space-y-2">
               <h1 className="text-2xl font-bold text-gray-900">Verify Your Email</h1>
               <p className="text-gray-600">
