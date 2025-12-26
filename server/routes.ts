@@ -3035,27 +3035,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
       }
 
-      // Generate 6-digit code
       const emailCode = Math.floor(100000 + Math.random() * 900000).toString();
       
-      // Store code in verification_codes table
       await db.insert(verificationCodes).values({
         userId: user.id,
         code: emailCode,
         type: 'email_password_reset',
-        expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000),
         userData: { email }
       });
 
-      // Send reset email using new template
-      const templatePath = path.join(process.cwd(), 'server', 'templates', 'password_reset_whatsapp.html');
+      const templatePath = path.join(process.cwd(), 'server', 'templates', 'phone_linking_verification.html');
       const htmlContent = fs.readFileSync(templatePath, 'utf-8');
       const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, user.id) });
 
       await sendEmail(
         email,
         'Password Reset Verification Code',
-        getEmailTemplate('password_reset_whatsapp' as any, { 
+        getEmailTemplate('phone_linking_verification' as any, { 
           code: emailCode, 
           fullName: profile?.name || 'User',
           expiresIn: '10',
@@ -3065,14 +3062,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
     } catch (error) {
-      console.error('Password reset request error:', error);
-      res.status(500).json({ success: false, error: "Password reset request failed" });
-    }
-  });
-
-      res.json({ success: true, message: "If an account with this email exists, a reset link has been sent." });
-
-    } catch (error: any) {
       console.error('Password reset request error:', error);
       res.status(500).json({ success: false, error: "Password reset request failed" });
     }
