@@ -1268,6 +1268,47 @@ export class EmailService {
     });
   }
 
+  async sendShopVerificationEmail(email: string, data: { fullName: string; verificationCode: string; expiresIn?: string }): Promise<boolean> {
+    const htmlPath = path.resolve(process.cwd(), 'server/templates/customer_verification_template/email.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    const fullName = data.fullName || 'User';
+    const code = data.verificationCode || '000000';
+    const expiresIn = data.expiresIn || '15 minutes';
+
+    // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
+    html = this.forceReplaceName(html, fullName);
+    
+    // Replace other dynamic placeholders
+    html = html.replace(/\{\{code\}\}/gi, code);
+    html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
+
+    // Replace image paths with CIDs
+    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:customer1');
+    html = html.replaceAll('images/41506b29d7f0bbde9fcb0d4afb720c70.png', 'cid:customer2');
+    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:customer3');
+    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:customer4');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:customer5');
+    html = html.replaceAll('images/fcf514453cb3c939b52a8a2bcbb97b94.png', 'cid:customer6');
+
+    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Verify Your Shop Account - EduFiliova',
+      html,
+      from: `"EduFiliova Security" <support@edufiliova.com>`,
+      attachments: [
+        { filename: 'customer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766750209430.png'), cid: 'customer1', contentType: 'image/png' },
+        { filename: 'customer2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_1766750209426.png'), cid: 'customer2', contentType: 'image/png' },
+        { filename: 'customer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766750209423.png'), cid: 'customer3', contentType: 'image/png' },
+        { filename: 'customer4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766750209420.png'), cid: 'customer4', contentType: 'image/png' },
+        { filename: 'customer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766750209420.png'), cid: 'customer5', contentType: 'image/png' },
+        { filename: 'customer6.png', path: assetPath('fcf514453cb3c939b52a8a2bcbb97b94_1766750209434.png'), cid: 'customer6', contentType: 'image/png' }
+      ]
+    });
+  }
+
   async sendApplicationSubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
     try {
       const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'template.html');
