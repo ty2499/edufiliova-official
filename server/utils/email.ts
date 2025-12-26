@@ -120,7 +120,10 @@ export class EmailService {
     if (this.transporters.size === 0) {
       await this.initializeFromDatabase();
     }
-    if (this.transporters.size === 0) return false;
+    if (this.transporters.size === 0) {
+      console.error('❌ No email transporters available');
+      return false;
+    }
     
     try {
       const from = options.from || `"EduFiliova" <orders@edufiliova.com>`;
@@ -128,7 +131,17 @@ export class EmailService {
       const senderEmail = emailMatch ? emailMatch[1] : from;
       let transporter = this.transporters.get(senderEmail) || Array.from(this.transporters.values())[0];
       
-      if (!transporter) return false;
+      console.log(`📧 Email send attempt:
+   - From: ${from}
+   - Sender email extracted: ${senderEmail}
+   - Transporter found for sender: ${this.transporters.has(senderEmail)}
+   - Using fallback transporter: ${!this.transporters.has(senderEmail)}
+   - Available transporters: ${Array.from(this.transporters.keys()).join(', ')}`);
+      
+      if (!transporter) {
+        console.error('❌ No transporter available for email');
+        return false;
+      }
 
       const mailOptions = {
         from,
@@ -138,7 +151,12 @@ export class EmailService {
         attachments: options.attachments || [],
       };
       
-      await transporter.sendMail(mailOptions);
+      const result = await transporter.sendMail(mailOptions);
+      console.log(`📧 SMTP Response:
+   - Message ID: ${result.messageId}
+   - Response: ${result.response}
+   - Accepted: ${result.accepted?.join(', ')}
+   - Rejected: ${result.rejected?.join(', ') || 'none'}`);
       return true;
     } catch (error) {
       console.error('❌ Error in sendEmail:', error);
