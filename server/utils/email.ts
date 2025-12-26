@@ -1427,6 +1427,50 @@ export class EmailService {
       return false;
     }
   }
+
+  async sendTeacherApplicationDeclinedEmail(email: string, data: { 
+    fullName: string; 
+    reason?: string;
+  }): Promise<boolean> {
+    try {
+      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-declined', 'template.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
+
+      const fullName = data.fullName || 'Teacher';
+      const reason = data.reason || '';
+
+      // ✅ USE BULLETPROOF NAME REPLACEMENT
+      html = this.forceReplaceName(html, fullName);
+      
+      // Handle conditional reason block
+      if (reason) {
+        html = html.replace(/\{\{#if reason\}\}([\s\S]*?)\{\{\/if\}\}/gi, '$1');
+        html = html.replace(/\{\{\s*reason\s*\}\}/gi, reason);
+      } else {
+        html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+      }
+
+      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-declined', 'images');
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Teacher Application Update - EduFiliova',
+        html,
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        attachments: [
+          { filename: 'spiral-left.png', path: path.join(imagesDir, 'spiral-left.png'), cid: 'spiral-left', contentType: 'image/png' },
+          { filename: 'spiral-right.png', path: path.join(imagesDir, 'spiral-right.png'), cid: 'spiral-right', contentType: 'image/png' },
+          { filename: 'logo-header.png', path: path.join(imagesDir, 'logo-header.png'), cid: 'logo-header', contentType: 'image/png' },
+          { filename: 'declined-icon.png', path: path.join(imagesDir, 'declined-icon.png'), cid: 'declined-icon', contentType: 'image/png' },
+          { filename: 'promo.png', path: path.join(imagesDir, 'promo.png'), cid: 'promo', contentType: 'image/png' },
+          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
+        ]
+      });
+    } catch (error) {
+      console.error('❌ Error sending teacher application declined email:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();
