@@ -1186,13 +1186,13 @@ export class EmailService {
     });
   }
 
-  async sendFreelancerVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
+  async sendFreelancerVerificationEmail(email: string, data: { fullName: string; verificationCode: string; expiresIn?: string }): Promise<boolean> {
     const htmlPath = path.resolve(process.cwd(), 'server/templates/freelancer_verification_template/email.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     const fullName = data.fullName || 'User';
-    const code = data.code || '000000';
-    const expiresIn = data.expiresIn || '10';
+    const code = data.verificationCode || '000000';
+    const expiresIn = data.expiresIn || '24 hours';
 
     // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
     html = this.forceReplaceName(html, fullName);
