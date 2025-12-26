@@ -1678,7 +1678,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       <div className="mb-6 text-center">
         <div className="flex justify-center mb-4">
           <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
-            <Lock className="h-8 w-8 text-primary" />
+            <Lock className="h-8 w-8" style={{ color: '#0c332c' }} />
           </div>
         </div>
         <h2 className="text-2xl font-bold text-white mb-2">
