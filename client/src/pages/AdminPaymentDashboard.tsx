@@ -1177,7 +1177,8 @@ const ProductApprovalCard = ({
           <Button
             onClick={() => onApprove(product.id)}
             disabled={loading}
-            className="flex-1 bg-green-600 hover:bg-green-700" transition-all duration-300
+            className="flex-1 border-0"
+            style={{ backgroundColor: '#0c332c', color: 'white' }}
             data-testid={`approve-product-${product.id}`}
           >
             <CheckCircle2 className="h-4 w-4 mr-2" />
