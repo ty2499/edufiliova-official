@@ -92,11 +92,10 @@ interface Conversation {
 interface MessagingInterfaceProps {
   userRole: 'student' | 'teacher' | 'admin' | 'freelancer';
   onChatModeChange?: (isInChat: boolean) => void;
-  onNavigate?: (route: string) => void;
   useOptimizedInterface?: boolean; // Enable high-performance messaging
 }
 
-export function MessagingInterface({ userRole, onChatModeChange, onNavigate, useOptimizedInterface = false }: MessagingInterfaceProps) {
+export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInterface = false }: MessagingInterfaceProps) {
   const { user, profile } = useAuth();
   const queryClient = useQueryClient();
   const { 
@@ -2009,21 +2008,6 @@ export function MessagingInterface({ userRole, onChatModeChange, onNavigate, use
           <div className="flex items-center gap-3">
             <button
               onClick={() => {
-                // Always navigate back to dashboard
-                if (onNavigate) {
-                  if (userRole === 'student') {
-                    onNavigate('/');
-                  } else if (userRole === 'admin') {
-                    onNavigate('/?page=admin-dashboard');
-                  } else if (userRole === 'teacher') {
-                    onNavigate('/?page=teacher-dashboard');
-                  } else if (userRole === 'freelancer') {
-                    onNavigate('/?page=freelancer-dashboard');
-                  } else {
-                    onNavigate('/');
-                  }
-                }
-                // Also close chat mode if callback exists
                 if (onChatModeChange) {
                   onChatModeChange(false);
                 }
