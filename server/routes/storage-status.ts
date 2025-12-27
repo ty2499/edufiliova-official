@@ -6,8 +6,59 @@ import { cloudflareR2Storage } from "../cloudflare-r2-storage";
 import { storageManager } from "../storage-manager";
 import { migrateLessonImagesToR2, migrateCourseThumbailsToR2 } from "../migrate-lesson-images-to-r2";
 import { regenerateAllImages } from "../regenerate-lesson-images";
+import { db } from "../db.js";
+import { profiles, users } from "../../shared/schema.js";
+import { eq } from "drizzle-orm";
+import { emailService } from "../utils/email.js";
 
 const router = Router();
+
+// New route for admin to update user status and send notification email
+router.patch("/users/:userId/status", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res) => {
+  try {
+    const { userId } = req.params;
+    const { status } = req.body;
+
+    if (!['active', 'banned', 'suspended'].includes(status)) {
+      return res.status(400).json({ success: false, error: "Invalid status" });
+    }
+
+    const [updatedProfile] = await db
+      .update(profiles)
+      .set({ status, updatedAt: new Date() })
+      .where(eq(profiles.userId, userId))
+      .returning();
+
+    if (!updatedProfile) {
+      return res.status(404).json({ success: false, error: "Profile not found" });
+    }
+
+    // If unsuspending/unbanning (setting to active), send notification email
+    if (status === 'active') {
+      try {
+        const [user] = await db
+          .select({ email: users.email })
+          .from(users)
+          .where(eq(users.id, userId))
+          .limit(1);
+
+        if (user?.email) {
+          await emailService.sendAccountUnsuspendedEmail(user.email, {
+            fullName: updatedProfile.name || updatedProfile.displayName || 'Member'
+          });
+          console.log(`✅ Unsuspension email sent to ${user.email}`);
+        }
+      } catch (emailError) {
+        console.warn("⚠️ Failed to send unsuspension email:", emailError);
+      }
+    }
+
+    res.json({ success: true, data: updatedProfile });
+  } catch (error) {
+    console.error("Error updating user status:", error);
+    res.status(500).json({ success: false, error: "Internal server error" });
+  }
+});
 
 router.get("/status", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res) => {
   try {

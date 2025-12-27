@@ -319,6 +319,73 @@ export class EmailService {
     });
   }
 
+  async sendAccountUnsuspendedEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+    .header { background-color: #0C332C; padding: 40px; text-align: center; }
+    .logo { max-width: 180px; height: auto; }
+    .content { padding: 40px; }
+    .title { color: #1a1a1a; font-size: 24px; font-weight: 700; margin: 0 0 20px 0; }
+    .message { color: #4a5568; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; }
+    .important { border-left: 4px solid #0C332C; background-color: #f9fafb; padding: 20px; margin: 25px 0; font-style: italic; }
+    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
+    .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
+    </div>
+    <div class="content">
+      <h1 class="title">Account Status Update, ${data.fullName}</h1>
+      <p class="message">
+        We are pleased to inform you that we have reviewed your account and have officially removed the restrictions. Your account has been unsuspended/unbanned, and you now have full access to all Edufiliova features once again.
+      </p>
+      
+      <div class="important">
+        By continuing to use our platform, you agree to strictly adhere to our Terms of Service and Community Guidelines. We maintain these standards to ensure a safe, professional, and productive environment for all our members. Any further violations may lead to permanent restriction of your account.
+      </div>
+      
+      <p class="message">
+        We value your participation in our community and look forward to your continued growth and contributions on the platform. Please take a moment to review our latest policies and privacy information via the links below.
+      </p>
+      
+      <center>
+        <a href="${baseUrl}/login" class="button">Log In to Your Account</a>
+      </center>
+      
+      <p class="message" style="margin-top: 30px;">
+        If you have any questions regarding this update, please don't hesitate to reach out to our support team.
+      </p>
+    </div>
+    <div class="footer">
+      <p>© 2025 Edufiliova. All rights reserved.</p>
+      <p style="margin-top: 15px; font-size: 12px;">
+        <a href="${baseUrl}/privacy-policy">Privacy Policy</a> | 
+        <a href="${baseUrl}/terms">Terms of Service</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Important: Your Edufiliova Account Restrictions Have Been Removed',
+      html,
+      from: `"Edufiliova Support" <support@edufiliova.com>`
+    });
+  }
+
   async sendFreelancerApprovalEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/freelancer_approval_template.html');
