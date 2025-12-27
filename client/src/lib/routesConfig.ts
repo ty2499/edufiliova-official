@@ -311,6 +311,16 @@ export function isAuthState(state: AppState): boolean {
 }
 
 export function shouldRedirectAuthenticatedUser(state: AppState, userRole: string | null | undefined): AppState | null {
+  // Never redirect if the user is on a public-safe page
+  const publicSafeStates: AppState[] = [
+    "product-shop", "course-browse", "course-detail", "blog", "home", 
+    "about", "contact", "help", "portfolio-gallery", "cart"
+  ];
+  
+  if (publicSafeStates.includes(state)) {
+    return null;
+  }
+
   if (!isAuthState(state) || !userRole) {
     return null;
   }

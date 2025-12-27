@@ -1095,8 +1095,14 @@ const Index = () => {
                           "creator-pricing", "education-pricing", "privacy-policy", "verify-certificate", "buy-voucher"];
       
       // IF THE CURRENT PAGE IS A PUBLIC PAGE, STOP AUTO-ROUTING IMMEDIATELY
-      if (publicPages.includes(currentState) || window.location.pathname.startsWith('/shop')) {
-        console.log('✅ Staying on public page or /shop path:', currentState);
+      const path = window.location.pathname;
+      if (publicPages.includes(currentState) || 
+          path === '/shop' || 
+          path.startsWith('/shop/') || 
+          path === '/courses' || 
+          path.startsWith('/courses/') ||
+          path.startsWith('/course/')) {
+        console.log('✅ Staying on public page or protected path:', currentState, 'Path:', path);
         return;
       }
 
