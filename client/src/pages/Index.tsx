@@ -1564,12 +1564,10 @@ const Index = () => {
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname;
       if (pathname === '/shop' || pathname.startsWith('/shop/')) {
-        const stateToUse = currentState === 'product-shop' ? currentState : 'product-shop';
-        // Force render shop if URL is /shop regardless of state
-        if (stateToUse === 'product-shop') {
+        if (currentState === 'product-shop') {
           return (
             <PageTransition 
-              isActive={true} 
+              isActive={currentPage === 'product-shop'} 
               transitionType={transitionType} 
               isTransitioning={isTransitioning}
               isExiting={isExiting}
@@ -1587,7 +1585,7 @@ const Index = () => {
         if (currentState === 'course-browse' || currentState === 'course-detail' || currentState === 'course-player') {
           return (
             <PageTransition 
-              isActive={true} 
+              isActive={currentPage === 'course-browse' || currentPage === 'course-detail' || currentPage === 'course-player'} 
               transitionType={transitionType} 
               isTransitioning={isTransitioning}
               isExiting={isExiting}
