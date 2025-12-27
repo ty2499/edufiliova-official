@@ -1177,7 +1177,7 @@ const ProductApprovalCard = ({
           <Button
             onClick={() => onApprove(product.id)}
             disabled={loading}
-            className="flex-1 border-0"
+            className="flex-1 border-0 hover:scale-100 hover:opacity-100"
             style={{ backgroundColor: '#0c332c', color: 'white' }}
             data-testid={`approve-product-${product.id}`}
           >
@@ -1188,7 +1188,8 @@ const ProductApprovalCard = ({
             variant="destructive"
             onClick={() => setShowRejectDialog(true)}
             disabled={loading}
-            className="flex-1"
+            className="flex-1 border-0"
+            style={{ backgroundColor: '#0c332c', color: 'white' }}
             data-testid={`reject-product-${product.id}`}
           >
             <XCircle className="h-4 w-4 mr-2" />
@@ -1231,6 +1232,8 @@ const ProductApprovalCard = ({
                 setRejectionReason('');
               }}
               disabled={!rejectionReason.trim() || loading}
+              className="border-0"
+              style={{ backgroundColor: '#0c332c', color: 'white' }}
               data-testid="confirm-reject-product"
             >
               Reject Product
@@ -1476,7 +1479,8 @@ const ProductsList = ({
                               size="sm"
                               onClick={() => handleStatusChange(product.id, 'approved')}
                               disabled={changeProductStatusMutation.isPending}
-                              className="text-green-600 border-green-600 hover:bg-green-50" transition-all duration-300
+                              className="border-0 hover:scale-100 hover:opacity-100"
+                              style={{ backgroundColor: '#0c332c', color: 'white' }}
                               data-testid={`publish-product-${product.id}`}
                             >
                               <CheckCircle2 className="h-3 w-3 mr-1" />
@@ -1488,7 +1492,8 @@ const ProductsList = ({
                               size="sm"
                               onClick={() => handleStatusChange(product.id, 'approved')}
                               disabled={changeProductStatusMutation.isPending}
-                              className="text-green-600 border-green-600 hover:bg-green-50" transition-all duration-300
+                              className="border-0 hover:scale-100 hover:opacity-100"
+                              style={{ backgroundColor: '#0c332c', color: 'white' }}
                               data-testid={`approve-product-${product.id}`}
                             >
                               <CheckCircle2 className="h-3 w-3 mr-1" />

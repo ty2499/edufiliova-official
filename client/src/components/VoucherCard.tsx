@@ -27,7 +27,7 @@ export function VoucherCard({
   if (showBack) {
     return (
       <Card className={cn(
-        "relative w-full max-w-md aspect-[1.6/1] overflow-hidden bg-gradient-to-br from-orange-600 to-orange-700 text-white shadow-2xl",
+        "relative w-full max-w-md aspect-[1.6/1] overflow-hidden bg-gradient-to-br from-[#0c332c] to-[#0c332c] text-white shadow-2xl",
         className
       )}>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgMjAgMTAgTSAxMCAwIEwgMTAgMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-30" />
@@ -76,11 +76,11 @@ export function VoucherCard({
 
   return (
     <Card className={cn(
-      "relative w-full max-w-md aspect-[1.6/1] overflow-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 shadow-2xl border-2 border-orange-500",
+      "relative w-full max-w-md aspect-[1.6/1] overflow-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 shadow-2xl border-2 border-[#0c332c]",
       className
     )}>
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-0 right-0 w-2/5 h-full bg-gradient-to-br from-primary to-primary" 
+        <div className="absolute top-0 right-0 w-2/5 h-full bg-[#0c332c]" 
              style={{ clipPath: 'polygon(20% 0, 100% 0, 100% 100%, 0% 100%)' }} 
         />
       </div>
@@ -91,7 +91,7 @@ export function VoucherCard({
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <Ticket className="w-6 h-6 text-primary dark:text-orange-500" />
+              <Ticket className="w-6 h-6 text-[#0c332c] dark:text-[#0c332c]" />
               <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
                 {description}
               </h3>
@@ -108,11 +108,11 @@ export function VoucherCard({
           <div className="flex-1">
             <div className="mb-4">
               <div className="flex items-baseline gap-1 mb-1">
-                <span className="text-5xl font-bold text-primary dark:text-orange-500">
+                <span className="text-5xl font-bold text-[#0c332c] dark:text-[#0c332c]">
                   ${formattedAmount.split('.')[0]}
                 </span>
                 {formattedAmount.split('.')[1] && (
-                  <span className="text-2xl font-semibold text-primary dark:text-orange-500">
+                  <span className="text-2xl font-semibold text-[#0c332c] dark:text-[#0c332c]">
                     .{formattedAmount.split('.')[1]}
                   </span>
                 )}
@@ -130,8 +130,8 @@ export function VoucherCard({
             </div>
           </div>
 
-          <div className="flex items-center justify-center w-24 h-24 bg-white dark:bg-gray-800 rounded-full border-4 border-orange-500 shadow-lg">
-            <Gift className="w-12 h-12 text-primary dark:text-orange-500" />
+          <div className="flex items-center justify-center w-24 h-24 bg-white dark:bg-gray-800 rounded-full border-4 border-[#0c332c] shadow-lg">
+            <Gift className="w-12 h-12 text-[#0c332c] dark:text-[#0c332c]" />
           </div>
         </div>
 
@@ -145,7 +145,7 @@ export function VoucherCard({
           </div>
           <div className="flex gap-1">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="w-1.5 h-1.5 bg-primary transform rotate-45" />
+              <div key={i} className="w-1.5 h-1.5 bg-[#0c332c] transform rotate-45" />
             ))}
           </div>
         </div>
