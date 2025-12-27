@@ -1881,20 +1881,65 @@ const Index = () => {
         );
     
       case "student-signup":
-        return <div className="page-transition"><AuthModern onLogin={handleLogin} onNavigate={handleNavigation} userType="student" /></div>;
+        return (
+          <PageTransition 
+            isActive={currentPage === "student-signup"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
+            <AuthModern onLogin={handleLogin} onNavigate={handleNavigation} userType="student" />
+          </PageTransition>
+        );
     
       case "creator-signup":
-        return <div className="page-transition"><AuthModern onLogin={handleLogin} onNavigate={handleNavigation} userType="teacher" /></div>;
+        return (
+          <PageTransition 
+            isActive={currentPage === "creator-signup"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
+            <AuthModern onLogin={handleLogin} onNavigate={handleNavigation} userType="teacher" />
+          </PageTransition>
+        );
     
       case "teacher-login":
-        return <div className="page-transition"><TeacherLogin onLogin={handleLogin} onNavigate={handleNavigation} /></div>;
+        return (
+          <PageTransition 
+            isActive={currentPage === "teacher-login"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
+            <TeacherLogin onLogin={handleLogin} onNavigate={handleNavigation} />
+          </PageTransition>
+        );
     
       case "freelancer-login":
-        return <div className="page-transition"><AuthModern onLogin={handleLogin} onNavigate={handleNavigation} userType="freelancer" /></div>;
+        return (
+          <PageTransition 
+            isActive={currentPage === "freelancer-login"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
+            <AuthModern onLogin={handleLogin} onNavigate={handleNavigation} userType="freelancer" />
+          </PageTransition>
+        );
     
       case "settings":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
-        return <div className="page-transition"><StudySettings onBack={handleBackToDashboard} /></div>;
+        return (
+          <PageTransition 
+            isActive={currentPage === "settings"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
+            <StudySettings onBack={handleBackToDashboard} />
+          </PageTransition>
+        );
     
 
 
@@ -1904,14 +1949,24 @@ const Index = () => {
       case "subscribe":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "subscribe"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <Subscribe onNavigate={handleNavigation} />
-          </div>
+          </PageTransition>
         );
 
       case "checkout":
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "checkout"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <Checkout
               amount={checkoutDetails.amount}
               courseName={checkoutDetails.courseName || checkoutDetails.planName}
@@ -1923,7 +1978,7 @@ const Index = () => {
               onSuccess={() => handleNavigation("payment-success", "instant")}
               onCancel={() => handleNavigation(checkoutDetails.orderData ? "cart" : "premium")}
             />
-          </div>
+          </PageTransition>
         );
 
       case "learn-more":
@@ -1941,9 +1996,14 @@ const Index = () => {
 
       case "reset-password":
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "reset-password"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <ResetPassword />
-          </div>
+          </PageTransition>
         );
 
       case "student-dashboard":
@@ -1962,9 +2022,14 @@ const Index = () => {
       case "survey":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "survey"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <Survey onComplete={handleSurveyComplete} userId={user.id} />
-          </div>
+          </PageTransition>
         );
 
       case "customer-pricing":
@@ -2182,32 +2247,52 @@ const Index = () => {
       case "networking":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "networking"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <StudentNetworking />
-          </div>
+          </PageTransition>
         );
 
       case "community":
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "community"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <PortfolioNavigation onNavigate={handleNavigation} />
             <FindTalent onNavigate={handleNavigation} />
-          </div>
+          </PageTransition>
         );
 
       case "payment-success":
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "payment-success"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <PaymentSuccess onNavigate={handleNavigation} />
-          </div>
+          </PageTransition>
         );
 
       case "transaction-dashboard":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "transaction-dashboard"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <TransactionDashboard />
-          </div>
+          </PageTransition>
         );
 
       case "teacher-dashboard":
@@ -2338,9 +2423,14 @@ const Index = () => {
         // If user is logged in as freelancer, show the pending dashboard
         if (user && profile?.role === 'freelancer') {
           return (
-            <div className="instant-transition">
+            <PageTransition 
+              isActive={currentPage === "freelancer-application-status"} 
+              transitionType={transitionType} 
+              isTransitioning={isTransitioning}
+              isExiting={isExiting}
+            >
               <FreelancerDashboardPending onNavigate={handleNavigation} />
-            </div>
+            </PageTransition>
           );
         }
         // Otherwise show the public application status page
@@ -2456,9 +2546,14 @@ const Index = () => {
       case "logo-management":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "logo-management"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <LogoManagementPage />
-          </div>
+          </PageTransition>
         );
 
       case "advertise-with-us":
@@ -2725,9 +2820,14 @@ const Index = () => {
       case "category-management":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "category-management"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <CategoryManagement />
-          </div>
+          </PageTransition>
         );
 
       case "category-detail":
@@ -2748,42 +2848,67 @@ const Index = () => {
       case "product-creation":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "product-creation"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <ProductCreation onNavigate={handleNavigation} />
-          </div>
+          </PageTransition>
         );
 
       case "coupon-management":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "coupon-management"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <CouponManagement />
-          </div>
+          </PageTransition>
         );
 
       case "freelancer-checkout":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "freelancer-checkout"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <FreelancerCheckout onNavigate={handleNavigation} />
-          </div>
+          </PageTransition>
         );
 
       case "my-certificates":
         if (!user) return <div className="page-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "my-certificates"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <Header onNavigate={handleNavigation} currentPage={currentState} />
             <MyCertificatesPage />
-          </div>
+          </PageTransition>
         );
 
       case "verify-certificate":
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "verify-certificate"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <Header onNavigate={handleNavigation} currentPage={currentState} />
             <VerifyCertificatePage />
-          </div>
+          </PageTransition>
         );
 
       case "buy-voucher":
