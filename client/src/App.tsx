@@ -29,28 +29,6 @@ const AppContent = () => {
   // Check if user has a stored session (indicates they were logged in)
   const hasStoredSession = typeof window !== 'undefined' && localStorage.getItem('sessionId');
   
-  // Determine if we should show loading screen
-  // For Cordova mobile app: show loading during auth check to prevent home page flash
-  // For web users: only show loading if they have a stored session
-  const isCordova = isInCordovaApp();
-  const shouldShowLoadingScreen = isCordova ? loading : (loading && hasStoredSession);
-  
-  // Show loading screen while auth is being validated
-  // For Cordova apps: Always show during loading to prevent landing page flash
-  // For web: Only show if they have a stored session (previously logged in)
-  if (shouldShowLoadingScreen) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 mx-auto relative">
-            <div className="absolute inset-0 rounded-full border-4 border-blue-200 dark:border-blue-800"></div>
-            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-600 animate-spin"></div>
-          </div>
-          <p className="text-gray-600 dark:text-gray-300 font-medium">Just a moment</p>
-        </div>
-      </div>
-    );
-  }
 
   // List of auth page routes where chat widget should be hidden
   const authRoutes = [
