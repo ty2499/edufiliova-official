@@ -152,19 +152,27 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
       if (!user?.id) return { success: false, unreadCount: 0 };
       try {
         const sessionId = localStorage.getItem('sessionId');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        
         const response = await fetch(`/api/messages/${user.id}/unread-count`, {
-          headers: { Authorization: `Bearer ${sessionId}` }
+          headers: { Authorization: `Bearer ${sessionId}` },
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+          return { success: false, unreadCount: 0 };
+        }
         const result = await response.json();
         return result;
       } catch (error) {
-        console.error('Header: Failed to fetch unread messages:', error);
         return { success: false, unreadCount: 0 };
       }
     },
     enabled: !!user?.id && isAuthenticated,
-    staleTime: 30 * 1000, // Data considered fresh for 30 seconds
-    gcTime: 2 * 60 * 1000, // Cache persists for 2 minutes
+    staleTime: 30 * 1000,
+    gcTime: 2 * 60 * 1000,
     refetchOnWindowFocus: true,
     retry: false
   });
@@ -177,7 +185,17 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
     queryFn: async () => {
       if (!user?.id) return { count: 0 };
       try {
-        const response = await fetch(`/api/certificates/claimable-count`);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        
+        const response = await fetch(`/api/certificates/claimable-count`, {
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+          return { count: 0 };
+        }
         const result = await response.json();
         return result;
       } catch (error) {
@@ -186,6 +204,8 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
     },
     enabled: !!user?.id && isAuthenticated,
     staleTime: 60 * 1000,
+    retry: false,
+    refetchOnWindowFocus: false
   });
 
   const claimableCertificatesCount = claimableData?.count || 0;
