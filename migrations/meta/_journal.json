@@ -15,6 +15,13 @@
       "when": 1763337870860,
       "tag": "0001_living_sunspot",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1766877492047,
+      "tag": "0002_overconfident_bruce_banner",
+      "breakpoints": true
     }
   ]
 }
