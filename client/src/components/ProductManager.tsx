@@ -1056,13 +1056,12 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
   const { data: products = [], isLoading, error } = useQuery<Product[]>({
     queryKey: [productsEndpoint, viewMode],
     queryFn: async () => {
-      console.log('🔍 Fetching products from:', productsEndpoint);
-      const data = await apiRequest(productsEndpoint);
-      console.log('🔍 Products API response:', data);
-      return Array.isArray(data) ? data : [];
+      const response = await apiRequest(productsEndpoint);
+      // apiRequest already unwraps { success, data } and returns just the data
+      return Array.isArray(response) ? response : [];
     },
-    staleTime: 0, // Always refetch to avoid cache issues
-    gcTime: 0, // Don't cache results
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+    gcTime: 1000 * 60 * 10, // Keep in memory for 10 minutes
   });
 
   // Fetch performance stats for creator dashboard
