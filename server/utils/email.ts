@@ -1284,11 +1284,11 @@ export class EmailService {
       html,
       from: `"EduFiliova Security" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'freelancer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766749969172.png'), cid: 'freelancer1', contentType: 'image/png' },
+        { filename: 'freelancer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'freelancer1', contentType: 'image/png' },
         { filename: 'freelancer2.png', path: assetPath('9564092012b952eb113aed5a5f2f67f8_1766749969170.png'), cid: 'freelancer2', contentType: 'image/png' },
-        { filename: 'freelancer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766749969169.png'), cid: 'freelancer3', contentType: 'image/png' },
+        { filename: 'freelancer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'freelancer3', contentType: 'image/png' },
         { filename: 'freelancer4.png', path: assetPath('53d788456ae4cc2800001f0737c2d843_1766749969168.png'), cid: 'freelancer4', contentType: 'image/png' },
-        { filename: 'freelancer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766749969167.png'), cid: 'freelancer5', contentType: 'image/png' },
+        { filename: 'freelancer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'freelancer5', contentType: 'image/png' },
         { filename: 'freelancer6.png', path: assetPath('1bf5815502d2621deb8af9e7b0187f86_1766749969164.png'), cid: 'freelancer6', contentType: 'image/png' }
       ]
     });
