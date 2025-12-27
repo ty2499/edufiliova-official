@@ -446,6 +446,12 @@ const getInitialState = (): AppState => {
     
     // For /app path users with session, check stored page to bypass landing
     const sessionId = localStorage.getItem('sessionId');
+    
+    // Global Navigation Handler
+    const handleNavigate = (target: string, transition: TransitionType = 'fade') => {
+      navigateToPage(target, transition);
+    };
+
     if (sessionId && isAppPath()) {
       const storedPage = getStoredAppPage();
       if (storedPage) {
@@ -1943,9 +1949,14 @@ const Index = () => {
       case "student-dashboard":
         if (!user) return <div className="instant-transition"><AuthModern onLogin={handleLogin} /></div>;
         return (
-          <div className="instant-transition">
+          <PageTransition 
+            isActive={currentPage === "student-dashboard"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <StudentDashboard onNavigate={handleNavigation} />
-          </div>
+          </PageTransition>
         );
 
       case "survey":
@@ -2012,9 +2023,14 @@ const Index = () => {
           return <div className="instant-transition">Redirecting...</div>;
         }
         return (
-          <div className="instant-transition">
+          <PageTransition 
+            isActive={currentPage === "admin-dashboard"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <AdminPaymentDashboard onNavigate={handleNavigation} />
-          </div>
+          </PageTransition>
         );
 
       case "admin-payout-management":
@@ -2139,18 +2155,28 @@ const Index = () => {
 
       case "blog":
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "blog"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <Header onNavigate={handleNavigation} currentPage={currentState} />
             <BlogPage onNavigate={handleNavigation} />
-          </div>
+          </PageTransition>
         );
 
       case "blog-post-detail":
         return (
-          <div className="page-transition">
+          <PageTransition 
+            isActive={currentPage === "blog-post-detail"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <Header onNavigate={handleNavigation} currentPage={currentState} />
             <BlogPostDetail onNavigate={handleNavigation} slug={blogSlug} />
-          </div>
+          </PageTransition>
         );
 
       case "networking":
@@ -2192,9 +2218,14 @@ const Index = () => {
           return <div className="instant-transition">Redirecting...</div>;
         }
         return (
-          <div className="instant-transition">
+          <PageTransition 
+            isActive={currentPage === "teacher-dashboard"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <TeacherDashboardWithStatusCheck onNavigate={handleNavigation} userId={user.id} />
-          </div>
+          </PageTransition>
         );
 
       case "teacher-meetings":
@@ -2256,9 +2287,14 @@ const Index = () => {
           return <div className="instant-transition">Redirecting...</div>;
         }
         return (
-          <div className="instant-transition">
+          <PageTransition 
+            isActive={currentPage === "freelancer-dashboard"} 
+            transitionType={transitionType} 
+            isTransitioning={isTransitioning}
+            isExiting={isExiting}
+          >
             <FreelancerDashboardWithStatusCheck onNavigate={handleNavigation} initialTab={freelancerDashboardTab} userId={user.id} />
-          </div>
+          </PageTransition>
         );
 
       case "creator-earnings-dashboard":

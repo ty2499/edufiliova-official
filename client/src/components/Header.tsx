@@ -226,13 +226,8 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
       'portfolio-gallery': '/marketplace'
     };
 
-    // If page has a URL mapping, use URL navigation
-    if (urlMap[page]) {
-      navigate(urlMap[page]);
-    } else {
-      // Otherwise fall back to state-based navigation (blog, courses, etc.)
-      onNavigate(page);
-    }
+    // Use transition for all navigation
+    onNavigate(page);
   };
 
   // Hide header on mobile when chat is open or when on product-shop page
