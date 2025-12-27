@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
-const { Octokit } = require("@octokit/rest");
-const fs = require("fs");
-const path = require("path");
-const readline = require("readline");
+import { Octokit } from "@octokit/rest";
+import fs from "fs";
+import path from "path";
+import readline from "readline";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -32,9 +35,10 @@ async function main() {
       "📝 Enter your GitHub username (repo owner): "
     );
     const repo = await question("📝 Enter your repository name: ");
-    const branch = (await question("📝 Enter branch name (default: main): "))
-      ? await question("📝 Enter branch name (default: main): ")
-      : "main";
+    const branchInput = await question(
+      "📝 Enter branch name (default: main): "
+    );
+    const branch = branchInput || "main";
 
     console.log(`\n✅ Configuration:`);
     console.log(`   Owner: ${owner}`);
@@ -49,7 +53,7 @@ async function main() {
 
     console.log("\n📦 Collecting files to push...");
     const filesMap = new Map();
-    const baseDir = "/home/runner/workspace";
+    const baseDir = __dirname;
 
     // Ignore patterns
     const ignoredPatterns = [
@@ -147,7 +151,9 @@ async function main() {
 
       console.log(`\n✅ Success! Code pushed to GitHub`);
       console.log(`   Commit SHA: ${newCommit.sha}`);
-      console.log(`   View at: https://github.com/${owner}/${repo}/commit/${newCommit.sha}`);
+      console.log(
+        `   View at: https://github.com/${owner}/${repo}/commit/${newCommit.sha}`
+      );
     } catch (error) {
       if (error.status === 409) {
         console.error(
