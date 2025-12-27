@@ -1086,6 +1086,16 @@ const Index = () => {
       
       console.log('🔄 Auto-routing check - User role:', profile.role, 'Current State:', currentState);
       
+      const path = window.location.pathname;
+      
+      // ABSOLUTE PROTECTION FOR SHOP AND COURSES
+      if (path === '/shop' || path.startsWith('/shop/') || 
+          path === '/courses' || path.startsWith('/courses/') || 
+          path.startsWith('/course/')) {
+        console.log('🛑 BLOCKING REDIRECT - User on public path:', path);
+        return;
+      }
+      
       // Define public pages that customers can access while logged in
       const publicPages = ["home", "about", "help", "contact", "privacy", "terms", "blog",
                           "blog-post-detail", "chat-terms", "course-browse", "course-detail", "course-player", 
@@ -1095,14 +1105,8 @@ const Index = () => {
                           "creator-pricing", "education-pricing", "privacy-policy", "verify-certificate", "buy-voucher"];
       
       // IF THE CURRENT PAGE IS A PUBLIC PAGE, STOP AUTO-ROUTING IMMEDIATELY
-      const path = window.location.pathname;
-      if (publicPages.includes(currentState) || 
-          path === '/shop' || 
-          path.startsWith('/shop/') || 
-          path === '/courses' || 
-          path.startsWith('/courses/') ||
-          path.startsWith('/course/')) {
-        console.log('✅ Staying on public page or protected path:', currentState, 'Path:', path);
+      if (publicPages.includes(currentState)) {
+        console.log('✅ Staying on public page:', currentState);
         return;
       }
 

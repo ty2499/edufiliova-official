@@ -84,14 +84,11 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
   // Redirect authenticated users back to where they came from or to dashboard
   useEffect(() => {
     if (!loading && user && profile) {
-      if (returnUrl) {
-        onNavigate?.(returnUrl, 'slide-left');
-      } else {
-        // DO NOT FORCE TO DASHBOARD - Stay on product-shop if no returnUrl
-        onNavigate?.('product-shop', 'slide-left');
-      }
+      console.log('ShopAuth: User authenticated, staying on shop');
+      // STAY ON SHOP - NO REDIRECT
+      return;
     }
-  }, [user, profile, loading, onNavigate, returnUrl]);
+  }, [user, profile, loading]);
 
   // Clear errors when user types
   const clearError = (field: string) => {
