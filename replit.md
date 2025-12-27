@@ -1,62 +1,59 @@
 # EduFiliova Project Status
 
 ## Overview
-Education platform with comprehensive teacher application system, user account management, email notifications, and compliance enforcement. Recently added content moderation system for platform safety.
+Education platform with comprehensive teacher application system, user account management, email notifications, compliance enforcement, and content moderation.
 
-## Recent Changes (Dec 27, 2025)
+## Recent Completion (Dec 27, 2025)
 
-### ✅ Account Reactivation Email (Complete)
-- Enhanced unsuspended email template with prominent policy links
-- Includes Terms of Service, Community Guidelines, Code of Conduct, Privacy Policy links
-- Warning section about future violations → permanent termination
-- Uses support@edufiliova.com as sender
-
-### ✅ Content Moderation System - Phase 1 (Complete)
-**New Service:** `server/utils/moderation.ts`
-- **Phone Number Detection**: Regex patterns for US, UK, Australia, China, India formats
-- **Nude/NSFW Image Detection**: Uses OpenAI Vision API
-- **Dating Content Detection**: Uses OpenAI GPT analysis
-- **Admin Notification**: Sends detailed alerts to support@edufiliova.com with user info and violation details
-
+### ✅ Content Moderation System - Phase 2 (Complete)
 **Integrated Endpoints:**
-1. ✅ **Messaging** (`POST /user-chats/:userId`) - Messages with violations rejected + admin notified
-   - Checks latest message before saving
-   - Returns 403 with "Message rejected" error
-   - Admin receives full violation report
+1. ✅ **Messaging** (`POST /user-chats/:userId`) - Messages checked before saving
+2. ✅ **Course Creation** (`PUT /courses/:courseId`) - Descriptions + images checked
+3. ✅ **Product Creation** (`POST /products`) - Descriptions + images checked
 
-## Currently In Progress (Fast Mode - Step by Step)
+**What Gets Checked:**
+- 📱 Phone numbers (US, UK, Australia, China, India formats)
+- 🔞 Nude/NSFW images (OpenAI Vision)
+- 💘 Dating/romantic content (OpenAI GPT)
 
-### Next Integration Points:
-2. **Course Creation** - Check descriptions for phone/dating content + image uploads for nudity
-3. **Freelancer Projects** - Same checks on project descriptions and images
-4. **Product Listings** - Check product descriptions and images
-5. **Student Posts** - Monitor user posts for violations
+**Response on Violation:**
+- Message rejected with 403 error
+- Admin notified at support@edufiliova.com with full violation report
+- User receives clear "prohibited content" message
+
+### ✅ Account Reactivation Email
+- Enhanced template with 4 prominent policy links
+- Warning about future violations → permanent termination
+- Uses support@edufiliova.com sender
+
+---
+
+## Still Need to Integrate (For Future)
+1. **Freelancer Projects** - Check descriptions + images
+2. **Student Posts** - Check post content
+
+---
 
 ## Technical Stack
 - **Backend**: Express, Node.js, TypeScript
 - **Database**: PostgreSQL (Drizzle ORM)
-- **AI Services**: OpenAI (primary for moderation)
-- **Email**: Nodemailer with support@edufiliova.com
+- **AI Services**: OpenAI (Vision + GPT)
+- **Email**: Nodemailer (support@edufiliova.com)
 - **Frontend**: React + Vite
 
-## Email Configuration
-- **Primary Sender**: support@edufiliova.com (active and configured)
-- **Templates**: Professional EduFiliova branding
-- **Notification Email**: support@edufiliova.com receives all moderation alerts
+## Key Files
+- `server/utils/moderation.ts` - Moderation service (phone, nude, dating detection)
+- `server/routes/supabase-proxy.ts` - Messaging moderation
+- `server/routes/admin-course-routes.ts` - Course moderation
+- `server/routes/products.ts` - Product moderation
 
 ## User Preferences
-- Remove all emojis from UI (teacher signup form completed)
-- OpenAI as primary AI service (over Anthropic)
-- Admin notifications instead of auto-bans (allows review of edge cases)
-- Fast mode development (one endpoint at a time)
+- ✅ No emojis in UI
+- ✅ OpenAI as primary AI service
+- ✅ Admin notifications (not auto-bans)
+- ✅ Fast mode development
 
-## Important Notes
-- Moderation checks are text-based and AI-powered - may have false positives, so admin review is important
-- Phone number detection includes global patterns but regex can't catch every format
-- Image moderation via OpenAI Vision - requires valid image URL
-- All violations logged and reported to support team
+## Current Status
+All three endpoints are protected with comprehensive content moderation. Users attempting to share prohibited content will have their submission rejected with clear feedback, and the admin team will be immediately notified via support email for review.
 
-## Next Steps
-To continue building moderation across other endpoints:
-- Option A: Continue in Fast mode - integrate into ONE endpoint per turn (slower but focused)
-- Option B: Switch to Autonomous mode - integrate into all remaining endpoints in one go (faster, more comprehensive)
+Next steps: Continue with freelancer projects and student posts integration when ready.

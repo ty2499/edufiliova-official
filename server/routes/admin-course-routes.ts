@@ -1,7 +1,8 @@
 import express, { Request, Response } from 'express';
 import { db } from '../db';
-import { courses } from '@shared/schema';
+import { courses, users, profiles } from '@shared/schema';
 import { eq } from 'drizzle-orm';
+import { moderationService } from '../utils/moderation.js';
 
 const router = express.Router();
 
@@ -34,6 +35,36 @@ router.put('/:courseId', async (req: Request, res: Response) => {
       learningObjectives,
       isFeatured
     } = req.body;
+
+    // Moderation check on course description and images
+    if (description) {
+      const modResult = await moderationService.checkContent({
+        text: description,
+        userType: 'teacher',
+        contentType: 'course',
+      });
+      if (!modResult.passed) {
+        return res.status(403).json({
+          error: 'Course rejected',
+          details: 'Course description contains prohibited content: ' + modResult.violations.join(', ')
+        });
+      }
+    }
+
+    if (image || thumbnailUrl) {
+      const imageUrl = image || thumbnailUrl;
+      const modResult = await moderationService.checkContent({
+        imageUrl,
+        userType: 'teacher',
+        contentType: 'course',
+      });
+      if (!modResult.passed) {
+        return res.status(403).json({
+          error: 'Course image rejected',
+          details: 'Course image contains prohibited content: ' + modResult.violations.join(', ')
+        });
+      }
+    }
 
     const updates: any = {};
     if (title !== undefined) updates.title = title;

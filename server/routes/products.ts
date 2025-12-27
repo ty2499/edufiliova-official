@@ -573,6 +573,38 @@ router.post("/", requireAuth, requireRole(['freelancer', 'teacher', 'admin']), i
     console.log('🔍 downloadableFiles in request:', req.body.downloadableFiles);
     console.log('🔍 downloadableFiles after validation:', validation.data.downloadableFiles);
 
+    // Moderation check on product description and images
+    const { moderationService } = await import('../utils/moderation.js');
+    if (validation.data.description) {
+      const modResult = await moderationService.checkContent({
+        text: validation.data.description,
+        userType: 'freelancer',
+        contentType: 'product',
+      });
+      if (!modResult.passed) {
+        return res.status(403).json({
+          success: false,
+          error: 'Product rejected',
+          details: 'Product description contains prohibited content: ' + modResult.violations.join(', ')
+        });
+      }
+    }
+
+    if (validation.data.imageUrl) {
+      const modResult = await moderationService.checkContent({
+        imageUrl: validation.data.imageUrl,
+        userType: 'freelancer',
+        contentType: 'product',
+      });
+      if (!modResult.passed) {
+        return res.status(403).json({
+          success: false,
+          error: 'Product image rejected',
+          details: 'Product image contains prohibited content: ' + modResult.violations.join(', ')
+        });
+      }
+    }
+
     // Get user profile to determine role
     const userProfile = await db
       .select({ role: profiles.role })
