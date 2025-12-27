@@ -72,7 +72,7 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
       icon: <PlusCircle className="h-5 w-5" />,
       title: "Add Product",
       description: "List your products for sale",
-      page: "product-creation",
+      page: "freelancer-dashboard",
       bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
       iconBg: "bg-[#a0fab2]",
       iconColor: "#2f5a4e",
