@@ -305,12 +305,13 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
           </Button>
 
           <div className="pt-4 space-y-3">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white">
               You didn't receive any code?{" "}
               <button
                 onClick={handleResendCode}
                 disabled={isResending}
-                className="font-medium text-foreground hover:underline disabled:opacity-50 transition-all duration-300"
+                className="font-medium hover:underline disabled:opacity-50 transition-all duration-300"
+                style={{ color: '#a0fab2' }}
                 data-testid="button-resend-code"
               >
                 {isResending ? "Sending..." : "Resend Code"}
