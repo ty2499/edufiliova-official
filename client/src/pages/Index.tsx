@@ -1084,15 +1084,22 @@ const Index = () => {
       // User logged in successfully - clear the intentional logout flag
       localStorage.removeItem('intentional_logout');
       
-      console.log('🔄 Auto-routing check - User role:', profile.role);
+      console.log('🔄 Auto-routing check - User role:', profile.role, 'Current State:', currentState);
       
       // Define public pages that customers can access while logged in
       const publicPages = ["home", "about", "help", "contact", "privacy", "terms", "blog",
-                          "chat-terms", "course-browse", "course-detail", "course-player", "claim-certificate", "product-shop", 
-                          "product-detail", "cart", "portfolio-gallery", "portfolio-preview", "freelancer-profile",
-                          "advertise-with-us", "banner-creator", "banner-payment", "freelancer-checkout", "checkout",
-                          "customer-pricing", "creator-pricing", "education-pricing", "privacy-policy"];
+                          "blog-post-detail", "chat-terms", "course-browse", "course-detail", "course-player", 
+                          "claim-certificate", "product-shop", "product-detail", "cart", "portfolio-gallery", 
+                          "portfolio-preview", "freelancer-profile", "advertise-with-us", "banner-creator", 
+                          "banner-payment", "freelancer-checkout", "checkout", "customer-pricing", 
+                          "creator-pricing", "education-pricing", "privacy-policy", "verify-certificate", "buy-voucher"];
       
+      // IF THE CURRENT PAGE IS A PUBLIC PAGE, STOP AUTO-ROUTING IMMEDIATELY
+      if (publicPages.includes(currentState)) {
+        console.log('✅ Staying on public page:', currentState);
+        return;
+      }
+
       // Check if trying to access wrong dashboard
       const wrongDashboardAccess = 
         (currentState === "admin-dashboard" && !["admin", "accountant", "customer_service"].includes(profile.role)) ||
