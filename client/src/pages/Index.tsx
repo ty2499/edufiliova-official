@@ -1068,9 +1068,11 @@ const Index = () => {
     
     // Check if user clicked logo to navigate home - skip auto-routing while on home
     const forceHome = localStorage.getItem('force_home_navigation');
-    if (forceHome === 'true') {
-      if (currentState === 'home') {
-        console.log('🔄 Skipping auto-routing - user clicked logo to go home');
+    const isPublicRoute = currentState === 'product-shop' || currentState === 'course-browse' || currentState === 'portfolio-gallery' || currentState === 'blog';
+
+    if (forceHome === 'true' || isPublicRoute) {
+      if (currentState === 'home' || isPublicRoute) {
+        console.log('🔄 Skipping auto-routing - user is on public/forced home route:', currentState);
         return;
       } else {
         // User navigated away from home, clear the flag
