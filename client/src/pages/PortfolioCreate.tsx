@@ -507,7 +507,7 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
 
         {/* Show form when: creating new work OR editing and data is loaded OR editing and no error */}
         {(!isEditMode || existingWork || (!isLoadingWork && !loadingError)) && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8">
             {/* Left Column - Creation Form */}
             <div className="space-y-8">
               <Form {...form}>
