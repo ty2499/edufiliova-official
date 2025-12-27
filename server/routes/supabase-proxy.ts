@@ -343,12 +343,12 @@ router.post('/user-chats/:userId', requireAuth, async (req: AuthenticatedRequest
           userName: profile?.name || profile?.displayName || 'Unknown',
           contentType: 'message',
           action: 'notify',
-          contentPreview: latestMessage,
+          contentPreview: modResult.cleanedText || latestMessage,
         });
 
         return res.status(403).json({ 
           error: 'Message rejected',
-          details: 'Your message contains prohibited content and has been reported to our moderation team.'
+          details: 'Your message contains prohibited content (emails, phone numbers, or personal info not allowed) and has been reported to our moderation team.'
         });
       }
     }

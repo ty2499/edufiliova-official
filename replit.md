@@ -1,114 +1,136 @@
 # EduFiliova Project Status
 
 ## Overview
-Education platform with teacher application system, user account management, email notifications, compliance enforcement, and comprehensive content moderation with auto-logout functionality.
+Education platform with comprehensive content moderation system that detects and removes personal information, prevents unsafe content, and enforces platform policies with professional email notifications.
 
-## Completed Features (Dec 27, 2025)
+## Complete Moderation System (Dec 27, 2025)
 
-### ✅ Content Moderation System (Complete)
+### ✅ Content Detection & Removal
 **Service:** `server/utils/moderation.ts`
 
-**Detection Capabilities:**
-- Phone numbers (US, UK, Australia, China, India formats)
-- Nude/NSFW images (OpenAI Vision API)
+**Detections (Auto-Removed):**
+- Email addresses → [email-removed]
+- Phone numbers (US, UK, Australia, China, India) → [phone-removed]
+- Social media handles (@mentions, Instagram, Twitter, Facebook) → [social-removed]
+- Nude/NSFW images (OpenAI Vision)
 - Dating/romantic content (OpenAI GPT)
+- Profanity patterns
 
-**Integrated Endpoints:**
-1. ✅ **Messaging** (`POST /user-chats/:userId`)
-2. ✅ **Course Creation** (`PUT /courses/:courseId`)
-3. ✅ **Product Creation** (`POST /products`)
+**Result:** Personal info stripped, violation flagged, user logged out, admin notified
 
-**Violation Response Flow:**
-1. User submits prohibited content
-2. System detects violation
-3. **User session immediately invalidated** (auto-logout)
-4. Request rejected with 403 error
-5. **Email sent to support@edufiliova.com** with full details
+### ✅ Protected Endpoints (3 Integrated)
+1. **Messaging** (`POST /user-chats/:userId`)
+   - Detects emails/phone/social in messages
+   - Removes personal info instantly
+   - Rejects message with 403 error
+   
+2. **Course Creation** (`PUT /courses/:courseId`)
+   - Scans descriptions + images
+   - Removes personal info from description
+   - Rejects if other violations found
+   
+3. **Product Creation** (`POST /products`)
+   - Scans descriptions + images
+   - Removes personal info from product description
+   - Rejects if violations found
 
-### ✅ Ban/Suspension Emails (Complete)
-**New Template:** `sendAccountBannedEmail` in `server/utils/email.ts`
+### ✅ User Actions on Violation
+1. Content rejected immediately
+2. **Session invalidated** (user auto-logged out)
+3. Clear error message explaining what was wrong
+4. Support notified at support@edufiliova.com with cleaned content preview
 
-**Features (No Emojis, Big, Well-Explained):**
+### ✅ Professional Email Notifications
+**Ban Email Template** (No emojis, big fonts, detailed):
 - Clear title: "Account Suspended - Policy Violation"
-- Reason for suspension with violation list
-- What this means (full access loss)
-- Appeal process with support email prominent
+- Reason section with violation list
+- "What This Means" section (all access lost)
+- Appeal process with support email
 - Future compliance requirements
-- Professional formatting (700px width, large fonts)
 
-**Trigger:** Admin bans user via PATCH `/users/:userId/status` with `status: "banned"`
-- User receives detailed ban email
-- Support team notified of admin action
+**Admin Alerts** include:
+- User information
+- Violation details
+- Cleaned content preview
+- Action taken (flagged/banned)
 
-### ✅ Session Invalidation
-- Auto-logout when moderation violation detected
-- All user sessions marked as inactive
-- User must login again
-- Prevents continued unauthorized access
-
-### ✅ Admin Notifications
-- Sent to support@edufiliova.com on all violations
-- Includes user info, violation details, content preview
-- Sent on admin bans with timestamp
-- Clear call-to-action to review
-
-### ✅ Account Reactivation Email
+### ✅ Account Reactivation
 - Policy links (Terms, Guidelines, Code of Conduct, Privacy)
-- Violation warnings
+- Future violation warnings
 - Support contact information
 
 ---
 
 ## Technical Implementation
 
-### Files Modified:
-- `server/utils/moderation.ts` - Session invalidation + violation handling
-- `server/utils/email.ts` - Professional ban email template
-- `server/routes/storage-status.ts` - Admin ban action with emails
-- `server/routes/supabase-proxy.ts` - Messaging moderation
-- `server/routes/admin-course-routes.ts` - Course moderation
-- `server/routes/products.ts` - Product moderation
+### Core Features:
+- `detectEmails()` - Email pattern detection
+- `detectPhoneNumbers()` - Global phone formats
+- `detectPersonalInfo()` - Email, phone, social media detection
+- `removePersonalInfo()` - Strip & replace with [type-removed]
+- `invalidateUserSessions()` - Force auto-logout
+- `checkContent()` - Unified moderation check with cleaning
 
-### Key Methods:
-- `moderationService.checkContent()` - Detects violations
-- `moderationService.invalidateUserSessions()` - Auto-logout
-- `emailService.sendAccountBannedEmail()` - Ban notification
-- `handleViolation()` - Complete violation workflow
+### Violation Flow:
+1. User submits content → `checkContent()` called
+2. If violations found:
+   - Personal info removed (`cleanedText`)
+   - Violations list compiled
+   - `handleViolation()` called
+   - Sessions invalidated
+   - Email sent to support
+   - Request rejected (403)
+
+### Email Configuration:
+- Sender: support@edufiliova.com
+- No emojis in all templates
+- 15px+ body text, 18px+ headers
+- Professional HTML formatting
 
 ---
 
-## User Experience Flow
+## Example Scenarios
 
-### When User Submits Prohibited Content:
-1. Message/Course/Product rejected immediately
-2. User logged out automatically
-3. Error message shown: "Content rejected - reported to moderation team"
-4. Support team alerted via email
+**Scenario 1: User shares email in message**
+- Input: "Contact me at john@example.com for tutoring"
+- Detection: Email address detected
+- Action: Cleaned to "Contact me at [email-removed] for tutoring"
+- Result: Message rejected, user logged out, admin notified with cleaned message
 
-### When Admin Bans User:
-1. User receives detailed ban email (no emojis, big fonts, clear explanation)
-2. Explains why banned (if applicable)
-3. Shows what happens (no access to features)
-4. Explains appeal process
-5. Support team notified
-6. Future violations = permanent ban
+**Scenario 2: User includes phone in course description**
+- Input: "Call me +1-555-123-4567 for inquiries"
+- Detection: Phone number detected
+- Action: Cleaned to "Call me [phone-removed] for inquiries"
+- Result: Course rejected, user logged out, admin alerted
 
-### When Admin Reactivates User:
-1. User receives reactivation email with policy links
-2. Warning about future violations
-3. Clear compliance expectations
+**Scenario 3: Admin bans user**
+- Trigger: `PATCH /users/:userId/status` with `{"status": "banned"}`
+- Result: 
+  - User receives detailed ban email (no emojis, clear explanation)
+  - Admin team notified
+  - User cannot login (session invalid)
 
 ---
 
 ## Status
-All moderation systems are deployed and operational. Users violating platform policies will be immediately logged out and reported to support@edufiliova.com. Professional communication sent to all parties.
+All moderation systems are deployed and operational. The platform now:
+- Prevents sharing of personal contact information
+- Automatically removes detected personal data
+- Logs users out on violation detection
+- Notifies support team of all attempts
+- Sends professional emails with clear explanations
+
+The system balances user experience (content rejection + auto-logout) with data safety (removing personal info before storage).
 
 ## Still Available (Future):
 - Freelancer projects moderation
 - Student posts moderation
+- Admin dashboard for moderation review
 
-## Email Configuration
-- **Sender:** support@edufiliova.com (active and verified)
-- **No emojis** in all notification emails
-- **Big fonts:** Min 15px for body text, 18px+ for headers
-- **Professional formatting:** Clean HTML, proper sections
+## Files Modified This Session:
+- `server/utils/moderation.ts` - Email/personal info detection & removal
+- `server/utils/email.ts` - Professional ban email template
+- `server/routes/supabase-proxy.ts` - Messaging moderation with cleaning
+- `server/routes/admin-course-routes.ts` - Course moderation with cleaning
+- `server/routes/products.ts` - Product moderation with cleaning
+- `server/routes/storage-status.ts` - Ban email on admin action

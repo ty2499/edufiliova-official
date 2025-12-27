@@ -49,6 +49,10 @@ router.put('/:courseId', async (req: Request, res: Response) => {
           details: 'Course description contains prohibited content: ' + modResult.violations.join(', ')
         });
       }
+      // Use cleaned text if personal info was removed
+      if (modResult.cleanedText) {
+        updates.description = modResult.cleanedText;
+      }
     }
 
     if (image || thumbnailUrl) {

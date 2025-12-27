@@ -8,9 +8,13 @@ export interface ModerationResult {
   passed: boolean;
   violations: string[];
   autoAction?: 'ban' | 'notify';
+  cleanedText?: string;
 }
 
 class ModerationService {
+  // Email regex pattern
+  private emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+  
   // Phone number regex patterns
   private phonePatterns = [
     /\+?1?\s*\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})/g, // US/Canada
@@ -20,6 +24,21 @@ class ModerationService {
     /(\+86)[0-9]{10}/g, // China
     /(\+91)[0-9]{10}/g, // India
   ];
+  
+  // Social media handles and personal info patterns
+  private socialMediaPatterns = [
+    /@[a-zA-Z0-9_]{1,15}(?:\s|$)/g, // @mentions (Twitter, Instagram style)
+    /(?:instagram|twitter|facebook|whatsapp|telegram|telegram\.me|t\.me|fb\.com|insta|tiktok)[\w\s:\/\.@]*[@\w\s\.\/\-]{5,}/gi, // Social profiles
+  ];
+
+  /**
+   * Detect emails in text
+   */
+  detectEmails(text: string): boolean {
+    if (!text) return false;
+    const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+    return emailPattern.test(text);
+  }
 
   /**
    * Detect phone numbers in text
@@ -38,6 +57,52 @@ class ModerationService {
       }
     }
     return false;
+  }
+
+  /**
+   * Remove personal information from text
+   */
+  removePersonalInfo(text: string): string {
+    let cleaned = text;
+    
+    // Remove emails
+    cleaned = cleaned.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '[email-removed]');
+    
+    // Remove phone numbers
+    for (const pattern of this.phonePatterns) {
+      pattern.lastIndex = 0;
+      cleaned = cleaned.replace(pattern, '[phone-removed]');
+    }
+    
+    // Remove social media handles and profiles
+    for (const pattern of this.socialMediaPatterns) {
+      pattern.lastIndex = 0;
+      cleaned = cleaned.replace(pattern, '[social-removed]');
+    }
+    
+    return cleaned;
+  }
+
+  /**
+   * Detect personal information
+   */
+  detectPersonalInfo(text: string): string[] {
+    const detected: string[] = [];
+    
+    if (this.detectEmails(text)) {
+      detected.push('Email address detected');
+    }
+    
+    if (this.detectPhoneNumbers(text)) {
+      detected.push('Phone number detected');
+    }
+    
+    // Check for social media
+    if (/@[a-zA-Z0-9_]{1,15}/.test(text)) {
+      detected.push('Social media handle detected');
+    }
+    
+    return detected;
   }
 
   /**
@@ -125,12 +190,27 @@ Text: "${text.substring(0, 500)}"`,
     contentType: 'message' | 'course' | 'product' | 'post';
   }): Promise<ModerationResult> {
     const violations: string[] = [];
+    let cleanedText = options.text || '';
 
-    // Check text for phone numbers and dating content
+    // Check text for personal info, phone numbers and dating content
     if (options.text) {
-      if (this.detectPhoneNumbers(options.text)) {
-        violations.push('Phone number detected');
+      // Check for personal info (emails, phone, social media)
+      const personalInfoViolations = this.detectPersonalInfo(options.text);
+      violations.push(...personalInfoViolations);
+      
+      // Remove personal info from text
+      if (personalInfoViolations.length > 0) {
+        cleanedText = this.removePersonalInfo(options.text);
       }
+      
+      // Check for phone numbers (if not already detected)
+      if (!violations.some(v => v.includes('Phone'))) {
+        if (this.detectPhoneNumbers(options.text)) {
+          violations.push('Phone number detected');
+          cleanedText = this.removePersonalInfo(cleanedText);
+        }
+      }
+      
       if (await this.detectDatingContent(options.text)) {
         violations.push('Dating/romantic content detected');
       }
@@ -146,7 +226,8 @@ Text: "${text.substring(0, 500)}"`,
     return {
       passed: violations.length === 0,
       violations,
-      autoAction: violations.length > 0 ? 'notify' : undefined, // Default to notify admin
+      cleanedText: cleanedText !== options.text ? cleanedText : undefined,
+      autoAction: violations.length > 0 ? 'notify' : undefined,
     };
   }
 

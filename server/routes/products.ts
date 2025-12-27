@@ -588,6 +588,10 @@ router.post("/", requireAuth, requireRole(['freelancer', 'teacher', 'admin']), i
           details: 'Product description contains prohibited content: ' + modResult.violations.join(', ')
         });
       }
+      // Use cleaned text if personal info was removed
+      if (modResult.cleanedText) {
+        validation.data.description = modResult.cleanedText;
+      }
     }
 
     if (validation.data.imageUrl) {
