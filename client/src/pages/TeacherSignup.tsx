@@ -881,6 +881,50 @@ export default function TeacherSignup() {
                   </div>
 
                   <div className="border rounded-lg p-4 bg-gray-50">
+                    <p className="font-medium text-gray-900 mb-3">Introduction Video - Great Examples (ACCEPTED):</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855676157.png" 
+                          alt="Teacher in classroom with laptop - ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-green-700">✓ Classroom Setting</p>
+                        <p className="text-xs text-gray-600 mt-1">Engaging, expressive, authentic</p>
+                      </div>
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855686807.png" 
+                          alt="Female ESL teacher with branding - ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-green-700">✓ Professional Branding</p>
+                        <p className="text-xs text-gray-600 mt-1">Warm smile, welcoming presence</p>
+                      </div>
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855695067.png" 
+                          alt="Teacher with professional setup - ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-green-700">✓ Professional Setup</p>
+                        <p className="text-xs text-gray-600 mt-1">Good lighting, clear quality</p>
+                      </div>
+                    </div>
+                    <div className="border-l-4 border-green-500 pl-3 mb-4">
+                      <p className="font-medium text-green-700 mb-2">✓ Why These Work Well</p>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• Direct eye contact with genuine smile</li>
+                        <li>• Speaking with passion about teaching</li>
+                        <li>• Natural, engaging body language</li>
+                        <li>• Professional but personable demeanor</li>
+                        <li>• Clear audio and good lighting</li>
+                        <li>• Shows personality and teaching environment</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="border rounded-lg p-4 bg-gray-50 mt-4">
                     <p className="font-medium text-gray-900 mb-3">Introduction Video Guidelines - What NOT to Do:</p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                       <div className="text-center">
