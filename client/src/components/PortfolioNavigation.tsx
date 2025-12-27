@@ -84,17 +84,14 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
               <div className="px-4 pt-4">
                 <Button
                   onClick={() => {
-                    if (profile.role === 'freelancer') {
-                      onNavigate("freelancer-dashboard");
-                    } else if (profile.role === 'admin') {
-                      onNavigate("admin-dashboard");
-                    } else if (profile.role === 'teacher') {
-                      onNavigate("teacher-dashboard");
-                    } else if (profile.role === 'general') {
-                      onNavigate("customer-dashboard");
-                    } else {
-                      onNavigate("student-dashboard");
-                    }
+                    const getDashboardPage = () => {
+                      if (profile.role === 'freelancer') return "freelancer-dashboard";
+                      if (profile.role === 'admin') return "admin-dashboard";
+                      if (profile.role === 'teacher') return "teacher-dashboard";
+                      if (profile.role === 'general') return "customer-dashboard";
+                      return "student-dashboard";
+                    };
+                    onNavigate(getDashboardPage());
                     setIsMobileMenuOpen(false);
                   }}
                   size="sm"

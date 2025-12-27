@@ -463,17 +463,16 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                 variant="ghost"
                 className="flex items-center gap-2 h-10 px-3"
                 onClick={() => {
-                  if (profile?.role === 'admin') {
-                    onNavigate("admin-dashboard");
-                  } else if (profile?.role === 'teacher') {
-                    onNavigate("teacher-dashboard");
-                  } else if (profile?.role === 'freelancer') {
-                    onNavigate("freelancer-dashboard");
-                  } else if (profile?.role === 'general') {
-                    onNavigate("customer-dashboard");
-                  } else {
-                    onNavigate("student-dashboard");
-                  }
+    const getDashboardPage = () => {
+      if (!profile) return "auth";
+      if (profile.role === 'admin') return "admin-dashboard";
+      if (profile.role === 'teacher') return "teacher-dashboard";
+      if (profile.role === 'freelancer') return "freelancer-dashboard";
+      if (profile.role === 'general') return "customer-dashboard";
+      return "student-dashboard";
+    };
+
+    onNavigate(getDashboardPage());
                 }}
                 title={profile?.role === 'admin' ? 'Admin Dashboard' : profile?.role === 'general' ? 'My Account' : 'Dashboard'}
                 data-testid="header-profile"

@@ -38,12 +38,20 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
     },
   ];
 
+  const getDashboardPage = () => {
+    if (profile?.role === 'admin') return "admin-dashboard";
+    if (profile?.role === 'teacher') return "teacher-dashboard";
+    if (profile?.role === 'freelancer') return "freelancer-dashboard";
+    if (profile?.role === 'general') return "customer-dashboard";
+    return "student-dashboard";
+  };
+
   const myAccount = [
     {
       icon: <FolderOpen className="h-5 w-5" />,
       title: "My Purchases",
       description: "Access your downloaded design assets",
-      page: "customer-dashboard",
+      page: getDashboardPage(),
       bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
       iconBg: "bg-[#a0fab2]",
       iconColor: "#2f5a4e",
