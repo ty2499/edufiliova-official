@@ -214,8 +214,6 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
   // Unified navigation helper - uses URL routing when possible, falls back to state navigation
   const handleNavigation = (page: string) => {
     // Map common pages to clean URLs
-    // NOTE: blog and course-browse use state-based navigation (no URL change)
-    // to allow detail views to work without URL conflicts
     const urlMap: Record<string, string> = {
       'home': '/',
       'about': '/about',
@@ -223,8 +221,15 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
       'help': '/help',
       'privacy': '/privacy-policy',
       'terms': '/terms-and-conditions',
-      'portfolio-gallery': '/marketplace'
+      'portfolio-gallery': '/marketplace',
+      'product-shop': '/shop',
+      'course-browse': '/courses'
     };
+
+    const targetPath = urlMap[page];
+    if (targetPath) {
+      window.history.pushState({}, '', targetPath);
+    }
 
     // Use transition for all navigation
     onNavigate(page);

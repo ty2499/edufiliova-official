@@ -1080,6 +1080,7 @@ const Index = () => {
       }
     }
     
+    // If user is logged in, handle dashboard redirects and public access
     if (!loading && user && profile) {
       // User logged in successfully - clear the intentional logout flag
       localStorage.removeItem('intentional_logout');
@@ -1087,12 +1088,21 @@ const Index = () => {
       console.log('🔄 Auto-routing check - User role:', profile.role, 'Current State:', currentState);
       
       const path = window.location.pathname;
+      const searchParams = new URLSearchParams(window.location.search);
+      const isManualNav = searchParams.get('nav') === 'user';
       
       // ABSOLUTE PROTECTION FOR SHOP AND COURSES
-      if (path === '/shop' || path.startsWith('/shop/') || 
+      // We block any redirect if the path is explicitly /shop or /courses
+      if (isManualNav || 
+          path === '/shop' || path.startsWith('/shop/') || 
           path === '/courses' || path.startsWith('/courses/') || 
           path.startsWith('/course/')) {
         console.log('🛑 BLOCKING REDIRECT - User on public path:', path);
+        // Force URL cleanup if we see a page parameter trying to hijack the view
+        if (searchParams.has('page')) {
+          const cleanPath = path;
+          window.history.replaceState({}, '', cleanPath);
+        }
         return;
       }
       
