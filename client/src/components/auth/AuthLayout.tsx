@@ -44,7 +44,7 @@ export default function AuthLayout({
         {/* Left Side - Hero Section */}
         <div className="relative flex-shrink-0 md:w-1/2 md:fixed md:left-0 md:top-0 md:h-screen md:overflow-hidden">
           {/* Skip button on mobile - positioned over hero */}
-          {showNotNow && window.location.hostname !== 'edufiliova.com' && (
+          {showNotNow && !window.location.hostname.includes('edufiliova.com') && (
             <button
               onClick={handleNotNow}
               className="absolute top-4 right-4 z-[100] px-4 py-2 text-sm font-medium text-white bg-black/30 hover:bg-black/50 backdrop-blur-sm rounded-full transition-all md:hidden" transition-all duration-300
@@ -90,7 +90,7 @@ export default function AuthLayout({
                 <div></div>
               )}
               
-              {showNotNow && window.location.hostname !== 'edufiliova.com' && (
+              {showNotNow && !window.location.hostname.includes('edufiliova.com') && (
                 <button
                   onClick={handleNotNow}
                   className="px-5 py-2 text-sm font-medium text-white/90 bg-white/10 hover:bg-white/20 rounded-full transition-all transition-all duration-300 border border-white/20"
