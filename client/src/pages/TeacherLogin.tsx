@@ -32,6 +32,8 @@ interface TeacherLoginProps {
 
 type TeacherStep = "login" | "apply" | "verify" | "status";
 
+import { SocialAuthButtons } from "@/components/SocialAuthButtons";
+
 const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
   const { signIn } = useAuth();
   const [currentStep, setCurrentStep] = useState<TeacherStep>("login");
@@ -270,6 +272,11 @@ const TeacherLogin = ({ onNavigate, onLogin }: TeacherLoginProps) => {
               Don't have a teacher account? Apply here
             </Button>
           </div>
+
+          <SocialAuthButtons 
+            onSuccess={onLogin || (() => {})} 
+            disabled={loading}
+          />
         </form>
       </CardContent>
     </Card>

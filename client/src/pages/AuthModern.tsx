@@ -47,6 +47,8 @@ interface AuthModernProps {
 
 type AuthStep = "login" | "register" | "register-teacher" | "verify-email" | "verify-phone" | "forgot-password" | "reset-pin-entry";
 
+import LoginForm from "@/components/auth/LoginForm";
+
 const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'student', hideSkipButton = false }: AuthModernProps) => {
   // Set initial step based on userType prop
   const getInitialStep = (): AuthStep => {
@@ -651,169 +653,11 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
   };
 
   const renderLoginForm = () => (
-    <div>
-      <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold text-[#a0fab2] mb-2">
-            Sign in to your account
-          </h2>
-          <p className="text-white/80 text-sm">
-            Welcome back! Please enter your details
-          </p>
-      </div>
-
-      {errors.general && (
-        <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary-700 text-sm">
-          <AlertCircle className="h-4 w-4 flex-shrink-0" />
-          <span>{errors.general}</span>
-        </div>
-      )}
-
-      <form onSubmit={handleLogin} className="space-y-4">
-        <div>
-          <Label htmlFor="login-method" className="text-sm font-medium text-white mb-1 block">
-            Login Method
-          </Label>
-          <Select 
-            value={formData.loginMethod} 
-            onValueChange={(value: any) => handleInputChange('loginMethod', value)}
-          >
-            <SelectTrigger className="h-12 text-base rounded-lg border-white/20 bg-white/10 text-white" data-testid="select-login-method">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="email" data-testid="option-email">
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  Email Address
-                </div>
-              </SelectItem>
-              <SelectItem value="phone" data-testid="option-phone">
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
-                  Phone Number
-                </div>
-              </SelectItem>
-              <SelectItem value="id" data-testid="option-id">
-                <div className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  ID Number
-                </div>
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <Label htmlFor="login-identifier" className="text-sm font-medium text-white mb-1 block">
-            {formData.loginMethod === 'email' ? 'Email Address' : 
-             formData.loginMethod === 'phone' ? 'Phone Number' : 'ID Number'}*
-          </Label>
-          <Input
-            id="login-identifier"
-            type={formData.loginMethod === 'email' ? 'email' : 'text'}
-            value={formData.loginIdentifier}
-            onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
-            placeholder={`Enter your ${formData.loginMethod === 'email' ? 'email address' : formData.loginMethod === 'phone' ? 'phone number' : 'ID number'}`}
-            className="h-12 text-base rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
-            data-testid="input-login-identifier"
-          />
-          {errors.loginIdentifier && <p className="text-sm text-primary-500 mt-1">{errors.loginIdentifier}</p>}
-        </div>
-
-        <div>
-          <Label htmlFor="password" className="text-sm font-medium text-white mb-1 block">
-            Password*
-          </Label>
-          <div className="relative">
-            <Input
-              id="password"
-              type={showPassword ? 'text' : 'password'}
-              value={formData.password}
-              onChange={(e) => handleInputChange('password', e.target.value)}
-              placeholder="Enter your password"
-              className="h-12 text-base pr-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-white"
-              data-testid="input-password"
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-white/70 transition-all duration-300"
-              onClick={() => setShowPassword(!showPassword)}
-              data-testid="button-toggle-password"
-            >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </Button>
-          </div>
-          {errors.password && <p className="text-sm text-primary-500 mt-1">{errors.password}</p>}
-        </div>
-
-        <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => setCurrentStep("forgot-password")}
-              className="text-sm font-medium ml-auto transition-all duration-300 text-white/80 hover:text-white"
-              data-testid="button-forgot-password"
-            >
-              Forgot password?
-            </button>
-        </div>
-
-        <Button
-          type="submit"
-          className="w-full h-11 font-medium rounded-lg"
-          style={{ backgroundColor: '#A0FAB2', color: '#1f2937' }}
-          disabled={loading}
-          data-testid="button-login"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Signing in...
-            </>
-          ) : (
-            'Sign in'
-          )}
-        </Button>
-
-        <Button
-          type="button"
-          className="w-full h-11 font-medium rounded-lg hover:opacity-90"
-          style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
-          disabled={loading}
-          onClick={() => setCurrentStep("register")}
-          data-testid="button-blue-action"
-        >
-          <User className="h-4 w-4 mr-2" />
-          Join as Student
-        </Button>
-
-        <Button
-          type="button"
-          onClick={() => setCurrentStep("register-teacher")}
-          className="w-full h-11 font-medium rounded-lg hover:opacity-90"
-          style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
-          data-testid="link-teacher-signup"
-        >
-          <GraduationCap className="h-4 w-4 mr-2" />
-          Apply to teach
-        </Button>
-
-        <Button
-          type="button"
-          className="w-full h-11 font-medium rounded-lg hover:opacity-90"
-          style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
-          disabled={loading}
-          onClick={() => {
-            onNavigate?.('freelancer-signup-basic');
-          }}
-          data-testid="button-join-freelancer"
-        >
-          <Briefcase className="h-4 w-4 mr-2" />
-          Join as Freelancer
-        </Button>
-      </form>
-    </div>
+    <LoginForm 
+      onSuccess={onLogin} 
+      onSwitchToRegister={() => setCurrentStep("register")}
+      onForgotPassword={() => setCurrentStep("forgot-password")}
+    />
   );
 
   const renderRegisterForm = () => {
