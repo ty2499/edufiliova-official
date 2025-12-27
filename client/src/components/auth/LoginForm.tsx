@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from '@/components/ui/select';
-import { Eye, EyeOff, Mail, Phone, AlertCircle, Loader2 } from 'lucide-react';
+import { Eye, EyeOff, Mail, Phone, AlertCircle, Loader2, User, GraduationCap, Briefcase } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { SocialAuthButtons } from '../SocialAuthButtons';
 
@@ -11,12 +11,18 @@ interface LoginFormProps {
   onSuccess: () => void;
   onSwitchToRegister?: () => void;
   onForgotPassword?: () => void;
+  onJoinAsStudent?: () => void;
+  onApplyToTeach?: () => void;
+  onJoinAsFreelancer?: () => void;
 }
 
 export default function LoginForm({ 
   onSuccess, 
   onSwitchToRegister, 
-  onForgotPassword 
+  onForgotPassword,
+  onJoinAsStudent,
+  onApplyToTeach,
+  onJoinAsFreelancer
 }: LoginFormProps) {
   const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
@@ -117,10 +123,10 @@ export default function LoginForm({
   return (
     <div>
       <div className="mb-6 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold text-[#a0fab2] mb-2">
           Sign in to your account
         </h2>
-        <p className="text-gray-600 text-sm">
+        <p className="text-white/80 text-sm">
           Welcome back! Please enter your details.
         </p>
       </div>
@@ -134,14 +140,14 @@ export default function LoginForm({
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="login-method" className="text-sm font-medium text-gray-700 mb-1 block">
+          <Label htmlFor="login-method" className="text-sm font-medium text-white mb-1 block">
             Login Method
           </Label>
           <Select 
             value={formData.loginMethod} 
             onValueChange={(value: 'email' | 'phone' | 'id') => handleInputChange('loginMethod', value)}
           >
-            <SelectTrigger className="h-11 rounded-lg" data-testid="select-login-method">
+            <SelectTrigger className="h-11 rounded-lg border-white/20 bg-white/10 text-white" data-testid="select-login-method">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -168,7 +174,7 @@ export default function LoginForm({
         </div>
 
         <div>
-          <Label htmlFor="login-identifier" className="text-sm font-medium text-gray-700 mb-1 block">
+          <Label htmlFor="login-identifier" className="text-sm font-medium text-white mb-1 block">
             {formData.loginMethod === 'email' ? 'Email Address' : 
              formData.loginMethod === 'phone' ? 'Phone Number' : 'ID Number'}*
           </Label>
@@ -182,7 +188,7 @@ export default function LoginForm({
               value={formData.loginIdentifier}
               onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
               placeholder={getLoginPlaceholder()}
-              className={`h-11 pl-10 rounded-lg ${errors.loginIdentifier ? 'border-primary' : ''}`}
+              className={`h-11 pl-10 rounded-lg border-white/20 bg-white/10 text-white ${errors.loginIdentifier ? 'border-primary' : ''}`}
               data-testid="input-login-identifier"
             />
           </div>
@@ -190,7 +196,7 @@ export default function LoginForm({
         </div>
 
         <div>
-          <Label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1 block">
+          <Label htmlFor="password" className="text-sm font-medium text-white mb-1 block">
             Password*
           </Label>
           <div className="relative">
@@ -200,14 +206,14 @@ export default function LoginForm({
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Enter your password"
-              className={`h-11 pr-10 rounded-lg ${errors.password ? 'border-primary' : ''}`}
+              className={`h-11 pr-10 rounded-lg border-white/20 bg-white/10 text-white ${errors.password ? 'border-primary' : ''}`}
               data-testid="input-password"
             />
             <Button
               type="button"
               variant="ghost"
               size="sm"
-              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-gray-400"
+              className="absolute right-0 top-0 h-11 px-3 hover:bg-transparent text-white/70"
               onClick={() => setShowPassword(!showPassword)}
               data-testid="button-toggle-password"
             >
@@ -218,11 +224,11 @@ export default function LoginForm({
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="text-sm">
+          <div className="text-sm ml-auto">
             <button
               type="button"
               onClick={onForgotPassword}
-              className="text-primary hover:text-purple-800 font-medium transition-all duration-300"
+              className="text-white/80 hover:text-white font-medium transition-all duration-300"
               data-testid="button-forgot-password"
             >
               Forgot password?
@@ -247,18 +253,61 @@ export default function LoginForm({
           )}
         </Button>
 
+        <div className="space-y-3">
+          {onJoinAsStudent && (
+            <Button
+              type="button"
+              className="w-full h-11 font-medium rounded-lg hover:opacity-90 transition-all duration-300"
+              style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
+              disabled={loading}
+              onClick={onJoinAsStudent}
+              data-testid="button-join-student"
+            >
+              <User className="h-4 w-4 mr-2" />
+              Join as Student
+            </Button>
+          )}
+
+          {onApplyToTeach && (
+            <Button
+              type="button"
+              onClick={onApplyToTeach}
+              className="w-full h-11 font-medium rounded-lg hover:opacity-90 transition-all duration-300"
+              style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
+              data-testid="button-apply-teach"
+            >
+              <GraduationCap className="h-4 w-4 mr-2" />
+              Apply to teach
+            </Button>
+          )}
+
+          {onJoinAsFreelancer && (
+            <Button
+              type="button"
+              className="w-full h-11 font-medium rounded-lg hover:opacity-90 transition-all duration-300"
+              style={{ backgroundColor: '#0c332c', color: '#a0fab2' }}
+              disabled={loading}
+              onClick={onJoinAsFreelancer}
+              data-testid="button-join-freelancer"
+            >
+              <Briefcase className="h-4 w-4 mr-2" />
+              Join as Freelancer
+            </Button>
+          )}
+        </div>
+
         <SocialAuthButtons 
           onSuccess={onSuccess} 
           disabled={loading}
         />
 
         {onSwitchToRegister && (
-          <div className="text-center text-sm text-gray-600 mt-6">
+          <div className="text-center text-sm text-white mt-6">
             Don't have an account?{' '}
             <button
               type="button"
               onClick={onSwitchToRegister}
-              className="text-primary hover:text-purple-800 font-medium transition-all duration-300"
+              className="text-[#a0fab2] hover:text-white font-medium transition-all duration-300"
               data-testid="link-register"
             >
               Sign up
@@ -268,4 +317,5 @@ export default function LoginForm({
       </form>
     </div>
   );
+}
 }

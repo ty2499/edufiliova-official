@@ -657,6 +657,9 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
       onSuccess={onLogin} 
       onSwitchToRegister={() => setCurrentStep("register")}
       onForgotPassword={() => setCurrentStep("forgot-password")}
+      onJoinAsStudent={() => setCurrentStep("register")}
+      onApplyToTeach={() => setCurrentStep("register-teacher")}
+      onJoinAsFreelancer={() => onNavigate?.('freelancer-signup-basic')}
     />
   );
 
