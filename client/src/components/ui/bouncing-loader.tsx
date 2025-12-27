@@ -26,6 +26,7 @@ export const BouncingBoxLoader: React.FC<BouncingBoxLoaderProps> = ({
       y: [0, -20, 0],
       rotate: [0, 90, 180, 270, 360],
       borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+      backgroundColor: ["#0c332c", "#1a4d43", "#0c332c"],
       transition: {
         duration: 2,
         repeat: Infinity,
@@ -51,7 +52,7 @@ export const BouncingBoxLoader: React.FC<BouncingBoxLoaderProps> = ({
       <div className="relative">
         <motion.div
           className={cn(sizeMap[size], "shadow-lg")}
-          style={{ backgroundColor: color }}
+          style={{ backgroundColor: "#0c332c" }}
           variants={boxVariants}
           animate="animate"
         />

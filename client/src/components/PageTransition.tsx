@@ -27,9 +27,10 @@ const PageTransition = ({
 
     if (isExiting) {
       return {
-        opacity: 0,
-        transform: 'translateY(-8px)',
-        transition: 'opacity 200ms ease-out, transform 200ms ease-out',
+        opacity: 0.4,
+        transform: 'scale(1.02)',
+        filter: 'blur(15px)',
+        transition: 'opacity 500ms ease-in-out, filter 500ms ease-in-out, transform 500ms ease-in-out',
       };
     }
 
@@ -37,8 +38,8 @@ const PageTransition = ({
       return {
         opacity: 1,
         transform: 'translateY(0)',
-        filter: 'blur(12px)',
-        transition: 'opacity 400ms ease-in-out, filter 400ms ease-in-out, transform 400ms ease-in-out',
+        filter: 'blur(15px)',
+        transition: 'opacity 500ms ease-in-out, filter 500ms ease-in-out, transform 500ms ease-in-out',
       };
     }
 
