@@ -976,12 +976,12 @@ export class EmailService {
       html,
       from: `"EduFiliova Security" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'img1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766748234011.png'), cid: 'img1', contentType: 'image/png' },
-        { filename: 'img2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_1766748234010.png'), cid: 'img2', contentType: 'image/png' },
-        { filename: 'img3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766748234009.png'), cid: 'img3', contentType: 'image/png' },
-        { filename: 'img4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766748234008.png'), cid: 'img4', contentType: 'image/png' },
+        { filename: 'img1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'img1', contentType: 'image/png' },
+        { filename: 'img2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_linking.png'), cid: 'img2', contentType: 'image/png' },
+        { filename: 'img3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'img3', contentType: 'image/png' },
+        { filename: 'img4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'img4', contentType: 'image/png' },
         { filename: 'img5.png', path: assetPath('2fcb5438f3a66f5b8a9aad39bcd49e69_1766748234007.png'), cid: 'img5', contentType: 'image/png' },
-        { filename: 'img6.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766748234008.png'), cid: 'img6', contentType: 'image/png' }
+        { filename: 'img6.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'img6', contentType: 'image/png' }
       ]
     });
   }
@@ -1019,11 +1019,11 @@ export class EmailService {
       html,
       from: `"EduFiliova Courses" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'course1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766749237272.png'), cid: 'course1', contentType: 'image/png' },
-        { filename: 'course2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_1766749237266.png'), cid: 'course2', contentType: 'image/png' },
-        { filename: 'course3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766749237264.png'), cid: 'course3', contentType: 'image/png' },
-        { filename: 'course4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766749237259.png'), cid: 'course4', contentType: 'image/png' },
-        { filename: 'course5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766749237262.png'), cid: 'course5', contentType: 'image/png' },
+        { filename: 'course1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'course1', contentType: 'image/png' },
+        { filename: 'course2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_linking.png'), cid: 'course2', contentType: 'image/png' },
+        { filename: 'course3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'course3', contentType: 'image/png' },
+        { filename: 'course4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'course4', contentType: 'image/png' },
+        { filename: 'course5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'course5', contentType: 'image/png' },
         { filename: 'course6.png', path: assetPath('dae012787ae5c5348c44bb83c0009419_1766749237268.png'), cid: 'course6', contentType: 'image/png' }
       ]
     });
@@ -1060,11 +1060,11 @@ export class EmailService {
       html,
       from: `"EduFiliova Security" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'verify1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766749617228.png'), cid: 'verify1', contentType: 'image/png' },
+        { filename: 'verify1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'verify1', contentType: 'image/png' },
         { filename: 'verify2.png', path: assetPath('f28befc0a869e8a352bf79aa02080dc7_1766749617230.png'), cid: 'verify2', contentType: 'image/png' },
-        { filename: 'verify3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766749617221.png'), cid: 'verify3', contentType: 'image/png' },
+        { filename: 'verify3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'verify3', contentType: 'image/png' },
         { filename: 'verify4.png', path: assetPath('8c5dfa6f6ff7f681bbf586933883b270_1766749617209.png'), cid: 'verify4', contentType: 'image/png' },
-        { filename: 'verify5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766749617212.png'), cid: 'verify5', contentType: 'image/png' },
+        { filename: 'verify5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'verify5', contentType: 'image/png' },
         { filename: 'verify6.png', path: assetPath('50df79cf94bcde6e18f9cb9ac1a740dd_1766749617214.png'), cid: 'verify6', contentType: 'image/png' }
       ]
     });
@@ -1245,9 +1245,9 @@ export class EmailService {
       attachments: [
         { filename: 'teacher1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766749820555.png'), cid: 'teacher1', contentType: 'image/png' },
         { filename: 'teacher2.png', path: assetPath('f28befc0a869e8a352bf79aa02080dc7_1766749820559.png'), cid: 'teacher2', contentType: 'image/png' },
-        { filename: 'teacher3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766749820553.png'), cid: 'teacher3', contentType: 'image/png' },
+        { filename: 'teacher3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'teacher3', contentType: 'image/png' },
         { filename: 'teacher4.png', path: assetPath('e5c031c97fefa56399311851ed3cb1de_1766749820557.png'), cid: 'teacher4', contentType: 'image/png' },
-        { filename: 'teacher5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766749820548.png'), cid: 'teacher5', contentType: 'image/png' },
+        { filename: 'teacher5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'teacher5', contentType: 'image/png' },
         { filename: 'teacher6.png', path: assetPath('8c5dfa6f6ff7f681bbf586933883b270_1766749820545.png'), cid: 'teacher6', contentType: 'image/png' }
       ]
     });
@@ -1325,11 +1325,11 @@ export class EmailService {
       html,
       from: `"EduFiliova Security" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'customer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766750209430.png'), cid: 'customer1', contentType: 'image/png' },
-        { filename: 'customer2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_1766750209426.png'), cid: 'customer2', contentType: 'image/png' },
-        { filename: 'customer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766750209423.png'), cid: 'customer3', contentType: 'image/png' },
-        { filename: 'customer4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766750209420.png'), cid: 'customer4', contentType: 'image/png' },
-        { filename: 'customer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766750209420.png'), cid: 'customer5', contentType: 'image/png' },
+        { filename: 'customer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'customer1', contentType: 'image/png' },
+        { filename: 'customer2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_linking.png'), cid: 'customer2', contentType: 'image/png' },
+        { filename: 'customer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'customer3', contentType: 'image/png' },
+        { filename: 'customer4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'customer4', contentType: 'image/png' },
+        { filename: 'customer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'customer5', contentType: 'image/png' },
         { filename: 'customer6.png', path: assetPath('fcf514453cb3c939b52a8a2bcbb97b94_1766750209434.png'), cid: 'customer6', contentType: 'image/png' }
       ]
     });
@@ -1366,11 +1366,11 @@ export class EmailService {
       html,
       from: `"EduFiliova Security" <support@edufiliova.com>`,
       attachments: [
-        { filename: 'customer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_1766750209430.png'), cid: 'customer1', contentType: 'image/png' },
-        { filename: 'customer2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_1766750209426.png'), cid: 'customer2', contentType: 'image/png' },
-        { filename: 'customer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_1766750209423.png'), cid: 'customer3', contentType: 'image/png' },
-        { filename: 'customer4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_1766750209420.png'), cid: 'customer4', contentType: 'image/png' },
-        { filename: 'customer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_1766750209420.png'), cid: 'customer5', contentType: 'image/png' },
+        { filename: 'customer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'customer1', contentType: 'image/png' },
+        { filename: 'customer2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_linking.png'), cid: 'customer2', contentType: 'image/png' },
+        { filename: 'customer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'customer3', contentType: 'image/png' },
+        { filename: 'customer4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'customer4', contentType: 'image/png' },
+        { filename: 'customer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'customer5', contentType: 'image/png' },
         { filename: 'customer6.png', path: assetPath('fcf514453cb3c939b52a8a2bcbb97b94_1766750209434.png'), cid: 'customer6', contentType: 'image/png' }
       ]
     });
