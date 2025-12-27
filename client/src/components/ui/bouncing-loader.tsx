@@ -12,7 +12,7 @@ interface BouncingBoxLoaderProps {
 export const BouncingBoxLoader: React.FC<BouncingBoxLoaderProps> = ({
   className,
   size = 'md',
-  color = '#2f5a4e',
+  color = '#0c332c',
   message
 }) => {
   const sizeMap = {
