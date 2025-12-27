@@ -411,6 +411,11 @@ export default function TeacherSignup() {
                         </div>
                       </div>
                     </div>
+                    <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm text-blue-900">
+                        <span className="font-medium">Why this matters:</span> A clear, professional profile photo helps build trust with students and families. It verifies your identity, ensures we can recognize you, and creates a professional first impression. Students and parents need to see who they're working with. Blurry, filtered, or hidden photos make it difficult to verify your identity and can raise security concerns.
+                      </p>
+                    </div>
                   </div>
 
                   <div>
