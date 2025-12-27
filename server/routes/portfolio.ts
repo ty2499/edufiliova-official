@@ -443,12 +443,14 @@ router.post('/works', requireAuth, async (req: AuthenticatedRequest, res) => {
       validatedMedia = mediaSchema.parse(media);
     }
     
-    // Create the work first (without coverMediaId for now)
+    // Create the work with auto-approved status
     const [newWork] = await db
       .insert(works)
       .values({
         ...validatedWorkData,
-        userId: req.user!.id
+        userId: req.user!.id,
+        status: 'approved', // Auto-approve portfolios
+        visibility: 'public' // Default to public
       })
       .returning();
 
