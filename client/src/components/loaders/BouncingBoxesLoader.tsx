@@ -15,7 +15,7 @@ export const BouncingBoxesLoader = () => {
               rotate: [0, 90, 0],
             }}
             transition={{
-              duration: 0.6,
+              duration: 2,
               repeat: Infinity,
               ease: "easeInOut",
               delay: index * 0.1,
@@ -23,13 +23,6 @@ export const BouncingBoxesLoader = () => {
           />
         ))}
       </div>
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="absolute mt-20 text-white font-medium tracking-wide"
-      >
-        Setting things up...
-      </motion.p>
     </div>
   );
 };
