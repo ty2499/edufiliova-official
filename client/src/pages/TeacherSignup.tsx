@@ -648,6 +648,55 @@ export default function TeacherSignup() {
                     <p className="text-sm text-gray-600 mt-1">Accept: PDF, JPG, PNG. Required.</p>
                   </div>
 
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <p className="font-medium text-gray-900 mb-3">Teaching Certificate Guidelines - Accepted Examples:</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855802891.png" 
+                          alt="University teaching diploma - ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-green-700">✓ University Diploma</p>
+                        <p className="text-xs text-gray-600 mt-1">Formal teaching degree</p>
+                      </div>
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855812937.png" 
+                          alt="Degree certificate in frame - ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-green-700">✓ Degree Certificate</p>
+                        <p className="text-xs text-gray-600 mt-1">Educational qualification</p>
+                      </div>
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855821676.png" 
+                          alt="Professional teaching certificate - ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-green-700">✓ Teaching Certificate</p>
+                        <p className="text-xs text-gray-600 mt-1">Professional credential</p>
+                      </div>
+                    </div>
+                    <div className="border-l-4 border-green-500 pl-3 mb-4">
+                      <p className="font-medium text-green-700 mb-2">✓ What Makes Good Certificates</p>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• Clear, readable document (PDF or scanned image)</li>
+                        <li>• Shows your name and qualification</li>
+                        <li>• From recognized institution or organization</li>
+                        <li>• Date of issue clearly visible</li>
+                        <li>• Official seal, signature, or institution stamp</li>
+                        <li>• Full page or both sides if double-sided</li>
+                      </ul>
+                    </div>
+                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm text-blue-900">
+                        <span className="font-medium">Why this matters:</span> Teaching certificates verify your qualifications and credentials. We need clear, official documentation to confirm you have the proper education and training to teach effectively. This protects students and ensures quality instruction.
+                      </p>
+                    </div>
+                  </div>
+
                   <div>
                     <Label htmlFor="idPassport">Upload ID/Passport (Identity Proof) *</Label>
                     <Input
