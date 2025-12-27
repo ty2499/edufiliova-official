@@ -1043,7 +1043,196 @@ export default function TeacherSignup() {
               )}
 
               {currentStep === 7 && (
-                <div className="space-y-4">
+                <div className="space-y-6">
+                  {/* Documents Checklist */}
+                  <div className="border rounded-lg p-6 bg-gray-50">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Final Documents Checklist</h3>
+                    <p className="text-sm text-gray-600 mb-6">Before submitting your application, please review the checklist below to ensure all required documents meet our verification standards. Applications with missing, unclear, or incorrect documents may be delayed or rejected.</p>
+                    
+                    <div className="space-y-5">
+                      {/* Profile Photo */}
+                      <div className="border-l-4 border-green-500 pl-4">
+                        <h4 className="font-medium text-gray-900 mb-2">1. Profile Photo</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <p className="font-medium text-green-700 mb-2">Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Clear photo of your face</li>
+                              <li>• Good lighting, no filters</li>
+                              <li>• Only you in the photo</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-medium text-red-700 mb-2">Not Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Group photos</li>
+                              <li>• AI avatars or cartoons</li>
+                              <li>• Sunglasses covering eyes</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Identity Document */}
+                      <div className="border-l-4 border-green-500 pl-4">
+                        <h4 className="font-medium text-gray-900 mb-2">2. Identity Document (Required)</h4>
+                        <p className="text-sm text-gray-600 mb-3">Upload ONE valid government-issued ID:</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <p className="font-medium text-green-700 mb-2">Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Passport (photo information page)</li>
+                              <li>• National ID card (front & back)</li>
+                              <li>• Driver's license (front & back)</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-medium text-red-700 mb-2">Not Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Passport-size photo alone</li>
+                              <li>• Screenshots or edited images</li>
+                              <li>• Expired documents</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Teaching Qualification */}
+                      <div className="border-l-4 border-green-500 pl-4">
+                        <h4 className="font-medium text-gray-900 mb-2">3. Teaching Qualification (Required)</h4>
+                        <p className="text-sm text-gray-600 mb-3">Upload at least one qualification document. Must clearly show:</p>
+                        <ul className="text-sm text-gray-600 space-y-1 mb-3">
+                          <li>• Your full name</li>
+                          <li>• Institution name</li>
+                          <li>• Qualification title</li>
+                          <li>• Completion date</li>
+                        </ul>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <p className="font-medium text-green-700 mb-2">Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Teaching certificate</li>
+                              <li>• Degree or diploma</li>
+                              <li>• Professional education certificate</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-medium text-red-700 mb-2">Not Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Unrelated certificates</li>
+                              <li>• Cropped or unreadable files</li>
+                              <li>• Edited or fake documents</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* CV/Resume */}
+                      <div className="border-l-4 border-green-500 pl-4">
+                        <h4 className="font-medium text-gray-900 mb-2">4. CV / Resume (Required)</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <p className="font-medium text-green-700 mb-2">Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• PDF or DOC/DOCX format</li>
+                              <li>• Includes education, experience, and skills</li>
+                              <li>• Teaching subjects clearly listed</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-medium text-red-700 mb-2">Not Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Handwritten resumes</li>
+                              <li>• Screenshots from chats</li>
+                              <li>• Empty or incomplete CVs</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Introduction Video */}
+                      <div className="border-l-4 border-green-500 pl-4">
+                        <h4 className="font-medium text-gray-900 mb-2">5. Introduction Video (Required)</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-3">
+                          <div>
+                            <p className="font-medium text-green-700 mb-2">Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• 30-120 seconds</li>
+                              <li>• Clear audio and lighting</li>
+                              <li>• Face clearly visible</li>
+                              <li>• Introduce name, subjects, grades, experience</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-medium text-red-700 mb-2">Not Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Silent videos</li>
+                              <li>• Music-only or slideshow videos</li>
+                              <li>• AI avatars or animations</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* File Rules */}
+                      <div className="border-l-4 border-blue-500 pl-4 bg-blue-50 p-3 rounded">
+                        <h4 className="font-medium text-gray-900 mb-2">File Rules (Important)</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <p className="font-medium text-green-700 mb-2">Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• PDF, JPG, PNG, MP4, DOC/DOCX</li>
+                              <li>• Clear and readable files</li>
+                              <li>• Original documents only</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-medium text-red-700 mb-2">Not Accepted:</p>
+                            <ul className="text-gray-600 space-y-1">
+                              <li>• Screenshots from apps</li>
+                              <li>• Blurry or low-resolution</li>
+                              <li>• Edited or manipulated documents</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Review Timeline */}
+                      <div className="border-l-4 border-orange-500 pl-4 bg-orange-50 p-3 rounded">
+                        <h4 className="font-medium text-gray-900 mb-2">Review Timeline</h4>
+                        <p className="text-sm text-gray-600">Our verification team reviews applications within 2-3 working days. You will be notified by email once a decision is made.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Declarations */}
+                  <div className="border rounded-lg p-6 bg-gray-50">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Declaration</h3>
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-start space-x-2">
+                        <input
+                          type="checkbox"
+                          id="declaration1"
+                          className="h-4 w-4 accent-[#0c332c] cursor-pointer mt-1"
+                        />
+                        <Label htmlFor="declaration1" className="text-sm font-normal leading-relaxed cursor-pointer">
+                          I confirm that all information and documents provided are accurate and authentic.
+                        </Label>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <input
+                          type="checkbox"
+                          id="declaration2"
+                          className="h-4 w-4 accent-[#0c332c] cursor-pointer mt-1"
+                        />
+                        <Label htmlFor="declaration2" className="text-sm font-normal leading-relaxed cursor-pointer">
+                          I understand that submitting false or edited documents may result in rejection or account restriction.
+                        </Label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Agreement Checkboxes */}
                   <div className="space-y-3">
                     <div className="flex items-start space-x-2">
                       <div className="relative flex h-4 w-4 shrink-0 items-center justify-center mt-1">
