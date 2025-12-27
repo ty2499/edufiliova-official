@@ -246,10 +246,6 @@ export default function TeacherSignupBasic({ onNavigate }: TeacherSignupBasicPro
         }}
       >
         <div className="text-center space-y-6">
-          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto bg-[#0C332C]/10">
-            <Mail className="h-10 w-10 text-foreground" />
-          </div>
-          
           <div className="space-y-2">
             <h2 className="text-2xl font-bold" style={{ color: '#a0fab2' }}>Enter code</h2>
             <p className="text-gray-500 text-sm">
