@@ -1020,6 +1020,8 @@ export const ProductForm = ({
           type="submit"
           disabled={isLoading}
           data-testid="button-submit-product"
+          className="text-white hover:bg-[#0C332C]"
+          style={{ backgroundColor: '#0C332C' }}
         >
           {isLoading ? 'Saving...' : (product ? 'Update Product' : 'Create Product')}
         </Button>
