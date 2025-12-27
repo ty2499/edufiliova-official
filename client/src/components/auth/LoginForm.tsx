@@ -228,7 +228,7 @@ export default function LoginForm({
             <button
               type="button"
               onClick={onForgotPassword}
-              className="text-[#ff6b6b] hover:text-white font-medium transition-all duration-300"
+              className="text-[#a0fab2] hover:text-white font-medium transition-all duration-300"
               data-testid="button-forgot-password"
             >
               Forgot password?
