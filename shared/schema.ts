@@ -5238,7 +5238,7 @@ export const insertUserActivityTrackingSchema = createInsertSchema(userActivityT
 export const emailNotificationLogs = pgTable("email_notification_logs", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id").references(() => users.id),
-  pendingRegistrationId: uuid("pending_registration_id").references(() => pendingRegistrations.id),
+  pendingRegistrationId: uuid("pending_registration_id").references(() => pendingRegistrations.id, { onDelete: 'cascade' }),
   recipientEmail: text("recipient_email").notNull(),
   recipientName: text("recipient_name"),
   notificationType: engagementNotificationTypeEnum("notification_type").notNull(),

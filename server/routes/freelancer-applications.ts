@@ -115,7 +115,12 @@ router.post('/applications/initiate', async (req, res) => {
     }
 
     // Delete any existing pending registration for this email (allows re-registration)
-    await db.delete(pendingRegistrations).where(eq(pendingRegistrations.email, email));
+    // We must first delete any associated notification logs to avoid foreign key violations
+    const existingPending = await db.select().from(pendingRegistrations).where(eq(pendingRegistrations.email, email)).limit(1);
+    if (existingPending.length > 0) {
+      await db.delete(emailNotificationLogs).where(eq(emailNotificationLogs.pendingRegistrationId, existingPending[0].id));
+      await db.delete(pendingRegistrations).where(eq(pendingRegistrations.id, existingPending[0].id));
+    }
 
     // Hash password and generate verification code
     const hashedPassword = await bcrypt.hash(password, 12);
