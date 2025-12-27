@@ -21,7 +21,7 @@ export const BouncingBoxLoader: React.FC<BouncingBoxLoaderProps> = ({
     lg: 'w-24 h-24'
   };
 
-  const boxVariants = {
+  const boxVariants: any = {
     animate: {
       y: [0, -20, 0],
       rotate: [0, 90, 180, 270, 360],
@@ -34,7 +34,7 @@ export const BouncingBoxLoader: React.FC<BouncingBoxLoaderProps> = ({
     }
   };
 
-  const shadowVariants = {
+  const shadowVariants: any = {
     animate: {
       scale: [1, 0.6, 1],
       opacity: [0.3, 0.1, 0.3],
