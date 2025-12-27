@@ -338,7 +338,9 @@ export function isQuickCommand(text: string): string | null {
     'ASSIGNMENT': 'assignment',
     'AVAILABILITY': 'availability',
     'WITHDRAW': 'withdraw',
-    'EARNINGS': 'earnings'
+    'EARNINGS': 'earnings',
+    'ABOUT': 'about',
+    'CONTACT': 'contact'
   };
   return commands[normalized] || null;
 }
