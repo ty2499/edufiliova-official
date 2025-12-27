@@ -132,7 +132,7 @@ export default function LoginForm({
       </div>
 
       {errors.general && (
-        <div className="mb-4 p-3 bg-primary/10 border border-red-200 rounded-lg flex items-center gap-2 text-primary text-sm">
+        <div className="mb-4 p-3 bg-red-900/50 border border-red-500 rounded-lg flex items-center gap-2 text-white text-sm">
           <AlertCircle className="h-4 w-4 flex-shrink-0" />
           <span>{errors.general}</span>
         </div>
@@ -188,11 +188,11 @@ export default function LoginForm({
               value={formData.loginIdentifier}
               onChange={(e) => handleInputChange('loginIdentifier', e.target.value)}
               placeholder={getLoginPlaceholder()}
-              className={`h-11 pl-10 rounded-lg border-white/20 bg-white/10 text-white ${errors.loginIdentifier ? 'border-primary' : ''}`}
+              className={`h-11 pl-10 rounded-lg border-white/20 bg-white/10 text-white placeholder:text-white/50 ${errors.loginIdentifier ? 'border-red-500' : ''}`}
               data-testid="input-login-identifier"
             />
           </div>
-          {errors.loginIdentifier && <p className="text-sm text-primary mt-1">{errors.loginIdentifier}</p>}
+          {errors.loginIdentifier && <p className="text-sm text-red-400 mt-1">{errors.loginIdentifier}</p>}
         </div>
 
         <div>
@@ -206,7 +206,7 @@ export default function LoginForm({
               value={formData.password}
               onChange={(e) => handleInputChange('password', e.target.value)}
               placeholder="Enter your password"
-              className={`h-11 pr-10 rounded-lg border-white/20 bg-white/10 text-white ${errors.password ? 'border-primary' : ''}`}
+              className={`h-11 pr-10 rounded-lg border-white/20 bg-white/10 text-white placeholder:text-white/50 ${errors.password ? 'border-red-500' : ''}`}
               data-testid="input-password"
             />
             <Button
@@ -220,7 +220,7 @@ export default function LoginForm({
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
           </div>
-          {errors.password && <p className="text-sm text-primary mt-1">{errors.password}</p>}
+          {errors.password && <p className="text-sm text-red-400 mt-1">{errors.password}</p>}
         </div>
 
         <div className="flex items-center justify-between">
@@ -228,7 +228,7 @@ export default function LoginForm({
             <button
               type="button"
               onClick={onForgotPassword}
-              className="text-white/80 hover:text-white font-medium transition-all duration-300"
+              className="text-[#ff6b6b] hover:text-white font-medium transition-all duration-300"
               data-testid="button-forgot-password"
             >
               Forgot password?
@@ -249,7 +249,7 @@ export default function LoginForm({
               Signing in...
             </>
           ) : (
-            'Sign in'
+            'Sign In'
           )}
         </Button>
 
@@ -307,7 +307,7 @@ export default function LoginForm({
             <button
               type="button"
               onClick={onSwitchToRegister}
-              className="text-[#a0fab2] hover:text-white font-medium transition-all duration-300"
+              className="text-[#ff7675] hover:text-white font-medium transition-all duration-300"
               data-testid="link-register"
             >
               Sign up

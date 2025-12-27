@@ -43,7 +43,7 @@ export function SocialAuthButtons({ onSuccess, isCheckout = false, redirectTo, d
           variant="outline"
           onClick={() => handleSocialSignIn('facebook')}
           disabled={disabled || loading}
-          className="w-full h-12 text-base rounded-lg border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all duration-300"
+          className="w-full h-12 text-base rounded-lg border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all duration-300 font-semibold"
           data-testid="button-facebook-signin"
         >
           {loading ? (
