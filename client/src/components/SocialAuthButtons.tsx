@@ -41,49 +41,18 @@ export function SocialAuthButtons({ onSuccess, isCheckout = false, redirectTo, d
       <div className="grid grid-cols-1 gap-3">
         <Button
           variant="outline"
-          onClick={() => handleSocialSignIn('google')}
-          disabled={disabled || loading}
-          className="w-full"
-          data-testid="button-google-signin"
-        >
-          {loading ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <SiGoogle className="mr-2 h-4 w-4 text-[#4285F4]" />
-          )}
-          Continue with Google
-        </Button>
-
-        <Button
-          variant="outline"
           onClick={() => handleSocialSignIn('facebook')}
           disabled={disabled || loading}
-          className="w-full"
+          className="w-full h-12 text-base rounded-lg border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all duration-300"
           data-testid="button-facebook-signin"
         >
           {loading ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           ) : (
-            <SiFacebook className="mr-2 h-4 w-4 text-[#1877F2]" />
+            <SiFacebook className="mr-2 h-5 w-5 text-[#1877F2]" />
           )}
           Continue with Facebook
         </Button>
-
-        <Button
-          variant="outline"
-          onClick={() => handleSocialSignIn('twitter')}
-          disabled={disabled || loading}
-          className="w-full"
-          data-testid="button-twitter-signin"
-        >
-          {loading ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <SiX className="mr-2 h-4 w-4" />
-          )}
-          Continue with X
-        </Button>
-
       </div>
     </div>
   );
