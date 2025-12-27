@@ -981,48 +981,6 @@ export default function PortfolioCreate({ onNavigate }: PortfolioCreateProps) {
               </Card>
             </div>
           </div>
-
-          {/* Right Column - Live Preview */}
-          <div className="space-y-6">
-            <div className="sticky top-6">
-              <Card className="overflow-hidden">
-                
-                <CardContent className="p-0">
-                  {/* Preview Content */}
-                  <div className="bg-gray-50 border-b p-6">
-                    {/* Title Preview */}
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                      {form.watch('title') || 'Untitled Work'}
-                    </h3>
-                    
-                    {/* Description Preview */}
-                    {form.watch('description') && (
-                      <p className="text-gray-600 mb-4">
-                        {form.watch('description')}
-                      </p>
-                    )}
-
-                    {/* Tags Preview */}
-                    {form.watch('tags') && form.watch('tags')!.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {form.watch('tags')!.map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Visibility Preview */}
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      {getVisibilityIcon(form.watch('visibility') || 'public')}
-                      <span className="capitalize">{form.watch('visibility') || 'public'} work</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              </div>
-            </div>
           </div>
         )}
       </div>
