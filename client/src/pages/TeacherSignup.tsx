@@ -802,15 +802,10 @@ export default function TeacherSignup() {
               {currentStep === 6 && (
                 <div className="space-y-4">
                   <div className="bg-muted p-6 rounded-lg">
-                    <h3 className="font-medium mb-3 text-lg">Choose Payout Method</h3>
+                    <h3 className="font-medium mb-3 text-lg">Earnings & Payouts</h3>
                     <p className="text-sm text-gray-600 mb-4">
-                      To be completed after approval. Available options:
+                      Your earnings will be calculated based on your region and teaching performance. Once your application is approved, you'll be able to set up your preferred payout method to receive payments directly to your account.
                     </p>
-                    <ul className="text-sm text-gray-600 space-y-1 list-disc list-inside">
-                      <li>PayPal</li>
-                      <li>Stripe</li>
-                      <li>Bank transfer (if supported)</li>
-                    </ul>
                   </div>
 
                   <div className="bg-muted p-6 rounded-lg">
