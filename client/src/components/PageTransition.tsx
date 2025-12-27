@@ -37,7 +37,8 @@ const PageTransition = ({
       return {
         opacity: 1,
         transform: 'translateY(0)',
-        transition: 'opacity 250ms ease-out, transform 250ms ease-out',
+        filter: 'blur(12px)',
+        transition: 'opacity 400ms ease-in-out, filter 400ms ease-in-out, transform 400ms ease-in-out',
       };
     }
 

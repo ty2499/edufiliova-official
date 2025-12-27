@@ -80,31 +80,33 @@ export const BouncingBoxLoader: React.FC<BouncingBoxLoaderProps> = ({
 
 export const BouncingCircleLoader: React.FC<BouncingBoxLoaderProps> = ({
   className,
-  color = '#2f5a4e',
+  color = '#0c332c',
   message
 }) => {
   return (
     <div className={cn("flex flex-col items-center justify-center space-y-4", className)}>
-      <div className="flex space-x-2">
-        {[0, 1, 2].map((index) => (
+      <div className="flex space-x-3">
+        {[0, 1, 2, 3].map((index) => (
           <motion.div
             key={index}
-            className="w-4 h-4 rounded-full"
+            className="w-4 h-4 rounded-full shadow-sm"
             style={{ backgroundColor: color }}
             animate={{
-              y: [0, -15, 0],
+              y: [0, -20, 0],
+              scale: [1, 1.1, 1],
+              opacity: [0.7, 1, 0.7]
             }}
             transition={{
-              duration: 0.6,
+              duration: 0.8,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: index * 0.1
+              delay: index * 0.15
             }}
           />
         ))}
       </div>
       {message && (
-        <p className="text-sm text-muted-foreground font-medium animate-pulse mt-2">
+        <p className="text-sm text-[#0c332c]/70 font-semibold animate-pulse mt-4 tracking-wide uppercase">
           {message}
         </p>
       )}
