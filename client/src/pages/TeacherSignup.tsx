@@ -879,6 +879,55 @@ export default function TeacherSignup() {
                     )}
                     <p className="text-sm text-gray-600 mt-1">Helpful for approval. Optional.</p>
                   </div>
+
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <p className="font-medium text-gray-900 mb-3">Introduction Video Guidelines - What NOT to Do:</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855628741.png" 
+                          alt="Eyes closed or looking down - NOT ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-red-700">✗ Eyes Closed/Down</p>
+                        <p className="text-xs text-gray-600 mt-1">Not engaging, unprofessional</p>
+                      </div>
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855638492.png" 
+                          alt="Stressed or frustrated appearance - NOT ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-red-700">✗ Stressed/Frustrated</p>
+                        <p className="text-xs text-gray-600 mt-1">Negative emotions, off-putting</p>
+                      </div>
+                      <div className="text-center">
+                        <img 
+                          src="/attached_assets/image_1766855651046.png" 
+                          alt="Shushing gesture or silence - NOT ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
+                        />
+                        <p className="text-sm font-medium text-red-700">✗ Not Speaking/Silent</p>
+                        <p className="text-xs text-gray-600 mt-1">Doesn't show teaching ability</p>
+                      </div>
+                    </div>
+                    <div className="border-l-4 border-green-500 pl-3 mb-4">
+                      <p className="font-medium text-green-700 mb-2">✓ What We Want Instead</p>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• Look directly at camera with a warm, welcoming smile</li>
+                        <li>• Speak clearly about your teaching passion and expertise</li>
+                        <li>• Show enthusiasm for teaching and students</li>
+                        <li>• Keep it between 30-60 seconds</li>
+                        <li>• Good lighting and clear audio</li>
+                        <li>• Professional but personable tone</li>
+                      </ul>
+                    </div>
+                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm text-blue-900">
+                        <span className="font-medium">Why this matters:</span> Your introduction video gives students and families a first impression of who you are as a teacher. We need to see your personality, professionalism, and genuine passion for teaching. A good video builds trust and confidence in your ability to teach effectively.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               )}
 
