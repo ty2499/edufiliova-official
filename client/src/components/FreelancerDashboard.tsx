@@ -2135,8 +2135,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   <Card>
                     <CardContent className="p-6">
                       <div className="flex items-center">
-                        <Briefcase className="h-8 w-8 text-gray-700" />
-                        <div className="ml-4">
+                        <div>
                           <p className="text-sm font-medium text-gray-600">Portfolios</p>
                           <p className="text-2xl font-bold text-gray-900" data-testid="text-portfolios-count">
                             {portfolioLoading ? '...' : portfolioWorks.length}
@@ -2149,8 +2148,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   <Card>
                     <CardContent className="p-6">
                       <div className="flex items-center">
-                        <Heart className="h-8 w-8 text-gray-700" />
-                        <div className="ml-4">
+                        <div>
                           <p className="text-sm font-medium text-gray-600">Likes</p>
                           <p className="text-2xl font-bold text-gray-900" data-testid="text-likes-count">
                             {profileStatsLoading ? '...' : formatNumber(profileStats?.likes || 0)}
@@ -2163,8 +2161,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   <Card>
                     <CardContent className="p-6">
                       <div className="flex items-center">
-                        <BarChart3 className="h-8 w-8 text-gray-700" />
-                        <div className="ml-4">
+                        <div>
                           <p className="text-sm font-medium text-gray-600">Views</p>
                           <p className="text-2xl font-bold text-gray-900" data-testid="text-views-count">
                             {profileStatsLoading ? '...' : formatNumber(profileStats?.views || 0)}
@@ -2177,8 +2174,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
                   <Card>
                     <CardContent className="p-6">
                       <div className="flex items-center">
-                        <Users className="h-8 w-8 text-gray-700" />
-                        <div className="ml-4">
+                        <div>
                           <p className="text-sm font-medium text-gray-600">Followers</p>
                           <p className="text-2xl font-bold text-gray-900" data-testid="text-followers-count">
                             {profileStatsLoading ? '...' : formatNumber(profileStats?.followers || 0)}
