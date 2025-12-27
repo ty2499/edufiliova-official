@@ -443,6 +443,12 @@ async function handleMenuSelection(
     const selection = message.listId || message.buttonId || '';
     const textInput = message.text?.toLowerCase().trim() || '';
 
+    // Handle student menu items
+    if (selection === 'stu_courses' || selection === 'action_browse' || selection === 'menu_courses') {
+      await whatsappService.sendCourseCatalog(phone);
+      return;
+    }
+    
     // Handle back to menu button
     if (selection === 'btn_back_menu') {
       await studentHandler.handleBackToMenu(phone, conversation);

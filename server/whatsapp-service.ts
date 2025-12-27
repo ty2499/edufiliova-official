@@ -399,15 +399,19 @@ export async function sendListMessage(
 
 // Send course cards as a list
 export async function sendCourseCatalog(
-  to: string,
-  courses: Array<{ id: string; title: string; price: string; duration?: string }>
+  to: string
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  const allCourses = await db.query.courses.findMany({
+    where: eq(courses.isActive, true),
+    limit: 10
+  });
+
   const sections = [{
     title: 'Available Courses',
-    rows: courses.map(course => ({
+    rows: allCourses.map(course => ({
       id: `course_${course.id}`,
-      title: course.title.substring(0, 24),
-      description: `${course.price}${course.duration ? ` • ${course.duration}` : ''}`
+      title: (course.title as string).substring(0, 24),
+      description: `${course.currency || '$'} ${course.price}`
     }))
   }];
 
