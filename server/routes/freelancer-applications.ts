@@ -259,6 +259,16 @@ router.get('/applications/verify-link', async (req, res) => {
       status: 'pending'
     }).returning();
 
+    // Send freelancer application submitted email
+    try {
+      await emailService.sendFreelancerApplicationSubmittedEmail(pending.email, {
+        fullName: pending.fullName
+      });
+      console.log(`✅ Freelancer application submitted email sent to ${pending.email}`);
+    } catch (emailError) {
+      console.warn(`⚠️ Failed to send freelancer application email to ${pending.email}:`, emailError);
+    }
+
     // Delete the pending registration
     await db.delete(pendingRegistrations).where(eq(pendingRegistrations.token, token));
 
@@ -455,6 +465,16 @@ router.post('/applications/verify-code', async (req, res) => {
       servicesOffered: [],
       status: 'pending'
     }).returning();
+
+    // Send freelancer application submitted email
+    try {
+      await emailService.sendFreelancerApplicationSubmittedEmail(pending.email, {
+        fullName: pending.fullName
+      });
+      console.log(`✅ Freelancer application submitted email sent to ${pending.email}`);
+    } catch (emailError) {
+      console.warn(`⚠️ Failed to send freelancer application email to ${pending.email}:`, emailError);
+    }
 
     // Delete the pending registration
     await db.delete(pendingRegistrations).where(eq(pendingRegistrations.email, email));
