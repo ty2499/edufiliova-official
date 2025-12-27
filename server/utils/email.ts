@@ -1392,7 +1392,7 @@ export class EmailService {
         to: email,
         subject: 'Application Received - Your Teacher Application is Under Review',
         html,
-        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        from: `"EduFiliova Applications" <support@edufiliova.com>`,
         attachments: [
           { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
           { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
@@ -1421,7 +1421,7 @@ export class EmailService {
         to: email,
         subject: 'Application Resubmitted - Your Teacher Application is Under Review',
         html,
-        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        from: `"EduFiliova Applications" <support@edufiliova.com>`,
         attachments: [
           { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
           { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }

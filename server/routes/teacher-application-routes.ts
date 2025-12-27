@@ -685,13 +685,17 @@ router.post("/teacher-applications", async (req, res) => {
 
     // Send application submission confirmation email
     try {
-      await emailService.sendApplicationSubmittedEmail(validatedData.email, {
+      const emailResult = await emailService.sendApplicationSubmittedEmail(validatedData.email, {
         fullName: validatedData.fullName,
         applicationType: 'teacher'
       });
-      console.log(`✅ Teacher application submission email sent to ${validatedData.email}`);
+      if (emailResult) {
+        console.log(`✅ Teacher application submission email sent to ${validatedData.email}`);
+      } else {
+        console.warn(`⚠️ Email service returned false for ${validatedData.email} - checking transporter status`);
+      }
     } catch (emailError) {
-      console.warn(`⚠️ Failed to send submission confirmation email to ${validatedData.email}:`, emailError);
+      console.error(`❌ Failed to send submission confirmation email to ${validatedData.email}:`, emailError);
     }
 
     res.status(201).json({
