@@ -1560,6 +1560,45 @@ const Index = () => {
   };
 
   const renderPage = () => {
+    // URL-based override for shop/courses - HIGHEST PRIORITY
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname;
+      if (pathname === '/shop' || pathname.startsWith('/shop/')) {
+        const stateToUse = currentState === 'product-shop' ? currentState : 'product-shop';
+        // Force render shop if URL is /shop regardless of state
+        if (stateToUse === 'product-shop') {
+          return (
+            <PageTransition 
+              isActive={true} 
+              transitionType={transitionType} 
+              isTransitioning={isTransitioning}
+              isExiting={isExiting}
+            >
+              <ProductShop 
+                onNavigate={handleNavigation} 
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+              />
+            </PageTransition>
+          );
+        }
+      }
+      if (pathname === '/courses' || pathname.startsWith('/courses/')) {
+        if (currentState === 'course-browse' || currentState === 'course-detail' || currentState === 'course-player') {
+          return (
+            <PageTransition 
+              isActive={true} 
+              transitionType={transitionType} 
+              isTransitioning={isTransitioning}
+              isExiting={isExiting}
+            >
+              <CourseBrowse onNavigate={handleNavigation} />
+            </PageTransition>
+          );
+        }
+      }
+    }
+    
     // Check if user has a stored session (likely logged in)
     const hasStoredSession = typeof window !== 'undefined' && localStorage.getItem('sessionId');
     const intentionalLogout = typeof window !== 'undefined' && localStorage.getItem('intentional_logout') === 'true';
