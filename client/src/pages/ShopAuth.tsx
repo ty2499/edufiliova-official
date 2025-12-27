@@ -81,11 +81,17 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
     }
   }, [refreshAuth, onNavigate, returnUrl]);
 
-  // Redirect authenticated users back to where they came from or to shop
+  // Redirect authenticated users back to where they came from or to dashboard
   useEffect(() => {
     if (!loading && user && profile) {
-      const destination = returnUrl || 'product-shop';
-      onNavigate?.(destination, 'slide-left');
+      if (returnUrl) {
+        onNavigate?.(returnUrl, 'slide-left');
+      } else {
+        const dashboard = profile.role === 'teacher' ? 'teacher-dashboard' : 
+                         (profile.role === 'freelancer' || profile.role === 'creator') ? 'freelancer-dashboard' : 
+                         'student-dashboard';
+        onNavigate?.(dashboard, 'slide-left');
+      }
     }
   }, [user, profile, loading, onNavigate, returnUrl]);
 
@@ -191,9 +197,16 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
           }
         }
         
-        // Redirect to shop or return URL
-        const destination = returnUrl || 'product-shop';
-        onNavigate?.(destination, 'slide-left');
+        // Redirect to dashboard or return URL
+        if (returnUrl) {
+          onNavigate?.(returnUrl, 'slide-left');
+        } else {
+          // Note: profile might be updated after refreshAuth
+          const dashboard = profile?.role === 'teacher' ? 'teacher-dashboard' : 
+                           (profile?.role === 'freelancer' || profile?.role === 'creator') ? 'freelancer-dashboard' : 
+                           'student-dashboard';
+          onNavigate?.(dashboard, 'slide-left');
+        }
       } else {
         if (result.error?.includes('Email already registered') && authMode === 'signup') {
           setAuthMode('signin');
@@ -265,9 +278,15 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
           }
         }
         
-        // Redirect to shop or return URL
-        const destination = returnUrl || 'product-shop';
-        onNavigate?.(destination, 'slide-left');
+        // Redirect to dashboard or return URL
+        if (returnUrl) {
+          onNavigate?.(returnUrl, 'slide-left');
+        } else {
+          const dashboard = profile?.role === 'teacher' ? 'teacher-dashboard' : 
+                           (profile?.role === 'freelancer' || profile?.role === 'creator') ? 'freelancer-dashboard' : 
+                           'student-dashboard';
+          onNavigate?.(dashboard, 'slide-left');
+        }
       } else {
         setVerificationError(true);
         setVerificationCode('');
