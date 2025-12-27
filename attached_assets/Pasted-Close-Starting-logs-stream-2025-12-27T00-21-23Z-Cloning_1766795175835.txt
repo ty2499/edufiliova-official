@@ -1,0 +1,87 @@
+Close
+Starting logs stream.
+2025-12-27T00:21:23Z Cloning into '/repo'...
+2025-12-27T00:21:36Z Updating files: 67% (1442/2132) Updating files: 68% (1450/2132) Updating files: 69% (1472/2132) Updating files: 70% (1493/2132) Updating files: 71% (1514/2132) Updating files: 72% (1536/2132) Updating files: 73% (1557/2132) Updating files: 74% (1578/2132) Updating files: 75% (1599/2132) Updating files: 76% (1621/2132) Updating files: 77% (1642/2132) Updating files: 78% (1663/2132) Updating files: 79% (1685/2132) Updating files: 80% (1706/2132) Updating files: 81% (1727/2132) Updating files: 82% (1749/2132) Updating files: 83% (1770/2132) Updating files: 84% (1791/2132) Updating files: 85% (1813/2132) Updating files: 86% (1834/2132) Updating files: 87% (1855/2132) Updating files: 88% (1877/2132) Updating files: 89% (1898/2132) Updating files: 90% (1919/2132) Updating files: 91% (1941/2132) Updating files: 92% (1962/2132) Updating files: 93% (1983/2132) Updating files: 94% (2005/2132) Updating files: 95% (2026/2132) Updating files: 96% (2047/2132) Updating files: 97% (2069/2132) Updating files: 98% (2090/2132) Updating files: 99% (2111/2132) Updating files: 100% (2132/2132) Updating files: 100% (2132/2132), done.
+2025-12-27T00:21:37Z INFO[0000] Resolved base name node:20-alpine to builder
+2025-12-27T00:21:37Z INFO[0000] Resolved base name node:20-alpine to runner
+2025-12-27T00:21:37Z INFO[0000] Using dockerignore file: /repo/.dockerignore
+2025-12-27T00:21:37Z INFO[0000] Retrieving image manifest node:20-alpine
+2025-12-27T00:21:37Z INFO[0000] Retrieving image node:20-alpine from registry index.docker.io
+2025-12-27T00:21:38Z INFO[0000] Retrieving image manifest node:20-alpine
+2025-12-27T00:21:38Z INFO[0000] Returning cached image manifest
+2025-12-27T00:21:38Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-27T00:21:38Z INFO[0001] Returning cached image manifest
+2025-12-27T00:21:38Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-27T00:21:38Z INFO[0001] Returning cached image manifest
+2025-12-27T00:21:38Z INFO[0001] Built cross stage deps: map[0:[/app/package.json /app/package-lock.json /app/node_modules /app/dist]]
+2025-12-27T00:21:38Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-27T00:21:38Z INFO[0001] Returning cached image manifest
+2025-12-27T00:21:38Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-27T00:21:38Z INFO[0001] Returning cached image manifest
+2025-12-27T00:21:38Z INFO[0001] Executing 0 build triggers
+2025-12-27T00:21:38Z INFO[0001] Building stage 'node:20-alpine' [idx: '0', base-idx: '-1']
+2025-12-27T00:21:38Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4972/hyperlift-4972/cache:9754597c2bce11ef817bf63fd44a434c8571356218ce1baa27b6d5414c721017...
+2025-12-27T00:21:39Z INFO[0001] Using caching version of cmd: RUN apk add --no-cache python3 make g++ gcc libc-dev
+2025-12-27T00:21:39Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4972/hyperlift-4972/cache:cdf3cf13f73c9a6256a2e5e18071553b67c3de1ebd59b70fac8a2e7a11aa03ec...
+2025-12-27T00:21:39Z INFO[0001] No cached layer found for cmd RUN npm ci --include=dev
+2025-12-27T00:21:39Z INFO[0001] Unpacking rootfs as cmd COPY package.json package-lock.json ./ requires it.
+2025-12-27T00:21:41Z INFO[0003] ARG BUILD_VERSION=20251218-v4
+2025-12-27T00:21:41Z INFO[0003] No files changed in this command, skipping snapshotting.
+2025-12-27T00:21:41Z INFO[0003] ENV BUILD_VERSION=${BUILD_VERSION}
+2025-12-27T00:21:41Z INFO[0003] No files changed in this command, skipping snapshotting.
+2025-12-27T00:21:41Z INFO[0003] ENV NODE_OPTIONS="--max-old-space-size=2048"
+2025-12-27T00:21:41Z INFO[0003] No files changed in this command, skipping snapshotting.
+2025-12-27T00:21:41Z INFO[0003] RUN apk add --no-cache python3 make g++ gcc libc-dev
+2025-12-27T00:21:41Z INFO[0003] Found cached layer, extracting to filesystem
+2025-12-27T00:21:55Z INFO[0017] WORKDIR /app
+2025-12-27T00:21:55Z INFO[0017] Cmd: workdir
+2025-12-27T00:21:55Z INFO[0017] Changed working directory to /app
+2025-12-27T00:21:55Z INFO[0017] Creating directory /app with uid -1 and gid -1
+2025-12-27T00:21:55Z INFO[0017] Taking snapshot of files...
+2025-12-27T00:21:55Z INFO[0017] COPY package.json package-lock.json ./
+2025-12-27T00:21:55Z INFO[0017] Taking snapshot of files...
+2025-12-27T00:21:55Z INFO[0017] RUN npm ci --include=dev
+2025-12-27T00:21:55Z INFO[0017] Initializing snapshotter ...
+2025-12-27T00:21:55Z INFO[0017] Taking snapshot of full filesystem...
+2025-12-27T00:21:56Z INFO[0018] Cmd: /bin/sh
+2025-12-27T00:21:56Z INFO[0018] Args: [-c npm ci --include=dev]
+2025-12-27T00:21:56Z INFO[0018] Running: [/bin/sh -c npm ci --include=dev]
+2025-12-27T00:21:58Z npm error code EUSAGE
+2025-12-27T00:21:58Z npm error
+2025-12-27T00:21:58Z npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+2025-12-27T00:21:58Z npm error
+2025-12-27T00:21:58Z npm error Missing: @types/passport-facebook@3.0.4 from lock file
+2025-12-27T00:21:58Z npm error Missing: passport-facebook@3.0.0 from lock file
+2025-12-27T00:21:58Z npm error Missing: @types/passport@1.0.17 from lock file
+2025-12-27T00:21:58Z npm error Missing: @types/passport-oauth2@1.8.0 from lock file
+2025-12-27T00:21:58Z npm error Missing: @types/oauth@0.9.6 from lock file
+2025-12-27T00:21:58Z npm error Missing: passport-oauth2@1.8.0 from lock file
+2025-12-27T00:21:58Z npm error Missing: base64url@3.0.1 from lock file
+2025-12-27T00:21:58Z npm error Missing: oauth@0.10.2 from lock file
+2025-12-27T00:21:58Z npm error Missing: passport-strategy@1.0.0 from lock file
+2025-12-27T00:21:58Z npm error Missing: uid2@0.0.4 from lock file
+2025-12-27T00:21:58Z npm error
+2025-12-27T00:21:58Z npm error Clean install a project
+2025-12-27T00:21:58Z npm error
+2025-12-27T00:21:58Z npm error Usage:
+2025-12-27T00:21:58Z npm error npm ci
+2025-12-27T00:21:58Z npm error
+2025-12-27T00:21:58Z npm error Options:
+2025-12-27T00:21:58Z npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2025-12-27T00:21:58Z npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2025-12-27T00:21:58Z npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-12-27T00:21:58Z npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-12-27T00:21:58Z npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-12-27T00:21:58Z npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-12-27T00:21:58Z npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-12-27T00:21:58Z npm error
+2025-12-27T00:21:58Z npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-12-27T00:21:58Z npm error
+2025-12-27T00:21:58Z npm error Run "npm help ci" for more info
+2025-12-27T00:21:58Z npm notice
+2025-12-27T00:21:58Z npm notice New major version of npm available! 10.8.2 -> 11.7.0
+2025-12-27T00:21:58Z npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+2025-12-27T00:21:58Z npm notice To update run: npm install -g npm@11.7.0
+2025-12-27T00:21:58Z npm notice
+2025-12-27T00:21:58Z npm error A complete log of this run can be found in: /root/.npm/_logs/2025-12-27T00_21_56_710Z-debug-0.log
+2025-12-27T00:21:58Z error building image: error building stage: failed to execute command: waiting for process to exit: exit status 1
