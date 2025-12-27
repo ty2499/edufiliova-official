@@ -252,7 +252,10 @@ router.get('/works', async (req, res) => {
     const tagArray = tags ? tags.split(',').map(tag => tag.trim()).filter(Boolean) : [];
 
     // Build WHERE conditions
-    const whereConditions = [eq(works.visibility, 'public')];
+    const whereConditions = [
+      eq(works.visibility, 'public'),
+      eq(profiles.approvalStatus, 'approved') // Only show works from approved freelancers
+    ];
     
     // Add search condition if provided
     if (searchQuery) {
