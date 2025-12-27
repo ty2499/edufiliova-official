@@ -15,12 +15,11 @@ async function main() {
       process.exit(1);
     }
 
-    // Get from command line args or defaults
     const owner = process.argv[2] || "ty2499";
     const repo = process.argv[3] || "edufiliova";
     const branch = process.argv[4] || "main";
 
-    console.log("🚀 Pushing code to GitHub via API\n");
+    console.log("🚀 Pushing ALL source code to GitHub\n");
     console.log("📋 Configuration:");
     console.log(`   Owner: ${owner}`);
     console.log(`   Repo: ${repo}`);
@@ -32,58 +31,26 @@ async function main() {
     const { data: user } = await octokit.rest.users.getAuthenticated();
     console.log(`✅ Authenticated as: ${user.login}\n`);
 
-    console.log("📦 Collecting important source files...");
+    console.log("📦 Collecting ALL source code files...");
     const filesMap = new Map();
     const baseDir = __dirname;
-
-    // Only include these directories
-    const includePatterns = [
-      "client/src",
-      "server",
-      "docs",
-      ".",
-    ];
 
     // Ignore patterns
     const ignoredPatterns = [
       ".git",
       "node_modules",
       ".env",
-      "dist",
       ".cache",
       "attached_assets",
       ".turbo",
       ".next",
-      "build",
       ".config",
+      "/dist",
+      "/build",
     ];
 
     function isIgnored(filePath) {
       return ignoredPatterns.some((pattern) => filePath.includes(pattern));
-    }
-
-    function shouldInclude(filePath) {
-      // Include root-level config files
-      if (path.dirname(filePath) === ".") {
-        const name = path.basename(filePath);
-        return [
-          "package.json",
-          "package-lock.json",
-          "tsconfig.json",
-          "vite.config.ts",
-          "replit.md",
-          "README.md",
-          ".gitignore",
-          "drizzle.config.ts",
-        ].includes(name);
-      }
-
-      // Include files from specific directories
-      return includePatterns.some((pattern) =>
-        filePath.startsWith(pattern + path.sep) ||
-        (pattern === "." && filePath.startsWith("client/src")) ||
-        (pattern === "." && filePath.startsWith("server"))
-      );
     }
 
     function collectFiles(dir) {
@@ -94,7 +61,6 @@ async function main() {
           const relativePath = path.relative(baseDir, filePath);
 
           if (isIgnored(relativePath)) return;
-          if (!shouldInclude(relativePath)) return;
 
           const stat = fs.statSync(filePath);
           if (stat.isDirectory()) {
@@ -114,7 +80,12 @@ async function main() {
     }
 
     collectFiles(baseDir);
-    console.log(`✅ Found ${filesMap.size} source files to push\n`);
+    console.log(`✅ Found ${filesMap.size} files to push\n`);
+
+    if (filesMap.size === 0) {
+      console.error("❌ No files found to push");
+      process.exit(1);
+    }
 
     console.log("📤 Pushing to GitHub...");
 
@@ -145,7 +116,7 @@ async function main() {
       const { data: newCommit } = await octokit.rest.git.createCommit({
         owner,
         repo,
-        message: `Push clean code from Replit - ${new Date().toISOString()}`,
+        message: `Push all source code from Replit - ${new Date().toISOString()}`,
         tree: treeData.sha,
         parents: [baseCommitSha],
         author: {
@@ -163,14 +134,11 @@ async function main() {
         sha: newCommit.sha,
       });
 
-      console.log(`\n✅ Success! Code pushed to GitHub`);
-      console.log(`   Files pushed: ${tree.length}`);
+      console.log(`\n✅ Success! ALL source code pushed to GitHub`);
+      console.log(`   Total files: ${tree.length}`);
       console.log(`   Commit SHA: ${newCommit.sha}`);
       console.log(
-        `   View at: https://github.com/${owner}/${repo}/commit/${newCommit.sha}`
-      );
-      console.log(
-        `   Repository: https://github.com/${owner}/${repo}\n`
+        `   View at: https://github.com/${owner}/${repo}/commit/${newCommit.sha}\n`
       );
     } catch (error) {
       if (error.status === 409) {
@@ -178,13 +146,9 @@ async function main() {
           "❌ Branch conflict. The branch may need fast-forward merge."
         );
       } else if (error.status === 404) {
-        console.error("❌ Repository not found. Check owner and repo name.");
-        console.error(`   Looking for: ${owner}/${repo}`);
+        console.error("❌ Repository not found.");
       } else {
         console.error("❌ Error:", error.message);
-        if (error.response?.data?.message) {
-          console.error(`   Details: ${error.response.data.message}`);
-        }
       }
       process.exit(1);
     }
