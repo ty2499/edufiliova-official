@@ -14959,62 +14959,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else if (status === 'active') {
         try {
           const { emailService } = await import('./utils/email.js');
-          
-          const emailHtml = `
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="UTF-8">
-                <style>
-                  body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                  .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                  .header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; border-radius: 5px; }
-                  .content { padding: 20px; background-color: #f9f9f9; margin-top: 20px; border-radius: 5px; }
-                  .footer { text-align: center; padding: 20px; color: #999; font-size: 12px; }
-                  .button { display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px; }
-                </style>
-              </head>
-              <body>
-                <div class="container">
-                  <div class="header">
-                    <h1>Your Account Has Been Activated!</h1>
-                  </div>
-                  <div class="content">
-                    <p>Hi ${userName},</p>
-                    <p>Great news! Your EduFiliova account has been successfully activated and is ready to use.</p>
-                    <p>You can now:</p>
-                    <ul>
-                      <li>Access all available features</li>
-                      <li>Enroll in courses</li>
-                      <li>Connect with teachers and peers</li>
-                      <li>Track your learning progress</li>
-                    </ul>
-                    <p><a href="${process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : process.env.BASE_URL || 'https://edufiliova.com'}/student-dashboard" class="button">Go to Dashboard</a></p>
-                    <p>If you have any questions, feel free to reach out to our support team.</p>
-                    <p>Happy learning!<br>The EduFiliova Team</p>
-                  </div>
-                  <div class="footer">
-                    <p>&copy; 2025 EduFiliova. All rights reserved.</p>
-                  </div>
-                </div>
-              </body>
-            </html>
-          `;
-          
           await emailService.sendEmail({
             to: user.email,
             subject: 'Your EduFiliova Account Has Been Activated',
-            html: emailHtml,
+            html: `<h2>Account Activated</h2><p>Hi ${userName},</p><p>Your account has been activated! Welcome to EduFiliova.</p>`,
             from: '"EduFiliova Support" <support@edufiliova.com>'
           });
-          
           console.log(`📧 Activation email sent to ${user.email}`);
         } catch (emailError) {
+      }
           console.error('Failed to send activation email:', emailError);
-          
         }
-
-
       const statusMessage = status === 'active' ? 'User unbanned successfully' : 
                            status === 'banned' ? 'User banned successfully' : 
                            'User suspended successfully';
