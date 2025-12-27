@@ -144,7 +144,7 @@ router.post('/applications/initiate', async (req, res) => {
     // Send verification email with code
     const emailSent = await emailService.sendFreelancerVerificationEmail(email, {
       fullName,
-      code: verificationCode
+      verificationCode
     });
 
     if (emailSent) {
@@ -256,7 +256,7 @@ router.get('/applications/verify-link', async (req, res) => {
       about: '',
       skills: [],
       servicesOffered: [],
-      status: 'pending' as any
+      status: 'pending'
     }).returning();
 
     // Delete the pending registration
@@ -327,7 +327,7 @@ router.post('/applications/resend-link', async (req, res) => {
 
     const emailSent = await emailService.sendFreelancerVerificationEmail(email, {
       fullName: pending.fullName,
-      code: newVerificationCode
+      verificationCode: newVerificationCode
     });
 
     if (emailSent) {
@@ -453,7 +453,7 @@ router.post('/applications/verify-code', async (req, res) => {
       about: '',
       skills: [],
       servicesOffered: [],
-      status: 'pending' as any
+      status: 'pending'
     }).returning();
 
     // Delete the pending registration
@@ -498,29 +498,35 @@ router.post('/applications/resend-code', async (req, res) => {
       .limit(1);
 
     if (pending) {
-      // Generate new verification code (match the code flow in initiate)
-      const newVerificationCode = generateVerificationCode();
+      // Generate new token and update expiry
+      const newToken = crypto.randomBytes(32).toString('hex');
       const expiresAt = new Date();
       expiresAt.setHours(expiresAt.getHours() + 24);
 
       await db.update(pendingRegistrations)
-        .set({ verificationCode: newVerificationCode, expiresAt })
+        .set({ token: newToken, expiresAt })
         .where(eq(pendingRegistrations.email, email));
 
-      const emailSent = await emailService.sendFreelancerVerificationEmail(email, {
+      const baseUrl = process.env.REPLIT_DEV_DOMAIN 
+        ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+        : process.env.BASE_URL || 'http://localhost:5000';
+      const verificationLink = `${baseUrl}/verify-email?token=${newToken}`;
+
+      const emailSent = await emailService.sendVerificationLinkEmail(email, {
         fullName: pending.fullName,
-        code: newVerificationCode
+        verificationLink,
+        expiresIn: '24 hours'
       });
 
       if (emailSent) {
-        console.log(`✅ Verification code resent to ${email}`);
+        console.log(`✅ Verification link resent to ${email}`);
       } else {
         console.warn(`⚠️ Failed to resend verification email to ${email}`);
       }
 
       return res.json({
         success: true,
-        message: "Verification code has been resent to your email"
+        message: "Verification link has been resent to your email"
       });
     }
 
