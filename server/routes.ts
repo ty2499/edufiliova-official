@@ -14956,9 +14956,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Continue even if email fails - status update was successful
         }
       }
-      } else if (status === 'active') {
-          const { emailService } = await import('./utils/email.js');
           
+        try {
           const emailHtml = `<!DOCTYPE html>
 <html>
 <head>
