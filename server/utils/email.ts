@@ -319,6 +319,126 @@ export class EmailService {
     });
   }
 
+  async sendAccountBannedEmail(email: string, data: { fullName: string; violations?: string[] }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const violationsList = (data.violations || []).map(v => `<li style="margin: 8px 0; color: #333;">- ${v}</li>`).join('');
+    
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
+    .container { max-width: 700px; margin: 0 auto; background-color: #ffffff; }
+    .header { background-color: #d32f2f; padding: 50px; text-align: center; }
+    .logo { max-width: 200px; height: auto; }
+    .content { padding: 50px; }
+    .title { color: #d32f2f; font-size: 28px; font-weight: 700; margin: 0 0 25px 0; line-height: 1.3; }
+    .message { color: #333; font-size: 16px; line-height: 1.8; margin: 0 0 25px 0; }
+    .section { background-color: #fef5f5; border-left: 5px solid #d32f2f; padding: 25px; margin: 25px 0; border-radius: 4px; }
+    .section h3 { margin: 0 0 15px 0; color: #d32f2f; font-size: 18px; font-weight: 700; }
+    .section p { margin: 0 0 12px 0; color: #333; font-size: 15px; line-height: 1.6; }
+    .violations { list-style: none; padding: 0; margin: 15px 0; }
+    .violations li { padding: 8px 0; color: #333; font-size: 15px; }
+    .reason-box { background-color: #f5f5f5; border: 2px solid #d32f2f; padding: 25px; margin: 25px 0; border-radius: 6px; }
+    .reason-box h3 { margin: 0 0 15px 0; color: #d32f2f; font-size: 18px; font-weight: 700; }
+    .reason-box p { margin: 0 0 12px 0; color: #333; font-size: 15px; line-height: 1.7; }
+    .footer { background-color: #f5f5f5; padding: 30px; text-align: center; color: #666; font-size: 13px; border-top: 1px solid #ddd; }
+    .footer p { margin: 8px 0; }
+    .support-email { color: #d32f2f; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
+    </div>
+    <div class="content">
+      <h1 class="title">Account Suspended - Policy Violation</h1>
+      
+      <p class="message">
+        Dear {{fullName}},
+      </p>
+
+      <p class="message">
+        We are writing to inform you that your EduFiliova account has been suspended effective immediately. This decision was made due to violations of our platform policies.
+      </p>
+
+      <div class="reason-box">
+        <h3>Reason for Suspension</h3>
+        <p>Your account violated the following policies:</p>
+        <ul class="violations">
+          ${violationsList || '<li>- Platform policy violation(s) detected</li>'}
+        </ul>
+        <p>
+          We take the safety and integrity of our community very seriously. These violations represent a breach of the trust our members place in us and the terms you agreed to when creating your account.
+        </p>
+      </div>
+
+      <div class="section">
+        <h3>What This Means</h3>
+        <p>
+          Your account is now suspended and you will no longer be able to access any EduFiliova services, including:
+        </p>
+        <ul class="violations">
+          <li>- Logging into your account</li>
+          <li>- Accessing courses or course materials</li>
+          <li>- Creating or managing products</li>
+          <li>- Communicating with other users</li>
+          <li>- Earning revenue from any platform features</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>Appeal Process</h3>
+        <p>
+          If you believe this suspension was made in error or would like to provide additional context, you may submit an appeal to our support team. Please email:
+        </p>
+        <p style="font-size: 16px; font-weight: 700; color: #d32f2f; margin: 15px 0;">
+          support@edufiliova.com
+        </p>
+        <p>
+          In your email, please clearly state your user ID and explain why you believe the suspension should be reconsidered. Appeals are reviewed within 5 business days. However, please understand that repeated violations or severe breaches may not be eligible for appeal.
+        </p>
+      </div>
+
+      <div class="section">
+        <h3>Going Forward</h3>
+        <p>
+          If your account is reactivated in the future, you must demonstrate full compliance with all platform policies. Any further violations will result in permanent termination of your account without possibility of appeal.
+        </p>
+        <p>
+          We encourage you to review our Terms of Service, Community Guidelines, Code of Conduct, and Privacy Policy to understand what behavior is expected on our platform.
+        </p>
+      </div>
+
+      <p class="message" style="margin-top: 30px; font-size: 15px; color: #666;">
+        If you have questions or need clarification about this suspension, please contact our support team immediately.
+      </p>
+    </div>
+    <div class="footer">
+      <p>EduFiliova Account Support</p>
+      <p class="support-email">support@edufiliova.com</p>
+      <p style="margin-top: 15px; color: #999;">
+        © 2025 Edufiliova. All rights reserved.
+      </p>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    // Use bulletproof name replacement
+    const finalHtml = this.forceReplaceName(html, data.fullName);
+
+    return this.sendEmail({
+      to: email,
+      subject: 'Account Suspended: Policy Violation',
+      html: finalHtml,
+      from: '"EduFiliova Support" <support@edufiliova.com>'
+    });
+  }
+
   async sendAccountUnsuspendedEmail(email: string, data: { fullName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const html = `<!DOCTYPE html>

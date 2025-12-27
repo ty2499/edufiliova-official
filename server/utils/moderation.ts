@@ -1,6 +1,6 @@
 import { getOpenAIClient } from '../openai';
 import { db } from '../db.js';
-import { profiles } from '../../shared/schema.js';
+import { profiles, userLoginSessions, users } from '../../shared/schema.js';
 import { eq } from 'drizzle-orm';
 import { emailService } from './email';
 
@@ -151,6 +151,17 @@ Text: "${text.substring(0, 500)}"`,
   }
 
   /**
+   * Invalidate user sessions
+   */
+  private async invalidateUserSessions(userId: string): Promise<void> {
+    await db
+      .update(userLoginSessions)
+      .set({ isActive: false })
+      .where(eq(userLoginSessions.userId, userId));
+    console.log(`🔓 All sessions invalidated for user ${userId}`);
+  }
+
+  /**
    * Handle moderation violation
    */
   async handleViolation(options: {
@@ -163,35 +174,26 @@ Text: "${text.substring(0, 500)}"`,
     contentPreview?: string;
   }): Promise<boolean> {
     try {
-      if (options.action === 'ban') {
-        // Ban the user
-        await db
-          .update(profiles)
-          .set({ status: 'banned', updatedAt: new Date() })
-          .where(eq(profiles.userId, options.userId));
+      // Always invalidate user sessions on violation
+      await this.invalidateUserSessions(options.userId);
 
-        console.log(`🚫 User ${options.userId} banned for: ${options.violations.join(', ')}`);
-      }
+      // Send admin notification
+      await emailService.sendEmail({
+        to: 'support@edufiliova.com',
+        subject: 'Moderation Alert: Policy Violation Detected',
+        html: this.generateAdminNotificationEmail({
+          userId: options.userId,
+          userName: options.userName || 'Unknown',
+          userEmail: options.userEmail || 'Unknown',
+          violations: options.violations,
+          contentType: options.contentType,
+          contentPreview: options.contentPreview,
+          action: options.action,
+        }),
+        from: '"EduFiliova System" <support@edufiliova.com>',
+      });
 
-      if (options.action === 'notify' && options.userEmail) {
-        // Send admin notification
-        await emailService.sendEmail({
-          to: 'support@edufiliova.com',
-          subject: `Moderation Alert: Policy Violation Detected`,
-          html: this.generateAdminNotificationEmail({
-            userId: options.userId,
-            userName: options.userName || 'Unknown',
-            userEmail: options.userEmail,
-            violations: options.violations,
-            contentType: options.contentType,
-            contentPreview: options.contentPreview,
-            action: options.action,
-          }),
-          from: `"EduFiliova System" <support@edufiliova.com>`,
-        });
-
-        console.log(`📧 Admin notified about violations for user ${options.userId}`);
-      }
+      console.log(`📧 Admin notified and sessions invalidated for user ${options.userId}`);
 
       return true;
     } catch (error) {

@@ -33,6 +33,35 @@ router.patch("/users/:userId/status", requireAuth, requireRole(['admin']), async
       return res.status(404).json({ success: false, error: "Profile not found" });
     }
 
+    // If banning, send ban email and notify admin
+    if (status === 'banned') {
+      try {
+        const [user] = await db
+          .select({ email: users.email })
+          .from(users)
+          .where(eq(users.id, userId))
+          .limit(1);
+
+        if (user?.email) {
+          await emailService.sendAccountBannedEmail(user.email, {
+            fullName: updatedProfile.name || updatedProfile.displayName || 'Member'
+          });
+          console.log(`📧 Ban email sent to ${user.email}`);
+        }
+
+        // Notify admin
+        await emailService.sendEmail({
+          to: 'support@edufiliova.com',
+          subject: 'Admin Action: User Account Banned',
+          html: `<!DOCTYPE html><html><body style="font-family: Arial; padding: 20px;"><h2>User Account Banned</h2><p>User ID: ${userId}</p><p>Name: ${updatedProfile.name || updatedProfile.displayName || 'Unknown'}</p><p>Email: ${user?.email || 'Unknown'}</p><p>Status: Account has been banned by admin</p><p>Timestamp: ${new Date().toISOString()}</p></body></html>`,
+          from: '"EduFiliova System" <support@edufiliova.com>'
+        });
+        console.log(`📧 Admin notified about ban for user ${userId}`);
+      } catch (emailError) {
+        console.warn("⚠️ Failed to send ban notification:", emailError);
+      }
+    }
+
     // If unsuspending/unbanning (setting to active), send notification email
     if (status === 'active') {
       try {
