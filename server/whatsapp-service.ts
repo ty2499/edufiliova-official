@@ -397,32 +397,34 @@ export async function sendListMessage(
   }
 }
 
-// Send course cards as a list
+// Send course cards as a single text message with better formatting
 export async function sendCourseCatalog(
   to: string
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   const allCourses = await db.query.courses.findMany({
     where: eq(courses.isActive, true),
-    limit: 10
+    limit: 5
   });
 
-  const sections = [{
-    title: 'Available Courses',
-    rows: allCourses.map(course => ({
-      id: `course_${course.id}`,
-      title: (course.title as string).substring(0, 24),
-      description: `${course.currency || '$'} ${course.price}`
-    }))
-  }];
+  if (allCourses.length === 0) {
+    return sendTextMessage(to, "Sorry, there are no courses available at the moment.");
+  }
 
-  return sendListMessage(
-    to,
-    'Browse our available courses and select one to learn more.',
-    'View Courses',
-    sections,
-    '📚 EduFiliova Courses',
-    'Reply with your selection'
-  );
+  let message = "📚 *Available Courses at EduFiliova*\n\n";
+  
+  allCourses.forEach((course, index) => {
+    message += `*${index + 1}. ${course.title}*\n`;
+    message += `💰 Price: ${course.currency || '$'}${course.price}\n`;
+    if (course.description) {
+      const shortDesc = (course.description as string).substring(0, 100);
+      message += `📝 ${shortDesc}${shortDesc.length >= 100 ? '...' : ''}\n`;
+    }
+    message += `🔗 View: edufiliova.com/course/${course.id}\n\n`;
+  });
+
+  message += "Type the *Number* of the course to see more details!";
+
+  return sendTextMessage(to, message);
 }
 
 // Send subscription plans as buttons
