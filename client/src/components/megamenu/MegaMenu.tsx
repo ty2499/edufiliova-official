@@ -11,8 +11,8 @@ export const MegaMenu = ({ isOpen, children, className = "" }: MegaMenuProps) =>
 
   return (
     <div className={`w-screen mt-0 pointer-events-auto ${className}`}>
-      <div className="container mx-auto px-6 md:px-10 lg:px-14 max-w-7xl">
-        <div className="bg-[#2f5a4e] dark:bg-[#2f5a4e] backdrop-blur-xl rounded-2xl shadow-2xl border border-[#2f5a4e]/50 dark:border-[#2f5a4e]/50 p-6 animate-fade-in outline-none focus:outline-none">
+      <div className="container mx-auto px-3 sm:px-6 md:px-10 lg:px-14 max-w-7xl">
+        <div className="bg-[#2f5a4e] dark:bg-[#2f5a4e] backdrop-blur-xl rounded-2xl shadow-2xl border border-[#2f5a4e]/50 dark:border-[#2f5a4e]/50 p-4 sm:p-6 animate-fade-in outline-none focus:outline-none max-h-[80vh] overflow-y-auto">
           {children}
         </div>
       </div>
@@ -37,27 +37,27 @@ export const MegaMenuItem = ({ icon, title, description, onClick, badge, testId,
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left p-4 rounded-lg transition-all duration-200 group ${bgColor || 'hover:bg-white/10 dark:hover:bg-white/10'}`}
+      className={`w-full text-left p-3 sm:p-4 rounded-lg transition-all duration-200 group active:scale-95 ${bgColor || 'hover:bg-white/10 dark:hover:bg-white/10'}`}
       data-testid={testId}
     >
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-2 sm:gap-3">
         {image ? (
-          <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+          <div className="flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 rounded-lg overflow-hidden">
             <img src={image} alt={title} className="w-full h-full object-cover" />
           </div>
         ) : (
-          <div className={`flex-shrink-0 w-12 h-12 ${iconBg || 'bg-[#a0fab2]'} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`} style={{backgroundColor: iconBg ? undefined : '#a0fab2'}}>
-            <div style={{color: iconColor || '#2f5a4e'}} className="text-lg">
+          <div className={`flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 ${iconBg || 'bg-[#a0fab2]'} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`} style={{backgroundColor: iconBg ? undefined : '#a0fab2'}}>
+            <div style={{color: iconColor || '#2f5a4e'}} className="text-base sm:text-lg">
               {icon}
             </div>
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-sm text-[#a0fab2] dark:text-[#a0fab2] group-hover:text-[#a0fab2] transition-colors whitespace-nowrap" transition-all duration-300>
+          <h4 className="font-semibold text-xs sm:text-sm text-[#a0fab2] dark:text-[#a0fab2] group-hover:text-[#a0fab2] transition-colors">
             {title}
           </h4>
           {description && (
-            <p className="text-xs text-white dark:text-white mt-1 line-clamp-1">
+            <p className="text-xs text-white dark:text-white mt-0.5 sm:mt-1 line-clamp-1">
               {description}
             </p>
           )}
@@ -90,8 +90,8 @@ export const MegaMenuSection = ({ title, children, className = "", icon }: MegaM
   return (
     <div className={className}>
       {title && (
-        <div className="flex items-center gap-2 mb-4 px-2">
-          {icon && <div style={{color: '#a0fab2'}} className="text-base">{icon}</div>}
+        <div className="flex items-center gap-2 mb-2 sm:mb-4 px-1 sm:px-2">
+          {icon && <div style={{color: '#a0fab2'}} className="text-sm sm:text-base">{icon}</div>}
           <h3 className="text-xs font-semibold text-[#a0fab2] dark:text-[#a0fab2] uppercase tracking-wide">
             {title}
           </h3>
