@@ -92,21 +92,23 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
           ))}
         </MegaMenuSection>
 
-        <MegaMenuSection title="My Account" icon={<FolderOpen className="h-4 w-4 text-[#a0fab2]" />}>
-          {myAccount.map((item: any, index) => (
-            <MegaMenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-              onClick={() => handleNavigate(item.page)}
-              bgColor={item.bgColor}
-              iconBg={item.iconBg}
-              iconColor={item.iconColor}
-              testId={`megamenu-shop-account-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-            />
-          ))}
-        </MegaMenuSection>
+        {user && (
+          <MegaMenuSection title="My Account" icon={<FolderOpen className="h-4 w-4 text-[#a0fab2]" />}>
+            {myAccount.map((item: any, index) => (
+              <MegaMenuItem
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                onClick={() => handleNavigate(item.page)}
+                bgColor={item.bgColor}
+                iconBg={item.iconBg}
+                iconColor={item.iconColor}
+                testId={`megamenu-shop-account-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+              />
+            ))}
+          </MegaMenuSection>
+        )}
 
         {isCreator && (
           <MegaMenuSection title="Sell" icon={<PlusCircle className="h-4 w-4 text-[#a0fab2]" />}>
