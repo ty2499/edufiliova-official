@@ -2009,9 +2009,8 @@ export function MessagingInterface({ userRole, onChatModeChange, onNavigate, use
           <div className="flex items-center gap-3">
             <button
               onClick={() => {
-                if (onChatModeChange) {
-                  onChatModeChange(false);
-                } else if (onNavigate) {
+                // Always navigate back to dashboard
+                if (onNavigate) {
                   if (userRole === 'student') {
                     onNavigate('/');
                   } else if (userRole === 'admin') {
@@ -2023,6 +2022,10 @@ export function MessagingInterface({ userRole, onChatModeChange, onNavigate, use
                   } else {
                     onNavigate('/');
                   }
+                }
+                // Also close chat mode if callback exists
+                if (onChatModeChange) {
+                  onChatModeChange(false);
                 }
               }}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors" transition-all duration-300
