@@ -147,6 +147,24 @@ async function routeMessage(
     if (handled) return;
   }
 
+  // Handle quick commands
+  const quickCommand = chatbot.isQuickCommand(text);
+  if (quickCommand === 'about') {
+    await whatsappService.sendTextMessage(
+      phone,
+      "EduFiliova is an all-in-one educational platform designed to empower students, teachers, and freelancers. We provide high-quality courses, mentorship, and professional services to bridge the gap in digital education."
+    );
+    return;
+  }
+
+  if (quickCommand === 'contact') {
+    await whatsappService.sendTextMessage(
+      phone,
+      "You can reach us at support@edufiliova.com or call our hotline at +263 719 250 123. Our team is available Monday to Friday, 8 AM - 5 PM CAT."
+    );
+    return;
+  }
+
   if (text === 'menu' || text === 'start' || text === 'hi' || text === 'hello') {
     await chatbot.updateConversationFlow(conversation.id, 'idle', {});
     
