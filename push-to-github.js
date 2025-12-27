@@ -3,21 +3,9 @@
 import { Octokit } from "@octokit/rest";
 import fs from "fs";
 import path from "path";
-import readline from "readline";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-function question(prompt) {
-  return new Promise((resolve) => {
-    rl.question(prompt, resolve);
-  });
-}
 
 async function main() {
   try {
@@ -27,33 +15,34 @@ async function main() {
       process.exit(1);
     }
 
-    console.log(
-      "🚀 GitHub Push Helper - Uses GitHub API to push your EduFiliova code\n"
-    );
+    // Get from command line args or defaults
+    const owner = process.argv[2] || "ty2499";
+    const repo = process.argv[3] || "edufiliova";
+    const branch = process.argv[4] || "main";
 
-    const owner = await question(
-      "📝 Enter your GitHub username (repo owner): "
-    );
-    const repo = await question("📝 Enter your repository name: ");
-    const branchInput = await question(
-      "📝 Enter branch name (default: main): "
-    );
-    const branch = branchInput || "main";
-
-    console.log(`\n✅ Configuration:`);
+    console.log("🚀 Pushing code to GitHub via API\n");
+    console.log("📋 Configuration:");
     console.log(`   Owner: ${owner}`);
     console.log(`   Repo: ${repo}`);
-    console.log(`   Branch: ${branch}`);
+    console.log(`   Branch: ${branch}\n`);
 
     const octokit = new Octokit({ auth: token });
 
-    console.log("\n⏳ Authenticating with GitHub...");
+    console.log("⏳ Authenticating with GitHub...");
     const { data: user } = await octokit.rest.users.getAuthenticated();
-    console.log(`✅ Authenticated as: ${user.login}`);
+    console.log(`✅ Authenticated as: ${user.login}\n`);
 
-    console.log("\n📦 Collecting files to push...");
+    console.log("📦 Collecting important source files...");
     const filesMap = new Map();
     const baseDir = __dirname;
+
+    // Only include these directories
+    const includePatterns = [
+      "client/src",
+      "server",
+      "docs",
+      ".",
+    ];
 
     // Ignore patterns
     const ignoredPatterns = [
@@ -66,44 +55,76 @@ async function main() {
       ".turbo",
       ".next",
       "build",
+      ".config",
     ];
 
     function isIgnored(filePath) {
       return ignoredPatterns.some((pattern) => filePath.includes(pattern));
     }
 
+    function shouldInclude(filePath) {
+      // Include root-level config files
+      if (path.dirname(filePath) === ".") {
+        const name = path.basename(filePath);
+        return [
+          "package.json",
+          "package-lock.json",
+          "tsconfig.json",
+          "vite.config.ts",
+          "replit.md",
+          "README.md",
+          ".gitignore",
+          "drizzle.config.ts",
+        ].includes(name);
+      }
+
+      // Include files from specific directories
+      return includePatterns.some((pattern) =>
+        filePath.startsWith(pattern + path.sep) ||
+        (pattern === "." && filePath.startsWith("client/src")) ||
+        (pattern === "." && filePath.startsWith("server"))
+      );
+    }
+
     function collectFiles(dir) {
-      const files = fs.readdirSync(dir);
-      files.forEach((file) => {
-        const filePath = path.join(dir, file);
-        const relativePath = path.relative(baseDir, filePath);
+      try {
+        const files = fs.readdirSync(dir);
+        files.forEach((file) => {
+          const filePath = path.join(dir, file);
+          const relativePath = path.relative(baseDir, filePath);
 
-        if (isIgnored(relativePath)) return;
+          if (isIgnored(relativePath)) return;
+          if (!shouldInclude(relativePath)) return;
 
-        const stat = fs.statSync(filePath);
-        if (stat.isDirectory()) {
-          collectFiles(filePath);
-        } else {
-          const content = fs.readFileSync(filePath, "utf-8");
-          filesMap.set(relativePath, content);
-        }
-      });
+          const stat = fs.statSync(filePath);
+          if (stat.isDirectory()) {
+            collectFiles(filePath);
+          } else {
+            try {
+              const content = fs.readFileSync(filePath, "utf-8");
+              filesMap.set(relativePath, content);
+            } catch (e) {
+              // Skip binary files
+            }
+          }
+        });
+      } catch (e) {
+        // Skip directories that can't be read
+      }
     }
 
     collectFiles(baseDir);
-    console.log(`✅ Found ${filesMap.size} files to push`);
+    console.log(`✅ Found ${filesMap.size} source files to push\n`);
 
-    console.log("\n📤 Creating commit via GitHub API...");
-    console.log("   (This will create a new commit with all clean code)");
+    console.log("📤 Pushing to GitHub...");
 
-    const tree = Array.from(filesMap.entries()).map(([path, content]) => ({
-      path,
+    const tree = Array.from(filesMap.entries()).map(([filePath, content]) => ({
+      path: filePath,
       mode: "100644",
       type: "blob",
       content,
     }));
 
-    // Get current branch reference
     try {
       const { data: ref } = await octokit.rest.git.getRef({
         owner,
@@ -112,7 +133,7 @@ async function main() {
       });
       const baseCommitSha = ref.object.sha;
 
-      // Create tree
+      console.log(`   Creating tree with ${tree.length} files...`);
       const { data: treeData } = await octokit.rest.git.createTree({
         owner,
         repo,
@@ -120,18 +141,11 @@ async function main() {
         base_tree: baseCommitSha,
       });
 
-      // Get current commit
-      const { data: currentCommit } = await octokit.rest.git.getCommit({
-        owner,
-        repo,
-        commit_sha: baseCommitSha,
-      });
-
-      // Create new commit
+      console.log("   Creating commit...");
       const { data: newCommit } = await octokit.rest.git.createCommit({
         owner,
         repo,
-        message: `Push clean code - ${new Date().toISOString()}`,
+        message: `Push clean code from Replit - ${new Date().toISOString()}`,
         tree: treeData.sha,
         parents: [baseCommitSha],
         author: {
@@ -141,7 +155,7 @@ async function main() {
         },
       });
 
-      // Update reference
+      console.log("   Updating branch reference...");
       await octokit.rest.git.updateRef({
         owner,
         repo,
@@ -150,9 +164,13 @@ async function main() {
       });
 
       console.log(`\n✅ Success! Code pushed to GitHub`);
+      console.log(`   Files pushed: ${tree.length}`);
       console.log(`   Commit SHA: ${newCommit.sha}`);
       console.log(
         `   View at: https://github.com/${owner}/${repo}/commit/${newCommit.sha}`
+      );
+      console.log(
+        `   Repository: https://github.com/${owner}/${repo}\n`
       );
     } catch (error) {
       if (error.status === 409) {
@@ -161,15 +179,17 @@ async function main() {
         );
       } else if (error.status === 404) {
         console.error("❌ Repository not found. Check owner and repo name.");
+        console.error(`   Looking for: ${owner}/${repo}`);
       } else {
-        throw error;
+        console.error("❌ Error:", error.message);
+        if (error.response?.data?.message) {
+          console.error(`   Details: ${error.response.data.message}`);
+        }
       }
+      process.exit(1);
     }
-
-    rl.close();
   } catch (error) {
     console.error("❌ Error:", error.message);
-    rl.close();
     process.exit(1);
   }
 }
