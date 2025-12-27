@@ -2,8 +2,9 @@ import { Router } from 'express';
 import { requireAuth, type AuthenticatedRequest } from '../middleware/auth.js';
 import { z } from 'zod';
 import { db } from '../db.js';
-import { usersProgress, userSubjects, userChats } from '@shared/schema.js';
+import { usersProgress, userSubjects, userChats, users, profiles } from '@shared/schema.js';
 import { eq, and } from 'drizzle-orm';
+import { moderationService } from '../utils/moderation.js';
 
 const router = Router();
 
@@ -319,6 +320,38 @@ router.post('/user-chats/:userId', requireAuth, async (req: AuthenticatedRequest
     }
     
     const { messages } = validation.data;
+
+    // Moderation check on messages
+    const latestMessage = messages[messages.length - 1]?.text || '';
+    if (latestMessage) {
+      const modResult = await moderationService.checkContent({
+        text: latestMessage,
+        userType: 'user',
+        contentType: 'message',
+      });
+
+      if (!modResult.passed) {
+        // Get user info for notification
+        const [user] = await db.select({ email: users.email }).from(users).where(eq(users.id, userId)).limit(1);
+        const [profile] = await db.select({ name: profiles.name, displayName: profiles.displayName }).from(profiles).where(eq(profiles.userId, userId)).limit(1);
+        
+        // Notify admin about violation
+        await moderationService.handleViolation({
+          userId,
+          violations: modResult.violations,
+          userEmail: user?.email,
+          userName: profile?.name || profile?.displayName || 'Unknown',
+          contentType: 'message',
+          action: 'notify',
+          contentPreview: latestMessage,
+        });
+
+        return res.status(403).json({ 
+          error: 'Message rejected',
+          details: 'Your message contains prohibited content and has been reported to our moderation team.'
+        });
+      }
+    }
 
     const result = await db
       .insert(userChats)
