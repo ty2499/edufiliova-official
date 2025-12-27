@@ -307,7 +307,7 @@ export default function LoginForm({
             <button
               type="button"
               onClick={onSwitchToRegister}
-              className="text-[#ff7675] hover:text-white font-medium transition-all duration-300"
+              className="text-[#a0fab2] hover:text-white font-medium transition-all duration-300"
               data-testid="link-register"
             >
               Sign up

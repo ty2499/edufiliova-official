@@ -11,19 +11,5 @@ interface SocialAuthButtonsProps {
 }
 
 export function SocialAuthButtons({ onSuccess, isCheckout = false, redirectTo, disabled }: SocialAuthButtonsProps) {
-  const { signInWithProvider, loading } = useSocialAuth();
-
-  const handleSocialSignIn = async (provider: 'google' | 'twitter' | 'facebook') => {
-    try {
-      await signInWithProvider(provider, {
-        redirectTo: redirectTo || '/auth/callback',
-        isCheckout
-      });
-      onSuccess?.();
-    } catch (error) {
-      console.error('Social auth error:', error);
-    }
-  };
-
   return null;
 }
