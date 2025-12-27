@@ -27,19 +27,19 @@ const PageTransition = ({
 
     if (isExiting) {
       return {
-        opacity: 0.4,
-        transform: 'scale(1.02)',
-        filter: 'blur(15px)',
-        transition: 'opacity 500ms ease-in-out, filter 500ms ease-in-out, transform 500ms ease-in-out',
+        opacity: 1,
+        filter: 'blur(20px)',
+        transform: 'scale(1.05)',
+        transition: 'filter 600ms ease-in-out, transform 600ms ease-in-out, opacity 600ms ease-in-out',
       };
     }
 
-    if (isTransitioning && !isExiting) {
+    if (isTransitioning) {
       return {
-        opacity: 1,
-        transform: 'translateY(0)',
-        filter: 'blur(15px)',
-        transition: 'opacity 500ms ease-in-out, filter 500ms ease-in-out, transform 500ms ease-in-out',
+        opacity: 0.8,
+        filter: 'blur(20px)',
+        transform: 'scale(1.05)',
+        transition: 'none', // Keep it static while loading overlay is on top
       };
     }
 
