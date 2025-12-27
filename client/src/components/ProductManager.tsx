@@ -1272,7 +1272,6 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <Package className="h-8 w-8 text-gray-900" />
               <div>
                 <p className="text-sm text-gray-600">Total Products</p>
                 <p className="text-2xl font-bold">
@@ -1285,7 +1284,6 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-8 w-8 text-gray-900" />
               <div>
                 <p className="text-sm text-gray-600">Approved</p>
                 <p className="text-2xl font-bold">
@@ -1298,7 +1296,6 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <ShoppingCart className="h-8 w-8 text-gray-900" />
               <div>
                 <p className="text-sm text-gray-600">Total Sales</p>
                 <p className="text-2xl font-bold">
@@ -1311,7 +1308,6 @@ export function ProductManager({ userRole = 'freelancer', showAllProducts = fals
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <Wallet className="h-8 w-8 text-gray-900" />
               <div>
                 <p className="text-sm text-gray-600">Your Earnings</p>
                 <p className="text-2xl font-bold">
