@@ -704,59 +704,49 @@ export default function TeacherSignup() {
                   </div>
 
                   <div className="border rounded-lg p-4 bg-gray-50">
-                    <p className="font-medium text-gray-900 mb-3">Resume Guidelines:</p>
+                    <p className="font-medium text-gray-900 mb-3">Resume Guidelines - Examples We Do NOT Accept:</p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                       <div className="text-center">
                         <img 
                           src="/attached_assets/image_1766855463199.png" 
-                          alt="Professional resume example - ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
+                          alt="Generic professional resume - NOT ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
                         />
-                        <p className="text-sm font-medium text-green-700">✓ Professional Resume</p>
-                        <p className="text-xs text-gray-600 mt-1">Formatted, organized, clear</p>
+                        <p className="text-sm font-medium text-red-700">✗ Non-Teaching Resume</p>
+                        <p className="text-xs text-gray-600 mt-1">Not tailored for teaching role</p>
                       </div>
                       <div className="text-center">
                         <img 
                           src="/attached_assets/image_1766855472096.png" 
-                          alt="Resume template example - ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
+                          alt="Generic template - NOT ACCEPTED"
+                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
                         />
-                        <p className="text-sm font-medium text-green-700">✓ Clean Template</p>
-                        <p className="text-xs text-gray-600 mt-1">Well-structured, easy to read</p>
+                        <p className="text-sm font-medium text-red-700">✗ Generic Template</p>
+                        <p className="text-xs text-gray-600 mt-1">Generic format without teaching focus</p>
                       </div>
                       <div className="text-center">
                         <img 
-                          src="/attached_assets/image_1766855484464.png" 
-                          alt="Handwritten notes example - NOT ACCEPTED"
+                          src="/attached_assets/image_1766855560025.png" 
+                          alt="Personal CV format - NOT ACCEPTED"
                           className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
                         />
-                        <p className="text-sm font-medium text-red-700">✗ Handwritten Notes</p>
-                        <p className="text-xs text-gray-600 mt-1">Not professional, hard to read</p>
+                        <p className="text-sm font-medium text-red-700">✗ Generic CV Format</p>
+                        <p className="text-xs text-gray-600 mt-1">Not specific to teaching experience</p>
                       </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <div className="border-l-4 border-green-500 pl-3">
-                        <p className="font-medium text-green-700 mb-2">✓ Accepted</p>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          <li>• Professional formatted resume</li>
-                          <li>• Clear sections (Experience, Education)</li>
-                          <li>• Organized bullet points</li>
-                          <li>• PDF format recommended</li>
-                        </ul>
-                      </div>
-                      <div className="border-l-4 border-red-500 pl-3">
-                        <p className="font-medium text-red-700 mb-2">✗ Not Accepted</p>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          <li>• Handwritten notes or scans</li>
-                          <li>• Messy or hard to read</li>
-                          <li>• Incomplete information</li>
-                          <li>• Images or unsupported formats</li>
-                        </ul>
-                      </div>
+                    <div className="border-l-4 border-red-500 pl-3 mb-4">
+                      <p className="font-medium text-red-700 mb-2">✗ Why We Reject Generic Resumes</p>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• Not focused on teaching experience and skills</li>
+                        <li>• Don't highlight educational background or certifications</li>
+                        <li>• Generic job experience (lawyers, business roles, etc.)</li>
+                        <li>• Missing teaching methodology and subject expertise</li>
+                        <li>• Don't demonstrate student impact or teaching achievements</li>
+                      </ul>
                     </div>
                     <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                       <p className="text-sm text-blue-900">
-                        <span className="font-medium">Why this matters:</span> A well-formatted resume helps us evaluate your qualifications, teaching background, and expertise quickly. It shows professionalism and makes the review process efficient. We want to see your real credentials and experience clearly presented.
+                        <span className="font-medium">What we need instead:</span> Please provide a resume that specifically highlights your teaching experience, qualifications, subjects you teach, student outcomes, teaching methods, and educational achievements. Focus on your teaching role, not generic job experience.
                       </p>
                     </div>
                   </div>
