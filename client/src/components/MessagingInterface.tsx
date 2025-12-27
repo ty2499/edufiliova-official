@@ -92,10 +92,11 @@ interface Conversation {
 interface MessagingInterfaceProps {
   userRole: 'student' | 'teacher' | 'admin' | 'freelancer';
   onChatModeChange?: (isInChat: boolean) => void;
+  onNavigate?: (route: string) => void;
   useOptimizedInterface?: boolean; // Enable high-performance messaging
 }
 
-export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInterface = false }: MessagingInterfaceProps) {
+export function MessagingInterface({ userRole, onChatModeChange, onNavigate, useOptimizedInterface = false }: MessagingInterfaceProps) {
   const { user, profile } = useAuth();
   const queryClient = useQueryClient();
   const { 
@@ -2010,17 +2011,17 @@ export function MessagingInterface({ userRole, onChatModeChange, useOptimizedInt
               onClick={() => {
                 if (onChatModeChange) {
                   onChatModeChange(false);
-                } else {
+                } else if (onNavigate) {
                   if (userRole === 'student') {
-                    window.location.href = '/';
+                    onNavigate('/');
                   } else if (userRole === 'admin') {
-                    window.location.href = '/?page=admin-dashboard';
+                    onNavigate('/?page=admin-dashboard');
                   } else if (userRole === 'teacher') {
-                    window.location.href = '/?page=teacher-dashboard';
+                    onNavigate('/?page=teacher-dashboard');
                   } else if (userRole === 'freelancer') {
-                    window.location.href = '/?page=freelancer-dashboard';
+                    onNavigate('/?page=freelancer-dashboard');
                   } else {
-                    window.history.back();
+                    onNavigate('/');
                   }
                 }
               }}
