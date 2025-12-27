@@ -87,10 +87,8 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
       if (returnUrl) {
         onNavigate?.(returnUrl, 'slide-left');
       } else {
-        const dashboard = profile.role === 'teacher' ? 'teacher-dashboard' : 
-                         (profile.role === 'freelancer' || profile.role === 'creator') ? 'freelancer-dashboard' : 
-                         'student-dashboard';
-        onNavigate?.(dashboard, 'slide-left');
+        // DO NOT FORCE TO DASHBOARD - Stay on product-shop if no returnUrl
+        onNavigate?.('product-shop', 'slide-left');
       }
     }
   }, [user, profile, loading, onNavigate, returnUrl]);
@@ -201,11 +199,8 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
         if (returnUrl) {
           onNavigate?.(returnUrl, 'slide-left');
         } else {
-          // Note: profile might be updated after refreshAuth
-          const dashboard = profile?.role === 'teacher' ? 'teacher-dashboard' : 
-                           (profile?.role === 'freelancer' || profile?.role === 'creator') ? 'freelancer-dashboard' : 
-                           'student-dashboard';
-          onNavigate?.(dashboard, 'slide-left');
+          // DO NOT FORCE TO DASHBOARD - Stay on product-shop if no returnUrl
+          onNavigate?.('product-shop', 'slide-left');
         }
       } else {
         if (result.error?.includes('Email already registered') && authMode === 'signup') {
@@ -282,10 +277,8 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
         if (returnUrl) {
           onNavigate?.(returnUrl, 'slide-left');
         } else {
-          const dashboard = profile?.role === 'teacher' ? 'teacher-dashboard' : 
-                           (profile?.role === 'freelancer' || profile?.role === 'creator') ? 'freelancer-dashboard' : 
-                           'student-dashboard';
-          onNavigate?.(dashboard, 'slide-left');
+          // DO NOT FORCE TO DASHBOARD - Stay on product-shop if no returnUrl
+          onNavigate?.('product-shop', 'slide-left');
         }
       } else {
         setVerificationError(true);

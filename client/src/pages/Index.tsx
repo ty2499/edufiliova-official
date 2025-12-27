@@ -1095,8 +1095,8 @@ const Index = () => {
                           "creator-pricing", "education-pricing", "privacy-policy", "verify-certificate", "buy-voucher"];
       
       // IF THE CURRENT PAGE IS A PUBLIC PAGE, STOP AUTO-ROUTING IMMEDIATELY
-      if (publicPages.includes(currentState)) {
-        console.log('✅ Staying on public page:', currentState);
+      if (publicPages.includes(currentState) || window.location.pathname.startsWith('/shop')) {
+        console.log('✅ Staying on public page or /shop path:', currentState);
         return;
       }
 
