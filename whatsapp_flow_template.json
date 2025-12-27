@@ -1,0 +1,66 @@
+{
+  "version": "3.1",
+  "screens": [
+    {
+      "id": "SIGN_IN",
+      "title": "Sign In",
+      "terminal": false,
+      "data": {},
+      "layout": {
+        "type": "Form",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "Welcome Back!"
+          },
+          {
+            "type": "TextInput",
+            "name": "email",
+            "label": "Email/Phone",
+            "required": true,
+            "helper_text": "Enter your login details"
+          },
+          {
+            "type": "Footer",
+            "label": "Sign In",
+            "on-click-action": {
+              "name": "data_exchange",
+              "payload": {
+                "screen": "SIGN_IN"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "SUCCESS",
+      "title": "Success",
+      "terminal": true,
+      "data": {},
+      "layout": {
+        "type": "Form",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "Signed In!"
+          },
+          {
+            "type": "TextBody",
+            "text": "You have successfully signed in to EduFiliova."
+          },
+          {
+            "type": "Footer",
+            "label": "Close",
+            "on-click-action": {
+              "name": "complete-flow",
+              "payload": {
+                "status": "success"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
