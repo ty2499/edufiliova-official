@@ -1253,12 +1253,13 @@ export class EmailService {
     });
   }
 
-  async sendFreelancerVerificationEmail(email: string, data: { fullName: string; verificationCode: string; expiresIn?: string }): Promise<boolean> {
+  async sendFreelancerVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'server/templates/freelancer_verification_template/email.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     const fullName = data.fullName || 'User';
-    const code = data.verificationCode || '000000';
+    const code = data.code || '000000';
     const expiresIn = data.expiresIn || '24 hours';
 
     // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
@@ -1267,6 +1268,7 @@ export class EmailService {
     // Replace other dynamic placeholders
     html = html.replace(/\{\{code\}\}/gi, code);
     html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
     // Replace image paths with CIDs
     html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:freelancer1');
@@ -1276,7 +1278,21 @@ export class EmailService {
     html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:freelancer5');
     html = html.replaceAll('images/1bf5815502d2621deb8af9e7b0187f86.png', 'cid:freelancer6');
 
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+    const assetPath = (filename: string) => {
+      const fullPath = path.resolve(process.cwd(), 'attached_assets', filename);
+      if (fs.existsSync(fullPath)) return fullPath;
+      
+      const baseName = filename.split('_')[0];
+      const fallbackPath = path.resolve(process.cwd(), 'attached_assets', `${baseName}_linking.png`);
+      if (fs.existsSync(fallbackPath)) return fallbackPath;
+      
+      // Secondary fallback to generic names in public/email-assets if available
+      const publicPath = path.resolve(process.cwd(), 'public/email-assets/voucher', filename.split('_')[0] + '.png');
+      if (fs.existsSync(publicPath)) return publicPath;
+
+      console.warn(`⚠️ Email asset not found: ${filename}, using placeholder`);
+      return fullPath; // Will still fail but we logged it
+    };
 
     return this.sendEmail({
       to: email,
