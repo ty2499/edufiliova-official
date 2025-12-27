@@ -1096,12 +1096,19 @@ const Index = () => {
           path === '/courses' || path.startsWith('/courses/') || 
           path.startsWith('/course/')) {
         console.log('🛑 BLOCKING REDIRECT - User on public path:', path);
-        // Force URL cleanup and BREAK early to prevent any lower code from running
+        
+        // CRITICAL FIX: If we see a dashboard param on a public path, 
+        // it means the view is being hijacked by the routing logic below.
+        // We MUST force the state to be the correct public state and clear the param.
         if (searchParams.has('page')) {
-          const cleanPath = path;
-          window.history.replaceState({}, '', cleanPath);
+          const targetState = path.startsWith('/shop') ? 'product-shop' : 'course-browse';
+          if (currentState !== targetState) {
+            setCurrentState(targetState);
+            window.history.replaceState({}, '', path);
+            return;
+          }
         }
-        return; // Fixed return type to match void return in useEffect
+        return; 
       }
 
       // Define public pages that customers can access while logged in
