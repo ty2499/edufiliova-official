@@ -1548,12 +1548,8 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
     enabled: !!user,
   });
 
-  // Fetch unread messages count
-  const { data: unreadMessagesData } = useQuery<{ unreadCount: number }>({
-    queryKey: ['/api/messages/unread-count', user?.id],
-    enabled: !!user,
-  });
-  const unreadMessagesCount = unreadMessagesData?.unreadCount || 0;
+  // Fetch unread messages count - TODO: create /api/messages/unread-count endpoint
+  const unreadMessagesCount = 0; // Temporarily disabled until endpoint is created
 
   // Fetch user balance and earnings
   const { data: balance, isLoading: balanceLoading, error: balanceError } = useQuery<{ totalEarnings?: number; pendingPayouts?: number }>({
