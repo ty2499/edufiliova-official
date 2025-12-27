@@ -239,6 +239,8 @@ export const ALL_API_KEYS = [
   { key: 'certifier_diploma_group_id', envVar: 'CERTIFIER_DIPLOMA_GROUP_ID', category: 'certificate', description: 'Certifier diploma group ID', sensitive: false },
   
   { key: 'supabase_url', envVar: 'SUPABASE_URL', category: 'auth', description: 'Supabase project URL', sensitive: false },
+  { key: 'facebook_app_id', envVar: 'FACEBOOK_APP_ID', category: 'auth', description: 'Facebook App ID', sensitive: false },
+  { key: 'facebook_app_secret', envVar: 'FACEBOOK_APP_SECRET', category: 'auth', description: 'Facebook App Secret', sensitive: true },
   { key: 'supabase_anon_key', envVar: 'SUPABASE_ANON_KEY', category: 'auth', description: 'Supabase anon key', sensitive: true },
   { key: 'supabase_service_key', envVar: 'SUPABASE_SERVICE_KEY', category: 'auth', description: 'Supabase service key', sensitive: true },
   

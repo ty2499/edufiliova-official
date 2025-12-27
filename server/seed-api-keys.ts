@@ -61,6 +61,8 @@ const apiKeysToSeed: APIKey[] = [
   { key: 'whatsapp_webhook_url', envVar: '', category: 'messaging', description: 'WhatsApp webhook callback URL', isSensitive: false },
 
   // ==================== AUTH ====================
+  { key: 'facebook_app_id', envVar: 'FACEBOOK_APP_ID', category: 'auth', description: 'Facebook App ID for social login', isSensitive: false },
+  { key: 'facebook_app_secret', envVar: 'FACEBOOK_APP_SECRET', category: 'auth', description: 'Facebook App Secret for social login', isSensitive: true },
   { key: 'supabase_url', envVar: 'SUPABASE_URL', category: 'auth', description: 'Supabase project URL', isSensitive: false },
   { key: 'supabase_anon_key', envVar: 'SUPABASE_ANON_KEY', category: 'auth', description: 'Supabase anonymous key', isSensitive: true },
   { key: 'supabase_service_key', envVar: 'SUPABASE_SERVICE_KEY', category: 'auth', description: 'Supabase service role key', isSensitive: true },
