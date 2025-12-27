@@ -1085,8 +1085,6 @@ const Index = () => {
       // User logged in successfully - clear the intentional logout flag
       localStorage.removeItem('intentional_logout');
       
-      console.log('🔄 Auto-routing check - User role:', profile.role, 'Current State:', currentState);
-      
       const path = window.location.pathname;
       const searchParams = new URLSearchParams(window.location.search);
       const isManualNav = searchParams.get('nav') === 'user';
@@ -1098,14 +1096,14 @@ const Index = () => {
           path === '/courses' || path.startsWith('/courses/') || 
           path.startsWith('/course/')) {
         console.log('🛑 BLOCKING REDIRECT - User on public path:', path);
-        // Force URL cleanup if we see a page parameter trying to hijack the view
+        // Force URL cleanup and BREAK early to prevent any lower code from running
         if (searchParams.has('page')) {
           const cleanPath = path;
           window.history.replaceState({}, '', cleanPath);
         }
-        return;
+        return; // Fixed return type to match void return in useEffect
       }
-      
+
       // Define public pages that customers can access while logged in
       const publicPages = ["home", "about", "help", "contact", "privacy", "terms", "blog",
                           "blog-post-detail", "chat-terms", "course-browse", "course-detail", "course-player", 
@@ -1120,6 +1118,12 @@ const Index = () => {
         return;
       }
 
+      // 4. Force specific dashboard based on role
+      // ONLY IF NOT ON A PUBLIC-SAFE PAGE
+      const isPublicSafePage = publicPages.includes(currentState) || 
+                               path === '/shop' || path.startsWith('/shop/') || 
+                               path === '/courses' || path.startsWith('/courses/');
+
       // Check if trying to access wrong dashboard
       const wrongDashboardAccess = 
         (currentState === "admin-dashboard" && !["admin", "accountant", "customer_service"].includes(profile.role)) ||
@@ -1133,7 +1137,7 @@ const Index = () => {
       // Only auto-redirect when on auth pages OR accessing wrong dashboard
       // Allow authenticated users to freely explore the home page and other public pages
       // Only redirect from auth pages (login/signup) to dashboard after login
-      const shouldAutoRoute = currentState === "auth" || wrongDashboardAccess;
+      const shouldAutoRoute = !isPublicSafePage && (currentState === "auth" || wrongDashboardAccess);
       
       if (shouldAutoRoute) {
         console.log('🔄 Current state requires auto-routing:', currentState);
