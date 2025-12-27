@@ -1548,6 +1548,13 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
     enabled: !!user,
   });
 
+  // Fetch unread messages count
+  const { data: unreadMessagesData } = useQuery<{ unreadCount: number }>({
+    queryKey: ['/api/messages/unread-count', user?.id],
+    enabled: !!user,
+  });
+  const unreadMessagesCount = unreadMessagesData?.unreadCount || 0;
+
   // Fetch user balance and earnings
   const { data: balance, isLoading: balanceLoading, error: balanceError } = useQuery<{ totalEarnings?: number; pendingPayouts?: number }>({
     queryKey: ['/api/transactions/balance', user?.id],
@@ -1863,15 +1870,22 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
             
             <button
               onClick={() => { setActiveTab("messages"); setShowMobileMenu(false); }}
-              className={`w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+              className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                 activeTab === "messages"
                   ? 'bg-blue-50 text-blue-700'
                   : 'text-gray-700 hover:bg-gray-50'
               }`}
               data-testid="nav-messages"
             >
-              <MessageSquare className="h-5 w-5 mr-3" />
-              Messages
+              <div className="flex items-center">
+                <MessageSquare className="h-5 w-5 mr-3" />
+                Messages
+              </div>
+              {activeTab !== "messages" && unreadMessagesCount > 0 && (
+                <Badge variant="default" className="ml-2 bg-red-500">
+                  {unreadMessagesCount}
+                </Badge>
+              )}
             </button>
             
             {/* MONEY Section - Collapsible */}
