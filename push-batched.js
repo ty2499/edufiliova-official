@@ -19,7 +19,7 @@ async function main() {
     const repo = "edufiliova";
     const branch = "main";
 
-    console.log("🚀 Pushing source code in batches\n");
+    console.log("🚀 Pushing source code INCLUDING attached files\n");
 
     const octokit = new Octokit({ auth: token });
 
@@ -36,7 +36,6 @@ async function main() {
       "node_modules",
       ".env",
       ".cache",
-      "attached_assets",
       ".turbo",
       ".next",
       ".config",
@@ -74,7 +73,7 @@ async function main() {
 
     collectFiles(baseDir);
     const allFiles = Array.from(filesMap.entries());
-    console.log(`✅ Found ${allFiles.length} files\n`);
+    console.log(`✅ Found ${allFiles.length} files (including attached_assets)\n`);
 
     // Get current branch
     const { data: ref } = await octokit.rest.git.getRef({
@@ -84,7 +83,7 @@ async function main() {
     });
     let currentSha = ref.object.sha;
 
-    // Push in batches of 50 files (smaller batches to avoid API errors)
+    // Push in batches of 50 files
     const batchSize = 50;
     let batchNum = 1;
     let successCount = 0;
@@ -122,7 +121,7 @@ async function main() {
         const { data: newCommit } = await octokit.rest.git.createCommit({
           owner,
           repo,
-          message: `Push code batch ${batchNum} - ${new Date().toISOString()}`,
+          message: `Push code batch ${batchNum} with attached_assets - ${new Date().toISOString()}`,
           tree: treeData.sha,
           parents: [currentSha],
           author: {
@@ -146,13 +145,12 @@ async function main() {
         batchNum++;
       } catch (error) {
         console.error(`   ⚠️  Batch ${batchNum} skipped:`, error.message);
-        // Continue with next batch instead of failing completely
         batchNum++;
       }
     }
 
-    console.log(`\n✅ SUCCESS! Pushed ${successCount} source code files to GitHub`);
-    console.log(`   Total files collected: ${allFiles.length}`);
+    console.log(`\n✅ SUCCESS! Pushed ${successCount} files INCLUDING attached_assets`);
+    console.log(`   Total files: ${allFiles.length}`);
     console.log(`   Final commit: ${currentSha}`);
     console.log(
       `   View: https://github.com/${owner}/${repo}/commit/${currentSha}\n`
