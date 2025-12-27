@@ -87,7 +87,13 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
   ];
 
   const filteredGetStarted = getStarted.filter(item => !isAuthenticated && item.showWhenNotAuth);
-  const filteredMyLearning = myLearning.filter(item => !item.requiresAuth || isAuthenticated);
+  const filteredMyLearning = myLearning.filter(item => {
+    // "My Subjects" only visible to students
+    if (item.page === 'student-dashboard' && user?.role !== 'student') {
+      return false;
+    }
+    return !item.requiresAuth || isAuthenticated;
+  });
   const filteredCertificates = certificates.filter(item => {
     // Hide "Claim Certificate" if user has no claimable certificates
     if (item.page === 'claim-certificate' && claimableCertificatesCount === 0) {

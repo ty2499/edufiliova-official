@@ -100,7 +100,13 @@ export const CoursesMegaMenu = ({ isOpen, onNavigate, onClose }: CoursesMegaMenu
     <MegaMenu isOpen={isOpen}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         <MegaMenuSection title="Explore Learning" icon={<BookOpen className="h-4 w-4 text-[#a0fab2]" />}>
-          {exploreLearning.map((item: any, index) => (
+          {exploreLearning.filter((item: any) => {
+            // "My Subjects" only visible to students
+            if (item.title === 'My Subjects' && user?.role !== 'student') {
+              return false;
+            }
+            return true;
+          }).map((item: any, index) => (
             <MegaMenuItem
               key={index}
               icon={item.icon}
