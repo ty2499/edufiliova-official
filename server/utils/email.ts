@@ -6,6 +6,17 @@ import { eq } from 'drizzle-orm';
 import fs from 'fs';
 import path from 'path';
 
+// Load Cloudinary email asset URLs
+let emailAssetMap: Record<string, string> = {};
+try {
+  const mapPath = path.resolve(process.cwd(), 'server/config/email-assets-map.json');
+  if (fs.existsSync(mapPath)) {
+    emailAssetMap = JSON.parse(fs.readFileSync(mapPath, 'utf-8'));
+  }
+} catch (err) {
+  console.warn('⚠️ Could not load email assets map:', err instanceof Error ? err.message : String(err));
+}
+
 interface EmailAttachment {
   filename: string;
   content?: Buffer;
@@ -47,82 +58,32 @@ export class EmailService {
   }
 
   private processEmailImages(html: string): string {
-    // Replace all image href/src references with base64-encoded versions
+    // Replace local image references with Cloudinary URLs
     const imageRegex = /(?:href|src)="images\/([^"]+)"/g;
     
     return html.replace(imageRegex, (match, filename) => {
-      try {
-        const cwdPath = process.cwd();
-        const emailAssetsRoot = path.resolve(cwdPath, 'public', 'email-assets');
-        
-        // Try multiple possible paths where images could be stored
-        const possiblePaths: string[] = [];
-        
-        // Try to scan public/email-assets subdirectories
-        try {
-          const emailAssetsDirs = fs.readdirSync(emailAssetsRoot);
-          for (const dir of emailAssetsDirs) {
-            possiblePaths.push(
-              path.join(emailAssetsRoot, dir, 'images', filename),
-              path.join(emailAssetsRoot, dir, filename)
-            );
-          }
-        } catch {
-          // Directory doesn't exist or can't be read
-        }
-        
-        // Add fallback paths
-        possiblePaths.push(
-          path.join(emailAssetsRoot, filename),
-          path.resolve(cwdPath, 'attached_assets', filename),
-          path.resolve(cwdPath, 'public', filename),
-        );
-        
-        // Try parent directories (for deployed scenarios)
-        try {
-          const parentEmailAssets = path.resolve(cwdPath, '..', 'public', 'email-assets');
-          if (fs.existsSync(parentEmailAssets)) {
-            const dirs = fs.readdirSync(parentEmailAssets);
-            for (const dir of dirs) {
-              possiblePaths.push(
-                path.join(parentEmailAssets, dir, 'images', filename),
-                path.join(parentEmailAssets, dir, filename)
-              );
-            }
-          }
-        } catch {
-          // Ignore
-        }
-        
-        let imagePath = '';
-        for (const p of possiblePaths) {
-          try {
-            if (fs.existsSync(p)) {
-              imagePath = p;
-              break;
-            }
-          } catch {
-            // Continue to next path
-          }
-        }
-        
-        if (imagePath) {
-          try {
-            const imageData = fs.readFileSync(imagePath);
-            const base64 = imageData.toString('base64');
-            const ext = path.extname(filename).slice(1).toLowerCase();
-            const mimeType = ext === 'png' ? 'image/png' : ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : ext === 'gif' ? 'image/gif' : 'image/png';
-            return `src="data:${mimeType};base64,${base64}"`;
-          } catch (readErr) {
-            console.warn(`⚠️ Error reading image file ${imagePath}: ${readErr instanceof Error ? readErr.message : String(readErr)}`);
-          }
-        } else {
-          console.warn(`⚠️ Could not find image file: ${filename} (checked ${possiblePaths.length} paths)`);
-        }
-      } catch (e) {
-        console.warn(`⚠️ Error processing image: ${filename} - ${e instanceof Error ? e.message : String(e)}`);
+      // Check if we have a Cloudinary URL for this image
+      if (emailAssetMap[filename]) {
+        return `src="${emailAssetMap[filename]}"`;
       }
-      return match;
+      
+      // Fallback: try to find in map with slight variations (case, extensions)
+      const variations = [
+        filename,
+        filename.toLowerCase(),
+        filename.toUpperCase(),
+      ];
+      
+      for (const variation of variations) {
+        for (const [key, url] of Object.entries(emailAssetMap)) {
+          if (key.toLowerCase() === variation.toLowerCase()) {
+            return `src="${url}"`;
+          }
+        }
+      }
+      
+      console.warn(`⚠️ Image not found in Cloudinary map: ${filename}`);
+      return match; // Return original if not found
     });
   }
 
@@ -241,7 +202,7 @@ export class EmailService {
         return false;
       }
 
-      // Process images in HTML: convert to base64 data URIs
+      // Process images in HTML: replace local refs with Cloudinary URLs
       let processedHtml = this.processEmailImages(options.html);
       
       const mailOptions = {
