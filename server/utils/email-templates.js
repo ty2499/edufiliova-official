@@ -18,52 +18,19 @@ export async function sendStudentWelcomeEmail(recipientEmail, recipientName) {
     emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
     emailHtml = emailHtml.replace(/\{\{ fullName \}\}/gi, fullName);
     
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
-    emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, 'cid:logo');
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
-    emailHtml = emailHtml.replace(/images\/dc84055d94aa2dc70856ec3b8b024828\.png/g, 'cid:promo');
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    const baseUrl = process.env.REPLIT_DEV_DOMAIN 
+      ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+      : 'https://edufiliova.com';
+    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
-    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'student-welcome', 'images');
-    const attachments = [
-      {
-        filename: 'spiral1.png',
-        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
-        cid: 'spiral1',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logo.png',
-        path: path.join(imagesDir, 'f28befc0a869e8a352bf79aa02080dc7.png'),
-        cid: 'logo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'spiral2.png',
-        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
-        cid: 'spiral2',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'corner.png',
-        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
-        cid: 'corner',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'promo.png',
-        path: path.join(imagesDir, 'dc84055d94aa2dc70856ec3b8b024828.png'),
-        cid: 'promo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logofull.png',
-        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
-        cid: 'logofull',
-        contentType: 'image/png'
-      }
-    ];
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/dc84055d94aa2dc70856ec3b8b024828\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+
+    const attachments = [];
 
     const result = await emailService.sendEmail({
       to: recipientEmail,
@@ -116,52 +83,16 @@ export async function sendStudentVerificationEmail(recipientEmail, recipientName
     emailHtml = emailHtml.replace(/\{\{ExpiresIn\}\}/gi, expiresIn);
     emailHtml = emailHtml.replace(/\{\{ expiresIn \}\}/gi, expiresIn);
     
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
-    emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, 'cid:logo');
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
-    emailHtml = emailHtml.replace(/images\/8c5dfa6f6ff7f681bbf586933883b270\.png/g, 'cid:corner');
-    emailHtml = emailHtml.replace(/images\/50df79cf94bcde6e18f9cb9ac1a740dd\.png/g, 'cid:promo');
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
-    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'student-verification', 'images');
-    const attachments = [
-      {
-        filename: 'spiral1.png',
-        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
-        cid: 'spiral1',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logo.png',
-        path: path.join(imagesDir, 'f28befc0a869e8a352bf79aa02080dc7.png'),
-        cid: 'logo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'spiral2.png',
-        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
-        cid: 'spiral2',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'corner.png',
-        path: path.join(imagesDir, '8c5dfa6f6ff7f681bbf586933883b270.png'),
-        cid: 'corner',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'promo.png',
-        path: path.join(imagesDir, '50df79cf94bcde6e18f9cb9ac1a740dd.png'),
-        cid: 'promo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logofull.png',
-        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
-        cid: 'logofull',
-        contentType: 'image/png'
-      }
-    ];
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/8c5dfa6f6ff7f681bbf586933883b270\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/50df79cf94bcde6e18f9cb9ac1a740dd\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+
+    const attachments = [];
 
     const result = await emailService.sendEmail({
       to: recipientEmail,
@@ -247,52 +178,16 @@ export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerN
       emailHtml = emailHtml.replace(/\{\{#if personalMessage\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
     }
     
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
-    emailHtml = emailHtml.replace(/images\/de07618f612ae3f3a960a43365f0d61d\.png/g, 'cid:logo');
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
-    emailHtml = emailHtml.replace(/images\/fe18318bf782f1266432dce6a1a46f60\.png/g, 'cid:promo');
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
-    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'voucher', 'images');
-    const attachments = [
-      {
-        filename: 'spiral1.png',
-        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
-        cid: 'spiral1',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logo.png',
-        path: path.join(imagesDir, 'de07618f612ae3f3a960a43365f0d61d.png'),
-        cid: 'logo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'spiral2.png',
-        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
-        cid: 'spiral2',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'corner.png',
-        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
-        cid: 'corner',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'promo.png',
-        path: path.join(imagesDir, 'fe18318bf782f1266432dce6a1a46f60.png'),
-        cid: 'promo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logofull.png',
-        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
-        cid: 'logofull',
-        contentType: 'image/png'
-      }
-    ];
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/de07618f612ae3f3a960a43365f0d61d\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/fe18318bf782f1266432dce6a1a46f60\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+
+    const attachments = [];
 
     const result = await emailService.sendEmail({
       to: recipientEmail,
@@ -351,54 +246,17 @@ export async function sendCoursePurchaseEmail(recipientEmail, recipientName, cou
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
     }
     
-    // Replace image paths with CID references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
-    emailHtml = emailHtml.replace(/images\/d003f0807fd61e8939ef89ef37a2a824\.png/g, 'cid:logo');
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
-    emailHtml = emailHtml.replace(/images\/c986afbaeaa02e99d02feeac68f6b944\.png/g, 'cid:promo');
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+
+    // Replace image paths with CDN references
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/d003f0807fd61e8939ef89ef37a2a824\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/c986afbaeaa02e99d02feeac68f6b944\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
     
-    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'course-purchase');
-    
-    const attachments = [
-      {
-        filename: 'spiral1.png',
-        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
-        cid: 'spiral1',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logo.png',
-        path: path.join(imagesDir, 'd003f0807fd61e8939ef89ef37a2a824.png'),
-        cid: 'logo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'spiral2.png',
-        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
-        cid: 'spiral2',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'corner.png',
-        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
-        cid: 'corner',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'promo.png',
-        path: path.join(imagesDir, 'c986afbaeaa02e99d02feeac68f6b944.png'),
-        cid: 'promo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logofull.png',
-        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
-        cid: 'logofull',
-        contentType: 'image/png'
-      }
-    ];
+    const attachments = [];
 
     const result = await emailService.sendEmail({
       to: recipientEmail,
@@ -450,54 +308,17 @@ export async function sendNewCourseAnnouncementEmail(recipientEmail, recipientNa
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{<\\/span><span[^>]*>${key}<\\/span><span[^>]*>\\}\\}`, 'gi'), value);
     }
     
-    // Replace image paths with CID references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, 'cid:spiral1');
-    emailHtml = emailHtml.replace(/images\/41506b29d7f0bbde9fcb0d4afb720c70\.png/g, 'cid:logo');
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, 'cid:spiral2');
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, 'cid:corner');
-    emailHtml = emailHtml.replace(/images\/dae012787ae5c5348c44bb83c0009419\.png/g, 'cid:promo');
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, 'cid:logofull');
+    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+
+    // Replace image paths with CDN references
+    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/41506b29d7f0bbde9fcb0d4afb720c70\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/dae012787ae5c5348c44bb83c0009419\.png/g, logoUrl);
+    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
     
-    const imagesDir = path.join(process.cwd(), 'public', 'email-assets', 'new-course-announcement', 'images');
-    
-    const attachments = [
-      {
-        filename: 'spiral1.png',
-        path: path.join(imagesDir, 'db561a55b2cf0bc6e877bb934b39b700.png'),
-        cid: 'spiral1',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logo.png',
-        path: path.join(imagesDir, '41506b29d7f0bbde9fcb0d4afb720c70.png'),
-        cid: 'logo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'spiral2.png',
-        path: path.join(imagesDir, '83faf7f361d9ba8dfdc904427b5b6423.png'),
-        cid: 'spiral2',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'corner.png',
-        path: path.join(imagesDir, '3d94f798ad2bd582f8c3afe175798088.png'),
-        cid: 'corner',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'promo.png',
-        path: path.join(imagesDir, 'dae012787ae5c5348c44bb83c0009419.png'),
-        cid: 'promo',
-        contentType: 'image/png'
-      },
-      {
-        filename: 'logofull.png',
-        path: path.join(imagesDir, '9f7291948d8486bdd26690d0c32796e0.png'),
-        cid: 'logofull',
-        contentType: 'image/png'
-      }
-    ];
+    const attachments = [];
 
     const result = await emailService.sendEmail({
       to: recipientEmail,
