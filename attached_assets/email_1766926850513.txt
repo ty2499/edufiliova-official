@@ -1,32 +1,0 @@
-Hi {{fullName}},
- Thank you for your interest in joining EduFiliova as a freelancer and for taking the time to submit your application.
- After carefully reviewing your profile, portfolio, and submitted information, we regret to inform you that we are unable to approve your freelancer application at this time.
-
-
-Application Declined
-Application Not Approved
-{{#if rejectionReason}}  Reason provided:  {{rejectionReason}}  {{/if}}
-Please understand that this decision may be based on factors such as incomplete information, portfolio requirements, eligibility criteria, or current platform needs. It does not reflect your overall potential or future opportunities.
-
-
-
-What You Can Do Next
-You are welcome to:
-Review and improve your portfolio or profile details Strengthen your listed skills and experience Complete relevant learning or certifications  Reapply in the future once requirements are met
-EduFiliova regularly reviews new freelancer applications, and reapplications are encouraged when appropriate.
-
-This decision applies only to your freelancer application
-Your EduFiliova user account (if applicable) remains active
-You may continue using other platform features where available
-Need Help or Clarification?
-If you believe this decision was made in error or would like more information, our support team is here to help.
-Contact us at support@edufiliova.com
-We appreciate your interest in EduFiliova and wish you success in your professional journey moving forward.
-Kind regards,  The EduFiliova Review Team
-
-Thank you!
-Feel free to reach out if you have any questions.
-You can unsubscribe from these emails here. 
- Visit the Freelancers Help Center
- Or contact us anytime at support@edufiliova.com
- 
