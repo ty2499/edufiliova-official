@@ -375,6 +375,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("pending")}
                 size="sm"
                 data-testid="filter-pending"
+                className={statusFilter === "pending" ? "bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white" : ""}
               >
                 <Clock className="w-4 h-4 mr-1" />
                 Pending ({statusCounts.pending})
@@ -384,6 +385,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("under_review")}
                 size="sm"
                 data-testid="filter-under-review"
+                className={statusFilter === "under_review" ? "bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white" : ""}
               >
                 <Eye className="w-4 h-4 mr-1" />
                 Under Review ({statusCounts.under_review})
@@ -393,6 +395,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("approved")}
                 size="sm"
                 data-testid="filter-approved"
+                className={statusFilter === "approved" ? "bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white" : ""}
               >
                 <CheckmarkIcon size="sm" variant="success" className="mr-1" />
                 Approved ({statusCounts.approved})
@@ -402,6 +405,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("rejected")}
                 size="sm"
                 data-testid="filter-rejected"
+                className={statusFilter === "rejected" ? "bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white" : ""}
               >
                 <XCircle className="w-4 h-4 mr-1" />
                 Rejected ({statusCounts.rejected})
