@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Application Approved</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; }
+    .header { background: #0C332C; color: white; padding: 20px; text-align: center; }
+    .content { padding: 20px; }
+    .footer { font-size: 12px; color: #999; text-align: center; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Welcome to EduFiliova</h1>
+    </div>
+    <div class="content">
+      <p>Hi {{fullName}},</p>
+      <p>Congratulations! Your freelancer application has been approved.</p>
+      <p>You can now log in to your dashboard and start working on projects.</p>
+      <p><a href="{{baseUrl}}/login">Log in to your account</a></p>
+    </div>
+    <div class="footer">
+      &copy; 2025 EduFiliova. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>
