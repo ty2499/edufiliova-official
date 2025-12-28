@@ -52,11 +52,18 @@ export class EmailService {
     
     return html.replace(imageRegex, (match, filename) => {
       try {
-        // Try multiple possible paths (since server might run from different directories)
+        // Try multiple possible paths where images could be stored
         const possiblePaths = [
+          // Primary: public/email-assets subdirectories (most common)
+          ...fs.readdirSync(path.join('/home/runner/workspace/public/email-assets')).flatMap(dir => [
+            path.join('/home/runner/workspace/public/email-assets', dir, 'images', filename),
+            path.join('/home/runner/workspace/public/email-assets', dir, filename),
+          ]),
+          // Fallback: attached_assets and server templates
+          path.join('/home/runner/workspace/attached_assets', filename),
           path.resolve(process.cwd(), 'attached_assets', filename),
           path.resolve(process.cwd(), '..', 'attached_assets', filename),
-          path.join('/home/runner/workspace/attached_assets', filename),
+          path.join('/home/runner/workspace/public/email-assets', filename),
         ];
         
         let imagePath = '';
@@ -71,11 +78,13 @@ export class EmailService {
           const imageData = fs.readFileSync(imagePath);
           const base64 = imageData.toString('base64');
           const ext = path.extname(filename).slice(1).toLowerCase();
-          const mimeType = ext === 'png' ? 'image/png' : ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : 'image/png';
+          const mimeType = ext === 'png' ? 'image/png' : ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : ext === 'gif' ? 'image/gif' : 'image/png';
           return `src="data:${mimeType};base64,${base64}"`;
+        } else {
+          console.warn(`⚠️ Could not find image file: ${filename}`);
         }
       } catch (e) {
-        console.warn(`⚠️ Could not process image: ${filename}`);
+        console.warn(`⚠️ Error processing image: ${filename} - ${e instanceof Error ? e.message : String(e)}`);
       }
       return match;
     });
