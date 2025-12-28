@@ -929,7 +929,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                   </div>
 
                   {(selectedTeacherApp.status === "pending" || selectedTeacherApp.status === "under_review") && (
-                    <div className="flex gap-2 pt-4 border-t flex-wrap">
+                    <div className="flex gap-2 pt-4 border-t flex-wrap sm:flex-nowrap">
                       {selectedTeacherApp.status === "pending" && (
                         <Button
                           onClick={() => {
@@ -939,43 +939,41 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                               notes: adminNotes,
                             });
                           }}
-                          variant="outline"
-                          className="flex-1 border-orange-500 text-primary hover:bg-primary/10" transition-all duration-300
+                          className="flex-1 bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white" transition-all duration-300
                           disabled={updateTeacherStatus.isPending}
                           data-testid="btn-mark-under-review-teacher"
                         >
                           <Eye className="w-4 h-4 mr-2" />
-                          Mark Under Review
+                          Review
                         </Button>
                       )}
                       <Button
                         onClick={() => setReviewAction("approve")}
-                        className="flex-1 bg-primary hover:bg-primary" transition-all duration-300
+                        className="flex-1 bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white" transition-all duration-300
                         data-testid="btn-approve-teacher"
                       >
-                        Approve Application
+                        Approve
                       </Button>
                       <Button
                         onClick={() => setReviewAction("reject")}
-                        variant="destructive"
-                        className="flex-1"
+                        className="flex-1 bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white"
                         data-testid="btn-reject-teacher"
                       >
                         <XCircle className="w-4 h-4 mr-2" />
-                        Reject Application
+                        Reject
                       </Button>
                     </div>
                   )}
 
                   {selectedTeacherApp.status === "rejected" && (
-                    <div className="flex gap-2 pt-4 border-t flex-wrap">
+                    <div className="flex gap-2 pt-4 border-t flex-wrap sm:flex-nowrap">
                       <Button
                         onClick={() => setReviewAction("approve")}
-                        className="flex-1 bg-primary hover:bg-primary"
+                        className="flex-1 bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white"
                         data-testid="btn-reapprove-teacher"
                       >
                         <Check className="w-4 h-4 mr-2" />
-                        Re-approve Application
+                        Re-approve
                       </Button>
                     </div>
                   )}
@@ -1170,35 +1168,34 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                   )}
 
                   {selectedFreelancerApp.status === "pending" && (
-                    <div className="flex gap-2 pt-4 border-t">
+                    <div className="flex gap-2 pt-4 border-t flex-wrap sm:flex-nowrap">
                       <Button
                         onClick={() => setReviewAction("approve")}
-                        className="flex-1 bg-primary hover:bg-primary" transition-all duration-300
+                        className="flex-1 bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white" transition-all duration-300
                         data-testid="btn-approve-freelancer"
                       >
-                        Approve Application
+                        Approve
                       </Button>
                       <Button
                         onClick={() => setReviewAction("reject")}
-                        variant="destructive"
-                        className="flex-1"
+                        className="flex-1 bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white"
                         data-testid="btn-reject-freelancer"
                       >
                         <XCircle className="w-4 h-4 mr-2" />
-                        Reject Application
+                        Reject
                       </Button>
                     </div>
                   )}
 
                   {selectedFreelancerApp.status === "rejected" && (
-                    <div className="flex gap-2 pt-4 border-t">
+                    <div className="flex gap-2 pt-4 border-t flex-wrap sm:flex-nowrap">
                       <Button
                         onClick={() => setReviewAction("approve")}
-                        className="flex-1 bg-primary hover:bg-primary"
+                        className="flex-1 bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white"
                         data-testid="btn-reapprove-freelancer"
                       >
                         <Check className="w-4 h-4 mr-2" />
-                        Re-approve Application
+                        Re-approve
                       </Button>
                     </div>
                   )}
