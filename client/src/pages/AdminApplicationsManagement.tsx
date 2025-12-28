@@ -366,7 +366,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("all")}
                 size="sm"
                 data-testid="filter-all"
-                className="bg-[#a0fab2] text-[#2f5a4e] hover:bg-[#a0fab2] hover:text-[#2f5a4e]"
+                className="bg-[#0d3931] text-white hover:bg-[#0d3931] hover:text-white"
               >
                 All ({statusCounts.all})
               </Button>
@@ -384,7 +384,6 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("under_review")}
                 size="sm"
                 data-testid="filter-under-review"
-                className="bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white"
               >
                 <Eye className="w-4 h-4 mr-1" />
                 Under Review ({statusCounts.under_review})
@@ -394,7 +393,6 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("approved")}
                 size="sm"
                 data-testid="filter-approved"
-                className="bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white"
               >
                 <CheckmarkIcon size="sm" variant="success" className="mr-1" />
                 Approved ({statusCounts.approved})
