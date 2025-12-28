@@ -1297,7 +1297,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
                 onClick={() => handleResendCode("email")}
                 disabled={resendCooldown > 0 || loading}
                 className="font-medium hover:underline disabled:opacity-50 transition-all duration-300"
-                style={{ color: '#0C332C' }}
+                style={{ color: '#A0FAB2' }}
                 data-testid="button-resend-email"
               >
                 {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code'}
@@ -1423,7 +1423,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             <button
               onClick={() => handleResendCode("phone")}
               disabled={resendCooldown > 0 || loading}
-              className="font-medium hover:underline disabled:opacity-50 text-white transition-all duration-300"
+              className="font-medium hover:underline disabled:opacity-50 transition-all duration-300"
+              style={{ color: '#A0FAB2' }}
               data-testid="button-resend-phone"
             >
                 {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code'}
@@ -1587,7 +1588,8 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
           <button
             type="button"
             onClick={() => setCurrentStep("forgot-password")}
-            className="text-primary hover:text-purple-800 font-medium transition-all duration-300"
+            className="font-medium transition-all duration-300 hover:underline"
+            style={{ color: '#A0FAB2' }}
             data-testid="button-resend-reset-code"
           >
             Request new code
