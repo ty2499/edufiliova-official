@@ -280,12 +280,17 @@ export class EmailService {
     // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
     let processedHtml = this.processEmailImages(options.html);
     
-    // Explicitly handle cid: references in HTML that might have been added manually
-    const cidRegex = /src="cid:([^"]+)"/gi;
+    // Explicitly handle cid: references in HTML
+    const cidRegex = /src=["']cid:([^"']+)["']/gi;
     processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
       // Look for a mapping for this CID (assuming CID matches filename in asset map)
+      const lowerCid = cid.toLowerCase();
       for (const [filename, url] of Object.entries(emailAssetMap)) {
-        if (filename.toLowerCase().startsWith(cid.toLowerCase())) {
+        const lowerFilename = filename.toLowerCase();
+        if (lowerFilename === lowerCid || 
+            lowerFilename.startsWith(lowerCid + '_') || 
+            lowerFilename.startsWith(lowerCid + '.') ||
+            lowerFilename.includes(lowerCid)) {
           return `src="${url}"`;
         }
       }
@@ -297,7 +302,7 @@ export class EmailService {
       to: options.to,
       subject: options.subject,
       html: processedHtml,
-      attachments: [], // Clear attachments since we use Cloudinary URLs
+      attachments: [], // We use Cloudinary URLs instead of attachments to prevent ESTREAM errors
     };
       
     const result = await transporter.sendMail(mailOptions);
