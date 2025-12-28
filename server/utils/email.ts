@@ -123,35 +123,31 @@ export class EmailService {
     const cidRegex = /src=["']cid:([^"']+)["']/gi;
     processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
       const lowerCid = cid.toLowerCase();
+      console.log(`🔍 Checking CID: ${lowerCid}`);
       
       // First try exact or near-match in emailAssetMap
       for (const [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
-        if (lowerKey === lowerCid || lowerKey.startsWith(lowerCid + '_') || lowerKey.startsWith(lowerCid + '.') || lowerKey.includes(lowerCid)) {
-          console.log(`✅ CID match: ${cid} -> ${key} -> ${url}`);
+        if (lowerKey === lowerCid || 
+            lowerKey.startsWith(lowerCid + '_') || 
+            lowerKey.startsWith(lowerCid + '.') || 
+            lowerKey.includes(lowerCid)) {
+          console.log(`✅ CID match found: ${cid} -> ${key} -> ${url}`);
           return `src="${url}"`;
         }
       }
 
-      // 4. Handle specific image filenames if they aren't CIDs
-      if (lowerCid.includes('db561a55b2cf0bc6e877bb934b39b700')) {
-        const url = emailAssetMap['db561a55b2cf0bc6e877bb934b39b700.png'] || emailAssetMap['db561a55b2cf0bc6e877bb934b39b700_1766506747370.png'];
-        if (url) return `src="${url}"`;
-      }
-      if (lowerCid.includes('83faf7f361d9ba8dfdc904427b5b6423')) {
-        const url = emailAssetMap['83faf7f361d9ba8dfdc904427b5b6423.png'] || emailAssetMap['83faf7f361d9ba8dfdc904427b5b6423_1766506747364.png'];
-        if (url) return `src="${url}"`;
-      }
-
-      // 5. Check if the CID is a base name that might match a mapping
+      // Try matching by base name (stripping extensions and timestamps)
+      const cidBase = lowerCid.split('.')[0].split('_')[0];
       for (const [key, url] of Object.entries(emailAssetMap)) {
-        const keyBase = key.split('_')[0].split('.')[0].toLowerCase();
-        if (keyBase.includes(lowerCid) || lowerCid.includes(keyBase)) {
-          console.log(`✅ CID base match: ${cid} -> ${key} -> ${url}`);
+        const keyBase = key.toLowerCase().split('.')[0].split('_')[0];
+        if (keyBase === cidBase) {
+          console.log(`✅ CID base match found: ${cid} -> ${key} -> ${url}`);
           return `src="${url}"`;
         }
       }
 
+      console.warn(`⚠️ No mapping found for CID: ${cid}`);
       return match;
     });
 
@@ -283,22 +279,8 @@ export class EmailService {
     // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
     let processedHtml = this.processEmailImages(options.html);
     
-    // Explicitly handle cid: references in HTML
-    const cidRegex = /src=["']cid:([^"']+)["']/gi;
-    processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
-      // Look for a mapping for this CID (assuming CID matches filename in asset map)
-      const lowerCid = cid.toLowerCase();
-      for (const [filename, url] of Object.entries(emailAssetMap)) {
-        const lowerFilename = filename.toLowerCase();
-        if (lowerFilename === lowerCid || 
-            lowerFilename.startsWith(lowerCid + '_') || 
-            lowerFilename.startsWith(lowerCid + '.') ||
-            lowerFilename.includes(lowerCid)) {
-          return `src="${url}"`;
-        }
-      }
-      return match;
-    });
+    // CID replacement is now handled inside processEmailImages for consistency
+    // No need for secondary replacement here as it might double-process or miss edge cases
 
     const mailOptions = {
       from,
