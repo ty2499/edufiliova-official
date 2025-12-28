@@ -178,11 +178,13 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
     }
   };
 
+  const [creatorOnlyFilter, setCreatorOnlyFilter] = useState(userRole !== 'admin');
+
   // Get user's subjects
   const { data: subjects, isLoading: subjectsLoading } = useQuery({
-    queryKey: ['/api/subjects', { creatorOnly: true }],
+    queryKey: ['/api/subjects', { creatorOnly: creatorOnlyFilter }],
     queryFn: async () => {
-      const subjects = await apiRequest('/api/subjects?creatorOnly=true');
+      const subjects = await apiRequest(`/api/subjects?creatorOnly=${creatorOnlyFilter}`);
       return subjects.data || [];
     }
   });
@@ -512,17 +514,39 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
             </p>
           </div>
         </div>
-        {viewMode === 'list' && (
-          <Button 
-            onClick={() => setViewMode('create')} 
-            data-testid="button-create-subject"
-            className="text-white border-0 hover:bg-[#2f5a4e] active:bg-[#2f5a4e] focus:bg-[#2f5a4e] transition-none p-2 sm:px-4 sm:py-2"
-            style={{ backgroundColor: '#2f5a4e' }}
-          >
-            <Plus className="h-4 w-4 sm:mr-2" />
-            <span className="hidden sm:inline">New Subject</span>
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+          {userRole === 'admin' && viewMode === 'list' && (
+            <div className="flex items-center bg-muted p-1 rounded-md mr-2">
+              <Button
+                variant={creatorOnlyFilter ? "default" : "secondary"}
+                size="sm"
+                onClick={() => setCreatorOnlyFilter(true)}
+                className="h-7 text-xs px-2"
+              >
+                My Subjects
+              </Button>
+              <Button
+                variant={!creatorOnlyFilter ? "default" : "secondary"}
+                size="sm"
+                onClick={() => setCreatorOnlyFilter(false)}
+                className="h-7 text-xs px-2"
+              >
+                All Subjects
+              </Button>
+            </div>
+          )}
+          {viewMode === 'list' && (
+            <Button 
+              onClick={() => setViewMode('create')} 
+              data-testid="button-create-subject"
+              className="text-white border-0 hover:bg-[#2f5a4e] active:bg-[#2f5a4e] focus:bg-[#2f5a4e] transition-none p-2 sm:px-4 sm:py-2"
+              style={{ backgroundColor: '#2f5a4e' }}
+            >
+              <Plus className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">New Subject</span>
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Action Message */}
