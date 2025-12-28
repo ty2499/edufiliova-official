@@ -1,0 +1,36 @@
+Learning • Skills • Careers
+Hi {{fullName}},
+ Thank you for your interest in becoming a teacher on EduFiliova, and for taking the time to submit your application.
+ After carefully reviewing your submitted information, documents, and qualifications, we regret to inform you that we are unable to approve your Teacher Application at this time.
+
+
+Application Declined 
+Application Not Approved {{#if reason}} Reason provided:
+{{reason}}
+{{/if}}
+ Please note that this decision does not reflect your potential or future eligibility. In many cases, applications are declined due to missing information, documentation requirements, eligibility criteria, or current platform needs.
+
+
+
+What You Can Do Next
+You are welcome to: 
+Review and update your application details
+Address any issues or requirements mentioned above
+Reapply in the future once requirements are met
+EduFiliova regularly reviews new applications, and reapplications are encouraged when appropriate.
+This decision applies only to your teacher application
+Your EduFiliova user account (if any) remains active
+You may still access learning or other platform features where applicable 
+
+ Need Help or Clarification?
+If you believe this decision was made in error or if you would like clarification, our support team is here to help.
+Contact us at: support@edufiliova.com
+We appreciate your interest in EduFiliova and wish you success in your educational and professional journey.
+ Kind regards,
+The EduFiliova Review Team
+
+Thank you!
+Feel free to reach out if you have any questions.
+You can unsubscribe from these emails here. 
+ Visit the Teacher Help Center
+ Or contact us anytime at support@edufiliova.com
