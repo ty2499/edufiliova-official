@@ -1,0 +1,130 @@
+const nodemailer = require('nodemailer');
+
+const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <meta name="x-apple-disable-message-reformatting">
+    <title>New Device Login - EduFiliova</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #f0f1f5; font-family: 'Arial', 'Helvetica', sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+        .header { background-color: #0c332c; padding: 40px 30px; text-align: center; }
+        .header img { max-width: 180px; height: auto; display: block; margin: 0 auto; }
+        .content { padding: 40px; color: #333; line-height: 1.8; }
+        .greeting { font-size: 18px; color: #0c332c; font-weight: bold; margin-bottom: 20px; }
+        .title { color: #0c332c; font-size: 28px; font-weight: bold; margin-bottom: 20px; text-align: center; }
+        .intro-text { color: #666; font-size: 15px; margin-bottom: 25px; }
+        .divider { height: 2px; background-color: #0c332c; margin: 30px 0; }
+        .alert-box { background-color: #f0f7f4; border-left: 5px solid #0c332c; padding: 20px; margin: 20px 0; border-radius: 4px; }
+        .alert-title { color: #0c332c; font-weight: bold; font-size: 16px; margin-bottom: 15px; }
+        .alert-text { color: #555; font-size: 14px; line-height: 1.8; }
+        .action-box { background-color: #f8faf9; border: 1px solid #e0e0e0; padding: 20px; margin: 25px 0; border-radius: 6px; }
+        .action-title { color: #0c332c; font-weight: bold; font-size: 15px; margin-bottom: 12px; }
+        .action-text { color: #555; font-size: 14px; line-height: 1.8; margin-bottom: 15px; }
+        .action-list { color: #555; font-size: 14px; line-height: 1.8; }
+        .button-container { text-align: center; margin: 25px 0; }
+        .cta-button { color: #ffffff; text-decoration: none; font-weight: bold; font-size: 15px; padding: 12px 30px; display: inline-block; background-color: #0c332c; border-radius: 4px; }
+        .closing { color: #666; font-size: 15px; margin-top: 30px; }
+        .closing-sign { color: #0c332c; font-weight: bold; font-size: 14px; margin-top: 10px; }
+        .footer { background: linear-gradient(135deg, #0c332c 0%, #1a4a42 100%); padding: 40px 30px; color: #ffffff; }
+        .footer-content { max-width: 600px; margin: 0 auto; }
+        .footer-grid { display: table; width: 100%; margin-bottom: 30px; }
+        .footer-col { display: table-cell; width: 50%; padding: 0 15px; vertical-align: top; }
+        .footer-col:first-child { padding-left: 0; }
+        .footer-col:last-child { padding-right: 0; }
+        .footer-section { margin-bottom: 25px; }
+        .footer-title { color: #a0fab2; font-weight: bold; font-size: 12px; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px; border-bottom: 1px solid #1a4a42; padding-bottom: 8px; }
+        .footer-text { font-size: 12px; line-height: 1.9; color: #d4e4df; }
+        .footer-link { color: #a0fab2; text-decoration: none; font-weight: 500; }
+        .footer-divider { height: 1px; background-color: #1a4a42; margin: 20px 0; }
+        .footer-info { background-color: rgba(255,255,255,0.05); padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+        .footer-info-text { font-size: 11px; line-height: 1.8; color: #c7d8d3; }
+        .footer-bottom { text-align: center; color: #8fa9a3; font-size: 11px; padding-top: 15px; border-top: 1px solid #1a4a42; }
+        .footer-bottom p { margin: 5px 0; }
+        .footer-social { text-align: center; margin: 15px 0; }
+        .footer-social-link { display: inline-block; color: #a0fab2; text-decoration: none; margin: 0 8px; font-size: 11px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" />
+        </div>
+        <div class="content">
+            <p class="greeting">Hi Test User,</p>
+            <div class="title">New Device Login Detected</div>
+            <p class="intro-text">We detected a login to your EduFiliova account from a new device. If this was you, you can safely ignore this email. If it wasn't, please secure your account immediately.</p>
+            <div class="divider"></div>
+            <div class="alert-box">
+                <div class="alert-title">Login Information</div>
+                <div class="alert-text"><strong>Device:</strong> Chrome on Windows<br><strong>Browser:</strong> Chrome 120<br><strong>Location:</strong> Cape Town, South Africa<br><strong>Time:</strong> Just now</div>
+            </div>
+            <div class="divider"></div>
+            <div class="action-box">
+                <div class="action-title">Recognize This Login?</div>
+                <div class="action-text">If you recognize this device and login, no further action is needed. Your account is secure.</div>
+                <div class="action-title">Didn't Recognize This Login?</div>
+                <div class="action-text">If this wasn't you, secure your account immediately by changing your password:</div>
+                <div class="action-list">1. Click the button below to change your password<br>2. Use a strong, unique password<br>3. Review your account activity for any unauthorized changes<br>4. Contact support if you notice anything suspicious</div>
+            </div>
+            <div class="button-container"><a href="https://edufiliova.com/login" class="cta-button">Change Password</a></div>
+            <p class="closing">Your account security is important to us. If you have any questions or need assistance, contact our support team at support@edufiliova.com</p>
+            <p class="closing-sign">Best regards,<br>The EduFiliova Security Team</p>
+        </div>
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="footer-section">
+                            <div class="footer-title">Support</div>
+                            <div class="footer-text"><a href="mailto:support@edufiliova.com" class="footer-link">support@edufiliova.com</a><br><a href="https://edufiliova.com/help" class="footer-link">Help Center</a><br><a href="https://edufiliova.com/blog" class="footer-link">Blog</a></div>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <div class="footer-section">
+                            <div class="footer-title">Resources</div>
+                            <div class="footer-text"><a href="https://edufiliova.com/login" class="footer-link">Dashboard</a><br><a href="https://edufiliova.com/about" class="footer-link">About Us</a><br><a href="https://edufiliova.com/shop" class="footer-link">Digital Resources</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-info">
+                    <div class="footer-info-text"><a href="https://edufiliova.com/community-guidelines" class="footer-link">Community Guidelines</a></div>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 EduFiliova. All rights reserved.</p>
+                    <p>This email was sent to teach@pacreatives.co.za</p>
+                    <div class="footer-social"><a href="https://edufiliova.com/unsubscribe" class="footer-social-link">Unsubscribe</a> | <a href="https://edufiliova.com/privacy" class="footer-social-link">Privacy Policy</a> | <a href="https://edufiliova.com/terms" class="footer-social-link">Terms</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+
+const transporter = nodemailer.createTransport({
+  host: 'mail.spacemail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'support@edufiliova.com',
+    pass: process.env.SMTP_PASSWORD || ''
+  }
+});
+
+transporter.sendMail({
+  from: '"EduFiliova Security" <support@edufiliova.com>',
+  to: 'teach@pacreatives.co.za',
+  subject: 'New Device Login Detected - EduFiliova',
+  html: html
+}, (err, info) => {
+  if (err) {
+    console.log('ERROR:', err.message);
+    process.exit(1);
+  }
+  console.log('✅ Email sent to teach@pacreatives.co.za');
+  process.exit(0);
+});
