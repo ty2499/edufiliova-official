@@ -210,7 +210,10 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
     const Icon = config.icon;
 
     return (
-      <Badge variant={config.variant} className="flex items-center gap-1">
+      <Badge 
+        variant={config.variant} 
+        className={`flex items-center gap-1 ${status === "approved" ? "bg-[#a0fab2] text-[#2f5a4e] hover:bg-[#a0fab2]" : ""}`}
+      >
         <Icon className="w-3 h-3" />
         {config.label}
       </Badge>
