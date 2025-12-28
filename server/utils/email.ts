@@ -65,7 +65,7 @@ export class EmailService {
     const imageRegex = /(?:href|src)=["'](?:images\/)?([^"']+)["']/gi;
     let processedHtml = html.replace(imageRegex, (match, filename) => {
       // 0. Skip Absolute URLs or Cloudinary URLs
-      if (filename.startsWith('http') || filename.startsWith('https://res.cloudinary.com')) {
+      if (filename.startsWith('http') || filename.startsWith('https://res.cloudinary.com') || filename.startsWith('mailto:')) {
         return match;
       }
 
@@ -84,13 +84,16 @@ export class EmailService {
       // Look for any key that starts with this base name
       for (const [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
-        // Check for exact match, match with timestamp (baseName_...), match with extension (baseName.png), 
-        // OR if the mapped filename contains the cleanFilename
-        if (lowerKey === baseName || 
-            lowerKey.startsWith(baseName + '_') || 
-            lowerKey.startsWith(baseName + '.') || 
-            lowerKey === cleanFilename.toLowerCase() ||
-            lowerKey.includes(cleanFilename.toLowerCase())) {
+        const keyBase = key.split('_')[0].split('.')[0].toLowerCase();
+        
+        // Match conditions: 
+        // 1. Exact match (handled above, but here for robustness)
+        // 2. Base names match (logo.png vs logo_123.png)
+        // 3. Key contains the base name or vice-versa
+        if (lowerKey === cleanFilename.toLowerCase() || 
+            keyBase === baseName || 
+            keyBase.startsWith(baseName) ||
+            baseName.startsWith(keyBase)) {
           console.log(`✅ Image base match: ${filename} -> ${key} -> ${url}`);
           return match.includes('href') ? `href="${url}"` : `src="${url}"`;
         }
