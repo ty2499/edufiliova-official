@@ -24,9 +24,16 @@ interface EmailOptions {
 
 export class EmailService {
   private transporters: Map<string, Transporter> = new Map();
+  private initialized = false;
 
   constructor() {
-    this.initialize();
+    this.initializeAsync();
+  }
+
+  private initializeAsync() {
+    this.initializeFromDatabase().catch(e => {
+      console.error('❌ Failed to initialize email service in constructor:', e);
+    });
   }
 
   private getBaseUrl(): string {
@@ -74,28 +81,37 @@ export class EmailService {
     });
   }
 
-  private initialize() {
-    this.initializeFromDatabase();
-  }
-
   private async initializeFromDatabase() {
     try {
       const accounts = await db.select().from(emailAccounts).where(eq(emailAccounts.isActive, true));
-      if (accounts.length === 0) return;
+      console.log(`📧 EmailService loading ${accounts.length} accounts from database...`);
+      if (accounts.length === 0) {
+        console.warn('⚠️ No active email accounts found in database');
+        return;
+      }
       for (const account of accounts) {
         if (account.smtpHost && account.smtpPort && account.smtpUsername && account.smtpPassword) {
-          const transporter = nodemailer.createTransport({
-            host: account.smtpHost,
-            port: account.smtpPort,
-            secure: account.smtpSecure || account.smtpPort === 465,
-            auth: {
-              user: account.smtpUsername,
-              pass: account.smtpPassword,
-            },
-          });
-          this.transporters.set(account.email, transporter);
+          try {
+            const transporter = nodemailer.createTransport({
+              host: account.smtpHost,
+              port: account.smtpPort,
+              secure: account.smtpSecure || account.smtpPort === 465,
+              auth: {
+                user: account.smtpUsername,
+                pass: account.smtpPassword,
+              },
+            });
+            this.transporters.set(account.email, transporter);
+            console.log(`  ✅ Configured transporter for ${account.email}`);
+          } catch (e) {
+            console.error(`  ❌ Failed to create transporter for ${account.email}:`, e);
+          }
+        } else {
+          console.warn(`  ⚠️ Account ${account.email} missing SMTP credentials`);
         }
       }
+      this.initialized = true;
+      console.log(`📧 EmailService initialized with ${this.transporters.size} transporters`);
     } catch (error) {
       console.error('❌ Failed to initialize email service:', error);
     }
@@ -152,11 +168,13 @@ export class EmailService {
   }
 
   async sendEmail(options: EmailOptions): Promise<boolean> {
-    if (this.transporters.size === 0) {
+    // Ensure initialization is complete
+    if (!this.initialized) {
       await this.initializeFromDatabase();
     }
     if (this.transporters.size === 0) {
-      console.error('❌ No email transporters available');
+      console.error('❌ No email transporters available after initialization');
+      console.error('   Available transporters:', Array.from(this.transporters.keys()));
       return false;
     }
     
