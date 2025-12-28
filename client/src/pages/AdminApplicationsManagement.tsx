@@ -363,6 +363,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("all")}
                 size="sm"
                 data-testid="filter-all"
+                className="bg-[#a0fab2] text-[#2f5a4e] hover:bg-[#a0fab2] hover:text-[#2f5a4e]"
               >
                 All ({statusCounts.all})
               </Button>
