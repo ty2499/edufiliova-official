@@ -388,22 +388,14 @@ export class EmailService {
 
     const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
 
+    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+
     return this.sendEmail({
       to: email,
       subject: 'Application Status Update - EduFiliova Teacher Application',
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'logo.png', path: assetPath('0ac9744033a7e26f12e08d761c703308_linking.png'), cid: 'logo', contentType: 'image/png' },
-        { filename: 'icon_db.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_linking.png'), cid: 'icon_db', contentType: 'image/png' },
-        { filename: 'icon_pf.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_linking.png'), cid: 'icon_pf', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_linking.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 's_social', contentType: 'image/png' },
-        { filename: 'teacher_img.png', path: assetPath('917a6e905cf83da447efc0f5c2780aca_linking.png'), cid: 'teacher_img', contentType: 'image/png' },
-        { filename: 'rejection_icon.png', path: assetPath('de497c5361453604d8a15c4fd9bde086_linking.png'), cid: 'rejection_icon', contentType: 'image/png' },
-        { filename: 'support_img.png', path: assetPath('e06e238bd6d74a3e48f94e5b0b81388d_linking.png'), cid: 'support_img', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('7976503d64a3eef4169fe235111cdc57_linking.png'), cid: 'corner_graphic', contentType: 'image/png' }
-      ]
+      attachments: []
     });
   }
 
