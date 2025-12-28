@@ -192,13 +192,20 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
           }
         }
         
-        // Redirect to dashboard or return URL
-        if (returnUrl) {
-          onNavigate?.(returnUrl, 'slide-left');
-        } else {
-          // DO NOT FORCE TO DASHBOARD - Stay on product-shop if no returnUrl
-          onNavigate?.('product-shop', 'slide-left');
-        }
+        // Redirect to appropriate dashboard based on role
+        const getDashboardByRole = () => {
+          if (!profile) return 'product-shop'; // fallback
+          const role = profile.role;
+          if (['admin', 'accountant', 'customer_service'].includes(role)) return 'admin-dashboard';
+          if (role === 'teacher') return 'teacher-dashboard';
+          if (role === 'freelancer') return 'freelancer-dashboard';
+          if (role === 'general' || role === 'customer') return 'customer-dashboard';
+          if (role === 'student' || role === 'user') return 'student-dashboard';
+          return 'customer-dashboard'; // default
+        };
+
+        const destination = returnUrl || getDashboardByRole();
+        onNavigate?.(destination, 'slide-left');
       } else {
         if (result.error?.includes('Email already registered') && authMode === 'signup') {
           setAuthMode('signin');
@@ -270,13 +277,20 @@ export default function ShopAuth({ onNavigate, returnUrl }: ShopAuthProps) {
           }
         }
         
-        // Redirect to dashboard or return URL
-        if (returnUrl) {
-          onNavigate?.(returnUrl, 'slide-left');
-        } else {
-          // DO NOT FORCE TO DASHBOARD - Stay on product-shop if no returnUrl
-          onNavigate?.('product-shop', 'slide-left');
-        }
+        // Redirect to appropriate dashboard based on role
+        const getDashboardByRole = () => {
+          if (!profile) return 'product-shop'; // fallback
+          const role = profile.role;
+          if (['admin', 'accountant', 'customer_service'].includes(role)) return 'admin-dashboard';
+          if (role === 'teacher') return 'teacher-dashboard';
+          if (role === 'freelancer') return 'freelancer-dashboard';
+          if (role === 'general' || role === 'customer') return 'customer-dashboard';
+          if (role === 'student' || role === 'user') return 'student-dashboard';
+          return 'customer-dashboard'; // default
+        };
+
+        const destination = returnUrl || getDashboardByRole();
+        onNavigate?.(destination, 'slide-left');
       } else {
         setVerificationError(true);
         setVerificationCode('');
