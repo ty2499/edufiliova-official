@@ -27,12 +27,12 @@ export async function sendStudentWelcomeEmail(recipientEmail, recipientName) {
     const cornerUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908555/edufiliova/email-assets/3d94f798ad2bd582f8c3afe175798088_1766506747360.png';
     const promoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/dc84055d94aa2dc70856ec3b8b024828.png';
 
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/dc84055d94aa2dc70856ec3b8b024828\.png/g, promoUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
 
     const attachments = [];
 
@@ -93,12 +93,12 @@ export async function sendStudentVerificationEmail(recipientEmail, recipientName
     const cornerUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/8c5dfa6f6ff7f681bbf586933883b270.png';
     const promoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/50df79cf94bcde6e18f9cb9ac1a740dd.png';
 
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/f28befc0a869e8a352bf79aa02080dc7\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/8c5dfa6f6ff7f681bbf586933883b270\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/50df79cf94bcde6e18f9cb9ac1a740dd\.png/g, promoUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
 
     const attachments = [];
 
@@ -192,12 +192,12 @@ export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerN
     const cornerUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908555/edufiliova/email-assets/3d94f798ad2bd582f8c3afe175798088_1766506747360.png';
     const promoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908572/edufiliova/email-assets/fe18318bf782f1266432dce6a1a46f60.png';
 
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/de07618f612ae3f3a960a43365f0d61d\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/fe18318bf782f1266432dce6a1a46f60\.png/g, promoUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
 
     const attachments = [];
 
@@ -265,12 +265,12 @@ export async function sendCoursePurchaseEmail(recipientEmail, recipientName, cou
     const promoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/c986afbaeaa02e99d02feeac68f6b944.png';
 
     // Replace image paths with CDN references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/d003f0807fd61e8939ef89ef37a2a824\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/c986afbaeaa02e99d02feeac68f6b944\.png/g, promoUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
     
     const attachments = [];
 
@@ -331,12 +331,12 @@ export async function sendNewCourseAnnouncementEmail(recipientEmail, recipientNa
     const promoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/dae012787ae5c5348c44bb83c0009419.png';
 
     // Replace image paths with CDN references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/41506b29d7f0bbde9fcb0d4afb720c70\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/dae012787ae5c5348c44bb83c0009419\.png/g, promoUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
     
     const attachments = [];
 
@@ -462,12 +462,12 @@ export async function sendPlanUpgradeEmail(recipientEmail, recipientName, upgrad
     const promoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/fcf514453cb3c939b52a8a2bcbb97b94.png';
 
     // Replace image paths with CDN references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/41506b29d7f0bbde9fcb0d4afb720c70\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/fcf514453cb3c939b52a8a2bcbb97b94\.png/g, promoUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
     
     const attachments = [];
 
@@ -590,13 +590,13 @@ export async function sendNewDeviceLoginEmail(recipientEmail, recipientName, log
     const promoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/ccc540df188352ef9b2d4fb790d0b4bb.png';
 
     // Replace image paths with CDN references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/e76fe516a6e91a2aa475626bd50a37d8\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/ccc540df188352ef9b2d4fb790d0b4bb\.png/g, promoUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/53185829a16faf137a533f19db64d893\.png/g, logoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
     
     const attachments = [];
 
@@ -661,13 +661,13 @@ export async function sendMeetingReminderEmail(recipientEmail, recipientName, me
     const whatsappPromoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/51cf8361f51fd7575b8d8390ef957e30.png';
 
     // Replace image paths with CDN references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/292db72c5a7a0299db100d17711b8c55\.png/g, logoHeaderUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/53185829a16faf137a533f19db64d893\.png/g, logoUrl);
-    emailHtml = emailHtml.replace(/images\/51cf8361f51fd7575b8d8390ef957e30\.png/g, whatsappPromoUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, footerLogoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
     
     const attachments = [];
 
@@ -728,11 +728,11 @@ export async function sendShopPurchaseEmail(recipientEmail, recipientName, order
     const footerLogoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908563/edufiliova/email-assets/9f7291948d8486bdd26690d0c32796e0_1766647041190.png';
 
     // Replace image paths with CDN references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/f4a85d998eb4f45ce242a7b73cf561d5\.png/g, logoHeaderUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, footerLogoUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
     
     const attachments = [];
 
@@ -796,12 +796,12 @@ export async function sendCourseCompletionEmail(recipientEmail, recipientName, c
     const gradBannerUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1766908554/edufiliova/email-assets/371e2880c8a2b5b2073b1f18b5482c1f.png';
 
     // Replace image paths with CDN references
-    emailHtml = emailHtml.replace(/images\/db561a55b2cf0bc6e877bb934b39b700\.png/g, spiral1Url);
-    emailHtml = emailHtml.replace(/images\/a0f41a0ecf16a144a8fae636842d4fcc\.png/g, logoHeaderUrl);
-    emailHtml = emailHtml.replace(/images\/83faf7f361d9ba8dfdc904427b5b6423\.png/g, spiral2Url);
-    emailHtml = emailHtml.replace(/images\/3d94f798ad2bd582f8c3afe175798088\.png/g, cornerUrl);
-    emailHtml = emailHtml.replace(/images\/9f7291948d8486bdd26690d0c32796e0\.png/g, footerLogoUrl);
-    emailHtml = emailHtml.replace(/images\/371e2880c8a2b5b2073b1f18b5482c1f\.png/g, gradBannerUrl);
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
+    // Image removed
     
     const attachments = [];
 

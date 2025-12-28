@@ -446,7 +446,7 @@ export class EmailService {
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
+      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png
     </div>
     <div class="content">
       <h1 class="title">Account Suspended - Policy Violation</h1>
@@ -547,7 +547,7 @@ export class EmailService {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #0C332C; padding: 40px; text-align: center; }
+    .header { background-color: #2f5a4e; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
     .title { color: #1a1a1a; font-size: 24px; font-weight: 700; margin: 0 0 20px 0; }
@@ -555,12 +555,12 @@ export class EmailService {
     .important { border-left: 4px solid #d32f2f; background-color: #fef5f5; padding: 20px; margin: 25px 0; }
     .important h3 { margin: 0 0 12px 0; color: #d32f2f; font-size: 16px; }
     .important p { margin: 0; color: #4a5568; font-size: 14px; line-height: 1.6; }
-    .policies-section { border: 2px solid #0C332C; border-radius: 8px; padding: 25px; margin: 25px 0; background-color: #f9fafb; }
-    .policies-section h3 { margin: 0 0 18px 0; color: #0C332C; font-size: 18px; font-weight: 700; text-align: center; }
-    .policy-link { display: block; margin: 12px 0; padding: 12px; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; text-decoration: none; color: #0C332C; font-weight: 600; text-align: center; transition: all 0.2s; }
-    .policy-link:hover { background-color: #0C332C; color: #ffffff; border-color: #0C332C; }
-    .button { display: inline-block; background-color: #0C332C; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
-    .footer { background-color: #0C332C; padding: 30px; text-align: center; color: #ffffff; }
+    .policies-section { border: 2px solid #2f5a4e; border-radius: 8px; padding: 25px; margin: 25px 0; background-color: #f9fafb; }
+    .policies-section h3 { margin: 0 0 18px 0; color: #2f5a4e; font-size: 18px; font-weight: 700; text-align: center; }
+    .policy-link { display: block; margin: 12px 0; padding: 12px; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; text-decoration: none; color: #2f5a4e; font-weight: 600; text-align: center; transition: all 0.2s; }
+    .policy-link:hover { background-color: #2f5a4e; color: #ffffff; border-color: #2f5a4e; }
+    .button { display: inline-block; background-color: #2f5a4e; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
+    .footer { background-color: #2f5a4e; padding: 30px; text-align: center; color: #ffffff; }
     .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
     .warning { border-left: 4px solid #ff9800; background-color: #fff8e1; padding: 16px; margin: 20px 0; border-radius: 4px; }
     .warning p { margin: 0; color: #e65100; font-size: 14px; font-weight: 600; }
@@ -569,7 +569,7 @@ export class EmailService {
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
+      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png
     </div>
     <div class="content">
       <h1 class="title">Account Reactivated, {{fullName}}</h1>
@@ -1525,7 +1525,7 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1551,7 +1551,7 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1576,7 +1576,7 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1601,7 +1601,7 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1640,7 +1640,7 @@ export class EmailService {
       html = html.replace(/\{\{\s*amount\s*\}\}/gi, amount);
       html = html.replace(/\{\{\s*retryUrl\s*\}\}/gi, retryUrl);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1677,7 +1677,7 @@ export class EmailService {
         html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
       }
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1702,7 +1702,7 @@ export class EmailService {
       // USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1727,7 +1727,7 @@ export class EmailService {
       // USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
