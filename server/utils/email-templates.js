@@ -563,6 +563,90 @@ export async function sendTeacherUnderReviewEmail(recipientEmail, recipientName)
   }
 }
 
+export async function sendShopPurchaseEmail(recipientEmail, recipientName, purchaseData) {
+  console.log(`📧 Sending shop purchase email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'shop-purchase', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'Customer';
+    const productName = purchaseData.productName || 'Product';
+    const amount = purchaseData.amount || '0.00';
+    const orderId = purchaseData.orderId || 'N/A';
+    
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{productName\}\}/gi, productName);
+    emailHtml = emailHtml.replace(/\{\{amount\}\}/gi, amount);
+    emailHtml = emailHtml.replace(/\{\{orderId\}\}/gi, orderId);
+    
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Order Confirmation - ${productName}`,
+      html: emailHtml,
+      from: `"EduFiliova Shop" <orders@edufiliova.com>`
+    });
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending shop purchase email:`, error);
+    throw error;
+  }
+}
+
+export async function sendNewDeviceLoginEmail(recipientEmail, recipientName, loginData) {
+  console.log(`📧 Sending new device login email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'new-device-login', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'User';
+    const device = loginData.device || 'Unknown Device';
+    const location = loginData.location || 'Unknown Location';
+    const time = loginData.time || new Date().toLocaleString();
+    
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{device\}\}/gi, device);
+    emailHtml = emailHtml.replace(/\{\{location\}\}/gi, location);
+    emailHtml = emailHtml.replace(/\{\{time\}\}/gi, time);
+    
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Security Alert: New Device Login',
+      html: emailHtml,
+      from: `"EduFiliova Security" <support@edufiliova.com>`
+    });
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending new device login email:`, error);
+    throw error;
+  }
+}
+
+export async function sendMeetingReminderEmail(recipientEmail, recipientName, meetingData) {
+  console.log(`📧 Sending meeting reminder email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'meeting-reminder', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'User';
+    const meetingTitle = meetingData.title || 'Meeting';
+    const meetingTime = meetingData.time || 'Scheduled Time';
+    const meetingLink = meetingData.link || '#';
+    
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{meetingTitle\}\}/gi, meetingTitle);
+    emailHtml = emailHtml.replace(/\{\{meetingTime\}\}/gi, meetingTime);
+    emailHtml = emailHtml.replace(/\{\{meetingLink\}\}/gi, meetingLink);
+    
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Reminder: ${meetingTitle}`,
+      html: emailHtml,
+      from: `"EduFiliova" <noreply@edufiliova.com>`
+    });
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending meeting reminder email:`, error);
+    throw error;
+  }
+}
+
 export async function sendFreelancerApplicationSubmittedEmail(recipientEmail, recipientName) {
   console.log(`📧 Sending freelancer application submitted email to ${recipientEmail}...`);
   try {
@@ -584,23 +668,64 @@ export async function sendFreelancerApplicationSubmittedEmail(recipientEmail, re
   }
 }
 
-export async function sendFreelancerApplicationApprovedEmail(recipientEmail, recipientName) {
-  console.log(`📧 Sending freelancer application approved email to ${recipientEmail}...`);
+export async function sendCourseCompletionEmail(recipientEmail, recipientName, courseData) {
+  console.log(`📧 Sending course completion email to ${recipientEmail}...`);
   try {
-    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'freelancer-application-approved', 'template.html');
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'course-completion', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    const fullName = recipientName || 'Freelancer';
+    const fullName = recipientName || 'Student';
+    const courseName = courseData.courseName || 'Course';
+    const completionDate = courseData.completionDate || new Date().toLocaleDateString();
+    const finalScore = courseData.finalScore || 'Completed';
+    
     emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
-    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{courseName\}\}/gi, courseName);
+    emailHtml = emailHtml.replace(/\{\{completionDate\}\}/gi, completionDate);
+    emailHtml = emailHtml.replace(/\{\{finalScore\}\}/gi, finalScore);
+    
     const result = await emailService.sendEmail({
       to: recipientEmail,
-      subject: 'Welcome to EduFiliova Freelancer Network!',
+      subject: `Congratulations! You've completed ${courseName}`,
       html: emailHtml,
-      from: `"EduFiliova Review Team" <support@edufiliova.com>`
+      from: `"EduFiliova" <noreply@edufiliova.com>`
     });
     return result;
   } catch (error) {
-    console.error(`❌ Error sending freelancer application approved email:`, error);
+    console.error(`❌ Error sending course completion email:`, error);
+    throw error;
+  }
+}
+
+export async function sendPaymentFailedEmail(recipientEmail, recipientName, paymentData) {
+  console.log(`📧 Sending payment failed email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'payment-failed', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'User';
+    const orderId = paymentData.orderId || 'N/A';
+    const amount = paymentData.amount || '0.00';
+    const itemName = paymentData.itemName || 'Subscription';
+    const failureReason = paymentData.failureReason || 'Declined by bank';
+    const failureDate = paymentData.failureDate || new Date().toLocaleDateString();
+    const updatePaymentLink = paymentData.updatePaymentLink || 'https://edufiliova.com/billing';
+    
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{orderId\}\}/gi, orderId);
+    emailHtml = emailHtml.replace(/\{\{amount\}\}/gi, amount);
+    emailHtml = emailHtml.replace(/\{\{itemName\}\}/gi, itemName);
+    emailHtml = emailHtml.replace(/\{\{failureReason\}\}/gi, failureReason);
+    emailHtml = emailHtml.replace(/\{\{failureDate\}\}/gi, failureDate);
+    emailHtml = emailHtml.replace(/\{\{updatePaymentLink\}\}/gi, updatePaymentLink);
+    
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Action Required: Payment Failed',
+      html: emailHtml,
+      from: `"EduFiliova Billing" <orders@edufiliova.com>`
+    });
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending payment failed email:`, error);
     throw error;
   }
 }
