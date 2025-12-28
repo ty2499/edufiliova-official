@@ -506,6 +506,17 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
+          {(viewMode === 'create' || viewMode === 'manage') && (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleBackToList}
+              className="p-0 h-8 w-8 rounded-full"
+              data-testid="button-back"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          )}
           <div>
             <p className="text-gray-700 dark:text-gray-400 text-sm">
               {viewMode === 'list' ? 'Create and manage subjects for students' : 
