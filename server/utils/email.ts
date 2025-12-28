@@ -45,12 +45,26 @@ export class EmailService {
     
     return html.replace(imageRegex, (match, filename) => {
       try {
-        const imagePath = path.resolve(process.cwd(), 'attached_assets', filename);
-        if (fs.existsSync(imagePath)) {
+        // Try multiple possible paths (since server might run from different directories)
+        const possiblePaths = [
+          path.resolve(process.cwd(), 'attached_assets', filename),
+          path.resolve(process.cwd(), '..', 'attached_assets', filename),
+          path.join('/home/runner/workspace/attached_assets', filename),
+        ];
+        
+        let imagePath = '';
+        for (const p of possiblePaths) {
+          if (fs.existsSync(p)) {
+            imagePath = p;
+            break;
+          }
+        }
+        
+        if (imagePath) {
           const imageData = fs.readFileSync(imagePath);
           const base64 = imageData.toString('base64');
           const ext = path.extname(filename).slice(1).toLowerCase();
-          const mimeType = ext === 'png' ? 'image/png' : ext === 'jpg' ? 'image/jpeg' : 'image/png';
+          const mimeType = ext === 'png' ? 'image/png' : ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : 'image/png';
           return `src="data:${mimeType};base64,${base64}"`;
         }
       } catch (e) {
