@@ -8,6 +8,7 @@
   <style>
     body { width: 100%; margin: 0; padding: 0; background-color: #f0f1f5; font-family: Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
     .header { background-color: #0c332c; padding: 30px 40px; text-align: center; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
     .content { background-color: #ffffff; padding: 40px; max-width: 600px; margin: 0 auto; border-radius: 0 0 8px 8px; }
     .footer { padding: 30px; text-align: center; color: #666; font-size: 14px; }
     .code-container { background-color: #f8fafc; border: 2px dashed #0c332c; padding: 30px; text-align: center; margin: 30px 0; border-radius: 12px; }
@@ -28,11 +29,11 @@
       <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" style="max-width: 180px; height: auto; display: inline-block;">
     </div>
     <div class="content">
-      <h1 style="color: #0c332c; margin: 0 0 20px 0; font-size: 24px; font-weight: 800; text-align: center;">Verify Your Identity</h1>
+      <h1 style="margin: 0 0 20px 0; font-size: 24px; font-weight: 800; text-align: center;">Verify Your Identity</h1>
       
-      <p style="color: #334155; font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Hi <strong>{{fullName}}</strong>,</p>
+      <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Hi <strong>{{fullName}}</strong>,</p>
       
-      <p style="color: #475569; font-size: 16px; line-height: 1.6;">A request was made to reset your password. For your security, please use the following verification code to proceed with the password change.</p>
+      <p style="font-size: 16px; line-height: 1.6;">A request was made to reset your password. For your security, please use the following verification code to proceed with the password change.</p>
       
       <div class="code-container">
         <span class="code-label">Verification Code</span>
@@ -40,7 +41,7 @@
         <div class="expires-badge">Expires in {{expiresIn}}</div>
       </div>
 
-      <p style="color: #475569; font-size: 15px; line-height: 1.6; text-align: center;">
+      <p style="font-size: 15px; line-height: 1.6; text-align: center;">
         If you didn't request this, you can safely ignore this email. Your password will remain unchanged unless you use this code.
       </p>
       

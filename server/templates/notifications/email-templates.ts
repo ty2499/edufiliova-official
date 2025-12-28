@@ -15,6 +15,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .content { padding: 40px; }
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -23,14 +24,14 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Hey {{displayName}}!</h1>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <h1 style="margin: 0 0 20px;">Hey {{displayName}}!</h1>
+      <p style="font-size: 16px; line-height: 1.6;">
         We noticed you started signing up but didn't finish. No worries – your spot is still waiting!
       </p>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         Complete your registration now to unlock:
       </p>
-      <ul style="color: #666; font-size: 16px; line-height: 1.8;">
+      <ul style="font-size: 16px; line-height: 1.8;">
         <li>Access to thousands of lessons and courses</li>
         <li>Interactive learning tools</li>
         <li>Progress tracking and certificates</li>
@@ -38,7 +39,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <div style="text-align: center;">
         <a href="{{completeUrl}}" class="btn">Complete Registration</a>
       </div>
-      <p style="color: #999; font-size: 14px; margin-top: 30px;">
+      <p style="font-size: 14px; margin-top: 30px;">
         If you have any questions, just reply to this email – we're here to help!
       </p>
     </div>
@@ -69,6 +70,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .urgent-box { background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px 20px; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -77,17 +79,17 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Time is running out, {{displayName}}!</h1>
+      <h1 style="margin: 0 0 20px;">Time is running out, {{displayName}}!</h1>
       <div class="urgent-box">
         <p style="margin: 0; color: #e65100; font-weight: 600;">Your registration will expire in 24 hours!</p>
       </div>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         Don't miss out on your learning journey. Complete your registration now before your spot expires.
       </p>
       <div style="text-align: center;">
         <a href="{{completeUrl}}" class="btn">Complete Registration Now</a>
       </div>
-      <p style="color: #999; font-size: 14px; margin-top: 30px;">
+      <p style="font-size: 14px; margin-top: 30px;">
         Need help? Reply to this email and we'll assist you right away.
       </p>
     </div>
@@ -117,6 +119,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .content { padding: 40px; }
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -125,14 +128,14 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Welcome to the Freelance Community, {{displayName}}!</h1>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <h1 style="margin: 0 0 20px;">Welcome to the Freelance Community, {{displayName}}!</h1>
+      <p style="font-size: 16px; line-height: 1.6;">
         You're almost done! Complete your freelance profile to start connecting with clients and earning on EduFiliova.
       </p>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         Complete your registration to:
       </p>
-      <ul style="color: #666; font-size: 16px; line-height: 1.8;">
+      <ul style="font-size: 16px; line-height: 1.8;">
         <li>Showcase your portfolio and skills</li>
         <li>Connect with clients looking for your expertise</li>
         <li>Start earning from day one</li>
@@ -141,7 +144,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <div style="text-align: center;">
         <a href="{{completeUrl}}" class="btn">Complete Your Profile</a>
       </div>
-      <p style="color: #999; font-size: 14px; margin-top: 30px;">
+      <p style="font-size: 14px; margin-top: 30px;">
         Questions? Reply to this email and our support team will help you get started!
       </p>
     </div>
@@ -172,6 +175,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .urgent-box { background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px 20px; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -180,17 +184,17 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Don't miss out on client opportunities, {{displayName}}!</h1>
+      <h1 style="margin: 0 0 20px;">Don't miss out on client opportunities, {{displayName}}!</h1>
       <div class="urgent-box">
         <p style="margin: 0; color: #e65100; font-weight: 600;">Your freelancer profile registration expires in 24 hours!</p>
       </div>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         Complete your registration now to start earning with EduFiliova. Finish setting up your profile before your opportunity expires!
       </p>
       <div style="text-align: center;">
         <a href="{{completeUrl}}" class="btn">Activate Your Freelance Profile</a>
       </div>
-      <p style="color: #999; font-size: 14px; margin-top: 30px;">
+      <p style="font-size: 14px; margin-top: 30px;">
         Need support? We're here to help. Reply to this email anytime.
       </p>
     </div>
@@ -221,6 +225,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .feature-box { background: #f9fafb; padding: 20px; border-radius: 8px; margin: 15px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -229,35 +234,35 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Welcome aboard, {{displayName}}!</h1>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <h1 style="margin: 0 0 20px;">Welcome aboard, {{displayName}}!</h1>
+      <p style="font-size: 16px; line-height: 1.6;">
         We're thrilled to have you join the EduFiliova family! You've taken the first step towards an amazing learning journey.
       </p>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         Here's what you can do right now:
       </p>
       <div class="feature-box">
-        <h3 style="color: #1a1a1a; margin: 0 0 10px;">
+        <h3 style="margin: 0 0 10px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 8px;">
             <path d="M8 8C8 8 14 6 24 6C34 6 40 8 40 8V40C40 40 34 38 24 38C14 38 8 40 8 40V8Z" fill="#3B82F6"/>
             <path d="M24 6V38" stroke="white" stroke-width="2"/>
           </svg>
           Explore Courses
         </h3>
-        <p style="color: #666; margin: 0;">Browse our library of courses tailored to your grade level.</p>
+        <p style="margin: 0;">Browse our library of courses tailored to your grade level.</p>
       </div>
       <div class="feature-box">
-        <h3 style="color: #1a1a1a; margin: 0 0 10px;">
+        <h3 style="margin: 0 0 10px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 8px;">
             <circle cx="24" cy="16" r="10" fill="#3B82F6"/>
             <path d="M10 44C10 34 16 28 24 28C32 28 38 34 38 44" stroke="#3B82F6" stroke-width="4"/>
           </svg>
           Complete Your Profile
         </h3>
-        <p style="color: #666; margin: 0;">Set up your profile to get personalized recommendations.</p>
+        <p style="margin: 0;">Set up your profile to get personalized recommendations.</p>
       </div>
       <div class="feature-box">
-        <h3 style="color: #1a1a1a; margin: 0 0 10px;">
+        <h3 style="margin: 0 0 10px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48" fill="none" style="vertical-align: middle; margin-right: 8px;">
             <circle cx="24" cy="24" r="20" stroke="#0C332C" stroke-width="4"/>
             <circle cx="24" cy="24" r="12" stroke="#F59E0B" stroke-width="4"/>
@@ -265,7 +270,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
           </svg>
           Start Learning
         </h3>
-        <p style="color: #666; margin: 0;">Jump into your first lesson and track your progress.</p>
+        <p style="margin: 0;">Jump into your first lesson and track your progress.</p>
       </div>
       <div style="text-align: center;">
         <a href="{{dashboardUrl}}" class="btn">Go to Dashboard</a>
@@ -300,6 +305,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .tip-box { background: #0C332C; padding: 25px; border-radius: 12px; margin: 20px 0; color: #ffffff !important; }
     .tip-box p, .tip-box h1, .tip-box h2, .tip-box h3 { color: #ffffff !important; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -308,8 +314,8 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">How's your learning going, {{displayName}}?</h1>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <h1 style="margin: 0 0 20px;">How's your learning going, {{displayName}}?</h1>
+      <p style="font-size: 16px; line-height: 1.6;">
         It's been a couple of days since you joined. Here are some tips to get the most out of EduFiliova:
       </p>
       <div class="tip-box">
@@ -322,10 +328,10 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
         </h3>
         <p style="margin: 0;">Set a daily learning goal of just 15 minutes. Consistency beats intensity!</p>
       </div>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         <strong>Popular with students like you:</strong>
       </p>
-      <ul style="color: #666; font-size: 16px; line-height: 1.8;">
+      <ul style="font-size: 16px; line-height: 1.8;">
         <li>Daily challenges to test your knowledge</li>
         <li>Interactive quizzes with instant feedback</li>
         <li>Study groups and community discussions</li>
@@ -361,6 +367,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .stats-box { background: #f0f9ff; border: 2px solid #0ea5e9; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -369,18 +376,18 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">You're doing great, {{displayName}}!</h1>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <h1 style="margin: 0 0 20px;">You're doing great, {{displayName}}!</h1>
+      <p style="font-size: 16px; line-height: 1.6;">
         You've been with us for 5 days now. Here's what you've unlocked:
       </p>
       <div class="stats-box">
         <h2 style="color: #0ea5e9; margin: 0;">Your Learning Journey</h2>
-        <p style="color: #666; margin: 10px 0 0;">Every expert was once a beginner. Keep going!</p>
+        <p style="margin: 10px 0 0;">Every expert was once a beginner. Keep going!</p>
       </div>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         <strong>Ready for more?</strong> Consider upgrading to unlock:
       </p>
-      <ul style="color: #666; font-size: 16px; line-height: 1.8;">
+      <ul style="font-size: 16px; line-height: 1.8;">
         <li>Unlimited access to all courses</li>
         <li>Live tutoring sessions</li>
         <li>Downloadable study materials</li>
@@ -417,6 +424,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .reminder-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin: 20px 0; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -425,14 +433,14 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Hey {{displayName}}, we miss you!</h1>
+      <h1 style="margin: 0 0 20px;">Hey {{displayName}}, we miss you!</h1>
       <div class="reminder-box">
         <p style="margin: 0; color: #92400e;">It's been 3 days since your last lesson. Don't break your learning streak!</p>
       </div>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         Just 10 minutes a day can make a huge difference. Your courses are waiting for you!
       </p>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <p style="font-size: 16px; line-height: 1.6;">
         <strong>Quick tip:</strong> Pick up right where you left off – we saved your progress.
       </p>
       <div style="text-align: center;">
@@ -466,6 +474,7 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
     .course-card { background: #f9fafb; padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #e5e7eb; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+    p, h1, h2, h3, li { color: #0C332C !important; }
   </style>
 </head>
 <body>
@@ -474,13 +483,13 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
       <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
-      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Your course is ready, {{displayName}}!</h1>
-      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+      <h1 style="margin: 0 0 20px;">Your course is ready, {{displayName}}!</h1>
+      <p style="font-size: 16px; line-height: 1.6;">
         You enrolled in a course 3 days ago but haven't started yet. The best time to start is now!
       </p>
       <div class="course-card">
-        <h3 style="color: #1a1a1a; margin: 0 0 10px;">{{courseName}}</h3>
-        <p style="color: #666; margin: 0;">Start your first lesson and see how fun learning can be!</p>
+        <h3 style="margin: 0 0 10px;">{{courseName}}</h3>
+        <p style="margin: 0;">Start your first lesson and see how fun learning can be!</p>
       </div>
       <div style="text-align: center;">
         <a href="{{courseUrl}}" class="btn">Start Course Now</a>
