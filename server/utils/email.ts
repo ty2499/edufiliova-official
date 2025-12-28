@@ -775,7 +775,7 @@ export class EmailService {
 
   async sendFreelancerApprovalEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/freelancer_approval_template.html');
+    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/freelancer-application-approved/template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
@@ -796,23 +796,12 @@ export class EmailService {
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
     return this.sendEmail({
       to: email,
       subject: 'Welcome Aboard! Your Freelancer Application is Approved - EduFiliova',
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'ring_green.png', path: assetPath('bbe5722d1ffd3c84888e18335965d5e5_linking.png'), cid: 'ring_green', contentType: 'image/png' },
-        { filename: 'logo.png', path: assetPath('3c3a32d57b55881831d31127dddaf32b_linking.png'), cid: 'logo', contentType: 'image/png' },
-        { filename: 'ring_green2.png', path: assetPath('d320764f7298e63f6b035289d4219bd8_linking.png'), cid: 'ring_green2', contentType: 'image/png' },
-        { filename: 'edu_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_linking.png'), cid: 'edu_logo', contentType: 'image/png' },
-        { filename: 'edu_logo2.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'edu_logo2', contentType: 'image/png' },
-        { filename: 'freelancer_img.png', path: assetPath('5079c2203be6bb217e9e7c150f5f0d60_linking.png'), cid: 'freelancer_img', contentType: 'image/png' },
-        { filename: 'money_img.png', path: assetPath('c147000ffb2efef7ba64fa6ce5415a30_linking.png'), cid: 'money_img', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'corner', contentType: 'image/png' }
-      ]
+      attachments: [] // Images are handled via Cloudinary URLs in sendEmail
     });
   }
 
