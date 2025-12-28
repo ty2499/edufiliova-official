@@ -518,7 +518,12 @@ export async function sendTeacherDeclineEmail(recipientEmail, recipientName, rea
     }
 
     // Aggressive tag cleanup for images/ paths before passing to emailService
-    emailHtml = emailHtml.replace(/images\/(?:<[^>]*>)*([^"'>\s]+)(?:<[^>]*>)*\.(png|jpg|jpeg|gif)/gi, 'images/$1.$2');
+    emailHtml = emailHtml.replace(/images\/(?:<[^>]*>)*([^"'>\s]+?)(?:<[^>]*>)*\.(png|jpg|jpeg|gif)/gi, 'images/$1.$2');
+
+    // Final direct replacement of known local paths to absolute URLs as a fallback
+    const fallbackBase = "https://edufiliova.com/email-assets/teacher-decline/images/";
+    emailHtml = emailHtml.replace(/src=["']images\/([^"']+)["']/gi, `src="${fallbackBase}$1"`);
+    emailHtml = emailHtml.replace(/href=["']images\/([^"']+)["']/gi, `href="${fallbackBase}$1"`);
 
     const attachments = [];
 
