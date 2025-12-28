@@ -3114,16 +3114,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const htmlContent = fs.readFileSync(templatePath, 'utf-8');
       const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, user.id) });
 
-      await sendEmail(
-        email,
-        'Password Reset Verification Code',
-        getEmailTemplate('password_reset_whatsapp' as any, { 
-          code: emailCode, 
-          fullName: profile?.name || 'User',
-          expiresIn: '10',
-          htmlContent 
-        })
-      );
+      const { emailService } = await import('./utils/email.js');
+      await emailService.sendEmail({
+        to: email,
+        subject: 'Password Reset Verification Code',
+        html: htmlContent
+      });
 
       res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
     } catch (error) {
