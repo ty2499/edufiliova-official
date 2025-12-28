@@ -64,6 +64,11 @@ export class EmailService {
     // 1. Replace src="images/..." and href="images/..."
     const imageRegex = /(?:href|src)=["'](?:images\/)?([^"']+)["']/gi;
     let processedHtml = html.replace(imageRegex, (match, filename) => {
+      // 0. Skip Absolute URLs or Cloudinary URLs
+      if (filename.startsWith('http') || filename.startsWith('https://res.cloudinary.com')) {
+        return match;
+      }
+
       // If filename still contains images/, strip it
       const cleanFilename = filename.startsWith('images/') ? filename.substring(7) : filename;
       
@@ -79,7 +84,13 @@ export class EmailService {
       // Look for any key that starts with this base name
       for (const [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
-        if (lowerKey.startsWith(baseName) || lowerKey.includes(baseName)) {
+        // Check for exact match, match with timestamp (baseName_...), match with extension (baseName.png), 
+        // OR if the mapped filename contains the cleanFilename
+        if (lowerKey === baseName || 
+            lowerKey.startsWith(baseName + '_') || 
+            lowerKey.startsWith(baseName + '.') || 
+            lowerKey === cleanFilename.toLowerCase() ||
+            lowerKey.includes(cleanFilename.toLowerCase())) {
           console.log(`✅ Image base match: ${filename} -> ${key} -> ${url}`);
           return match.includes('href') ? `href="${url}"` : `src="${url}"`;
         }
@@ -107,13 +118,34 @@ export class EmailService {
     processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
       const lowerCid = cid.toLowerCase();
       
+      // First try exact or near-match in emailAssetMap
       for (const [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
-        if (lowerKey.includes(lowerCid)) {
+        if (lowerKey === lowerCid || lowerKey.startsWith(lowerCid + '_') || lowerKey.startsWith(lowerCid + '.') || lowerKey.includes(lowerCid)) {
           console.log(`✅ CID match: ${cid} -> ${key} -> ${url}`);
           return `src="${url}"`;
         }
       }
+
+      // 4. Handle specific image filenames if they aren't CIDs
+      if (lowerCid.includes('db561a55b2cf0bc6e877bb934b39b700')) {
+        const url = emailAssetMap['db561a55b2cf0bc6e877bb934b39b700.png'] || emailAssetMap['db561a55b2cf0bc6e877bb934b39b700_1766506747370.png'];
+        if (url) return `src="${url}"`;
+      }
+      if (lowerCid.includes('83faf7f361d9ba8dfdc904427b5b6423')) {
+        const url = emailAssetMap['83faf7f361d9ba8dfdc904427b5b6423.png'] || emailAssetMap['83faf7f361d9ba8dfdc904427b5b6423_1766506747364.png'];
+        if (url) return `src="${url}"`;
+      }
+
+      // 5. Check if the CID is a base name that might match a mapping
+      for (const [key, url] of Object.entries(emailAssetMap)) {
+        const keyBase = key.split('_')[0].split('.')[0].toLowerCase();
+        if (keyBase.includes(lowerCid) || lowerCid.includes(keyBase)) {
+          console.log(`✅ CID base match: ${cid} -> ${key} -> ${url}`);
+          return `src="${url}"`;
+        }
+      }
+
       return match;
     });
 
