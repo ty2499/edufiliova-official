@@ -510,10 +510,10 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
             variant="ghost" 
             size="sm" 
             onClick={() => viewMode === 'list' ? onNavigate('teacher-dashboard') : handleBackToList()}
-            className="p-0 h-8 w-8 rounded-full"
+            className="p-0 h-8 w-8 rounded-full text-[#2f5a4e] hover:bg-transparent hover:text-[#2f5a4e]"
             data-testid="button-back"
           >
-            <ArrowLeft className="h-5 w-5 text-[#2f5a4e]" />
+            <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
             <p className="text-gray-900 dark:text-gray-100 text-sm font-medium">
