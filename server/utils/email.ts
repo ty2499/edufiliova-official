@@ -62,16 +62,19 @@ export class EmailService {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
     // 1. Replace src="images/..." and href="images/..."
-    const imageRegex = /(?:href|src)=["']images\/([^"']+)["']/gi;
+    const imageRegex = /(?:href|src)=["'](?:images\/)?([^"']+)["']/gi;
     let processedHtml = html.replace(imageRegex, (match, filename) => {
+      // If filename still contains images/, strip it
+      const cleanFilename = filename.startsWith('images/') ? filename.substring(7) : filename;
+      
       // Check if we have a Cloudinary URL for this image
-      if (emailAssetMap[filename]) {
-        console.log(`✅ Cloudinary match: ${filename} -> ${emailAssetMap[filename]}`);
-        return match.includes('href') ? `href="${emailAssetMap[filename]}"` : `src="${emailAssetMap[filename]}"`;
+      if (emailAssetMap[cleanFilename]) {
+        console.log(`✅ Cloudinary match: ${cleanFilename} -> ${emailAssetMap[cleanFilename]}`);
+        return match.includes('href') ? `href="${emailAssetMap[cleanFilename]}"` : `src="${emailAssetMap[cleanFilename]}"`;
       }
       
       // Try to find the image in the map by ignoring timestamps and matching the base filename
-      const baseName = filename.split('_')[0].split('.')[0].toLowerCase();
+      const baseName = cleanFilename.split('_')[0].split('.')[0].toLowerCase();
       
       // Look for any key that starts with this base name
       for (const [key, url] of Object.entries(emailAssetMap)) {
