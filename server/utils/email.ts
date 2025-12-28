@@ -417,6 +417,64 @@ export class EmailService {
     });
   }
 
+  async sendTeacherApplicationDeclinedEmail(email: string, data: { fullName: string; displayName?: string; reason?: string }): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_1766920692166.html');
+    let html = fs.readFileSync(htmlPath, 'utf-8');
+
+    // STEP 1: Remove preloads and STEP 2: Add iPhone font support
+    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
+    
+    const iphoneFontStack = `
+    <style>
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
+    </style>`;
+    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+
+    const fullName = data.fullName || 'Teacher';
+    const displayName = data.displayName || data.fullName || 'Teacher';
+    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Application review completed';
+
+    // STEP 3: Bulletproof name replacement FIRST
+    html = this.forceReplaceName(html, fullName);
+
+    // Handle conditional blocks and variables
+    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
+
+    // Replace hardcoded placeholder names
+    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
+    hardcodedNames.forEach(pattern => {
+      html = html.replace(pattern, fullName);
+    });
+
+    // Final variable cleanup
+    html = html.replace(/\{\{reason\}\}/gi, reasonText);
+    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+    html = html.replace(/\{\{#if reason\}\}/gi, '');
+    html = html.replace(/\{\{\/if\}\}/gi, '');
+
+    // STEP 4 & 5: Replace image paths with CIDs (1:1 exact mapping for all 9 images)
+    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
+    html = html.replaceAll('images/0ac9744033a7e26f12e08d761c703308.png', 'cid:logo');
+    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
+    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
+    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
+    html = html.replaceAll('images/917a6e905cf83da447efc0f5c2780aca.png', 'cid:teacher_img');
+    html = html.replaceAll('images/de497c5361453604d8a15c4fd9bde086.png', 'cid:rejection_icon');
+    html = html.replaceAll('images/e06e238bd6d74a3e48f94e5b0b81388d.png', 'cid:support_img');
+    html = html.replaceAll('images/7976503d64a3eef4169fe235111cdc57.png', 'cid:corner_graphic');
+
+    // STEP 6: Send with Cloudinary processing via sendEmail()
+    return this.sendEmail({
+      to: email,
+      subject: 'Application Status Update - EduFiliova Teacher Application',
+      html,
+      from: `"EduFiliova Support" <support@edufiliova.com>`,
+      attachments: []
+    });
+  }
+
   async sendApplicationResubmittedEmail(email: string, data: { fullName: string; applicationType: 'teacher' | 'freelancer' }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/resubmission_template.html');
