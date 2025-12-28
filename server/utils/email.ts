@@ -63,15 +63,17 @@ export class EmailService {
 
     // 1. Replace src="images/..." and href="images/..."
     // Aggressive pattern to catch split spans in images/ paths and handle varying quote styles
-    const imageRegex = /(?:href|src|url)\s*[:=]\s*["']?((?:images\/)?(?:<span[^>]*>|<\/span>)*([^"'>\s]+?)(?:<span[^>]*>|<\/span>)*\.(?:png|jpg|jpeg|gif))["']?/gi;
+    const imageRegex = /(?:href|src|url)\s*[:=]\s*["']?((?:https?:\/\/[^"'>\s]+?\/email-assets\/|images\/)(?:<span[^>]*>|<\/span>)*([^"'>\s]+?)(?:<span[^>]*>|<\/span>)*\.(?:png|jpg|jpeg|gif))["']?/gi;
     let processedHtml = html.replace(imageRegex, (match, fullPath, filename) => {
       // Strip any internal HTML tags from the filename (like spans)
       let cleanFilename = filename.replace(/<[^>]*>/g, '').trim() + '.' + match.split('.').pop().split(/[#"'>\s)]/)[0];
       
-      // If the path is an absolute URL pointing to edufiliova.com email-assets, extract the filename
-      if (cleanFilename.includes('edufiliova.com/email-assets/')) {
-        const parts = cleanFilename.split('/');
-        cleanFilename = parts[parts.length - 1];
+      // If the path is an absolute URL pointing to Cloudinary email-assets, extract the filename
+      if (fullPath.includes('/email-assets/')) {
+        const parts = fullPath.split('/');
+        const lastPart = parts[parts.length - 1];
+        // Extract base filename before timestamps if present (e.g., logo_123.png -> logo.png)
+        cleanFilename = lastPart.split('_')[0] + '.' + lastPart.split('.').pop();
       }
 
       console.log(`🔍 Checking filename: ${cleanFilename} from path: ${fullPath}`);
@@ -399,8 +401,12 @@ export class EmailService {
   }
 
   async sendTeacherRejectionEmail(email: string, data: { fullName: string; displayName?: string; reason?: string }): Promise<boolean> {
+    return this.sendTeacherApplicationDeclinedEmail(email, data);
+  }
+
+  async sendTeacherApplicationDeclinedEmail(email: string, data: { fullName: string; displayName?: string; reason?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_declined_teacher_1766647033808.html');
+    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/teacher-application-declined/template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
@@ -414,98 +420,27 @@ export class EmailService {
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
     const fullName = data.fullName || 'Teacher';
-    const displayName = data.displayName || data.fullName || 'Teacher';
-    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
+    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Application review completed';
 
     // ✅ USE BULLETPROOF NAME REPLACEMENT FIRST
     html = this.forceReplaceName(html, fullName);
 
-    // 1. Handle blocks
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
-
-    // 2. Replace hardcoded placeholder names
-    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
-    hardcodedNames.forEach(pattern => {
-      html = html.replace(pattern, fullName);
-    });
-
-    // 3. Final cleanup
-    html = html.replace(/\{\{reason\}\}/gi, reasonText);
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{#if reason\}\}/gi, '');
-    html = html.replace(/\{\{\/if\}\}/gi, '');
-
-    // 1:1 replacement of EXACT relative paths with CIDs (matching declined template images)
-    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
-    html = html.replaceAll('images/0ac9744033a7e26f12e08d761c703308.png', 'cid:logo');
-    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
-    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
-    html = html.replaceAll('images/917a6e905cf83da447efc0f5c2780aca.png', 'cid:teacher_img');
-    html = html.replaceAll('images/de497c5361453604d8a15c4fd9bde086.png', 'cid:rejection_icon');
-    html = html.replaceAll('images/e06e238bd6d74a3e48f94e5b0b81388d.png', 'cid:support_img');
-    html = html.replaceAll('images/7976503d64a3eef4169fe235111cdc57.png', 'cid:corner_graphic');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
-
-    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
-
-    return this.sendEmail({
-      to: email,
-      subject: 'Application Status Update - EduFiliova Teacher Application',
-      html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: []
-    });
-  }
-
-  async sendTeacherApplicationDeclinedEmail(email: string, data: { fullName: string; displayName?: string; reason?: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/email_1766920692166.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    // STEP 1: Remove preloads and STEP 2: Add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
-    
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
-
-    const fullName = data.fullName || 'Teacher';
-    const displayName = data.displayName || data.fullName || 'Teacher';
-    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Application review completed';
-
-    // STEP 3: Bulletproof name replacement FIRST
-    html = this.forceReplaceName(html, fullName);
-
-    // Handle conditional blocks and variables
-    html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{reason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided:\n\n${reasonText}`);
-
-    // Replace hardcoded placeholder names
-    const hardcodedNames = [/Tyler Williams/gi, /Test Teacher/gi, /EduFiliova Teacher/gi, /Hallpt Design/gi];
-    hardcodedNames.forEach(pattern => {
-      html = html.replace(pattern, fullName);
-    });
+    // Handle conditional blocks and variables (Handlebars style)
+    if (reasonText) {
+      // If Handlebars isn't used as a real engine here, we manually handle the #if
+      html = html.replace(/{{#if reason}}[\s\S]*?{{reason}}[\s\S]*?{{\/if}}/gi, `
+        <div style="margin-top:15px;padding:12px;background-color:#fee2e2;border-radius:6px;">
+          <p style="margin:0;font-size:13px;color:#991b1b;"><strong>Reason provided:</strong></p>
+          <p style="margin:5px 0 0 0;font-size:13px;color:#7f1d1d;">${reasonText}</p>
+        </div>
+      `);
+    } else {
+      html = html.replace(/{{#if reason}}[\s\S]*?{{\/if}}/gi, '');
+    }
 
     // Final variable cleanup
-    html = html.replace(/\{\{reason\}\}/gi, reasonText);
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{#if reason\}\}/gi, '');
-    html = html.replace(/\{\{\/if\}\}/gi, '');
-
-    // STEP 4 & 5: Replace image paths with CIDs (1:1 exact mapping for all 9 images)
-    html = html.replaceAll('images/bbe5722d1ffd3c84888e18335965d5e5.png', 'cid:icon_db');
-    html = html.replaceAll('images/0ac9744033a7e26f12e08d761c703308.png', 'cid:logo');
-    html = html.replaceAll('images/d320764f7298e63f6b035289d4219bd8.png', 'cid:icon_pf');
-    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:s_social');
-    html = html.replaceAll('images/917a6e905cf83da447efc0f5c2780aca.png', 'cid:teacher_img');
-    html = html.replaceAll('images/de497c5361453604d8a15c4fd9bde086.png', 'cid:rejection_icon');
-    html = html.replaceAll('images/e06e238bd6d74a3e48f94e5b0b81388d.png', 'cid:support_img');
-    html = html.replaceAll('images/7976503d64a3eef4169fe235111cdc57.png', 'cid:corner_graphic');
+    html = html.replace(/{{reason}}/gi, reasonText);
+    html = html.replace(/{{baseUrl}}/gi, baseUrl);
 
     // STEP 6: Send with Cloudinary processing via sendEmail()
     return this.sendEmail({
