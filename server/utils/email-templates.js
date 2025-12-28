@@ -450,6 +450,40 @@ export async function sendSuspensionEmail(recipientEmail, recipientName, suspens
   }
 }
 
+export async function sendAccountRestrictionEmail(recipientEmail, recipientName, restrictionData) {
+  console.log(`📧 Sending account restriction email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'restriction', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'User';
+    
+    const replacements = {
+      'fullName': fullName,
+      'restrictionDate': restrictionData.restrictionDate || new Date().toLocaleDateString(),
+      'restrictionType': restrictionData.restrictionType || 'Account Restriction',
+      'duration': restrictionData.duration || 'Temporary',
+      'referenceId': restrictionData.referenceId || 'N/A',
+      'restrictionReason': restrictionData.restrictionReason || 'Violation of terms.',
+      'appealLink': restrictionData.appealLink || 'https://edufiliova.com/appeal'
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+    }
+    
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Important: Your Account Has Been Restricted',
+      html: emailHtml,
+      from: `"EduFiliova Trust & Safety" <support@edufiliova.com>`
+    });
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending account restriction email:`, error);
+    throw error;
+  }
+}
+
 export async function sendFreelancerUnderReviewEmail(recipientEmail, recipientName) {
   console.log(`📧 Sending freelancer review email to ${recipientEmail}...`);
   try {
