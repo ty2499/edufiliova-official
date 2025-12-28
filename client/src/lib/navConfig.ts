@@ -227,6 +227,14 @@ export const NAV_SECTIONS: Record<string, NavSection> = {
         requiresAuth: true,
       },
       {
+        id: 'admin-subject-approval',
+        label: 'Subject Approvals',
+        description: 'Review teacher-created subjects',
+        icon: 'GraduationCap',
+        allowedRoles: ['admin'],
+        requiresAuth: true,
+      },
+      {
         id: 'teacher-meetings',
         label: 'Teacher Meetings',
         description: 'Schedule and host classes',
