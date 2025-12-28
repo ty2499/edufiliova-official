@@ -395,21 +395,12 @@ export class EmailService {
     html = html.replace(/\{\{appType\}\}/gi, appType);
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
     return this.sendEmail({
       to: email,
       subject: `Your ${appType} Application Resubmission Received - EduFiliova`,
       html,
       from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'corner1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'corner1', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_linking.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'ring.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'ring', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'social', contentType: 'image/png' },
-        { filename: 'corner2.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'corner2', contentType: 'image/png' },
-        { filename: 'student_img.png', path: assetPath('e521c0bfaebd7131cd0f55ee3686e87f_linking.png'), cid: 'student_img', contentType: 'image/png' }
-      ]
+      attachments: []
     });
   }
 
