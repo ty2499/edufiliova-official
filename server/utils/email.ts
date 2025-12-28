@@ -66,7 +66,7 @@ export class EmailService {
     const imageRegex = /(?:href|src|url)\s*[:=]\s*["']?((?:https?:\/\/[^"'>\s]+?\/email-assets\/|images\/)(?:<span[^>]*>|<\/span>)*([^"'>\s]+?)(?:<span[^>]*>|<\/span>)*\.(?:png|jpg|jpeg|gif))["']?/gi;
     let processedHtml = html.replace(imageRegex, (match, fullPath, filename) => {
       // Strip any internal HTML tags from the filename (like spans)
-      let cleanFilename = filename.replace(/<[^>]*>/g, '').trim() + '.' + match.split('.').pop().split(/[#"'>\s)]/)[0];
+      let cleanFilename = filename.replace(/<[^>]*>/g, '').trim() + '.' + fullPath.split('.').pop().split(/[#"'>\s)]/)[0];
       
       // If the path is an absolute URL pointing to Cloudinary email-assets, extract the filename
       if (fullPath.includes('/email-assets/')) {
@@ -96,6 +96,11 @@ export class EmailService {
           }
           // Ensure no trailing comma or double slash
           url = url.replace(/,\//g, '/').replace(/\/\//g, '/').replace(/https:\//g, 'https://');
+          
+          // Add quality and fetch_format for better compatibility
+          if (!url.includes('q_auto')) {
+             url = url.replace(/\/upload\//, '/upload/q_auto:best/');
+          }
         }
 
         console.log(`✅ Cloudinary match: ${cleanFilename} -> ${url}`);
@@ -135,6 +140,10 @@ export class EmailService {
               });
             }
             url = url.replace(/,\//g, '/').replace(/\/\//g, '/').replace(/https:\//g, 'https://');
+            
+            if (!url.includes('q_auto')) {
+               url = url.replace(/\/upload\//, '/upload/q_auto:best/');
+            }
           }
 
           console.log(`✅ Image base match: ${filename} -> ${key} -> ${url}`);
@@ -390,6 +399,11 @@ export class EmailService {
     
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+
+    // Explicitly replace any remaining images/ paths in teacher approval
+    html = html.replace(/src="images\/logo\.png"/gi, `src="${emailAssetMap['logo.png']}"`);
+    html = html.replace(/src="images\/bbe5722d1ffd3c84888e18335965d5e5_1766647041212\.png"/gi, `src="${emailAssetMap['bbe5722d1ffd3c84888e18335965d5e5_1766647041212.png']}"`);
+    html = html.replace(/src="images\/d320764f7298e63f6b035289d4219bd8_1766647041216\.png"/gi, `src="${emailAssetMap['d320764f7298e63f6b035289d4219bd8_1766647041216.png']}"`);
 
     // Use support@edufiliova.com as requested
     return this.sendEmail({
