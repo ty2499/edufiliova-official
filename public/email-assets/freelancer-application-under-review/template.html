@@ -3,197 +3,105 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-    <meta name="x-apple-disable-message-reformatting">
     <title>Application Under Review - EduFiliova</title>
     <style>
         body { margin: 0; padding: 0; background-color: #f0f1f5; font-family: 'Arial', 'Helvetica', sans-serif; }
         .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
         .header { background-color: #0c332c; padding: 40px 30px; text-align: center; }
-        .header img { max-width: 180px; height: auto; display: block; margin: 0 auto; }
         .content { padding: 40px; color: #333; line-height: 1.8; }
         .greeting { font-size: 18px; color: #0c332c; font-weight: bold; margin-bottom: 20px; }
+        .title { color: #0c332c; font-size: 28px; font-weight: bold; margin-bottom: 20px; text-align: center; }
         .intro-text { color: #666; font-size: 15px; margin-bottom: 25px; }
         .divider { height: 2px; background-color: #0c332c; margin: 30px 0; }
         
-        .status-box { background-color: #f0f7f4; border-left: 5px solid #0c332c; padding: 20px; margin: 20px 0; border-radius: 4px; }
-        .status-title { color: #0c332c; font-weight: bold; font-size: 16px; margin-bottom: 10px; }
-        .status-text { color: #555; font-size: 14px; line-height: 1.6; }
+        .status-box { background-color: #f8faf9; border: 1px solid #e0e0e0; padding: 20px; margin: 25px 0; border-radius: 6px; }
+        .status-title { color: #0c332c; font-weight: bold; font-size: 15px; margin-bottom: 12px; }
+        .status-text { color: #555; font-size: 14px; line-height: 1.8; margin: 0; }
         
-        .steps-container { margin: 25px 0; }
-        .step { display: table; width: 100%; margin-bottom: 18px; }
-        .step-number { display: table-cell; width: 45px; vertical-align: top; }
-        .step-circle { width: 35px; height: 35px; background-color: #0c332c; color: white; border-radius: 50%; text-align: center; line-height: 35px; font-weight: bold; font-size: 16px; }
-        .step-content { display: table-cell; vertical-align: top; padding-left: 15px; }
-        .step-text { color: #666; font-size: 14px; line-height: 1.6; }
-        
-        .info-box { background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px; }
-        .info-box-title { color: #92400e; font-weight: bold; font-size: 14px; margin-bottom: 8px; }
-        .info-box-text { color: #78350f; font-size: 13px; line-height: 1.7; }
-        .info-item { margin: 5px 0; }
-        
-        .cta-button { text-align: center; margin: 25px 0; }
-        .cta-button a { display: inline-block; padding: 14px 32px; background-color: #0c332c; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 15px; font-weight: bold; }
-        .cta-button a:hover { background-color: #2f5a4e; }
-        
-        .closing { color: #666; font-size: 15px; margin-top: 25px; line-height: 1.7; }
-        .closing-sign { color: #0c332c; font-weight: bold; font-size: 14px; margin-top: 8px; }
+        .steps-box { background-color: #f0f7f4; border-left: 5px solid #0c332c; padding: 20px; margin: 25px 0; border-radius: 4px; }
+        .steps-title { color: #0c332c; font-weight: bold; font-size: 16px; margin-bottom: 15px; }
+        .steps-list { color: #555; font-size: 14px; line-height: 2; margin: 0; padding-left: 20px; }
         
         .footer { background: linear-gradient(135deg, #0c332c 0%, #1a4a42 100%); padding: 40px 30px; color: #ffffff; }
         .footer-content { max-width: 600px; margin: 0 auto; }
-        
         .footer-grid { display: table; width: 100%; margin-bottom: 30px; }
         .footer-col { display: table-cell; width: 50%; padding: 0 15px; vertical-align: top; }
         .footer-col:first-child { padding-left: 0; }
         .footer-col:last-child { padding-right: 0; }
-        
-        .footer-section { margin-bottom: 25px; }
         .footer-title { color: #a0fab2; font-weight: bold; font-size: 12px; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px; border-bottom: 1px solid #1a4a42; padding-bottom: 8px; }
         .footer-text { font-size: 12px; line-height: 1.9; color: #d4e4df; }
         .footer-link { color: #a0fab2; text-decoration: none; font-weight: 500; }
-        .footer-link:hover { text-decoration: underline; }
-        
         .footer-divider { height: 1px; background-color: #1a4a42; margin: 20px 0; }
-        
-        .footer-info { background-color: rgba(255,255,255,0.05); padding: 15px; border-radius: 4px; margin-bottom: 20px; }
-        .footer-info-text { font-size: 11px; line-height: 1.8; color: #c7d8d3; }
-        
         .footer-bottom { text-align: center; color: #8fa9a3; font-size: 11px; padding-top: 15px; border-top: 1px solid #1a4a42; }
-        .footer-bottom p { margin: 5px 0; }
-        
         .footer-social { text-align: center; margin: 15px 0; }
         .footer-social-link { display: inline-block; color: #a0fab2; text-decoration: none; margin: 0 8px; font-size: 11px; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header with Logo -->
         <div class="header">
-            <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" />
+            <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" width="180">
         </div>
 
-        <!-- Content -->
         <div class="content">
             <p class="greeting">Hi {{fullName}},</p>
             
-            <p class="intro-text">Exciting news! Your freelancer application is now being actively reviewed by our verification team. We're evaluating your profile to ensure it meets EduFiliova's quality and professional standards.</p>
-
-            <div class="divider"></div>
-
-            <!-- Status Box -->
-            <div class="status-box">
-                <div class="status-title">Application Status: Under Review</div>
-                <div class="status-text">Our team has started the review process. We are carefully evaluating your profile, portfolio, and professional information to determine your eligibility.</div>
-            </div>
-
-            <!-- Review Steps -->
-            <div class="steps-container">
-                <p style="color: #0c332c; font-size: 16px; font-weight: bold; margin: 0 0 20px 0;">Review Steps in Progress</p>
-                
-                <div class="step">
-                    <div class="step-number">
-                        <div class="step-circle">1</div>
-                    </div>
-                    <div class="step-content">
-                        <div class="step-text"><strong>Verifying</strong> your identity and contact information</div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">
-                        <div class="step-circle">2</div>
-                    </div>
-                    <div class="step-content">
-                        <div class="step-text"><strong>Reviewing</strong> your portfolio and work samples</div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">
-                        <div class="step-circle">3</div>
-                    </div>
-                    <div class="step-content">
-                        <div class="step-text"><strong>Checking</strong> your skills and service offerings</div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">
-                        <div class="step-circle">4</div>
-                    </div>
-                    <div class="step-content">
-                        <div class="step-text"><strong>Final</strong> approval decision</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <!-- What to Expect -->
-            <div class="info-box">
-                <div class="info-box-title">What to Expect</div>
-                <div class="info-box-text">
-                    <div class="info-item">- You will receive an email once the review is complete</div>
-                    <div class="info-item">- No action is required from you at this time</div>
-                    <div class="info-item">- You can check your application status in your dashboard anytime</div>
-                </div>
-            </div>
-
-            <!-- Dashboard Link -->
-            <div class="cta-button">
-                <a href="https://edufiliova.com/login">View Your Dashboard</a>
-            </div>
-
-            <!-- Closing -->
-            <p class="closing">Thank you for your patience. We appreciate your interest in joining the EduFiliova freelancer community and will notify you as soon as a decision has been made.</p>
+            <div class="title">Application Received</div>
             
-            <p class="closing-sign">Kind regards,<br>EduFiliova Review Team</p>
+            <p class="intro-text">Thank you for your interest in joining the EduFiliova freelancer network. We've received your application and it's currently being reviewed by our team.</p>
+
+            <div class="divider"></div>
+
+            <div class="status-box">
+                <div class="status-title">Application Status:</div>
+                <p class="status-text"><strong>Under Review</strong></p>
+            </div>
+
+            <div class="steps-box">
+                <div class="steps-title">What happens next:</div>
+                <ol class="steps-list">
+                    <li>Our team reviews your portfolio and credentials.</li>
+                    <li>We verify your submitted information and references.</li>
+                    <li>You'll receive an email notification once a decision is made.</li>
+                    <li>This process typically takes 3-5 business days.</li>
+                </ol>
+            </div>
+
+            <div class="divider"></div>
+
+            <p style="color: #666; font-size: 14px; text-align: center;">
+                If you have any questions in the meantime, please feel free to reach out to us.
+            </p>
         </div>
 
-        <!-- Enhanced Professional Footer -->
         <div class="footer">
             <div class="footer-content">
-                <!-- Quick Links Grid -->
                 <div class="footer-grid">
                     <div class="footer-col">
-                        <div class="footer-section">
-                            <div class="footer-title">Support</div>
-                            <div class="footer-text">
-                                <a href="mailto:support@edufiliova.com" class="footer-link">support@edufiliova.com</a><br>
-                                <a href="https://edufiliova.com/help" class="footer-link">Help Center</a><br>
-                                <a href="https://edufiliova.com/blog" class="footer-link">Blog</a>
-                            </div>
+                        <div class="footer-title">Support</div>
+                        <div class="footer-text">
+                            <a href="mailto:support@edufiliova.com" class="footer-link">Email Support</a><br>
+                            <a href="https://edufiliova.com/help" class="footer-link">Help Center</a><br>
+                            <a href="https://edufiliova.com/blog" class="footer-link">Blog</a>
                         </div>
                     </div>
                     <div class="footer-col">
-                        <div class="footer-section">
-                            <div class="footer-title">Resources</div>
-                            <div class="footer-text">
-                                <a href="https://edufiliova.com/login" class="footer-link">Dashboard</a><br>
-                                <a href="https://edufiliova.com/about" class="footer-link">About Us</a><br>
-                                <a href="https://edufiliova.com/shop" class="footer-link">Digital Resources</a>
-                            </div>
+                        <div class="footer-title">Resources</div>
+                        <div class="footer-text">
+                            <a href="https://edufiliova.com/community-guidelines" class="footer-link">Community Guidelines</a><br>
+                            <a href="https://edufiliova.com/about" class="footer-link">About Us</a><br>
+                            <a href="https://edufiliova.com/shop" class="footer-link">Digital Resources</a>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Important Info Box -->
-                <div class="footer-info">
-                    <div class="footer-info-text">
-                        <a href="https://edufiliova.com/community-guidelines" class="footer-link">Community Guidelines</a>
                     </div>
                 </div>
 
                 <div class="footer-divider"></div>
 
-                <!-- Footer Bottom -->
                 <div class="footer-bottom">
                     <p>&copy; 2025 EduFiliova. All rights reserved.</p>
-                    <p>This email was sent to {{email}}</p>
                     <div class="footer-social">
-                        <a href="https://edufiliova.com/unsubscribe" class="footer-social-link">Unsubscribe</a> | 
                         <a href="https://edufiliova.com/privacy" class="footer-social-link">Privacy Policy</a> | 
-                        <a href="https://edufiliova.com/terms" class="footer-social-link">Terms</a>
+                        <a href="https://edufiliova.com/terms" class="footer-social-link">Terms of Service</a>
                     </div>
                 </div>
             </div>
