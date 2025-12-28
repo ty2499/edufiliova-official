@@ -1248,29 +1248,11 @@ export class EmailService {
     html = html.replace(/\{\{code\}\}/gi, code);
     html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
 
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:verify1');
-    html = html.replaceAll('images/f28befc0a869e8a352bf79aa02080dc7.png', 'cid:verify2');
-    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:verify3');
-    html = html.replaceAll('images/8c5dfa6f6ff7f681bbf586933883b270.png', 'cid:verify4');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:verify5');
-    html = html.replaceAll('images/50df79cf94bcde6e18f9cb9ac1a740dd.png', 'cid:verify6');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
     return this.sendEmail({
       to: email,
       subject: 'Verify Your Student Account - EduFiliova',
       html,
-      from: `"EduFiliova Security" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'verify1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'verify1', contentType: 'image/png' },
-        { filename: 'verify2.png', path: assetPath('f28befc0a869e8a352bf79aa02080dc7_linking.png'), cid: 'verify2', contentType: 'image/png' },
-        { filename: 'verify3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'verify3', contentType: 'image/png' },
-        { filename: 'verify4.png', path: assetPath('8c5dfa6f6ff7f681bbf586933883b270_linking.png'), cid: 'verify4', contentType: 'image/png' },
-        { filename: 'verify5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'verify5', contentType: 'image/png' },
-        { filename: 'verify6.png', path: assetPath('50df79cf94bcde6e18f9cb9ac1a740dd_linking.png'), cid: 'verify6', contentType: 'image/png' }
-      ]
+      from: `"EduFiliova Security" <support@edufiliova.com>`
     });
   }
 
@@ -1431,29 +1413,11 @@ export class EmailService {
     html = html.replace(/\{\{code\}\}/gi, code);
     html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
 
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:teacher1');
-    html = html.replaceAll('images/f28befc0a869e8a352bf79aa02080dc7.png', 'cid:teacher2');
-    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:teacher3');
-    html = html.replaceAll('images/e5c031c97fefa56399311851ed3cb1de.png', 'cid:teacher4');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:teacher5');
-    html = html.replaceAll('images/8c5dfa6f6ff7f681bbf586933883b270.png', 'cid:teacher6');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
     return this.sendEmail({
       to: email,
       subject: 'Verify Your Teacher Account - EduFiliova',
       html,
-      from: `"EduFiliova Security" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'teacher1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'teacher1', contentType: 'image/png' },
-        { filename: 'teacher2.png', path: assetPath('f28befc0a869e8a352bf79aa02080dc7_linking.png'), cid: 'teacher2', contentType: 'image/png' },
-        { filename: 'teacher3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'teacher3', contentType: 'image/png' },
-        { filename: 'teacher4.png', path: assetPath('e5c031c97fefa56399311851ed3cb1de_linking.png'), cid: 'teacher4', contentType: 'image/png' },
-        { filename: 'teacher5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'teacher5', contentType: 'image/png' },
-        { filename: 'teacher6.png', path: assetPath('8c5dfa6f6ff7f681bbf586933883b270_linking.png'), cid: 'teacher6', contentType: 'image/png' }
-      ]
+      from: `"EduFiliova Security" <support@edufiliova.com>`
     });
   }
 
@@ -1472,29 +1436,11 @@ export class EmailService {
     html = html.replace(/\{\{code\}\}/gi, code);
     html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
 
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:freelancer1');
-    html = html.replaceAll('images/9564092012b952eb113aed5a5f2f67f8.png', 'cid:freelancer2');
-    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:freelancer3');
-    html = html.replaceAll('images/53d788456ae4cc2800001f0737c2d843.png', 'cid:freelancer4');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:freelancer5');
-    html = html.replaceAll('images/1bf5815502d2621deb8af9e7b0187f86.png', 'cid:freelancer6');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
     return this.sendEmail({
       to: email,
       subject: 'Verify Your Freelancer Account - EduFiliova',
       html,
-      from: `"EduFiliova Security" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'freelancer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'freelancer1', contentType: 'image/png' },
-        { filename: 'freelancer2.png', path: assetPath('9564092012b952eb113aed5a5f2f67f8_linking.png'), cid: 'freelancer2', contentType: 'image/png' },
-        { filename: 'freelancer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'freelancer3', contentType: 'image/png' },
-        { filename: 'freelancer4.png', path: assetPath('53d788456ae4cc2800001f0737c2d843_linking.png'), cid: 'freelancer4', contentType: 'image/png' },
-        { filename: 'freelancer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'freelancer5', contentType: 'image/png' },
-        { filename: 'freelancer6.png', path: assetPath('1bf5815502d2621deb8af9e7b0187f86_linking.png'), cid: 'freelancer6', contentType: 'image/png' }
-      ]
+      from: `"EduFiliova Security" <support@edufiliova.com>`
     });
   }
 
@@ -1513,29 +1459,11 @@ export class EmailService {
     html = html.replace(/\{\{code\}\}/gi, code);
     html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
 
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:customer1');
-    html = html.replaceAll('images/41506b29d7f0bbde9fcb0d4afb720c70.png', 'cid:customer2');
-    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:customer3');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:customer4');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:customer5');
-    html = html.replaceAll('images/fcf514453cb3c939b52a8a2bcbb97b94.png', 'cid:customer6');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
     return this.sendEmail({
       to: email,
       subject: 'Verify Your Account - EduFiliova',
       html,
-      from: `"EduFiliova Security" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'customer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'customer1', contentType: 'image/png' },
-        { filename: 'customer2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_linking.png'), cid: 'customer2', contentType: 'image/png' },
-        { filename: 'customer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'customer3', contentType: 'image/png' },
-        { filename: 'customer4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'customer4', contentType: 'image/png' },
-        { filename: 'customer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'customer5', contentType: 'image/png' },
-        { filename: 'customer6.png', path: assetPath('fcf514453cb3c939b52a8a2bcbb97b94_linking.png'), cid: 'customer6', contentType: 'image/png' }
-      ]
+      from: `"EduFiliova Security" <support@edufiliova.com>`
     });
   }
 
@@ -1554,29 +1482,11 @@ export class EmailService {
     html = html.replace(/\{\{code\}\}/gi, code);
     html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
 
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/db561a55b2cf0bc6e877bb934b39b700.png', 'cid:customer1');
-    html = html.replaceAll('images/41506b29d7f0bbde9fcb0d4afb720c70.png', 'cid:customer2');
-    html = html.replaceAll('images/83faf7f361d9ba8dfdc904427b5b6423.png', 'cid:customer3');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:customer4');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:customer5');
-    html = html.replaceAll('images/fcf514453cb3c939b52a8a2bcbb97b94.png', 'cid:customer6');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
     return this.sendEmail({
       to: email,
       subject: 'Verify Your Shop Account - EduFiliova',
       html,
-      from: `"EduFiliova Security" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'customer1.png', path: assetPath('db561a55b2cf0bc6e877bb934b39b700_linking.png'), cid: 'customer1', contentType: 'image/png' },
-        { filename: 'customer2.png', path: assetPath('41506b29d7f0bbde9fcb0d4afb720c70_linking.png'), cid: 'customer2', contentType: 'image/png' },
-        { filename: 'customer3.png', path: assetPath('83faf7f361d9ba8dfdc904427b5b6423_linking.png'), cid: 'customer3', contentType: 'image/png' },
-        { filename: 'customer4.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'customer4', contentType: 'image/png' },
-        { filename: 'customer5.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'customer5', contentType: 'image/png' },
-        { filename: 'customer6.png', path: assetPath('fcf514453cb3c939b52a8a2bcbb97b94_linking.png'), cid: 'customer6', contentType: 'image/png' }
-      ]
+      from: `"EduFiliova Security" <support@edufiliova.com>`
     });
   }
 
