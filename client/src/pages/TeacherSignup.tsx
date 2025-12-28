@@ -385,35 +385,36 @@ export default function TeacherSignup() {
 
                   <div className="border rounded-lg p-4 bg-gray-50">
                     <img 
-                      src="/attached_assets/image_1766949735320.png" 
-                      alt="Profile picture guidelines - what is and isn't accepted"
+                      src="/attached_assets/image_1766954375306.png" 
+                      alt="Teacher profile picture guidelines - accepted vs not accepted"
                       className="w-full rounded-lg"
                     />
                     <div className="mt-3 space-y-2 text-sm">
-                      <p className="font-medium text-gray-900">Requirements:</p>
+                      <p className="font-medium text-gray-900">Summary of Guidelines:</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="border-l-4 border-green-500 pl-3">
                           <p className="font-medium text-green-700">✓ Accepted</p>
                           <ul className="text-gray-600 space-y-1 mt-1">
-                            <li>• Clear, professional photos</li>
-                            <li>• Good lighting</li>
-                            <li>• Face clearly visible</li>
+                            <li>• Clear, child-friendly</li>
+                            <li>• Professional and friendly</li>
+                            <li>• Neutral background</li>
+                            <li>• Good lighting, smile</li>
                           </ul>
                         </div>
                         <div className="border-l-4 border-red-500 pl-3">
                           <p className="font-medium text-red-700">✗ Not Accepted</p>
                           <ul className="text-gray-600 space-y-1 mt-1">
-                            <li>• Blurry or filtered</li>
-                            <li>• Cartoons or logos</li>
-                            <li>• Group photos</li>
-                            <li>• Face hidden</li>
+                            <li>• Blurry, dark or cropped</li>
+                            <li>• Nudity or revealing skin</li>
+                            <li>• Heavy filters or masks</li>
+                            <li>• Offensive gestures/alcohol</li>
                           </ul>
                         </div>
                       </div>
                     </div>
                     <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                       <p className="text-sm text-blue-900">
-                        <span className="font-medium">Why this matters:</span> A clear, professional profile photo helps build trust with students and families. It verifies your identity, ensures we can recognize you, and creates a professional first impression. Students and parents need to see who they're working with. Blurry, filtered, or hidden photos make it difficult to verify your identity and can raise security concerns.
+                        <span className="font-medium">Why this matters:</span> Profile photos must be appropriate for children/students to see teachers online. A clear, professional photo helps build trust and ensures a safe learning environment.
                       </p>
                     </div>
                   </div>
