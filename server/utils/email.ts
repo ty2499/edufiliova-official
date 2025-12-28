@@ -122,12 +122,12 @@ export class EmailService {
     // 3. Explicitly handle cid: references
     const cidRegex = /src=["']cid:([^"']+)["']/gi;
     processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
-      const lowerCid = cid.toLowerCase();
+      const lowerCid = cid.toLowerCase().trim();
       console.log(`🔍 Checking CID: ${lowerCid}`);
       
       // First try exact or near-match in emailAssetMap
       for (const [key, url] of Object.entries(emailAssetMap)) {
-        const lowerKey = key.toLowerCase();
+        const lowerKey = key.toLowerCase().trim();
         if (lowerKey === lowerCid || 
             lowerKey.startsWith(lowerCid + '_') || 
             lowerKey.startsWith(lowerCid + '.') || 
@@ -148,6 +148,13 @@ export class EmailService {
       }
 
       console.warn(`⚠️ No mapping found for CID: ${cid}`);
+      return match;
+    });
+
+    // Final global cleanup for any missed src="cid:..." patterns
+    processedHtml = processedHtml.replace(/src=["']cid:([^"']+)["']/gi, (match, cid) => {
+      const key = cid.toLowerCase().trim();
+      if (emailAssetMap[key]) return `src="${emailAssetMap[key]}"`;
       return match;
     });
 
