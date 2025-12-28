@@ -2585,6 +2585,11 @@ const Index = () => {
         );
         
       case "customer-dashboard":
+        // Redirect admins away from customer dashboard
+        if (profile && ["admin", "accountant", "customer_service"].includes(profile.role)) {
+          handleNavigation("admin-dashboard");
+          return <div className="instant-transition">Redirecting to admin dashboard...</div>;
+        }
         return (
           <PageTransition 
             isActive={currentPage === "customer-dashboard"} 
