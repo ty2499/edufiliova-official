@@ -3676,7 +3676,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TabsContent value="all">
                 <Card>
                   <CardContent className="p-0">
-                    <ScrollArea className="h-[400px] md:h-[600px]">
+                    <ScrollArea className="md:h-[600px]">
                       <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                         {usersLoading ? (
                           <div className="text-center py-8">Loading users...</div>
@@ -3706,7 +3706,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TabsContent value="student">
                 <Card>
                   <CardContent className="p-0">
-                    <ScrollArea className="h-[400px] md:h-[600px]">
+                    <ScrollArea className="md:h-[600px]">
                       <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                         {usersLoading ? (
                           <div className="text-center py-8">Loading users...</div>
@@ -3736,7 +3736,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TabsContent value="teacher">
                 <Card>
                   <CardContent className="p-0">
-                    <ScrollArea className="h-[400px] md:h-[600px]">
+                    <ScrollArea className="md:h-[600px]">
                       <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                         {usersLoading ? (
                           <div className="text-center py-8">Loading users...</div>
@@ -3777,7 +3777,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                   {/* Freelancer User List */}
                   <Card>
                     <CardContent className="p-0">
-                      <ScrollArea className="h-[400px] md:h-[600px]">
+                      <ScrollArea className="md:h-[600px]">
                         <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                           {usersLoading ? (
                             <div className="text-center py-8">Loading users...</div>
@@ -3808,7 +3808,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TabsContent value="customer">
                 <Card>
                   <CardContent className="p-0">
-                    <ScrollArea className="h-[400px] md:h-[600px]">
+                    <ScrollArea className="md:h-[600px]">
                       <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                         {usersLoading ? (
                           <div className="text-center py-8">Loading users...</div>
@@ -3838,7 +3838,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TabsContent value="admin">
                 <Card>
                   <CardContent className="p-0">
-                    <ScrollArea className="h-[400px] md:h-[600px]">
+                    <ScrollArea className="md:h-[600px]">
                       <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                         {usersLoading ? (
                           <div className="text-center py-8">Loading users...</div>
@@ -3868,7 +3868,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TabsContent value="accountant">
                 <Card>
                   <CardContent className="p-0">
-                    <ScrollArea className="h-[400px] md:h-[600px]">
+                    <ScrollArea className="md:h-[600px]">
                       <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                         {usersLoading ? (
                           <div className="text-center py-8">Loading users...</div>
@@ -3898,7 +3898,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TabsContent value="customer_service">
                 <Card>
                   <CardContent className="p-0">
-                    <ScrollArea className="h-[400px] md:h-[600px]">
+                    <ScrollArea className="md:h-[600px]">
                       <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                         {usersLoading ? (
                           <div className="text-center py-8">Loading users...</div>
@@ -3937,7 +3937,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
                     </p>
                   </CardHeader>
                   <CardContent className="p-0">
-                    <ScrollArea className="h-[400px] md:h-[600px]">
+                    <ScrollArea className="md:h-[600px]">
                       <div className="p-2 md:p-4 space-y-2 md:space-y-4">
                         {usersLoading ? (
                           <div className="text-center py-8">Loading users...</div>
