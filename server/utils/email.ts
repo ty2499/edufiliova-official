@@ -58,35 +58,43 @@ export class EmailService {
   }
 
   private processEmailImages(html: string): string {
-    // Replace local image references with Cloudinary URLs
+    // 1. Replace src="images/..." and href="images/..."
     const imageRegex = /(?:href|src)="images\/([^"]+)"/gi;
-    
-    return html.replace(imageRegex, (match, filename) => {
+    let processedHtml = html.replace(imageRegex, (match, filename) => {
       // Check if we have a Cloudinary URL for this image
       if (emailAssetMap[filename]) {
-        console.log(`✅ Cloudinary match found for: ${filename}`);
         return `src="${emailAssetMap[filename]}"`;
       }
       
       // Fallback: try to find in map with slight variations (case, extensions)
-      const variations = [
-        filename,
-        filename.toLowerCase(),
-        filename.toUpperCase(),
-      ];
-      
-      for (const variation of variations) {
-        for (const [key, url] of Object.entries(emailAssetMap)) {
-          if (key.toLowerCase() === variation.toLowerCase()) {
-            console.log(`✅ Cloudinary variation match found: ${filename} -> ${key}`);
-            return `src="${url}"`;
-          }
+      const lowerFilename = filename.toLowerCase();
+      for (const [key, url] of Object.entries(emailAssetMap)) {
+        if (key.toLowerCase() === lowerFilename) {
+          return `src="${url}"`;
+        }
+        // Partial match (e.g., logo.png matching logo_123.png)
+        if (key.toLowerCase().startsWith(lowerFilename.split('_')[0])) {
+           return `src="${url}"`;
         }
       }
       
-      console.warn(`⚠️ Image not found in Cloudinary map: ${filename}`);
-      return match; // Return original if not found
+      return match;
     });
+
+    // 2. Explicitly handle cid: references that might be in the HTML
+    const cidRegex = /src="cid:([^"]+)"/gi;
+    processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
+      const lowerCid = cid.toLowerCase();
+      for (const [key, url] of Object.entries(emailAssetMap)) {
+        const lowerKey = key.toLowerCase();
+        if (lowerKey === lowerCid || lowerKey.startsWith(lowerCid)) {
+          return `src="${url}"`;
+        }
+      }
+      return match;
+    });
+
+    return processedHtml;
   }
 
   private async initializeFromDatabase() {
