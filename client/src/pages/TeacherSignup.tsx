@@ -727,6 +727,42 @@ export default function TeacherSignup() {
                     )}
                   </div>
 
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <img 
+                      src="/attached_assets/image_1766955033934.png" 
+                      alt="Passport verification guidelines - accepted vs not accepted"
+                      className="w-full rounded-lg"
+                    />
+                    <div className="mt-3 space-y-2 text-sm">
+                      <p className="font-medium text-gray-900">KYC Requirements:</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="border-l-4 border-green-500 pl-3">
+                          <p className="font-medium text-green-700">✓ Accepted</p>
+                          <ul className="text-gray-600 space-y-1 mt-1">
+                            <li>• Full passport photo page</li>
+                            <li>• All edges visible</li>
+                            <li>• Clear, in color, no glare</li>
+                            <li>• Unexpired, readable text</li>
+                          </ul>
+                        </div>
+                        <div className="border-l-4 border-red-500 pl-3">
+                          <p className="font-medium text-red-700">✗ Not Accepted</p>
+                          <ul className="text-gray-600 space-y-1 mt-1">
+                            <li>• Cropped or blurry photos</li>
+                            <li>• Expired documents</li>
+                            <li>• Mobile screenshots</li>
+                            <li>• Cover photo only</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm text-blue-900">
+                        <span className="font-medium">Why this matters:</span> Uncropped, clear, and unexpired passports are required for teacher KYC (Know Your Customer) verification to ensure the platform remains secure and compliant.
+                      </p>
+                    </div>
+                  </div>
+
                   <div>
                     <Label htmlFor="cvResume">Upload CV / Resume</Label>
                     <Input
