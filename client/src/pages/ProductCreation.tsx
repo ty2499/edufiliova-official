@@ -21,7 +21,14 @@ export default function ProductCreation({ onNavigate }: ProductCreationProps) {
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        
+        <Button
+          variant="outline"
+          onClick={handleBack}
+          className="mb-6"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Dashboard
+        </Button>
 
         
 
