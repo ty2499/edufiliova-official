@@ -530,8 +530,20 @@ export async function sendTeacherDeclineEmail(recipientEmail, recipientName, rea
       "9f7291948d8486bdd26690d0c32796e0.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908561/edufiliova/email-assets/9f7291948d8486bdd26690d0c32796e0_1766506747363.png"
     };
 
+    // Standard replacement
     for (const [img, url] of Object.entries(assets)) {
       emailHtml = emailHtml.replace(new RegExp(`images\\/${img}`, 'g'), url);
+    }
+
+    // Handle split HTML spans in image paths (common in these templates)
+    for (const [img, url] of Object.entries(assets)) {
+      const imgParts = img.split('.');
+      if (imgParts.length === 2) {
+        const name = imgParts[0];
+        const ext = imgParts[1];
+        const splitRegex = new RegExp(`images\\/<\/span><span[^>]*>${name}<\/span><span[^>]*>\\.${ext}`, 'g');
+        emailHtml = emailHtml.replace(splitRegex, url);
+      }
     }
 
     const attachments = [];
