@@ -335,4 +335,38 @@ router.get('/teachers/by-category/:categoryId', async (req, res) => {
   }
 });
 
+// Delete subject (Admin only)
+router.delete('/api/subjects/:id', requireAuth, async (req: AuthenticatedRequest, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Authorization check: only admins
+    if (req.user?.role !== 'admin') {
+      return res.status(403).json({ success: false, error: 'Only admins can delete subjects' });
+    }
+
+    // Check if subject exists
+    const subject = await db.select().from(subjects).where(eq(subjects.id, id)).limit(1);
+    if (!subject.length) {
+      return res.status(404).json({ success: false, error: 'Subject not found' });
+    }
+
+    // Delete related teacher associations first
+    await db.delete(teacherSubjects).where(eq(teacherSubjects.subjectId, id));
+    
+    // Delete related availability
+    // Note: teacherAvailability references categoryId, not subjectId directly, 
+    // but some implementations might have linked them. 
+    // Checking schema, subjects and teacherSubjects are the main link.
+
+    // Delete the subject
+    await db.delete(subjects).where(eq(subjects.id, id));
+    
+    res.json({ success: true, message: 'Subject deleted successfully' });
+  } catch (error: any) {
+    console.error('Error deleting subject:', error);
+    res.status(500).json({ success: false, error: 'Failed to delete subject' });
+  }
+});
+
 export default router;

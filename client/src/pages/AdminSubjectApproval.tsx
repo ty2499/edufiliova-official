@@ -97,6 +97,26 @@ export default function AdminSubjectApproval({ onNavigate }: AdminSubjectApprova
     },
   });
 
+  const deleteSubject = useMutation({
+    mutationFn: async (id: string) => {
+      setAjaxStatus({ type: 'loading', message: 'Deleting subject...' });
+      return apiRequest(`/api/subjects/${id}`, {
+        method: "DELETE",
+      });
+    },
+    onSuccess: () => {
+      setAjaxStatus({ type: 'success', message: 'Subject deleted successfully!' });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/subjects"] });
+      setTimeout(() => {
+        setAjaxStatus({ type: 'idle', message: '' });
+      }, 1500);
+    },
+    onError: (error: any) => {
+      setAjaxStatus({ type: 'error', message: error.message || 'Failed to delete subject' });
+      setTimeout(() => setAjaxStatus({ type: 'idle', message: '' }), 3000);
+    },
+  });
+
   const handleReview = () => {
     if (!selectedSubject || !reviewAction) return;
     
@@ -231,35 +251,50 @@ export default function AdminSubjectApproval({ onNavigate }: AdminSubjectApprova
                       <p>Email: {subject.creatorEmail || 'N/A'}</p>
                       <p>Created: {new Date(subject.createdAt).toLocaleDateString()}</p>
                     </div>
-                    {subject.approvalStatus === 'pending' && (
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          className="flex-1"
-                          onClick={() => {
-                            setSelectedSubject(subject);
-                            setReviewAction('approve');
-                          }}
-                          data-testid={`button-approve-${subject.id}`}
-                        >
-                          <Check className="h-4 w-4 mr-1" />
-                          Approve
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          className="flex-1"
-                          onClick={() => {
-                            setSelectedSubject(subject);
-                            setReviewAction('reject');
-                          }}
-                          data-testid={`button-reject-${subject.id}`}
-                        >
-                          <XCircle className="h-4 w-4 mr-1" />
-                          Reject
-                        </Button>
-                      </div>
-                    )}
+                    <div className="flex gap-2">
+                      {subject.approvalStatus === 'pending' && (
+                        <>
+                          <Button
+                            size="sm"
+                            className="flex-1"
+                            onClick={() => {
+                              setSelectedSubject(subject);
+                              setReviewAction('approve');
+                            }}
+                            data-testid={`button-approve-${subject.id}`}
+                          >
+                            <Check className="h-4 w-4 mr-1" />
+                            Approve
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            className="flex-1"
+                            onClick={() => {
+                              setSelectedSubject(subject);
+                              setReviewAction('reject');
+                            }}
+                            data-testid={`button-reject-${subject.id}`}
+                          >
+                            <XCircle className="h-4 w-4 mr-1" />
+                            Reject
+                          </Button>
+                        </>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-primary hover:bg-primary/10"
+                        onClick={() => {
+                          if (window.confirm(`Are you sure you want to PERMANENTLY delete "${subject.name}"?`)) {
+                            deleteSubject.mutate(subject.id);
+                          }
+                        }}
+                        data-testid={`button-delete-${subject.id}`}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                     {subject.adminNotes && (
                       <div className="mt-3 p-2 bg-muted rounded text-xs">
                         <strong>Admin Notes:</strong> {subject.adminNotes}
