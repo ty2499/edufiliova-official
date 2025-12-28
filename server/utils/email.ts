@@ -438,7 +438,6 @@ export class EmailService {
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" class="logo">
     </div>
     <div class="content">
       <h1 class="title" style="color: #0c332c;">Account Update</h1>

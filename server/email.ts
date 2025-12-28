@@ -222,7 +222,6 @@ export async function sendSubscriptionCancellationEmail(
 <body>
   <div class="container">
     <div class="header">
-      <img src="${whiteLogoUrl}" alt="Edufiliova" class="logo">
     </div>
     <div class="content">
       <div class="greeting">Hi ${recipientName || 'there'},</div>
@@ -396,7 +395,6 @@ function generateVoucherEmailHTML(
 <body>
   <div class="container">
     <div class="header">
-      <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
     </div>
     
     <div style="padding: 30px 40px; text-align: center;">
@@ -592,7 +590,6 @@ export async function sendBulkVouchersEmail(
 <body>
   <div class="container">
     <div class="header">
-      <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
     </div>
     
     <div class="content">

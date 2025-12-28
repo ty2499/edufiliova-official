@@ -31,7 +31,6 @@ const emailTemplates = [
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="content">
       <h1 class="title">Welcome to Edufiliova, {{recipientName}}! 🎉</h1>
@@ -118,7 +117,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="content">
       <h1 class="title">Hey {{recipientName}}! 👋</h1>
@@ -208,7 +206,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="promo-banner">
       <p class="promo-text">SAVE 50%</p>
@@ -297,7 +294,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="celebration">
       <div class="trophy">🏆</div>
@@ -395,7 +391,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="content">
       <div class="emoji-header">👋💫</div>
@@ -492,7 +487,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="content">
       <center><span class="badge">✨ Just Launched</span></center>
@@ -584,7 +578,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="success-banner">
       <div class="success-icon">✓</div>
@@ -688,7 +681,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="content">
       <div class="receipt-header">
@@ -797,7 +789,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="welcome-banner">
       <div class="welcome-icon">👨‍🏫</div>
@@ -915,7 +906,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="welcome-banner">
       <div class="welcome-icon">💼</div>
@@ -1028,7 +1018,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="content">
       <h1 class="title">Hello {{recipientName}}! 📊</h1>
@@ -1132,7 +1121,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="content">
       <div class="emoji-header">💬</div>
@@ -1222,7 +1210,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="hero">
       <div class="snowflakes">❄️ 🎄 ❄️</div>
@@ -1331,7 +1318,6 @@ Unsubscribe: {{unsubscribeLink}}`,
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="Edufiliova" class="logo" />
     </div>
     <div class="alert-banner">
       <div class="alert-icon">⚠️</div>

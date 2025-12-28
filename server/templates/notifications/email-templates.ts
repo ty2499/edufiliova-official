@@ -21,7 +21,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">Hey {{displayName}}!</h1>
@@ -76,7 +75,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">Time is running out, {{displayName}}!</h1>
@@ -125,7 +123,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">Welcome to the Freelance Community, {{displayName}}!</h1>
@@ -181,7 +178,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">Don't miss out on client opportunities, {{displayName}}!</h1>
@@ -231,7 +227,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">Welcome aboard, {{displayName}}!</h1>
@@ -311,7 +306,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">How's your learning going, {{displayName}}?</h1>
@@ -373,7 +367,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">You're doing great, {{displayName}}!</h1>
@@ -430,7 +423,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">Hey {{displayName}}, we miss you!</h1>
@@ -480,7 +472,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="margin: 0 0 20px;">Your course is ready, {{displayName}}!</h1>
@@ -527,7 +518,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">Your download is ready!</h1>
@@ -580,7 +570,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">Ready to start teaching, {{displayName}}?</h1>
@@ -641,7 +630,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">Time to shine, {{displayName}}!</h1>
@@ -701,7 +689,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">Let's boost your sales, {{displayName}}!</h1>
@@ -755,7 +742,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">Don't forget your downloads, {{displayName}}!</h1>
@@ -797,7 +783,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">We miss you, {{displayName}}!</h1>
@@ -843,7 +828,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">It's been 2 weeks, {{displayName}}!</h1>
@@ -898,7 +882,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">We'd love to have you back, {{displayName}}!</h1>
@@ -944,7 +927,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <div class="celebration-box">
@@ -1003,7 +985,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">Great news, {{displayName}}!</h1>
@@ -1051,7 +1032,6 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
 <body>
   <div class="container">
     <div class="header">
-      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
     </div>
     <div class="content">
       <h1 style="color: #1a1a1a; margin: 0 0 20px;">Your earnings are ready!</h1>

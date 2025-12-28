@@ -663,7 +663,6 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">${baseStyle}</head><body>
           <div class="container">
             <div class="header">
-              <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
             </div>
             <div class="content">
               <h2 class="title">Verify Your Account</h2>
@@ -704,7 +703,6 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">${baseStyle}</head><body>
           <div class="container">
             <div class="header">
-              <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
             </div>
             <div class="content">
               <h2 class="title">Welcome to EduFiliova!</h2>
@@ -741,7 +739,6 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">${baseStyle}</head><body>
           <div class="container">
             <div class="header">
-              <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
             </div>
             <div class="content">
               <h2 class="title">Reset Your Password</h2>
@@ -827,7 +824,6 @@ export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_re
         <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">${baseStyle}</head><body>
           <div class="container">
             <div class="header">
-              <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
             </div>
             <div class="content">
               <h2 class="title">Verify Your Teacher Application</h2>
