@@ -384,6 +384,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("under_review")}
                 size="sm"
                 data-testid="filter-under-review"
+                className="bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white"
               >
                 <Eye className="w-4 h-4 mr-1" />
                 Under Review ({statusCounts.under_review})
