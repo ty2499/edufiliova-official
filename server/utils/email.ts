@@ -1573,17 +1573,14 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'images');
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
         subject: 'Application Received - Your Teacher Application is Under Review',
         html,
         from: `"EduFiliova Applications" <support@edufiliova.com>`,
-        attachments: [
-          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
-          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
-        ]
+        attachments: []
       });
     } catch (error) {
       console.error('❌ Error sending application submitted email:', error);
@@ -1602,17 +1599,14 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'images');
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
         subject: 'Application Resubmitted - Your Teacher Application is Under Review',
         html,
         from: `"EduFiliova Applications" <support@edufiliova.com>`,
-        attachments: [
-          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
-          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
-        ]
+        attachments: []
       });
     } catch (error) {
       console.error('❌ Error sending application resubmitted email:', error);
@@ -1630,18 +1624,14 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'images');
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
         subject: 'Application Received - Your Freelancer Application is Under Review',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments: [
-          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
-          { filename: 'promo.png', path: path.join(imagesDir, 'promo.png'), cid: 'promo', contentType: 'image/png' },
-          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
-        ]
+        attachments: []
       });
     } catch (error) {
       console.error('❌ Error sending freelancer application submitted email:', error);
@@ -1659,18 +1649,14 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'images');
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
         subject: 'Application Resubmitted - Your Freelancer Application is Under Review',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments: [
-          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
-          { filename: 'promo.png', path: path.join(imagesDir, 'promo.png'), cid: 'promo', contentType: 'image/png' },
-          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
-        ]
+        attachments: []
       });
     } catch (error) {
       console.error('❌ Error sending freelancer application resubmitted email:', error);
@@ -1702,20 +1688,14 @@ export class EmailService {
       html = html.replace(/\{\{\s*amount\s*\}\}/gi, amount);
       html = html.replace(/\{\{\s*retryUrl\s*\}\}/gi, retryUrl);
 
-      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'payment-failed', 'images');
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
         subject: `Payment Failed - Order #${orderId}`,
         html,
         from: `"EduFiliova Billing" <orders@edufiliova.com>`,
-        attachments: [
-          { filename: 'spiral-left.png', path: path.join(imagesDir, 'spiral-left.png'), cid: 'spiral-left', contentType: 'image/png' },
-          { filename: 'spiral-right.png', path: path.join(imagesDir, 'spiral-right.png'), cid: 'spiral-right', contentType: 'image/png' },
-          { filename: 'logo-header.png', path: path.join(imagesDir, 'logo-header.png'), cid: 'logo-header', contentType: 'image/png' },
-          { filename: 'whatsapp-promo.png', path: path.join(imagesDir, 'whatsapp-promo.png'), cid: 'whatsapp-promo', contentType: 'image/png' },
-          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
-        ]
+        attachments: []
       });
     } catch (error) {
       console.error('❌ Error sending payment failed email:', error);
@@ -1745,21 +1725,14 @@ export class EmailService {
         html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
       }
 
-      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-declined', 'images');
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
         subject: 'Teacher Application Update - EduFiliova',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments: [
-          { filename: 'spiral-left.png', path: path.join(imagesDir, 'spiral-left.png'), cid: 'spiral-left', contentType: 'image/png' },
-          { filename: 'spiral-right.png', path: path.join(imagesDir, 'spiral-right.png'), cid: 'spiral-right', contentType: 'image/png' },
-          { filename: 'logo-header.png', path: path.join(imagesDir, 'logo-header.png'), cid: 'logo-header', contentType: 'image/png' },
-          { filename: 'declined-icon.png', path: path.join(imagesDir, 'declined-icon.png'), cid: 'declined-icon', contentType: 'image/png' },
-          { filename: 'promo.png', path: path.join(imagesDir, 'promo.png'), cid: 'promo', contentType: 'image/png' },
-          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
-        ]
+        attachments: []
       });
     } catch (error) {
       console.error('❌ Error sending teacher application declined email:', error);
@@ -1777,17 +1750,14 @@ export class EmailService {
       // USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-under-review', 'images');
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
         subject: 'Your Application is Now Under Review - EduFiliova',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments: [
-          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
-          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
-        ]
+        attachments: []
       });
     } catch (error) {
       console.error('❌ Error sending teacher under review email:', error);
@@ -1805,17 +1775,14 @@ export class EmailService {
       // USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const imagesDir = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-under-review', 'images');
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
         subject: 'Your Application is Now Under Review - EduFiliova',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments: [
-          { filename: 'header-image.png', path: path.join(imagesDir, 'header-image.png'), cid: 'header-image', contentType: 'image/png' },
-          { filename: 'logo-footer.png', path: path.join(imagesDir, 'logo-footer.png'), cid: 'logo-footer', contentType: 'image/png' }
-        ]
+        attachments: []
       });
     } catch (error) {
       console.error('❌ Error sending freelancer under review email:', error);
