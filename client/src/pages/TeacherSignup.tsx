@@ -954,94 +954,37 @@ export default function TeacherSignup() {
                   </div>
 
                   <div className="border rounded-lg p-4 bg-gray-50">
-                    <p className="font-medium text-gray-900 mb-3">Introduction Video - Great Examples (ACCEPTED):</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855676157.png" 
-                          alt="Teacher in classroom with laptop - ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-green-700">✓ Classroom Setting</p>
-                        <p className="text-xs text-gray-600 mt-1">Engaging, expressive, authentic</p>
-                      </div>
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855686807.png" 
-                          alt="Female ESL teacher with branding - ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-green-700">✓ Professional Branding</p>
-                        <p className="text-xs text-gray-600 mt-1">Warm smile, welcoming presence</p>
-                      </div>
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855695067.png" 
-                          alt="Teacher with professional setup - ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-green-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-green-700">✓ Professional Setup</p>
-                        <p className="text-xs text-gray-600 mt-1">Good lighting, clear quality</p>
+                    <img 
+                      src="/attached_assets/image_1766955397136.png" 
+                      alt="Video introduction guidelines - accepted vs not accepted"
+                      className="w-full rounded-lg"
+                    />
+                    <div className="mt-3 space-y-2 text-sm">
+                      <p className="font-medium text-gray-900">Video Requirements:</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="border-l-4 border-green-500 pl-3">
+                          <p className="font-medium text-green-700">✓ Accepted</p>
+                          <ul className="text-gray-600 space-y-1 mt-1">
+                            <li>• Professional, well-lit setting</li>
+                            <li>• Clear audio and video quality</li>
+                            <li>• Engaging and friendly presence</li>
+                            <li>• Direct eye contact, genuine smile</li>
+                          </ul>
+                        </div>
+                        <div className="border-l-4 border-red-500 pl-3">
+                          <p className="font-medium text-red-700">✗ Not Accepted</p>
+                          <ul className="text-gray-600 space-y-1 mt-1">
+                            <li>• Dark, noisy, or blurry</li>
+                            <li>• Too close, bored, or low energy</li>
+                            <li>• Heavy filters (not child-friendly)</li>
+                            <li>• Offensive behavior or cropped</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                    <div className="border-l-4 border-green-500 pl-3 mb-4">
-                      <p className="font-medium text-green-700 mb-2">✓ Why These Work Well</p>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Direct eye contact with genuine smile</li>
-                        <li>• Speaking with passion about teaching</li>
-                        <li>• Natural, engaging body language</li>
-                        <li>• Professional but personable demeanor</li>
-                        <li>• Clear audio and good lighting</li>
-                        <li>• Shows personality and teaching environment</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4 bg-gray-50 mt-4">
-                    <p className="font-medium text-gray-900 mb-3">Introduction Video Guidelines - What NOT to Do:</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855628741.png" 
-                          alt="Eyes closed or looking down - NOT ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-red-700">✗ Eyes Closed/Down</p>
-                        <p className="text-xs text-gray-600 mt-1">Not engaging, unprofessional</p>
-                      </div>
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855638492.png" 
-                          alt="Stressed or frustrated appearance - NOT ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-red-700">✗ Stressed/Frustrated</p>
-                        <p className="text-xs text-gray-600 mt-1">Negative emotions, off-putting</p>
-                      </div>
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855651046.png" 
-                          alt="Shushing gesture or silence - NOT ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-red-700">✗ Not Speaking/Silent</p>
-                        <p className="text-xs text-gray-600 mt-1">Doesn't show teaching ability</p>
-                      </div>
-                    </div>
-                    <div className="border-l-4 border-green-500 pl-3 mb-4">
-                      <p className="font-medium text-green-700 mb-2">✓ What We Want Instead</p>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Look directly at camera with a warm, welcoming smile</li>
-                        <li>• Speak clearly about your teaching passion and expertise</li>
-                        <li>• Show enthusiasm for teaching and students</li>
-                        <li>• Keep it between 30-60 seconds</li>
-                        <li>• Good lighting and clear audio</li>
-                        <li>• Professional but personable tone</li>
-                      </ul>
-                    </div>
-                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                       <p className="text-sm text-blue-900">
-                        <span className="font-medium">Why this matters:</span> Your introduction video gives students and families a first impression of who you are as a teacher. We need to see your personality, professionalism, and genuine passion for teaching. A good video builds trust and confidence in your ability to teach effectively.
+                        <span className="font-medium">Why this matters:</span> Professional, well-lit video intros are required for teacher verification. They show your personality and teaching environment, helping to build trust with students and parents.
                       </p>
                     </div>
                   </div>
