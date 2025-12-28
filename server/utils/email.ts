@@ -127,26 +127,26 @@ export class EmailService {
 
   // ✅ BULLETPROOF NAME REPLACEMENT - Force all variations to display
   private forceReplaceName(html: string, fullName: string): string {
-    // 1️⃣ FIRST: Handle specific split pattern from device login template
+    // 1️⃣ FIRST: Handle specific split patterns from various templates
     // Pattern: Hi {{full</span><span...>Name}</span><span...>},
-    html = html.replace(/Hi {{full<\/span><span[^>]*>Name}<\/span><span[^>]*>},/gi, `Hi ${fullName},`);
-    html = html.replace(/Hi {{Full<\/span><span[^>]*>Name}<\/span><span[^>]*>},/gi, `Hi ${fullName},`);
+    html = html.replace(/{{full<\/span><span[^>]*>Name}<\/span><span[^>]*>}/gi, fullName);
+    html = html.replace(/{{Full<\/span><span[^>]*>Name}<\/span><span[^>]*>}/gi, fullName);
+    html = html.replace(/{{fullName<\/span><span[^>]*>}/gi, fullName);
+    html = html.replace(/{{FullName<\/span><span[^>]*>}/gi, fullName);
     
-    // Also handle without the comma/spans
-    html = html.replace(/\{\{full<\/span><span[^>]*>Name\}\}/gi, fullName);
-    html = html.replace(/\{\{Full<\/span><span[^>]*>Name\}\}/gi, fullName);
-    
-    // 2️⃣ SECOND: Merge split placeholders caused by HTML spans
+    // 2️⃣ SECOND: Merge split placeholders caused by HTML spans or styling
     // Handles: {{</span><span...>fullName</span><span...>}} format
-    // More flexible regex that captures any content before/after the key parts
-    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>fullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{fullName}}');
-    html = html.replace(/\{\{[^<]*<\/span><span[^>]*>FullName<\/span><span[^>]*>[^}]*\}\}/gi, '{{FullName}}');
+    html = html.replace(/{{[^}]*fullName[^}]*}}/gi, fullName);
+    html = html.replace(/{{[^}]*FullName[^}]*}}/gi, fullName);
+    html = html.replace(/{{[^}]*fullname[^}]*}}/gi, fullName);
+    html = html.replace(/{{[^}]*FULLNAME[^}]*}}/gi, fullName);
     
-    // Handle cases where fullName is the only content
-    html = html.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, '{{fullName}}');
-    html = html.replace(/\{\{<\/span><span[^>]*>FullName<\/span><span[^>]*>\}\}/gi, '{{FullName}}');
+    // 3️⃣ THIRD: Handle cases where the placeholder might be partially outside brackets
+    // e.g., {fullName} or [fullName] or even just fullName in specific contexts
+    html = html.replace(/{fullName}/gi, fullName);
+    html = html.replace(/{FullName}/gi, fullName);
     
-    // 3️⃣ THEN: Replace ALL possible variations of {{fullName}} and {{FullName}}
+    // 4️⃣ FOURTH: Replace ALL possible variations of {{fullName}} and {{FullName}}
     const patterns = [
       '{{fullName}}',
       '{{FullName}}',
@@ -158,19 +158,26 @@ export class EmailService {
       '{{ FullName }}',
       '{{fullname}}',
       '{{FULLNAME}}',
+      '[[fullName]]',
+      '[[FullName]]',
     ];
     
     patterns.forEach(pattern => {
       html = html.replaceAll(pattern, fullName);
     });
     
-    // 4️⃣ Regex fallback for edge cases with spaces/variations
-    html = html.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
-    html = html.replace(/\{\{\s*FullName\s*\}\}/gi, fullName);
+    // 5️⃣ Regex fallback for edge cases with spaces/variations/newlines
+    html = html.replace(/{{\s*fullName\s*}}/gi, fullName);
+    html = html.replace(/{{\s*FullName\s*}}/gi, fullName);
+    html = html.replace(/{{\s*fullname\s*}}/gi, fullName);
+    html = html.replace(/{{\s*FULLNAME\s*}}/gi, fullName);
     
-    // 5️⃣ Last resort: Look for any remaining {{ and }} that might contain variations
-    // This catches edge cases like {{  fullName  }} with extra spaces
-    html = html.replace(/\{\{\s*(?:full|Full)Name\s*\}\}/gi, fullName);
+    // 6️⃣ Handle broken template tags like { {fullName} } or {{fullName}
+    html = html.replace(/{{\s*(?:full|Full)Name\s*}/gi, fullName);
+    html = html.replace(/{\s*(?:full|Full)Name\s*}}/gi, fullName);
+    
+    // 7️⃣ Last resort: Look for any remaining {{ and }} that might contain variations
+    html = html.replace(/{{\s*(?:full|Full)Name\s*}}/gi, fullName);
     
     return html;
   }
@@ -522,7 +529,11 @@ export class EmailService {
 </html>`;
 
     // Use bulletproof name replacement
-    const finalHtml = this.forceReplaceName(html, data.fullName);
+    let finalHtml = this.forceReplaceName(html, data.fullName);
+    
+    // Also try to replace generic name placeholders if found
+    finalHtml = finalHtml.replace(/Dear\s+Customer/gi, `Dear ${data.fullName}`);
+    finalHtml = finalHtml.replace(/Hi\s+there/gi, `Hi ${data.fullName}`);
 
     return this.sendEmail({
       to: email,
