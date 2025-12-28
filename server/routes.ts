@@ -3096,6 +3096,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await db.insert(verificationCodes).values({
         userId: user.id,
         code: emailCode,
+        contactInfo: email,
         type: 'email_password_reset',
         expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
         userData: { email }
