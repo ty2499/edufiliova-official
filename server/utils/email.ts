@@ -447,7 +447,7 @@ export class EmailService {
 
     const assetPath = (filename: string) => path.resolve(process.cwd(), 'public/email-assets', filename);
 
-    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
     return this.sendEmail({
       to: email,
@@ -1682,7 +1682,7 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1708,7 +1708,7 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1733,7 +1733,7 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1758,7 +1758,7 @@ export class EmailService {
       // ✅ USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1797,7 +1797,7 @@ export class EmailService {
       html = html.replace(/\{\{\s*amount\s*\}\}/gi, amount);
       html = html.replace(/\{\{\s*retryUrl\s*\}\}/gi, retryUrl);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1834,7 +1834,7 @@ export class EmailService {
         html = html.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
       }
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1859,7 +1859,7 @@ export class EmailService {
       // USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
@@ -1884,7 +1884,7 @@ export class EmailService {
       // USE BULLETPROOF NAME REPLACEMENT
       html = this.forceReplaceName(html, fullName);
 
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png';
 
       return this.sendEmail({
         to: email,
