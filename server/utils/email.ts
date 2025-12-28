@@ -425,7 +425,7 @@ export class EmailService {
   <style>
     body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 700px; margin: 0 auto; background-color: #ffffff; }
-    .header { background-color: #d32f2f; padding: 50px; text-align: center; }
+    .header { background-color: #0c332c; padding: 50px; text-align: center; }
     .logo { max-width: 200px; height: auto; }
     .content { padding: 50px; }
     .title { color: #d32f2f; font-size: 28px; font-weight: 700; margin: 0 0 25px 0; line-height: 1.3; }
@@ -446,7 +446,7 @@ export class EmailService {
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png
+      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" class="logo">
     </div>
     <div class="content">
       <h1 class="title">Account Suspended - Policy Violation</h1>
