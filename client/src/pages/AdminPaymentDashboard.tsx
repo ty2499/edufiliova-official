@@ -982,7 +982,7 @@ const UserCard = ({
     switch (role) {
       case 'admin': return <Badge variant="destructive" className="text-xs">Admin</Badge>;
       case 'teacher': return <Badge variant="default" className="text-xs">Teacher</Badge>;
-      case 'student': return <Badge variant="secondary" className="text-xs">Student</Badge>;
+      case 'student': return <Badge className="text-xs text-white" style={{ backgroundColor: '#0c332c' }}>Student</Badge>;
       case 'moderator': return <Badge variant="outline" className="text-xs text-primary border-purple-300">Moderator</Badge>;
       case 'freelancer': return <Badge variant="outline" className="text-xs text-blue-600 border-blue-300">Freelancer</Badge>;
       case 'accountant': return <Badge variant="outline" className="text-xs text-green-600 border-green-300">Accountant</Badge>;
@@ -2576,7 +2576,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
     switch (role) {
       case 'admin': return <Badge variant="destructive" className="text-xs">Admin</Badge>;
       case 'teacher': return <Badge variant="default" className="text-xs">Teacher</Badge>;
-      case 'student': return <Badge variant="secondary" className="text-xs">Student</Badge>;
+      case 'student': return <Badge className="text-xs text-white" style={{ backgroundColor: '#0c332c' }}>Student</Badge>;
       case 'moderator': return <Badge variant="outline" className="text-xs text-primary border-purple-300">Moderator</Badge>;
       case 'freelancer': return <Badge variant="outline" className="text-xs text-blue-600 border-blue-300">Freelancer</Badge>;
       case 'accountant': return <Badge variant="outline" className="text-xs text-green-600 border-green-300">Accountant</Badge>;
