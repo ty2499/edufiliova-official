@@ -1,0 +1,4459 @@
+                .where(eq(courseCategories.id, course.categoryId))
+                .limit(1);
+              
+              if (category.length > 0) {
+                categoryName = category[0].name;
+              }
+            }
+          } catch (error: any) {
+            console.error('Error fetching category name for course:', course.id, error);
+          }
+          
+          return {
+            ...course,
+            authorName,
+            categoryId: categoryName || course.categoryId
+          };
+        })
+      );
+
+      res.json({ success: true,
+        success: true,
+        courses: enrichedCourses
+      });
+
+    } catch (error: any) {
+      console.error('Public courses fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch courses'
+      });
+    }
+  });
+
+  // Enroll student in a course (only for free courses)
+  app.post('/api/course-creator/enroll/:courseId', requireAuth, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const user = req.user;
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check if course exists and is published
+      const course = await db
+        .select()
+        .from(courses)
+        .where(and(eq(courses.id, courseId), eq(courses.isActive, true)))
+        .limit(1);
+
+      if (course.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found or not available'
+        });
+      }
+
+      // Check if user has access to this course based on pricing type
+      const coursePrice = parseFloat(course[0].price?.toString() || '0');
+      const pricingType = course[0].pricingType;
+      const subscriptionStatus = await hasActiveSubscription(user.id);
+      
+      // Allow enrollment based on pricing type:
+      // 1. Free courses (pricingType = "free" or price = 0) - anyone can enroll
+      // 2. Subscription courses (pricingType = "subscription") - requires active subscription
+      // 3. Fixed-price courses (pricingType = "fixed_price" with price > 0) - must go through checkout
+      // 4. Legacy courses (no pricingType but price > 0) - treat as fixed-price paid courses
+      let hasAccess = false;
+      let requiresPayment = false;
+
+      if (coursePrice === 0 || pricingType === 'free') {
+        // Free course - anyone can enroll
+        hasAccess = true;
+      } else if (pricingType === 'subscription') {
+        // Subscription course - requires active subscription
+        hasAccess = subscriptionStatus.hasAccess;
+      } else if (pricingType === 'fixed_price' || (!pricingType && coursePrice > 0)) {
+        // Paid course (explicit fixed_price or legacy with price > 0) - must go through checkout
+        hasAccess = false;
+        requiresPayment = true;
+      }
+
+      if (!hasAccess) {
+        if (requiresPayment) {
+          return res.status(400).json({
+            success: false,
+            error: 'This is a paid course. Please complete the purchase to enroll.',
+            isPaid: true,
+            price: coursePrice,
+            requiresCheckout: true
+          });
+        } else {
+          return res.status(400).json({
+            success: false,
+            error: 'This course requires an active subscription. Please upgrade your plan to access premium courses.',
+            isPaid: true,
+            price: coursePrice,
+            subscriptionRequired: true,
+            currentSubscription: subscriptionStatus.subscriptionTier || 'free'
+          });
+        }
+      }
+
+      // Check if already enrolled
+      const existingEnrollment = await db
+        .select()
+        .from(courseEnrollments)
+        .where(and(
+          eq(courseEnrollments.userId, user.id),
+          eq(courseEnrollments.courseId, courseId)
+        ))
+        .limit(1);
+
+      if (existingEnrollment.length > 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'Already enrolled in this course'
+        });
+      }
+
+      // Create enrollment for free course
+      const newEnrollment = await db
+        .insert(courseEnrollments)
+        .values({
+          userId: user.id,
+          courseId
+        })
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        enrollment: newEnrollment[0],
+        message: 'Successfully enrolled in course'
+      });
+
+    } catch (error: any) {
+      console.error('Course enrollment error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to enroll in course'
+      });
+    }
+  });
+
+  // Create payment intent for course purchase
+  app.post('/api/course-creator/purchase/:courseId', requireAuth, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const user = req.user;
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check if course exists and is published
+      const course = await db
+        .select()
+        .from(courses)
+        .where(and(eq(courses.id, courseId), eq(courses.isActive, true)))
+        .limit(1);
+
+      if (course.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found or not available'
+        });
+      }
+
+      const coursePrice = parseFloat(course[0].price?.toString() || '0');
+      
+      if (coursePrice <= 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'This course is free. Use the enroll endpoint instead.'
+        });
+      }
+
+      // Check if already enrolled or purchased
+      const existingEnrollment = await db
+        .select()
+        .from(courseEnrollments)
+        .where(and(
+          eq(courseEnrollments.userId, user.id),
+          eq(courseEnrollments.courseId, courseId)
+        ))
+        .limit(1);
+
+      if (existingEnrollment.length > 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'Already enrolled in this course'
+        });
+      }
+
+      // Create Stripe payment intent (use global Stripe instance)
+      const stripe = await getPrimaryPaymentClient();
+      if (!stripe) {
+        return res.status(500).json({
+          success: false,
+          error: 'Payment processing unavailable'
+        });
+      }
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(coursePrice * 100), // Convert to cents
+        currency: 'usd',
+        metadata: {
+          courseId: courseId,
+          userId: user.id,
+          courseName: course[0].title,
+          type: 'course_purchase'
+        }
+      });
+
+      res.json({ success: true,
+        success: true,
+        clientSecret: paymentIntent.client_secret,
+        course: {
+          id: course[0].id,
+          title: course[0].title,
+          price: coursePrice
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Course purchase error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to create payment intent'
+      });
+    }
+  });
+
+  // Confirm course purchase and enroll student after successful payment
+  app.post('/api/course-creator/confirm-purchase', requireAuth, async (req, res) => {
+    try {
+      const { paymentIntentId } = req.body;
+      const user = req.user;
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      if (!paymentIntentId) {
+        return res.status(400).json({
+          success: false,
+          error: 'Payment intent ID is required'
+        });
+      }
+
+      // Verify payment with Stripe (use global instance and validate server-side)
+      const stripe = await getPrimaryPaymentClient();
+      if (!stripe) {
+        return res.status(500).json({
+          success: false,
+          error: 'Payment processing unavailable'
+        });
+      }
+
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+      // Comprehensive server-side validation
+      if (paymentIntent.status !== 'succeeded') {
+        return res.status(400).json({
+          success: false,
+          error: 'Payment not successful'
+        });
+      }
+
+      // Validate metadata exists and matches
+      if (!paymentIntent.metadata?.courseId || !paymentIntent.metadata?.userId) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid payment metadata'
+        });
+      }
+
+      const courseId = paymentIntent.metadata.courseId;
+      const paymentUserId = paymentIntent.metadata.userId;
+
+      // Verify the user matches (critical security check)
+      if (paymentUserId !== user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Payment user mismatch'
+        });
+      }
+
+      // Verify course exists and get current price
+      const course = await db
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .limit(1);
+
+      if (course.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      // Validate payment amount matches current course price
+      const expectedAmount = Math.round(parseFloat(course[0].price?.toString() || '0') * 100);
+      if (paymentIntent.amount !== expectedAmount) {
+        return res.status(400).json({
+          success: false,
+          error: 'Payment amount mismatch'
+        });
+      }
+
+      // Validate currency
+      if (paymentIntent.currency !== 'usd') {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid payment currency'
+        });
+      }
+
+      // Use a database transaction for atomicity
+      await db.transaction(async (tx) => {
+        // Check if already enrolled (with transaction lock)
+        const existingEnrollment = await tx
+          .select()
+          .from(courseEnrollments)
+          .where(and(
+            eq(courseEnrollments.userId, user.id),
+            eq(courseEnrollments.courseId, courseId)
+          ))
+          .limit(1);
+
+        if (existingEnrollment.length > 0) {
+          throw new Error('Already enrolled in this course');
+        }
+
+        // Check if payment already processed (idempotency)
+        const existingPayment = await tx
+          .select()
+          .from(payments)
+          .where(eq(payments.stripePaymentIntentId, paymentIntentId))
+          .limit(1);
+
+        if (existingPayment.length > 0) {
+          throw new Error('Payment already processed');
+        }
+
+        // Record the payment
+        await tx.insert(payments).values({
+          userId: user.id,
+          amount: (paymentIntent.amount / 100).toString(), // Convert from cents
+          currency: paymentIntent.currency.toUpperCase(),
+          status: 'succeeded',
+          stripePaymentIntentId: paymentIntentId,
+          description: `Course purchase: ${paymentIntent.metadata.courseName}`,
+          paymentMethod: 'card',
+          processedAt: new Date(),
+          metadata: {
+            courseId: courseId,
+            courseName: paymentIntent.metadata.courseName,
+            type: 'course_purchase'
+          }
+        });
+
+        // Create enrollment after successful payment
+        const newEnrollment = await tx
+          .insert(courseEnrollments)
+          .values({
+            userId: user.id,
+            courseId: courseId
+          })
+          .returning();
+
+        // Update course enrollment count
+        await tx
+          .update(courses)
+          .set({
+            totalEnrollments: sql`${courses.totalEnrollments} + 1`
+          })
+          .where(eq(courses.id, courseId));
+
+        return newEnrollment[0];
+      }).then(async (newEnrollment) => {
+        // Send confirmation email
+        try {
+          const { emailService } = await import('./utils/email.js');
+          const userProfile = await db.select().from(profiles).where(eq(profiles.userId, user.id)).limit(1);
+          const userEmail = userProfile[0]?.email || user.email;
+          
+          if (userEmail) {
+            await emailService.sendCoursePurchaseEmail(userEmail, {
+              courseName: paymentIntent.metadata.courseName || course[0].title,
+              price: paymentIntent.amount / 100,
+              orderId: paymentIntentId,
+              customerName: userProfile[0]?.name || undefined,
+              accessUrl: `https://edufiliova.com/course/${courseId}`,
+            });
+            console.log('📧 Course purchase confirmation email sent to:', userEmail);
+          }
+        } catch (emailError) {
+          console.error('Failed to send course purchase email:', emailError);
+        }
+
+        res.json({ success: true,
+          success: true,
+          enrollment: newEnrollment,
+          message: 'Course purchased and enrolled successfully!'
+        });
+      }).catch((error) => {
+        if (error.message === 'Already enrolled in this course' || 
+            error.message === 'Payment already processed') {
+          return res.status(400).json({
+            success: false,
+            error: error.message
+          });
+        }
+        throw error; // Re-throw unexpected errors
+      });
+
+    } catch (error: any) {
+      console.error('Course purchase confirmation error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to confirm course purchase'
+      });
+    }
+  });
+
+  // Get student's enrolled courses
+  app.get('/api/course-creator/my-courses', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Get enrolled courses without problematic joins
+      const enrollmentsData = await db
+        .select({
+          courseId: courses.id,
+          title: courses.title,
+          description: courses.description,
+          categoryId: courses.categoryId,
+          thumbnailUrl: courses.thumbnailUrl,
+          enrolledAt: courseEnrollments.enrolledAt,
+          progress: courseEnrollments.progress,
+          createdBy: courses.createdBy
+        })
+        .from(courseEnrollments)
+        .innerJoin(courses, eq(courseEnrollments.courseId, courses.id))
+        .where(eq(courseEnrollments.userId, user.id))
+        .orderBy(desc(courseEnrollments.enrolledAt));
+
+      // Get author names separately to avoid join issues
+      const enrichedCourses = await Promise.all(
+        enrollmentsData.map(async (course) => {
+          let authorName = null;
+          try {
+            if (course.createdBy) {
+              const authorProfile = await db
+                .select({ name: profiles.name })
+                .from(profiles)
+                .where(eq(profiles.userId, course.createdBy))
+                .limit(1);
+              
+              if (authorProfile.length > 0) {
+                authorName = authorProfile[0].name;
+              }
+            }
+          } catch (error: any) {
+            console.error('Error fetching author name for enrolled course:', course.courseId, error);
+          }
+          
+          return {
+            ...course,
+            authorName
+          };
+        })
+      );
+
+      res.json({ success: true,
+        success: true,
+        courses: enrichedCourses
+      });
+
+    } catch (error: any) {
+      console.error('My courses fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch enrolled courses'
+      });
+    }
+  });
+
+  // Unsubscribe student from all enrolled courses
+  app.post('/api/course-creator/unsubscribe-all', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Get all enrolled courses before deletion for logging
+      const enrolledCourses = await db
+        .select({
+          courseId: courses.id,
+          title: courses.title
+        })
+        .from(courseEnrollments)
+        .innerJoin(courses, eq(courseEnrollments.courseId, courses.id))
+        .where(eq(courseEnrollments.userId, user.id));
+
+      console.log(`Unsubscribing user ${user.id} from ${enrolledCourses.length} courses:`, 
+        enrolledCourses.map(c => c.title).join(', '));
+
+      // Delete all course enrollments for the user
+      const deletedEnrollments = await db
+        .delete(courseEnrollments)
+        .where(eq(courseEnrollments.userId, user.id))
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        message: `Successfully unsubscribed from ${deletedEnrollments.length} courses`,
+        unsubscribedCount: deletedEnrollments.length,
+        unsubscribedCourses: enrolledCourses.map(c => ({ id: c.courseId, title: c.title }))
+      });
+
+    } catch (error: any) {
+      console.error('Unsubscribe error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to unsubscribe from courses'
+      });
+    }
+  });
+
+  // Update student progress
+  app.post('/api/course-creator/progress', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      const { courseId, lessonId, progressPercentage, timeSpent } = req.body;
+
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Create or update progress
+      const progressData = {
+        userId: user.id,
+        courseId,
+        lessonId,
+        progressPercentage: progressPercentage || 0,
+        timeSpent: timeSpent || 0,
+        lastAccessedAt: new Date()
+      };
+
+      const existingProgress = await db
+        .select()
+        .from(studentProgress)
+        .where(and(
+          eq(studentProgress.userId, user.id),
+          eq(studentProgress.courseId, courseId),
+          eq(studentProgress.lessonId, lessonId)
+        ))
+        .limit(1);
+
+      let progress;
+      if (existingProgress.length > 0) {
+        progress = await db
+          .update(studentProgress)
+          .set(progressData)
+          .where(eq(studentProgress.id, existingProgress[0].id))
+          .returning();
+      } else {
+        progress = await db
+          .insert(studentProgress)
+          .values(progressData)
+          .returning();
+      }
+
+      // Update overall course progress
+      if (progressPercentage === 100) {
+        await db
+          .update(courseEnrollments)
+          .set({ progress: progressPercentage })
+          .where(and(
+            eq(courseEnrollments.userId, user.id),
+            eq(courseEnrollments.courseId, courseId)
+          ));
+      }
+
+      res.json({ success: true,
+        success: true,
+        progress: progress[0],
+        message: 'Progress updated successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Progress update error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to update progress'
+      });
+    }
+  });
+
+  // Daily Questions System API endpoints
+  
+  // Get today's daily questions (7 questions for the current day)
+  app.get('/api/daily-questions/today/:userId', requireAuth, async (req, res) => {
+    try {
+      const { userId } = req.params;
+      
+      // Get user profile to check their grade and grade system
+      const userProfile = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, userId))
+        .limit(1);
+
+      if (userProfile.length === 0) {
+        return res.status(404).json({ success: false, error: 'User not found' });
+      }
+
+      const userGrade = userProfile[0].grade;
+      const userGradeSystem = userProfile[0].gradeSystem;
+
+      // Calculate user's current day based on their progress
+      // Find the last completed day
+      const lastCompletedDay = await db
+        .select({ dayNumber: dailyProgressSummary.dayNumber })
+        .from(dailyProgressSummary)
+        .where(
+          and(
+            eq(dailyProgressSummary.userId, userId),
+            sql`${dailyProgressSummary.completedAt} IS NOT NULL`
+          )
+        )
+        .orderBy(desc(dailyProgressSummary.dayNumber))
+        .limit(1);
+
+      // Current day is either the last completed day + 1, or day 1 for new users
+      const currentDay = lastCompletedDay.length > 0 
+        ? lastCompletedDay[0].dayNumber + 1 
+        : 1;
+      
+      // Get total days available in the system (filtered by grade)
+      // Build where conditions dynamically to handle null gradeSystem
+      const totalDaysConditions = [eq(subjects.gradeLevel, userGrade)];
+      if (userGradeSystem !== null && userGradeSystem !== undefined) {
+        totalDaysConditions.push(eq(subjects.gradeSystem, userGradeSystem));
+      }
+      
+      const totalDaysResult = await db
+        .select({ maxDay: sql<number>`MAX(${dailyQuestions.dayNumber})` })
+        .from(dailyQuestions)
+        .leftJoin(subjects, eq(dailyQuestions.subjectId, subjects.id))
+        .where(and(...totalDaysConditions));
+      
+      const totalDays = totalDaysResult[0]?.maxDay || 200;
+
+      // Check if user has questions available for current day
+      if (currentDay > totalDays) {
+        return res.json({ success: true,
+          success: true,
+          data: {
+            dayNumber: totalDays,
+            totalDays,
+            isCompleted: true,
+            questions: [],
+            totalQuestions: 0,
+            answeredQuestions: 0,
+            correctAnswers: 0,
+            message: "Congratulations! You've completed all available daily questions."
+          }
+        });
+      }
+
+      // Get today's questions - FILTERED BY GRADE AND GRADE SYSTEM
+      const todaysQuestions = await db
+        .select({
+          id: dailyQuestions.id,
+          dayNumber: dailyQuestions.dayNumber,
+          question: dailyQuestions.question,
+          options: dailyQuestions.options,
+          correctAnswer: dailyQuestions.correctAnswer,
+          explanation: dailyQuestions.explanation,
+          difficulty: dailyQuestions.difficulty,
+          questionOrder: dailyQuestions.questionOrder,
+          subjectId: dailyQuestions.subjectId,
+          subjectName: subjects.name,
+          gradeLevel: subjects.gradeLevel,
+          gradeSystem: subjects.gradeSystem,
+        })
+        .from(dailyQuestions)
+        .leftJoin(subjects, eq(dailyQuestions.subjectId, subjects.id))
+        .where(
+          and(
+            eq(dailyQuestions.dayNumber, currentDay),
+            eq(subjects.gradeLevel, userGrade),
+            eq(subjects.gradeSystem, userGradeSystem)
+          )
+        )
+        .orderBy(asc(dailyQuestions.questionOrder));
+
+      // Get user's progress for today's questions
+      const userProgress = await db
+        .select()
+        .from(dailyQuestionProgress)
+        .where(
+          and(
+            eq(dailyQuestionProgress.userId, userId),
+            eq(dailyQuestionProgress.dayNumber, currentDay)
+          )
+        );
+
+      // Combine questions with user progress
+      const questionsWithProgress = todaysQuestions.map(question => {
+        const progress = userProgress.find(p => p.questionId === question.id);
+        return {
+          ...question,
+          isAnswered: !!progress,
+          selectedAnswer: progress?.selectedAnswer || null,
+          isCorrect: progress?.isCorrect || null,
+          timeSpent: progress?.timeSpent || 0
+        };
+      });
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          dayNumber: currentDay,
+          totalDays,
+          isCompleted: false,
+          questions: questionsWithProgress,
+          totalQuestions: questionsWithProgress.length,
+          answeredQuestions: userProgress.length,
+          correctAnswers: userProgress.filter(p => p.isCorrect).length
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Daily questions error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch daily questions' });
+    }
+  });
+
+  // Submit answer for a daily question
+  app.post('/api/daily-questions/answer', requireAuth, async (req, res) => {
+    try {
+      const { userId, questionId, selectedAnswer, timeSpent } = req.body;
+
+      // Get question details
+      const question = await db
+        .select()
+        .from(dailyQuestions)
+        .where(eq(dailyQuestions.id, questionId))
+        .limit(1);
+
+      if (question.length === 0) {
+        return res.status(404).json({ success: false, error: 'Question not found' });
+      }
+
+      const isCorrect = selectedAnswer === question[0].correctAnswer;
+
+      // Check if user already answered this question
+      const existingProgress = await db
+        .select()
+        .from(dailyQuestionProgress)
+        .where(
+          and(
+            eq(dailyQuestionProgress.userId, userId),
+            eq(dailyQuestionProgress.questionId, questionId)
+          )
+        )
+        .limit(1);
+
+      if (existingProgress.length > 0) {
+        return res.status(400).json({ success: false, error: 'Question already answered' });
+      }
+
+      // Save user's answer
+      await db.insert(dailyQuestionProgress).values({
+        userId,
+        questionId,
+        dayNumber: question[0].dayNumber,
+        selectedAnswer,
+        isCorrect,
+        timeSpent: timeSpent || 0
+      });
+
+      // Update daily progress summary
+      const existingSummary = await db
+        .select()
+        .from(dailyProgressSummary)
+        .where(
+          and(
+            eq(dailyProgressSummary.userId, userId),
+            eq(dailyProgressSummary.dayNumber, question[0].dayNumber)
+          )
+        )
+        .limit(1);
+
+      if (existingSummary.length > 0) {
+        // Update existing summary
+        const newCorrectAnswers = existingSummary[0].correctAnswers + (isCorrect ? 1 : 0);
+        const newTotalTime = existingSummary[0].totalTime + (timeSpent || 0);
+        
+        await db
+          .update(dailyProgressSummary)
+          .set({
+            correctAnswers: newCorrectAnswers,
+            totalTime: newTotalTime,
+            completedAt: newCorrectAnswers === 7 ? new Date() : null,
+            updatedAt: new Date()
+          })
+          .where(eq(dailyProgressSummary.id, existingSummary[0].id));
+      } else {
+        // Create new summary
+        await db.insert(dailyProgressSummary).values({
+          userId,
+          dayNumber: question[0].dayNumber,
+          totalQuestions: 7,
+          correctAnswers: isCorrect ? 1 : 0,
+          totalTime: timeSpent || 0,
+          completedAt: null // Will be set when all 7 questions are completed
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          isCorrect,
+          correctAnswer: question[0].correctAnswer,
+          explanation: question[0].explanation
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Answer submission error:', error);
+      res.status(500).json({ success: false, error: 'Failed to submit answer' });
+    }
+  });
+
+  // Get user's daily progress statistics (for progress visualization)
+  app.get('/api/daily-questions/progress/:userId', requireAuth, async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { limit = 30 } = req.query; // Default to last 30 days
+
+      // Get recent daily summaries
+      const recentProgress = await db
+        .select()
+        .from(dailyProgressSummary)
+        .where(eq(dailyProgressSummary.userId, userId))
+        .orderBy(desc(dailyProgressSummary.dayNumber))
+        .limit(Number(limit));
+
+      // Calculate overall statistics
+      const totalDays = recentProgress.length;
+      const completedDays = recentProgress.filter(day => day.completedAt).length;
+      const totalCorrectAnswers = recentProgress.reduce((sum, day) => sum + day.correctAnswers, 0);
+      const totalQuestions = recentProgress.reduce((sum, day) => sum + day.totalQuestions, 0);
+
+      // Calculate current streak
+      let currentStreak = 0;
+      for (let i = 0; i < recentProgress.length; i++) {
+        if (recentProgress[i].completedAt) {
+          currentStreak++;
+        } else {
+          break;
+        }
+      }
+
+      // Calculate accuracy by subject (requires joining with questions)
+      const subjectStats = await db
+        .select({
+          subjectName: subjects.name,
+          correctAnswers: sql<number>`COUNT(CASE WHEN ${dailyQuestionProgress.isCorrect} = true THEN 1 END)`,
+          totalAnswers: sql<number>`COUNT(${dailyQuestionProgress.id})`
+        })
+        .from(dailyQuestionProgress)
+        .leftJoin(dailyQuestions, eq(dailyQuestionProgress.questionId, dailyQuestions.id))
+        .leftJoin(subjects, eq(dailyQuestions.subjectId, subjects.id))
+        .where(eq(dailyQuestionProgress.userId, userId))
+        .groupBy(subjects.name);
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          overview: {
+            totalDays,
+            completedDays,
+            currentStreak,
+            totalCorrectAnswers,
+            totalQuestions,
+            accuracy: totalQuestions > 0 ? Math.round((totalCorrectAnswers / totalQuestions) * 100) : 0
+          },
+          recentProgress: recentProgress.map(day => ({
+            dayNumber: day.dayNumber,
+            correctAnswers: day.correctAnswers,
+            totalQuestions: day.totalQuestions,
+            accuracy: Math.round((day.correctAnswers / day.totalQuestions) * 100),
+            isCompleted: !!day.completedAt,
+            completedAt: day.completedAt,
+            totalTime: day.totalTime
+          })),
+          subjectStats: subjectStats.map(stat => ({
+            subject: stat.subjectName,
+            accuracy: stat.totalAnswers > 0 ? Math.round((stat.correctAnswers / stat.totalAnswers) * 100) : 0,
+            totalAnswers: stat.totalAnswers,
+            correctAnswers: stat.correctAnswers
+          }))
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Progress statistics error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch progress statistics' });
+    }
+  });
+
+  // Get comprehensive user profile with learning statistics
+  app.get('/api/users/:userId/profile-stats', requireAuth, async (req, res) => {
+    try {
+      const { userId } = req.params;
+
+      // Get user profile with country information
+      const userProfile = await db
+        .select({
+          id: profiles.id,
+          userId: profiles.userId,
+          name: profiles.name,
+          email: profiles.email,
+          age: profiles.age,
+          grade: profiles.grade,
+          educationLevel: profiles.educationLevel,
+          country: profiles.country,
+          gradeSystem: profiles.gradeSystem,
+          avatarUrl: profiles.avatarUrl,
+          role: profiles.role,
+          subscriptionTier: profiles.subscriptionTier,
+          legacyPlan: profiles.legacyPlan,
+          planExpiry: profiles.planExpiry,
+          createdAt: profiles.createdAt,
+          lastSeen: profiles.lastSeen,
+          countryName: countries.name,
+          countryCode: countries.code
+        })
+        .from(profiles)
+        .leftJoin(countries, eq(profiles.countryId, countries.id))
+        .where(eq(profiles.userId, userId))
+        .limit(1);
+
+      if (userProfile.length === 0) {
+        return res.status(404).json({ success: false, error: 'User profile not found' });
+      }
+
+      const profile = userProfile[0];
+
+      // Get learning statistics
+      const learningStats = await db
+        .select({
+          lessonId: subjectProgress.lessonId,
+          status: subjectProgress.status,
+          score: subjectProgress.score,
+          timeSpent: subjectProgress.timeSpent,
+          completedAt: subjectProgress.completedAt,
+          subjectName: subjects.name
+        })
+        .from(subjectProgress)
+        .innerJoin(subjectLessons, eq(subjectProgress.lessonId, subjectLessons.id))
+        .innerJoin(subjectChapters, eq(subjectLessons.chapterId, subjectChapters.id))
+        .innerJoin(subjects, eq(subjectChapters.subjectId, subjects.id))
+        .where(eq(subjectProgress.userId, userId));
+
+      // Calculate statistics
+      const totalLessons = learningStats.length;
+      const completedLessons = learningStats.filter(lesson => lesson.status === 'completed').length;
+      const inProgressLessons = learningStats.filter(lesson => lesson.status === 'in_progress').length;
+      const totalTimeSpent = learningStats.reduce((total, lesson) => total + (lesson.timeSpent || 0), 0);
+      const averageScore = learningStats.length > 0 
+        ? learningStats.filter(lesson => lesson.score !== null)
+            .reduce((total, lesson, _, arr) => total + (lesson.score || 0) / arr.length, 0)
+        : 0;
+
+      // Get daily questions statistics
+      const dailyStats = await db
+        .select({
+          dayNumber: dailyProgressSummary.dayNumber,
+          correctAnswers: dailyProgressSummary.correctAnswers,
+          totalQuestions: dailyProgressSummary.totalQuestions,
+          completedAt: dailyProgressSummary.completedAt
+        })
+        .from(dailyProgressSummary)
+        .where(eq(dailyProgressSummary.userId, userId))
+        .orderBy(desc(dailyProgressSummary.dayNumber));
+
+      const totalDailyDays = dailyStats.length;
+      const dailyStreak = calculateStreak(dailyStats);
+      const totalDailyQuestions = dailyStats.reduce((total, day) => total + day.totalQuestions, 0);
+      const totalCorrectDaily = dailyStats.reduce((total, day) => total + day.correctAnswers, 0);
+      const dailyAccuracy = totalDailyQuestions > 0 ? (totalCorrectDaily / totalDailyQuestions) * 100 : 0;
+
+      // Get subject breakdown
+      const subjectBreakdown = learningStats.reduce((acc, lesson) => {
+        const subject = lesson.subjectName;
+        if (!acc[subject]) {
+          acc[subject] = { total: 0, completed: 0, timeSpent: 0 };
+        }
+        acc[subject].total++;
+        if (lesson.status === 'completed') acc[subject].completed++;
+        acc[subject].timeSpent += lesson.timeSpent || 0;
+        return acc;
+      }, {} as Record<string, { total: number; completed: number; timeSpent: number }>);
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          profile: {
+            ...profile,
+            joinedDaysAgo: Math.floor((Date.now() - new Date(profile.createdAt).getTime()) / (1000 * 60 * 60 * 24))
+          },
+          learningStats: {
+            totalLessons,
+            completedLessons,
+            inProgressLessons,
+            completionRate: totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0,
+            totalTimeSpent,
+            averageScore: Math.round(averageScore),
+            subjectBreakdown
+          },
+          dailyStats: {
+            totalDays: totalDailyDays,
+            currentStreak: dailyStreak,
+            totalQuestions: totalDailyQuestions,
+            correctAnswers: totalCorrectDaily,
+            accuracy: Math.round(dailyAccuracy)
+          }
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Profile stats error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch profile statistics' });
+    }
+  });
+
+  // Helper function to calculate streak
+  function calculateStreak(dailyStats: any[]): number {
+    if (dailyStats.length === 0) return 0;
+    
+    let streak = 0;
+    const today = new Date();
+    
+    for (let i = 0; i < dailyStats.length; i++) {
+      const statDate = new Date(dailyStats[i].completedAt);
+      const daysDiff = Math.floor((today.getTime() - statDate.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (daysDiff === i && dailyStats[i].completedAt) {
+        streak++;
+      } else {
+        break;
+      }
+    }
+    
+    return streak;
+  }
+
+
+
+  // ======================= PRODUCT LIKE/FOLLOW ENDPOINTS =======================
+
+  // Toggle product like (heart/like functionality)
+  app.post('/api/products/:productId/like', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { productId } = req.params;
+      const userId = req.user!.id;
+
+      const result = await storage.toggleProductLike(productId, userId);
+      
+      res.json({ success: true,
+        success: true,
+        data: result
+      });
+    } catch (error: any) {
+      console.error('Error toggling product like:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to toggle product like'
+      });
+    }
+  });
+
+
+  // Get featured/trending products for landing page
+  app.get('/api/products/featured', async (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 8;
+      
+      const result = await sql`
+        SELECT 
+          p.id,
+          p.seller_id as "sellerId",
+          p.seller_role as "sellerRole",
+          p.name,
+          p.description,
+          p.type,
+          p.price,
+          p.currency,
+          p.category,
+          COALESCE(p.images[1], p.file_url) as "imageUrl"
+        FROM products p
+        WHERE p.type IS NOT NULL
+        ORDER BY p.created_at DESC
+        LIMIT ${limit}
+      `;
+      
+      res.json({ 
+        success: true, 
+        products: result 
+      });
+    } catch (error: any) {
+      console.error('Error fetching featured products:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to fetch featured products" 
+      });
+    }
+  });
+  // Get product likes with user information
+  app.get('/api/products/:productId/likes', async (req, res) => {
+    try {
+      const { productId } = req.params;
+      // Validate pagination
+      const limit = Math.min(Math.max(parseInt(req.query.limit as string) || 50, 1), 100);
+      const offset = Math.max(parseInt(req.query.offset as string) || 0, 0);
+
+      const likes = await storage.getProductLikes(productId, { limit, offset });
+      
+      res.json({ success: true,
+        success: true,
+        data: likes
+      });
+    } catch (error: any) {
+      console.error('Error fetching product likes:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch product likes'
+      });
+    }
+  });
+
+  // Get product like stats (count, whether current user liked, recent likers)
+  app.get('/api/products/:productId/like-stats', optionalAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { productId } = req.params;
+      const viewerUserId = req.user?.id; // Optional - user may not be authenticated
+
+      const stats = await storage.getProductLikeStats(productId, viewerUserId);
+      
+      res.json({ success: true,
+        success: true,
+        data: stats
+      });
+    } catch (error: any) {
+      console.error('Error fetching product like stats:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch product like stats'
+      });
+    }
+  });
+
+  // Get user's liked products
+  app.get('/api/users/:userId/liked-products', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { userId } = req.params;
+      const currentUserId = req.user!.id;
+      const currentUserTextId = req.user!.userId;
+
+      // Users can only see their own liked products (check both UUID and text ID)
+      if (userId !== currentUserId && userId !== currentUserTextId) {
+        return res.status(403).json({
+          success: false,
+          error: 'Access denied'
+        });
+      }
+
+      // Validate pagination
+      const limit = Math.min(Math.max(parseInt(req.query.limit as string) || 50, 1), 100);
+      const offset = Math.max(parseInt(req.query.offset as string) || 0, 0);
+
+      // Use the UUID for storage operations
+      const likedProducts = await storage.getUserLikedProducts(currentUserId, { limit, offset });
+      
+      res.json({ success: true,
+        success: true,
+        data: likedProducts
+      });
+    } catch (error: any) {
+      console.error('Error fetching user liked products:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch liked products'
+      });
+    }
+  });
+
+  // Toggle seller follow (follow the seller/creator)
+  app.post('/api/sellers/:sellerId/follow', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { sellerId } = req.params;
+      const followerId = req.user!.id;
+      const followerTextId = req.user!.userId;
+
+      // Users cannot follow themselves (check both UUID and text ID)
+      if (sellerId === followerId || sellerId === followerTextId) {
+        return res.status(400).json({
+          success: false,
+          error: 'Cannot follow yourself'
+        });
+      }
+
+      // Use UUID for storage operations
+      const result = await storage.toggleProductFollow(sellerId, followerId);
+      
+      res.json({ success: true,
+        success: true,
+        data: result
+      });
+    } catch (error: any) {
+      console.error('Error toggling seller follow:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to toggle seller follow'
+      });
+    }
+  });
+
+  // Get seller followers with user information
+  app.get('/api/sellers/:sellerId/followers', async (req, res) => {
+    try {
+      const { sellerId } = req.params;
+      // Validate pagination
+      const limit = Math.min(Math.max(parseInt(req.query.limit as string) || 50, 1), 100);
+      const offset = Math.max(parseInt(req.query.offset as string) || 0, 0);
+
+      const followers = await storage.getProductFollows(sellerId, { limit, offset });
+      
+      res.json({ success: true,
+        success: true,
+        data: followers
+      });
+    } catch (error: any) {
+      console.error('Error fetching seller followers:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch seller followers'
+      });
+    }
+  });
+
+  // Get seller follow stats (count, whether current user follows, recent followers)
+  app.get('/api/sellers/:sellerId/follow-stats', optionalAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { sellerId } = req.params;
+      const viewerUserId = req.user?.id; // Optional - user may not be authenticated
+
+      const stats = await storage.getSellerFollowStats(sellerId, viewerUserId);
+      
+      res.json({ success: true,
+        success: true,
+        data: stats
+      });
+    } catch (error: any) {
+      console.error('Error fetching seller follow stats:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch seller follow stats'
+      });
+    }
+  });
+
+  // Get user's followed sellers
+  app.get('/api/users/:userId/followed-sellers', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { userId } = req.params;
+      const currentUserId = req.user!.id;
+      const currentUserTextId = req.user!.userId;
+
+      // Users can only see their own followed sellers (check both UUID and text ID)
+      if (userId !== currentUserId && userId !== currentUserTextId) {
+        return res.status(403).json({
+          success: false,
+          error: 'Access denied'
+        });
+      }
+
+      // Validate pagination
+      const limit = Math.min(Math.max(parseInt(req.query.limit as string) || 50, 1), 100);
+      const offset = Math.max(parseInt(req.query.offset as string) || 0, 0);
+
+      // Use the UUID for storage operations
+      const followedSellers = await storage.getUserFollowedSellers(currentUserId, { limit, offset });
+      
+      res.json({ success: true,
+        success: true,
+        data: followedSellers
+      });
+    } catch (error: any) {
+      console.error('Error fetching user followed sellers:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch followed sellers'
+      });
+    }
+  });
+
+  // ===== HELP CHAT API ENDPOINTS =====
+
+  // Get help chat messages for a guest
+  app.get('/api/help-chat/messages/:guestId', async (req, res) => {
+    try {
+      const { guestId } = req.params;
+      
+      const messages = await db
+        .select({
+          id: helpChatMessages.id,
+          guestId: helpChatMessages.guestId,
+          message: helpChatMessages.message,
+          sender: helpChatMessages.sender,
+          createdAt: helpChatMessages.createdAt,
+          adminName: profiles.name,
+          adminAvatar: profiles.avatarUrl
+        })
+        .from(helpChatMessages)
+        .leftJoin(users, eq(helpChatMessages.receiverId, users.id))
+        .leftJoin(profiles, eq(users.id, profiles.userId))
+        .where(eq(helpChatMessages.guestId, guestId))
+        .orderBy(asc(helpChatMessages.createdAt));
+
+      const formattedMessages = messages.map(msg => ({
+        id: msg.id.toString(),
+        message: msg.message,
+        sender: msg.sender,
+        timestamp: msg.createdAt.toISOString(),
+        adminName: msg.adminName,
+        adminAvatar: msg.adminAvatar
+      }));
+
+      res.json({ success: true,
+        success: true,
+        messages: formattedMessages
+      });
+    } catch (error: any) {
+      console.error('Error fetching help chat messages:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch messages'
+      });
+    }
+  });
+
+  // Send help chat message (HTTP backup for WebSocket)
+  app.post('/api/help-chat/send', async (req, res) => {
+    try {
+      const { guestId, message, sender } = req.body;
+
+      if (!guestId || !message || !sender) {
+        return res.status(400).json({
+          success: false,
+          error: 'Missing required fields: guestId, message, sender'
+        });
+      }
+
+      // Validate message length
+      if (message.length > 2000) {
+        return res.status(400).json({
+          success: false,
+          error: 'Message too long. Maximum 2000 characters.'
+        });
+      }
+
+      // Save message to database
+      const [newMessage] = await db.insert(helpChatMessages).values({
+        guestId: guestId,
+        receiverId: null, // Will be set if from admin
+        message: message,
+        sender: sender,
+      }).returning({
+        id: helpChatMessages.id,
+        guestId: helpChatMessages.guestId,
+        message: helpChatMessages.message,
+        sender: helpChatMessages.sender,
+        createdAt: helpChatMessages.createdAt
+      });
+
+      res.json({ success: true,
+        success: true,
+        message: 'Message sent successfully',
+        data: {
+          id: newMessage.id.toString(),
+          guestId: newMessage.guestId,
+          message: newMessage.message,
+          sender: newMessage.sender,
+          timestamp: newMessage.createdAt.toISOString()
+        }
+      });
+    } catch (error: any) {
+      console.error('Error sending help chat message:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to send message'
+      });
+    }
+  });
+
+  // Get all help chat conversations for admin/moderator
+  app.get('/api/admin/help-chat/conversations', requireAuth, requireAdminOrModerator, async (req, res) => {
+    try {
+      // Get distinct guest IDs with their latest message and message count
+      // Using a more explicit approach to avoid subquery scoping issues
+      const conversations = await db
+        .select({
+          guestId: helpChatMessages.guestId,
+          lastMessage: sql<string>`(
+            SELECT message 
+            FROM help_chat_messages hcm2 
+            WHERE hcm2.guest_id = help_chat_messages.guest_id 
+            ORDER BY hcm2.created_at DESC 
+            LIMIT 1
+          )`,
+          lastMessageTime: sql<Date>`(
+            SELECT created_at 
+            FROM help_chat_messages hcm2 
+            WHERE hcm2.guest_id = help_chat_messages.guest_id 
+            ORDER BY hcm2.created_at DESC 
+            LIMIT 1
+          )`,
+          messageCount: sql<number>`COUNT(*)`,
+          unreadCount: sql<number>`SUM(CASE WHEN sender = 'visitor' THEN 1 ELSE 0 END)`
+        })
+        .from(helpChatMessages)
+        .groupBy(helpChatMessages.guestId)
+        .orderBy(sql`MAX(${helpChatMessages.createdAt}) DESC`);
+
+      // Double-check that each conversation has the correct lastMessage by querying individually
+      const enrichedConversations = await Promise.all(
+        conversations.map(async (conv) => {
+          const latestMessage = await db
+            .select({
+              message: helpChatMessages.message,
+              createdAt: helpChatMessages.createdAt
+            })
+            .from(helpChatMessages)
+            .where(eq(helpChatMessages.guestId, conv.guestId))
+            .orderBy(desc(helpChatMessages.createdAt))
+            .limit(1);
+
+          return {
+            guestId: conv.guestId,
+            lastMessage: latestMessage[0]?.message || conv.lastMessage,
+            lastMessageTime: latestMessage[0]?.createdAt ? latestMessage[0].createdAt.toISOString() : 
+                            (conv.lastMessageTime ? new Date(conv.lastMessageTime).toISOString() : null),
+            messageCount: Number(conv.messageCount),
+            unreadCount: Number(conv.unreadCount),
+            isActive: true // Could add logic to determine if guest is currently online
+          };
+        })
+      );
+
+      res.json({ success: true,
+        success: true,
+        conversations: enrichedConversations
+      });
+    } catch (error: any) {
+      console.error('Error fetching help chat conversations:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch conversations'
+      });
+    }
+  });
+
+  // Get help chat conversation details
+  app.get('/api/admin/help-chat/conversation/:guestId', requireAuth, requireAdminOrModerator, async (req, res) => {
+    try {
+      const { guestId } = req.params;
+      
+      const messages = await db
+        .select({
+          id: helpChatMessages.id,
+          guestId: helpChatMessages.guestId,
+          message: helpChatMessages.message,
+          sender: helpChatMessages.sender,
+          createdAt: helpChatMessages.createdAt,
+          adminName: profiles.name,
+          adminAvatar: profiles.avatarUrl
+        })
+        .from(helpChatMessages)
+        .leftJoin(users, eq(helpChatMessages.receiverId, users.id))
+        .leftJoin(profiles, eq(users.id, profiles.userId))
+        .where(eq(helpChatMessages.guestId, guestId))
+        .orderBy(asc(helpChatMessages.createdAt));
+
+      const formattedMessages = messages.map(msg => ({
+        id: msg.id.toString(),
+        message: msg.message,
+        sender: msg.sender,
+        timestamp: msg.createdAt.toISOString(),
+        adminName: msg.adminName,
+        adminAvatar: msg.adminAvatar
+      }));
+
+      res.json({ success: true,
+        success: true,
+        guestId,
+        messages: formattedMessages
+      });
+    } catch (error: any) {
+      console.error('Error fetching help chat conversation:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch conversation'
+      });
+    }
+  });
+
+  // Export help chat history 
+  app.get('/api/admin/help-chat/export', requireAuth, requireAdminOrModerator, async (req, res) => {
+    try {
+      const { format = 'csv', guestId } = req.query;
+      
+      let query = db
+        .select({
+          id: helpChatMessages.id,
+          guestId: helpChatMessages.guestId,
+          message: helpChatMessages.message,
+          sender: helpChatMessages.sender,
+          createdAt: helpChatMessages.createdAt,
+          adminName: profiles.name
+        })
+        .from(helpChatMessages)
+        .leftJoin(users, eq(helpChatMessages.receiverId, users.id))
+        .leftJoin(profiles, eq(users.id, profiles.userId))
+        .orderBy(asc(helpChatMessages.createdAt));
+
+      // Filter by guest ID if provided
+      if (guestId) {
+        query = query.where(eq(helpChatMessages.guestId, guestId as string));
+      }
+
+      const messages = await query;
+
+      if (format === 'csv') {
+        const csvHeader = 'Guest ID,Sender,Message,Admin Name,Timestamp\n';
+        const csvData = messages.map(msg => 
+          `"${msg.guestId}","${msg.sender}","${msg.message.replace(/"/g, '""')}","${msg.adminName || ''}","${msg.createdAt.toISOString()}"`
+        ).join('\n');
+        
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename="help-chat-export-${Date.now()}.csv"`);
+        res.send(csvHeader + csvData);
+      } else if (format === 'txt') {
+        const txtData = messages.map(msg => 
+          `[${msg.createdAt.toISOString()}] ${msg.sender === 'visitor' ? `Guest ${msg.guestId}` : `Admin ${msg.adminName || 'Unknown'}`}: ${msg.message}`
+        ).join('\n\n');
+        
+        res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Disposition', `attachment; filename="help-chat-export-${Date.now()}.txt"`);
+        res.send(txtData);
+      } else if (format === 'json') {
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Disposition', `attachment; filename="help-chat-export-${Date.now()}.json"`);
+        res.json({ success: true,
+          exportDate: new Date().toISOString(),
+          totalMessages: messages.length,
+          messages: messages.map(msg => ({
+            id: msg.id.toString(),
+            guestId: msg.guestId,
+            message: msg.message,
+            sender: msg.sender,
+            adminName: msg.adminName,
+            timestamp: msg.createdAt.toISOString()
+          }))
+        });
+      } else if (format === 'pdf') {
+        const PDFDocument = require('pdfkit');
+        const doc = new PDFDocument();
+        
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="help-chat-export-${Date.now()}.pdf"`);
+        
+        doc.pipe(res);
+        
+        // PDF Header
+        doc.fontSize(16).text('Help Chat History Export', { align: 'center' });
+        doc.fontSize(12).text(`Export Date: ${new Date().toLocaleString()}`, { align: 'center' });
+        doc.fontSize(10).text(`Total Messages: ${messages.length}`, { align: 'center' });
+        
+        if (guestId) {
+          doc.text(`Guest ID: ${guestId}`, { align: 'center' });
+        }
+        
+        doc.moveDown(2);
+        
+        // Messages
+        messages.forEach((msg, index) => {
+          const timestamp = new Date(msg.createdAt).toLocaleString();
+          const senderName = msg.sender === 'visitor' ? `Guest ${msg.guestId.slice(-8)}` : (msg.adminName || 'Admin');
+          
+          if (doc.y > 700) { // Add new page if needed
+            doc.addPage();
+          }
+          
+          // Message header with bubble-style formatting
+          doc.fontSize(10)
+             .fillColor('#666666')
+             .text(`${timestamp} - ${senderName}`, { align: msg.sender === 'admin' ? 'right' : 'left' });
+          
+          // Message content with styling similar to chat bubbles
+          doc.fontSize(11)
+             .fillColor(msg.sender === 'admin' ? '#2563eb' : '#374151')
+             .text(msg.message, { 
+               align: msg.sender === 'admin' ? 'right' : 'left',
+               indent: msg.sender === 'admin' ? 50 : 0,
+               width: 400
+             });
+          
+          doc.moveDown(0.5);
+          
+          // Add separator line
+          if (index < messages.length - 1) {
+            doc.strokeColor('#e5e7eb')
+               .lineWidth(0.5)
+               .moveTo(50, doc.y)
+               .lineTo(550, doc.y)
+               .stroke();
+            doc.moveDown(0.5);
+          }
+        });
+        
+        doc.end();
+      } else {
+        res.status(400).json({
+          success: false,
+          error: 'Invalid format. Supported formats: csv, txt, json, pdf'
+        });
+      }
+    } catch (error: any) {
+      console.error('Error exporting help chat data:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to export chat data'
+      });
+    }
+  });
+
+  // =======================
+  // SUPPORT SYSTEM API ROUTES
+  // =======================
+
+  // Support Agents Management
+  // =========================
+  
+  // Get all support agents (admin/moderator only)
+  app.get('/api/admin/support-agents', requireAuth, requireAdminOrModerator, async (req, res) => {
+    try {
+      // Add cache-control headers to prevent browser caching
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      
+      // Direct database query to access existing support agents (bypassing storage interface issues)
+      const agents = await db.select().from(supportAgents).orderBy(asc(supportAgents.sortOrder), asc(supportAgents.name));
+      console.log('📋 Direct DB query - Support agents found:', agents.length);
+      res.json({ success: true, data: agents });
+    } catch (error: any) {
+      console.error('Error fetching support agents:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch support agents' });
+    }
+  });
+
+  // Get active support agents for public display (visitor chat)
+  app.get('/api/support-agents/active', async (req, res) => {
+    try {
+      // Add cache-control headers to prevent browser caching
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      
+      const agents = await storage.getActiveSupportAgents();
+      // Only return minimal info needed for visitor display
+      const publicAgents = agents.map(agent => ({
+        id: agent.id,
+        name: agent.name,
+        avatarUrl: agent.avatarUrl,
+        role: agent.role
+      }));
+      res.json({ success: true, data: publicAgents });
+    } catch (error: any) {
+      console.error('Error fetching active support agents:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch active support agents' });
+    }
+  });
+
+  // Get specific support agent
+  app.get('/api/admin/support-agents/:id', requireAuth, requireAdminOrModerator, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, error: 'Invalid agent ID' });
+      }
+      
+      const agent = await storage.getSupportAgentById(id);
+      
+      if (!agent) {
+        return res.status(404).json({ success: false, error: 'Support agent not found' });
+      }
+      
+      res.json({ success: true, data: agent });
+    } catch (error: any) {
+      console.error('Error fetching support agent:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch support agent' });
+    }
+  });
+
+  // Create new support agent
+  app.post('/api/admin/support-agents', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const validationResult = insertSupportAgentSchema.safeParse(req.body);
+      
+      if (!validationResult.success) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Validation failed',
+          details: validationResult.error.errors 
+        });
+      }
+
+      const newAgent = await storage.createSupportAgent(validationResult.data);
+
+      res.status(201).json({ success: true, data: newAgent, message: 'Support agent created successfully' });
+    } catch (error: any) {
+      console.error('Error creating support agent:', error);
+      res.status(500).json({ success: false, error: 'Failed to create support agent' });
+    }
+  });
+
+  // Update support agent
+  app.put('/api/admin/support-agents/:id', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, error: 'Invalid agent ID' });
+      }
+      
+      const validationResult = insertSupportAgentSchema.partial().safeParse(req.body);
+      
+      if (!validationResult.success) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Validation failed',
+          details: validationResult.error.errors 
+        });
+      }
+
+      const updatedAgent = await storage.updateSupportAgent(id, validationResult.data);
+      
+      if (!updatedAgent) {
+        return res.status(404).json({ success: false, error: 'Support agent not found' });
+      }
+
+      res.json({ success: true, data: updatedAgent, message: 'Support agent updated successfully' });
+    } catch (error: any) {
+      console.error('Error updating support agent:', error);
+      res.status(500).json({ success: false, error: 'Failed to update support agent' });
+    }
+  });
+
+  // Delete support agent
+  app.delete('/api/admin/support-agents/:id', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, error: 'Invalid agent ID' });
+      }
+      
+      const deleted = await storage.deleteSupportAgent(id);
+
+      if (!deleted) {
+        return res.status(404).json({ success: false, error: 'Support agent not found' });
+      }
+
+      res.json({ success: true, message: 'Support agent deleted successfully' });
+    } catch (error: any) {
+      console.error('Error deleting support agent:', error);
+      res.status(500).json({ success: false, error: 'Failed to delete support agent' });
+    }
+  });
+
+  // Help Chat Settings Management
+  // =============================
+  
+  // Get all help chat settings
+  app.get('/api/admin/help-chat-settings', requireAuth, requireAdminOrModerator, async (req, res) => {
+    try {
+      const settings = await storage.getHelpChatSettings();
+      res.json({ success: true, data: settings });
+    } catch (error: any) {
+      console.error('Error fetching help chat settings:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch help chat settings' });
+    }
+  });
+
+  // Get specific help chat setting
+  app.get('/api/admin/help-chat-settings/:key', requireAuth, requireAdminOrModerator, async (req, res) => {
+    try {
+      const { key } = req.params;
+      const setting = await storage.getHelpChatSetting(key);
+      
+      if (!setting) {
+        return res.status(404).json({ success: false, error: 'Setting not found' });
+      }
+      
+      res.json({ success: true, data: setting });
+    } catch (error: any) {
+      console.error('Error fetching help chat setting:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch help chat setting' });
+    }
+  });
+
+  // Create or update help chat setting
+  app.post('/api/admin/help-chat-settings', requireAuth, requireAdmin, async (req: AuthenticatedRequest, res) => {
+    try {
+      // Convert text userId to UUID for updatedBy field
+      let updatedByUuid = null;
+      if (req.user?.userId) {
+        updatedByUuid = await getUserUuidByTextId(req.user.userId);
+      }
+
+      const validationResult = insertHelpChatSettingSchema.safeParse({
+        ...req.body,
+        updatedBy: updatedByUuid
+      });
+      
+      if (!validationResult.success) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Validation failed',
+          details: validationResult.error.errors 
+        });
+      }
+
+      const { settingKey, settingValue, description, updatedBy } = validationResult.data;
+      
+      // Check if setting already exists
+      const existingSetting = await storage.getHelpChatSetting(settingKey);
+      
+      let setting;
+      if (existingSetting) {
+        // Update existing setting
+        setting = await storage.updateHelpChatSetting(settingKey, settingValue, updatedBy || undefined);
+      } else {
+        // Create new setting
+        setting = await storage.createHelpChatSetting(validationResult.data);
+      }
+
+      res.status(existingSetting ? 200 : 201).json({ 
+        success: true, 
+        data: setting, 
+        message: `Help chat setting ${existingSetting ? 'updated' : 'created'} successfully` 
+      });
+    } catch (error: any) {
+      console.error('Error saving help chat setting:', error);
+      res.status(500).json({ success: false, error: 'Failed to save help chat setting' });
+    }
+  });
+
+  // Update help chat setting
+  app.put('/api/admin/help-chat-settings/:key', requireAuth, requireAdmin, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { key } = req.params;
+      const { settingValue } = req.body;
+      
+      if (!settingValue) {
+        return res.status(400).json({ success: false, error: 'Setting value is required' });
+      }
+
+      // Convert text userId to UUID for updatedBy field
+      let updatedByUuid = undefined;
+      if (req.user?.userId) {
+        updatedByUuid = await getUserUuidByTextId(req.user.userId);
+      }
+
+      const updatedSetting = await storage.updateHelpChatSetting(key, settingValue, updatedByUuid);
+      
+      if (!updatedSetting) {
+        return res.status(404).json({ success: false, error: 'Setting not found' });
+      }
+
+      res.json({ success: true, data: updatedSetting, message: 'Help chat setting updated successfully' });
+    } catch (error: any) {
+      console.error('Error updating help chat setting:', error);
+      res.status(500).json({ success: false, error: 'Failed to update help chat setting' });
+    }
+  });
+
+  // Delete help chat setting
+  app.delete('/api/admin/help-chat-settings/:key', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { key } = req.params;
+      const deleted = await storage.deleteHelpChatSetting(key);
+
+      if (!deleted) {
+        return res.status(404).json({ success: false, error: 'Setting not found' });
+      }
+
+      res.json({ success: true, message: 'Help chat setting deleted successfully' });
+    } catch (error: any) {
+      console.error('Error deleting help chat setting:', error);
+      res.status(500).json({ success: false, error: 'Failed to delete help chat setting' });
+    }
+  });
+
+  // Quick Responses Management
+  // ==========================
+  
+  // Get all quick responses
+  app.get('/api/admin/quick-responses', requireAuth, requireSupportStaff, async (req, res) => {
+    try {
+      const { category } = req.query;
+      
+      // Fetch quick responses with creator information
+      const responsesWithCreator = await db
+        .select({
+          id: quickResponses.id,
+          title: quickResponses.title,
+          content: quickResponses.content,
+          shortcut: quickResponses.shortcut,
+          category: quickResponses.category,
+          isActive: quickResponses.isActive,
+          sortOrder: quickResponses.sortOrder,
+          createdBy: quickResponses.createdBy,
+          createdAt: quickResponses.createdAt,
+          updatedAt: quickResponses.updatedAt,
+          creatorRole: profiles.role,
+          creatorName: profiles.name
+        })
+        .from(quickResponses)
+        .leftJoin(profiles, eq(quickResponses.createdBy, profiles.userId))
+        .where(category ? eq(quickResponses.category, category as string) : sql`true`)
+        .orderBy(
+          asc(quickResponses.category), 
+          asc(quickResponses.sortOrder), 
+          asc(quickResponses.title)
+        );
+      
+      res.json({ success: true, data: responsesWithCreator });
+    } catch (error: any) {
+      console.error('Error fetching quick responses:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch quick responses' });
+    }
+  });
+
+  // Get specific quick response
+  app.get('/api/admin/quick-responses/:id', requireAuth, requireSupportStaff, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, error: 'Invalid quick response ID' });
+      }
+      
+      const response = await storage.getQuickResponseById(id);
+      
+      if (!response) {
+        return res.status(404).json({ success: false, error: 'Quick response not found' });
+      }
+      
+      res.json({ success: true, data: response });
+    } catch (error: any) {
+      console.error('Error fetching quick response:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch quick response' });
+    }
+  });
+
+  // Create new quick response
+  app.post('/api/admin/quick-responses', requireAuth, requireSupportStaff, async (req: AuthenticatedRequest, res) => {
+    console.log('🔍 QuickResponse POST body:', JSON.stringify(req.body, null, 2));
+    
+    try {
+      // Normalize request body to match backend schema
+      const shortcut = req.body.shortcut ?? req.body.trigger;
+      const title = req.body.title ?? shortcut;
+      const sortOrder = typeof req.body.sortOrder === 'string' ? parseInt(req.body.sortOrder, 10) : (req.body.sortOrder ?? 0);
+      const category = String(req.body.category || 'general').toLowerCase();
+      
+      const dataToValidate = {
+        title,
+        shortcut,
+        content: req.body.content,
+        category,
+        isActive: req.body.isActive ?? true,
+        sortOrder,
+        createdBy: req.user.id
+      };
+      
+      console.log('🔍 Normalized data for validation:', JSON.stringify(dataToValidate, null, 2));
+      
+      const validationResult = insertQuickResponseSchema.safeParse(dataToValidate);
+      
+      if (!validationResult.success) {
+        console.log('❌ Validation failed:', JSON.stringify(validationResult.error.flatten(), null, 2));
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Validation failed',
+          issues: validationResult.error.flatten()
+        });
+      }
+
+      const newResponse = await storage.createQuickResponse(validationResult.data);
+
+      res.status(201).json({ success: true, data: newResponse, message: 'Quick response created successfully' });
+    } catch (error: any) {
+      console.error('Error creating quick response:', error);
+      res.status(500).json({ success: false, error: 'Failed to create quick response' });
+    }
+  });
+
+  // Update quick response
+  app.put('/api/admin/quick-responses/:id', requireAuth, requireSupportStaff, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, error: 'Invalid quick response ID' });
+      }
+      
+      const validationResult = insertQuickResponseSchema.partial().safeParse(req.body);
+      
+      if (!validationResult.success) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Validation failed',
+          details: validationResult.error.errors 
+        });
+      }
+
+      const updatedResponse = await storage.updateQuickResponse(id, validationResult.data);
+      
+      if (!updatedResponse) {
+        return res.status(404).json({ success: false, error: 'Quick response not found' });
+      }
+
+      res.json({ success: true, data: updatedResponse, message: 'Quick response updated successfully' });
+    } catch (error: any) {
+      console.error('Error updating quick response:', error);
+      res.status(500).json({ success: false, error: 'Failed to update quick response' });
+    }
+  });
+
+  // Delete quick response
+  app.delete('/api/admin/quick-responses/:id', requireAuth, requireSupportStaff, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, error: 'Invalid quick response ID' });
+      }
+      
+      const deleted = await storage.deleteQuickResponse(id);
+
+      if (!deleted) {
+        return res.status(404).json({ success: false, error: 'Quick response not found' });
+      }
+
+      res.json({ success: true, message: 'Quick response deleted successfully' });
+    } catch (error: any) {
+      console.error('Error deleting quick response:', error);
+      res.status(500).json({ success: false, error: 'Failed to delete quick response' });
+    }
+  });
+
+  // Public Quick Responses (for messaging interface)
+  // =================================================
+  
+  // Get active quick responses for all authenticated users (for messaging interface)
+  app.get('/api/quick-responses/active', requireAuth, async (req, res) => {
+    try {
+      const { category } = req.query;
+      const responses = await storage.getActiveQuickResponses();
+      
+      // Filter by category if provided
+      const filteredResponses = category && category !== 'all' 
+        ? responses.filter(response => response.category === category)
+        : responses;
+      
+      res.json({ success: true, data: filteredResponses });
+    } catch (error: any) {
+      console.error('Error fetching active quick responses:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch quick responses' });
+    }
+  });
+
+  // Support Chat Sessions Management
+  // ================================
+  
+  // Get all support chat sessions (for admin dashboard)
+  app.get('/api/admin/support-chat-sessions', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { activeOnly } = req.query;
+      const sessions = activeOnly === 'true' 
+        ? await storage.getActiveSessions()
+        : await storage.getAllSupportChatSessions();
+      
+      res.json({ success: true, data: sessions });
+    } catch (error: any) {
+      console.error('Error fetching support chat sessions:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch support chat sessions' });
+    }
+  });
+
+  // Get sessions by agent
+  app.get('/api/admin/support-chat-sessions/agent/:agentId', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const agentId = parseInt(req.params.agentId);
+      const { activeOnly } = req.query;
+      
+      const sessions = await storage.getSessionsByAgent(agentId, { 
+        activeOnly: activeOnly === 'true' 
+      });
+      
+      res.json({ success: true, data: sessions });
+    } catch (error: any) {
+      console.error('Error fetching sessions by agent:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch sessions by agent' });
+    }
+  });
+
+  // Get specific support chat session
+  app.get('/api/admin/support-chat-sessions/:guestId', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { guestId } = req.params;
+      const session = await storage.getSupportChatSession(guestId);
+      
+      if (!session) {
+        return res.status(404).json({ success: false, error: 'Support chat session not found' });
+      }
+      
+      res.json({ success: true, data: session });
+    } catch (error: any) {
+      console.error('Error fetching support chat session:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch support chat session' });
+    }
+  });
+
+  // Update support chat session (assign agent, admin takeover, etc.)
+  app.put('/api/admin/support-chat-sessions/:guestId', requireAuth, requireAdmin, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { guestId } = req.params;
+      const updates = req.body;
+
+      // If this is an admin takeover, set the admin user ID
+      if (updates.adminTakenOver === true) {
+        updates.adminUserId = req.user?.userId || null;
+      }
+
+      const updatedSession = await storage.updateSupportChatSession(guestId, updates);
+      
+      if (!updatedSession) {
+        return res.status(404).json({ success: false, error: 'Support chat session not found' });
+      }
+
+      res.json({ success: true, data: updatedSession, message: 'Support chat session updated successfully' });
+    } catch (error: any) {
+      console.error('Error updating support chat session:', error);
+      res.status(500).json({ success: false, error: 'Failed to update support chat session' });
+    }
+  });
+
+  // Close support chat session
+  app.post('/api/admin/support-chat-sessions/:guestId/close', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { guestId } = req.params;
+      const closedSession = await storage.closeSupportChatSession(guestId);
+      
+      if (!closedSession) {
+        return res.status(404).json({ success: false, error: 'Support chat session not found' });
+      }
+      
+      res.json({ success: true, data: closedSession, message: 'Support chat session closed successfully' });
+    } catch (error: any) {
+      console.error('Error closing support chat session:', error);
+      res.status(500).json({ success: false, error: 'Failed to close support chat session' });
+    }
+  });
+
+  // Get or create support chat session
+  app.post('/api/support-chat-sessions', async (req, res) => {
+    try {
+      const { guestId } = req.body;
+      
+      if (!guestId) {
+        return res.status(400).json({ success: false, error: 'Guest ID is required' });
+      }
+      
+      const validationResult = insertSupportChatSessionSchema.partial().safeParse(req.body);
+      
+      if (!validationResult.success) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Validation failed',
+          details: validationResult.error.errors 
+        });
+      }
+
+      const session = await storage.getOrCreateSupportChatSession(guestId, validationResult.data);
+
+      res.json({ success: true, data: session });
+    } catch (error: any) {
+      console.error('Error getting/creating support chat session:', error);
+      res.status(500).json({ success: false, error: 'Failed to get or create support chat session' });
+    }
+  });
+
+  // Course reviews endpoint for CourseDetail page
+  app.get('/api/courses/:courseId/reviews', async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      
+      // Get reviews from the database (using courseReviews from schema)
+      const reviewData = await db
+        .select({
+          id: courseReviews.id,
+          userId: courseReviews.studentId,
+          rating: courseReviews.rating,
+          comment: courseReviews.review,
+          title: sql`NULL`, // title column doesn't exist in this table
+          createdAt: courseReviews.createdAt,
+          userName: profiles.displayName,
+          userAvatar: profiles.avatarUrl
+        })
+        .from(courseReviews)
+        .leftJoin(profiles, eq(courseReviews.studentId, profiles.userId))
+        .where(eq(courseReviews.courseId, courseId))
+        .orderBy(desc(courseReviews.createdAt));
+
+      // Map to expected format with isVerified check
+      const reviews = reviewData.map(review => ({
+        id: review.id,
+        userId: review.userId,
+        userName: review.userName || 'Anonymous',
+        userAvatar: review.userAvatar || null,
+        rating: review.rating,
+        title: review.title || null,
+        comment: review.comment,
+        isVerified: true, // For now, assume all reviews are verified
+        createdAt: review.createdAt
+      }));
+
+      res.json({ reviews });
+    } catch (error: any) {
+      console.error('Error fetching course reviews:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch course reviews' });
+    }
+
+  // ========== COURSE COMMENTS SECTION ==========
+  
+  // Get course comments with pagination
+  app.get('/api/courses/:courseId/comments', async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 5;
+      const showAll = req.query.showAll === 'true';
+      
+      const offset = (page - 1) * limit;
+      
+      // Get total count
+      const totalResult = await db
+        .select({ count: count() })
+        .from(courseComments)
+        .where(eq(courseComments.courseId, courseId));
+      
+      const total = totalResult[0]?.count || 0;
+      
+      // Get comments with user info
+      const commentsQuery = db
+        .select({
+          id: courseComments.id,
+          courseId: courseComments.courseId,
+          userId: courseComments.userId,
+          comment: courseComments.comment,
+          likesCount: courseComments.likesCount,
+          repliesCount: courseComments.repliesCount,
+          createdAt: courseComments.createdAt,
+          userName: profiles.displayName,
+          userAvatar: profiles.avatarUrl
+        })
+        .from(courseComments)
+        .leftJoin(profiles, eq(courseComments.userId, profiles.userId))
+        .where(eq(courseComments.courseId, courseId))
+        .orderBy(desc(courseComments.createdAt));
+      
+      const commentsData = showAll 
+        ? await commentsQuery.limit(100)
+        : await commentsQuery.limit(limit).offset(offset);
+      
+      const comments = commentsData.map(c => ({
+        ...c,
+        userName: c.userName || 'Anonymous'
+      }));
+      
+      res.json({
+        comments,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+          hasMore: offset + comments.length < total
+        }
+      });
+    } catch (error: any) {
+      console.error('Error fetching course comments:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch course comments' });
+    }
+  });
+  
+  // Post a new comment
+  app.post('/api/courses/:courseId/comments', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { courseId } = req.params;
+      const { comment } = req.body;
+      const userId = req.user.id;
+      
+      if (!comment || !comment.trim()) {
+        return res.status(400).json({ success: false, error: 'Comment is required' });
+      }
+      
+      const [newComment] = await db
+        .insert(courseComments)
+        .values({
+          courseId,
+          userId,
+          comment: comment.trim()
+        })
+        .returning();
+      
+      // Get user info for the response
+      const userInfo = await db
+        .select({
+          displayName: profiles.displayName,
+          avatarUrl: profiles.avatarUrl
+        })
+        .from(profiles)
+        .where(eq(profiles.userId, userId))
+        .limit(1);
+      
+      res.json({
+        success: true,
+        comment: {
+          ...newComment,
+          userName: userInfo[0]?.displayName || 'Anonymous',
+          userAvatar: userInfo[0]?.avatarUrl || null
+        }
+      });
+    } catch (error: any) {
+      console.error('Error posting comment:', error);
+      res.status(500).json({ success: false, error: 'Failed to post comment' });
+    }
+  });
+  
+  // Like a comment
+  app.post('/api/comments/:commentId/like', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { commentId } = req.params;
+      const userId = req.user.id;
+      
+      // Check if already liked
+      const existingLike = await db
+        .select()
+        .from(courseCommentLikes)
+        .where(and(
+          eq(courseCommentLikes.commentId, commentId),
+          eq(courseCommentLikes.userId, userId)
+        ))
+        .limit(1);
+      
+      if (existingLike.length > 0) {
+        // Unlike
+        await db.delete(courseCommentLikes)
+          .where(and(
+            eq(courseCommentLikes.commentId, commentId),
+            eq(courseCommentLikes.userId, userId)
+          ));
+        
+        // Decrement likes count
+        await db.update(courseComments)
+          .set({ likesCount: sql`GREATEST(0, ${courseComments.likesCount} - 1)` })
+          .where(eq(courseComments.id, commentId));
+        
+        res.json({ success: true, liked: false });
+      } else {
+        // Like
+        await db.insert(courseCommentLikes).values({
+          commentId,
+          userId
+        });
+        
+        // Increment likes count
+        await db.update(courseComments)
+          .set({ likesCount: sql`${courseComments.likesCount} + 1` })
+          .where(eq(courseComments.id, commentId));
+        
+        res.json({ success: true, liked: true });
+      }
+    } catch (error: any) {
+      console.error('Error liking comment:', error);
+      res.status(500).json({ success: false, error: 'Failed to like comment' });
+    }
+  });
+  
+  // Get replies for a comment
+  app.get('/api/comments/:commentId/replies', async (req, res) => {
+    try {
+      const { commentId } = req.params;
+      
+      const replies = await db
+        .select({
+          id: courseCommentReplies.id,
+          commentId: courseCommentReplies.commentId,
+          userId: courseCommentReplies.userId,
+          reply: courseCommentReplies.reply,
+          likesCount: courseCommentReplies.likesCount,
+          createdAt: courseCommentReplies.createdAt,
+          userName: profiles.displayName,
+          userAvatar: profiles.avatarUrl
+        })
+        .from(courseCommentReplies)
+        .leftJoin(profiles, eq(courseCommentReplies.userId, profiles.userId))
+        .where(eq(courseCommentReplies.commentId, commentId))
+        .orderBy(asc(courseCommentReplies.createdAt));
+      
+      res.json(replies.map(r => ({
+        ...r,
+        userName: r.userName || 'Anonymous'
+      })));
+    } catch (error: any) {
+      console.error('Error fetching replies:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch replies' });
+    }
+  });
+  
+  // Post a reply to a comment
+  app.post('/api/comments/:commentId/replies', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { commentId } = req.params;
+      const { reply } = req.body;
+      const userId = req.user.id;
+      
+      if (!reply || !reply.trim()) {
+        return res.status(400).json({ success: false, error: 'Reply is required' });
+      }
+      
+      const [newReply] = await db
+        .insert(courseCommentReplies)
+        .values({
+          commentId,
+          userId,
+          reply: reply.trim()
+        })
+        .returning();
+      
+      // Increment replies count on parent comment
+      await db.update(courseComments)
+        .set({ repliesCount: sql`${courseComments.repliesCount} + 1` })
+        .where(eq(courseComments.id, commentId));
+      
+      // Get user info
+      const userInfo = await db
+        .select({
+          displayName: profiles.displayName,
+          avatarUrl: profiles.avatarUrl
+        })
+        .from(profiles)
+        .where(eq(profiles.userId, userId))
+        .limit(1);
+      
+      res.json({
+        success: true,
+        reply: {
+          ...newReply,
+          userName: userInfo[0]?.displayName || 'Anonymous',
+          userAvatar: userInfo[0]?.avatarUrl || null
+        }
+      });
+    } catch (error: any) {
+      console.error('Error posting reply:', error);
+      res.status(500).json({ success: false, error: 'Failed to post reply' });
+    }
+  });
+  
+  // Like a reply
+  app.post('/api/replies/:replyId/like', requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { replyId } = req.params;
+      const userId = req.user.id;
+      
+      // Check if already liked
+      const existingLike = await db
+        .select()
+        .from(courseCommentReplyLikes)
+        .where(and(
+          eq(courseCommentReplyLikes.replyId, replyId),
+          eq(courseCommentReplyLikes.userId, userId)
+        ))
+        .limit(1);
+      
+      if (existingLike.length > 0) {
+        // Unlike
+        await db.delete(courseCommentReplyLikes)
+          .where(and(
+            eq(courseCommentReplyLikes.replyId, replyId),
+            eq(courseCommentReplyLikes.userId, userId)
+          ));
+        
+        // Decrement likes count
+        await db.update(courseCommentReplies)
+          .set({ likesCount: sql`GREATEST(0, ${courseCommentReplies.likesCount} - 1)` })
+          .where(eq(courseCommentReplies.id, replyId));
+        
+        res.json({ success: true, liked: false });
+      } else {
+        // Like
+        await db.insert(courseCommentReplyLikes).values({
+          replyId,
+          userId
+        });
+        
+        // Increment likes count
+        await db.update(courseCommentReplies)
+          .set({ likesCount: sql`${courseCommentReplies.likesCount} + 1` })
+          .where(eq(courseCommentReplies.id, replyId));
+        
+        res.json({ success: true, liked: true });
+      }
+    } catch (error: any) {
+      console.error('Error liking reply:', error);
+      res.status(500).json({ success: false, error: 'Failed to like reply' });
+    }
+  });
+
+  // ========== END COURSE COMMENTS SECTION ==========
+  });
+
+
+  // Check if user has purchased a course
+  app.get('/api/courses/:courseId/purchase-status', async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      
+      // Get user from auth header (optional - returns false if not authenticated)
+      let userId = null;
+      const authHeader = req.headers.authorization;
+      const sessionId = authHeader?.replace('Bearer ', '') || 
+                       req.headers['x-session-id'] as string;
+
+      if (sessionId) {
+        const session = await db
+          .select({ userId: userLoginSessions.userId })
+          .from(userLoginSessions)
+          .where(and(
+            eq(userLoginSessions.sessionId, sessionId),
+            gt(userLoginSessions.expiresAt, new Date())
+          ))
+          .limit(1);
+
+        if (session.length > 0) {
+          userId = session[0].userId;
+        }
+      }
+
+      if (!userId) {
+        return res.json({ hasPurchased: false });
+      }
+
+      // Check if user has purchased this course
+      const purchase = await db
+        .select()
+        .from(coursePurchases)
+        .where(and(
+          eq(coursePurchases.userId, userId),
+          eq(coursePurchases.courseId, courseId),
+          eq(coursePurchases.paymentStatus, 'completed')
+        ))
+        .limit(1);
+
+      res.json({ hasPurchased: purchase.length > 0 });
+    } catch (error: any) {
+      console.error('Error checking purchase status:', error);
+      res.status(500).json({ error: 'Failed to check purchase status' });
+    }
+  });
+
+  // Create Stripe payment intent for course purchase
+  app.post('/api/courses/:courseId/create-payment-intent', requireAuth, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const { couponCode } = req.body;
+      const user = (req as AuthenticatedRequest).user;
+      
+      if (!user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+
+      // Get course details
+      const course = await db
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .limit(1);
+
+      if (course.length === 0) {
+        return res.status(404).json({ error: 'Course not found' });
+      }
+
+      const courseData = course[0];
+      
+      // Check if course is free
+      if (!courseData.price || parseFloat(courseData.price) <= 0) {
+        return res.status(400).json({ error: 'This course is free' });
+      }
+
+      const originalPrice = parseFloat(courseData.price);
+
+      // Check if user already purchased this course
+      const existingPurchase = await db
+        .select()
+        .from(coursePurchases)
+        .where(and(
+          eq(coursePurchases.userId, user.id),
+          eq(coursePurchases.courseId, courseId),
+          eq(coursePurchases.paymentStatus, 'completed')
+        ))
+        .limit(1);
+
+      if (existingPurchase.length > 0) {
+        return res.status(400).json({ error: 'You have already purchased this course' });
+      }
+
+      // Delete any existing pending purchases to avoid unique constraint violation
+      await db
+        .delete(coursePurchases)
+        .where(and(
+          eq(coursePurchases.userId, user.id),
+          eq(coursePurchases.courseId, courseId),
+          eq(coursePurchases.paymentStatus, 'pending')
+        ));
+
+      // Initialize discount variables
+      let discountAmount = 0;
+      let finalPrice = originalPrice;
+      let validatedCoupon = null;
+
+      // Validate and apply coupon if provided
+      if (couponCode && typeof couponCode === 'string') {
+        // Find coupon
+        const [coupon] = await db
+          .select()
+          .from(coupons)
+          .where(eq(coupons.code, couponCode.toUpperCase()))
+          .limit(1);
+
+        if (!coupon) {
+          return res.status(404).json({ error: 'Invalid coupon code' });
+        }
+
+        // Validate coupon
+        const now = new Date();
+
+        if (!coupon.isActive) {
+          return res.status(400).json({ error: 'This coupon is no longer active' });
+        }
+
+        if (coupon.startDate && new Date(coupon.startDate) > now) {
+          return res.status(400).json({ error: 'This coupon is not yet valid' });
+        }
+
+        if (coupon.endDate && new Date(coupon.endDate) < now) {
+          return res.status(400).json({ error: 'This coupon has expired' });
+        }
+
+        if (coupon.minOrderAmount && originalPrice < parseFloat(coupon.minOrderAmount)) {
+          return res.status(400).json({ 
+            error: `Minimum order amount of $${coupon.minOrderAmount} required` 
+          });
+        }
+
+        if (coupon.totalUsageLimit && (coupon.usageCount ?? 0) >= coupon.totalUsageLimit) {
+          return res.status(400).json({ error: 'This coupon has reached its usage limit' });
+        }
+
+        // Check per-user limit
+        const [userUsageResult] = await db
+          .select({ count: count() })
+          .from(couponUsages)
+          .where(
+            and(
+              eq(couponUsages.couponId, coupon.id),
+              eq(couponUsages.userId, user.id)
+            )
+          );
+
+        const userUsageCount = userUsageResult?.count || 0;
+        if (coupon.perUserLimit && userUsageCount >= coupon.perUserLimit) {
+          return res.status(400).json({ 
+            error: 'You have already used this coupon the maximum number of times' 
+          });
+        }
+
+        // Calculate discount
+        if (coupon.discountType === 'percentage') {
+          discountAmount = (originalPrice * parseFloat(coupon.discountValue)) / 100;
+          if (coupon.maxDiscount && discountAmount > parseFloat(coupon.maxDiscount)) {
+            discountAmount = parseFloat(coupon.maxDiscount);
+          }
+        } else {
+          discountAmount = parseFloat(coupon.discountValue);
+        }
+
+        // Ensure discount doesn't exceed course price
+        discountAmount = Math.min(discountAmount, originalPrice);
+        finalPrice = originalPrice - discountAmount;
+
+        validatedCoupon = coupon;
+      }
+
+      // Get Stripe instance
+      const stripe = await getPrimaryPaymentClient();
+      if (!stripe) {
+        return res.status(500).json({ error: 'Payment processing is not configured' });
+      }
+
+      // Create payment intent with discounted price
+      const amount = Math.round(finalPrice * 100); // Convert to cents
+      
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency: 'usd',
+        automatic_payment_methods: {
+          enabled: true,
+        },
+        metadata: {
+          courseId: courseId,
+          userId: user.id,
+          courseTitle: courseData.title,
+          type: 'course_purchase',
+          ...(validatedCoupon && {
+            couponCode: validatedCoupon.code,
+            couponId: validatedCoupon.id,
+            discountAmount: discountAmount.toFixed(2),
+            originalPrice: originalPrice.toFixed(2),
+          }),
+        },
+      });
+
+      // Create pending purchase record with discounted price
+      await db.insert(coursePurchases).values({
+        userId: user.id,
+        courseId: courseId,
+        amount: finalPrice.toFixed(2),
+        currency: 'USD',
+        paymentIntentId: paymentIntent.id,
+        paymentStatus: 'pending',
+      });
+
+      res.json({ 
+        success: true, 
+        clientSecret: paymentIntent.client_secret,
+        originalAmount: originalPrice,
+        discountAmount: discountAmount,
+        finalPrice: finalPrice,
+        amount: finalPrice
+      });
+    } catch (error: any) {
+      console.error('Error creating payment intent:', error);
+      res.status(500).json({ error: 'Failed to create payment intent' });
+    }
+  });
+
+  // Confirm course purchase after successful Stripe payment
+  app.post('/api/courses/:courseId/purchase', requireAuth, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const { paymentIntentId } = req.body;
+      const user = (req as AuthenticatedRequest).user;
+      
+      if (!user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+
+      if (!paymentIntentId) {
+        return res.status(400).json({ error: 'Payment intent ID is required' });
+      }
+
+      // Get Stripe instance
+      const stripe = await getPrimaryPaymentClient();
+      if (!stripe) {
+        return res.status(500).json({ error: 'Payment processing is not configured' });
+      }
+
+      // Verify payment intent with Stripe
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+      if (paymentIntent.status !== 'succeeded') {
+        return res.status(400).json({ error: 'Payment not completed' });
+      }
+
+      // Verify metadata matches
+      if (paymentIntent.metadata.courseId !== courseId || 
+          paymentIntent.metadata.userId !== user.id) {
+        return res.status(400).json({ error: 'Payment verification failed' });
+      }
+
+      // Update purchase record to completed
+      await db
+        .update(coursePurchases)
+        .set({ 
+          paymentStatus: 'completed',
+          purchasedAt: new Date()
+        })
+        .where(and(
+          eq(coursePurchases.paymentIntentId, paymentIntentId),
+          eq(coursePurchases.userId, user.id),
+          eq(coursePurchases.courseId, courseId)
+        ));
+
+      // Auto-enroll user in the course
+      const existingEnrollment = await db
+        .select()
+        .from(courseEnrollments)
+        .where(and(
+          eq(courseEnrollments.userId, user.id),
+          eq(courseEnrollments.courseId, courseId)
+        ))
+        .limit(1);
+
+      if (existingEnrollment.length === 0) {
+        await db.insert(courseEnrollments).values({
+          userId: user.id,
+          courseId: courseId,
+          enrolledAt: new Date(),
+          progress: 0,
+        });
+      }
+
+      res.json({ 
+        success: true, 
+        message: 'Purchase completed successfully' 
+      });
+    } catch (error: any) {
+      console.error('Error confirming purchase:', error);
+      res.status(500).json({ error: 'Failed to confirm purchase' });
+    }
+  });
+  // Course modules endpoint for CourseDetail page
+  app.get('/api/course-creator/courses/:courseId/modules', async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      
+      // Optional authentication check - get user if authenticated
+      let user = null;
+      let isEnrolled = false;
+      
+      const authHeader = req.headers.authorization;
+      const sessionId = authHeader?.replace('Bearer ', '') || 
+                       req.headers['x-session-id'] as string ||
+                       req.cookies?.sessionId ||
+                       req.cookies?.session ||
+                       req.cookies?.auth_session;
+
+      if (sessionId) {
+        try {
+          const session = await db
+            .select({ userId: userLoginSessions.userId })
+            .from(userLoginSessions)
+            .where(and(
+              eq(userLoginSessions.sessionId, sessionId),
+              gt(userLoginSessions.expiresAt, new Date())
+            ))
+            .limit(1);
+
+          if (session.length > 0) {
+            user = { id: session[0].userId };
+            
+            // Check if user is enrolled in this course
+            const enrollment = await db
+              .select()
+              .from(courseEnrollments)
+              .where(and(
+                eq(courseEnrollments.courseId, courseId),
+                eq(courseEnrollments.userId, session[0].userId)
+              ))
+              .limit(1);
+            
+            const isSpecificallyEnrolled = enrollment.length > 0;
+            
+            // Check if user has active subscription for premium access
+            const subscriptionStatus = await hasActiveSubscription(session[0].userId);
+            
+            // User has access if they are enrolled OR have active subscription
+            isEnrolled = isSpecificallyEnrolled || subscriptionStatus.hasAccess;
+          }
+        } catch (authError) {
+          console.log('Auth check failed, continuing as public:', authError);
+          // Continue as unauthenticated user
+        }
+      }
+      
+      // Get modules and their lessons with proper ordering
+      const moduleList = await db
+        .select({
+          moduleId: modules.id,
+          moduleTitle: modules.title,
+          moduleDescription: modules.description,
+          moduleOrderIndex: modules.orderNum,
+          lessonId: lessons.id,
+          lessonTitle: lessons.title,
+          lessonContent: lessons.content,
+          lessonVideoUrl: lessons.videoUrl,
+          lessonOrderIndex: lessons.orderNum,
+          lessonDurationMinutes: lessons.durationMinutes,
+          lessonFreePreviewFlag: lessons.freePreviewFlag,
+          lessonImages: lessons.images
+        })
+        .from(modules)
+        .leftJoin(lessons, eq(modules.id, lessons.moduleId))
+        .where(eq(modules.courseId, courseId))
+        .orderBy(modules.orderNum, lessons.orderNum);
+
+      // Group lessons by module with access control
+      const groupedModules = moduleList.reduce((acc, item) => {
+        const moduleId = item.moduleId;
+        if (!acc[moduleId]) {
+          acc[moduleId] = {
+            id: item.moduleId,
+            title: item.moduleTitle,
+            description: item.moduleDescription,
+            orderNum: item.moduleOrderIndex,
+            lessons: []
+          };
+        }
+        if (item.lessonId) {
+          if (isEnrolled) {
+            // Full access for enrolled users
+            acc[moduleId].lessons.push({
+              id: item.lessonId,
+              title: item.lessonTitle,
+              content: item.lessonContent,
+              videoUrl: item.lessonVideoUrl,
+              orderNum: item.lessonOrderIndex,
+              durationMinutes: item.lessonDurationMinutes,
+              freePreviewFlag: item.lessonFreePreviewFlag || false,
+              images: item.lessonImages || []
+            });
+          } else if (item.lessonFreePreviewFlag) {
+            // Only show preview lessons to non-enrolled users with full content
+            acc[moduleId].lessons.push({
+              title: item.lessonTitle,
+              id: item.lessonId,
+              content: item.lessonContent,
+              videoUrl: item.lessonVideoUrl,
+              orderNum: item.lessonOrderIndex,
+              durationMinutes: item.lessonDurationMinutes,
+              freePreviewFlag: item.lessonFreePreviewFlag || false,
+              images: item.lessonImages || []
+            });
+          }
+        }
+        return acc;
+      }, {} as any);
+
+      const modules_result = Object.values(groupedModules);
+      res.json({ modules: modules_result });
+    } catch (error: any) {
+      console.error('Error fetching course modules:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch course modules' });
+    }
+  });
+
+  // Course enrollment status endpoint for CourseDetail page
+  app.get('/api/course-creator/courses/:courseId/enrollment', requireAuth, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const userId = (req as AuthenticatedRequest).user.id;
+      
+      // Check if user is enrolled in the course
+      const enrollment = await db
+        .select()
+        .from(courseEnrollments)
+        .where(and(
+          eq(courseEnrollments.courseId, courseId),
+          eq(courseEnrollments.userId, userId)
+        ))
+        .limit(1);
+
+      const isEnrolled = enrollment.length > 0;
+      const enrollmentData = enrollment[0] || null;
+
+      res.json({ 
+        enrolled: isEnrolled,
+        enrollment: enrollmentData 
+      });
+    } catch (error: any) {
+      console.error('Error checking course enrollment:', error);
+      res.status(500).json({ success: false, error: 'Failed to check course enrollment' });
+    }
+  });
+
+  // ==================================================
+  // UNIFIED SHOP CATEGORIES ENDPOINTS (Multi-role access)
+  // ==================================================
+
+  // Get shop categories (public - for unauthenticated access) 
+  app.get('/api/shop-categories/public', async (req, res) => {
+    try {
+      // Public endpoint - only return global categories
+      const categories = await db
+        .select()
+        .from(shopCategories)
+        .where(and(
+          eq(shopCategories.isActive, true),
+          eq(shopCategories.scope, 'global')
+        ))
+        .orderBy(shopCategories.sortOrder, shopCategories.displayName);
+
+      // Transform snake_case to camelCase for frontend
+      const transformedCategories = categories.map(category => ({
+        id: category.id,
+        name: category.name,
+        displayName: category.displayName,
+        description: category.description,
+        imageUrl: category.imageUrl,
+        backgroundColor: category.backgroundColor,
+        sortOrder: category.sortOrder,
+        isActive: category.isActive,
+        scope: category.scope,
+        createdAt: category.createdAt.toISOString()
+      }));
+
+      res.json({ success: true,
+        success: true,
+        data: transformedCategories
+      });
+    } catch (error: any) {
+      console.error('Error fetching public shop categories:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to fetch shop categories' 
+      });
+    }
+  });
+
+  // Get single shop category by ID (public - for unauthenticated access)
+  app.get('/api/shop-categories/public/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      // Public endpoint - fetch single global category by ID
+      const [category] = await db
+        .select()
+        .from(shopCategories)
+        .where(and(
+          eq(shopCategories.id, id),
+          eq(shopCategories.isActive, true),
+          eq(shopCategories.scope, 'global')
+        ))
+        .limit(1);
+
+      if (!category) {
+        return res.status(404).json({
+          success: false,
+          error: 'Category not found'
+        });
+      }
+
+      // Transform snake_case to camelCase for frontend
+      const transformedCategory = {
+        id: category.id,
+        name: category.name,
+        displayName: category.displayName,
+        description: category.description,
+        imageUrl: category.imageUrl,
+        backgroundColor: category.backgroundColor,
+        sortOrder: category.sortOrder,
+        isActive: category.isActive,
+        scope: category.scope,
+        createdAt: category.createdAt.toISOString()
+      };
+
+      res.json({ success: true,
+        success: true,
+        data: transformedCategory
+      });
+    } catch (error: any) {
+      console.error('Error fetching public shop category:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to fetch shop category' 
+      });
+    }
+  });
+
+  // Get shop categories with role-based visibility (authenticated)
+  app.get('/api/shop-categories', requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user.id;
+      const userRole = (req as AuthenticatedRequest).user.role || 'student';
+      const { visibility } = req.query;
+
+      let categories;
+
+      if (userRole === 'admin' && visibility === 'all') {
+        // Admins can see all categories when requested
+        categories = await db
+          .select()
+          .from(shopCategories)
+          .where(eq(shopCategories.isActive, true))
+          .orderBy(shopCategories.sortOrder, shopCategories.displayName);
+      } else if (userRole === 'admin' || userRole === 'teacher' || userRole === 'freelancer') {
+        // Teachers/freelancers see global + their own categories
+        categories = await db
+          .select()
+          .from(shopCategories)
+          .where(and(
+            eq(shopCategories.isActive, true),
+            or(
+              eq(shopCategories.scope, 'global'),
+              and(
+                eq(shopCategories.scope, 'seller'),
+                eq(shopCategories.createdBy, userId)
+              )
+            )
+          ))
+          .orderBy(shopCategories.sortOrder, shopCategories.displayName);
+      } else {
+        // Students and others see only global categories
+        categories = await db
+          .select()
+          .from(shopCategories)
+          .where(and(
+            eq(shopCategories.isActive, true),
+            eq(shopCategories.scope, 'global')
+          ))
+          .orderBy(shopCategories.sortOrder, shopCategories.displayName);
+      }
+
+      // Transform snake_case to camelCase for frontend
+      const transformedCategories = categories.map(category => ({
+        id: category.id,
+        name: category.name,
+        displayName: category.displayName,
+        description: category.description,
+        imageUrl: category.imageUrl,
+        backgroundColor: category.backgroundColor,
+        sortOrder: category.sortOrder,
+        isActive: category.isActive,
+        scope: category.scope,
+        createdBy: category.createdBy,
+        createdAt: category.createdAt.toISOString()
+      }));
+
+      res.json({ success: true,
+        success: true,
+        data: transformedCategories
+      });
+    } catch (error: any) {
+      console.error('Error fetching shop categories:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to fetch shop categories' 
+      });
+    }
+  });
+
+  // Create new shop category (multi-role)
+  app.post('/api/shop-categories', requireAuth, upload.single('image'), async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user.id;
+      const userRole = (req as AuthenticatedRequest).user.role || 'student';
+
+      // Check if user can create categories
+      if (!['admin', 'teacher', 'freelancer'].includes(userRole)) {
+        return res.status(403).json({
+          success: false,
+          error: 'Only admins, teachers, and freelancers can create categories'
+        });
+      }
+
+      // SERVER-SIDE SECURITY: Set scope based on role, never trust client
+      let scope: 'global' | 'seller';
+      if (userRole === 'admin') {
+        // Admins can create both global and seller categories
+        scope = req.body.scope === 'seller' ? 'seller' : 'global';
+      } else {
+        // Teachers/freelancers can ONLY create seller-scoped categories
+        scope = 'seller';
+      }
+
+      // Validate and sanitize request body - including required server-side fields
+      const requestData = {
+        name: req.body.name?.trim(),
+        displayName: req.body.displayName?.trim(),
+        description: req.body.description?.trim() || '',
+        backgroundColor: req.body.backgroundColor || 'bg-gradient-to-br from-blue-100 to-blue-200',
+        sortOrder: req.body.sortOrder ? parseInt(req.body.sortOrder, 10) : 0,
+        isActive: req.body.isActive === 'true' || req.body.isActive === true || req.body.isActive === 'True',
+        scope: scope,
+        createdBy: userId
+      };
+
+      const validation = insertShopCategorySchema.safeParse(requestData);
+
+      if (!validation.success) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid category data',
+          details: validation.error.errors
+        });
+      }
+
+      const categoryData = validation.data;
+
+      let imageUrl = null;
+      if (req.file) {
+        const fileType = getFileType(req.file.originalname);
+        if (!FILE_CONFIGS[fileType]) {
+          return res.status(400).json({
+            success: false,
+            error: 'Unsupported file type'
+          });
+        }
+
+        const validation = validateFile(req.file, fileType);
+        if (!validation.isValid) {
+          return res.status(400).json({
+            success: false,
+            error: validation.error
+          });
+        }
+
+        const uploadResult = await cloudinaryStorage.uploadFile(
+          req.file.buffer,
+          req.file.originalname,
+          req.file.mimetype,
+          FILE_CONFIGS[fileType].folder || 'shop-categories'
+        );
+
+        if (!uploadResult.success) {
+          return res.status(500).json({
+            success: false,
+            error: 'Failed to upload image'
+          });
+        }
+        
+        imageUrl = uploadResult.url;
+      }
+
+      // SERVER-SIDE SECURITY: Always set createdBy from authenticated user, never trust client
+      const [newCategory] = await db.insert(shopCategories).values({
+        ...categoryData,
+        scope, // Server-controlled based on role
+        createdBy: userId, // Always from authenticated user
+        imageUrl,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }).returning();
+
+      res.status(201).json({
+        success: true,
+        data: {
+          id: newCategory.id,
+          name: newCategory.name,
+          displayName: newCategory.displayName,
+          description: newCategory.description,
+          imageUrl: newCategory.imageUrl,
+          backgroundColor: newCategory.backgroundColor,
+          sortOrder: newCategory.sortOrder,
+          isActive: newCategory.isActive,
+          scope: newCategory.scope,
+          createdBy: newCategory.createdBy
+        }
+      });
+    } catch (error: any) {
+      console.error('Create shop category error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to create category'
+      });
+    }
+  });
+
+  // Update shop category
+  app.put('/api/shop-categories/:id', requireAuth, upload.single('image'), async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = (req as any).userId;
+      const profile = (req as any).profile;
+      
+      if (!profile) {
+        return res.status(401).json({
+          success: false,
+          error: 'Unauthorized'
+        });
+      }
+
+      // Determine scope based on role
+      const isAdmin = profile.role === 'admin';
+      const scope = isAdmin ? 'platform' : 'seller';
+
+      const updateData: any = {};
+
+      if (req.body.name) updateData.name = req.body.name.trim();
+      if (req.body.displayName) updateData.displayName = req.body.displayName.trim();
+      if (req.body.description !== undefined) updateData.description = req.body.description.trim();
+      if (req.body.backgroundColor) updateData.backgroundColor = req.body.backgroundColor;
+      if (req.body.sortOrder !== undefined) updateData.sortOrder = parseInt(req.body.sortOrder, 10);
+      if (req.body.isActive !== undefined) {
+        updateData.isActive = req.body.isActive === 'true' || req.body.isActive === true || req.body.isActive === 'True';
+      }
+
+      if (req.file) {
+        const fileType = getFileType(req.file.originalname);
+        if (!FILE_CONFIGS[fileType]) {
+          return res.status(400).json({
+            success: false,
+            error: 'Unsupported file type'
+          });
+        }
+
+        const validation = validateFile(req.file, fileType);
+        if (!validation.isValid) {
+          return res.status(400).json({
+            success: false,
+            error: validation.error
+          });
+        }
+
+        const uploadResult = await cloudinaryStorage.uploadFile(
+          req.file.buffer,
+          req.file.originalname,
+          req.file.mimetype,
+          FILE_CONFIGS[fileType].folder || 'shop-categories'
+        );
+
+        if (!uploadResult.success) {
+          return res.status(500).json({
+            success: false,
+            error: 'Failed to upload image'
+          });
+        }
+        
+        updateData.imageUrl = uploadResult.url;
+      }
+
+      const [updatedCategory] = await db
+        .update(shopCategories)
+        .set(updateData)
+        .where(eq(shopCategories.id, id))
+        .returning();
+      res.json({ success: true,
+        success: true,
+        data: {
+          id: updatedCategory.id,
+          name: updatedCategory.name,
+          displayName: updatedCategory.displayName,
+          description: updatedCategory.description,
+          imageUrl: updatedCategory.imageUrl,
+          backgroundColor: updatedCategory.backgroundColor,
+          sortOrder: updatedCategory.sortOrder,
+          isActive: updatedCategory.isActive,
+          scope: updatedCategory.scope
+        }
+      });
+    } catch (error: any) {
+      console.error("Update shop category error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to update category"
+      });
+    }
+  });
+
+
+  // ===== QUIZ AND ASSESSMENT ROUTES =====
+  
+  // Get quiz for a specific lesson
+  app.get('/api/quizzes/lesson/:lessonId', async (req, res) => {
+    try {
+      const { lessonId } = req.params;
+      
+      const quiz = await db.query.quizzes.findFirst({
+        where: eq(quizzes.lessonId, parseInt(lessonId))
+      });
+      
+      if (!quiz) {
+        return res.json(null);
+      }
+      
+      res.json({ success: true,
+        id: quiz.id,
+        lessonId: quiz.lessonId,
+        title: quiz.title,
+        description: quiz.description,
+        questions: quiz.questions,
+        passingScore: quiz.passingScore || 70
+      });
+    } catch (error: any) {
+      console.error('Get quiz error:', error);
+      res.status(500).json({ error: 'Failed to fetch quiz' });
+    }
+  });
+  
+  // Submit quiz answers
+  app.post('/api/quizzes/submit', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+      
+      const { lessonId, answers, score } = req.body;
+      
+      const quiz = await db.query.quizzes.findFirst({
+        where: eq(quizzes.lessonId, lessonId)
+      });
+      
+      if (!quiz) {
+        return res.status(404).json({ error: 'Quiz not found' });
+      }
+      
+      const passed = score >= (quiz.passingScore || 70);
+      
+      const existing = await db.query.lessonProgress.findFirst({
+        where: and(
+          eq(lessonProgress.userId, user.id),
+          eq(lessonProgress.lessonId, lessonId)
+        )
+      });
+      
+      if (existing) {
+        await db.update(lessonProgress)
+          .set({
+            progressPercent: passed ? 100 : existing.progressPercent,
+            completedAt: passed ? new Date() : existing.completedAt,
+            updatedAt: new Date()
+          })
+          .where(eq(lessonProgress.id, existing.id));
+      }
+      
+      res.json({ success: true,
+        success: true,
+        passed,
+        score,
+        passingScore: quiz.passingScore || 70
+      });
+    } catch (error: any) {
+      console.error('Submit quiz error:', error);
+      res.status(500).json({ error: 'Failed to submit quiz' });
+    }
+  });
+  
+  app.get('/api/courses/:courseId/progress', requireAuth, async (req, res) => {
+    try {
+  // Get course progress
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      const { courseId } = req.params;
+
+      // Get all modules and lessons for this course
+      const courseModules = await db.query.modules.findMany({
+        where: eq(modules.courseId, courseId),
+        with: {
+          lessons: true
+        },
+        orderBy: [asc(modules.orderNum)]
+      });
+
+      const allLessons = courseModules.flatMap(m => m.lessons);
+      const totalLessons = allLessons.length;
+
+      if (totalLessons === 0) {
+        return res.json({ success: true,
+          success: true,
+          progressPercentage: 0,
+          completedLessons: 0,
+          totalLessons: 0,
+          lessonProgress: []
+        });
+      }
+
+      // Get user's lesson progress
+      const userProgress = await db.query.lessonProgress.findMany({
+        where: eq(lessonProgress.userId, user.id)
+      });
+
+      // Create a map of completed lessons
+      const progressMap = userProgress.reduce((acc, lp) => {
+        acc[lp.lessonId] = {
+          completed: lp.completedAt !== null,
+          quizPassed: lp.quizPassed,
+          score: lp.score
+        };
+        return acc;
+      }, {} as Record<number, any>);
+
+      // Calculate completed lessons count
+      const completedCount = allLessons.filter(lesson => 
+        progressMap[lesson.id]?.completed
+      ).length;
+
+      const progressPercentage = Math.round((completedCount / totalLessons) * 100);
+
+      // Update course enrollment progress
+      await db
+        .update(courseEnrollments)
+        .set({ progress: progressPercentage })
+        .where(and(
+          eq(courseEnrollments.userId, user.id),
+          eq(courseEnrollments.courseId, courseId)
+        ));
+
+      res.json({ success: true,
+        success: true,
+        progressPercentage,
+        completedLessons: completedCount,
+        totalLessons,
+        lessonProgress: allLessons.map(lesson => ({
+          lessonId: lesson.id,
+          completed: progressMap[lesson.id]?.completed || false,
+          quizPassed: progressMap[lesson.id]?.quizPassed,
+          score: progressMap[lesson.id]?.score
+        }))
+      });
+    } catch (error: any) {
+      console.error('Course progress fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch course progress'
+      });
+    }
+  });
+  // ===== CERTIFICATE ROUTES =====
+  
+  // Generate certificate for course completion
+  // Generate certificate for course completion
+  app.post('/api/certificates/generate', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+      
+      const { courseId } = req.body;
+      
+      // Get course details
+      const course = await db.query.courses.findFirst({
+        where: eq(courses.id, courseId)
+      });
+      
+      if (!course) {
+        return res.status(404).json({ error: 'Course not found' });
+      }
+      
+      // Check if user has completed the course
+      const enrollment = await db.query.courseEnrollments.findFirst({
+        where: and(
+          eq(courseEnrollments.userId, user.id),
+          eq(courseEnrollments.courseId, courseId)
+        )
+      });
+      
+      if (!enrollment) {
+        return res.status(403).json({ error: 'You are not enrolled in this course' });
+      }
+      
+      // Check if course is 100% complete
+      if (enrollment.progress !== 100) {
+        return res.status(400).json({ 
+          error: 'You must complete 100% of the course before generating a certificate',
+          currentProgress: enrollment.progress
+        });
+      }
+      
+      // Check if certificate already exists
+      const existingCertificate = await db.query.certificates.findFirst({
+        where: and(
+          eq(certificates.userId, user.id),
+          eq(certificates.courseId, courseId),
+          eq(certificates.isRevoked, false)
+        )
+      });
+      
+      if (existingCertificate) {
+        // Certificate already exists - ask Certifier to resend it to the user's email
+        if (existingCertificate.certifierId) {
+          try {
+            const { certifierAPI } = await import('./utils/certifier-api.js');
+            console.log(`📧 Requesting Certifier to resend certificate to ${user.email}`);
+            await certifierAPI.sendCredential(existingCertificate.certifierId);
+            console.log(`✅ Certifier will send the certificate to ${user.email}`);
+          } catch (resendError) {
+            console.error('❌ Failed to request Certifier resend:', resendError);
+          }
+        }
+        // Return existing certificate
+        return res.json(existingCertificate);
+      }
+      
+      // Get user profile
+      const profile = await db.query.profiles.findFirst({
+        where: eq(profiles.userId, user.id)
+      });
+      
+      if (!profile) {
+        return res.status(404).json({ error: 'User profile not found' });
+      }
+      
+      // Generate verification code
+      const verificationCode = generateVerificationCode();
+      
+      // Generate certificate using Certifier API
+      const { certificateUrl, certifierId, certifierGroupId } = await generateCertificateWithCertifier({
+        studentName: profile.name,
+        studentEmail: user.email,
+        courseTitle: course.title,
+        courseDescription: course.description || undefined,
+        completionDate: enrollment.completedAt || new Date(),
+        verificationCode,
+        instructorName: course.publisherName || undefined,
+        finalScore: enrollment.progress,
+        certificateType: (course.certificationType as 'certificate' | 'diploma') || 'certificate',
+      });
+      
+      // Create certificate in database
+      const [newCertificate] = await db.insert(certificates).values({
+        userId: user.id,
+        courseId: courseId,
+        studentName: profile.name,
+        studentEmail: user.email,
+        courseTitle: course.title,
+        courseDescription: course.description,
+        verificationCode,
+        certificateUrl,
+        completionDate: enrollment.completedAt || new Date(),
+        finalScore: enrollment.progress,
+        instructorName: course.publisherName,
+        certificateType: course.certificationType || 'certificate',
+        certifierId,
+        certifierGroupId,
+      }).returning();
+      
+      // Certifier API already sent the certificate via email in createIssueAndSendCredential()
+      console.log(`✅ Certificate generated and sent by Certifier to ${user.email}`);
+      
+      res.json(newCertificate);
+    } catch (error: any) {
+      console.error('Generate certificate error:', error);
+      res.status(500).json({ error: 'Failed to generate certificate' });
+    }
+  });
+  
+  // Get user's certificates
+  app.get('/api/certificates/my-certificates', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+      
+      const userCertificates = await db.query.certificates.findMany({
+        where: and(
+          eq(certificates.userId, user.id),
+          eq(certificates.isRevoked, false)
+        ),
+        orderBy: [desc(certificates.issueDate)]
+      });
+      
+      res.json(userCertificates);
+    } catch (error: any) {
+      console.error('Get certificates error:', error);
+      res.status(500).json({ error: 'Failed to fetch certificates' });
+    }
+  });
+  
+  // Get certificate by verification code
+  app.get('/api/certificates/verify/:verificationCode', async (req, res) => {
+    try {
+      const { verificationCode } = req.params;
+      
+      const certificate = await db.query.certificates.findFirst({
+        where: and(
+          eq(certificates.verificationCode, verificationCode),
+          eq(certificates.isRevoked, false)
+        )
+      });
+      
+      if (!certificate) {
+        return res.status(404).json({ error: 'Certificate not found' });
+      }
+      
+      res.json({ success: true,
+        id: certificate.id,
+        userName: certificate.userName,
+        courseTitle: certificate.courseTitle,
+        issuedAt: certificate.issuedAt,
+        verificationCode: certificate.verificationCode,
+        certificateUrl: certificate.certificateUrl,
+        isValid: !certificate.isRevoked
+      });
+    } catch (error: any) {
+      console.error('Verify certificate error:', error);
+      res.status(500).json({ error: 'Failed to verify certificate' });
+    }
+  });
+  
+  // Download certificate (placeholder - can be enhanced with PDF generation)
+  app.get('/api/certificates/:id/download', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+      
+      const { id } = req.params;
+      
+      const certificate = await db.query.certificates.findFirst({
+        where: and(
+          eq(certificates.id, id),
+          eq(certificates.userId, user.id),
+          eq(certificates.isRevoked, false)
+        )
+      });
+      
+      if (!certificate) {
+        return res.status(404).json({ error: 'Certificate not found' });
+      }
+      
+      // Return certificate data for now
+      // In the future, this can generate and return a PDF
+      res.json(certificate);
+    } catch (error: any) {
+      console.error('Download certificate error:', error);
+      res.status(500).json({ error: 'Failed to download certificate' });
+    }
+  });
+  // Get course progress alternative endpoint
+  app.get('/api/courses/:courseId/progress-alt', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+      
+      const { courseId } = req.params;
+      
+      // Get all lessons in this course
+      const courseLessons = await db
+        .select({
+          lessonId: lessons.id
+        })
+        .from(lessons)
+        .leftJoin(modules, eq(lessons.moduleId, modules.id))
+        .where(eq(modules.courseId, courseId));
+      
+      const allLessonIds = courseLessons.map(l => l.lessonId);
+      const totalLessons = allLessonIds.length;
+      
+      if (totalLessons === 0) {
+        return res.json({ success: true,
+          completedLessons: 0,
+          totalLessons: 0,
+          progressPercentage: 0,
+          lessonProgress: []
+        });
+      }
+      
+      const progress = await db
+        .select()
+        .from(lessonProgress)
+        .where(and(
+          eq(lessonProgress.userId, user.id),
+          inArray(lessonProgress.lessonId, allLessonIds)
+        ));
+      
+      const completed = progress.filter(p => p.completedAt !== null);
+      const progressPercentage = Math.round((completed.length / totalLessons) * 100);
+      
+      res.json({ success: true,
+        completedLessons: completed.length,
+        totalLessons,
+        progressPercentage,
+        lessonProgress: progress.map(p => ({
+          lessonId: p.lessonId,
+          completed: p.completedAt !== null,
+          progressPercent: p.progressPercent
+        }))
+      });
+    } catch (error: any) {
+      console.error('Get course progress error:', error);
+      res.status(500).json({ error: 'Failed to fetch progress' });
+    }
+  });
+
+
+  // ==========================================
+  // API Keys - Marketplace API Access
+  // ==========================================
+
+  app.post("/api/api-keys/generate", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      if (!userId) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const { name, tier, permissions, expiresInDays } = req.body;
+
+      // Validate tier based on user's shop membership
+      const userProfile = await db.query.profiles.findFirst({
+        where: eq(profiles.userId, userId)
+      });
+
+      if (!userProfile) {
+        return res.status(404).json({ error: "Profile not found" });
+      }
+
+      // Check shop membership for subscription tier (shop customers use shopMemberships)
+      const shopCustomer = await db.query.shopCustomers.findFirst({
+        where: eq(shopCustomers.userId, userId)
+      });
+
+      let membershipPlan = userProfile.subscriptionTier || 'free';
+      
+      if (shopCustomer) {
+        const shopMembershipRecord = await db.query.shopMemberships.findFirst({
+          where: eq(shopMemberships.customerId, shopCustomer.id)
+        });
+        if (shopMembershipRecord) {
+          membershipPlan = shopMembershipRecord.plan || 'free';
+        }
+      }
+
+      // Check if user has required subscription tier
+      if (tier === 'basic' && !['pro', 'business'].includes(membershipPlan)) {
+        return res.status(403).json({ error: "Pro or Business tier required for Basic API access" });
+      }
+      if (tier === 'advanced' && membershipPlan !== 'business') {
+        return res.status(403).json({ error: "Business tier required for Advanced API access" });
+      }
+
+      // Generate a secure random API key
+      const crypto = await import('crypto');
+      const apiKey = `mk_${crypto.randomBytes(32).toString('hex')}`;
+
+      // Hash the key before storing
+      const keyHash = await bcrypt.hash(apiKey, 10);
+      const keyPreview = apiKey.substring(0, 10) + '...' + apiKey.substring(apiKey.length - 4);
+
+      // Calculate expiration date if specified
+      let expiresAt = null;
+      if (expiresInDays) {
+        expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + expiresInDays);
+      }
+
+      const newKey = await storage.createApiKey({
+        userId,
+        keyHash,
+        keyPreview,
+        name: name || 'API Key',
+        tier: tier || 'basic',
+        permissions: permissions || [],
+        expiresAt,
+        isActive: true
+      });
+
+      res.json({ success: true,
+        id: newKey.id,
+        name: newKey.name,
+        key: apiKey, // Return the raw key only once
+        tier: newKey.tier,
+        permissions: newKey.permissions,
+        expiresAt: newKey.expiresAt,
+        createdAt: newKey.createdAt,
+        message: "Store this key securely - it won't be shown again!"
+      });
+    } catch (error: any) {
+      console.error('Generate API key error:', error);
+      res.status(500).json({ error: "Failed to generate API key" });
+    }
+  });
+  // List user's API keys
+  app.get("/api/api-keys", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      if (!userId) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const keys = await storage.getApiKeysByUserId(userId);
+      
+      // Return sanitized metadata - keyPreview is already stored in DB
+      const sanitizedKeys = keys.map(k => ({
+        id: k.id,
+        name: k.name,
+        tier: k.tier,
+        permissions: k.permissions,
+        keyPreview: k.keyPreview, // Already formatted in DB as "mk_xxxxxxxxxx...xxxx"
+        lastUsedAt: k.lastUsedAt,
+        expiresAt: k.expiresAt,
+        createdAt: k.createdAt
+      }));
+
+      res.json(sanitizedKeys);
+    } catch (error: any) {
+      console.error('List API keys error:', error);
+      res.status(500).json({ error: "Failed to list API keys" });
+    }
+  });
+
+  // Revoke an API key
+  app.delete("/api/api-keys/:keyId", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      if (!userId) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const { keyId } = req.params;
+
+      // Verify the key belongs to the user
+      const key = await db.query.apiKeys.findFirst({
+        where: and(
+          eq(apiKeys.id, keyId),
+          eq(apiKeys.userId, userId)
+        )
+      });
+
+      if (!key) {
+        return res.status(404).json({ error: "API key not found" });
+      }
+
+      await storage.revokeApiKey(keyId);
+
+      res.json({ message: "API key revoked successfully" });
+    } catch (error: any) {
+      console.error('Revoke API key error:', error);
+      res.status(500).json({ error: "Failed to revoke API key" });
+    }
+  });
+
+  // Example API endpoint that can be accessed with API keys
+  app.get("/api/v1/profile", validateApiKey, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).apiKey?.userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Invalid API key" });
+      }
+
+      const userProfile = await db.query.profiles.findFirst({
+        where: eq(profiles.userId, userId)
+      });
+
+      if (!userProfile) {
+        return res.status(404).json({ error: "Profile not found" });
+      }
+
+      res.json({ success: true,
+        id: userProfile.id,
+        name: userProfile.name,
+        email: userProfile.email,
+        subscriptionTier: userProfile.subscriptionTier,
+        createdAt: userProfile.createdAt
+      });
+    } catch (error: any) {
+      console.error('API profile fetch error:', error);
+      res.status(500).json({ error: "Failed to fetch profile" });
+    }
+  });
+
+  // Example API endpoint for accessing purchases (requires API key)
+  app.get("/api/v1/purchases", validateApiKey, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).apiKey?.userId;
+      if (!userId) {
+        return res.status(401).json({ error: "Invalid API key" });
+      }
+
+      const purchases = await db.query.shopPurchases.findMany({
+        where: eq(shopPurchases.customerId, userId),
+        orderBy: [desc(shopPurchases.purchaseDate)],
+        limit: 100
+      });
+
+      res.json({ success: true,
+        purchases: purchases.map(p => ({
+          id: p.id,
+          productId: p.productId,
+          amount: p.amount,
+          purchaseDate: p.purchaseDate,
+          downloadUrl: p.downloadUrl
+        }))
+      });
+    } catch (error: any) {
+      console.error('API purchases fetch error:', error);
+      res.status(500).json({ error: "Failed to fetch purchases" });
+    }
+  });
+  
+  // GET /api/app-download-links - Get app download links (public)
+  app.get('/api/app-download-links', async (req, res) => {
+    try {
+      const links = await storage.getAppDownloadLinks();
+      res.json({ success: true, data: links });
+    } catch (error: any) {
+      console.error('Error fetching app download links:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch app download links' });
+    }
+  });
+
+  // POST /api/admin/app-download-links - Update app download links (admin only)
+  app.post('/api/admin/app-download-links', requireAuth, requireAdmin, async (req, res) => {
+    console.log('🚀 POST /api/admin/app-download-links called');
+    console.log('📦 Request body:', req.body);
+    try {
+      const { 
+        appStoreUrl, 
+        appStoreText, 
+        googlePlayUrl, 
+        googlePlayText,
+        huaweiGalleryUrl,
+        huaweiGalleryText
+      } = req.body;
+      
+      console.log('📊 Extracted values:', {
+        appStoreUrl,
+        appStoreText,
+        googlePlayUrl,
+        googlePlayText,
+        huaweiGalleryUrl,
+        huaweiGalleryText
+      });
+      
+      console.log('💾 Calling storage.updateAppDownloadLinks...');
+      const links = await storage.updateAppDownloadLinks(
+        appStoreUrl || '', 
+        appStoreText || 'Download on the',
+        googlePlayUrl || '', 
+        googlePlayText || 'Get it on',
+        huaweiGalleryUrl || '',
+        huaweiGalleryText || 'Explore it on'
+      );
+      
+      console.log('✅ Storage returned:', links);
+      res.json({ success: true, data: links });
+    } catch (error: any) {
+      console.error('❌ Error updating app download links:', error);
+      res.status(500).json({ success: false, error: 'Failed to update app download links' });
+    }
+  });
+
+
+
+
+  // ==========================================
+  // Social Media Links - Social media profile links
+  // ==========================================
+  
+
+  // ==========================================
+  // Social Media Links - Social media profile links
+  // ==========================================
+  
+  // GET /api/social-media-links - Get social media links (public)
+  app.get('/api/social-media-links', async (req, res) => {
+    try {
+      const links = await storage.getSocialMediaLinks();
+      res.json({ success: true, data: links });
+    } catch (error: any) {
+      console.error('Error fetching social media links:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch social media links' });
+    }
+  });
+
+  // POST /api/admin/social-media-links - Update social media links (admin only)
+  app.post('/api/admin/social-media-links', requireAuth, requireAdmin, async (req, res) => {
+    console.log('🚀 POST /api/admin/social-media-links called');
+    console.log('📦 Request body:', req.body);
+    try {
+      const { 
+        whatsappUrl,
+        instagramUrl,
+        telegramUrl,
+        dribbbleUrl,
+        threadsUrl,
+        facebookUrl, 
+        xUrl,
+        pinterestUrl, 
+        behanceUrl
+      } = req.body;
+      
+      console.log('📊 Extracted values:', {
+        whatsappUrl,
+        instagramUrl,
+        telegramUrl,
+        dribbbleUrl,
+        threadsUrl,
+        facebookUrl,
+        xUrl,
+        pinterestUrl,
+        behanceUrl
+      });
+      
+      console.log('💾 Calling storage.updateSocialMediaLinks...');
+      const links = await storage.updateSocialMediaLinks(
+        whatsappUrl || '',
+        '', // linkedinUrl (not using currently)
+        instagramUrl || '',
+        threadsUrl || '',
+        '', // tiktokUrl (not using currently)
+        dribbbleUrl || '',
+        facebookUrl || '',
+        xUrl || '',
+        pinterestUrl || '',
+        behanceUrl || '',
+        telegramUrl || ''
+      );
+      
+      console.log('✅ Storage returned:', links);
+      res.json({ success: true, data: links });
+    } catch (error: any) {
+      console.error('❌ Error updating social media links:', error);
+      res.status(500).json({ success: false, error: 'Failed to update social media links' });
+    }
+  });
+
+  // Register meeting routes
+  // Register teacher application routes
+  const teacherApplicationRoutes = (await import('./routes/teacher-application-routes.js')).default;
+  app.use('/api', teacherApplicationRoutes);
+
+  // Register freelancer application routes
+  const freelancerApplicationRoutes = (await import('./routes/freelancer-applications.js')).default;
+  app.use('/api/freelancer', freelancerApplicationRoutes);
+
+  // Register shop verification routes
+  const shopVerificationRoutes = (await import('./routes/shop-verification-routes.js')).default;
+  app.use('/api', shopVerificationRoutes);
+
+  const { registerMeetingRoutes } = await import('./meeting-routes.js');
+  registerMeetingRoutes(app);
+
+  // Test email routes (for testing email templates)
+  const testEmailRoutes = (await import("./routes/test-emails.js")).default;
+  app.use("/api", testEmailRoutes);
+
+  // ==========================================
+  // WhatsApp Webhook - Meta verification and message handling
+  // ==========================================
+  const whatsappWebhookHandler = await import('./whatsapp-webhook-handler.js');
+
+  // GET /api/whatsapp/webhook - Webhook verification (Meta)
+  app.get('/api/whatsapp/webhook', async (req, res) => {
+    await whatsappWebhookHandler.handleWebhookVerification(req, res);
+  });
+
+  // POST /api/whatsapp/webhook - Receive messages from WhatsApp
+  app.post('/api/whatsapp/webhook', async (req, res) => {
+    await whatsappWebhookHandler.handleWhatsAppWebhook(req, res);
+  });
+
+  // WhatsApp Flow endpoint for Sign In/Sign Up flows
+  const whatsappFlowHandler = await import('./whatsapp-flow-handler.js');
+  
+  app.post('/api/whatsapp/flow', async (req, res) => {
+    await whatsappFlowHandler.handleFlowEndpoint(req, res);
+  });
+  
+  app.get('/api/whatsapp/flow/health', async (req, res) => {
+    await whatsappFlowHandler.handleFlowHealthCheck(req, res);
+  });
+
+  // Engagement notification admin routes
+  const engagementNotificationRoutes = (await import("./routes/engagement-notification-routes.js")).default;
+  app.use("/api/admin", engagementNotificationRoutes);
+
+  // GitHub routes for pushing code
+  const githubRoutes = (await import("./routes/github-routes.js")).default;
+  app.use("/api", githubRoutes);
+
+
+  // ==========================================
+  // Python Course Content Generation (Step-by-step)
+  // ==========================================
+  app.post('/api/admin/generate-python-lesson/:lessonId', requireAdmin, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const lessonId = parseInt(req.params.lessonId);
+      
+      // Get lesson with module info
+      const lessonResult = await db.select({
+        lesson: lessons,
+        module: modules
+      })
+      .from(lessons)
+      .innerJoin(modules, eq(lessons.moduleId, modules.id))
+      .where(eq(lessons.id, lessonId))
+      .limit(1);
+      
+      if (!lessonResult.length) {
+        return res.status(404).json({ error: 'Lesson not found' });
+      }
+      
+      const { lesson, module } = lessonResult[0];
+      
+      // Count lessons in module
+      const lessonCount = await db.select({ count: sql<number>`count(*)` })
+        .from(lessons)
+        .where(eq(lessons.moduleId, module.id));
+      
+      const totalLessons = Number(lessonCount[0]?.count || 5);
+      
+      // Generate content using OpenAI (one lesson at a time)
+      const content = await generatePythonLessonContent(
+        module.title || '',
+        lesson.title || '',
+        lesson.description || '',
+        lesson.orderNum || 1,
+        totalLessons
+      );
+      
+      // Update lesson with generated content
+      await db.update(lessons)
+        .set({ 
+          content: content.content,
+          images: content.imagePrompts
+        })
+        .where(eq(lessons.id, lessonId));
+      
+      // Add quiz questions
+      if (content.questions && content.questions.length > 0) {
+        for (const q of content.questions) {
+          await db.insert(quizzes).values({
+            lessonId: lessonId,
+            question: q.text,
+            options: q.options,
+            correctAnswer: q.correctIndex,
+            explanation: q.explanation
+          });
+        }
+      }
+      
+      res.json({ 
+        success: true, 
+        lessonId,
+        contentLength: content.content?.length || 0,
+        questionsGenerated: content.questions?.length || 0,
+        imagePrompts: content.imagePrompts?.length || 0
+      });
+    } catch (error) {
+      console.error('Error generating Python lesson:', error);
+      res.status(500).json({ error: 'Failed to generate lesson content' });
+    }
+  });
+
+  // Generate all Python lessons sequentially (one by one)
+  app.post('/api/admin/generate-python-course-content', requireAdmin, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const courseId = '663f9127-368d-4e91-b725-896bfc2ea70a'; // Python course ID
+      
+      // Get all lessons for the course
+      const allLessons = await db.select({
+        lessonId: lessons.id,
+        lessonTitle: lessons.title,
+        moduleTitle: modules.title,
+        content: lessons.content
+      })
+      .from(lessons)
+      .innerJoin(modules, eq(lessons.moduleId, modules.id))
+      .where(eq(lessons.courseId, courseId))
+      .orderBy(modules.orderNum, lessons.orderNum);
+      
+      // Filter lessons without content
+      const lessonsToGenerate = allLessons.filter(l => !l.content || l.content.trim() === '');
+      
+      res.json({ success: true,
+        success: true,
+        totalLessons: allLessons.length,
+        lessonsNeedingContent: lessonsToGenerate.length,
+        lessonIds: lessonsToGenerate.map(l => l.lessonId),
+        message: `Use POST /api/admin/generate-python-lesson/:lessonId to generate each lesson one at a time`
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Failed to get lessons' });
+    }
+  });
+
+
+  // Regenerate Job Readiness Course images (uploads to R2)
+  app.post('/api/admin/regenerate-job-readiness-images', requireAuth, requireAdmin, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      console.log('Starting Job Readiness Course image regeneration...');
+      const stats = await regenerateJobReadinessImages();
+      res.json({ success: true,
+        success: true,
+        message: 'Job Readiness Course images regenerated successfully',
+        stats
+      });
+    } catch (error: any) {
+      console.error('Job Readiness regeneration error:', error);
+      res.status(500).json({ error: error.message || 'Failed to regenerate images' });
+    }
+  });
+
+  // Confirm course purchase after DodoPay payment (separate from Stripe flow)
+  app.post('/api/course-creator/confirm-dodopay-purchase', requireAuth, async (req, res) => {
+    try {
+      const { paymentId, courseId, amount } = req.body;
+      const user = req.user;
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      if (!courseId) {
+        return res.status(400).json({
+          success: false,
+          error: 'Course ID is required'
+        });
+      }
+
+      // Verify course exists
+      const [course] = await db
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .limit(1);
+
+      if (!course) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      // Check if already enrolled
+      const [existingEnrollment] = await db
+        .select()
+        .from(courseEnrollments)
+        .where(and(
+          eq(courseEnrollments.courseId, courseId),
+          eq(courseEnrollments.userId, user.id)
+        ))
+        .limit(1);
+
+      if (existingEnrollment) {
+        return res.json({
+          success: true,
+          message: 'Already enrolled in this course',
+          enrollment: existingEnrollment
+        });
+      }
+
+      // Create enrollment
+      const [enrollment] = await db.insert(courseEnrollments).values({
+        courseId: courseId,
+        userId: user.id,
+        status: 'enrolled',
+        progress: 0,
+        enrolledAt: new Date()
+      }).returning();
+
+      // Update course total enrollments
+      await db.update(courses)
+        .set({ totalEnrollments: sql`COALESCE(total_enrollments, 0) + 1` })
+        .where(eq(courses.id, courseId));
+
+      // Record the payment
+      const orderAmount = amount?.toString() || course.price?.toString() || '0';
+      await db.insert(orders).values({
+        userId: user.id,
+        totalAmount: orderAmount,
+        amount: orderAmount,
+        currency: 'USD',
+        paymentMethod: 'dodopay',
+        status: 'paid',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+
+      // Send confirmation email
+      const userEmail = user.email;
+      const userName = user.profile?.fullName || userEmail;
+      
+      if (userEmail) {
+        try {
+          const emailData = {
+            to: userEmail,
+            subject: `Course Enrollment Confirmed: ${course.title}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #42fa76;">Course Enrollment Confirmed!</h2>
+                <p>Dear ${userName},</p>
+                <p>Congratulations! You have successfully enrolled in:</p>
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h3 style="margin: 0 0 10px 0;">${course.title}</h3>
+                  <p style="margin: 0; color: #666;">${course.description?.substring(0, 150)}...</p>
+                </div>
+                <p>You can access your course from your dashboard under "My Courses".</p>
+                <p>Happy learning!</p>
+                <p>Best regards,<br>EduFiliova Team</p>
+              </div>
+            `
+          };
+          await sendEmailWithAccount(emailData, 'orders');
+          console.log('📧 Course purchase confirmation email sent to:', userEmail);
+        } catch (emailError) {
+          console.error('Failed to send course purchase email:', emailError);
+        }
+      }
+
+      console.log(`✅ Course enrollment confirmed via DodoPay: ${course.title} for user ${user.id}`);
+
+      res.json({
+        success: true,
+        message: 'Course purchased successfully',
+        enrollment: enrollment
+      });
+    } catch (error: any) {
+      console.error('DodoPay course purchase confirmation error:', error);
+      res.status(500).json({
+        success: false,
+        error: error.message || 'Failed to confirm course purchase'
+      });
+    }
+  });
+
+  return server;
+}

@@ -1,0 +1,5000 @@
+      const { groupId } = req.params;
+
+      // Check if user is a member of the group or admin
+      const userMembership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      if (userMembership.length === 0 && user.role !== 'admin') {
+        return res.status(403).json({ success: false, error: 'Only group members can view member list' });
+      }
+
+      // Get all group members with their profile info
+      const members = await db
+        .select({
+          id: communityGroupMembers.id,
+          userId: communityGroupMembers.userId,
+          role: communityGroupMembers.role,
+          joinedAt: communityGroupMembers.joinedAt,
+          name: sql<string>`profile.name`,
+          avatarUrl: sql<string>`profile.avatar_url`,
+          email: sql<string>`profile.email`
+        })
+        .from(communityGroupMembers)
+        .leftJoin(sql`profiles AS profile`, sql`profile.user_id = ${communityGroupMembers.userId}`)
+        .where(eq(communityGroupMembers.groupId, groupId))
+        .orderBy(desc(communityGroupMembers.joinedAt));
+
+      res.json({ success: true,
+        success: true,
+        data: members
+      });
+
+    } catch (error: any) {
+      console.error('Get group members error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch group members' });
+    }
+  });
+
+  // Add reaction to post or reply
+  app.post("/api/community/reactions", createRateLimit(1000, 30), async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { targetType, targetId, emoji } = req.body;
+
+      if (!targetType || !targetId || !emoji) {
+        return res.status(400).json({ success: false, error: 'Missing required fields' });
+      }
+
+      if (!['post', 'reply'].includes(targetType)) {
+        return res.status(400).json({ success: false, error: 'Invalid target type' });
+      }
+
+      // Check if user already reacted with this emoji
+      const existingReaction = await db.select()
+        .from(communityReactions)
+        .where(and(
+          eq(communityReactions.userId, user.id),
+          eq(communityReactions.targetType, targetType),
+          eq(communityReactions.targetId, targetId),
+          eq(communityReactions.emoji, emoji)
+        ))
+        .limit(1);
+
+      if (existingReaction.length > 0) {
+        // Remove existing reaction (toggle off)
+        await db.delete(communityReactions)
+          .where(eq(communityReactions.id, existingReaction[0].id));
+      } else {
+        // Add new reaction
+        await db.insert(communityReactions).values({
+          userId: user.id,
+          targetType,
+          targetId,
+          emoji
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: existingReaction.length > 0 ? 'Reaction removed' : 'Reaction added'
+      });
+
+    } catch (error: any) {
+      console.error('Add reaction error:', error);
+      res.status(500).json({ success: false, error: 'Failed to add reaction' });
+    }
+  });
+
+  // Add reply to post
+  app.post("/api/community/replies", createRateLimit(3000, 10), async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { postId, content, replyToId, isAnonymous = false } = req.body;
+
+      if (!postId || !content?.trim()) {
+        return res.status(400).json({ success: false, error: 'Post ID and content are required' });
+      }
+
+      // Check if post exists
+      const post = await db.select()
+        .from(communityPosts)
+        .where(eq(communityPosts.id, postId))
+        .limit(1);
+
+      if (post.length === 0) {
+        return res.status(404).json({ success: false, error: 'Post not found' });
+      }
+
+      // Rate limiting for replies (use profiles.userId for comparison)
+      const userProfile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      if (userProfile.length === 0) {
+        return res.status(404).json({ success: false, error: 'User profile not found' });
+      }
+
+      const authorId = userProfile[0].userId;
+
+      const recentReply = await db.select()
+        .from(communityReplies)
+        .where(and(
+          eq(communityReplies.authorId, authorId),
+          gt(communityReplies.createdAt, new Date(Date.now() - 30000)) // 30 seconds
+        ))
+        .limit(1);
+
+      if (recentReply.length > 0) {
+        return res.status(429).json({ success: false, error: 'Please wait before replying again' });
+      }
+
+      // Create reply
+      const [newReply] = await db.insert(communityReplies).values({
+        postId: postId,   // Only postId exists in database
+        authorId: authorId, // Use the correct user ID from profile
+        content: content.trim(),
+        isAnonymous
+      }).returning();
+
+      // Update post replies count (skip for now as field doesn't exist in schema)
+      // await db.update(communityPosts)
+      //   .set({ 
+      //     replies: sql`${communityPosts.replies} + 1`,
+      //     updatedAt: new Date()
+      //   })
+      //   .where(eq(communityPosts.id, postId));
+
+      // Create notification for post author (don't notify yourself)
+      if (post[0].authorId !== authorId) {
+        await db.insert(notifications).values({
+          userId: post[0].authorId,
+          title: 'New Comment',
+          message: `${isAnonymous ? 'Someone' : user.name} commented on your post`,
+          type: 'info',
+          actionUrl: `/community/posts/${postId}`,
+          isRead: false
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          id: newReply.id,
+          postId: newReply.postId,
+          content: newReply.content,
+          createdAt: newReply.createdAt,
+          author: {
+            id: authorId,
+            name: isAnonymous ? 'Anonymous Student' : user.name,
+            profilePic: isAnonymous ? null : user.avatarUrl
+          }
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Add reply error:', error);
+      res.status(500).json({ success: false, error: 'Failed to add reply' });
+    }
+  });
+
+  // Get replies for a specific post
+  app.get("/api/community/posts/:postId/replies", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { postId } = req.params;
+
+      // Get all replies for the post  
+      const replies = await db
+        .select()
+        .from(communityReplies)
+        .where(eq(communityReplies.postId, postId))
+        .orderBy(asc(communityReplies.createdAt));
+        
+      // Then enrich with author data separately
+      const enrichedReplies = await Promise.all(replies.map(async (reply) => {
+        let authorName = 'Anonymous Student';
+        let authorAvatar = null;
+        
+        // Get author info if not anonymous
+        if (!reply.isAnonymous && reply.authorId) {
+          try {
+            const author = await db
+              .select({
+                name: profiles.name,
+                avatarUrl: profiles.avatarUrl,
+              })
+              .from(profiles)
+              .where(eq(profiles.userId, reply.authorId))
+              .limit(1);
+            
+            if (author.length > 0) {
+              authorName = author[0].name;
+              authorAvatar = author[0].avatarUrl;
+            }
+          } catch (error: any) {
+            console.error('Error fetching reply author:', error);
+          }
+        }
+        
+        return {
+          id: reply.id,
+          postId: reply.postId,
+          content: reply.content,
+          communityReactions: reply.upvotes || 0,
+          createdAt: reply.createdAt,
+          authorId: reply.authorId,
+          authorName: authorName,
+          authorAvatarUrl: authorAvatar,
+          author: {
+            id: reply.authorId,
+            name: authorName,
+            profilePic: authorAvatar
+          }
+        };
+      }));
+
+      res.json({ success: true, data: enrichedReplies });
+
+    } catch (error: any) {
+      console.error('Get replies error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch replies' });
+    }
+  });
+
+  // Get community topics 
+  app.get("/api/community/posts", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { groupId, search } = req.query;
+
+      // Get all topics with proper Drizzle query and join author information
+      let conditions = [eq(communityPosts.isModerated, false)];
+      
+      if (groupId) {
+        conditions.push(eq(communityPosts.groupId, groupId as string));
+      }
+      
+      if (search && typeof search === 'string') {
+        conditions.push(or(
+          sql`${communityPosts.title} ILIKE ${'%' + search + '%'}`,
+          sql`${communityPosts.content} ILIKE ${'%' + search + '%'}`
+        ));
+      }
+
+      // Get posts first without complex joins that cause issues
+      const posts = await db
+        .select()
+        .from(communityPosts)
+        .where(and(...conditions))
+        .orderBy(desc(communityPosts.createdAt))
+        .limit(20);
+
+      // Then enrich with author data separately
+      const topics = await Promise.all(posts.map(async (post) => {
+        let authorName = 'Anonymous Student';
+        let authorAvatar = null;
+        let authorPronouns = null;
+        let groupName = null;
+
+        // Get author info if not anonymous
+        if (!post.isAnonymous && post.authorId) {
+          try {
+            const author = await db
+              .select({
+                name: profiles.name,
+                avatarUrl: profiles.avatarUrl,
+                pronouns: profiles.pronouns
+              })
+              .from(profiles)
+              .where(eq(profiles.userId, post.authorId))
+              .limit(1);
+            
+            if (author.length > 0) {
+              authorName = author[0].name;
+              authorAvatar = author[0].avatarUrl;
+              authorPronouns = author[0].pronouns;
+            }
+          } catch (error: any) {
+            console.error('Error fetching author:', error);
+          }
+        }
+
+        // Get group info if exists
+        if (post.groupId) {
+          try {
+            const group = await db
+              .select({ name: communityGroups.name })
+              .from(communityGroups)
+              .where(eq(communityGroups.id, post.groupId))
+              .limit(1);
+            
+            if (group.length > 0) {
+              groupName = group[0].name;
+            }
+          } catch (error: any) {
+            console.error('Error fetching group:', error);
+          }
+        }
+
+        return {
+          id: post.id,
+          title: post.title,
+          content: post.content,
+          communityReactions: post.communityReactions || 0,
+          replyCount: 0, // Will be calculated separately if needed
+          upvotes: post.upvotes || 0,
+          downvotes: post.downvotes || 0,
+          subject: post.subject,
+          grade: post.grade,
+          createdAt: post.createdAt,
+          updatedAt: post.updatedAt,
+          author: {
+            id: post.authorId,
+            name: authorName,
+            profilePic: authorAvatar
+          },
+          groupName
+        };
+      }));
+
+      res.json({ success: true, data: topics });
+
+    } catch (error: any) {
+      console.error('Community topics error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch community topics' });
+    }
+  });
+
+  // Create community topic (Premium only)
+  app.post("/api/community/posts", createRateLimit(10000, 3), async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // All students can create community topics
+
+      const { 
+        title, 
+        content, 
+        subject, 
+        grade, 
+        topicType = 'discussion',
+        tags = [], 
+        isAnonymous = false, 
+        groupId 
+      } = req.body;
+
+      if (!title?.trim() || !content?.trim()) {
+        return res.status(400).json({ success: false, error: 'Title and content are required' });
+      }
+
+      // Validate topic type
+      const validTopicTypes = ['discussion', 'question', 'study_group', 'announcement'];
+      if (!validTopicTypes.includes(topicType)) {
+        return res.status(400).json({ success: false, error: 'Invalid topic type' });
+      }
+
+      // If posting to a group, verify membership
+      if (groupId) {
+        const membership = await db.select()
+          .from(communityGroupMembers)
+          .where(and(
+            eq(communityGroupMembers.groupId, groupId),
+            eq(communityGroupMembers.userId, user.id)
+          ))
+          .limit(1);
+
+        if (membership.length === 0) {
+          return res.status(403).json({ success: false, error: 'You must be a member of this group to post' });
+        }
+      }
+
+      // Get user profile to get the correct user ID
+      const userProfile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      if (userProfile.length === 0) {
+        return res.status(404).json({ success: false, error: 'User profile not found' });
+      }
+
+      const authorId = userProfile[0].userId;
+
+      // Create new topic
+      const [newTopic] = await db.insert(communityPosts).values({
+        authorId: authorId, // Use the correct user ID from profile
+        groupId: groupId || null,
+        title: title.trim(),
+        content: content.trim(),
+        subject: subject?.trim() || null,
+        grade: grade ? parseInt(grade) : null,
+        topicType,
+        tags: tags.length > 0 ? tags : null,
+        isAnonymous
+      }).returning();
+
+      // Update group post count if applicable
+      if (groupId) {
+        await db.update(communityGroups)
+          .set({ 
+            postCount: sql`${communityGroups.postCount} + 1`,
+            updatedAt: new Date()
+          })
+          .where(eq(communityGroups.id, groupId));
+      }
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          id: newTopic.id,
+          title: newTopic.title,
+          content: newTopic.content,
+          communityReactions: newTopic.communityReactions || 0,
+          replies: 0,
+          upvotes: newTopic.upvotes || 0,
+          downvotes: newTopic.downvotes || 0,
+          subject: newTopic.subject,
+          grade: newTopic.grade,
+          views: newTopic.views || 0,
+          createdAt: newTopic.createdAt,
+          author: {
+            id: authorId,
+            name: isAnonymous ? 'Anonymous Student' : user.name,
+            profilePic: isAnonymous ? null : user.avatarUrl
+          }
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Create topic error:', error);
+      res.status(500).json({ success: false, error: 'Failed to create topic' });
+    }
+  });
+
+  // Like/Unlike community post
+  app.post("/api/community/posts/:postId/like", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { postId } = req.params;
+
+      // Check if post exists
+      const post = await db.select()
+        .from(communityPosts)
+        .where(eq(communityPosts.id, postId))
+        .limit(1);
+
+      if (post.length === 0) {
+        return res.status(404).json({ success: false, error: 'Post not found' });
+      }
+
+      // Check if user already liked this post
+      const existingReaction = await db.select()
+        .from(communityReactions)
+        .where(and(
+          eq(communityReactions.targetId, postId),
+          eq(communityReactions.targetType, 'post'),
+          eq(communityReactions.userId, user.id)
+        ))
+        .limit(1);
+
+      if (existingReaction.length > 0) {
+        // Remove like (toggle off)
+        await db.delete(communityReactions)
+          .where(eq(communityReactions.id, existingReaction[0].id));
+        
+        // Decrease communityReactions count
+        await db.update(communityPosts)
+          .set({ 
+            likes: Math.max(0, (post[0].likes || 0) - 1),
+            updatedAt: new Date()
+          })
+          .where(eq(communityPosts.id, postId));
+
+        res.json({ success: true, message: 'Like removed', isLiked: false });
+      } else {
+        // Add like
+        await db.insert(communityReactions).values({
+          userId: user.id,
+          targetId: postId,
+          targetType: 'post',
+          emoji: '👍'
+        });
+        
+        // Increase communityReactions count
+        await db.update(communityPosts)
+          .set({ 
+            likes: (post[0].likes || 0) + 1,
+            updatedAt: new Date()
+          })
+          .where(eq(communityPosts.id, postId));
+
+        // Create notification for post author (don't notify yourself)
+        if (post[0].authorId !== user.id) {
+          // Get liker's name
+          const [liker] = await db.select({ name: profiles.name })
+            .from(profiles)
+            .where(eq(profiles.userId, user.id))
+            .limit(1);
+
+          await db.insert(notifications).values({
+            userId: post[0].authorId,
+            title: 'New Like',
+            message: `${liker?.name || 'Someone'} liked your post`,
+            type: 'info',
+            actionUrl: `/community/posts/${postId}`,
+            isRead: false
+          });
+        }
+
+        res.json({ success: true, message: 'Post liked', isLiked: true });
+      }
+
+    } catch (error: any) {
+      console.error('Like post error:', error);
+      res.status(500).json({ success: false, error: 'Failed to like post' });
+    }
+  });
+
+
+  // Edit community post
+  app.put("/api/community/posts/:postId", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { postId } = req.params;
+      const { title, content } = req.body;
+
+      if (!title?.trim() || !content?.trim()) {
+        return res.status(400).json({ success: false, error: 'Title and content are required' });
+      }
+
+      // Check if post exists and user owns it
+      const post = await db.select()
+        .from(communityPosts)
+        .where(eq(communityPosts.id, postId))
+        .limit(1);
+
+      if (post.length === 0) {
+        return res.status(404).json({ success: false, error: 'Post not found' });
+      }
+
+      // Get user profile to check authorization
+      const userProfile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      // Check if user owns the post
+      if (post[0].authorId !== userProfile[0].userId) {
+        return res.status(403).json({ success: false, error: 'You can only edit your own posts' });
+      }
+
+      // Update the post
+      const [updatedPost] = await db.update(communityPosts)
+        .set({ 
+          title: title.trim(),
+          content: content.trim(),
+          updatedAt: new Date()
+        })
+        .where(eq(communityPosts.id, postId))
+        .returning();
+
+      res.json({ 
+        success: true, 
+        message: 'Post updated successfully',
+        data: {
+          ...updatedPost,
+          author: {
+            id: userProfile[0].userId,
+            name: user.name,
+            profilePic: user.avatarUrl || null
+          }
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Edit post error:', error);
+      res.status(500).json({ success: false, error: 'Failed to update post' });
+    }
+  });
+
+  // ======================= MESSAGING GROUPS API =======================
+  
+  // Get user's joined groups for messaging interface
+  app.get("/api/groups", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Get user's profile ID for unread count queries
+      const userProfile = await db.select({ id: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      if (userProfile.length === 0) {
+        return res.status(400).json({ success: false, error: 'Profile not found' });
+      }
+
+      const currentUserProfileId = userProfile[0].id;
+      // Check cache for groups
+      const groupsCacheKey = CacheKeys.groups(currentUserProfileId);
+      const cachedGroups = cache.get(groupsCacheKey);
+      if (cachedGroups !== null) {
+        console.log(`✅ Cache HIT: groups for user ${currentUserProfileId}`);
+        return res.json({ success: true, data: cachedGroups });
+      }
+
+      // Get groups where user is a member
+      const userGroups = await db
+        .select({
+          id: communityGroups.id,
+          name: communityGroups.name,
+          description: communityGroups.description,
+          memberCount: communityGroups.memberCount,
+          createdAt: communityGroups.createdAt,
+          avatarUrl: communityGroups.avatarUrl,
+          isMember: sql<boolean>`true` // Always true since we filter by membership
+        })
+        .from(communityGroups)
+        .innerJoin(communityGroupMembers, and(
+          eq(communityGroupMembers.groupId, communityGroups.id),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .where(eq(communityGroups.isActive, true))
+        .orderBy(desc(communityGroups.createdAt));
+
+      // Enrich groups with last message and unread count
+      const enrichedGroups = await Promise.all(userGroups.map(async (group) => {
+        // Get last message for this group
+        const lastMessageResult = await db
+          .select({
+            content: messages.content,
+            createdAt: messages.createdAt,
+            messageType: messages.messageType,
+            senderName: profiles.name
+          })
+          .from(messages)
+          .leftJoin(profiles, eq(messages.senderId, profiles.id))
+          .where(eq(messages.groupId, group.id))
+          .orderBy(desc(messages.createdAt))
+          .limit(1);
+
+        // Get unread count for this user in this group
+        const unreadCountResult = await db
+          .select({ count: sql<number>`count(*)::int` })
+          .from(messages)
+          .where(and(
+            eq(messages.groupId, group.id),
+            ne(messages.senderId, currentUserProfileId),
+            eq(messages.isRead, false)
+          ));
+
+        const lastMessage = lastMessageResult[0];
+        const unreadCount = unreadCountResult[0]?.count || 0;
+
+        // Format last message preview
+        let actualLastMessage = '';
+        if (lastMessage) {
+          if (lastMessage.messageType === 'text') {
+            const senderPrefix = lastMessage.senderName ? `${lastMessage.senderName}: ` : '';
+            actualLastMessage = `${senderPrefix}${lastMessage.content || ''}`;
+          } else if (lastMessage.messageType === 'image') {
+            actualLastMessage = `${lastMessage.senderName || 'Someone'} sent a photo`;
+          } else if (lastMessage.messageType === 'voice') {
+            actualLastMessage = `${lastMessage.senderName || 'Someone'} sent a voice message`;
+          } else if (lastMessage.messageType === 'document') {
+            actualLastMessage = `${lastMessage.senderName || 'Someone'} sent a document`;
+          } else {
+            actualLastMessage = `${lastMessage.senderName || 'Someone'} sent a message`;
+          }
+        }
+
+        return {
+          ...group,
+          actualLastMessage,
+          lastMessageTime: lastMessage?.createdAt || group.createdAt,
+          unreadCount
+        };
+      }));
+      // Cache groups for 60 seconds
+      cache.set(groupsCacheKey, enrichedGroups, CacheTTL.SHORT);
+
+      res.json({ success: true,
+        success: true,
+        data: enrichedGroups
+      });
+
+    } catch (error: any) {
+      console.error('Get user groups error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch user groups' });
+    }
+  });
+
+  // Get messages for a specific group
+  app.get("/api/groups/:groupId/messages", async (req, res) => {
+    try {
+      const { groupId } = req.params;
+      const { page = 1, limit = 50 } = req.query;
+      
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Check if user is a member of the group
+      const membership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      if (membership.length === 0) {
+        return res.status(403).json({ success: false, error: 'You are not a member of this group' });
+      }
+
+      // Get group messages with sender info
+      const groupMessages = await db
+        .select({
+          id: messages.id,
+          senderId: messages.senderId,
+          groupId: messages.groupId,
+          content: messages.content,
+          messageType: messages.messageType,
+          fileUrl: messages.fileUrl,
+          fileType: messages.fileType,
+          createdAt: messages.createdAt,
+          senderName: sql<string>`sender_profile.name`,
+          senderAvatarUrl: sql<string>`sender_profile.avatar_url`
+        })
+        .from(messages)
+        .leftJoin(sql`profiles AS sender_profile`, sql`sender_profile.id = ${messages.senderId}`)
+        .where(eq(messages.groupId, groupId))
+        .orderBy(desc(messages.createdAt))
+        .limit(parseInt(limit as string))
+        .offset((parseInt(page as string) - 1) * parseInt(limit as string));
+
+      res.json({ success: true,
+        success: true,
+        data: groupMessages.reverse() // Oldest first for chat display
+      });
+
+    } catch (error: any) {
+      console.error('Get group messages error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch group messages' });
+    }
+  });
+
+  // Send message to a group
+  app.post("/api/groups/:groupId/messages", async (req, res) => {
+    try {
+      const { groupId } = req.params;
+      const { content, messageType = 'text' } = req.body;
+      
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      if (!content?.trim()) {
+        return res.status(400).json({ success: false, error: 'Message content is required' });
+      }
+
+      // Check if user is a member of the group
+      const membership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      if (membership.length === 0) {
+        return res.status(403).json({ success: false, error: 'You are not a member of this group' });
+      }
+
+      // Get sender profile info
+      const senderProfile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      if (senderProfile.length === 0) {
+        return res.status(404).json({ success: false, error: 'Sender profile not found' });
+      }
+
+      // Insert the message
+      const [newMessage] = await db.insert(messages).values({
+        senderId: senderProfile[0].id,
+        groupId: groupId,
+        content: content.trim(),
+        messageType,
+      }).returning();
+
+      // Broadcast to group members via WebSocket if available
+      try {
+        const groupMembers = await db.select({ userId: communityGroupMembers.userId })
+          .from(communityGroupMembers)
+          .where(eq(communityGroupMembers.groupId, groupId));
+
+        const messageData = {
+          type: 'new_group_message',
+          data: {
+            ...newMessage,
+            senderName: senderProfile[0].name,
+            senderAvatarUrl: senderProfile[0].avatarUrl,
+            groupId
+          }
+        };
+
+        groupMembers.forEach(member => {
+          const memberWs = (global as any).wsClients?.get(member.userId);
+          if (memberWs && memberWs.readyState === 1) {
+            memberWs.send(JSON.stringify(messageData));
+          }
+        });
+      } catch (wsError) {
+        console.log('WebSocket broadcast failed:', wsError);
+      }
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          ...newMessage,
+          senderName: senderProfile[0].name,
+          senderAvatarUrl: senderProfile[0].avatarUrl,
+          groupId
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Send group message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send group message' });
+    }
+  });
+
+  // Update group settings (name and avatar)
+  app.put("/api/groups/:groupId", async (req, res) => {
+    try {
+      const { groupId } = req.params;
+      const { name, description } = req.body;
+      
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Check if user is a member of the group
+      const membership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      if (membership.length === 0) {
+        return res.status(403).json({ success: false, error: 'You are not a member of this group' });
+      }
+
+      // Validate input
+      if (name && name.trim().length < 1) {
+        return res.status(400).json({ success: false, error: 'Group name cannot be empty' });
+      }
+
+      if (name && name.trim().length > 50) {
+        return res.status(400).json({ success: false, error: 'Group name cannot exceed 50 characters' });
+      }
+
+      // Prepare update data
+      const updateData: any = {};
+      if (name !== undefined) {
+        updateData.name = name.trim();
+      }
+      if (description !== undefined) {
+        updateData.description = description?.trim() || null;
+      }
+
+      // Update the group
+      const [updatedGroup] = await db
+        .update(communityGroups)
+        .set(updateData)
+        .where(eq(communityGroups.id, groupId))
+        .returning();
+
+      if (!updatedGroup) {
+        return res.status(404).json({ success: false, error: 'Group not found' });
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: 'Group updated successfully',
+        data: updatedGroup
+      });
+
+    } catch (error: any) {
+      console.error('Update group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to update group' });
+    }
+  });
+
+  // Update group avatar
+  app.put("/api/groups/:groupId/avatar", upload.single('avatar'), async (req, res) => {
+    try {
+      const { groupId } = req.params;
+      
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Check if user is a member of the group
+      const membership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      if (membership.length === 0) {
+        return res.status(403).json({ success: false, error: 'You are not a member of this group' });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ success: false, error: 'No avatar file provided' });
+      }
+
+      // Upload avatar to Cloudinary
+      const uploadResult = await cloudinaryStorage.uploadFile(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype,
+        'group-avatars'
+      );
+
+      if (!uploadResult.success) {
+        return res.status(500).json({ success: false, error: 'Failed to upload avatar' });
+      }
+
+      // Update group with new avatar URL
+      const [updatedGroup] = await db
+        .update(communityGroups)
+        .set({ avatarUrl: uploadResult.url })
+        .where(eq(communityGroups.id, groupId))
+        .returning();
+
+      if (!updatedGroup) {
+        return res.status(404).json({ success: false, error: 'Group not found' });
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: 'Group avatar updated successfully',
+        data: {
+          avatarUrl: uploadResult.url
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Update group avatar error:', error);
+      res.status(500).json({ success: false, error: 'Failed to update group avatar' });
+    }
+  });
+
+
+  // Admin - Get all teacher-student assignments
+  app.get("/api/admin/teacher-assignments", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const admin = await getUserWithProfile(session[0].userId);
+      if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ success: false, error: "Admin access required" });
+      }
+
+      // Get all teacher-student assignments with names
+      const assignments = await db.select({
+        teacherId: teacherStudentAssignments.teacherId,
+        studentId: teacherStudentAssignments.studentId,
+        isActive: teacherStudentAssignments.isActive,
+        createdAt: teacherStudentAssignments.assignedAt,
+        teacherName: sql<string>`teacher_profile.name`,
+        studentName: sql<string>`student_profile.name`
+      })
+      .from(teacherStudentAssignments)
+      .leftJoin(sql`profiles AS teacher_profile`, sql`teacher_profile.user_id = ${teacherStudentAssignments.teacherId}`)
+      .leftJoin(sql`profiles AS student_profile`, sql`student_profile.user_id = ${teacherStudentAssignments.studentId}`)
+      .orderBy(desc(teacherStudentAssignments.assignedAt));
+
+      res.json({ success: true, data: assignments });
+
+    } catch (error: any) {
+      console.error('Get teacher assignments error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch teacher assignments' });
+    }
+  });
+
+  // ======================= STUDENT SETTINGS ROUTES =======================
+
+  // Helper function to get user from session
+  async function getUserFromSession(authHeader: string) {
+    if (!authHeader) return null;
+    
+    const sessionId = authHeader.replace('Bearer ', '');
+    
+    try {
+      // First, find the user session
+      const session = await db.select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, sessionId),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        console.log('🔍 Session not found or expired:', sessionId);
+        return null;
+      }
+
+      // Then get the user and profile data
+      const userProfile = await db.select({
+        id: users.id,
+        email: users.email,
+        name: profiles.name,
+        age: profiles.age,
+        grade: profiles.grade,
+        country: profiles.country,
+        countryId: profiles.countryId,
+        avatarUrl: profiles.avatarUrl,
+        role: profiles.role,
+        pronouns: profiles.pronouns,
+        bio: profiles.bio,
+        educationLevel: profiles.educationLevel,
+        subscriptionTier: profiles.subscriptionTier,
+        legacyPlan: profiles.legacyPlan,
+        planExpiry: profiles.planExpiry,
+        stripeCustomerId: profiles.stripeCustomerId,
+        stripeSubscriptionId: profiles.stripeSubscriptionId
+      })
+      .from(users)
+      .innerJoin(profiles, eq(users.id, profiles.userId))
+      .where(eq(users.id, session[0].userId))
+      .limit(1);
+      
+      return userProfile.length > 0 ? userProfile[0] : null;
+    } catch (error: any) {
+      console.error('getUserFromSession error:', error);
+      return null;
+    }
+  }
+
+  // Update user profile with enhanced Behance-style fields
+  app.put('/api/settings/profile', async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+
+      // Define allowed profile fields that can be updated
+      const allowedFields = [
+        'name', 'displayName', 'email', 'age', 'grade', 'gradeLevel', 'educationLevel', 
+        'subscriptionTier', 'country', 'countryId', 'gradeSystem', 'avatarUrl', 
+        'profilePicture', 'role', 'status', 'pronouns', 'bio', 'qualifications', 
+        'experience', 'availableHours', 'hourlyRate', 'legacyPlan', 'planExpiry', 
+        'stripeCustomerId', 'stripeSubscriptionId', 'isTest', 'isOnline', 'lastSeen', 
+        'lastPricingShown', 'availabilitySettings', 'approvalStatus', 'approvedBy', 
+        'approvedAt', 'rejectionReason', 'adminNotes', 'professionalTitle', 'tagline', 
+        'coverImageUrl', 'skills', 'socialLinks', 'websiteUrl', 'portfolioLinks', 
+        'location', 'locationLat', 'locationLng', 'timeZone', 'yearsOfExperience', 
+        'workAvailability', 'responseTime', 'professionalStatement', 'languages', 
+        'completedProjects', 'clientReviews', 'averageRating', 'profileViews', 
+        'profileVisibility', 'profileCompleteness', 'featuredWorkIds', 'verified', 
+        'verificationBadges', 'contactEmail', 'phoneNumber'
+      ];
+
+      // Filter request body to only include allowed fields
+      const updateData: any = {};
+      for (const [key, value] of Object.entries(req.body)) {
+        if (allowedFields.includes(key)) {
+          updateData[key] = value;
+        }
+      }
+
+      // Add updated timestamp
+      updateData.updatedAt = new Date();
+
+      // Update profile with filtered data
+      
+      await db.update(profiles)
+        .set(updateData)
+        .where(eq(profiles.userId, user.id));
+
+      res.json({ success: true, message: 'Profile updated successfully' });
+
+    } catch (error: any) {
+      console.error('Profile update error:', error);
+      res.status(500).json({ success: false, error: 'Failed to update profile' });
+    }
+  });
+
+  // Get user notification preferences
+  app.get('/api/settings/notifications', async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Use raw SQL to work with existing database columns
+      const preferences = await postgresClient`
+        SELECT * FROM user_notification_preferences WHERE user_id = ${user.id} LIMIT 1
+      `;
+
+      if (preferences.length === 0) {
+        // Create default preferences with existing column names
+        const defaultPrefs = await postgresClient`
+          INSERT INTO user_notification_preferences (user_id, email_course_updates, email_student_messages, email_system_updates, email_marketing_promotions)
+          VALUES (${user.id}, true, true, true, false)
+          RETURNING *
+        `;
+        
+        // Map database columns to expected interface
+        const mappedPrefs = {
+          emailLessons: defaultPrefs[0].email_course_updates,
+          emailProgress: defaultPrefs[0].email_system_updates,
+          emailMessages: defaultPrefs[0].email_student_messages,
+          emailMarketing: defaultPrefs[0].email_marketing_promotions,
+          smsLessons: false,
+          smsProgress: false,
+          smsMessages: false,
+          pushNotifications: true
+        };
+        
+        res.json({ success: true, data: mappedPrefs });
+      } else {
+        // Map database columns to expected interface
+        const mappedPrefs = {
+          emailLessons: preferences[0].email_course_updates,
+          emailProgress: preferences[0].email_system_updates,
+          emailMessages: preferences[0].email_student_messages,
+          emailMarketing: preferences[0].email_marketing_promotions,
+          smsLessons: false,
+          smsProgress: false,
+          smsMessages: false,
+          pushNotifications: true
+        };
+        
+        res.json({ success: true, data: mappedPrefs });
+      }
+
+    } catch (error: any) {
+      console.error('Get notification preferences error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get notification preferences' });
+    }
+  });
+
+  // Update user notification preferences
+  app.put('/api/settings/notifications', async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { 
+        emailLessons, 
+        emailProgress, 
+        emailMessages, 
+        emailMarketing,
+        smsLessons,
+        smsProgress,
+        smsMessages,
+        pushNotifications
+      } = req.body;
+
+      // Use raw SQL to work with existing database columns
+      const existing = await postgresClient`
+        SELECT * FROM user_notification_preferences WHERE user_id = ${user.id} LIMIT 1
+      `;
+
+      if (existing.length === 0) {
+        await postgresClient`
+          INSERT INTO user_notification_preferences (user_id, email_course_updates, email_student_messages, email_system_updates, email_marketing_promotions)
+          VALUES (${user.id}, ${emailLessons}, ${emailMessages}, ${emailProgress}, ${emailMarketing})
+        `;
+      } else {
+        await postgresClient`
+          UPDATE user_notification_preferences 
+          SET email_course_updates = ${emailLessons}, 
+              email_student_messages = ${emailMessages},
+              email_system_updates = ${emailProgress},
+              email_marketing_promotions = ${emailMarketing},
+              updated_at = NOW()
+          WHERE user_id = ${user.id}
+        `;
+      }
+
+      res.json({ success: true, message: 'Notification preferences updated successfully' });
+
+    } catch (error: any) {
+      console.error('Update notification preferences error:', error);
+      res.status(500).json({ success: false, error: 'Failed to update notification preferences' });
+    }
+  });
+
+  // Get user subscription info
+  app.get('/api/settings/subscription', async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Use raw SQL to work with existing database columns (simplified for now)
+      const subscription = await postgresClient`
+        SELECT us.*
+        FROM user_subscriptions us
+        WHERE us.user_id = ${user.id} AND us.subscription_status = 'active'
+        LIMIT 1
+      `;
+
+      // Get payment history
+      const paymentHistory = await db.select()
+        .from(payments)
+        .where(eq(payments.userId, user.id))
+        .orderBy(desc(payments.createdAt))
+        .limit(10);
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          subscription: subscription.length > 0 ? subscription[0] : null,
+          paymentHistory,
+          hasActiveSubscription: subscription.length > 0
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Get subscription info error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get subscription info' });
+    }
+  });
+
+  // Cancel user subscription
+  app.post('/api/settings/cancel-subscription', async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user || !user.stripeSubscriptionId) {
+        return res.status(400).json({ success: false, error: 'No active subscription found' });
+      }
+
+      const stripe = await getPrimaryPaymentClient();
+      if (!stripe) {
+        return res.status(500).json({ success: false, error: 'Payment service unavailable' });
+      }
+
+      // Cancel subscription in Stripe
+      await stripe.subscriptions.update(user.stripeSubscriptionId, {
+        cancel_at_period_end: true,
+      });
+
+      // Update subscription in database
+      await db.update(userSubscriptions)
+        .set({
+          cancelAtPeriodEnd: true,
+          cancelledAt: new Date(),
+          updatedAt: new Date()
+        })
+        .where(eq(userSubscriptions.stripeSubscriptionId, user.stripeSubscriptionId));
+
+      res.json({ success: true, message: 'Subscription cancelled successfully' });
+
+    } catch (error: any) {
+      console.error('Cancel subscription error:', error);
+      res.status(500).json({ success: false, error: 'Failed to cancel subscription' });
+    }
+  });
+
+  // Export user data
+  app.get('/api/settings/export-data', async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Gather all user data comprehensively
+      const userData = {
+        profile: {
+          name: user.name,
+          email: user.email,
+          age: user.age,
+          grade: user.grade,
+          country: user.country,
+          countryId: user.countryId,
+          educationLevel: user.educationLevel,
+          gradeSystem: null, // gradeSystem field not available
+          pronouns: user.pronouns,
+          bio: user.bio,
+          subscriptionTier: user.subscriptionTier,
+          plan: user.plan,
+          planExpiry: user.planExpiry,
+          role: user.role,
+          avatarUrl: user.avatarUrl,
+          createdAt: null, // createdAt field not available in user object
+          updatedAt: null, // updatedAt field not available in user object  
+          lastSeen: null // lastSeen field not available in user object
+        },
+        authentication: {
+          userId: null, // userId field not available in user object
+          accountCreated: null // createdAt field not available in user object
+        },
+        studyData: {
+          notes: await db.select().from(studyNotes).where(eq(studyNotes.userId, user.id)),
+          subjectProgress: [], // subjectProgress table not available
+          lessonProgress: await db.select().from(studentProgress).where(eq(studentProgress.userId, user.id)),
+          tasks: await db.select().from(tasks).where(eq(tasks.userId, user.id))
+        },
+        dailyQuestions: {
+          questionProgress: [], // dailyQuestionProgress table not available
+          dailySummaries: [] // dailyProgressSummary table not available
+        },
+        communication: {
+          messages: await db.select().from(messages).where(or(
+            eq(messages.senderId, user.id),
+            eq(messages.receiverId, user.id)
+          )),
+          announcements: await db.select().from(announcements).where(eq(announcements.userId, user.id))
+        },
+        community: {
+          groupMemberships: await db.select().from(groupMemberships).where(eq(groupMemberships.userId, user.id)),
+          communityPosts: await db.select().from(communityPosts).where(eq(communityPosts.authorId, user.id)),
+          communityReplies: await db.select().from(communityReplies).where(eq(communityReplies.authorId, user.id)),
+          friendships: await db.select().from(friendships).where(or(
+            eq(friendships.userId, user.id),
+            eq(friendships.friendId, user.id)
+          ))
+        },
+        preferences: {
+          notifications: await db.select().from(userNotificationPreferences).where(eq(userNotificationPreferences.userId, user.id)),
+          privacy: await db.select().from(userPrivacySettings).where(eq(userPrivacySettings.userId, user.id)),
+          other: await db.select().from(userOtherSettings).where(eq(userOtherSettings.userId, user.id))
+        },
+        subscriptions: {
+          current: await db.select().from(userSubscriptions).where(eq(userSubscriptions.userId, user.id)),
+          paymentHistory: await db.select().from(payments).where(eq(payments.userId, user.id))
+        },
+        exportedAt: new Date().toISOString(),
+        dataExportVersion: "1.0"
+      };
+
+      res.json({ success: true, data: userData });
+
+    } catch (error: any) {
+      console.error('Export data error:', error);
+      res.status(500).json({ success: false, error: 'Failed to export data' });
+    }
+  });
+
+  // Delete user account
+  app.delete('/api/settings/delete-account', async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { confirmation } = req.body;
+      if (confirmation !== 'DELETE MY ACCOUNT') {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Please type "DELETE MY ACCOUNT" to confirm account deletion' 
+        });
+      }
+
+      // Cancel any active subscriptions
+      if (user.stripeSubscriptionId && stripe) {
+        await stripe.subscriptions.cancel(user.stripeSubscriptionId);
+      }
+
+      // Delete related data comprehensively (cascading delete would be better but manual for now)
+      await Promise.all([
+        // Settings and preferences
+        db.delete(userNotificationPreferences).where(eq(userNotificationPreferences.userId, user.id)),
+        db.delete(userOtherSettings).where(eq(userOtherSettings.userId, user.id)),
+        db.delete(userPrivacySettings).where(eq(userPrivacySettings.userId, user.id)),
+        
+        // Study data
+        db.delete(studyNotes).where(eq(studyNotes.userId, user.id)),
+        db.delete(subjectProgress).where(eq(subjectProgress.userId, user.id)),
+        db.delete(lessonProgress).where(eq(lessonProgress.userId, user.id)),
+        db.delete(tasks).where(eq(tasks.userId, user.id)),
+        
+        // Daily questions progress
+        db.delete(dailyQuestionProgress).where(eq(dailyQuestionProgress.userId, user.id)),
+        db.delete(dailyProgressSummary).where(eq(dailyProgressSummary.userId, user.id)),
+        
+        // Communication and messages
+        db.delete(messages).where(or(
+          eq(messages.senderId, user.id),
+          eq(messages.receiverId, user.id)
+        )),
+        db.delete(announcements).where(eq(announcements.userId, user.id)),
+        
+        // Community participation
+        db.delete(groupMemberships).where(eq(groupMemberships.userId, user.id)),
+        db.delete(communityTopics).where(eq(communityTopics.authorId, user.id)),
+        db.delete(communityReplies).where(eq(communityReplies.authorId, user.id)),
+        db.delete(friendships).where(or(
+          eq(friendships.userId, user.id),
+          eq(friendships.friendId, user.id)
+        )),
+        
+        // Financial data
+        db.delete(userSubscriptions).where(eq(userSubscriptions.userId, user.id)),
+        db.delete(payments).where(eq(payments.userId, user.id)),
+        
+        // Session and authentication
+        db.delete(userLoginSessions).where(eq(userLoginSessions.userId, user.id)),
+        db.delete(userRoles).where(eq(userRoles.userId, user.userId))
+      ]);
+
+      // Delete profile and user
+      await db.delete(profiles).where(eq(profiles.userId, user.id));
+      await db.delete(users).where(eq(users.id, user.id));
+
+      res.json({ success: true, message: 'Account deleted successfully' });
+
+    } catch (error: any) {
+      console.error('Delete account error:', error);
+      res.status(500).json({ success: false, error: 'Failed to delete account' });
+    }
+  });
+
+  // Avatar upload endpoint
+  app.post('/api/settings/upload-avatar', upload.single('avatar'), async (req, res) => {
+    try {
+      console.log('📸 Avatar upload request received');
+      
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        console.log('❌ Authentication failed for avatar upload');
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      console.log('✅ Processing avatar upload for user:', user.id);
+
+      if (!req.file) {
+        console.log('❌ No file received in upload request');
+        return res.status(400).json({ success: false, error: 'No file uploaded' });
+      }
+
+      console.log('📁 File received:', {
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size
+      });
+
+      // Validate file type
+      if (!req.file.mimetype.startsWith('image/')) {
+        console.log('❌ Invalid file type:', req.file.mimetype);
+        return res.status(400).json({ success: false, error: 'Please upload an image file' });
+      }
+
+      // Validate file size (5MB max)
+      if (req.file.size > 5 * 1024 * 1024) {
+        console.log('❌ File too large:', req.file.size);
+        return res.status(400).json({ success: false, error: 'File size must be less than 5MB' });
+      }
+
+      // Upload to Cloudinary
+      const uploadResult = await cloudinaryStorage.uploadFile(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype,
+        'avatars'
+      );
+
+      if (!uploadResult.success) {
+        console.log('❌ Cloudinary upload failed:', uploadResult.error);
+        return res.status(500).json({ success: false, error: uploadResult.error || 'Failed to upload avatar' });
+      }
+
+      const avatarUrl = uploadResult.url!;
+      
+      // Update user profile with new avatar URL
+      await db.update(profiles)
+        .set({
+          avatarUrl: avatarUrl,
+          updatedAt: new Date()
+        })
+        .where(eq(profiles.userId, user.id));
+      
+      console.log('✅ Avatar upload completed successfully, profile updated');
+      res.json({ success: true, avatarUrl, message: 'Avatar uploaded successfully' });
+
+    } catch (error: any) {
+      console.error('❌ Avatar upload error:', error);
+      res.status(500).json({ success: false, error: 'Failed to upload avatar' });
+    }
+  });
+
+  // ======================= STUDENT SOCIAL FEATURES =======================
+
+  // Search students with online status
+  app.get("/api/students/search", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { q: search, limit = 20, offset = 0 } = req.query;
+
+      // Get search parameters with enhanced filtering
+      const { grade, country } = req.query as { grade?: string, country?: string };
+      
+      let whereConditions = [
+        eq(profiles.role, 'student'), // Students only
+        ne(users.id, user.id), // Exclude current user
+        eq(profiles.isTest, false) // Exclude test accounts
+      ];
+      
+      // Add grade filter if provided
+      if (grade) {
+        whereConditions.push(eq(profiles.grade, parseInt(grade)));
+      }
+      
+      // Add country filter if provided  
+      if (country) {
+        whereConditions.push(eq(profiles.country, country));
+      }
+
+      let query = db
+        .select({
+          id: users.id,
+          userId: users.userId,
+          name: profiles.name,
+          displayName: profiles.displayName,
+          grade: profiles.grade,
+          country: profiles.country,
+          avatarUrl: profiles.avatarUrl,
+          subscriptionTier: profiles.subscriptionTier,
+          lastSeen: profiles.lastSeen,
+          isOnline: sql<boolean>`(profiles.last_seen IS NULL OR profiles.last_seen > NOW() - INTERVAL '5 minutes')`.as('isOnline')
+        })
+        .from(users)
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(and(...whereConditions));
+
+      // Add search filter if provided
+      if (search) {
+        whereConditions.push(
+          or(
+            like(profiles.name, `%${search}%`),
+            like(profiles.displayName, `%${search}%`)
+          )
+        );
+        
+        query = db
+          .select({
+            id: users.id,
+            userId: users.userId,
+            name: profiles.name,
+            displayName: profiles.displayName,
+            grade: profiles.grade,
+            country: profiles.country,
+            avatarUrl: profiles.avatarUrl,
+            subscriptionTier: profiles.subscriptionTier,
+            lastSeen: profiles.lastSeen,
+            isOnline: sql<boolean>`(profiles.last_seen IS NULL OR profiles.last_seen > NOW() - INTERVAL '5 minutes')`.as('isOnline')
+          })
+          .from(users)
+          .innerJoin(profiles, eq(users.id, profiles.userId))
+          .where(and(...whereConditions));
+      }
+
+      const students = await query
+        .orderBy(desc(profiles.lastSeen), asc(profiles.name))
+        .limit(parseInt(limit as string))
+        .offset(parseInt(offset as string));
+
+      res.json({ success: true,
+        success: true,
+        data: students
+      });
+
+    } catch (error: any) {
+      console.error('Student search error:', error);
+      res.status(500).json({ success: false, error: 'Failed to search students' });
+    }
+  });
+
+  // Send friend request (Premium only)
+  app.post("/api/students/friend-request", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // All students can send friend requests
+
+      const { receiverId } = req.body;
+
+      if (!receiverId) {
+        return res.status(400).json({ success: false, error: 'Receiver ID is required' });
+      }
+
+      // Check if receiver exists and is a student
+      const receiver = await db.select()
+        .from(users)
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(and(
+          eq(users.id, receiverId),
+          eq(profiles.role, 'student'),
+          eq(profiles.isTest, false)
+        ))
+        .limit(1);
+
+      if (receiver.length === 0) {
+        return res.status(404).json({ success: false, error: 'Student not found' });
+      }
+
+      // Check if friendship already exists
+      const existingFriendship = await db.select()
+        .from(friendships)
+        .where(or(
+          and(eq(friendships.requesterId, user.id), eq(friendships.receiverId, receiverId)),
+          and(eq(friendships.requesterId, receiverId), eq(friendships.receiverId, user.id))
+        ))
+        .limit(1);
+
+      if (existingFriendship.length > 0) {
+        const status = existingFriendship[0].status;
+        if (status === 'accepted') {
+          return res.status(400).json({ success: false, error: 'Already friends' });
+        } else if (status === 'pending') {
+          return res.status(400).json({ success: false, error: 'Friend request already sent' });
+        } else if (status === 'blocked') {
+          return res.status(400).json({ success: false, error: 'Cannot send friend request' });
+        }
+      }
+
+      // Create friend request
+      await db.insert(friendships).values({
+        requesterId: user.id,
+        receiverId,
+        status: 'pending'
+      });
+
+      res.json({ success: true, message: 'Friend request sent successfully' });
+
+    } catch (error: any) {
+      console.error('Send friend request error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send friend request' });
+    }
+  });
+
+  // Accept friend request
+  app.post("/api/students/friend-request/accept", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { friendshipId } = req.body;
+
+      if (!friendshipId) {
+        return res.status(400).json({ success: false, error: 'Friendship ID is required' });
+      }
+
+      // Find pending friendship where current user is receiver
+      const friendship = await db.select()
+        .from(friendships)
+        .where(and(
+          eq(friendships.id, friendshipId),
+          eq(friendships.receiverId, user.id),
+          eq(friendships.status, 'pending')
+        ))
+        .limit(1);
+
+      if (friendship.length === 0) {
+        return res.status(404).json({ success: false, error: 'Friend request not found' });
+      }
+
+      // Update friendship status to accepted
+      await db.update(friendships)
+        .set({ 
+          status: 'accepted',
+          updatedAt: new Date()
+        })
+        .where(eq(friendships.id, friendshipId));
+
+      // Create reciprocal friendship record
+      await db.insert(friendships).values({
+        requesterId: friendship[0].receiverId,
+        receiverId: friendship[0].requesterId,
+        status: 'accepted'
+      });
+
+      res.json({ success: true, message: 'Friend request accepted' });
+
+    } catch (error: any) {
+      console.error('Accept friend request error:', error);
+      res.status(500).json({ success: false, error: 'Failed to accept friend request' });
+    }
+  });
+
+  // Block user/friend request
+  app.post("/api/students/friend-request/block", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { friendshipId, userId } = req.body;
+
+      if (friendshipId) {
+        // Block specific friend request
+        await db.update(friendships)
+          .set({ 
+            status: 'blocked',
+            updatedAt: new Date()
+          })
+          .where(and(
+            eq(friendships.id, friendshipId),
+            eq(friendships.receiverId, user.id)
+          ));
+      } else if (userId) {
+        // Block user completely
+        const existingFriendship = await db.select()
+          .from(friendships)
+          .where(or(
+            and(eq(friendships.requesterId, user.id), eq(friendships.receiverId, userId)),
+            and(eq(friendships.requesterId, userId), eq(friendships.receiverId, user.id))
+          ))
+          .limit(1);
+
+        if (existingFriendship.length > 0) {
+          await db.update(friendships)
+            .set({ 
+              status: 'blocked',
+              updatedAt: new Date()
+            })
+            .where(eq(friendships.id, existingFriendship[0].id));
+        } else {
+          // Create block relationship
+          await db.insert(friendships).values({
+            requesterId: user.id,
+            receiverId: userId,
+            status: 'blocked'
+          });
+        }
+      } else {
+        return res.status(400).json({ success: false, error: 'Friendship ID or User ID is required' });
+      }
+
+      res.json({ success: true, message: 'User blocked successfully' });
+
+    } catch (error: any) {
+      console.error('Block user error:', error);
+      res.status(500).json({ success: false, error: 'Failed to block user' });
+    }
+  });
+
+  // Get friend requests (incoming)
+  app.get("/api/students/friend-requests", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const friendRequests = await db.select({
+        id: friendships.id,
+        requesterId: friendships.requesterId,
+        requesterName: profiles.name,
+        requesterDisplayName: profiles.displayName,
+        requesterAvatarUrl: profiles.avatarUrl,
+        requesterGrade: profiles.grade,
+        requesterCountry: profiles.country,
+        createdAt: friendships.createdAt
+      })
+        .from(friendships)
+        .innerJoin(profiles, eq(friendships.requesterId, profiles.userId))
+        .where(and(
+          eq(friendships.receiverId, user.id),
+          eq(friendships.status, 'pending')
+        ))
+        .orderBy(desc(friendships.createdAt));
+
+      res.json({ success: true,
+        success: true,
+        data: friendRequests
+      });
+
+    } catch (error: any) {
+      console.error('Get friend requests error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get friend requests' });
+    }
+  });
+
+  // Get friends list
+  app.get("/api/students/friends", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const friends = await db.select({
+        id: users.id,
+        userId: users.userId,
+        name: profiles.name,
+        displayName: profiles.displayName,
+        avatarUrl: profiles.avatarUrl,
+        grade: profiles.grade,
+        country: profiles.country,
+        lastSeen: profiles.lastSeen,
+        isOnline: sql<boolean>`(profiles.last_seen IS NULL OR profiles.last_seen > NOW() - INTERVAL '5 minutes')`.as('isOnline'),
+        friendshipDate: friendships.createdAt
+      })
+        .from(friendships)
+        .innerJoin(users, eq(friendships.receiverId, users.id))
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(and(
+          eq(friendships.requesterId, user.id),
+          eq(friendships.status, 'accepted')
+        ))
+        .orderBy(desc(profiles.lastSeen), asc(profiles.name));
+
+      res.json({ success: true,
+        success: true,
+        data: friends
+      });
+
+    } catch (error: any) {
+      console.error('Get friends error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get friends list' });
+    }
+  });
+
+  // Update online presence (called when user is active)
+  app.post("/api/students/presence", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Update last seen timestamp
+      await db.update(profiles)
+        .set({ 
+          lastSeen: new Date(),
+          updatedAt: new Date()
+        })
+        .where(eq(profiles.userId, user.id));
+
+      res.json({ success: true });
+
+    } catch (error: any) {
+      console.error('Update presence error:', error);
+      res.status(500).json({ success: false, error: 'Failed to update presence' });
+    }
+  });
+
+  // ======================= STUDENT NETWORKING SYSTEM =======================
+  
+  // Send friend request
+  app.post("/api/friends/request", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { receiverId, message } = req.body;
+
+      // Check if receiver exists and is a student
+      const receiver = await db.select({
+        id: users.id,
+        userId: users.userId,
+        role: profiles.role
+      })
+        .from(users)
+        .leftJoin(profiles, eq(users.id, profiles.userId))
+        .where(eq(users.userId, receiverId))
+        .limit(1);
+
+      if (receiver.length === 0) {
+        return res.status(404).json({ success: false, error: 'Student not found' });
+      }
+
+      if (receiver[0].role !== 'student') {
+        return res.status(400).json({ success: false, error: 'Can only send friend requests to students' });
+      }
+
+      // Check if friendship already exists
+      const existingFriendship = await db.select()
+        .from(friendships)
+        .where(
+          or(
+            and(eq(friendships.requesterId, user.id), eq(friendships.receiverId, receiver[0].id)),
+            and(eq(friendships.requesterId, receiver[0].id), eq(friendships.receiverId, user.id))
+          )
+        )
+        .limit(1);
+
+      if (existingFriendship.length > 0) {
+        return res.status(400).json({ success: false, error: 'Friendship request already exists' });
+      }
+
+      // Create friend request
+      await db.insert(friendships).values({
+        requesterId: user.id,
+        receiverId: receiver[0].id,
+        status: 'pending',
+        requestMessage: message || null
+      });
+
+      res.json({ success: true, message: 'Friend request sent successfully' });
+
+    } catch (error: any) {
+      console.error('Send friend request error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send friend request' });
+    }
+  });
+
+  // Respond to friend request
+  app.post("/api/friends/respond", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { friendshipId, action } = req.body; // action: 'accept' or 'reject'
+
+      if (!['accept', 'reject'].includes(action)) {
+        return res.status(400).json({ success: false, error: 'Invalid action' });
+      }
+
+      // Update friendship status
+      const result = await db.update(friendships)
+        .set({ 
+          status: action === 'accept' ? 'accepted' : 'rejected',
+          updatedAt: new Date()
+        })
+        .where(
+          and(
+            eq(friendships.id, friendshipId),
+            eq(friendships.receiverId, user.id),
+            eq(friendships.status, 'pending')
+          )
+        );
+
+      res.json({ success: true, message: `Friend request ${action}ed successfully` });
+
+    } catch (error: any) {
+      console.error('Respond to friend request error:', error);
+      res.status(500).json({ success: false, error: 'Failed to respond to friend request' });
+    }
+  });
+
+  // Get pending friend requests
+  app.get("/api/friends/requests", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const requests = await db.select({
+        id: friendships.id,
+        requesterId: friendships.requesterId,
+        requesterUserId: users.userId,
+        requesterName: profiles.name,
+        requesterAvatar: profiles.avatarUrl,
+        requesterGrade: profiles.grade,
+        requesterCountry: profiles.country,
+        message: friendships.requestMessage,
+        createdAt: friendships.createdAt
+      })
+        .from(friendships)
+        .innerJoin(users, eq(friendships.requesterId, users.id))
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(
+          and(
+            eq(friendships.receiverId, user.id),
+            eq(friendships.status, 'pending')
+          )
+        )
+        .orderBy(desc(friendships.createdAt));
+
+      res.json({ success: true, data: requests });
+
+    } catch (error: any) {
+      console.error('Get friend requests error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get friend requests' });
+    }
+  });
+
+  // REMOVED: Duplicate endpoint - using the main search endpoint above
+
+  // Get discoverable students for Find Friends (Premium only)
+  app.get("/api/community/students", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // All students can access Find Friends feature
+
+      const { search, grade, subject, country, connectionType = 'friend' } = req.query;
+
+      // Build conditions array for better handling
+      let conditions = [
+        eq(profiles.role, 'student'), // Students only
+        ne(profiles.userId, user.id)
+      ];
+
+      // Exclude test accounts if the field exists
+      try {
+        conditions.push(or(isNull(profiles.isTest), eq(profiles.isTest, false)));
+      } catch (error: any) {
+        // isTest field might not exist, continue without it
+        console.log('isTest field not available, skipping condition');
+      }
+
+      // Add search filter
+      if (search) {
+        conditions.push(or(
+          like(profiles.name, `%${search}%`),
+          like(profiles.displayName, `%${search}%`),
+          like(profiles.country, `%${search}%`)
+        ));
+      }
+
+      // Add grade filter
+      if (grade) {
+        conditions.push(eq(profiles.grade, parseInt(grade as string)));
+      }
+
+      // Add country filter
+      if (country) {
+        conditions.push(eq(profiles.country, country as string));
+      }
+
+      // Get students with simplified query
+      const students = await db.select({
+        id: profiles.userId,
+        userId: profiles.userId,
+        name: profiles.name,
+        displayName: profiles.displayName,
+        avatarUrl: profiles.avatarUrl,
+        grade: profiles.grade,
+        country: profiles.country,
+        subscriptionTier: profiles.subscriptionTier,
+        lastSeen: profiles.lastSeen,
+        isOnline: profiles.isOnline
+      })
+      .from(profiles)
+      .where(and(...conditions))
+      .orderBy(desc(profiles.lastSeen), asc(profiles.name))
+      .limit(50);
+
+      // Check friendship status for each student separately
+      const enrichedStudents = await Promise.all(students.map(async (student) => {
+        try {
+          const friendship = await db.select({ status: friendships.status })
+            .from(friendships)
+            .where(or(
+              and(eq(friendships.requesterId, user.id), eq(friendships.receiverId, student.userId)),
+              and(eq(friendships.requesterId, student.userId), eq(friendships.receiverId, user.id))
+            ))
+            .limit(1);
+
+          const friendshipStatus = friendship.length > 0 ? friendship[0].status : 'none';
+          
+          return {
+            ...student,
+            friendshipStatus
+          };
+        } catch (error: any) {
+          console.error('Error checking friendship status:', error);
+          return {
+            ...student,
+            friendshipStatus: 'none'
+          };
+        }
+      }));
+
+      // Filter out users already connected if needed
+      const filteredStudents = enrichedStudents.filter(student => 
+        student.friendshipStatus === 'none' || 
+        student.friendshipStatus === 'rejected'
+      );
+
+      res.json({ success: true, data: filteredStudents });
+
+    } catch (error: any) {
+      console.error('Get community students error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch students' });
+    }
+  });
+
+  // Send friend request via community (Premium only)
+  app.post("/api/community/friend-requests", async (req, res) => {
+    try {
+      console.log('🤝 Friend request API called:', {
+        body: req.body,
+        authHeader: !!req.headers.authorization
+      });
+      
+      const authHeader = req.headers.authorization as string;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: 'Authorization header required' });
+      }
+
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user || !user.id) {
+        console.log('❌ User authentication failed');
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      console.log('✅ User authenticated:', { userId: user.userId, id: user.id });
+
+      // All students can send friend requests  
+      const { targetUserId } = req.body;
+
+      if (!targetUserId) {
+        return res.status(400).json({ success: false, error: 'Target user ID is required' });
+      }
+
+      // Check if target user exists and is a student
+      const targetUser = await db.select()
+        .from(users)
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(and(
+          eq(users.userId, targetUserId),
+          eq(profiles.role, 'student'),
+          eq(profiles.isTest, false)
+        ))
+        .limit(1);
+
+      if (targetUser.length === 0) {
+        return res.status(404).json({ success: false, error: 'Student not found' });
+      }
+
+      const receiverId = targetUser[0].users.id;
+
+      // Check if friendship already exists
+      const existingFriendship = await db.select()
+        .from(friendships)
+        .where(or(
+          and(eq(friendships.requesterId, user.id), eq(friendships.receiverId, receiverId)),
+          and(eq(friendships.requesterId, receiverId), eq(friendships.receiverId, user.id))
+        ))
+        .limit(1);
+
+      if (existingFriendship.length > 0) {
+        const status = existingFriendship[0].status;
+        if (status === 'accepted') {
+          return res.status(400).json({ success: false, error: 'Already friends' });
+        } else if (status === 'pending') {
+          return res.status(400).json({ success: false, error: 'Friend request already sent' });
+        } else if (status === 'blocked') {
+          return res.status(400).json({ success: false, error: 'Cannot send friend request' });
+        }
+      }
+
+      // Create friend request
+      await db.insert(friendships).values({
+        requesterId: user.id,
+        receiverId,
+        status: 'pending'
+      });
+
+      res.json({ success: true, message: 'Friend request sent successfully' });
+
+    } catch (error: any) {
+      console.error('Send community friend request error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send friend request' });
+    }
+  });
+
+  // ======================= PREMIUM MESSAGING SYSTEM =======================
+
+  // Send premium message (requires admin approval)
+  app.post("/api/premium-messages", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Check if user profile exists
+      const userProfile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      if (userProfile.length === 0) {
+        return res.status(404).json({ success: false, error: 'User profile not found' });
+      }
+
+      const { receiverId, content, messageType = 'text' } = req.body;
+
+      // Check if they are friends
+      const friendship = await db.select()
+        .from(friendships)
+        .where(
+          or(
+            and(eq(friendships.requesterId, user.id), eq(friendships.receiverId, receiverId), eq(friendships.status, 'accepted')),
+            and(eq(friendships.requesterId, receiverId), eq(friendships.receiverId, user.id), eq(friendships.status, 'accepted'))
+          )
+        )
+        .limit(1);
+
+      if (friendship.length === 0) {
+        return res.status(403).json({ success: false, error: 'Can only send premium messages to friends' });
+      }
+
+      // Create premium message pending approval
+      const newMessage = await db.insert(premiumMessages).values({
+        senderId: user.id,
+        receiverId: receiverId,
+        content: content,
+        messageType: messageType,
+        status: 'pending'
+      }).returning();
+
+      res.json({ success: true, message: 'Premium message sent for approval', data: newMessage[0] });
+
+    } catch (error: any) {
+      console.error('Send premium message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send premium message' });
+    }
+  });
+
+  // Admin: Get pending premium messages for approval
+  app.get("/api/admin/premium-messages", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user || !await isAdmin(user.id)) {
+        return res.status(403).json({ success: false, error: 'Admin access required' });
+      }
+
+      const pendingMessages = await db.select({
+        id: premiumMessages.id,
+        content: premiumMessages.content,
+        messageType: premiumMessages.messageType,
+        sentAt: premiumMessages.sentAt,
+        senderName: sql<string>`sender_profile.name`.as('senderName'),
+        senderUserId: sql<string>`sender_users.user_id`.as('senderUserId'),
+        receiverName: sql<string>`receiver_profile.name`.as('receiverName'),
+        receiverUserId: sql<string>`receiver_users.user_id`.as('receiverUserId')
+      })
+        .from(premiumMessages)
+        .leftJoin(sql`auth_users sender_users`, sql`premium_messages.sender_id = sender_users.id`)
+        .leftJoin(sql`profiles sender_profile`, sql`sender_users.id = sender_profile.user_id`)
+        .leftJoin(sql`auth_users receiver_users`, sql`premium_messages.receiver_id = receiver_users.id`)
+        .leftJoin(sql`profiles receiver_profile`, sql`receiver_users.id = receiver_profile.user_id`)
+        .where(eq(premiumMessages.status, 'pending'))
+        .orderBy(asc(premiumMessages.sentAt));
+
+      res.json({ success: true, data: pendingMessages });
+
+    } catch (error: any) {
+      console.error('Get pending premium messages error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get pending messages' });
+    }
+  });
+
+  // Admin: Approve/Reject premium message
+  app.post("/api/admin/premium-messages/:messageId/approve", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user || !await isAdmin(user.id)) {
+        return res.status(403).json({ success: false, error: 'Admin access required' });
+      }
+
+      const { messageId } = req.params;
+      const { action, rejectionReason } = req.body; // action: 'approve' or 'reject'
+
+      const status = action === 'approve' ? 'approved' : 'rejected';
+
+      await db.update(premiumMessages)
+        .set({
+          status: status,
+          approvedBy: user.id,
+          approvedAt: new Date(),
+          rejectionReason: rejectionReason || null,
+          updatedAt: new Date()
+        })
+        .where(eq(premiumMessages.id, messageId));
+
+      if (status === 'approved') {
+        // Move to regular messages table for delivery
+        const message = await db.select()
+          .from(premiumMessages)
+          .where(eq(premiumMessages.id, messageId))
+          .limit(1);
+
+        if (message.length > 0) {
+          await db.insert(messages).values({
+            senderId: message[0].senderId,
+            receiverId: message[0].receiverId,
+            topic: 'chat',
+            extension: 'txt',
+            content: message[0].content,
+            messageType: message[0].messageType
+          });
+        }
+      }
+
+      res.json({ success: true, message: `Premium message ${action}d successfully` });
+
+    } catch (error: any) {
+      console.error('Approve premium message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to process premium message' });
+    }
+  });
+
+  // ======================= GROUP MANAGEMENT SYSTEM =======================
+
+  // Create group (pending admin approval)
+  app.post("/api/groups", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { name, description, isPrivate = false, maxMembers = 100, tags = [] } = req.body;
+
+      const newGroup = await db.insert(communityGroups).values({
+        name: name,
+        description: description,
+        createdBy: user.id,
+        status: 'pending', // Requires admin approval
+        isPrivate: isPrivate,
+        maxMembers: maxMembers,
+        tags: tags,
+        memberCount: 1,
+        membersCount: 1
+      }).returning();
+
+      // Add creator as admin member
+      await db.insert(groupMemberships).values({
+        groupId: newGroup[0].id,
+        userId: user.id,
+        role: 'admin',
+        status: 'active'
+      });
+
+      // Check user role to determine if approval is needed
+      const userProfile = await db.select({ role: profiles.role })
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+      
+      // Auto-approve for admins and teachers, require approval for students and technicians
+      const requiresApproval = !userProfile[0] || !['admin', 'teacher'].includes(userProfile[0].role || '');
+      
+      if (!requiresApproval) {
+        // Auto-approve for admins/teachers
+        await db.update(communityGroups)
+          .set({ 
+            status: 'approved',
+            approvedBy: user.id,
+            approvedAt: new Date(),
+            updatedAt: new Date()
+          })
+          .where(eq(communityGroups.id, newGroup[0].id));
+        
+        res.json({ success: true, message: 'Group created and approved', data: { ...newGroup[0], status: 'approved' } });
+      } else {
+        res.json({ success: true, message: 'Group created and pending admin approval', data: newGroup[0] });
+      }
+
+    } catch (error: any) {
+      console.error('Create group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to create group' });
+    }
+  });
+
+  // Helper function to check admin status
+  const isAdmin = async (userId: string): Promise<boolean> => {
+    try {
+      const profile = await db.select({ role: profiles.role })
+        .from(profiles)
+        .where(eq(profiles.userId, userId))
+        .limit(1);
+      return profile.length > 0 && profile[0].role === 'admin';
+    } catch (error: any) {
+      console.error('Error checking admin status:', error);
+      return false;
+    }
+  };
+
+  // Admin: Get pending groups for approval
+  app.get("/api/admin/groups/pending", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user || !await isAdmin(user.id)) {
+        return res.status(403).json({ success: false, error: 'Admin access required' });
+      }
+
+      const pendingGroups = await db.select({
+        id: communityGroups.id,
+        name: communityGroups.name,
+        description: communityGroups.description,
+        isPrivate: communityGroups.isPrivate,
+        maxMembers: communityGroups.maxMembers,
+        tags: communityGroups.tags,
+        createdAt: communityGroups.createdAt,
+        creatorName: profiles.name,
+        creatorUserId: users.userId
+      })
+        .from(communityGroups)
+        .innerJoin(users, eq(communityGroups.createdBy, users.id))
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(eq(communityGroups.status, 'pending'))
+        .orderBy(asc(communityGroups.createdAt));
+
+      res.json({ success: true, data: pendingGroups });
+
+    } catch (error: any) {
+      console.error('Get pending groups error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get pending groups' });
+    }
+  });
+
+  // Admin: Approve/Reject group
+  app.post("/api/admin/groups/:groupId/approve", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user || !await isAdmin(user.id)) {
+        return res.status(403).json({ success: false, error: 'Admin access required' });
+      }
+
+      const { groupId } = req.params;
+      const { action, rejectionReason } = req.body; // action: 'approve' or 'reject'
+
+      const status = action === 'approve' ? 'approved' : 'rejected';
+
+      await db.update(communityGroups)
+        .set({
+          status: status,
+          approvedBy: user.id,
+          approvedAt: new Date(),
+          rejectionReason: rejectionReason || null,
+          updatedAt: new Date()
+        })
+        .where(eq(communityGroups.id, groupId));
+
+      res.json({ success: true, message: `Group ${action}d successfully` });
+
+    } catch (error: any) {
+      console.error('Approve group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to process group' });
+    }
+  });
+
+  // Join group
+  app.post("/api/groups/:groupId/join", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { groupId } = req.params;
+
+      // Check if group exists and is approved
+      const group = await db.select()
+        .from(communityGroups)
+        .where(and(eq(communityGroups.id, groupId), or(eq(communityGroups.status, 'approved'), eq(communityGroups.status, 'active'))))
+        .limit(1);
+
+      if (group.length === 0) {
+        return res.status(404).json({ success: false, error: 'Group not found or not available' });
+      }
+
+      // Check if already a member
+      const existingMembership = await db.select()
+        .from(groupMemberships)
+        .where(and(eq(groupMemberships.groupId, groupId), eq(groupMemberships.userId, user.id)))
+        .limit(1);
+
+      if (existingMembership.length > 0) {
+        return res.status(400).json({ success: false, error: 'Already a member of this group' });
+      }
+
+      // Check if group is full
+      if (group[0].memberCount >= group[0].maxMembers) {
+        return res.status(400).json({ success: false, error: 'Group is full' });
+      }
+
+      // Add membership
+      await db.insert(groupMemberships).values({
+        groupId: groupId,
+        userId: user.id,
+        role: 'member',
+        status: 'active'
+      });
+
+      // Update member count
+      await db.update(communityGroups)
+        .set({ 
+          memberCount: group[0].memberCount + 1,
+          membersCount: group[0].memberCount + 1,
+          updatedAt: new Date()
+        })
+        .where(eq(communityGroups.id, groupId));
+
+      res.json({ success: true, message: 'Joined group successfully' });
+
+    } catch (error: any) {
+      console.error('Join group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to join group' });
+    }
+  });
+
+  // Currency conversion API endpoint
+  app.get('/api/currency/:countryCode', async (req, res) => {
+    try {
+      const { countryCode } = req.params;
+      
+      // Country to currency mapping
+      const countryToCurrency: { [key: string]: string } = {
+        'US': 'USD', 'CA': 'CAD', 'GB': 'GBP', 'EU': 'EUR', 'DE': 'EUR', 'FR': 'EUR', 'ES': 'EUR', 'IT': 'EUR',
+        'AU': 'AUD', 'NZ': 'NZD', 'JP': 'JPY', 'CN': 'CNY', 'IN': 'INR', 'BR': 'BRL', 'MX': 'MXN',
+        'ZA': 'ZAR', 'NG': 'NGN', 'KE': 'KES', 'GH': 'GHS', 'EG': 'EGP', 'MA': 'MAD',
+        'RU': 'RUB', 'KR': 'KRW', 'TH': 'THB', 'VN': 'VND', 'ID': 'IDR', 'MY': 'MYR', 'PH': 'PHP', 'SG': 'SGD',
+        'AR': 'ARS', 'CL': 'CLP', 'CO': 'COP', 'PE': 'PEN', 'UY': 'UYU', 'VE': 'VES',
+        'TR': 'TRY', 'SA': 'SAR', 'AE': 'AED', 'IL': 'ILS', 'JO': 'JOD', 'LB': 'LBP',
+        'PL': 'PLN', 'CZ': 'CZK', 'HU': 'HUF', 'RO': 'RON', 'BG': 'BGN', 'HR': 'HRK',
+        'NO': 'NOK', 'SE': 'SEK', 'DK': 'DKK', 'FI': 'EUR', 'IS': 'ISK',
+        'CH': 'CHF', 'AT': 'EUR', 'BE': 'EUR', 'NL': 'EUR', 'LU': 'EUR', 'IE': 'EUR', 'PT': 'EUR'
+      };
+
+      const currency = countryToCurrency[countryCode] || 'USD';
+      
+      // Fetch exchange rates from a free API
+      const response = await fetch(`https://api.exchangerate-api.com/v4/latest/USD`);
+      const data = await response.json();
+      
+      const rate = data.rates[currency] || 1;
+      
+      res.json({ success: true,
+        success: true,
+        currency,
+        rate,
+        symbol: getCurrencySymbol(currency)
+      });
+
+    } catch (error: any) {
+      console.error('Currency conversion error:', error);
+      // Fallback to USD if API fails
+      res.json({ success: true,
+        success: true,
+        currency: 'USD',
+        rate: 1,
+        symbol: '$'
+      });
+    }
+  });
+
+  // Helper function to get currency symbols
+  function getCurrencySymbol(currency: string): string {
+    const symbols: { [key: string]: string } = {
+      'USD': '$', 'CAD': 'C$', 'GBP': '£', 'EUR': '€', 'AUD': 'A$', 'NZD': 'NZ$',
+      'JPY': '¥', 'CNY': '¥', 'INR': '₹', 'BRL': 'R$', 'MXN': '$', 'ZAR': 'R',
+      'NGN': '₦', 'KES': 'KSh', 'GHS': 'GH₵', 'EGP': 'E£', 'MAD': 'MAD',
+      'RUB': '₽', 'KRW': '₩', 'THB': '฿', 'VND': '₫', 'IDR': 'Rp', 'MYR': 'RM',
+      'PHP': '₱', 'SGD': 'S$', 'ARS': '$', 'CLP': '$', 'COP': '$', 'PEN': 'S/',
+      'UYU': '$U', 'VES': 'Bs', 'TRY': '₺', 'SAR': '﷼', 'AED': 'د.إ', 'ILS': '₪',
+      'JOD': 'JD', 'LBP': 'L£', 'PLN': 'zł', 'CZK': 'Kč', 'HUF': 'Ft', 'RON': 'lei',
+      'BGN': 'лв', 'HRK': 'kn', 'NOK': 'kr', 'SEK': 'kr', 'DKK': 'kr', 'ISK': 'kr',
+      'CHF': 'CHF'
+    };
+    return symbols[currency] || currency;
+  }
+
+  // Get approved groups with membership info
+  app.get("/api/groups", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const groups = await db.select({
+        id: communityGroups.id,
+        name: communityGroups.name,
+        description: communityGroups.description,
+        avatarUrl: communityGroups.avatarUrl,
+        memberCount: communityGroups.memberCount,
+        maxMembers: communityGroups.maxMembers,
+        tags: communityGroups.tags,
+        createdAt: communityGroups.createdAt,
+        createdBy: communityGroups.createdBy,
+        creatorName: profiles.name
+      })
+        .from(communityGroups)
+        .innerJoin(users, eq(communityGroups.createdBy, users.id))
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(or(eq(communityGroups.status, 'approved'), eq(communityGroups.status, 'active')))
+        .orderBy(desc(communityGroups.createdAt));
+
+      // Check membership for each group
+      const groupsWithMembership = await Promise.all(groups.map(async (group) => {
+        const membership = await db.select()
+          .from(communityGroupMembers)
+          .where(and(
+            eq(communityGroupMembers.groupId, group.id),
+            eq(communityGroupMembers.userId, user.id)
+          ))
+          .limit(1);
+        
+        return {
+          ...group,
+          isMember: membership.length > 0,
+          isCreator: group.createdBy === user.id
+        };
+      }));
+
+      res.json({ success: true, data: groupsWithMembership });
+
+    } catch (error: any) {
+      console.error('Get groups error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get groups' });
+    }
+  });
+
+
+  // Send group message
+  app.post("/api/groups/:groupId/messages", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { groupId } = req.params;
+      const { content, messageType = 'text' } = req.body;
+
+      // Check if user is a member of the group
+      const membership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      if (membership.length === 0) {
+        return res.status(403).json({ success: false, error: 'You are not a member of this group' });
+      }
+
+      // Get sender profile for message data
+      const senderProfile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      if (senderProfile.length === 0) {
+        return res.status(400).json({ success: false, error: 'Profile not found' });
+      }
+
+      // Insert the message
+      const newMessage = await db.insert(messages).values({
+        senderId: senderProfile[0].id,
+        groupId: groupId,
+        content: content,
+        messageType: messageType,
+        createdAt: new Date()
+      }).returning();
+
+      // Broadcast to all group members via WebSocket
+      const groupMembers = await db.select({ userId: users.userId })
+        .from(communityGroupMembers)
+        .innerJoin(users, eq(communityGroupMembers.userId, users.id))
+        .where(eq(communityGroupMembers.groupId, groupId));
+
+      // Broadcast the message to all connected group members
+      const messageData = {
+        type: 'new_group_message',
+        groupId,
+        message: {
+          ...newMessage[0],
+          senderName: senderProfile[0].name,
+          senderAvatarUrl: senderProfile[0].avatarUrl
+        }
+      };
+
+      // Broadcast to group members via WebSocket (implementation would depend on your WebSocket setup)
+      // This would integrate with your existing WebSocket system
+
+      res.json({ success: true, data: newMessage[0] });
+
+    } catch (error: any) {
+      console.error('Send group message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send group message' });
+    }
+  });
+
+  // ======================= PRICING ROUTES =======================
+  
+  // Get pricing plans
+  app.get("/api/pricing/plans", async (req, res) => {
+    try {
+      const plans = await db.select()
+        .from(pricingPlans)
+        .where(eq(pricingPlans.isActive, true))
+        .orderBy(asc(pricingPlans.sortOrder));
+
+      res.json({ success: true,
+        success: true,
+        plans: plans
+      });
+
+    } catch (error: any) {
+      console.error('Pricing plans error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch pricing plans' });
+    }
+  });
+
+
+  // Mathematics content endpoint - serves the math book JSON
+  app.get('/api/mathematics/content', async (req, res) => {
+    try {
+      const fs = require('fs').promises;
+      const path = require('path');
+      
+      // Read the grade7_math_book.json file
+      const mathBookPath = path.join(process.cwd(), 'grade7_math_book.json');
+      const mathBookData = await fs.readFile(mathBookPath, 'utf8');
+      const mathBook = JSON.parse(mathBookData);
+      
+      res.json({ success: true,
+        success: true,
+        data: mathBook
+      });
+    } catch (error: any) {
+      console.error('Mathematics content error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to load mathematics content' 
+      });
+    }
+  });
+
+  // Course Creation API
+  app.post('/api/admin/courses', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { title, subject, grade, description, lessons: courseLessons } = req.body;
+      
+      if (!title || !subject || !grade || !description) {
+        return res.status(400).json({
+          success: false,
+          error: 'Missing required fields: title, subject, grade, description'
+        });
+      }
+
+      // Create course record
+      const newCourse = await db
+        .insert(courses)
+        .values({
+          title,
+          description,
+          price: "0",
+          createdBy: req.user.id,
+          instructorId: req.user.id,
+          isActive: true,
+          approvalStatus: "approved", // Admin-created courses are auto-approved
+          // Only include fields that exist in the database
+          ...(req.body.duration && { duration: req.body.duration }),
+        })
+        .returning();
+
+      // If lessons are provided, create lesson records
+      if (courseLessons && Array.isArray(courseLessons)) {
+        for (let i = 0; i < courseLessons.length; i++) {
+          const lesson = courseLessons[i];
+          await db
+            .insert(lessons)
+            .values({
+              courseId: newCourse[0].id,
+              categoryId: 16, // Use the default category we just created
+              title: lesson.title || `Lesson ${i + 1}`,
+              description: lesson.description || '',
+              content: lesson,
+              level: 1, // Default level
+              order: i + 1,
+              durationMinutes: 30, // Default duration
+              freePreviewFlag: false
+              // Note: Don't include updatedAt as it doesn't exist in the actual database
+            });
+        }
+      }
+
+      // Send course announcement to Grade 11+ students
+      try {
+        const { sendCourseAnnouncementToEligibleStudents } = await import('./utils/email-templates.js');
+        const adminProfile = await db.select().from(profiles).where(eq(profiles.userId, req.user.id)).limit(1);
+        
+        sendCourseAnnouncementToEligibleStudents({
+          courseTitle: title,
+          teacherName: adminProfile.length > 0 ? adminProfile[0].name : 'EduFiliova',
+          category: subject || 'General'
+        }).then(result => {
+          console.log(`📧 Course announcement sent: ${result.sent}/${result.total} students`);
+        }).catch(err => {
+          console.error('Course announcement background error:', err);
+        });
+      } catch (emailErr) {
+        console.error('Failed to trigger course announcement:', emailErr);
+      }
+
+      res.json({ success: true,
+        success: true,
+        course: newCourse[0],
+        message: 'Course created successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Course creation error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to create course'
+      });
+    }
+  });
+
+  // Get all courses
+  app.get('/api/admin/courses', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const allCourses = await db
+        .select()
+        .from(courses)
+        .orderBy(desc(courses.createdAt));
+
+      res.json({ success: true,
+        success: true,
+        courses: allCourses
+      });
+
+    } catch (error: any) {
+      console.error('Courses fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch courses'
+      });
+    }
+  });
+
+  // Approve a course
+  app.patch('/api/admin/courses/:id/approve', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      const updatedCourse = await db
+        .update(courses)
+        .set({
+          approvalStatus: "approved",
+          isActive: true,
+          updatedAt: new Date()
+        })
+        .where(eq(courses.id, id))
+        .returning();
+
+      if (!updatedCourse || updatedCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        course: updatedCourse[0],
+        message: 'Course approved successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Course approval error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to approve course'
+      });
+    }
+  });
+
+  // Reject a course
+  app.patch('/api/admin/courses/:id/reject', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { reason } = req.body;
+      
+      const updatedCourse = await db
+        .update(courses)
+        .set({
+          approvalStatus: "rejected",
+          isActive: false,
+          updatedAt: new Date()
+        })
+        .where(eq(courses.id, id))
+        .returning();
+
+      if (!updatedCourse || updatedCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        course: updatedCourse[0],
+        message: 'Course rejected successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Course rejection error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to reject course'
+      });
+    }
+  });
+
+
+  // =============================================
+  // COURSE PRICING MANAGEMENT
+  // =============================================
+  
+  // GET /api/course-pricing/plans - Get course-specific pricing plans (Free and College Subscription only)
+  app.get('/api/course-pricing/plans', (req, res) => {
+    // Immediate early return with static data to avoid any DB access during schema migration
+    const fallbackPlans = [
+      {
+        id: 'course_free_temp',
+        name: 'course_free',
+        displayName: 'Free Course Access',
+        description: 'Access to free courses',
+        priceMonthly: '0.00',
+        priceYearly: '0.00',
+        currency: 'USD',
+        billingPeriod: 'one_time',
+        features: ['Free course content'],
+        isActive: true,
+        isPopular: false,
+        sortOrder: 1
+      },
+      {
+        id: 'college_course_subscription_temp', 
+        name: 'college_course_subscription',
+        displayName: 'College Course Subscription',
+        description: 'Access to premium course content',
+        priceMonthly: '9.99',
+        priceYearly: '99.99',
+        currency: 'USD',
+        billingPeriod: 'monthly',
+        features: ['Premium course content', 'Advanced features'],
+        isActive: true,
+        isPopular: true,
+        sortOrder: 2
+      }
+    ];
+
+    return res.json({ success: true,
+      success: true,
+      plans: fallbackPlans
+    });
+  });
+
+  // POST /api/grade-subscriptions/initialize - Initialize grade-based subscription plans (Admin only)
+  app.post('/api/grade-subscriptions/initialize', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      // Check if grade-based pricing plans already exist
+      const existingPlans = await db
+        .select()
+        .from(pricingPlans)
+        .where(or(
+          eq(pricingPlans.name, 'elementary_monthly'),
+          eq(pricingPlans.name, 'high_school_monthly'),
+          eq(pricingPlans.name, 'college_university_monthly')
+        ));
+
+      if (existingPlans.length > 0) {
+        return res.json({ success: true,
+          success: true,
+          message: 'Grade-based subscription plans already exist',
+          plans: existingPlans
+        });
+      }
+
+      // Create grade-based subscription plans
+      const gradeBasedPlans = [
+        // Elementary (Grades 1-7) Plans
+        {
+          name: 'elementary_monthly',
+          displayName: 'Elementary Monthly',
+          description: 'Perfect for students in Grades 1-7',
+          gradeTier: 'elementary',
+          gradeRange: '1-7',
+          priceMonthly: 5.99,
+          priceYearly: 54.99,
+          currency: 'USD',
+          billingPeriod: 'monthly',
+          features: ['Age-appropriate content', 'Interactive lessons', 'Parent dashboard', 'Progress tracking'],
+          benefits: ['Fun learning activities', 'Educational games', 'Safe environment', 'Basic support'],
+          isActive: true,
+          isPopular: false,
+          sortOrder: 1
+        },
+        {
+          name: 'elementary_yearly',
+          displayName: 'Elementary Yearly',
+          description: 'Perfect for students in Grades 1-7 (Save with yearly plan)',
+          gradeTier: 'elementary',
+          gradeRange: '1-7',
+          priceMonthly: 5.99,
+          priceYearly: 54.99,
+          currency: 'USD',
+          billingPeriod: 'yearly',
+          features: ['Age-appropriate content', 'Interactive lessons', 'Parent dashboard', 'Progress tracking'],
+          benefits: ['Fun learning activities', 'Educational games', 'Safe environment', 'Basic support', '17% savings'],
+          isActive: true,
+          isPopular: true,
+          sortOrder: 2
+        },
+        // High School (Grades 8-12) Plans
+        {
+          name: 'high_school_monthly',
+          displayName: 'High School Monthly',
+          description: 'Designed for students in Grades 8-12',
+          gradeTier: 'high_school',
+          gradeRange: '8-12',
+          priceMonthly: 9.99,
+          priceYearly: 99.90,
+          currency: 'USD',
+          billingPeriod: 'monthly',
+          features: ['Advanced coursework', 'Exam preparation', 'College readiness', 'Study tools', 'Access to college content for Grade 12+'],
+          benefits: ['SAT/ACT prep', 'Career guidance', 'University applications', 'Priority support', 'College-level access'],
+          isActive: true,
+          isPopular: false,
+          sortOrder: 3
+        },
+        {
+          name: 'high_school_yearly',
+          displayName: 'High School Yearly',
+          description: 'Designed for students in Grades 8-12 (Save with yearly plan)',
+          gradeTier: 'high_school',
+          gradeRange: '8-12',
+          priceMonthly: 9.99,
+          priceYearly: 99.90,
+          currency: 'USD',
+          billingPeriod: 'yearly',
+          features: ['Advanced coursework', 'Exam preparation', 'College readiness', 'Study tools', 'Access to college content for Grade 12+'],
+          benefits: ['SAT/ACT prep', 'Career guidance', 'University applications', 'Priority support', 'College-level access', '17% savings'],
+          isActive: true,
+          isPopular: true,
+          sortOrder: 4
+        },
+        // College & University Plans
+        {
+          name: 'college_university_monthly',
+          displayName: 'College & University Monthly',
+          description: 'Premium plan for college and university students',
+          gradeTier: 'college_university',
+          gradeRange: 'College & University',
+          priceMonthly: 39.00,
+          priceYearly: 399.00,
+          currency: 'USD',
+          billingPeriod: 'monthly',
+          features: ['All university courses', 'Research tools', 'Professional development', 'Industry connections', 'Advanced analytics'],
+          benefits: ['Graduate preparation', 'Career services', 'Networking opportunities', 'Premium support', 'All content access'],
+          isActive: true,
+          isPopular: false,
+          sortOrder: 5
+        },
+        {
+          name: 'college_university_yearly',
+          displayName: 'College & University Yearly',
+          description: 'Premium plan for college and university students (Save with yearly plan)',
+          gradeTier: 'college_university',
+          gradeRange: 'College & University',
+          priceMonthly: 39.00,
+          priceYearly: 399.00,
+          currency: 'USD',
+          billingPeriod: 'yearly',
+          features: ['All university courses', 'Research tools', 'Professional development', 'Industry connections', 'Advanced analytics'],
+          benefits: ['Graduate preparation', 'Career services', 'Networking opportunities', 'Premium support', 'All content access', '15% savings'],
+          isActive: true,
+          isPopular: true,
+          sortOrder: 6
+        }
+      ];
+
+      const createdPlans = await db
+        .insert(pricingPlans)
+        .values(gradeBasedPlans)
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        message: 'Grade-based subscription plans initialized successfully',
+        plans: createdPlans
+      });
+
+    } catch (error: any) {
+      console.error('Grade-based subscription plans initialization error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to initialize grade-based subscription plans'
+      });
+    }
+  });
+
+  // =============================================
+  // COURSE CREATOR API ENDPOINTS
+  // =============================================
+  
+  // Create a new course (Admin/Teacher/Freelancer only)
+  app.post('/api/course-creator/courses', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check if user has permission to create courses (Admin/Teacher/Freelancer only)
+      const userRole = await db
+        .select({ role: userRoles.role })
+        .from(userRoles)
+        .where(eq(userRoles.userId, user.id))
+        .limit(1);
+
+      const role = userRole[0]?.role || user.role; // Fallback to user.role from profile
+      if (!role || !['admin', 'teacher', 'freelancer'].includes(role)) {
+        return res.status(403).json({ success: false, error: 'Only Admin, Teachers, and Freelancers can create courses' });
+      }
+
+      const { title, description, category, thumbnailUrl, gradeTier, duration, language, difficulty, certificationType, pricingType, price } = req.body;
+
+      if (!title || !description) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Title and description are required' 
+        });
+      }
+
+      // Default to college_university if no gradeTier is provided
+      const courseGradeTier = gradeTier || 'college_university';
+      
+      // Validate gradeTier
+      if (!['elementary', 'high_school', 'college_university'].includes(courseGradeTier)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid grade tier. Must be elementary, high_school, or college_university.'
+        });
+      }
+
+      // Look up categoryId from category name
+      let categoryId = null;
+      if (category) {
+        const categoryResult = await db
+          .select({ id: courseCategories.id })
+          .from(courseCategories)
+          .where(eq(courseCategories.name, category))
+          .limit(1);
+        
+        if (categoryResult.length > 0) {
+          categoryId = categoryResult[0].id;
+        }
+      }
+
+      // Create course with proper active status based on role - IMPROVED SECURITY
+      // Only admins can directly activate courses, all others start as inactive (needs approval)
+      const approvalStatus = role === 'admin' ? 'approved' : 'pending'; // Admin courses auto-approved, others need approval
+      const isActive = role === 'admin' ? true : false;
+
+      const newCourse = await db
+        .insert(courses)
+        .values({
+          createdBy: user.id,
+          title,
+          description,
+          categoryId,
+          thumbnailUrl,
+          gradeTier: courseGradeTier,
+          duration: duration || 15,
+          language: language || 'en',
+          certificationType: certificationType || 'certificate',
+          pricingType: pricingType || 'free',
+          price: price || '0',
+          difficulty: difficulty || 'intermediate',
+          isActive,
+          approvalStatus,
+        })
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        course: newCourse[0],
+        message: 'Course created successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Course creation error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to create course'
+      });
+    }
+  });
+
+  // Get courses by user role
+  app.get('/api/course-creator/courses', requireAuth, async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      const userRole = await db
+        .select({ role: userRoles.role })
+        .from(userRoles)
+        .where(eq(userRoles.userId, user.id))
+        .limit(1);
+
+      const role = userRole[0]?.role || user.role; // Fallback to user.role from profile
+
+      let coursesQuery;
+      if (role === 'admin') {
+        // Admin can see all courses
+        coursesQuery = db
+          .select({
+            id: courses.id,
+            title: courses.title,
+            description: courses.description,
+            isActive: courses.isActive,
+            isFeatured: courses.isFeatured,
+            approvalStatus: courses.approvalStatus,
+            thumbnailUrl: courses.thumbnailUrl,
+            createdAt: courses.createdAt
+          })
+          .from(courses);
+      } else {
+        // Teachers and Freelancers can only see their own courses
+        coursesQuery = db
+          .select({
+            id: courses.id,
+            title: courses.title,
+            description: courses.description,
+            isActive: courses.isActive,
+            isFeatured: courses.isFeatured,
+            approvalStatus: courses.approvalStatus,
+            thumbnailUrl: courses.thumbnailUrl,
+            createdAt: courses.createdAt
+          })
+          .from(courses)
+          .where(eq(courses.createdBy, user.id));
+      }
+
+      const userCourses = await coursesQuery.orderBy(desc(courses.createdAt));
+
+      res.json({ success: true,
+        success: true,
+        courses: userCourses
+      });
+
+    } catch (error: any) {
+      console.error('Courses fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch courses'
+      });
+    }
+  });
+
+  // Update course status (Admin approval workflow)
+  app.put('/api/course-creator/courses/:courseId/status', requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const { status } = req.body;
+
+      if (!['draft', 'published', 'rejected'].includes(status)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid status. Must be draft, published, or rejected'
+        });
+      }
+
+      const updatedCourse = await db
+        .update(courses)
+        .set({ status })
+        .where(eq(courses.id, courseId))
+        .returning();
+
+      if (updatedCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        course: updatedCourse[0],
+        message: `Course ${status} successfully`
+      });
+
+    } catch (error: any) {
+      console.error('Course status update error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to update course status'
+      });
+    }
+  });
+
+  // Get course with modules, lessons, and quizzes
+  app.get('/api/course-creator/courses/:courseId', async (req, res) => {
+    try {
+      const { courseId } = req.params;
+
+      // Optional authentication check - get user if authenticated
+      let user = null;
+      let isEnrolled = false;
+      
+      const authHeader = req.headers.authorization;
+      const sessionId = authHeader?.replace('Bearer ', '') || 
+                       req.headers['x-session-id'] as string ||
+                       req.cookies?.sessionId ||
+                       req.cookies?.session ||
+                       req.cookies?.auth_session;
+
+      if (sessionId) {
+        try {
+          const session = await db
+            .select({ userId: userLoginSessions.userId })
+            .from(userLoginSessions)
+            .where(and(
+              eq(userLoginSessions.sessionId, sessionId),
+              gt(userLoginSessions.expiresAt, new Date())
+            ))
+            .limit(1);
+
+          if (session.length > 0) {
+            user = { id: session[0].userId };
+            
+            // Check if user is enrolled in this course
+            const enrollment = await db
+              .select()
+              .from(courseEnrollments)
+              .where(and(
+                eq(courseEnrollments.courseId, courseId),
+                eq(courseEnrollments.userId, session[0].userId)
+              ))
+              .limit(1);
+            
+            isEnrolled = enrollment.length > 0;
+          }
+        } catch (authError) {
+          console.log('Auth check failed, continuing as public:', authError);
+          // Continue as unauthenticated user
+        }
+      }
+
+      const course = await db
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .limit(1);
+
+      if (course.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      // Always get basic modules for course structure (titles only for non-enrolled)
+      const courseModules = await db
+        .select()
+        .from(modules)
+        .where(eq(modules.courseId, courseId))
+        .orderBy(asc(modules.orderNum));
+
+      // Get lessons for each module - limit content based on enrollment
+      const modulesWithLessons = await Promise.all(
+        courseModules.map(async (module) => {
+          const moduleLessons = await db
+            .select()
+            .from(lessons)
+            .where(eq(lessons.moduleId, module.id))
+            .orderBy(asc(lessons.orderNum));
+
+          let lessonsWithContent;
+          
+          if (isEnrolled) {
+            // Full access for enrolled users - include quizzes and media
+            lessonsWithContent = await Promise.all(
+              moduleLessons.map(async (lesson) => {
+                const lessonQuizzes = await db
+                  .select()
+                  .from(quizzes)
+                  .where(eq(quizzes.lessonId, lesson.id))
+                  .orderBy(asc(quizzes.order));
+
+                const lessonFiles = await db
+                  .select()
+                  .from(lessonMedia)
+                  .where(eq(lessonMedia.lessonId, lesson.id));
+
+                return {
+                  ...lesson,
+                  quizzes: lessonQuizzes,
+                  media: lessonFiles
+                };
+              })
+            );
+          } else {
+            // Limited access for non-enrolled users - only basic lesson info
+            lessonsWithContent = moduleLessons.map(lesson => ({
+              id: lesson.id,
+              title: lesson.title,
+              orderNum: lesson.orderNum,
+              durationMinutes: lesson.durationMinutes,
+              freePreviewFlag: lesson.freePreviewFlag,
+              // Don't include content, videoUrl, quizzes, or media for non-enrolled users
+              quizzes: [],
+              media: []
+            }));
+          }
+
+          return {
+            ...module,
+            lessons: lessonsWithContent
+          };
+        })
+      );
+
+      res.json({ success: true,
+        success: true,
+        course: {
+          ...course[0],
+          modules: modulesWithLessons
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Course fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch course'
+      });
+    }
+  });
+
+  // Update course details (Creator only)
+  app.put('/api/course-creator/courses/:courseId', requireAuth, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const { title, description, category, thumbnailUrl, duration, language, difficulty } = req.body;
+      const user = req.user;
+
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check if course exists and user has permission to edit
+      const existingCourse = await db
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .limit(1);
+
+      if (existingCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      // Check if user is admin or course creator
+      const userRole = await db
+        .select({ role: userRoles.role })
+        .from(userRoles)
+        .where(eq(userRoles.userId, user.id))
+        .limit(1);
+
+      const role = userRole[0]?.role || user.role;
+      const isCreator = existingCourse[0].createdBy === user.id;
+      const isAdmin = role === 'admin';
+
+      if (!isCreator && !isAdmin) {
+        return res.status(403).json({
+          success: false,
+          error: 'Only course creators and admins can edit courses'
+        });
+      }
+
+      if (!title || !description) {
+        return res.status(400).json({
+          success: false,
+          error: 'Title and description are required'
+        });
+      }
+
+      // Look up categoryId from category name if provided
+      let categoryId = existingCourse[0].categoryId;
+      if (category) {
+        const categoryResult = await db
+          .select({ id: courseCategories.id })
+          .from(courseCategories)
+          .where(eq(courseCategories.name, category))
+          .limit(1);
+        
+        if (categoryResult.length > 0) {
+          categoryId = categoryResult[0].id;
+        }
+      }
+
+      const updatedCourse = await db
+        .update(courses)
+        .set({
+          title,
+          description,
+          categoryId,
+          thumbnailUrl,
+          ...(duration !== undefined && { duration }),
+          ...(language !== undefined && { language }),
+          ...(difficulty !== undefined && { difficulty }),
+          updatedAt: new Date()
+        })
+        .where(eq(courses.id, courseId))
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        course: updatedCourse[0],
+        message: 'Course updated successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Course update error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to update course'
+      });
+    }
+  });
+
+  // Delete course (Creator/Admin only)
+  app.delete('/api/course-creator/courses/:courseId', requireAuth, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const user = req.user;
+
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check if course exists and user has permission to delete
+      const existingCourse = await db
+        .select()
+        .from(courses)
+        .where(eq(courses.id, courseId))
+        .limit(1);
+
+      if (existingCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Course not found'
+        });
+      }
+
+      // Check if user is admin or course creator
+      const userRole = await db
+        .select({ role: userRoles.role })
+        .from(userRoles)
+        .where(eq(userRoles.userId, user.id))
+        .limit(1);
+
+      const role = userRole[0]?.role || user.role;
+      const isCreator = existingCourse[0].createdBy === user.id;
+      const isAdmin = role === 'admin';
+
+      if (!isCreator && !isAdmin) {
+        return res.status(403).json({
+          success: false,
+          error: 'Only course creators and admins can delete courses'
+        });
+      }
+
+      // Delete course and all related data (cascade delete)
+      // First, get all lesson IDs for this course
+      const courseLessons = await db
+        .select({ id: lessons.id })
+        .from(lessons)
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .where(eq(modules.courseId, courseId));
+      
+      const lessonIds = courseLessons.map(l => l.id);
+
+      // Delete in correct order to avoid foreign key constraint violations
+      
+      // 1. Delete all data that references lessons
+      if (lessonIds.length > 0) {
+        // Delete lesson progress
+        await db.delete(lessonProgress).where(inArray(lessonProgress.lessonId, lessonIds));
+        
+        // Delete lesson content blocks
+        await db.delete(lessonContentBlocks).where(inArray(lessonContentBlocks.lessonId, lessonIds));
+        
+        // Delete topics
+        await db.delete(topics).where(inArray(topics.lessonId, lessonIds));
+        
+        // Delete quizzes
+        await db.delete(quizzes).where(inArray(quizzes.lessonId, lessonIds));
+        
+        // Delete lesson media
+        try {
+          await db.delete(lessonMedia).where(inArray(lessonMedia.lessonId, lessonIds));
+        } catch (error: any) {
+          console.log('Lesson media table not found, skipping deletion');
+        }
+      }
+
+      // 2. Delete student progress that references this course (if table exists)
+      try {
+        await db.delete(studentProgress).where(eq(studentProgress.courseId, courseId));
+      } catch (error: any) {
+        console.log('Student progress table not found or no data, skipping deletion');
+      }
+
+      // 3. Delete lessons
+      await db.delete(lessons).where(
+        inArray(lessons.moduleId,
+          db.select({ id: modules.id })
+            .from(modules)
+            .where(eq(modules.courseId, courseId))
+        )
+      );
+
+      // 4. Delete modules
+      await db.delete(modules).where(eq(modules.courseId, courseId));
+
+      // 4b. Delete lessons directly linked to course
+      try {
+        await db.delete(lessons).where(eq(lessons.courseId, courseId));
+      } catch (e) {
+        console.log("No direct lessons found or already deleted");
+      }
+
+      // 5. Delete all data that references the course
+      await db.delete(courseEnrollments).where(eq(courseEnrollments.courseId, courseId));
+      await db.delete(coursePurchases).where(eq(coursePurchases.courseId, courseId));
+      await db.delete(courseReviews).where(eq(courseReviews.courseId, courseId));
+      await db.delete(courseComments).where(eq(courseComments.courseId, courseId));
+      await db.delete(certificates).where(eq(certificates.courseId, courseId));
+      // Additional FK constraints
+      try { await db.delete(lessonAccessPermissions).where(eq(lessonAccessPermissions.courseId, courseId)); } catch (e) {}
+      try { await db.delete(certificatePurchases).where(eq(certificatePurchases.courseId, courseId)); } catch (e) {}
+      try { await db.delete(whatsappPaymentIntents).where(eq(whatsappPaymentIntents.courseId, courseId)); } catch (e) {}
+
+      // 6. Finally delete the course
+      await db.delete(courses).where(eq(courses.id, courseId));
+
+      res.json({ success: true,
+        success: true,
+        message: 'Course deleted successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Course deletion error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to delete course'
+      });
+    }
+  });
+
+  // Delete module (Creator/Admin only)
+  app.delete('/api/course-creator/modules/:moduleId', requireAuth, async (req, res) => {
+    try {
+      const { moduleId } = req.params;
+      const user = req.user;
+
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check if module exists and get course info for permission check
+      const existingModule = await db
+        .select({
+          id: modules.id,
+          courseId: modules.courseId,
+          createdBy: courses.createdBy
+        })
+        .from(modules)
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(modules.id, parseInt(moduleId)))
+        .limit(1);
+
+      if (existingModule.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Module not found'
+        });
+      }
+
+      // Check if user is admin or course creator
+      const userRole = await db
+        .select({ role: userRoles.role })
+        .from(userRoles)
+        .where(eq(userRoles.userId, user.id))
+        .limit(1);
+
+      const role = userRole[0]?.role || user.role;
+      const isCreator = existingModule[0].createdBy === user.id;
+      const isAdmin = role === 'admin';
+
+      if (!isCreator && !isAdmin) {
+        return res.status(403).json({
+          success: false,
+          error: 'Only course creators and admins can delete modules'
+        });
+      }
+
+      // Delete module and all related data (cascade delete)
+      // First delete quizzes
+      await db.delete(quizzes).where(
+        inArray(quizzes.lessonId,
+          db.select({ id: lessons.id })
+            .from(lessons)
+            .where(eq(lessons.moduleId, parseInt(moduleId)))
+        )
+      );
+
+      // Delete lesson media
+      await db.delete(lessonMedia).where(
+        inArray(lessonMedia.lessonId,
+          db.select({ id: lessons.id })
+            .from(lessons)
+            .where(eq(lessons.moduleId, parseInt(moduleId)))
+        )
+      );
+
+      // Delete lessons
+      await db.delete(lessons).where(eq(lessons.moduleId, parseInt(moduleId)));
+
+      // Finally delete the module
+      await db.delete(modules).where(eq(modules.id, parseInt(moduleId)));
+
+      res.json({ success: true,
+        success: true,
+        message: 'Module deleted successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Module deletion error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to delete module'
+      });
+    }
+  });
+
+  // Create a new module in a course
+  app.post('/api/course-creator/courses/:courseId/modules', requireAuth, async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const { title, orderNum } = req.body;
+
+      if (!title) {
+        return res.status(400).json({
+          success: false,
+          error: 'Module title is required'
+        });
+      }
+
+      const newModule = await db
+        .insert(modules)
+        .values({
+          courseId,
+          title,
+          orderNum: orderNum || 1
+        })
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        module: newModule[0],
+        message: 'Module created successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Module creation error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to create module'
+      });
+    }
+  });
+
+  // Create a new lesson in a module
+  app.post('/api/course-creator/modules/:moduleId/lessons', requireAuth, async (req, res) => {
+    try {
+      const { moduleId } = req.params;
+      const { title, content, videoUrl, orderNum } = req.body;
+
+      if (!title) {
+        return res.status(400).json({
+          success: false,
+          error: 'Lesson title is required'
+        });
+      }
+
+      const newLesson = await db
+        .insert(lessons)
+        .values({
+          moduleId: parseInt(moduleId),
+          title,
+          content: content || '',
+          videoUrl,
+          orderNum: orderNum || 1,
+          categoryId: 16 // Default to "General" category
+        })
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        lesson: newLesson[0],
+        message: 'Lesson created successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Lesson creation error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to create lesson'
+      });
+    }
+  });
+
+  // Upload media for a lesson
+  app.post('/api/course-creator/lessons/:lessonId/media', requireAuth, upload.single('file'), async (req, res) => {
+    try {
+      const { lessonId } = req.params;
+      const file = req.file as FileMetadata;
+
+      if (!file) {
+        return res.status(400).json({
+          success: false,
+          error: 'No file uploaded'
+        });
+      }
+
+      const fileType = ['image/jpeg', 'image/png', 'image/jpg'].includes(file.mimetype) ? 'image' : 'file';
+
+      const newMedia = await db
+        .insert(lessonMedia)
+        .values({
+          lessonId: parseInt(lessonId),
+          type: fileType,
+          fileUrl: file.cloudinaryUrl || file.url,
+          originalName: file.originalname,
+          fileSize: file.size,
+          mimeType: file.mimetype
+        })
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        media: newMedia[0],
+        message: 'Media uploaded successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Media upload error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to upload media'
+      });
+    }
+  });
+
+  // Get all media for a lesson
+  app.get('/api/course-creator/lessons/:lessonId/media', requireAuth, async (req, res) => {
+    try {
+      // Validate lesson ID parameter
+      const lessonIdSchema = z.coerce.number().int().positive();
+      let lessonId: number;
+      try {
+        lessonId = lessonIdSchema.parse(req.params.lessonId);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid lesson ID'
+        });
+      }
+
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check lesson exists and verify ownership
+      const lessonWithCourse = await db
+        .select({
+          lesson: lessons,
+          courseAuthorId: courses.createdBy
+        })
+        .from(lessons)
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(lessons.id, lessonId))
+        .limit(1);
+
+      if (lessonWithCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Lesson not found'
+        });
+      }
+
+      // Check ownership - user must be the course author
+      if (lessonWithCourse[0].courseAuthorId !== user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Not authorized to view this lesson media'
+        });
+      }
+
+      const mediaFiles = await db
+        .select()
+        .from(lessonMedia)
+        .where(eq(lessonMedia.lessonId, lessonId))
+        .orderBy(desc(lessonMedia.createdAt));
+
+      res.json({ success: true,
+        success: true,
+        media: mediaFiles
+      });
+
+    } catch (error: any) {
+      console.error('Media fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch media'
+      });
+    }
+  });
+
+  // Replace/update lesson media
+  app.put('/api/course-creator/media/:mediaId', requireAuth, upload.single('file'), async (req, res) => {
+    try {
+      // Validate media ID parameter
+      const mediaIdSchema = z.coerce.number().int().positive();
+      let mediaId: number;
+      try {
+        mediaId = mediaIdSchema.parse(req.params.mediaId);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid media ID'
+        });
+      }
+
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      const file = req.file as FileMetadata;
+      if (!file) {
+        return res.status(400).json({
+          success: false,
+          error: 'No file uploaded'
+        });
+      }
+
+      // Validate file using existing validation
+      const validationResult = validateFile(file);
+      if (!validationResult.isValid) {
+        return res.status(400).json({
+          success: false,
+          error: validationResult.error
+        });
+      }
+
+      // Check media exists and verify ownership
+      const mediaWithCourse = await db
+        .select({
+          media: lessonMedia,
+          courseAuthorId: courses.createdBy
+        })
+        .from(lessonMedia)
+        .innerJoin(lessons, eq(lessonMedia.lessonId, lessons.id))
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(lessonMedia.id, mediaId))
+        .limit(1);
+
+      if (mediaWithCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Media not found'
+        });
+      }
+
+      // Check ownership - user must be the course author
+      if (mediaWithCourse[0].courseAuthorId !== user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Not authorized to edit this media'
+        });
+      }
+
+      const fileType = getFileType(file);
+      
+      // Store old file URL for cleanup (if it's a Cloudinary URL)
+      const oldFileUrl = mediaWithCourse[0].media.fileUrl;
+
+      const updatedMedia = await db
+        .update(lessonMedia)
+        .set({
+          type: fileType,
+          fileUrl: file.cloudinaryUrl || file.url,
+          originalName: file.originalname,
+          fileSize: file.size,
+          mimeType: file.mimetype
+        })
+        .where(eq(lessonMedia.id, mediaId))
+        .returning();
+
+      // TODO: Implement Cloudinary cleanup of old file
+      // This would require extracting the public_id from the old URL
+      // and calling cloudinaryStorage.deleteFile(publicId)
+      console.log('TODO: Clean up old file:', oldFileUrl);
+
+      res.json({ success: true,
+        success: true,
+        media: updatedMedia[0],
+        message: 'Media updated successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Media update error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to update media'
+      });
+    }
+  });
+
+  // Delete lesson media
+  app.delete('/api/course-creator/media/:mediaId', requireAuth, async (req, res) => {
+    try {
+      // Validate media ID parameter
+      const mediaIdSchema = z.coerce.number().int().positive();
+      let mediaId: number;
+      try {
+        mediaId = mediaIdSchema.parse(req.params.mediaId);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid media ID'
+        });
+      }
+
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check media exists and verify ownership
+      const mediaWithCourse = await db
+        .select({
+          media: lessonMedia,
+          courseAuthorId: courses.createdBy
+        })
+        .from(lessonMedia)
+        .innerJoin(lessons, eq(lessonMedia.lessonId, lessons.id))
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(lessonMedia.id, mediaId))
+        .limit(1);
+
+      if (mediaWithCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Media not found'
+        });
+      }
+
+      // Check ownership - user must be the course author
+      if (mediaWithCourse[0].courseAuthorId !== user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Not authorized to delete this media'
+        });
+      }
+
+      // Store file URL for cleanup
+      const fileUrl = mediaWithCourse[0].media.fileUrl;
+
+      await db
+        .delete(lessonMedia)
+        .where(eq(lessonMedia.id, mediaId));
+
+      // TODO: Implement Cloudinary cleanup
+      // Extract public_id from fileUrl and delete from Cloudinary
+      console.log('TODO: Clean up deleted file:', fileUrl);
+
+      res.json({ success: true,
+        success: true,
+        message: 'Media deleted successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Media deletion error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to delete media'
+      });
+    }
+  });
+
+  // Get a specific media file
+  app.get('/api/course-creator/media/:mediaId', requireAuth, async (req, res) => {
+    try {
+      // Validate media ID parameter
+      const mediaIdSchema = z.coerce.number().int().positive();
+      let mediaId: number;
+      try {
+        mediaId = mediaIdSchema.parse(req.params.mediaId);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid media ID'
+        });
+      }
+
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check media exists and verify ownership
+      const mediaWithCourse = await db
+        .select({
+          media: lessonMedia,
+          courseAuthorId: courses.createdBy
+        })
+        .from(lessonMedia)
+        .innerJoin(lessons, eq(lessonMedia.lessonId, lessons.id))
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(lessonMedia.id, mediaId))
+        .limit(1);
+
+      if (mediaWithCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Media not found'
+        });
+      }
+
+      // Check ownership - user must be the course author
+      if (mediaWithCourse[0].courseAuthorId !== user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Not authorized to view this media'
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        media: mediaWithCourse[0].media
+      });
+
+    } catch (error: any) {
+      console.error('Media fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch media'
+      });
+    }
+  });
+
+  // ======================= PRODUCT UPLOAD ENDPOINTS =======================
+
+  // Upload product images (supports multiple files)
+
+  // Update lesson media settings (visibility)
+  app.patch('/api/course-creator/media/:mediaId/settings', requireAuth, async (req, res) => {
+    try {
+      const mediaIdSchema = z.coerce.number().int().positive();
+      let mediaId: number;
+      try {
+        mediaId = mediaIdSchema.parse(req.params.mediaId);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid media ID'
+        });
+      }
+
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Validate settings
+      const settingsSchema = z.object({
+        isCollapsible: z.boolean().optional(),
+        isVisibleByDefault: z.boolean().optional()
+      });
+
+      let settings;
+      try {
+        settings = settingsSchema.parse(req.body);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid settings data'
+        });
+      }
+
+      // Check media exists and verify ownership
+      const mediaWithCourse = await db
+        .select({
+          media: lessonMedia,
+          courseAuthorId: courses.createdBy
+        })
+        .from(lessonMedia)
+        .innerJoin(lessons, eq(lessonMedia.lessonId, lessons.id))
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(lessonMedia.id, mediaId))
+        .limit(1);
+
+      if (mediaWithCourse.length === 0) {
+        return res.status(404).json({ success: false, error: 'Media not found' });
+      }
+
+      const courseAuthorId = mediaWithCourse[0].courseAuthorId;
+      if (courseAuthorId !== user.id) {
+        return res.status(403).json({ success: false, error: 'Forbidden' });
+      }
+
+      // Update media settings
+      const updateData: any = {};
+      if (settings.isCollapsible !== undefined) {
+        updateData.isCollapsible = settings.isCollapsible;
+      }
+      if (settings.isVisibleByDefault !== undefined) {
+        updateData.isVisibleByDefault = settings.isVisibleByDefault;
+      }
+
+      await db
+        .update(lessonMedia)
+        .set(updateData)
+        .where(eq(lessonMedia.id, mediaId));
+
+      res.json({ success: true, message: 'Media settings updated successfully' });
+    } catch (error: any) {
+      console.error('[MEDIA_SETTINGS_UPDATE_ERROR]', error);
+      res.status(500).json({ success: false, error: 'Failed to update media settings' });
+    }
+  });
+  app.post('/api/products/upload/images', requireAuth, upload.array('images', 10), async (req, res) => {
+    try {
+      const files = req.files as Express.Multer.File[];
+
+      if (!files || files.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'No images uploaded'
+        });
+      }
+
+      const uploadPromises = files.map(async (file) => {
+        const result = await cloudinaryStorage.uploadFile(
+          file.buffer,
+          file.originalname,
+          file.mimetype,
+          'products/images'
+        );
+
+        if (!result.success) {
+          throw new Error(result.error || 'Upload failed');
+        }
+
+        return {
+          url: result.url,
+          originalName: file.originalname,
+          size: file.size,
+          mimeType: file.mimetype
+        };
+      });
+
+      const uploadedImages = await Promise.all(uploadPromises);
+
+      res.json({ success: true,
+        success: true,
+        images: uploadedImages,
+        message: `${uploadedImages.length} image(s) uploaded successfully`
+      });
+
+    } catch (error: any) {
+      console.error('Product images upload error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to upload product images'
+      });
+    }
+  });
+
+  // Upload downloadable files for digital products
+  app.post('/api/products/upload/files', requireAuth, upload.array('files', 5), async (req, res) => {
+    try {
+      const files = req.files as Express.Multer.File[];
+      const { fileTypes } = req.body; // Array of file types: 'main', 'preview', 'sample'
+
+      if (!files || files.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'No files uploaded'
+        });
+      }
+
+      const uploadPromises = files.map(async (file, index) => {
+        const fileType = fileTypes && fileTypes[index] ? fileTypes[index] : 'main';
+        
+        const result = await cloudinaryStorage.uploadFile(
+          file.buffer,
+          file.originalname,
+          file.mimetype,
+          `products/files/${fileType}`
+        );
+
+        if (!result.success) {
+          throw new Error(result.error || 'Upload failed');
+        }
+
+        return {
+          id: uuidv4(),
+          name: file.originalname,
+          url: result.url,
+          size: file.size,
+          type: fileType,
+          format: file.originalname.split('.').pop()?.toLowerCase() || 'unknown',
+          downloadCount: 0
+        };
+      });
+
+      const uploadedFiles = await Promise.all(uploadPromises);
+
+      res.json({ success: true,
+        success: true,
+        files: uploadedFiles,
+        message: `${uploadedFiles.length} file(s) uploaded successfully`
+      });
+
+    } catch (error: any) {
+      console.error('Product files upload error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to upload product files'
+      });
+    }
+  });
+
+  // Create a quiz for a lesson
+  app.post('/api/course-creator/lessons/:lessonId/quizzes', requireAuth, async (req, res) => {
+    try {
+      const { lessonId } = req.params;
+      const { title, description, questions, timeLimitMinutes, passingScore, topicId } = req.body;
+
+      // Validate request data with Zod
+      const questionSchema = z.object({
+        question: z.string().min(1),
+        options: z.array(z.string()).min(2),
+        correctAnswer: z.string(),
+        explanation: z.string().optional(),
+        questionType: z.enum(['mcq', 'true_false', 'short_answer']).optional(),
+        points: z.number().optional()
+      });
+
+      const quizDataSchema = z.object({
+        title: z.string().min(1),
+        description: z.string().optional(),
+        questions: z.array(questionSchema).min(1),
+        timeLimitMinutes: z.coerce.number().int().optional(),
+        passingScore: z.coerce.number().int().optional(),
+        topicId: z.coerce.number().int().optional()
+      });
+
+      const validatedData = quizDataSchema.parse({
+        title,
+        description,
+        questions,
+        timeLimitMinutes,
+        passingScore,
+        topicId
+      });
+
+      const insertData = {
+        lessonId: parseInt(lessonId),
+        title: validatedData.title,
+        description: validatedData.description || '',
+        questions: validatedData.questions, // Pass as JSON object, not stringified
+        timeLimitMinutes: validatedData.timeLimitMinutes || null,
+        passingScore: validatedData.passingScore || 70,
+        topicId: validatedData.topicId || null
+      };
+
+      console.log('🔍 Quiz insert data:', JSON.stringify(insertData, null, 2));
+      console.log('🔍 Quizzes schema columns:', Object.keys(quizzes));
+
+      const newQuiz = await db
+        .insert(quizzes)
+        .values(insertData)
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        quiz: newQuiz[0],
+        message: 'Quiz created successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Quiz creation error:', error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid quiz data',
+          details: error.errors
+        });
+      }
+      res.status(500).json({
+        success: false,
+        error: 'Failed to create quiz'
+      });
+    }
+  });
+
+  // Mark lesson as complete
+  app.post('/api/course-creator/lessons/:lessonId/complete', requireAuth, async (req, res) => {
+    try {
+      const { lessonId } = req.params;
+      const user = req.user;
+
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Get the lesson to find its course
+      const lesson = await db
+        .select({
+          id: lessons.id,
+          moduleId: lessons.moduleId
+        })
+        .from(lessons)
+        .where(eq(lessons.id, parseInt(lessonId)))
+        .limit(1);
+
+      if (!lesson || lesson.length === 0) {
+        return res.status(404).json({ success: false, error: 'Lesson not found' });
+      }
+
+      // Get the module to find the course
+      const module = await db
+        .select({
+          id: modules.id,
+          courseId: modules.courseId
+        })
+        .from(modules)
+        .where(eq(modules.id, lesson[0].moduleId))
+        .limit(1);
+
+      if (!module || module.length === 0) {
+        return res.status(404).json({ success: false, error: 'Module not found' });
+      }
+
+      const courseId = module[0].courseId;
+
+      // Check if progress record exists
+      const existingProgress = await db
+        .select()
+        .from(lessonProgress)
+        .where(and(
+          eq(lessonProgress.userId, user.id),
+          eq(lessonProgress.lessonId, parseInt(lessonId)),
+          eq(lessonProgress.courseOrSubjectId, courseId)
+        ))
+        .limit(1);
+
+      if (existingProgress && existingProgress.length > 0) {
+        // Update existing progress
+        await db
+          .update(lessonProgress)
+          .set({
+            completedAt: new Date(),
+            progressPercent: 100,
+            updatedAt: new Date()
+          })
+          .where(eq(lessonProgress.id, existingProgress[0].id));
+      } else {
+        // Create new progress record
+        await db
+          .insert(lessonProgress)
+          .values({
+            userId: user.id,
+            lessonId: parseInt(lessonId),
+            courseOrSubjectId: courseId,
+            startedAt: new Date(),
+            completedAt: new Date(),
+            progressPercent: 100
+          });
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: 'Lesson marked as complete'
+      });
+
+    } catch (error: any) {
+      console.error('Mark lesson complete error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to mark lesson as complete'
+      });
+    }
+  });
+
+
+  // Update a quiz for a lesson
+  app.put('/api/course-creator/quizzes/:quizId', requireAuth, async (req, res) => {
+    try {
+      // Validate quiz ID parameter
+      const quizIdSchema = z.coerce.number().int().positive();
+      let quizId: number;
+      try {
+        quizId = quizIdSchema.parse(req.params.quizId);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid quiz ID'
+        });
+      }
+
+      const { title, description, questions, timeLimitMinutes, passingScore } = req.body;
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Validate request data with Zod
+      const questionSchema = z.object({
+        question: z.string().min(1),
+        options: z.array(z.string()).min(2),
+        correctAnswer: z.string(),
+        explanation: z.string().optional(),
+        questionType: z.enum(['mcq', 'true_false', 'short_answer']).optional(),
+        points: z.number().optional()
+      });
+
+      const quizDataSchema = z.object({
+        title: z.string().min(1),
+        description: z.string().optional(),
+        questions: z.array(questionSchema).min(1),
+        timeLimitMinutes: z.coerce.number().int().optional(),
+        passingScore: z.coerce.number().int().optional()
+      });
+
+      const validatedData = quizDataSchema.parse({
+        title,
+        description,
+        questions,
+        timeLimitMinutes,
+        passingScore
+      });
+
+      // Check quiz exists and verify ownership
+      const quizWithCourse = await db
+        .select({
+          quiz: quizzes,
+          courseAuthorId: courses.createdBy
+        })
+        .from(quizzes)
+        .innerJoin(lessons, eq(quizzes.lessonId, lessons.id))
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(quizzes.id, quizId))
+        .limit(1);
+
+      if (quizWithCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Quiz not found'
+        });
+      }
+
+      // Check ownership - user must be the course author
+      if (quizWithCourse[0].courseAuthorId !== user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Not authorized to edit this quiz'
+        });
+      }
+
+      const updateData = {
+        title: validatedData.title,
+        description: validatedData.description || '',
+        questions: validatedData.questions,
+        timeLimitMinutes: validatedData.timeLimitMinutes || null,
+        passingScore: validatedData.passingScore || 70,
+        updatedAt: new Date()
+      };
+
+      const updatedQuiz = await db
+        .update(quizzes)
+        .set(updateData)
+        .where(eq(quizzes.id, quizId))
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        quiz: updatedQuiz[0],
+        message: 'Quiz updated successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Quiz update error:', error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid quiz data',
+          details: error.errors
+        });
+      }
+      res.status(500).json({
+        success: false,
+        error: 'Failed to update quiz'
+      });
+    }
+  });
+
+  // Delete a quiz
+  app.delete('/api/course-creator/quizzes/:quizId', requireAuth, async (req, res) => {
+    try {
+      // Validate quiz ID parameter
+      const quizIdSchema = z.coerce.number().int().positive();
+      let quizId: number;
+      try {
+        quizId = quizIdSchema.parse(req.params.quizId);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid quiz ID'
+        });
+      }
+
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check quiz exists and verify ownership
+      const quizWithCourse = await db
+        .select({
+          quiz: quizzes,
+          courseAuthorId: courses.createdBy
+        })
+        .from(quizzes)
+        .innerJoin(lessons, eq(quizzes.lessonId, lessons.id))
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(quizzes.id, quizId))
+        .limit(1);
+
+      if (quizWithCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Quiz not found'
+        });
+      }
+
+      // Check ownership - user must be the course author
+      if (quizWithCourse[0].courseAuthorId !== user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Not authorized to delete this quiz'
+        });
+      }
+
+      await db
+        .delete(quizzes)
+        .where(eq(quizzes.id, quizId));
+
+      res.json({ success: true,
+        success: true,
+        message: 'Quiz deleted successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Quiz deletion error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to delete quiz'
+      });
+    }
+  });
+
+  // Get a specific quiz for editing
+  app.get('/api/course-creator/quizzes/:quizId', requireAuth, async (req, res) => {
+    try {
+      // Validate quiz ID parameter
+      const quizIdSchema = z.coerce.number().int().positive();
+      let quizId: number;
+      try {
+        quizId = quizIdSchema.parse(req.params.quizId);
+      } catch (error: any) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid quiz ID'
+        });
+      }
+
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+
+      // Check quiz exists and verify ownership
+      const quizWithCourse = await db
+        .select({
+          quiz: quizzes,
+          courseAuthorId: courses.createdBy
+        })
+        .from(quizzes)
+        .innerJoin(lessons, eq(quizzes.lessonId, lessons.id))
+        .innerJoin(modules, eq(lessons.moduleId, modules.id))
+        .innerJoin(courses, eq(modules.courseId, courses.id))
+        .where(eq(quizzes.id, quizId))
+        .limit(1);
+
+      if (quizWithCourse.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Quiz not found'
+        });
+      }
+
+      // Check ownership - user must be the course author
+      if (quizWithCourse[0].courseAuthorId !== user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Not authorized to view this quiz'
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        quiz: quizWithCourse[0].quiz
+      });
+
+    } catch (error: any) {
+      console.error('Quiz fetch error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch quiz'
+      });
+    }
+  });
+
+  // Get published courses for students
+  app.get('/api/course-creator/public-courses', async (req, res) => {
+    try {
+      // First get courses without joins to avoid orderSelectedFields issues
+      const coursesData = await db
+        .select({
+          id: courses.id,
+          title: courses.title,
+          description: courses.description,
+          categoryId: courses.categoryId,
+          thumbnailUrl: courses.thumbnailUrl,
+          price: courses.price,
+          difficulty: courses.difficulty,
+          duration: courses.duration,
+          avgRating: courses.avgRating,
+          totalReviews: courses.totalReviews,
+          totalEnrollments: courses.totalEnrollments,
+          tags: courses.tags,
+          createdBy: courses.createdBy,
+          createdAt: courses.createdAt
+        })
+        .from(courses)
+        .where(eq(courses.isActive, true))
+        .orderBy(desc(courses.createdAt));
+
+      // Get author names and category names separately to avoid join issues
+      const enrichedCourses = await Promise.all(
+        coursesData.map(async (course) => {
+          let authorName = null;
+          let categoryName = null;
+          
+          try {
+            if (course.createdBy) {
+              const authorProfile = await db
+                .select({ name: profiles.name })
+                .from(profiles)
+                .where(eq(profiles.userId, course.createdBy))
+                .limit(1);
+              
+              if (authorProfile.length > 0) {
+                authorName = authorProfile[0].name;
+              }
+            }
+          } catch (error: any) {
+            console.error('Error fetching author name for course:', course.id, error);
+          }
+          
+          try {
+            if (course.categoryId) {
+              const category = await db
+                .select({ name: courseCategories.name })
+                .from(courseCategories)

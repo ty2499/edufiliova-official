@@ -17095,7 +17095,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ============================================
 
   // Create a new subject
-  app.post("/api/subjects", async (req, res) => {
+  app.post("/api/subjects", requireAuth, async (req, res) => {
     try {
       const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
       

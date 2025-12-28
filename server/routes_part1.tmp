@@ -1,0 +1,51 @@
+    }
+  });
+
+  // ============================================
+  // SUBJECT-BASED EDUCATION API (Primary/Secondary)
+  // ============================================
+
+  // Get subjects filtered by grade level and system (for primary/secondary students)
+  app.get("/api/subjects", async (req, res) => {
+    try {
+      const { gradeLevel, gradeSystem, creatorOnly } = req.query;
+      const user = req.user as any;
+      const isAdmin = user?.role === "admin";
+      
+      let conditions: any[] = [eq(subjects.isActive, true)];
+
+      if (creatorOnly === "true" && req.isAuthenticated()) {
+        conditions = [eq(subjects.createdBy, user.id)];
+      } else if (isAdmin && creatorOnly === "false") {
+        conditions = [];
+      } else {
+        if (gradeLevel) {
+          const parsedGrade = parseInt(gradeLevel as string);
+          conditions.push(eq(subjects.gradeLevel, parsedGrade));
+        }
+        
+        if (gradeSystem && gradeSystem !== "undefined" && gradeSystem !== "null") {
+          conditions.push(or(
+            eq(subjects.gradeSystem, gradeSystem as string),
+            eq(subjects.gradeSystem, "all")
+          ));
+        } else {
+          conditions.push(eq(subjects.gradeSystem, "all"));
+        }
+      }
+      
+      const subjectsData = await db
+        .select()
+        .from(subjects)
+        .where(conditions.length > 0 ? and(...conditions) : undefined)
+        .orderBy(subjects.name);
+      
+      res.json({ success: true, data: subjectsData });
+    } catch (error: any) {
+      console.error("Subjects fetch error:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch subjects" });
+    }
+  });
+
+  // Get lessons for a specific chapter
+  app.get("/api/chapters/:chapterId/lessons", async (req, res) => {

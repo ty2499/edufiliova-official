@@ -1,0 +1,5000 @@
+import path from 'path';
+import fs from 'fs';
+import type { Express, Response, Request } from "express";
+import express from "express";
+import { createServer, type Server } from "http";
+import { WebSocketServer, WebSocket } from "ws";
+import bcrypt from "bcrypt";
+import { cache, cachedQuery, CacheKeys, CacheTTL, invalidateUserMessaging, invalidateThread, invalidateGroupMessages } from "./cache.js";
+import { Vonage } from '@vonage/server-sdk';
+import { WhatsAppText } from '@vonage/messages';
+import { sendVerificationCode as sendWhatsAppOTP, isWhatsAppConfigured } from './whatsapp-service.js';
+import nodemailer from 'nodemailer';
+import multer from "multer";
+import { v4 as uuidv4 } from "uuid";
+import { upload, getFileType, getMimeTypeFromFileType, validateFile, type FileMetadata, FILE_CONFIGS } from "./upload.js";
+import { z } from "zod";
+import { cloudinaryStorage } from "./cloudinary-storage.js";
+
+// Helper function to get file extension
+const getFileExtension = (fileName: string): string => {
+  const ext = fileName.split('.').pop()?.toLowerCase();
+  return ext || 'txt';
+};
+import { db } from "./db.js";
+import { requireAuth, requireAdmin, requireAdminOrModerator, requireSupportStaff, optionalAuth, type AuthenticatedRequest } from "./middleware/auth.js";
+import { validateApiKey } from "./middleware/api-key.js";
+import { storage } from "./storage.js";
+import { countryCodes } from '../shared/countryCodes.js';
+import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal.js";
+import { getPrimaryPaymentClient, getStripeInstance, getStripePublishableKey, invalidatePaymentGatewayCache } from "./utils/payment-gateways.js";
+import { seedAPIKeys } from "./seed-api-keys.js";
+import dodopayRoutes from "./dodopay-routes.js";
+import vodapayRoutes from "./vodapay-routes.js";
+import ecocashRoutes from "./routes/ecocash-routes.js";
+import { clearSettingsCache } from "./utils/settings.js";
+import { generateCertificateWithCertifier, generateVerificationCode } from "./utils/certifier-certificate-generator.js";
+import { 
+  users, 
+  profiles, 
+  userRoles,
+  verificationCodes,
+  passwordResetTokens,
+  countries,
+  gradeSystems,
+  userLoginSessions,
+  userPrivacySettings,
+  userNotificationPreferences,
+  userOtherSettings,
+  systemSettings,
+  paymentGateways,
+  paymentMethods,
+  notifications,
+  teacherApplications,
+  freelancerApplications,
+  studentProgress,
+  lessonProgress,
+  tasks,
+  courses,
+  courseCategories,
+  modules,
+  lessons,
+  lessonMedia,
+  lessonContentBlocks,
+  quizzes,
+  certificates,
+  certificatePurchases,
+  lessonAccessPermissions,
+  whatsappPaymentIntents,
+  topics,
+  teacherAvailability,
+  appointments,
+  scheduleTemplates,
+  courseEnrollments,
+  coursePurchases,
+  studyNotes,
+  messages,
+  chatThreads,
+  chatParticipants,
+  supportAgents,
+  supportChatSessions,
+  helpChatMessages,
+  helpChatSettings,
+  quickResponses,
+  insertChatThreadSchema,
+  insertChatParticipantSchema,
+  insertMessageSchema,
+  insertSupportAgentSchema,
+  insertHelpChatSettingSchema,
+  insertQuickResponseSchema,
+  insertSupportChatSessionSchema,
+  insertCourseSchema,
+  insertModuleSchema,
+  insertLessonSchema,
+  insertLessonMediaSchema,
+  insertQuizSchema,
+  friendships,
+  groupMemberships,
+  premiumMessages,
+  communityGroups,
+  communityGroupMembers,
+  communityPosts,
+  communityReplies,
+  communityReactions,
+  pricingPlans,
+  userSubscriptions,
+  payments,
+  curricula,
+  countryCurricula,
+  teacherStudentAssignments,
+  announcements,
+  announcementReads,
+  moderationLogs,
+  blogPosts,
+  subjects,
+  subjectChapters,
+  subjectLessons,
+  subjectExercises,
+  subjectProgress,
+  dailyQuestions,
+  dailyQuestionProgress,
+  dailyProgressSummary,
+  transactions,
+  payoutAccounts,
+  userBalances,
+  banks,
+  insertPayoutAccountSchema,
+  insertTransactionSchema,
+  insertPricingPlanSchema,
+  assignments,
+  assignmentSubmissions,
+  assignmentComments,
+  courseReviews,
+  projects,
+  projectMilestones,
+  downloads,
+  insertProjectSchema,
+  insertProjectMilestoneSchema,
+  shopCategories,
+  insertShopCategorySchema,
+  categoryFilters,
+  categoryFilterOptions,
+  insertCategoryFilterSchema,
+  insertCategoryFilterOptionSchema,
+  categoryAccessApprovals,
+  orders,
+  orderItems,
+  products,
+  heroSections,
+  insertHeroSectionSchema,
+  insertProfileSchema,
+  works,
+  workMedia,
+  shopCustomers,
+  shopPurchases,
+  shopAds,
+  shopMemberships,
+  shopTransactions,
+  shopSupportTickets,
+  shopMembershipPlans,
+  manualPlanAssignments,
+  insertShopMembershipPlanSchema,
+  freelancerPricingPlans,
+  insertFreelancerPricingPlanSchema,
+  adsBanners,
+  workLikes,
+  workComments,
+  courseComments,
+  courseCommentReplies,
+  courseCommentLikes,
+  courseCommentReplyLikes,
+  coupons,
+  couponUsages,
+  workViews,
+  giftVoucherPurchases,
+  shopVouchers,
+  emailAccounts
+} from "../shared/schema.ts";
+import { eq, desc, and, or, sql, count, avg, sum, gt, lt, like, ilike, inArray, asc, isNull, isNotNull, ne, gte, lte } from "drizzle-orm";
+import { alias } from "drizzle-orm/pg-core";
+import Stripe from "stripe";
+import { seedCountries } from "./seed-countries.js";
+import { seedGradeSystems } from "./seed-grade-systems.js";
+import { seedCurricula } from "./seed-curricula.js";
+import { seedMembershipPlans } from "./seed-membership-plans.js";
+import { seedEnglishGrade3Zimbabwe } from "./seed-english-grade3-zimbabwe.js";
+import { seedMathematicsGrade3Zimbabwe } from "./seed-mathematics-grade3-zimbabwe.js";
+import { seedAIMLCourse } from "./seed-ai-ml-course.js";
+import { seedPromptEngineeringCourse } from "./seed-prompt-engineering-course.js";
+import { seedEmailAccounts } from "./seed-email-accounts.js";
+import { ensureAdminUser } from "./ensure-admin-user.js";
+import { WORLD_COUNTRIES } from "./world-countries-data.js";
+import communityRouter from "./community-routes.js";
+import certificatePaymentRoutes from "./certificate-payment-routes.js";
+import * as adsRoutes from "./routes/ads.js";
+import * as bannerPaymentRoutes from "./routes/banner-payment.js";
+import * as heroSectionRoutes from "./routes/hero-sections.ts";
+import * as freelancerProjectRoutes from "./routes/freelancer-projects.js";
+import { requireFreelancerRole } from "./routes/freelancer-projects.js";
+import showcaseRoutes from "./routes/showcase.js";
+import productsRoutes from "./routes/products.js";
+import ordersRoutes from "./routes/orders.js";
+import cartRoutes from "./routes/cart.js";
+import storageStatusRoutes from "./routes/storage-status.js";
+import portfolioRoutes from "./routes/portfolio.js";
+import adminCouponsRoutes from "./routes/admin-coupons.js";
+import adminApiKeysRoutes from "./routes/admin-api-keys.js";
+import manualPlanAssignmentRoutes from "./routes/manual-plan-assignment.js";
+import certificateRoutes from "./routes/certificate-routes.js";
+import adminCourseRoutes from "./routes/admin-course-routes.js";
+import profileBoostRoutes from "./routes/profile-boost.js";
+import workBoostRoutes from "./routes/work-boost.js";
+import contactSubmissionsRoutes from "./routes/contact-submissions";
+import creatorPayoutsRouter from "./routes/creator-payouts.js";
+import adminTransactionsRoutes from "./routes/admin-transactions.js";
+import { registerFinancialStatsRoutes } from "./routes/financial-stats.js";
+import { registerLessonContentBlockRoutes } from "./routes/lesson-content-blocks.js";
+import { trackProductDownload } from "./services/earnings.js";
+import { generatePythonLessonContent } from "./content-generator.js";
+import { regenerateJobReadinessImages } from "./regenerate-job-readiness-images.js";
+// @ts-ignore - PayPal SDK types
+import paypal from "@paypal/payouts-sdk";
+
+// PayPal Configuration with proper types
+const paypalClient = (): any => {
+  const environment = process.env.PAYPAL_ENVIRONMENT === 'production' 
+    ? new (paypal as any).core.LiveEnvironment(
+        process.env.PAYPAL_CLIENT_ID!, 
+        process.env.PAYPAL_CLIENT_SECRET!
+      )
+    : new (paypal as any).core.SandboxEnvironment(
+        process.env.PAYPAL_CLIENT_ID || 'test_client_id', 
+        process.env.PAYPAL_CLIENT_SECRET || 'test_client_secret'
+      );
+
+  return new (paypal as any).core.PayPalHttpClient(environment);
+};
+
+// File upload configuration is imported from upload.ts
+
+// WebSocket clients management
+const wsClients = new Map<string, WebSocket>();
+const adminClients = new Set<WebSocket>();
+
+// Rate limiting for community features
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+
+const createRateLimit = (windowMs: number, maxRequests: number) => {
+  return (req: Request, res: Response, next: express.NextFunction) => {
+    const key = `${req.ip || 'unknown'}_${req.headers['x-session-id'] || 'no-session'}`;
+    const now = Date.now();
+    
+    // Clean up expired entries
+    for (const [k, v] of rateLimitStore.entries()) {
+      if (now > v.resetTime) {
+        rateLimitStore.delete(k);
+      }
+    }
+    
+    let bucket = rateLimitStore.get(key);
+    if (!bucket || now > bucket.resetTime) {
+      bucket = { count: 0, resetTime: now + windowMs };
+      rateLimitStore.set(key, bucket);
+    }
+    
+    if (bucket.count >= maxRequests) {
+      const remainingTime = Math.ceil((bucket.resetTime - now) / 1000);
+      return res.status(429).json({
+        success: false,
+        error: 'Rate limit exceeded',
+        retryAfter: remainingTime
+      });
+    }
+    
+    bucket.count++;
+    next();
+  };
+};
+
+// Helper function to map country names to codes
+function getCountryCodeFromName(countryName: string): string {
+  const country = countryCodes.find(c => c.name === countryName);
+  return country ? country.code : 'US';
+}
+
+// Helper function to convert userId to UUID (handles both text ID and UUID formats)
+async function getUserUuidByTextId(userIdOrUuid: string): Promise<string | null> {
+  try {
+    // Check if it's already a UUID format
+    if (userIdOrUuid && userIdOrUuid.length === 36 && userIdOrUuid.includes('-')) {
+      // It's already a UUID, return as-is
+      return userIdOrUuid;
+    }
+    
+    // It's a text ID, convert to UUID
+    const user = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(eq(users.userId, userIdOrUuid))
+      .limit(1);
+    
+    return user.length > 0 ? user[0].id : null;
+  } catch (error: any) {
+    console.error('Error converting userId to UUID:', error);
+    return null;
+  }
+}
+
+// Helper function to get text ID by profile UUID
+async function getTextIdByProfileUuid(profileUuid: string): Promise<string | null> {
+  try {
+    // Get the user ID (UUID) from the profile
+    const profile = await db
+      .select({ userId: profiles.userId })
+      .from(profiles)
+      .where(eq(profiles.id, profileUuid))
+      .limit(1);
+    
+    if (profile.length === 0) return null;
+    
+    // Get the text ID from users table
+    const user = await db
+      .select({ userId: users.userId })
+      .from(users)
+      .where(eq(users.id, profile[0].userId))
+      .limit(1);
+      
+    return user.length > 0 ? user[0].userId : null;
+  } catch (error: any) {
+    console.error('Error getting text ID by profile UUID:', error);
+    return null;
+  }
+}
+
+// Helper function to check if user has active subscription
+async function hasActiveSubscription(userIdOrUuid: string): Promise<{ hasAccess: boolean; subscriptionTier?: string; planExpiry?: Date; plan?: string }> {
+  try {
+    // Convert text ID to UUID if needed
+    const userUuid = await getUserUuidByTextId(userIdOrUuid);
+    if (!userUuid) {
+      return { hasAccess: false };
+    }
+
+    const profile = await db
+      .select({
+        subscriptionTier: profiles.subscriptionTier,
+        legacyPlan: profiles.legacyPlan,
+        planExpiry: profiles.planExpiry,
+        gradeLevel: profiles.gradeLevel,
+        stripeSubscriptionId: profiles.stripeSubscriptionId
+      })
+      .from(profiles)
+      .where(eq(profiles.userId, userUuid))
+      .limit(1);
+
+    if (profile.length === 0) {
+      return { hasAccess: false };
+    }
+
+    const userProfile = profile[0];
+    
+    // New grade-based subscription system with proper expiry validation
+    if (userProfile.subscriptionTier) {
+      // CRITICAL: Must check planExpiry for grade-based subscriptions
+      if (userProfile.planExpiry) {
+        const expiry = new Date(userProfile.planExpiry);
+        const now = new Date();
+        
+        if (expiry <= now) {
+          // Subscription expired - no access
+          return { 
+            hasAccess: false, 
+            subscriptionTier: userProfile.subscriptionTier,
+            planExpiry: userProfile.planExpiry,
+            plan: userProfile.subscriptionTier 
+          };
+        }
+        
+        // Valid subscription with future expiry
+        return { 
+          hasAccess: true, 
+          subscriptionTier: userProfile.subscriptionTier,
+          planExpiry: userProfile.planExpiry,
+          plan: userProfile.subscriptionTier 
+        };
+      } else {
+        // No expiry set means subscription was never properly activated
+        return { 
+          hasAccess: false, 
+          subscriptionTier: userProfile.subscriptionTier,
+          planExpiry: undefined,
+          plan: userProfile.subscriptionTier 
+        };
+      }
+    }
+    
+    // Legacy support: Check old plan system for backward compatibility
+    if (userProfile.legacyPlan && userProfile.legacyPlan !== 'free' && userProfile.legacyPlan !== '') {
+      // Check for indefinite access: if user has a premium plan but planExpiry is null, grant access
+      if (!userProfile.planExpiry) {
+        const hasPremiumPlan = userProfile.legacyPlan.includes('premium') || userProfile.legacyPlan.includes('pro');
+        
+        if (hasPremiumPlan) {
+          return { 
+            hasAccess: true, 
+            subscriptionTier: userProfile.subscriptionTier || 'legacy_premium',
+            planExpiry: undefined,
+            plan: userProfile.legacyPlan 
+          };
+        }
+        
+        // For non-premium plans with null expiry, deny access
+        return { 
+          hasAccess: false, 
+          subscriptionTier: userProfile.subscriptionTier || 'free',
+          planExpiry: userProfile.planExpiry || undefined,
+          plan: userProfile.legacyPlan 
+        };
+      }
+
+      // Check if legacy subscription has expired
+      if (userProfile.planExpiry && new Date() > userProfile.planExpiry) {
+        return { 
+          hasAccess: false, 
+          subscriptionTier: userProfile.subscriptionTier || 'free',
+          planExpiry: userProfile.planExpiry || undefined,
+          plan: userProfile.legacyPlan 
+        };
+      }
+
+      // User has active legacy subscription
+      return { 
+        hasAccess: true, 
+        subscriptionTier: userProfile.subscriptionTier || 'legacy_premium',
+        planExpiry: userProfile.planExpiry || undefined,
+        plan: userProfile.legacyPlan 
+      };
+    }
+
+    // No subscription found
+    return { 
+      hasAccess: false, 
+      subscriptionTier: 'free',
+      planExpiry: undefined,
+      plan: 'free' 
+    };
+
+  } catch (error: any) {
+    console.error('Error checking subscription status:', error);
+    return { hasAccess: false };
+  }
+}
+
+// Note: Stripe is now initialized dynamically from admin settings
+// Use getStripeInstance() from payment-gateways.ts instead of this global instance
+
+// Initialize Vonage (SMS & WhatsApp)
+
+const vonage = new Vonage({
+  apiKey: process.env.VONAGE_API_KEY?.trim() || '',
+  apiSecret: process.env.VONAGE_API_SECRET?.trim() || ''
+});
+
+// Create email transporter for EduFiliova professional email system
+// Uses database-stored credentials for each email account
+const createEmailTransporter = async (senderEmail: string) => {
+  // Fetch email account credentials from database
+  const emailAccount = await db
+    .select()
+    .from(emailAccounts)
+    .where(eq(emailAccounts.email, senderEmail))
+    .limit(1);
+  
+  if (emailAccount.length > 0 && emailAccount[0].smtpPassword) {
+    // Use database credentials
+    console.log(`📧 Using database credentials for ${senderEmail}`);
+    return nodemailer.createTransport({
+      host: emailAccount[0].smtpHost || 'mail.spacemail.com',
+      port: emailAccount[0].smtpPort || 465,
+      secure: emailAccount[0].smtpSecure ?? true,
+      auth: {
+        user: emailAccount[0].smtpUsername || senderEmail,
+        pass: emailAccount[0].smtpPassword
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+  }
+  
+  // Fallback to environment variable if no database entry
+  console.log(`📧 Using fallback SMTP_PASSWORD for ${senderEmail}`);
+  return nodemailer.createTransport({
+    host: 'mail.spacemail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: senderEmail,
+      pass: process.env.SMTP_PASSWORD || ''
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
+};
+
+// Email templates with modern branding
+export const getEmailTemplate = (type: 'verification' | 'welcome' | 'password_reset' | 'teacher-verification' | 'password_reset_whatsapp' | 'password_changed_confirmation_whatsapp' | 'phone_linking_verification', data: any) => {
+  const whiteLogoUrl = process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+  const baseUrl = process.env.REPLIT_DEV_DOMAIN 
+    ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+    : process.env.BASE_URL || process.env.APP_URL || 'https://edufiliova.com';
+  const currentYear = new Date().getFullYear();
+
+  const cleanReplace = (html: string, key: string, value: any) => {
+    const val = String(value);
+    const fuzzyRegex = new RegExp('\\{\\{[^{}]*?' + key + '[^{}]*?\\}\\}', 'g');
+    html = html.replace(fuzzyRegex, val);
+    const fuzzySingleRegex = new RegExp('\\{[^{}]*?' + key + '[^{}]*?\\}', 'g');
+    html = html.replace(fuzzySingleRegex, val);
+    const fallbackRegex = new RegExp('<span[^>]*>' + key + '<\\/span>', 'g');
+    return html.replace(fallbackRegex, val);
+  };
+  
+  const baseStyle = `
+    <style>
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+        margin: 0; 
+        padding: 0; 
+        background-color: #f5f7fa; 
+      }
+      .container { 
+        max-width: 600px; 
+        margin: 0 auto; 
+        background-color: #ffffff; 
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+      }
+      .header { 
+        background-color: #0C332C; 
+        padding: 30px 40px; 
+        text-align: center; 
+      }
+      .logo { 
+        max-width: 200px; 
+        height: auto; 
+      }
+      .content { 
+        padding: 40px; 
+      }
+      .title { 
+        color: #1a1a1a; 
+        font-size: 26px; 
+        font-weight: 700; 
+        margin: 0 0 20px 0; 
+        line-height: 1.3; 
+      }
+      .message { 
+        color: #4a5568; 
+        font-size: 16px; 
+        line-height: 1.6; 
+        margin: 0 0 25px 0; 
+      }
+      .verification-code-box {
+        background: linear-gradient(135deg, #2d5ddd 0%, #1e4ac9 100%);
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        margin: 30px 0;
+      }
+      .verification-code {
+        font-size: 42px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 10px;
+        font-family: 'Courier New', monospace;
+        margin: 10px 0;
+      }
+      .code-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .button { 
+        display: inline-block; 
+        background-color: #0C332C; 
+        color: #ffffff !important; 
+        padding: 14px 32px; 
+        text-decoration: none; 
+        border-radius: 8px; 
+        font-weight: 600; 
+        font-size: 15px; 
+        margin: 20px 0; 
+      }
+      .alert-warning { 
+        background-color: #fff4ed; 
+        border-left: 4px solid #0C332C; 
+        padding: 15px 20px; 
+        border-radius: 6px; 
+        margin: 20px 0; 
+      }
+      .footer { 
+        background: #0C332C; 
+        padding: 40px; 
+        color: #ffffff; 
+      }
+      .footer-contact { 
+        text-align: center; 
+        margin: 25px 0; 
+      }
+      .footer-links { 
+        text-align: center; 
+        margin: 25px 0; 
+        padding-top: 25px; 
+        border-top: 1px solid rgba(255,255,255,0.2); 
+      }
+      .footer-link { 
+        color: #ffffff !important; 
+        text-decoration: none; 
+        font-size: 13px; 
+        margin: 0 12px; 
+        font-weight: 500; 
+      }
+      .footer-bottom { 
+        text-align: center; 
+        padding-top: 20px; 
+        margin-top: 20px; 
+        border-top: 1px solid rgba(255,255,255,0.2); 
+        color: rgba(255,255,255,0.7); 
+        font-size: 12px; 
+        line-height: 1.6; 
+      }
+    </style>
+  `;
+
+  const footer = `
+    <div class="footer">
+      <div class="footer-contact">
+        <p style="color: #ffffff; font-size: 16px; margin: 0 0 20px 0; text-align: center;">
+          You need help? Contact us on <a href="mailto:support@edufiliova.com" style="color: #ffffff; text-decoration: underline;">support@edufiliova.com</a>
+        </p>
+      </div>
+      
+      <div class="footer-links">
+        <a href="${baseUrl}/help" class="footer-link" style="color: #ffffff;">Help Center</a>
+        <a href="${baseUrl}/privacy-policy" class="footer-link" style="color: #ffffff;">Privacy Policy</a>
+        <a href="${baseUrl}/terms" class="footer-link" style="color: #ffffff;">Terms of Service</a>
+        <a href="${baseUrl}/refund-policy" class="footer-link" style="color: #ffffff;">Refund Policy</a>
+        <a href="${baseUrl}/contact" class="footer-link" style="color: #ffffff;">Contact Us</a>
+      </div>
+      
+      <div class="footer-bottom">
+        © ${currentYear} EduFiliova. All rights reserved.<br>
+        Creativity, Learning, and Growth in One Place
+      </div>
+    </div>
+  `;
+
+  switch (type) {
+    case 'verification':
+      return `
+        <!DOCTYPE html>
+        <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">${baseStyle}</head><body>
+          <div class="container">
+            <div class="header">
+              <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
+            </div>
+            <div class="content">
+              <h2 class="title">Verify Your Account</h2>
+              <p class="message">
+                ${data.name ? `Hi ${data.name},<br><br>` : ''}Welcome to EduFiliova! Please use the verification code below to complete your registration:
+              </p>
+              
+              <div class="verification-code-box">
+                <div class="code-label">YOUR VERIFICATION CODE</div>
+                <div class="verification-code">${data.code}</div>
+                <div style="color: rgba(255, 255, 255, 0.8); font-size: 12px; margin-top: 10px;">
+                  Code expires in 15 minutes
+                </div>
+              </div>
+              
+              <p class="message">
+                Please enter this code on the verification page to complete your signup and create your account.
+              </p>
+
+              <div class="alert-warning">
+                <div style="color: #92400e; font-size: 13px;">
+                  <strong>Didn't request this?</strong> If you didn't try to sign up for EduFiliova, you can safely ignore this email.
+                </div>
+              </div>
+              
+              <p class="message" style="font-size: 14px;">
+                Need help? Contact our support team at support@edufiliova.com
+              </p>
+            </div>
+            ${footer}
+          </div>
+        </body></html>
+      `;
+
+    case 'welcome':
+      return `
+        <!DOCTYPE html>
+        <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">${baseStyle}</head><body>
+          <div class="container">
+            <div class="header">
+              <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
+            </div>
+            <div class="content">
+              <h2 class="title">Welcome to EduFiliova!</h2>
+              <p class="message">
+                Congratulations, <strong>${data.name}</strong>! Your account has been successfully verified and you're now part of our global learning community.
+              </p>
+              
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="${data.loginUrl}" class="button">Start Learning</a>
+              </div>
+              
+              <div style="background-color: #f9fafb; border-radius: 10px; padding: 25px; margin: 25px 0;">
+                <h3 style="color: #1f2937; margin: 0 0 15px 0;">What's Next?</h3>
+                <ul style="color: #4b5563; line-height: 2; margin: 0; padding-left: 20px;">
+                  <li>Explore personalized learning content</li>
+                  <li>Access premium educational resources</li>
+                  <li>Connect with teachers and tutors</li>
+                  <li>Track your learning progress</li>
+                </ul>
+              </div>
+              
+              <p class="message" style="font-size: 14px;">
+                Need help getting started? Contact our support team at support@edufiliova.com
+              </p>
+            </div>
+            ${footer}
+          </div>
+        </body></html>
+      `;
+
+    case 'password_reset':
+      return `
+        <!DOCTYPE html>
+        <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">${baseStyle}</head><body>
+          <div class="container">
+            <div class="header">
+              <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
+            </div>
+            <div class="content">
+              <h2 class="title">Reset Your Password</h2>
+              <p class="message">
+                We received a request to reset your password. Click the button below to create a new password:
+              </p>
+              
+              <div style="text-align: center; margin: 30px 0;">
+                <a href="${data.resetUrl}" class="button">Reset Password</a>
+              </div>
+              
+              <div class="alert-warning">
+                <div style="color: #92400e; font-size: 13px;">
+                  <strong>Security Notice:</strong> This link expires in 1 hour. If you didn't request this reset, please ignore this email.
+                </div>
+              </div>
+              
+              <p class="message" style="font-size: 14px;">
+                For security, this link can only be used once.
+              </p>
+            </div>
+            ${footer}
+          </div>
+        </body></html>
+      `;
+
+                                case 'password_reset_whatsapp':
+      const imageAssets = [
+        'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
+        '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
+        '83faf7f361d9ba8dfdc904427b5b6423_1766506747364.png',
+        '3d94f798ad2bd582f8c3afe175798088_1766506747360.png',
+        'afa2a8b912b8da2c69e49d9de4a30768_1766506747368.png',
+        '9f7291948d8486bdd26690d0c32796e0_1766506747363.png'
+      ];
+      
+      let rendered = data.htmlContent;
+      
+      // Ultra-aggressive placeholder cleanup
+      
+
+      rendered = cleanReplace(rendered, 'fullName', data.fullName || 'User');
+      rendered = cleanReplace(rendered, 'code', data.code);
+      rendered = cleanReplace(rendered, 'expiresIn', data.expiresIn || '10');
+      
+      return {
+        html: rendered,
+        attachments: imageAssets.map(img => ({
+          filename: img,
+          path: path.join(process.cwd(), 'attached_assets', img),
+          cid: img.split('_')[0] + '.png'
+        }))
+      };
+
+        case 'password_changed_confirmation_whatsapp':
+      const confirmImageAssets = [
+        'db561a55b2cf0bc6e877bb934b39b700_1766506747370.png',
+        '41506b29d7f0bbde9fcb0d4afb720c70_1766506747366.png',
+        '83faf7f361d9ba8dfdc904427b5b6423_1766506747364.png',
+        '230f9575641a060a9b3772a9085c3203_1766745461892.png',
+        '3d94f798ad2bd582f8c3afe175798088_1766506747360.png',
+        '9f7291948d8486bdd26690d0c32796e0_1766506747363.png'
+      ];
+      
+      let confirmRendered = data.htmlContent;
+      // Handle dynamics
+      
+
+      confirmRendered = cleanReplace(confirmRendered, 'fullName', data.fullName || 'User');
+      
+      return {
+        html: confirmRendered,
+        attachments: confirmImageAssets.map(img => ({
+          filename: img,
+          path: path.join(process.cwd(), 'attached_assets', img),
+          cid: img.split('_')[0] + '.png'
+        }))
+      };
+
+    case 'teacher-verification':
+      return `
+        <!DOCTYPE html>
+        <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">${baseStyle}</head><body>
+          <div class="container">
+            <div class="header">
+              <img src="${whiteLogoUrl}" alt="EduFiliova" class="logo" />
+            </div>
+            <div class="content">
+              <h2 class="title">Verify Your Teacher Application</h2>
+              <p class="message">
+                Hi ${data.fullName},<br><br>
+                Thank you for applying to teach with EduFiliova! Please use the verification code below to complete your application:
+              </p>
+              
+              <div class="verification-code-box">
+                <div class="code-label">YOUR VERIFICATION CODE</div>
+                <div class="verification-code">${data.code}</div>
+                <div style="color: rgba(255, 255, 255, 0.8); font-size: 12px; margin-top: 10px;">
+                  Code expires in 24 hours
+                </div>
+              </div>
+              
+              <p class="message">
+                Please enter this code on the verification page to continue with your teacher application.
+              </p>
+
+              <div class="alert-warning">
+                <div style="color: #92400e; font-size: 13px;">
+                  <strong>Didn't request this?</strong> If you didn't apply to become a teacher, you can safely ignore this email.
+                </div>
+              </div>
+              
+              <p class="message" style="font-size: 14px; margin-top: 24px;">
+                Once verified, your application will be reviewed by our team and you'll receive an update within 24-48 hours.
+              </p>
+            </div>
+            ${footer}
+          </div>
+        </body></html>
+      `;
+
+    default:
+      return '<p>Invalid email template</p>';
+  }
+};
+
+// Utility functions
+// Utility functions
+const generateVerificationCode = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
+
+const generateUserId = () => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < 10; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
+
+const sendSMS = async (phoneNumber: string, message: string) => {
+  try {
+    if (!process.env.VONAGE_API_KEY || !process.env.VONAGE_API_SECRET) {
+      console.log('⚠️ Vonage credentials not configured, skipping SMS');
+      return { success: false, error: 'SMS service not configured' };
+    }
+
+    const from = "EduFiliova";
+    const to = phoneNumber.startsWith('+') ? phoneNumber : `+${phoneNumber}`;
+    
+    const response = await vonage.sms.send({ to, from, text: message });
+    console.log('✅ SMS sent successfully:', response);
+    return { success: true, messageId: response.messages[0]?.['message-id'] };
+  } catch (error: any) {
+    console.error('❌ SMS sending failed:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+};
+
+export const sendEmail = async (to: string, subject: string, html: any, fromAddress = 'verify@edufiliova.com') => {
+  try {
+    const isObject = typeof html === 'object' && html !== null && !Array.isArray(html);
+    const actualHtml = isObject ? html.html : html;
+    const attachments = isObject ? (html.attachments || []) : [];
+
+    // Extract verification code safely
+    let verificationCode = 'Unknown';
+    if (typeof actualHtml === 'string') {
+      const codeMatch = actualHtml.match(/<div class="code">(\d+)<\/div>/) || 
+                        actualHtml.match(/{{code}}/) || 
+                        actualHtml.match(/>(\d{6})</);
+      verificationCode = codeMatch ? (codeMatch[1] || codeMatch[0]) : 'Unknown';
+    }
+    
+    console.log('📧 Subject:', subject);
+    
+    try {
+      const transporter = await createEmailTransporter(fromAddress);
+      const mailOptions = {
+        from: `"EduFiliova" <${fromAddress}>`,
+        to,
+        subject,
+        html: actualHtml,
+        attachments: attachments
+      };
+      const info = await transporter.sendMail(mailOptions);
+      return { success: true, messageId: info.messageId };
+    } catch (smtpError) {
+      console.error('❌ Email sending failed:', smtpError);
+      return { success: false, error: 'Failed to send email' };
+    }
+  } catch (error) {
+    console.error('❌ Email processing failed:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+};
+
+const isValidEmail = (email: string) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const isValidPhone = (phone: string) => {
+  const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+  return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
+};
+
+// Broadcasting functions for real-time updates
+const broadcastToAdmins = (message: any) => {
+  adminClients.forEach(ws => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify(message));
+    }
+  });
+};
+
+const broadcastToUser = (userId: string, message: any) => {
+  const userWs = wsClients.get(userId);
+  if (userWs && userWs.readyState === WebSocket.OPEN) {
+    userWs.send(JSON.stringify(message));
+  }
+};
+
+// Helper function to generate 14-character alphanumeric voucher code
+function generateVoucherCode(): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < 14; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+export async function registerRoutes(app: Express): Promise<Server> {
+  const server = createServer(app);
+
+  // Run all seeding operations in parallel and await completion before serving requests
+  // This ensures data integrity while still benefiting from parallel execution
+  const results = await Promise.allSettled([
+    seedCountries(),
+    seedGradeSystems(),
+    seedCurricula(),
+    seedMembershipPlans(),
+    seedAPIKeys(),
+    seedEnglishGrade3Zimbabwe(),
+    seedMathematicsGrade3Zimbabwe(),
+    seedEmailAccounts(),
+    // seedAIMLCourse(), // Disabled - user requested deletion
+    // seedPromptEngineeringCourse(), // Disabled - user requested deletion
+  ]);
+  
+  results.forEach((result, index) => {
+    const operations = ['countries', 'grade systems', 'curricula', 'membership plans', 'API keys', 'English Grade 3', 'Mathematics Grade 3', 'Email accounts'];
+    if (result.status === 'rejected') {
+      console.error(`❌ Failed to seed ${operations[index]}:`, result.reason);
+    }
+  });
+
+  // Clean up expired verification codes periodically
+  const cleanupExpiredCodes = async () => {
+    try {
+      const now = new Date();
+      const deleted = await db.delete(verificationCodes).where(
+        or(
+          lt(verificationCodes.expiresAt, now),
+          eq(verificationCodes.isUsed, true)
+        )
+      );
+      console.log('🧹 Cleaned up expired verification codes');
+    } catch (error: any) {
+      console.error('❌ Failed to cleanup verification codes:', error);
+    }
+  };
+
+  // Run cleanup every 30 minutes
+  setInterval(cleanupExpiredCodes, 30 * 60 * 1000);
+  
+  // Run initial cleanup
+  cleanupExpiredCodes();
+
+  // Mount community routes
+  app.use('/api/community', communityRouter);
+  // Mount certificate payment routes
+  app.use(certificatePaymentRoutes);
+
+  // Mount showcase portfolio routes
+  app.use('/api/showcase', showcaseRoutes);
+  
+  // Mount portfolio routes (Behance-like works system)
+  app.use('/api/portfolio', portfolioRoutes);
+
+  // Mount products shop routes
+  app.use('/api/products', productsRoutes);
+
+  // Mount cart management routes
+  app.use('/api/cart', cartRoutes);
+
+  // Mount orders management routes  
+  app.use('/api/orders', ordersRoutes);
+
+  // Mount admin coupon management routes
+  app.use('/api/certificates', certificateRoutes);
+  app.use('/api/admin/courses', requireAuth, requireAdmin, adminCourseRoutes);
+  app.use('/api/admin/coupons', adminCouponsRoutes);
+  app.use('/api/admin/api-keys', requireAuth, requireAdmin, adminApiKeysRoutes);
+  app.use('/api/admin/manual-plan-assignments', requireAuth, manualPlanAssignmentRoutes);
+  app.use('/api', contactSubmissionsRoutes);
+  app.use('/api/admin/profile-boost', requireAuth, requireAdmin, profileBoostRoutes);
+  // Mount creator payouts routes
+  app.use('/api/creator-payouts', creatorPayoutsRouter);
+  registerFinancialStatsRoutes(app);
+  registerLessonContentBlockRoutes(app, requireAuth);
+  app.use('/api', adminTransactionsRoutes);
+  app.use('/api/admin/storage', storageStatusRoutes);
+  app.use('/api/admin/work-boost', requireAuth, requireAdmin, workBoostRoutes);
+
+  // PayPal routes - Referenced from PayPal integration blueprint
+  app.get("/api/paypal/setup", async (req, res) => {
+    await loadPaypalDefault(req, res);
+  });
+
+  app.post("/api/paypal/order", async (req, res) => {
+    // Request body should contain: { intent, amount, currency }
+    await createPaypalOrder(req, res);
+  });
+
+  app.post("/api/paypal/order/:orderID/capture", async (req, res) => {
+  
+    await capturePaypalOrder(req, res);
+  });
+
+  // DoDo Pay routes
+  app.use("/api/dodopay", dodopayRoutes);
+
+  // VodaPay routes
+  app.use("/api/vodapay", vodapayRoutes);
+
+  // EcoCash routes (Zimbabwe only)
+  app.use("/api", ecocashRoutes);
+
+  // Advertisement routes - Full CRUD Management System
+  app.get('/api/ads/manage', requireAuth, adsRoutes.getManageAds);           // Get all ads (admin) or user's own ads
+  app.get('/api/ads/my-ads', requireAuth, adsRoutes.getMyAds);               // Get current user's ads
+  app.post('/api/ads/create', requireAuth, adsRoutes.createAd);              // Create ad (admin only - free)
+  app.put('/api/ads/:id', requireAuth, adsRoutes.updateAd);                  // Edit ad (admin or owner)
+  app.delete('/api/ads/:id', requireAuth, adsRoutes.deleteAd);               // Delete ad (admin or owner)
+  app.post('/api/ads/approve/:id', requireAuth, adsRoutes.approveAd);        // Approve ad (admin only)
+  app.post('/api/ads/reject/:id', requireAuth, adsRoutes.rejectAd);          // Reject ad (admin only)
+  app.get('/api/ads/active', adsRoutes.getActiveAds);                        // Get active ads for dashboard
+  app.post('/api/ads/impression', adsRoutes.trackImpression);                // Track impressions
+  app.post('/api/ads/click', adsRoutes.trackClick);                          // Track clicks
+  app.get('/api/ads/pricing-config', requireAuth, adsRoutes.getPricingConfig);    // Get pricing config (admin)
+  app.put('/api/ads/pricing-config/:id', requireAuth, adsRoutes.updatePricingConfig); // Update pricing (admin)
+  app.delete('/api/ads/pricing-config/:id', requireAuth, adsRoutes.deletePricingConfig); // Delete pricing (admin)
+  app.post('/api/ads/calculate-price', adsRoutes.calculatePrice);            // Calculate ad price
+
+  // Banner Payment Routes
+  app.post('/api/ads/banner/create-with-payment', requireAuth, bannerPaymentRoutes.createBannerWithPayment);
+  app.post('/api/ads/banner/confirm-payment', requireAuth, bannerPaymentRoutes.confirmBannerPayment);
+  app.post('/api/ads/banner/confirm-paypal-payment', bannerPaymentRoutes.confirmPayPalBannerPayment);
+  app.get('/api/ads/banner/payment-success', bannerPaymentRoutes.handlePaymentSuccess);
+  app.delete('/api/ads/banner/:bannerId', requireAuth, bannerPaymentRoutes.deleteBannerAd);
+  app.put('/api/ads/banner/:bannerId', requireAuth, bannerPaymentRoutes.updateBannerAd);
+
+  // Hero Sections Routes - Admin management and public display
+  app.get('/api/hero-sections/manage', requireAuth, heroSectionRoutes.getManageHeroSections);   // Get all hero sections (admin only)
+  app.get('/api/hero-sections/my-hero-sections', requireAuth, heroSectionRoutes.getMyHeroSections);  // Get current user's hero sections
+  app.post('/api/hero-sections/create', requireAuth, heroSectionRoutes.createHeroSection);     // Create hero section (admin only)
+  app.put('/api/hero-sections/:id', requireAuth, heroSectionRoutes.updateHeroSection);        // Update hero section
+  app.delete('/api/hero-sections/:id', requireAuth, heroSectionRoutes.deleteHeroSection);     // Delete hero section
+  app.put('/api/hero-sections/:id/status', requireAuth, heroSectionRoutes.updateHeroSectionStatus); // Update hero section status (admin only)
+  app.get('/api/hero-sections/active', heroSectionRoutes.getActiveHeroSections);              // Get active hero sections for display
+  app.post('/api/hero-sections/impression', heroSectionRoutes.trackImpression);               // Track hero section impressions
+  app.post('/api/hero-sections/click', heroSectionRoutes.trackClick);                         // Track hero section clicks
+
+  // Freelancer Projects Routes - Secured with role-based authorization
+  app.get('/api/freelancer/projects/my', requireFreelancerRole, freelancerProjectRoutes.getMyProjects);         // Get freelancer's projects
+  app.get('/api/freelancer/projects/:id', requireFreelancerRole, freelancerProjectRoutes.getProject);           // Get specific project details
+  app.post('/api/freelancer/projects', requireFreelancerRole, freelancerProjectRoutes.createProject);           // Create new project
+  app.put('/api/freelancer/projects/:id', requireFreelancerRole, freelancerProjectRoutes.updateProject);        // Update project
+  app.delete('/api/freelancer/projects/:id', requireFreelancerRole, freelancerProjectRoutes.deleteProject);     // Delete project
+  app.post('/api/freelancer/projects/:id/milestones', requireFreelancerRole, freelancerProjectRoutes.addMilestone); // Add milestone to project
+  
+  // Freelancer stats endpoint
+  app.get('/api/freelancer/stats', requireAuth, requireFreelancerRole, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const userId = req.user?.id;
+      if (!userId) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Calculate freelancer stats
+      const userProjects = await db
+        .select()
+        .from(projects)
+        .where(eq(projects.freelancerId, userId));
+
+      const completedProjects = userProjects.filter(p => p.status === 'completed');
+      const averageRating = completedProjects.length > 0 
+        ? completedProjects.reduce((sum, p) => sum + (p.feedbackRating ?? 0), 0) / completedProjects.length 
+        : 0;
+
+      const stats = {
+        averageRating: Math.round(averageRating * 10) / 10, // Round to 1 decimal
+        totalReviews: completedProjects.filter(p => (p.feedbackRating ?? 0) > 0).length
+      };
+
+      res.json(stats);
+    } catch (error: any) {
+      console.error('Error fetching freelancer stats:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch stats' });
+    }
+  });
+
+  // Profile Statistics Endpoints - views, likes, follows
+  
+  // Get all freelancers - supports filtering, sorting, and pagination
+  app.get('/api/freelancers', async (req: Request, res: Response) => {
+    try {
+      const { sort = 'rating', page = 1, limit = 12 } = req.query;
+
+      const freelancers = await db
+        .select()
+        .from(profiles)
+        .where(eq(profiles.role, 'freelancer'))
+        .orderBy(desc(profiles.createdAt))
+        .limit(Number(limit))
+        .offset((Number(page) - 1) * Number(limit));
+
+      // Get portfolio stats for each freelancer
+      const portfolioStats = await db
+        .select({
+          userId: works.userId,
+          worksCount: count(works.id),
+          totalLikes: sum(works.likesCount),
+        })
+        .from(works)
+        .where(inArray(works.userId, freelancers.map(f => f.userId)))
+        .groupBy(works.userId);
+
+      const portfolioStatsMap = portfolioStats.reduce((acc, stat) => {
+        acc[stat.userId] = {
+          worksCount: Number(stat.worksCount) || 0,
+          totalLikes: Number(stat.totalLikes) || 0,
+        };
+        return acc;
+      }, {} as Record<string, { worksCount: number; totalLikes: number }>);
+
+      const transformedFreelancers = freelancers.map(f => ({
+        id: f.userId,
+        name: f.name || '',
+        displayName: f.displayName || f.name || '',
+        avatarUrl: f.avatarUrl,
+        coverImageUrl: f.coverImageUrl,
+        bio: f.bio,
+        title: f.professionalTitle,
+        skills: f.skills || [],
+        hourlyRate: f.hourlyRate ? Number(f.hourlyRate) : null,
+        location: f.location,
+        rating: f.averageRating ? Number(f.averageRating) : 0,
+        reviewCount: f.clientReviews || 0,
+        completedProjects: f.completedProjects || 0,
+        isOnline: f.isOnline || false,
+        profileViews: f.profileViews || 0,
+        joinedAt: f.createdAt?.toISOString() || new Date().toISOString(),
+        verificationBadge: f.verificationBadge,
+        responseTime: f.responseTime,
+        workAvailability: f.workAvailability,
+        likesCount: (portfolioStatsMap[f.userId]?.totalLikes || 0) + (f.likesCount || 0),
+        worksShared: portfolioStatsMap[f.userId]?.worksCount || 0,
+      }));
+
+      res.json({ success: true,
+        success: true,
+        data: transformedFreelancers,
+        pagination: {
+          page: Number(page),
+          limit: Number(limit),
+          hasMore: freelancers.length === Number(limit)
+        }
+      });
+    } catch (error: any) {
+      console.error('Error fetching freelancers:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch freelancers' });
+    }
+  });
+  app.get('/api/freelancers/:id/stats', async (req: Request, res: Response) => {
+    try {
+      const freelancerId = req.params.id; // This is the user ID
+      const viewerUserId = (req as any).user?.id;
+      
+      // Look up the profile ID from the user ID
+      const profile = await db.select({ id: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.userId, freelancerId))
+        .limit(1);
+      
+      if (profile.length === 0) {
+        return res.status(404).json({ success: false, error: 'Profile not found' });
+      }
+      
+      const profileId = profile[0].id;
+      const stats = await storage.getProfileStats(profileId, viewerUserId);
+      res.json(stats);
+    } catch (error: any) {
+      console.error('Error fetching profile stats:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch profile stats' });
+    }
+  });
+
+  // Get freelancer profile
+  app.get('/api/freelancers/:id/profile', async (req: Request, res: Response) => {
+    try {
+      const freelancerId = req.params.id; // This is the user ID
+      
+      // Fetch the complete profile data
+      const profileData = await db
+        .select()
+        .from(profiles)
+        .where(eq(profiles.userId, freelancerId))
+        .limit(1);
+      
+      if (profileData.length === 0) {
+        return res.status(404).json({ success: false, error: 'Freelancer profile not found' });
+      }
+      
+      const profile = profileData[0];
+      
+      // Return the profile data in the format expected by the frontend
+      res.json({ success: true,
+        success: true,
+        data: {
+          id: profile.id,
+          userId: profile.userId,
+          name: profile.name || '',
+          displayName: profile.displayName || profile.name || '',
+          professionalTitle: profile.professionalTitle || '',
+          tagline: profile.tagline || '',
+          email: profile.email || '',
+          contactEmail: profile.contactEmail || profile.email || '',
+          avatarUrl: profile.avatarUrl,
+          coverImageUrl: profile.coverImageUrl,
+          bio: profile.bio,
+          professionalStatement: profile.professionalStatement,
+          location: profile.location,
+          country: profile.country,
+          hourlyRate: profile.hourlyRate,
+          experienceYears: profile.experienceYears,
+          skills: profile.skills,
+          languages: profile.languages,
+          education: profile.education,
+          certifications: profile.certifications,
+          portfolioUrl: profile.portfolioUrl,
+          websiteUrl: profile.websiteUrl,
+          linkedinUrl: profile.linkedinUrl,
+          twitterUrl: profile.twitterUrl,
+          instagramUrl: profile.instagramUrl,
+          behanceUrl: profile.behanceUrl,
+          dribbbleUrl: profile.dribbbleUrl,
+          githubUrl: profile.githubUrl,
+          availability: profile.availability,
+          role: profile.role,
+          approvalStatus: profile.approvalStatus,
+          qualifications: profile.qualifications,
+          experience: profile.experience,
+          availableHours: profile.availableHours,
+          verificationBadge: profile.verificationBadge,
+          verified: profile.verified,
+          verificationBadges: profile.verificationBadges,
+          profileViews: profile.profileViews,
+          likesCount: profile.likesCount,
+          followersCount: profile.followersCount,
+          completedProjects: profile.completedProjects,
+          reviewCount: profile.reviewCount || profile.clientReviews,
+          rating: profile.rating || profile.averageRating,
+          responseTime: profile.responseTime,
+          workAvailability: profile.workAvailability,
+          yearsOfExperience: profile.yearsOfExperience || profile.experienceYears,
+          phoneNumber: profile.phoneNumber,
+          socialLinks: profile.socialLinks,
+          joinedAt: profile.createdAt
+        }
+      });
+    } catch (error: any) {
+      console.error('Error fetching freelancer profile:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch freelancer profile' });
+    }
+  });
+
+  // Get freelancer portfolio works
+  app.get('/api/freelancers/:id/portfolio', async (req: Request, res: Response) => {
+    try {
+      const freelancerId = req.params.id; // This is the user ID
+      
+      // First get the profile to verify the freelancer exists
+      const profileData = await db
+        .select({ id: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.userId, freelancerId))
+        .limit(1);
+      
+      if (profileData.length === 0) {
+        return res.status(404).json({ success: false, error: 'Freelancer not found' });
+      }
+      
+      // Fetch portfolio works for this freelancer
+      const portfolioWorks = await db
+        .select()
+        .from(works)
+        .where(eq(works.userId, freelancerId))
+        .orderBy(desc(works.createdAt));
+      
+      // Fetch media for each work
+      const worksWithMedia = await Promise.all(
+        portfolioWorks.map(async (work) => {
+          const media = await db
+            .select()
+            .from(workMedia)
+            .where(eq(workMedia.workId, work.id))
+            .orderBy(asc(workMedia.sortOrder));
+          
+          return {
+            ...work,
+            media
+          };
+        })
+      );
+      
+      res.json({ success: true,
+        success: true,
+        data: worksWithMedia
+      });
+    } catch (error: any) {
+      console.error('Error fetching freelancer portfolio:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch portfolio' });
+    }
+  });
+
+  app.post('/api/freelancers/:id/views', async (req: Request, res: Response) => {
+    try {
+      const freelancerId = req.params.id; // This is the user ID
+      const viewerUserId = (req as any).user?.id;
+      const { visitorId, sessionId, ipHash, uaHash, referer } = req.body;
+      
+      // Look up the profile ID from the user ID
+      const profile = await db.select({ id: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.userId, freelancerId))
+        .limit(1);
+      
+      if (profile.length === 0) {
+        return res.status(404).json({ success: false, error: 'Profile not found' });
+      }
+      
+      const profileId = profile[0].id;
+      
+      const recorded = await storage.recordProfileView(profileId, {
+        viewerUserId,
+        visitorId,
+        sessionId,
+        ipHash,
+        uaHash,
+        referer
+      });
+      
+      res.json({ success: true, recorded });
+    } catch (error: any) {
+      console.error('Error recording profile view:', error);
+      res.status(500).json({ success: false, error: 'Failed to record view' });
+    }
+  });
+
+  app.post('/api/freelancers/:id/likes', requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const freelancerId = req.params.id; // This is the user ID
+      const userId = req.user?.id;
+      
+      if (!userId) {
+        return res.status(401).json({ success: false, error: 'Authentication required to like profiles' });
+      }
+      
+      // Look up the profile ID from the user ID
+      const profile = await db.select({ id: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.userId, freelancerId))
+        .limit(1);
+      
+      if (profile.length === 0) {
+        return res.status(404).json({ success: false, error: 'Profile not found' });
+      }
+      
+      const profileId = profile[0].id;
+      const result = await storage.toggleProfileLike(profileId, userId);
+      res.json({ success: true, ...result });
+    } catch (error: any) {
+      console.error('Error toggling profile like:', error);
+      res.status(500).json({ success: false, error: 'Failed to toggle like' });
+    }
+  });
+
+  app.post('/api/freelancers/:id/follows', requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const freelancerId = req.params.id; // This is the user ID
+      const followerUserId = req.user?.id;
+      
+      if (!followerUserId) {
+        return res.status(401).json({ success: false, error: 'Authentication required to follow profiles' });
+      }
+      
+      // Look up the profile ID from the user ID
+      const profile = await db.select({ id: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.userId, freelancerId))
+        .limit(1);
+      
+      if (profile.length === 0) {
+        return res.status(404).json({ success: false, error: 'Profile not found' });
+      }
+      
+      const profileId = profile[0].id;
+      const result = await storage.toggleProfileFollow(profileId, followerUserId);
+      res.json({ success: true, isFollowing: result.following, followersCount: result.followersCount });
+    } catch (error: any) {
+      console.error('Error toggling profile follow:', error);
+      res.status(500).json({ success: false, error: 'Failed to toggle follow' });
+    }
+  });
+
+  // Comprehensive health check endpoint
+  app.get("/api/health", async (_req, res) => {
+    try {
+      const startTime = Date.now();
+      
+      // Database connectivity check
+      await db.select().from(users).limit(1);
+      
+      // Check if countries are properly seeded
+      const countriesCount = await db.select({ count: count() }).from(countries);
+      const isCountriesHealthy = countriesCount[0].count >= 190; // Should have ~199 countries
+      
+      // Check if grade systems are properly seeded
+      const gradeSystemsCount = await db.select({ count: count() }).from(gradeSystems);
+      const isGradeSystemsHealthy = gradeSystemsCount[0].count >= 2000; // Should have ~2987 grade systems
+      
+      // Check verification codes cleanup
+      const expiredCodesCount = await db
+        .select({ count: count() })
+        .from(verificationCodes)
+        .where(lt(verificationCodes.expiresAt, new Date()));
+      
+      const responseTime = Date.now() - startTime;
+      
+      const healthStatus = {
+        status: "healthy",
+        timestamp: new Date().toISOString(),
+        responseTime: `${responseTime}ms`,
+        database: {
+          connected: true,
+          countries: {
+            count: countriesCount[0].count,
+            healthy: isCountriesHealthy
+          },
+          gradeSystems: {
+            count: gradeSystemsCount[0].count,
+            healthy: isGradeSystemsHealthy
+          },
+          verificationCodes: {
+            expiredCount: expiredCodesCount[0].count,
+            needsCleanup: expiredCodesCount[0].count > 100
+          }
+        },
+        services: {
+          emailService: "configured",
+          smsService: process.env.VONAGE_API_KEY ? "configured" : "missing",
+          stripeService: process.env.STRIPE_SECRET_KEY ? "configured" : "missing"
+        },
+        loginSystem: {
+          status: isCountriesHealthy && isGradeSystemsHealthy ? "operational" : "degraded",
+          countriesAvailable: isCountriesHealthy,
+          gradeSystemsAvailable: isGradeSystemsHealthy
+        }
+      };
+      
+      const statusCode = (isCountriesHealthy && isGradeSystemsHealthy) ? 200 : 206;
+      res.status(statusCode).json(healthStatus);
+      
+    } catch (error: any) {
+      res.status(503).json({ 
+        status: "unhealthy", 
+        timestamp: new Date().toISOString(),
+        database: "disconnected",
+        error: error instanceof Error ? error.message : 'Unknown error',
+        loginSystem: {
+          status: "unavailable"
+        }
+      });
+    }
+  });
+
+  // Countries API with auto-recovery
+  app.get("/api/countries", async (_req, res) => {
+    try {
+      const countriesData = await db.select().from(countries).orderBy(countries.name);
+      
+      // Auto-recovery: If countries data is missing or corrupted, re-seed
+      if (countriesData.length < 190) {
+        // Countries data incomplete - triggering auto-recovery
+        await seedCountries();
+        const reseededCountries = await db.select().from(countries).orderBy(countries.name);
+        return res.json({ success: true, data: reseededCountries, recovered: true });
+      }
+      
+      res.json({ success: true, data: countriesData });
+    } catch (error: any) {
+      console.error('Countries fetch error:', error);
+      
+      // Try to recover by reseeding
+      try {
+        // Attempting database recovery
+        await seedCountries();
+        const recoveredCountries = await db.select().from(countries).orderBy(countries.name);
+        return res.json({ success: true, data: recoveredCountries, recovered: true });
+      } catch (recoveryError) {
+        // Database recovery failed
+        // Fallback to static countries data when database fails
+        console.log('🔄 Using fallback countries data due to database connectivity issues');
+        const fallbackCountries = WORLD_COUNTRIES.map((country, index) => ({
+          id: index + 1,
+          code: country.code,
+          name: country.name,
+          gradeSystemType: country.gradeSystemType,
+          createdAt: new Date()
+        }));
+        res.json({ success: true, data: fallbackCountries, fallback: true });
+      }
+    }
+  });
+
+  // Location detection API - returns user's detected location
+  app.get("/api/location/detect", (req, res) => {
+    try {
+      const location = req.userLocation;
+      
+      if (!location) {
+        return res.json({ success: true,
+          country: 'Unknown',
+          city: 'Unknown',
+          region: 'Unknown'
+        });
+      }
+
+      res.json({ success: true,
+        country: location.country || 'Unknown',
+        city: location.city || 'Unknown',
+        region: location.region || 'Unknown',
+        timezone: location.timezone,
+        latitude: location.latitude,
+        longitude: location.longitude
+      });
+    } catch (error: any) {
+      console.error('Location detection error:', error);
+      res.json({ success: true,
+        country: 'Unknown',
+        city: 'Unknown',
+        region: 'Unknown'
+      });
+    }
+  });
+
+  // Cities API by country
+  app.get("/api/cities/:countryCode", async (req, res) => {
+    try {
+      const { countryCode } = req.params;
+      
+      // Handle country code mapping for cities
+      // Some countries have different codes in the countries table vs cities table
+      const countryCodeMapping: { [key: string]: string } = {
+        'UK': 'GB',  // United Kingdom maps to Great Britain in cities
+        // Add more mappings as needed
+      };
+      
+      const actualCountryCode = countryCodeMapping[countryCode] || countryCode;
+      
+      const citiesData = await db
+        .select({
+          id: sql`cities.id`,
+          name: sql`cities.name`,
+          countryCode: sql`cities.country_code`,
+          isMajor: sql`cities.is_major`
+        })
+        .from(sql`cities`)
+        .where(sql`cities.country_code = ${actualCountryCode}`)
+        .orderBy(sql`cities.name`);
+      
+      res.json({ success: true, data: citiesData });
+    } catch (error: any) {
+      console.error('Cities fetch error:', error);
+      // Return empty array if no cities found for this country
+      res.json({ success: true, data: [] });
+    }
+  });
+
+  // Grade systems API with auto-recovery
+  app.get("/api/grade-systems/:countryId", async (req, res) => {
+    try {
+      const countryId = parseInt(req.params.countryId);
+      const gradeSystemsData = await db
+        .select()
+        .from(gradeSystems)
+        .where(eq(gradeSystems.countryId, countryId))
+        .orderBy(gradeSystems.gradeNumber);
+      
+      // Auto-recovery: If grade systems data is missing for this country, re-seed
+      if (gradeSystemsData.length === 0) {
+        console.log(`⚠️ Grade systems data missing for country ${countryId}, triggering auto-recovery...`);
+        await seedGradeSystems();
+        const reseededGrades = await db
+          .select()
+          .from(gradeSystems)
+          .where(eq(gradeSystems.countryId, countryId))
+          .orderBy(gradeSystems.gradeNumber);
+        console.log('✅ Grade systems auto-recovery completed');
+        return res.json({ success: true, data: reseededGrades, recovered: true });
+      }
+      
+      res.json({ success: true, data: gradeSystemsData });
+    } catch (error: any) {
+      console.error('Grade systems fetch error:', error);
+      
+      // Try to recover by reseeding
+      try {
+        console.log('🔄 Attempting grade systems recovery...');
+        await seedGradeSystems();
+        const recoveredGrades = await db
+          .select()
+          .from(gradeSystems)
+          .where(eq(gradeSystems.countryId, parseInt(req.params.countryId)))
+          .orderBy(gradeSystems.gradeNumber);
+        console.log('✅ Grade systems recovery successful');
+        return res.json({ success: true, data: recoveredGrades, recovered: true });
+      } catch (recoveryError) {
+        console.error('❌ Grade systems recovery failed:', recoveryError);
+        // Fallback to default grade system when database fails
+        console.log('🔄 Using fallback grade systems data due to database connectivity issues');
+        const fallbackGrades = [
+          { id: 1, countryId: parseInt(req.params.countryId), gradeNumber: 1, displayName: "Grade 1", educationLevel: "Primary", ageRange: "6-7", createdAt: new Date() },
+          { id: 2, countryId: parseInt(req.params.countryId), gradeNumber: 2, displayName: "Grade 2", educationLevel: "Primary", ageRange: "7-8", createdAt: new Date() },
+          { id: 3, countryId: parseInt(req.params.countryId), gradeNumber: 3, displayName: "Grade 3", educationLevel: "Primary", ageRange: "8-9", createdAt: new Date() },
+          { id: 4, countryId: parseInt(req.params.countryId), gradeNumber: 4, displayName: "Grade 4", educationLevel: "Primary", ageRange: "9-10", createdAt: new Date() },
+          { id: 5, countryId: parseInt(req.params.countryId), gradeNumber: 5, displayName: "Grade 5", educationLevel: "Primary", ageRange: "10-11", createdAt: new Date() },
+          { id: 6, countryId: parseInt(req.params.countryId), gradeNumber: 6, displayName: "Grade 6", educationLevel: "Primary", ageRange: "11-12", createdAt: new Date() },
+          { id: 7, countryId: parseInt(req.params.countryId), gradeNumber: 7, displayName: "Grade 7", educationLevel: "Secondary", ageRange: "12-13", createdAt: new Date() },
+          { id: 8, countryId: parseInt(req.params.countryId), gradeNumber: 8, displayName: "Grade 8", educationLevel: "Secondary", ageRange: "13-14", createdAt: new Date() },
+          { id: 9, countryId: parseInt(req.params.countryId), gradeNumber: 9, displayName: "Grade 9", educationLevel: "Secondary", ageRange: "14-15", createdAt: new Date() },
+          { id: 10, countryId: parseInt(req.params.countryId), gradeNumber: 10, displayName: "Grade 10", educationLevel: "Secondary", ageRange: "15-16", createdAt: new Date() },
+          { id: 11, countryId: parseInt(req.params.countryId), gradeNumber: 11, displayName: "Grade 11", educationLevel: "Secondary", ageRange: "16-17", createdAt: new Date() },
+          { id: 12, countryId: parseInt(req.params.countryId), gradeNumber: 12, displayName: "Grade 12", educationLevel: "Secondary", ageRange: "17-18", createdAt: new Date() },
+          { id: 13, countryId: parseInt(req.params.countryId), gradeNumber: 13, displayName: "College", educationLevel: "College", ageRange: "18+", createdAt: new Date() },
+          { id: 14, countryId: parseInt(req.params.countryId), gradeNumber: 14, displayName: "University", educationLevel: "University", ageRange: "18+", createdAt: new Date() },
+          { id: 15, countryId: parseInt(req.params.countryId), gradeNumber: 15, displayName: "Other", educationLevel: "Other", ageRange: "Any", createdAt: new Date() }
+        ];
+        res.json({ success: true, data: fallbackGrades, fallback: true });
+      }
+    }
+  });
+
+  // Get current user profile (for refreshing auth state)
+  app.get("/api/auth/profile", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Get fresh profile data from database
+      const profile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, user.id))
+        .limit(1);
+
+      if (profile.length === 0) {
+        return res.status(404).json({ success: false, error: 'Profile not found' });
+      }
+
+      // Fetch application status for teachers and freelancers
+      let teacherApplicationStatus = null;
+      let freelancerApplicationStatus = null;
+      
+      if (profile[0].role === 'teacher') {
+        const teacherApp = await db.select({
+          id: teacherApplications.id,
+          status: teacherApplications.status,
+          submittedAt: teacherApplications.createdAt
+        })
+          .from(teacherApplications)
+          .where(eq(teacherApplications.userId, user.id))
+          .limit(1);
+        
+        if (teacherApp.length > 0) {
+          teacherApplicationStatus = {
+            id: teacherApp[0].id,
+            status: teacherApp[0].status,
+            submittedAt: teacherApp[0].submittedAt
+          };
+        }
+      } else if (profile[0].role === 'freelancer') {
+        const freelancerApp = await db.select({
+          id: freelancerApplications.id,
+          status: freelancerApplications.status,
+          createdAt: freelancerApplications.createdAt,
+          approvedAt: freelancerApplications.approvedAt
+        })
+          .from(freelancerApplications)
+          .where(eq(freelancerApplications.userId, user.id))
+          .limit(1);
+        
+        if (freelancerApp.length > 0) {
+          freelancerApplicationStatus = {
+            id: freelancerApp[0].id,
+            status: freelancerApp[0].status,
+            createdAt: freelancerApp[0].createdAt,
+            approvedAt: freelancerApp[0].approvedAt
+          };
+        }
+      }
+
+      res.json({ success: true,
+        success: true,
+        user: {
+          id: user.id,
+          userId: user.userId,
+          email: user.email
+        },
+        profile: profile[0],
+        teacherApplicationStatus,
+        freelancerApplicationStatus
+      });
+
+    } catch (error: any) {
+      console.error('Get profile error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get profile' });
+    }
+  });
+
+  // Get Teacher Profile with Application Data
+  app.get("/api/teacher/profile", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const userUuid = req.user.id; // This is the UUID from the auth middleware
+      const userTextId = req.user.userId; // This is the text ID like "T2509P002"
+
+      console.log('🔍 Teacher profile request - userUuid:', userUuid, 'userTextId:', userTextId);
+
+      // Get basic profile data using UUID
+      const profile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, userUuid))
+        .limit(1);
+
+      if (profile.length === 0) {
+        console.log('❌ Profile not found for UUID:', userUuid);
+        return res.status(404).json({ success: false, error: 'Profile not found' });
+      }
+
+      // Get user email using UUID
+      const user = await db.select()
+        .from(users)
+        .where(eq(users.id, userUuid))
+        .limit(1);
+
+      console.log('✅ Found basic data - profile:', !!profile[0], 'user:', !!user[0]);
+
+      // Create a basic teacher profile with essential data
+      const teacherProfile = {
+        // Basic profile data
+        id: profile[0].id,
+        userId: profile[0].userId,
+        name: profile[0].name || 'Teacher Name',
+        email: user[0]?.email || profile[0].email || 'teacher@example.com',
+        bio: profile[0].bio || '',
+        avatarUrl: profile[0].avatarUrl || null,
+        country: profile[0].country || '',
+        role: profile[0].role,
+        
+        // Teacher application data from profile
+        phoneNumber: profile[0].phoneNumber || null,
+        qualifications: profile[0].qualifications || '',
+        experience: profile[0].experience || '',
+        portfolioLinks: [],
+        certifications: [],
+        availableHours: profile[0].availableHours || '',
+        hourlyRate: profile[0].hourlyRate || '25.00',
+        applicationStatus: 'approved'
+      };
+
+      console.log('📋 Returning teacher profile:', {
+        name: teacherProfile.name,
+        email: teacherProfile.email,
+        phoneNumber: teacherProfile.phoneNumber,
+        hourlyRate: teacherProfile.hourlyRate,
+        qualifications: teacherProfile.qualifications,
+        experience: teacherProfile.experience,
+        availableHours: teacherProfile.availableHours
+      });
+
+      res.json({ success: true,
+        success: true,
+        profile: teacherProfile
+      });
+
+    } catch (error: any) {
+      console.error('Get teacher profile error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get teacher profile' });
+    }
+  });
+
+  // Update Teacher Profile
+  app.put("/api/teacher/profile", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const userUuid = req.user.id;
+      const { 
+        name, 
+        bio, 
+        phoneNumber, 
+        hourlyRate, 
+        availableHours,
+        qualifications,
+        experience,
+        portfolioLinks,
+        certifications,
+        avatarUrl 
+      } = req.body;
+
+      console.log('🔄 Updating teacher profile for:', userUuid, 'with data:', {
+        name, bio, phoneNumber, hourlyRate, availableHours
+      });
+
+      // Update profile table (this should always work)
+      const profileUpdates: any = { updatedAt: new Date() };
+      if (name !== undefined && name.trim()) profileUpdates.name = name.trim();
+      if (bio !== undefined) profileUpdates.bio = bio;
+      if (avatarUrl !== undefined) profileUpdates.avatarUrl = avatarUrl;
+      if (qualifications !== undefined) profileUpdates.qualifications = qualifications;
+      if (experience !== undefined) profileUpdates.experience = experience;
+      if (availableHours !== undefined) profileUpdates.availableHours = availableHours;
+      if (hourlyRate !== undefined) profileUpdates.hourlyRate = hourlyRate;
+      if (phoneNumber !== undefined) profileUpdates.phoneNumber = phoneNumber;
+
+      if (Object.keys(profileUpdates).length > 1) { // More than just updatedAt
+        await db
+          .update(profiles)
+          .set(profileUpdates)
+          .where(eq(profiles.userId, userUuid));
+        console.log('✅ Profile table updated successfully');
+      }
+
+      // Try to update teacher application table with only safe columns
+      try {
+        const teacherApp = await db.select({ id: teacherApplications.id })
+          .from(teacherApplications)
+          .where(eq(teacherApplications.userId, userUuid))
+          .limit(1);
+
+        if (teacherApp.length > 0) {
+          const safeAppUpdates: any = { updatedAt: new Date() };
+          
+          // Only update fields that we know exist
+          if (phoneNumber !== undefined) safeAppUpdates.phoneNumber = phoneNumber;
+          if (hourlyRate !== undefined) safeAppUpdates.hourlyRate = hourlyRate;
+          if (qualifications !== undefined) safeAppUpdates.qualifications = qualifications;
+          if (experience !== undefined) safeAppUpdates.experience = experience;
+          if (bio !== undefined) safeAppUpdates.bio = bio;
+
+          if (Object.keys(safeAppUpdates).length > 1) {
+            await db
+              .update(teacherApplications)
+              .set(safeAppUpdates)
+              .where(eq(teacherApplications.userId, userUuid));
+            console.log('✅ Teacher application table updated successfully');
+          }
+        } else {
+          console.log('ℹ️ No teacher application record found, skipping app table update');
+        }
+      } catch (appError) {
+        console.log('⚠️ Could not update teacher application table:', appError.message);
+        // Don't fail the entire request if teacher app table update fails
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: 'Teacher profile updated successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Update teacher profile error:', error);
+      res.status(500).json({ success: false, error: 'Failed to update teacher profile' });
+    }
+  });
+
+  // Freelancer Registration Endpoint
+  app.post("/api/freelancer-register", async (req, res) => {
+    try {
+      const {
+        fullName,
+        email,
+        password,
+        phoneNumber,
+        skills,
+        experience,
+        hourlyRate,
+        portfolio,
+        specializations,
+        bio,
+        contactType,
+        verificationMethod
+      } = req.body;
+
+      // Check for existing verification request (don't check users table before verification)
+      const existingVerification = await db
+        .select()
+        .from(verificationCodes)
+        .where(eq(verificationCodes.contactInfo, email))
+        .limit(1);
+
+      if (existingVerification.length > 0 && !existingVerification[0].isUsed) {
+        return res.status(400).json({
+          success: false,
+          error: "A verification request is already pending for this email. Please check your email or wait a few minutes."
+        });
+      }
+
+      // Clean up any expired verification codes
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
+
+      // Prepare user data but DON'T create user yet - wait for verification
+      const hashedPassword = await bcrypt.hash(password, 12);
+      const verificationCode = generateVerificationCode();
+      const userIdString = generateUserId();
+
+      // Store ALL registration data in verification codes table temporarily
+      await db
+        .insert(verificationCodes)
+        .values({
+          contactInfo: email,
+          type: 'email',
+          code: verificationCode,
+          expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+          userData: { 
+            // User data
+            userId: userIdString,
+            email,
+            passwordHash: hashedPassword,
+            educationLevel: 'other',
+            // Profile data
+            fullName,
+            age: 25,
+            grade: 12,
+            country: 'Unknown',
+            countryId: null,
+            role: 'freelancer',
+            bio: bio || '',
+            experience: experience || '',
+            hourlyRate: hourlyRate || null,
+            qualifications: specializations ? specializations.join(', ') : null,
+            availableHours: 'Flexible',
+            // Additional freelancer data
+            skills, 
+            portfolio, 
+            phoneNumber,
+            specializations,
+            userType: 'freelancer' 
+          }
+        });
+
+      // Send verification email
+      if (contactType === 'email') {
+        try {
+          const emailTemplate = getEmailTemplate('verification', {
+            name: fullName,
+            code: verificationCode,
+            expiryMinutes: 15
+          });
+
+          const transporter = await createEmailTransporter('verify@edufiliova.com');
+          await transporter.sendMail({
+            from: '"EduFiliova Freelancer Platform" <verify@edufiliova.com>',
+            to: email,
+            subject: 'Verify Your Freelancer Account - EduFiliova',
+            html: emailTemplate
+          });
+          console.log('✅ Verification email sent successfully to:', email);
+        } catch (emailError) {
+          console.error('❌ Failed to send verification email:', {
+            error: emailError instanceof Error ? emailError.message : 'Unknown error',
+            code: (emailError as any)?.code,
+            response: (emailError as any)?.response,
+            responseCode: (emailError as any)?.responseCode,
+            to: email,
+            timestamp: new Date().toISOString()
+          });
+          
+          // Clean up verification code since email failed
+          await db
+            .delete(verificationCodes)
+            .where(eq(verificationCodes.contactInfo, email));
+
+          return res.status(500).json({
+            success: false,
+            error: 'Failed to send verification email. Please try again.'
+          });
+        }
+      }
+
+      res.status(201).json({
+        success: true,
+        message: "Verification email sent successfully. Please check your email to complete registration.",
+        data: {
+          email: email,
+          message: "Account will be created after email verification"
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Freelancer registration error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Registration failed. Please try again.'
+      });
+    }
+  });
+
+  // Resend verification code endpoint
+  app.post("/api/auth/resend-verification", async (req, res) => {
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return res.status(400).json({
+          success: false,
+          error: "Email is required"
+        });
+      }
+
+      // Find verification code for this email
+      const existingCode = await db
+        .select()
+        .from(verificationCodes)
+        .where(eq(verificationCodes.contactInfo, email))
+        .orderBy(desc(verificationCodes.createdAt))
+        .limit(1);
+
+      if (existingCode.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: "No verification code found for this email"
+        });
+      }
+
+      const code = existingCode[0].code;
+
+      // Resend verification email
+      try {
+        const emailTemplate = getEmailTemplate('verification', {
+          name: 'User',
+          code: code,
+          expiryMinutes: 15
+        });
+
+        const transporter = await createEmailTransporter('verify@edufiliova.com');
+        await transporter.sendMail({
+          from: '"EduFiliova Platform" <verify@edufiliova.com>',
+          to: email,
+          subject: 'Verification Code - EduFiliova',
+          html: emailTemplate
+        });
+
+        console.log('✅ Verification email resent successfully to:', email);
+
+        res.status(200).json({
+          success: true,
+          message: "Verification code resent successfully"
+        });
+
+      } catch (emailError) {
+        console.error('❌ Failed to resend verification email:', {
+          error: emailError instanceof Error ? emailError.message : 'Unknown error',
+          code: (emailError as any)?.code,
+          response: (emailError as any)?.response,
+          responseCode: (emailError as any)?.responseCode,
+          to: email,
+          timestamp: new Date().toISOString()
+        });
+
+        res.status(500).json({
+          success: false,
+          error: 'Failed to resend verification email. Please try again.'
+        });
+      }
+
+    } catch (error: any) {
+      console.error('Resend verification error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to resend verification code. Please try again.'
+      });
+    }
+  });
+
+  // Admin Freelancer Management Routes
+  app.get("/api/admin/freelancers", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { status, search } = req.query;
+      
+      console.log('🔍 Freelancer search request:', { status, search });
+      
+      // Build conditions array
+      const conditions = [eq(profiles.role, 'freelancer')];
+      
+      if (status) {
+        conditions.push(eq(profiles.approvalStatus, status as any));
+      }
+
+      if (search && typeof search === 'string') {
+        const searchPattern = `%${search}%`;
+        console.log('🔍 Search pattern:', searchPattern);
+        conditions.push(
+          or(
+            ilike(profiles.name, searchPattern),
+            ilike(profiles.displayName, searchPattern),
+            ilike(profiles.email, searchPattern)
+          )
+        );
+      }
+
+      const freelancers = await db
+        .select({
+          id: profiles.id,
+          userId: profiles.userId,
+          name: profiles.name,
+          displayName: profiles.displayName,
+          email: profiles.email,
+          avatarUrl: profiles.avatarUrl,
+          country: profiles.country,
+          experience: profiles.experience,
+          hourlyRate: profiles.hourlyRate,
+          bio: profiles.bio,
+          qualifications: profiles.qualifications,
+          approvalStatus: profiles.approvalStatus,
+          approvedBy: profiles.approvedBy,
+          approvedAt: profiles.approvedAt,
+          rejectionReason: profiles.rejectionReason,
+          adminNotes: profiles.adminNotes,
+          likesCount: profiles.likesCount,
+          followersCount: profiles.followersCount,
+          role: profiles.role,
+          createdAt: profiles.createdAt
+        })
+        .from(profiles)
+        .where(and(...conditions))
+        .orderBy(profiles.createdAt);
+
+      console.log('🔍 Found freelancers:', freelancers.length);
+      console.log('🔍 Freelancer names:', freelancers.map(f => f.name));
+
+      res.json({ success: true,
+        success: true,
+        data: freelancers
+      });
+    } catch (error: any) {
+      console.error('❌ Error fetching freelancers:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch freelancers'
+      });
+    }
+  });
+
+  app.post("/api/admin/freelancers/:userId/approve", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { notes } = req.body;
+      const adminUserId = req.user?.id;
+
+      // Check if freelancer profile exists and is pending
+      const [freelancerProfile] = await db
+        .select()
+        .from(profiles)
+        .where(and(
+          eq(profiles.userId, userId),
+          eq(profiles.role, 'freelancer')
+        ))
+        .limit(1);
+
+      if (!freelancerProfile) {
+        return res.status(404).json({
+          success: false,
+          error: 'Freelancer profile not found'
+        });
+      }
+
+      if (freelancerProfile.approvalStatus === 'approved') {
+        return res.json({ success: true,
+          success: true,
+          message: 'Freelancer already approved'
+        });
+      }
+
+      // Update approval status
+      await db
+        .update(profiles)
+        .set({
+          approvalStatus: 'approved',
+          approvedBy: adminUserId,
+          approvedAt: new Date(),
+          adminNotes: notes || null,
+          rejectionReason: null
+        })
+        .where(eq(profiles.userId, userId));
+
+      // Send approval email notification
+      try {
+        const emailTemplate = getEmailTemplate('welcome', {
+          name: freelancerProfile.name,
+          notes: notes || 'Your freelancer application has been approved!'
+        });
+
+        const transporter = await createEmailTransporter('support@edufiliova.com');
+        await transporter.sendMail({
+          from: '"EduFiliova Support" <support@edufiliova.com>',
+          to: freelancerProfile.email || '',
+          subject: 'Congratulations! Your Freelancer Application Approved - EduFiliova',
+          html: emailTemplate
+        });
+      } catch (emailError) {
+        console.error('Failed to send approval email:', emailError);
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: 'Freelancer approved successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Error approving freelancer:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to approve freelancer'
+      });
+    }
+  });
+
+  app.post("/api/admin/freelancers/:userId/reject", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { reason, notes } = req.body;
+      const adminUserId = req.user?.id;
+
+      if (!reason || reason.trim() === '') {
+        return res.status(400).json({
+          success: false,
+          error: 'Rejection reason is required'
+        });
+      }
+
+      // Check if freelancer profile exists
+      const [freelancerProfile] = await db
+        .select()
+        .from(profiles)
+        .where(and(
+          eq(profiles.userId, userId),
+          eq(profiles.role, 'freelancer')
+        ))
+        .limit(1);
+
+      if (!freelancerProfile) {
+        return res.status(404).json({
+          success: false,
+          error: 'Freelancer profile not found'
+        });
+      }
+
+      if (freelancerProfile.approvalStatus === 'rejected') {
+        return res.json({ success: true,
+          success: true,
+          message: 'Freelancer already rejected'
+        });
+      }
+
+      // Update rejection status
+      await db
+        .update(profiles)
+        .set({
+          approvalStatus: 'rejected',
+          approvedBy: adminUserId,
+          approvedAt: new Date(),
+          rejectionReason: reason,
+          adminNotes: notes || null
+        })
+        .where(eq(profiles.userId, userId));
+
+      // Send rejection email notification
+      try {
+        const emailTemplate = getEmailTemplate('freelancerRejection', {
+          name: freelancerProfile.name,
+          reason: reason,
+          notes: notes
+        });
+
+        const transporter = await createEmailTransporter('support@edufiliova.com');
+        await transporter.sendMail({
+          from: '"EduFiliova Support" <support@edufiliova.com>',
+          to: freelancerProfile.email || '',
+          subject: 'Update on Your Freelancer Application - EduFiliova',
+          html: emailTemplate
+        });
+      } catch (emailError) {
+        console.error('Failed to send rejection email:', emailError);
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: 'Freelancer rejected successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Error rejecting freelancer:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to reject freelancer'
+      });
+    }
+  });
+
+  // Featured Users Management (Admin only)
+  app.get("/api/admin/featured-users", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 20;
+      const featuredUsers = await storage.getFeaturedUsers(limit);
+      
+      res.json({ success: true,
+        success: true,
+        data: featuredUsers
+      });
+    } catch (error: any) {
+      console.error('Error fetching featured users:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch featured users'
+      });
+    }
+  });
+
+  app.post("/api/admin/users/:userId/toggle-featured", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const { userId: textUserId } = req.params;
+      const adminUserId = req.user?.id;
+
+      if (!adminUserId) {
+        return res.status(401).json({
+          success: false,
+          error: 'Unauthorized'
+        });
+      }
+
+      // Look up the user's UUID by their text userId
+      const user = await db.select({ id: users.id })
+        .from(users)
+        .where(eq(users.userId, textUserId))
+        .limit(1);
+
+      if (user.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'User not found'
+        });
+      }
+
+      const userUuid = user[0].id;
+      const result = await storage.toggleFeaturedStatus(userUuid, adminUserId);
+      
+      res.json({ success: true,
+        success: true,
+        data: result,
+        message: result.isFeatured ? 'User marked as featured' : 'User removed from featured'
+      });
+    } catch (error: any) {
+      console.error('Error toggling featured status:', error);
+      res.status(500).json({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to toggle featured status'
+      });
+    }
+  });
+
+  // Public endpoint to get featured creators
+  app.get("/api/featured-creators", async (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 10;
+      const featuredUsers = await storage.getFeaturedUsers(limit);
+      
+      res.json({ success: true,
+        success: true,
+        data: featuredUsers
+      });
+    } catch (error: any) {
+      console.error('Error fetching featured creators:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to fetch featured creators'
+      });
+    }
+  });
+
+  // User Registration with Dual Verification
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const { name, age, grade, educationLevel, country, email, phone, password, whatsappOptIn } = req.body;
+
+      // Validation
+      if (!name || !age || !grade || !country || !email || !password) {
+        return res.status(400).json({ success: false, error: "Missing required fields" });
+      }
+
+      if (!isValidEmail(email)) {
+        return res.status(400).json({ success: false, error: "Invalid email format" });
+      }
+
+      if (phone && !isValidPhone(phone)) {
+        return res.status(400).json({ success: false, error: "Invalid phone number format" });
+      }
+
+      // Check for existing verification request (don't check users table before verification)
+      const existingVerification = await db
+        .select()
+        .from(verificationCodes)
+        .where(eq(verificationCodes.contactInfo, email))
+        .limit(1);
+
+      if (existingVerification.length > 0 && !existingVerification[0].isUsed) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "A verification request is already pending for this email. Please check your email or wait a few minutes." 
+        });
+      }
+
+      // Clean up any expired verification codes
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
+
+      // Store registration data temporarily and send verification
+      const emailCode = generateVerificationCode();
+      const smsCode = phone ? generateVerificationCode() : null;
+
+      const registrationData = {
+        name,
+        age: parseInt(age),
+        grade: parseInt(grade),
+        educationLevel: educationLevel || 'grade',
+        country,
+        email,
+        phone: phone || null,
+        passwordHash: await bcrypt.hash(password, 10),
+        emailCode,
+        smsCode,
+        emailVerified: false,
+        smsVerified: !phone // If no phone, consider SMS verified
+      };
+
+      // Determine verification method based on whatsappOptIn
+      let emailResult = { success: true, error: undefined as string | undefined };
+      let whatsappResult = { success: true, messageId: undefined as string | undefined, error: undefined as string | undefined };
+      
+      if (whatsappOptIn && phone && smsCode) {
+        // WhatsApp opted in: Send ONLY WhatsApp OTP (no email)
+        if (isWhatsAppConfigured()) {
+          whatsappResult = await sendWhatsAppOTP(phone, smsCode);
+          if (whatsappResult.success) {
+            console.log('✅ WhatsApp OTP sent successfully to:', phone);
+          } else {
+            console.error('❌ WhatsApp OTP failed:', whatsappResult.error);
+            return res.status(500).json({
+              success: false,
+              error: "Failed to send WhatsApp verification. Please try again or uncheck WhatsApp option.",
+              details: whatsappResult.error
+            });
+          }
+        } else {
+          console.error('❌ WhatsApp not configured but user opted in');
+          return res.status(500).json({
+            success: false,
+            error: "WhatsApp verification is not available. Please uncheck the WhatsApp option and try again."
+          });
+        }
+      } else {
+        // No WhatsApp opt-in: Send email verification only using new HTML template
+        try {
+          const { sendStudentVerificationEmail } = await import('./utils/email-templates.js');
+          await sendStudentVerificationEmail(email, name, emailCode, 15);
+          console.log('✅ Student verification email sent successfully to:', email);
+        } catch (emailError) {
+          console.error('❌ Failed to send student verification email:', emailError);
+          return res.status(500).json({
+            success: false,
+            error: "Failed to send verification email. Please try again."
+          });
+        }
+      }
+
+      // Clean up any existing verification codes for this email/phone
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
+      if (phone) {
+        await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, phone));
+      }
+
+      if (whatsappOptIn && phone && whatsappResult.success) {
+        // WhatsApp flow: Only store phone verification (email will be auto-verified)
+      // Delete old verification codes for this email
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
+        await db.insert(verificationCodes).values({
+          contactInfo: phone,
+          type: 'phone',
+          code: smsCode,
+          expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+          userData: registrationData
+        });
+
+        res.json({ success: true,
+          success: true,
+          message: "WhatsApp verification code sent",
+          requiresEmailVerification: false,
+          requiresPhoneVerification: true,
+          emailSent: false,
+          whatsappSent: true
+        });
+      } else {
+        // Email flow: Only store email verification
+      // Delete old verification codes for this email
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
+        await db.insert(verificationCodes).values({
+          contactInfo: email,
+          type: 'email',
+          code: emailCode,
+          expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+          userData: registrationData
+        });
+
+        res.json({ success: true,
+          success: true,
+          message: "Email verification code sent",
+          requiresEmailVerification: true,
+          requiresPhoneVerification: false,
+          emailSent: true,
+          whatsappSent: false
+        });
+      }
+
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      
+      // Provide specific error messages for better user experience
+      if (error instanceof Error) {
+        if (error.message.includes('duplicate key value violates unique constraint')) {
+          if (error.message.includes('verification_codes_contact_info_unique')) {
+            return res.status(400).json({ 
+              success: false, 
+              error: "A verification request is already pending for this email. Please check your email or try again in a few minutes." 
+            });
+          }
+          if (error.message.includes('auth_users_email_unique')) {
+            return res.status(400).json({ 
+              success: false, 
+              error: "An account with this email already exists. Please try logging in instead." 
+            });
+          }
+        }
+        if (error.message.includes('Connection') || error.message.includes('timeout')) {
+          return res.status(503).json({ 
+            success: false, 
+            error: "Service temporarily unavailable. Please try again in a few minutes." 
+          });
+        }
+      }
+      
+      res.status(500).json({ success: false, error: "Registration failed. Please try again." });
+    }
+  });
+
+  // Verify Registration Codes
+  app.post("/api/auth/verify-registration", async (req, res) => {
+    try {
+      const { email, emailCode, smsCode, contactInfo, code, contactType } = req.body;
+
+      let userData: any;
+      let verificationRecordId: number;
+
+      // Handle WhatsApp/phone verification (contactType: 'phone')
+      if (contactType === 'phone' && contactInfo && code) {
+        // Get phone verification record
+        const phoneVerification = await db
+          .select()
+          .from(verificationCodes)
+          .where(and(
+            eq(verificationCodes.contactInfo, contactInfo),
+            eq(verificationCodes.type, 'phone'),
+            eq(verificationCodes.isUsed, false)
+          ))
+          .limit(1);
+
+        if (phoneVerification.length === 0) {
+          return res.status(400).json({ success: false, error: "Invalid or expired verification code" });
+        }
+
+        const phoneRecord = phoneVerification[0];
+
+        // Check phone code and expiration
+        if (phoneRecord.code !== code || new Date() > phoneRecord.expiresAt) {
+          return res.status(400).json({ success: false, error: "Invalid or expired verification code" });
+        }
+
+        userData = phoneRecord.userData as any;
+        verificationRecordId = phoneRecord.id;
+
+        // Mark phone verification as used
+        await db
+          .update(verificationCodes)
+          .set({ isUsed: true })
+          .where(eq(verificationCodes.id, phoneRecord.id));
+
+        // Also mark email verification as used (auto-verify email when WhatsApp is verified)
+        if (userData.email) {
+          await db
+            .update(verificationCodes)
+            .set({ isUsed: true })
+            .where(and(
+              eq(verificationCodes.contactInfo, userData.email),
+              eq(verificationCodes.type, 'email'),
+              eq(verificationCodes.isUsed, false)
+            ));
+        }
+      } 
+      // Handle email verification (contactType: 'email' or legacy flow)
+      else if ((contactType === 'email' && email && emailCode) || (email && emailCode)) {
+        // Get email verification record
+        const emailVerification = await db
+          .select()
+          .from(verificationCodes)
+          .where(and(
+            eq(verificationCodes.contactInfo, email),
+            eq(verificationCodes.type, 'email'),
+            eq(verificationCodes.isUsed, false)
+          ))
+          .limit(1);
+
+        if (emailVerification.length === 0) {
+          return res.status(400).json({ success: false, error: "Invalid or expired email verification code" });
+        }
+
+        const emailRecord = emailVerification[0];
+
+        // Check email code and expiration
+        if (emailRecord.code !== emailCode || new Date() > emailRecord.expiresAt) {
+          return res.status(400).json({ success: false, error: "Invalid or expired email verification code" });
+        }
+
+        userData = emailRecord.userData as any;
+        verificationRecordId = emailRecord.id;
+
+        // Mark email verification as used
+        await db
+          .update(verificationCodes)
+          .set({ isUsed: true })
+          .where(eq(verificationCodes.id, emailRecord.id));
+
+        // Check SMS verification if phone was provided and smsCode is given
+        if (userData.phone && smsCode) {
+          const smsVerification = await db
+            .select()
+            .from(verificationCodes)
+            .where(and(
+              eq(verificationCodes.contactInfo, userData.phone),
+              eq(verificationCodes.type, 'phone'),
+              eq(verificationCodes.isUsed, false)
+            ))
+            .limit(1);
+
+          if (smsVerification.length === 0 || smsVerification[0].code !== smsCode || new Date() > smsVerification[0].expiresAt) {
+            return res.status(400).json({ success: false, error: "Invalid or expired SMS verification code" });
+          }
+
+          // Mark SMS verification as used
+          await db
+            .update(verificationCodes)
+            .set({ isUsed: true })
+            .where(eq(verificationCodes.id, smsVerification[0].id));
+        }
+        // Note: If phone was provided but smsCode is missing, we don't block - email verification is sufficient
+      } else {
+        return res.status(400).json({ success: false, error: "Verification code required" });
+      }
+
+      // Check if user already exists (in case verification is retried)
+      const existingUser = await db.select().from(users).where(eq(users.email, userData.email)).limit(1);
+      if (existingUser.length > 0) {
+        return res.status(400).json({ success: false, error: "An account with this email already exists. Please try logging in instead." });
+      }
+
+      // Create user account
+      const userId = generateUserId();
+      
+      const newUser = await db.insert(users).values({
+        userId,
+        email: userData.email,
+        passwordHash: userData.passwordHash
+      }).returning();
+
+      // Find country ID
+      const countryRecord = await db
+        .select()
+        .from(countries)
+        .where(eq(countries.name, userData.country))
+        .limit(1);
+
+      // Get detected location from IP
+      const detectedLocation = req.userLocation;
+      const locationStr = detectedLocation 
+        ? `${detectedLocation.city || ''}, ${detectedLocation.country || ''}`.trim() 
+        : null;
+
+      // Create profile with location data
+      const newProfile = await db.insert(profiles).values({
+        userId: newUser[0].id,
+        name: userData.name || userData.fullName, // Handle freelancer fullName
+        email: userData.email, // Add email to profile
+        age: userData.age || 25, // Default age for freelancers
+        grade: userData.grade || 12, // Add required grade field with default
+        educationLevel: userData.educationLevel || "other", // Default education level
+        country: userData.country || (detectedLocation?.country) || "Unknown", // Add country
+        countryId: countryRecord.length > 0 ? countryRecord[0].id : null, // Add country ID
+        location: locationStr, // Add detected location
+      });
+      const loginEmail = userData.email;
+      const loginPhone = userData.phone || undefined;
+      const welcomeHtml = `
+        ${getEmailTemplate('blue', {})}
+        <div class="content">
+          <h2 class="title">Welcome to EduFiliova!</h2>
+          <p class="message">Hi ${userData.name},<br><br>Thank you for joining EduFiliova! We're excited to have you as part of our learning community.</p>
+          <div class="alert-success" style="text-align: center; padding: 30px;"><div style="margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div style="color: #065f46; font-size: 18px; font-weight: bold; margin-bottom: 8px;">Account Created Successfully</div><div style="color: #047857; font-size: 14px;">You're all set to start your journey with us!</div></div>
+          <div style="background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 25px 0;"><div style="color: #1f2937; font-size: 16px; font-weight: 600; margin-bottom: 15px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Your Login Credentials</div><div style="background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; padding: 15px; margin-bottom: 12px;"><div style="color: #6b7280; font-size: 12px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">Email</div><div style="color: #1f2937; font-size: 14px; font-family: 'Monaco', 'Courier New', monospace; word-break: break-all;">${loginEmail}</div></div>${loginPhone ? `<div style="background-color: #ffffff; border: 1px solid #d1d5db; border-radius: 6px; padding: 15px; margin-bottom: 12px;"><div style="color: #6b7280; font-size: 12px; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">Phone</div><div style="color: #1f2937; font-size: 14px; font-family: 'Monaco', 'Courier New', monospace;">${loginPhone}</div></div>` : ''}<div style="background-color: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; padding: 12px; margin-top: 12px;"><div style="color: #92400e; font-size: 13px; line-height: 1.6;"><strong>🔒 Security Reminder:</strong> Please keep your login credentials safe and secure. Never share them with anyone, including EduFiliova staff members. Always use the official login page to sign in.</div></div></div><div style="text-align: center; margin: 30px 0;"><a href="${req.protocol}://${req.get('host')}/login" class="button">Go to Dashboard</a></div><p class="message" style="font-size: 14px;">Need help? Check out our <a href="${req.protocol}://${req.get('host')}/help" style="color: #2d5ddd; text-decoration: none;">Help Center</a> or contact us at support@edufiliova.com</p>
+        </div>
+      `;
+      // Send welcome email using new HTML template
+      try {
+        const { sendStudentWelcomeEmail } = await import('./utils/email-templates.js');
+        await sendStudentWelcomeEmail(userData.email, userData.name);
+        console.log('✅ Student welcome email sent successfully to:', userData.email);
+      } catch (welcomeEmailError) {
+        console.error('❌ Failed to send student welcome email:', welcomeEmailError);
+        // Don't fail the registration if welcome email fails
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: "Account created successfully!",
+        user: {
+          userId: newUser[0].userId,
+          email: newUser[0].email
+        },
+        profile: newProfile[0]
+      });
+
+    } catch (error: any) {
+      console.error('Verification error:', error);
+      res.status(500).json({ success: false, error: "Verification failed" });
+    }
+  });
+
+  // User Login
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { loginId, password } = req.body;
+
+      if (!loginId || !password) {
+        return res.status(400).json({ success: false, error: "Login ID and password are required" });
+      }
+
+      // Find user by email, userId, or phone number (including profiles join)
+      let user = await db
+        .select()
+        .from(users)
+        .where(or(
+          eq(users.email, loginId),
+          eq(users.userId, loginId)
+        ))
+        .limit(1);
+
+      // If not found by email or userId, search by phone in profiles
+      if (user.length === 0) {
+        const normalizedPhone = loginId.replace(/\+/g, '');
+        const profilesWithPhone = await db
+          .select({ userId: profiles.userId })
+          .from(profiles)
+          .where(or(
+            eq(profiles.phoneNumber, loginId),
+            eq(profiles.phoneNumber, `+${normalizedPhone}`),
+            eq(profiles.phoneNumber, normalizedPhone)
+          ))
+          .limit(1);
+
+        if (profilesWithPhone.length > 0) {
+          user = await db
+            .select()
+            .from(users)
+            .where(eq(users.id, profilesWithPhone[0].userId))
+            .limit(1);
+        }
+      }
+
+      if (user.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid credentials" });
+      }
+
+      // Verify password
+      const isValidPassword = await bcrypt.compare(password, user[0].passwordHash);
+      if (!isValidPassword) {
+        return res.status(401).json({ success: false, error: "Invalid credentials" });
+      }
+
+      // Get user profile
+      const profile = await db
+        .select()
+        .from(profiles)
+        .where(eq(profiles.userId, user[0].id))
+        .limit(1);
+
+      if (profile.length === 0) {
+        return res.status(401).json({ success: false, error: "User profile not found" });
+      }
+
+      // Check if user is banned or suspended
+      if (profile[0].status === 'banned') {
+        return res.status(403).json({ 
+          success: false, 
+          error: 'Account has been banned. Please contact support if you believe this is an error.' 
+        });
+      }
+
+      if (profile[0].status === 'suspended') {
+        return res.status(403).json({ 
+          success: false, 
+          error: 'Account has been temporarily suspended. Please contact support for more information.' 
+        });
+      }
+
+      // Create session
+      const sessionId = uuidv4();
+      await db.insert(userLoginSessions).values({
+        userId: user[0].id,
+        sessionId,
+        userAgent: req.headers['user-agent'] || 'Unknown',
+        ipAddress: req.ip || 'Unknown',
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
+      });
+
+      // Fetch application status for teachers and freelancers
+      let teacherApplicationStatus = null;
+      let freelancerApplicationStatus = null;
+      
+      console.log('🔍 Fetching application status - role:', profile[0].role, 'userId:', user[0].id);
+      
+      if (profile[0].role === 'teacher') {
+        try {
+          const teacherApp = await db.select({
+            id: teacherApplications.id,
+            status: teacherApplications.status,
+            submittedAt: teacherApplications.createdAt
+          })
+            .from(teacherApplications)
+            .where(eq(teacherApplications.userId, user[0].id))
+            .limit(1);
+          
+          console.log('🔍 Teacher application query result:', teacherApp);
+          
+          if (teacherApp.length > 0) {
+            teacherApplicationStatus = {
+              id: teacherApp[0].id,
+              status: teacherApp[0].status,
+              submittedAt: teacherApp[0].submittedAt
+            };
+          }
+        } catch (error: any) {
+          console.error('❌ Error fetching teacher application:', error);
+        }
+      } else if (profile[0].role === 'freelancer') {
+        const freelancerApp = await db.select({
+          id: freelancerApplications.id,
+          status: freelancerApplications.status,
+          createdAt: freelancerApplications.createdAt,
+          approvedAt: freelancerApplications.approvedAt
+        })
+          .from(freelancerApplications)
+          .where(eq(freelancerApplications.userId, user[0].id))
+          .limit(1);
+        
+        if (freelancerApp.length > 0) {
+          freelancerApplicationStatus = {
+            id: freelancerApp[0].id,
+            status: freelancerApp[0].status,
+            createdAt: freelancerApp[0].createdAt,
+            approvedAt: freelancerApp[0].approvedAt
+          };
+        }
+      }
+
+      // Set session cookie for cross-subdomain auth
+      const requestHost = req.get('host') || '';
+      const originHeader = req.get('origin') || '';
+      
+      // Detect production based on NODE_ENV OR hostname (Replit deployments may run with NODE_ENV=development)
+      const isEdufiliovaRequest = requestHost.includes('edufiliova.com') || originHeader.includes('edufiliova.com');
+      const isProductionHost = isEdufiliovaRequest || requestHost.includes('.replit.app');
+      const isProduction = process.env.NODE_ENV === 'production' || isProductionHost;
+      
+      // Determine cookie domain based on request host OR origin
+      // This handles cross-subdomain requests (e.g., app.edufiliova.com -> edufiliova.com)
+      // For Replit subdomains (.replit.app, .repl.co), don't set domain to let browser use current host
+      let cookieDomain: string | undefined = undefined;
+      
+      if (isEdufiliovaRequest) {
+        cookieDomain = '.edufiliova.com';
+      }
+      
+      // Use sameSite: 'none' for cross-origin requests to allow cookie sharing between subdomains
+      // This is required when app.edufiliova.com makes requests to edufiliova.com API
+      const isCrossOrigin = originHeader && !originHeader.includes(requestHost);
+      
+      console.log('🍪 Cookie settings:', { 
+        requestHost, 
+        originHeader, 
+        isProduction, 
+        isEdufiliovaRequest, 
+        isCrossOrigin, 
+        cookieDomain,
+        sameSite: isEdufiliovaRequest && isCrossOrigin ? 'none' : 'lax'
+      });
+      
+      // New device/location detection and security email
+      try {
+        const currentIp = req.ip || req.connection.remoteAddress || 'Unknown';
+        const currentUserAgent = req.headers['user-agent'] || 'Unknown';
+        
+        // Check previous sessions for this user
+        const previousSessions = await db.select()
+          .from(userLoginSessions)
+          .where(eq(userLoginSessions.userId, user[0].id))
+          .orderBy(desc(userLoginSessions.createdAt))
+          .limit(10);
+        
+        // Check if this IP/UserAgent combination is new
+        const isNewDevice = previousSessions.length === 0 || !previousSessions.some(s => 
+          s.ipAddress === currentIp && s.userAgent === currentUserAgent
+        );
+        
+        if (isNewDevice && previousSessions.length > 0 && profile[0]?.email) {
+          // Parse user agent for device info
+          const ua = currentUserAgent;
+          let browserName = 'Unknown Browser';
+          let osName = 'Unknown OS';
+          let deviceType = 'Desktop';
+          
+          if (ua.includes('Chrome')) browserName = 'Chrome';
+          else if (ua.includes('Firefox')) browserName = 'Firefox';
+          else if (ua.includes('Safari')) browserName = 'Safari';
+          else if (ua.includes('Edge')) browserName = 'Edge';
+          
+          if (ua.includes('Windows')) osName = 'Windows';
+          else if (ua.includes('Mac OS')) osName = 'macOS';
+          else if (ua.includes('Linux')) osName = 'Linux';
+          else if (ua.includes('Android')) { osName = 'Android'; deviceType = 'Mobile'; }
+          else if (ua.includes('iPhone') || ua.includes('iPad')) { osName = 'iOS'; deviceType = 'Mobile'; }
+          
+          // Get location from IP (using geoip-lite if available)
+          let locationStr = 'Unknown Location';
+          try {
+            const geoip = await import('geoip-lite');
+            const geo = geoip.default.lookup(currentIp.replace('::ffff:', '')); 
+            if (geo) locationStr = `${geo.city || ''}, ${geo.country || ''}`;
+          } catch (e) { /* geoip not available */ }
+          
+          const { sendNewDeviceLoginEmail } = await import('./utils/email-templates.js');
+          sendNewDeviceLoginEmail(profile[0].email, profile[0].name || 'User', {
+            deviceName: deviceType,
+            browser: browserName,
+            os: osName,
+            location: locationStr,
+            ipAddress: currentIp,
+            loginTime: new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })
+          }).catch(err => console.error('New device email error:', err));
+          
+          console.log(`🔐 New device login detected for ${profile[0].email} from ${currentIp}`);
+        }
+      } catch (deviceCheckError) {
+        console.error('Device check error (non-blocking):', deviceCheckError);
+      }
+
+      res.cookie('sessionId', sessionId, {
+        httpOnly: false,
+        secure: isProduction,
+        sameSite: isEdufiliovaRequest && isCrossOrigin ? 'none' : 'lax',
+        domain: cookieDomain,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        path: '/' 
+      });
+
+      res.json({ success: true,
+        success: true,
+        user: {
+          id: user[0].id,
+          userId: user[0].userId,
+          email: user[0].email
+        },
+        profile: profile.length > 0 ? profile[0] : null,
+        sessionId,
+        teacherApplicationStatus,
+        freelancerApplicationStatus
+      });
+    } catch (error: any) {
+      console.error('Login error:', error);
+      res.status(500).json({ success: false, error: "Login failed" });
+    }
+  });
+
+  // Password Reset Request
+  app.post("/api/auth/forgot-password", async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await db.query.users.findFirst({ where: eq(users.email, email) });
+      
+      if (!user) {
+        return res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
+      }
+
+      // Generate 6-digit code
+      const emailCode = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      // Store code in verification_codes table
+      // Delete old verification codes for this email
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
+      await db.insert(verificationCodes).values({
+        userId: user.id,
+        code: emailCode,
+        contactInfo: email,
+        type: 'email_password_reset',
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+        userData: { email }
+      });
+
+      // Send reset email using new template
+      const templatePath = path.join(process.cwd(), 'server', 'templates', 'password_reset_whatsapp.html');
+      const htmlContent = fs.readFileSync(templatePath, 'utf-8');
+      const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, user.id) });
+
+      const { emailService } = await import('./utils/email.js');
+      await emailService.sendEmail({
+        to: email,
+        subject: 'Password Reset Verification Code',
+        html: htmlContent
+      });
+
+      res.json({ success: true, message: "If an account with this email exists, a verification code has been sent." });
+    } catch (error) {
+      console.error('Password reset request error:', error);
+      res.status(500).json({ success: false, error: "Password reset request failed" });
+    }
+  });
+
+  // Password Reset
+  app.post("/api/auth/reset-password", async (req, res) => {
+    try {
+      const { token, newPassword } = req.body;
+
+      if (!token || !newPassword) {
+        return res.status(400).json({ success: false, error: "Token and new password are required" });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({ success: false, error: "Password must be at least 6 characters long" });
+      }
+
+      // Find valid reset token
+      const resetToken = await db
+        .select()
+        .from(passwordResetTokens)
+        .where(and(
+          eq(passwordResetTokens.token, token),
+          eq(passwordResetTokens.isUsed, false)
+        ))
+        .limit(1);
+
+      if (resetToken.length === 0 || new Date() > resetToken[0].expiresAt) {
+        return res.status(400).json({ success: false, error: "Invalid or expired reset token" });
+      }
+
+      // Update password
+      const newPasswordHash = await bcrypt.hash(newPassword, 10);
+      await db
+        .update(users)
+        .set({ passwordHash: newPasswordHash })
+        .where(eq(users.id, resetToken[0].userId));
+
+      // Mark token as used
+      await db
+        .update(passwordResetTokens)
+        .set({ isUsed: true })
+        .where(eq(passwordResetTokens.id, resetToken[0].id));
+
+      res.json({ success: true, message: "Password reset successful" });
+
+    } catch (error: any) {
+      console.error('Password reset error:', error);
+      res.status(500).json({ success: false, error: "Password reset failed" });
+    }
+  });
+
+  // User Logout
+  app.post("/api/auth/logout", async (req, res) => {
+    try {
+      const { sessionId } = req.body;
+
+      if (sessionId) {
+        await db
+          .update(userLoginSessions)
+          .set({ isActive: false })
+          .where(eq(userLoginSessions.sessionId, sessionId));
+      }
+
+      res.json({ success: true, message: "Logged out successfully" });
+    } catch (error: any) {
+      console.error('Logout error:', error);
+      res.status(500).json({ success: false, error: "Logout failed" });
+    }
+  });
+
+  // Social Authentication Callback
+  app.post("/api/auth/social-callback", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      const { provider, isCheckout } = req.body;
+
+      if (!authHeader?.startsWith('Bearer ')) {
+        return res.status(401).json({ 
+          success: false, 
+          error: "No authorization token provided" 
+        });
+      }
+
+      // Create Supabase admin client for JWT verification
+      const { createClient } = await import('@supabase/supabase-js');
+      const supabaseUrl = process.env.VITE_SUPABASE_URL;
+      const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+
+      if (!supabaseUrl || !supabaseServiceKey) {
+        console.error('Missing Supabase configuration');
+        return res.status(500).json({ 
+          success: false, 
+          error: "Server configuration error" 
+        });
+      }
+
+      const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      });
+
+      // Verify the JWT token
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user: supabaseUser }, error: jwtError } = await supabase.auth.getUser(token);
+
+      if (jwtError || !supabaseUser) {
+        console.error('JWT verification failed:', jwtError);
+        return res.status(401).json({ 
+          success: false, 
+          error: "Invalid token" 
+        });
+      }
+
+      // Check if user already exists by email or supabase_user_id
+      const existingUser = await db
+        .select()
+        .from(users)
+        .where(
+          or(
+            eq(users.email, supabaseUser.email || ''),
+            eq(users.supabaseUserId, supabaseUser.id)
+          )
+        )
+        .limit(1);
+
+      let internalUser;
+      let needsProfileCompletion = false;
+      let needsRoleSelection = false;
+
+      if (existingUser.length > 0) {
+        // Update existing user with Supabase ID if not already set
+        internalUser = existingUser[0];
+        if (!internalUser.supabaseUserId) {
+          await db
+            .update(users)
+            .set({ supabaseUserId: supabaseUser.id })
+            .where(eq(users.id, internalUser.id));
+        }
+      } else {
+        // Create new user from social login
+        const userId = generateUserId(); // Generate 10-digit user ID
+        const userName = supabaseUser.user_metadata?.name || 
+                        supabaseUser.user_metadata?.full_name || 
+                        supabaseUser.email?.split('@')[0] || 
+                        'User';
+        
+        const newUserData = {
+          userId: userId,
+          email: supabaseUser.email || '',
+          passwordHash: null, // No password for social auth
+          supabaseUserId: supabaseUser.id,
+          authProvider: provider,
+          hasCompletedProfile: false,
+          hasSelectedRole: false,
+        };
+
+        const [createdUser] = await db.insert(users).values(newUserData).returning();
+        
+        // Create a basic profile for the new user
+        await db.insert(profiles).values({
+          userId: createdUser.id,
+          name: userName,
+          email: createdUser.email,
+          age: 18, // Default age, will be updated during profile completion
+          grade: 12, // Default grade, will be updated during profile completion
+          country: "Not specified", // Will be updated during profile completion
+        });
+        
+        internalUser = createdUser;
+        needsProfileCompletion = true;
+        needsRoleSelection = true;
+      }
+
+      // Check profile completion status
+      if (internalUser.hasCompletedProfile === false) {
+        needsProfileCompletion = true;
+      }
+
+      // Check role selection status  
+      if (internalUser.hasSelectedRole === false) {
+        needsRoleSelection = true;
+      }
+
+      // Create session for internal auth system
+      const sessionId = uuidv4();
+      const sessionExpiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
+      await db.insert(userLoginSessions).values({
+        userId: internalUser.id,
+        sessionId: sessionId,
+        expiresAt: sessionExpiry,
+        isActive: true,
+        loginMethod: 'social',
+        provider: provider,
+        createdAt: new Date()
+      });
+
+      // For checkout users, mark them appropriately
+      if (isCheckout) {
+        await db
+          .update(users)
+          .set({ 
+            isFromCheckout: true,
+            hasSelectedRole: false // Force role selection for checkout users
+          })
+          .where(eq(users.id, internalUser.id));
+        needsRoleSelection = true;
+      }
+
+      res.json({ 
+        success: true, 
+        sessionId,
+        user: {
+          id: internalUser.id,
+          email: internalUser.email,
+          userId: internalUser.userId,
+          hasCompletedProfile: internalUser.hasCompletedProfile,
+          hasSelectedRole: internalUser.hasSelectedRole,
+        },
+        needsProfileCompletion,
+        needsRoleSelection,
+        isFromCheckout: isCheckout || internalUser.isFromCheckout
+      });
+
+    } catch (error: any) {
+      console.error('Social auth callback error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Authentication failed" 
+      });
+    }
+  });
+
+  // Complete Profile after Social Login
+  app.post("/api/auth/complete-profile", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Not authenticated" });
+      }
+
+      const user = await getUserFromSession(authHeader);
+      if (!user) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const { age, grade, country } = req.body;
+
+      // Update user's profile
+      await db
+        .update(users)
+        .set({
+          age: parseInt(age),
+          grade: parseInt(grade),  
+          country: country,
+          hasCompletedProfile: true
+        })
+        .where(eq(users.id, user.id));
+
+      res.json({ 
+        success: true, 
+        message: "Profile completed successfully" 
+      });
+
+    } catch (error: any) {
+      console.error('Profile completion error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to complete profile" 
+      });
+    }
+  });
+
+  // Select Role after Social Login  
+  app.post("/api/auth/select-role", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Not authenticated" });
+      }
+
+      const user = await getUserFromSession(authHeader);
+      if (!user) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const { role } = req.body;
+
+      if (!['student', 'teacher', 'freelancer'].includes(role)) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Invalid role selected" 
+        });
+      }
+
+      // Update user's role
+      await db
+        .update(users)
+        .set({
+          role: role,
+          hasSelectedRole: true
+        })
+        .where(eq(users.id, user.id));
+
+      res.json({ 
+        success: true, 
+        message: "Role selected successfully",
+        role: role 
+      });
+
+    } catch (error: any) {
+      console.error('Role selection error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to select role" 
+      });
+    }
+  });
+
+  // Mark user as from checkout
+  app.post("/api/auth/mark-checkout-user", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Not authenticated" });
+      }
+
+      const user = await getUserFromSession(authHeader);
+      if (!user) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      await db
+        .update(users)
+        .set({ isFromCheckout: true })
+        .where(eq(users.id, user.id));
+
+      res.json({ 
+        success: true, 
+        message: "Checkout user marked successfully" 
+      });
+
+    } catch (error: any) {
+      console.error('Mark checkout user error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to mark checkout user" 
+      });
+    }
+  });
+
+  // Freelancer Authentication Endpoints
+  app.post("/api/freelancer/signup", async (req, res) => {
+    try {
+      const { email, password, fullName, role } = req.body;
+
+      // Validation
+      if (!email || !password || !fullName) {
+        return res.status(400).json({ success: false, error: "Email, password, and full name are required" });
+      }
+
+      if (!isValidEmail(email)) {
+        return res.status(400).json({ success: false, error: "Invalid email format" });
+      }
+
+      if (password.length < 8) {
+        return res.status(400).json({ success: false, error: "Password must be at least 8 characters long" });
+      }
+
+      // Check if user already exists
+      const existingUser = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+
+      if (existingUser.length > 0) {
+        return res.status(400).json({ success: false, error: "Email already registered. Please sign in instead." });
+      }
+
+      // Check for existing verification request
+      const existingVerification = await db
+        .select()
+        .from(verificationCodes)
+        .where(eq(verificationCodes.contactInfo, email))
+        .limit(1);
+
+      if (existingVerification.length > 0 && !existingVerification[0].isUsed) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "A verification request is already pending for this email. Please check your email or wait a few minutes." 
+        });
+      }
+
+      // Clean up any expired verification codes
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
+
+      // Store registration data temporarily and send verification
+      const emailCode = generateVerificationCode();
+
+      const registrationData = {
+        name: fullName,
+        age: 25, // Default age for freelancers
+        grade: 0, // No grade for freelancers
+        educationLevel: 'freelancer',
+        country: 'Global', // Default for freelancers
+        email,
+        phone: null,
+        passwordHash: await bcrypt.hash(password, 10),
+        emailCode,
+        smsCode: null,
+        emailVerified: false,
+        smsVerified: true, // No SMS for freelancers
+        role: 'freelancer'
+      };
+
+      // Send email verification
+      const emailResult = await sendEmail(
+        email,
+        'Verify Your Freelancer Account - EduFiliova',
+        getEmailTemplate('verification', { code: emailCode, name: fullName })
+      );
+
+      // If email failed, return error immediately
+      if (!emailResult.success) {
+        return res.status(500).json({
+          success: false,
+          error: "Failed to send verification email. Please try again.",
+          details: emailResult.error
+        });
+      }
+
+      // Store email verification
+      // Delete old verification codes for this email
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
+      await db.insert(verificationCodes).values({
+        contactInfo: email,
+        type: 'email',
+        code: emailCode,
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
+        userData: registrationData
+      });
+
+      res.json({ success: true,
+        success: true,
+        message: "Verification code sent to your email",
+        needsVerification: true,
+        emailSent: true
+      });
+
+    } catch (error: any) {
+      console.error('Freelancer signup error:', error);
+      res.status(500).json({ success: false, error: "Registration failed" });
+    }
+  });
+
+  app.post("/api/freelancer/signin", async (req, res) => {
+    try {
+      const { email, password, role } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({ success: false, error: "Email and password are required" });
+      }
+
+      // Find user by email
+      const user = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+
+      if (user.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid credentials" });
+      }
+
+      // Verify password
+      const isValidPassword = await bcrypt.compare(password, user[0].passwordHash);
+      if (!isValidPassword) {
+        return res.status(401).json({ success: false, error: "Invalid credentials" });
+      }
+
+      // Get user profile
+      const profile = await db
+        .select()
+        .from(profiles)
+        .where(eq(profiles.userId, user[0].id))
+        .limit(1);
+
+      if (profile.length === 0) {
+        return res.status(401).json({ success: false, error: "User profile not found" });
+      }
+
+      // Check if user is banned or suspended
+      if (profile[0].status === 'banned') {
+        return res.status(403).json({ 
+          success: false, 
+          error: 'Account has been banned. Please contact support if you believe this is an error.' 
+        });
+      }
+
+      if (profile[0].status === 'suspended') {
+        return res.status(403).json({ 
+          success: false, 
+          error: 'Account has been temporarily suspended. Please contact support for more information.' 
+        });
+      }
+
+      // Update user role to freelancer if not already
+      if (profile[0].role !== 'freelancer') {
+        await db
+          .update(profiles)
+          .set({ role: 'freelancer' })
+          .where(eq(profiles.userId, user[0].id));
+        
+        // Refresh profile data
+        const updatedProfile = await db
+          .select()
+          .from(profiles)
+          .where(eq(profiles.userId, user[0].id))
+          .limit(1);
+
+        profile[0] = updatedProfile[0];
+      }
+
+      // Create session
+      const sessionId = uuidv4();
+      await db.insert(userLoginSessions).values({
+        userId: user[0].id,
+        sessionId,
+        userAgent: req.headers['user-agent'] || 'Unknown',
+        ipAddress: req.ip || 'Unknown',
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
+      });
+
+      res.json({ success: true,
+        success: true,
+        user: {
+          id: user[0].id,
+          userId: user[0].userId,
+          email: user[0].email
+        },
+        profile: profile[0],
+        sessionId
+      });
+
+    } catch (error: any) {
+      console.error('Freelancer signin error:', error);
+      res.status(500).json({ success: false, error: "Sign in failed" });
+    }
+  });
+
+  // Shop Authentication Routes
+  app.post("/api/shop/signup", async (req, res) => {
+    try {
+      const { email, password, fullName } = req.body;
+
+      // Validation
+      if (!email || !password || !fullName) {
+        return res.status(400).json({ success: false, error: "Email, password, and full name are required" });
+      }
+
+      if (!isValidEmail(email)) {
+        return res.status(400).json({ success: false, error: "Invalid email format" });
+      }
+
+      if (password.length < 8) {
+        return res.status(400).json({ success: false, error: "Password must be at least 8 characters long" });
+      }
+
+      // Check if user already exists
+      const existingUser = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+
+      if (existingUser.length > 0) {
+        return res.status(400).json({ success: false, error: "Email already registered. Please sign in instead." });
+      }
+
+      // Check if there's a pending signup for this email
+      const existingPending = await storage.getPendingShopSignup(email);
+      if (existingPending) {
+        // Delete old pending signup
+        await storage.deletePendingShopSignup(email);
+      }
+
+      // Generate 6-digit verification code
+      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      // Hash password
+      const passwordHash = await bcrypt.hash(password, 10);
+
+      // Set expiration to 15 minutes from now
+      const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+      // Save pending signup with code
+      await storage.createPendingShopSignup({
+        email,
+        fullName,
+        passwordHash,
+        verificationCode,
+        expiresAt
+      });
+
+      // Send verification code email
+      const { emailService } = await import('./utils/email.js');
+      await emailService.sendShopVerificationEmail(email, {
+        fullName,
+        verificationCode
+      });
+
+      res.json({ success: true,
+        success: true,
+        needsVerification: true,
+        message: "Please check your email for the verification code.",
+        email
+      });
+
+    } catch (error: any) {
+      console.error('Shop signup error:', error);
+      res.status(500).json({ success: false, error: "Registration failed" });
+    }
+  });
+  app.post("/api/shop/verify-email", async (req, res) => {
+    try {
+      const { email, code } = req.body;
+
+      // Validation
+      if (!email || !code) {
+        return res.status(400).json({ success: false, error: "Email and verification code are required" });
+      }
+
+      if (!isValidEmail(email)) {
+        return res.status(400).json({ success: false, error: "Invalid email format" });
+      }
+
+      // Get pending signup
+      const pendingSignup = await storage.getPendingShopSignup(email);
+
+      if (!pendingSignup) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "No pending signup found for this email. Please sign up again." 
+        });
+      }
+
+      // Check if verification code matches
+      if (pendingSignup.verificationCode !== code) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Invalid verification code" 
+        });
+      }
+
+      // Check if code has expired
+      if (new Date() > new Date(pendingSignup.expiresAt)) {
+        await storage.deletePendingShopSignup(email);
+        return res.status(400).json({ 
+          success: false, 
+          error: "Verification code has expired. Please sign up again." 
+        });
+      }
+
+      // Check if user already exists BEFORE creating account
+      const existingUser = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+
+      if (existingUser.length > 0) {
+        // Delete the pending signup
+        await storage.deletePendingShopSignup(email);
+        return res.status(400).json({ 
+          success: false, 
+          error: "Email already registered. Please sign in instead." 
+        });
+      }
+
+      // Generate unique user ID
+      let userIdToUse = generateUserId();
+
+      // Wrap user creation in try-catch for duplicate email constraint
+      try {
+        // Create user with verified email
+        const newUser = await db.insert(users).values({
+          userId: userIdToUse,
+          email: pendingSignup.email,
+          passwordHash: pendingSignup.passwordHash,
+          isEmailVerified: true,
+          isPhoneVerified: false
+        }).returning();
+
+        // Create profile with general role (shop customer)
+        const newProfile = await db.insert(profiles).values({
+          userId: newUser[0].id,
+          name: pendingSignup.fullName,
+          age: 18,
+          grade: 12,
+          country: 'United States',
+          role: 'general',
+          status: 'active'
+        }).returning();
+
+        // Create shop customer record
+        const newCustomer = await db.insert(shopCustomers).values({
+          userId: newUser[0].id,
+          fullName: pendingSignup.fullName,
+          email: pendingSignup.email,
+          accountType: 'free'
+        }).returning();
+
+        // Create free membership for new customer
+        if (newCustomer[0]) {
+          await db.insert(shopMemberships).values({
+            customerId: newCustomer[0].id,
+            plan: 'free',
+            status: 'active',
+            billingCycle: 'monthly'
+          });
+        }
+
+        // Create session
+        const sessionId = uuidv4();
+        await db.insert(userLoginSessions).values({
+          userId: newUser[0].id,
+          sessionId,
+          userAgent: req.headers['user-agent'] || 'Unknown',
+          ipAddress: req.ip || 'Unknown',
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
+        });
+
+        // Delete the pending signup after successful account creation
+        await storage.deletePendingShopSignup(email);
+
+        res.json({ success: true,
+          success: true,
+          user: {
+            id: newUser[0].id,
+            userId: newUser[0].userId,
+            email: newUser[0].email
+          },
+          profile: newProfile[0],
+          sessionId
+        });
+
+      } catch (userCreationError: any) {
+        // Ensure pending signup is deleted even if user creation fails
+        await storage.deletePendingShopSignup(email);
+
+        // Handle duplicate email constraint error
+        if (userCreationError?.code === '23505' || userCreationError?.constraint?.includes('email')) {
+          return res.status(400).json({ 
+            success: false, 
+            error: "Email already registered. Please sign in instead." 
+          });
+        }
+
+        // Re-throw other errors to be caught by outer catch
+        throw userCreationError;
+      }
+
+    } catch (error: any) {
+      console.error('Shop email verification error:', error);
+      res.status(500).json({ success: false, error: "Email verification failed" });
+    }
+  });
+  app.post("/api/shop/signin", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({ success: false, error: "Email and password are required" });
+      }
+
+      // Find user by email
+      const user = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+
+      if (user.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid credentials" });
+      }
+
+      // Verify password
+      const isValidPassword = await bcrypt.compare(password, user[0].passwordHash);
+      if (!isValidPassword) {
+        return res.status(401).json({ success: false, error: "Invalid credentials" });
+      }
+
+      // Get user profile
+      const profile = await db
+        .select()
+        .from(profiles)
+        .where(eq(profiles.userId, user[0].id))
+        .limit(1);
+
+      if (profile.length === 0) {
+        return res.status(401).json({ success: false, error: "User profile not found" });
+      }
+
+      // Check if user is banned or suspended
+      if (profile[0].status === 'banned') {
+        return res.status(403).json({ 
+          success: false, 
+          error: 'Account has been banned. Please contact support if you believe this is an error.' 
+        });
+      }
+
+      if (profile[0].status === 'suspended') {
+        return res.status(403).json({ 
+          success: false, 
+          error: 'Account has been temporarily suspended. Please contact support for more information.' 
+        });
+      }
+
+      // Create session
+      const sessionId = uuidv4();
+      await db.insert(userLoginSessions).values({
+        userId: user[0].id,
+        sessionId,
+        userAgent: req.headers['user-agent'] || 'Unknown',
+        ipAddress: req.ip || 'Unknown',
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
+      });
+
+      res.json({ success: true,
+        success: true,
+        user: {
+          id: user[0].id,
+          userId: user[0].userId,
+          email: user[0].email
+        },
+        profile: profile[0],
+        sessionId
+      });
+
+    } catch (error: any) {
+      console.error('Shop signin error:', error);
+      res.status(500).json({ success: false, error: "Sign in failed" });
+    }
+  });
+
+  // ============================================
+  // CUSTOMER DASHBOARD API ROUTES
+  // ============================================
+
+  // Get customer dashboard statistics
+  app.get("/api/shop/dashboard/stats", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      
+      // Get or create shop customer
+      let customer = await storage.getShopCustomerByUserId(userId);
+      if (!customer) {
+        const profile = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
+        customer = await storage.createShopCustomer({
+          userId,
+          fullName: profile[0]?.name || 'Customer',
+          email: (req as AuthenticatedRequest).user?.email || ''
+        });
+      }
+
+      const stats = await storage.getCustomerDashboardStats(customer.id);
+      res.json(stats);
+    } catch (error: any) {
+      console.error('Dashboard stats error:', error);
+      res.status(500).json({ error: "Failed to fetch dashboard statistics" });
+    }
+  });
+
+  // Get purchase history
+  app.get("/api/shop/purchases", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const customer = await storage.getShopCustomerByUserId(userId);
+      
+      if (!customer) {
+        return res.json({ success: true, data: [] });
+      }
+
+      const purchases = await storage.getShopPurchasesByCustomerId(customer.id);
+      res.json({ success: true, data: purchases });
+    } catch (error: any) {
+      console.error('Get purchases error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch purchases" });
+    }
+  });
+
+  // Get course purchase history
+  app.get("/api/course-purchases", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      
+      const purchases = await db
+        .select({
+          id: coursePurchases.id,
+          courseId: coursePurchases.courseId,
+          courseTitle: courses.title,
+          amount: coursePurchases.amount,
+          currency: coursePurchases.currency,
+          paymentStatus: coursePurchases.paymentStatus,
+          purchasedAt: coursePurchases.purchasedAt,
+          createdAt: coursePurchases.createdAt,
+        })
+        .from(coursePurchases)
+        .leftJoin(courses, eq(coursePurchases.courseId, courses.id))
+        .where(eq(coursePurchases.userId, userId))
+        .orderBy(desc(coursePurchases.purchasedAt));
+      
+      res.json(purchases);
+    } catch (error: any) {
+      console.error('Get course purchases error:', error);
+      res.status(500).json({ error: "Failed to fetch course purchases" });
+    }
+  });
+
+  // Claim free digital item and create purchase record
+  app.post("/api/shop/purchases/claim-free", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const { productId, productName } = req.body;
+
+      if (!productId || !productName) {
+        return res.status(400).json({ error: "Product ID and name are required" });
+      }
+
+      // Get or create customer
+      let customer = await storage.getShopCustomerByUserId(userId);
+      if (!customer) {
+        const userProfile = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
+        const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+        
+        if (!userProfile[0] || !user[0]) {
+          return res.status(404).json({ error: "User profile not found" });
+        }
+
+        customer = await storage.createShopCustomer({
+          userId: userId,
+          fullName: userProfile[0].name,
+          email: user[0].email
+        });
+      }
+
+      // Check daily free download limit (5 per day)
+      const todaysPurchases = await db
+        .select()
+        .from(shopPurchases)
+        .where(
+          and(
+            eq(shopPurchases.customerId, customer.id),
+            eq(shopPurchases.price, '0.00'),
+            sql`DATE(${shopPurchases.createdAt}) = CURRENT_DATE`
+          )
+        );
+
+      console.log(`🔒 Free download check - Customer: ${customer.id}, Today's claims: ${todaysPurchases.length}/5`);
+
+      if (todaysPurchases.length >= 5) {
+        console.log(`❌ Daily limit reached for customer ${customer.id}`);
+        return res.status(429).json({ 
+          error: "Daily limit reached. You can download up to 5 free products per day. Please try again tomorrow." 
+        });
+      }
+
+      // Get product details
+      const [product] = await db.select().from(products).where(eq(products.id, productId)).limit(1);
+      
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      // Verify it's a free digital item
+      if (product.type !== 'digital' || parseFloat(product.price) > 0) {
+        return res.status(400).json({ error: "This product is not a free digital item" });
+      }
+
+      // Create purchase record
+      const purchase = await storage.createShopPurchase({
+        customerId: customer.id,
+        itemName: productName,
+        itemType: 'digital',
+        downloadUrl: product.images[0] || '',
+        thumbnailUrl: product.images[0] || '',
+        price: '0.00'
+      });
+
+      // Create download record for tracking
+      const crypto = await import('crypto');
+      const downloadToken = crypto.randomBytes(32).toString('hex');
+      const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
+      await db.insert(downloads).values({
+        userId: userId,
+        productId: product.id,
+        orderId: null, // No order for free claims
+        downloadToken: downloadToken,
+        expiresAt: expiresAt,
+        isExpired: false,
+        downloadedAt: new Date() // Mark as downloaded immediately for free claims
+      });
+
+      // Track the download in stats
+      await trackProductDownload({
+        productId: product.id,
+        userId: userId,
+        downloadType: 'free',
+        ipAddress: (req as any).ip,
+        userAgent: req.get('User-Agent')
+      });
+
+      console.log(`✅ Free product claimed and download tracked: ${product.name} by user ${userId}`);
+
+      res.json({ 
+        success: true, 
+        data: { 
+          ...purchase,
+          downloadUrl: product.images[0] || '',
+          downloadToken: downloadToken
+        }
+      });
+    } catch (error: any) {
+      console.error('Claim free item error:', error);
+      res.status(500).json({ error: "Failed to claim free item" });
+    }
+  });
+
+  // Check if user can download a product with their membership
+  app.get("/api/shop/membership/can-download/:productId", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const { productId } = req.params;
+
+      // Get product details
+      const [product] = await db.select().from(products).where(eq(products.id, productId)).limit(1);
+      
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      // Free products can always be downloaded (with daily limits)
+      if (parseFloat(product.price) === 0) {
+        return res.json({ 
+          canDownload: true,
+          method: 'free',
+          reason: 'Free product'
+        });
+      }
+
+      // Get customer
+      const customer = await storage.getShopCustomerByUserId(userId);
+      if (!customer) {
+        return res.json({ 
+          canDownload: false,
+          method: 'purchase',
+          reason: 'No membership. Please purchase or upgrade your plan.'
+        });
+      }
+
+      // Get membership
+      const membership = await storage.getShopMembershipByCustomerId(customer.id);
+      if (!membership) {
+        return res.json({ 
+          canDownload: false,
+          method: 'purchase',
+          reason: 'No membership. Please upgrade your plan to download paid products.'
+        });
+      }
+
+      // Check download limits
+      const limitCheck = await checkDownloadLimits(userId, [productId]);
+      
+      if (limitCheck.canDownload) {
+        return res.json({ success: true,
+          canDownload: true,
+          method: 'membership',
+          reason: 'Can download with membership'
+        });
+      } else {
+        return res.json({ success: true,
+          canDownload: false,
+          method: 'purchase',
+          reason: limitCheck.reason,
+          limitType: limitCheck.limitType
+        });
+      }
+    } catch (error: any) {
+      console.error('Check download eligibility error:', error);
+      res.status(500).json({ error: "Failed to check download eligibility" });
+    }
+  });
+
+  // Claim paid product using membership limits
+  app.post("/api/shop/purchases/claim-with-membership", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const { productId } = req.body;
+
+      if (!productId) {
+        return res.status(400).json({ error: "Product ID is required" });
+      }
+
+      // Get product details
+      const [product] = await db.select().from(products).where(eq(products.id, productId)).limit(1);
+      
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      // Must be a paid digital product
+      if (product.type !== 'digital' || parseFloat(product.price) === 0) {
+        return res.status(400).json({ error: "This endpoint is for paid digital products only" });
+      }
+
+      // Get or create customer
+      let customer = await storage.getShopCustomerByUserId(userId);
+      if (!customer) {
+        const userProfile = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
+        const user = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+        
+        if (!userProfile[0] || !user[0]) {
+          return res.status(404).json({ error: "User profile not found" });
+        }
+
+        customer = await storage.createShopCustomer({
+          userId: userId,
+          fullName: userProfile[0].name,
+          email: user[0].email
+        });
+      }
+
+      // Check download limits and update counters
+      const limitCheck = await checkDownloadLimits(userId, [productId]);
+      
+      if (!limitCheck.canDownload) {
+        return res.status(403).json({ 
+          error: limitCheck.reason,
+          limitType: limitCheck.limitType,
+          upgradeRequired: true
+        });
+      }
+
+      // Create a "free" order for this membership download
+      const [order] = await db
+        .insert(orders)
+        .values({
+          userId: userId,
+          totalAmount: '0.00', // Free with membership
+          status: 'delivered',
+          paymentMethod: 'membership',
+          completedAt: new Date()
+        })
+        .returning();
+
+      // Create order item
+      await db.insert(orderItems).values({
+        orderId: order.id,
+        productId: product.id,
+        quantity: 1,
+        price: product.price, // Original price for reference
+        unitPrice: product.price,
+        totalPrice: product.price
+      });
+
+      // Generate download token
+      const crypto = await import('crypto');
+      const downloadToken = crypto.randomBytes(32).toString('hex');
+      const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
+      const [downloadRecord] = await db
+        .insert(downloads)
+        .values({
+          userId: userId,
+          productId: product.id,
+          orderId: order.id,
+          downloadToken: downloadToken,
+          expiresAt: expiresAt,
+          isExpired: false
+        })
+        .returning();
+
+      // Create purchase record for user's library
+      const purchase = await storage.createShopPurchase({
+        customerId: customer.id,
+        itemName: product.name,
+        itemType: 'digital',
+        downloadUrl: `/download/${downloadToken}`,
+        thumbnailUrl: product.images[0] || '',
+        price: '0.00' // Free with membership
+      });
+
+      console.log(`✅ Membership download claimed - User: ${userId}, Product: ${product.name}`);
+
+      res.json({ 
+        success: true, 
+        data: { 
+          ...purchase,
+          downloadToken: downloadToken,
+          downloadUrl: `/download/${downloadToken}`,
+          expiresAt: expiresAt
+        }
+      });
+    } catch (error: any) {
+      console.error('Claim with membership error:', error);
+      res.status(500).json({ error: "Failed to claim product with membership" });
+    }
+  });
+
+  // Download digital product by token
+  app.get("/download/:token", async (req, res) => {
+    try {
+      const { token } = req.params;
+
+      // Find download record by token
+      const [downloadRecord] = await db
+        .select({
+          download: downloads,
+          product: products
+        })
+        .from(downloads)
+        .leftJoin(products, eq(downloads.productId, products.id))
+        .where(eq(downloads.downloadToken, token))
+        .limit(1);
+
+      if (!downloadRecord) {
+        return res.status(404).json({ error: 'Download not found' });
+      }
+
+      // Check if expired
+      const now = new Date();
+      if (new Date(downloadRecord.download.expiresAt) < now) {
+        return res.status(410).json({ error: 'Download link has expired' });
+      }
+
+      // Update downloadedAt timestamp if not already set
+      if (!downloadRecord.download.downloadedAt) {
+        await db
+          .update(downloads)
+          .set({ downloadedAt: now })
+          .where(eq(downloads.id, downloadRecord.download.id));
+      }
+
+      // Determine the file URL to download
+      let fileUrl = null;
+      
+      // Check downloadableFiles first (newer format)
+      if (downloadRecord.product?.downloadableFiles && Array.isArray(downloadRecord.product.downloadableFiles)) {
+        const files = downloadRecord.product.downloadableFiles as any[];
+        if (files.length > 0 && files[0].url) {
+          fileUrl = files[0].url;
+        }
+      }
+      
+      // Fallback to fileUrl (legacy format)
+      if (!fileUrl && downloadRecord.product?.fileUrl) {
+        fileUrl = downloadRecord.product.fileUrl;
+      }
+
+      // If we have a file URL, redirect to it for download
+      if (fileUrl) {
+        console.log(`📥 Downloading file: ${downloadRecord.product?.name} → ${fileUrl}`);
+        return res.redirect(fileUrl);
+      }
+
+      // No file found - return error
+      console.error('No file URL found for product:', downloadRecord.product?.id);
+      return res.status(404).json({ 
+        error: 'File not found. The product does not have a downloadable file configured.' 
+      });
+    } catch (error: any) {
+      console.error('Download error:', error);
+      res.status(500).json({ error: 'Download failed' });
+    }
+  });
+
+  // Get order details with items (for order slip viewer)
+  app.get("/api/orders/:orderId", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const { orderId } = req.params;
+
+      // Fetch order details
+      const [order] = await db
+        .select()
+        .from(orders)
+        .where(eq(orders.id, orderId))
+        .limit(1);
+
+      if (!order) {
+        return res.status(404).json({ error: 'Order not found' });
+      }
+
+      // Verify user owns this order
+      if (order.userId !== userId) {
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
+
+      // Fetch order items with product details
+      const items = await db
+        .select({
+          id: orderItems.id,
+          productId: orderItems.productId,
+          productName: products.name,
+          quantity: orderItems.quantity,
+          unitPrice: orderItems.unitPrice,
+          totalPrice: orderItems.totalPrice,
+          productImage: products.images,
+        })
+        .from(orderItems)
+        .leftJoin(products, eq(orderItems.productId, products.id))
+        .where(eq(orderItems.orderId, orderId));
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          order,
+          items: items.map(item => ({
+            ...item,
+            productImage: item.productImage?.[0] || null,
+          }))
+        }
+      });
+    } catch (error: any) {
+      console.error('Get order details error:', error);
+      res.status(500).json({ error: 'Failed to fetch order details' });
+    }
+  });
+
+  // Download order slip as PDF
+  app.get("/api/orders/:orderId/slip", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const { orderId } = req.params;
+
+      // Fetch order details
+      const [order] = await db
+        .select()
+        .from(orders)
+        .where(eq(orders.id, orderId))
+        .limit(1);
+
+      if (!order) {
+        return res.status(404).json({ error: 'Order not found' });
+      }
+
+      // Verify user owns this order
+      if (order.userId !== userId) {
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
+
+      // Fetch order items with product details
+      const items = await db
+        .select({
+          id: orderItems.id,
+          productName: products.name,
+          quantity: orderItems.quantity,
+          unitPrice: orderItems.unitPrice,
+          totalPrice: orderItems.totalPrice,
+        })
+        .from(orderItems)
+        .leftJoin(products, eq(orderItems.productId, products.id))
+        .where(eq(orderItems.orderId, orderId));
+
+      // Import PDFKit for PDF generation
+      const PDFDocument = require('pdfkit');
+      const doc = new PDFDocument({ margin: 50 });
+
+      // Set response headers for PDF download
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename=order-slip-${orderId.substring(0, 8)}.pdf`);
+
+      // Pipe PDF to response
+      doc.pipe(res);
+
+      // Add header
+      doc.fontSize(20).text('Order Receipt', { align: 'center' });
+      doc.moveDown();
+
+      // Order info
+      doc.fontSize(12);
+      doc.text(`Order ID: ${orderId.substring(0, 8).toUpperCase()}`, { continued: false });
+      doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`, { continued: false });
+      doc.text(`Status: ${order.status}`, { continued: false });
+      doc.text(`Payment Method: ${order.paymentMethod || 'N/A'}`, { continued: false });
+      doc.moveDown();
+
+      // Items table
+      doc.fontSize(14).text('Items:', { underline: true });
+      doc.moveDown(0.5);
+      
+      items.forEach((item, index) => {
+        doc.fontSize(11);
+        doc.text(`${index + 1}. ${item.productName || 'Product'}`);
+        doc.text(`   Quantity: ${item.quantity} × $${item.unitPrice} = $${item.totalPrice}`, { indent: 20 });
+        doc.moveDown(0.5);
+      });
+
+      doc.moveDown();
+      
+      // Total
+      doc.fontSize(14);
+      if (order.discountAmount && parseFloat(order.discountAmount as string) > 0) {
+        doc.text(`Discount: -$${order.discountAmount}`, { align: 'right' });
+      }
+      doc.fontSize(16).text(`Total: $${order.totalAmount}`, { align: 'right', bold: true });
+
+      // Finalize PDF
+      doc.end();
+    } catch (error: any) {
+      console.error('Download order slip error:', error);
+      res.status(500).json({ error: 'Failed to download order slip' });
+    }
+  });
+
+  // Get digital downloads
+  app.get("/api/digital-downloads", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+
+      // Get downloads with product details
+      const userDownloads = await db
+        .select({
+          id: downloads.id,
+          downloadToken: downloads.downloadToken,
+          downloadedAt: downloads.downloadedAt,
+          expiresAt: downloads.expiresAt,
+          isExpired: downloads.isExpired,
+          orderId: downloads.orderId,
+          productId: downloads.productId,
+          productName: products.name,
+          productDescription: products.description,
+          productType: products.type,
+          orderDate: orders.createdAt,
+          orderTotal: orders.totalAmount
+        })
+        .from(downloads)
+        .leftJoin(products, eq(downloads.productId, products.id))
+        .leftJoin(orders, eq(downloads.orderId, orders.id))
+        .where(eq(downloads.userId, userId))
+        .orderBy(desc(downloads.expiresAt));
+
+      // Check and update expired status
+      const now = new Date();
+      const downloadsWithStatus = userDownloads.map(download => {
+        const isExpired = new Date(download.expiresAt) < now;
+        return {
+          ...download,
+          isExpired,
+          daysUntilExpiry: isExpired ? 0 : Math.ceil((new Date(download.expiresAt).getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+        };
+      });
+
+      res.json(downloadsWithStatus);
+    } catch (error: any) {
+      console.error('Get digital downloads error:', error);
+      res.status(500).json({ error: "Failed to fetch digital downloads" });
+    }
+  });
+
+  // Get ads campaigns - includes both shop ads and banner ads
+  app.get("/api/shop/ads", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      
+      // Fetch banner ads directly by userId
+      const bannerAds = await db
+        .select()
+        .from(adsBanners)
+        .where(eq(adsBanners.userId, userId))
+        .orderBy(desc(adsBanners.createdAt));
+
+      // Transform banner ads to match the shop ads format
+      const transformedBannerAds = bannerAds.map(banner => ({
+        id: banner.id,
+        campaignName: banner.title,
+        adType: 'banner',
+        targetAudience: banner.targetLocations ? `Targeted (${JSON.parse(banner.targetLocations as string).length} locations)` : 'Global',
+        adContent: `Banner ad - ${banner.size}`,
+        budget: banner.price.toString(),
+        status: banner.status as 'pending' | 'approved' | 'running' | 'paused' | 'rejected',
+        impressions: banner.impressions,
+        clicks: banner.clicks,
+        startDate: banner.startDate.toISOString(),
+        endDate: banner.endDate.toISOString(),
+        createdAt: banner.createdAt.toISOString(),
+        imageUrl: banner.imageUrl,
+        placement: banner.placements || banner.placement,
+      }));
+
+      res.json(transformedBannerAds);
+    } catch (error: any) {
+      console.error('Get ads error:', error);
+      res.status(500).json({ error: "Failed to fetch ads" });
+    }
+  });
+
+  // Create new ad campaign
+  app.post("/api/shop/ads", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const customer = await storage.getShopCustomerByUserId(userId);
+      
+      if (!customer) {
+        return res.status(404).json({ error: "Customer profile not found" });
+      }
+
+      // Get user's membership
+      const membership = await db
+        .select()
+        .from(shopMemberships)
+        .where(eq(shopMemberships.customerId, customer.id))
+        .limit(1);
+
+      const userMembership = membership[0];
+      const currentPlan = userMembership?.plan || 'free';
+      
+      // Determine if user has annual billing (not monthly)
+      // Membership plan format: "free", "creator-monthly", "creator-annual", etc.
+      const isAnnual = currentPlan.includes('annual') || currentPlan.endsWith('-yearly');
+
+      // Get membership plan details to check ad limits
+      let canCreateFreeCampaign = false;
+      let campaignLimit = 0;
+      
+      if (isAnnual) {
+        // Annual subscribers get free campaigns based on their plan
+        const planId = currentPlan.replace('-annual', '').replace('-yearly', '');
+        const planDetails = await db
+          .select()
+          .from(shopMembershipPlans)
+          .where(eq(shopMembershipPlans.planId, planId))
+          .limit(1);
+        
+        if (planDetails.length > 0) {
+          // Use structured annualAdLimit field
+          const adLimit = planDetails[0].annualAdLimit;
+          
+          if (adLimit === null) {
+            // null = unlimited campaigns
+            canCreateFreeCampaign = true;
+            campaignLimit = Infinity;
+          } else if (adLimit && adLimit > 0) {
+            // Positive number = specific limit
+            canCreateFreeCampaign = true;
+            campaignLimit = adLimit;
+          }
+          // adLimit === 0 means no free campaigns (stays false)
+        }
+      }
+
+      // If they can create free campaigns, check against their limit
+      if (canCreateFreeCampaign) {
+        // Count active campaigns
+        const activeAds = await db
+          .select()
+          .from(shopAds)
+          .where(and(
+            eq(shopAds.customerId, customer.id),
+            or(
+              eq(shopAds.status, 'running'),
+              eq(shopAds.status, 'pending')
+            )
+          ));
+
+        if (activeAds.length >= campaignLimit) {
+          return res.status(403).json({ 
+            error: `Campaign limit reached. Your plan allows ${campaignLimit} active campaign${campaignLimit > 1 ? 's' : ''}.`,
+            requiresPayment: false,
+            limit: campaignLimit
+          });
+        }
+      } else {
+        // Non-annual users must pay for campaigns
+        // Get campaign price from system settings or use default
+        const campaignPrice = parseFloat(req.body.budget || '0');
+        
+        // Check wallet balance
+        const wallet = await db
+          .select()
+          .from(shopTransactions)
+          .where(eq(shopTransactions.customerId, customer.id));
+
+        const balance = wallet.reduce((sum, tx) => {
+          const amount = parseFloat(tx.amount);
+          return tx.type === 'add_funds' ? sum + amount : sum - amount;
+        }, 0);
+
+        if (balance < campaignPrice) {
+          return res.status(402).json({ 
+            error: "Insufficient wallet balance. Please add funds or upgrade to an annual plan for free campaigns.",
+            requiresPayment: true,
+            requiredAmount: campaignPrice,
+            currentBalance: balance
+          });
+        }
+
+        // Deduct campaign cost from wallet
+        await db.insert(shopTransactions).values({
+          customerId: customer.id,
+          amount: campaignPrice.toFixed(2),
+          type: 'ad_spend',
+          description: `Payment for advertising campaign: ${req.body.campaignName}`,
+          status: 'completed'
+        });
+      }
+
+      // Extract only allowed fields, never trust customerId from client
+      const { campaignName, budget, targetAudience, adContent, startDate, endDate } = req.body;
+
+      const newAd = await storage.createShopAd({
+        customerId: customer.id, // Always use authenticated customer's ID
+        campaignName,
+        budget,
+        targetAudience,
+        adContent,
+        startDate,
+        endDate,
+        status: 'pending' // Always start as pending
+      });
+
+      res.json({ success: true,
+        ...newAd,
+        paidCampaign: !canCreateFreeCampaign
+      });
+    } catch (error: any) {
+      console.error('Create ad error:', error);
+      res.status(500).json({ error: "Failed to create ad campaign" });
+    }
+  });
+
+  // Update ad campaign
+  app.put("/api/shop/ads/:id", requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const customer = await storage.getShopCustomerByUserId(userId);
+      
+      if (!customer) {
+        return res.status(404).json({ error: "Customer profile not found" });
+      }
+
+      // Verify ownership - check if ad belongs to this customer
+      const existingAd = await storage.getShopAdById(id);
+      if (!existingAd) {
+        return res.status(404).json({ error: "Ad not found" });
+      }
+
+      if (existingAd.customerId !== customer.id) {
+        return res.status(403).json({ error: "Unauthorized to modify this ad" });
+      }
+
+      // Extract only allowed fields for update
+      const { campaignName, budget, targetAudience, adContent, startDate, endDate, status } = req.body;
+
+      const updated = await storage.updateShopAd(id, {
+        campaignName,
+        budget,
+        targetAudience,
+        adContent,
+        startDate,
+        endDate,
+        status
+      });
+
+      res.json(updated);
+    } catch (error: any) {
+      console.error('Update ad error:', error);
+      res.status(500).json({ error: "Failed to update ad campaign" });
+    }
+  });
+
+  // Delete ad campaign
+  app.delete("/api/shop/ads/:id", requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const customer = await storage.getShopCustomerByUserId(userId);
+      
+      if (!customer) {
+        return res.status(404).json({ error: "Customer profile not found" });
+      }
+
+      // Verify ownership - check if ad belongs to this customer
+      const existingAd = await storage.getShopAdById(id);
+      if (!existingAd) {
+        return res.status(404).json({ error: "Ad not found" });
+      }
+
+      if (existingAd.customerId !== customer.id) {
+        return res.status(403).json({ error: "Unauthorized to delete this ad" });
+      }
+
+      const deleted = await storage.deleteShopAd(id);
+
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error('Delete ad error:', error);
+      res.status(500).json({ error: "Failed to delete ad campaign" });
+    }
+  });
+
+  // Get membership details
+  app.get("/api/shop/membership", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const customer = await storage.getShopCustomerByUserId(userId);
+      
+      if (!customer) {
+        return res.json({ plan: 'free', status: 'active' });
+      }
+
+      let membership = await storage.getShopMembershipByCustomerId(customer.id);
+      
+      if (!membership) {
+        membership = await storage.createShopMembership({
+          customerId: customer.id,
+          plan: customer.accountType || 'free',
+          status: 'active'
+        });
+      }
+
+      res.json(membership);
+    } catch (error: any) {
+      console.error('Get membership error:', error);
+      res.status(500).json({ error: "Failed to fetch membership details" });
+    }
+  });
+
+  // Update membership
+  app.put("/api/shop/membership", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const customer = await storage.getShopCustomerByUserId(userId);
+      
+      if (!customer) {
+        return res.status(404).json({ error: "Customer profile not found" });
+      }
+
+      const membership = await storage.getShopMembershipByCustomerId(customer.id);
+      
+      if (!membership) {
+        return res.status(404).json({ error: "Membership not found" });
+      }
+
+      const updated = await storage.updateShopMembership(membership.id, req.body);
+      
+      // Also update customer account type
+      await storage.updateShopCustomer(customer.id, { accountType: req.body.plan });
+
+      // Send membership confirmation email
+      try {
+        const { emailService } = await import('./utils/email.js');
+        const userProfile = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
+        const userEmail = userProfile[0]?.email || customer.email;
+        
+        if (userEmail) {
+          // Get plan details
+          const planDetails = await db
+            .select()
+            .from(shopMembershipPlans)
+            .where(eq(shopMembershipPlans.planId, req.body.plan))
+            .limit(1);
+          
+          if (planDetails[0]) {
+            await emailService.sendSubscriptionEmail(userEmail, {
+              planName: planDetails[0].name,
+              price: parseFloat(planDetails[0].monthlyPrice || '0'),
+              billingCycle: 'Monthly',
+              orderId: membership.id,
+              customerName: customer.fullName || userProfile[0]?.name || undefined,
+              features: planDetails[0].features || []
+            });
+            console.log('📧 Membership upgrade email sent to:', userEmail);
+          }
+        }
+      } catch (emailError) {
+        console.error('Failed to send membership email:', emailError);
+      }
+
+      res.json(updated);
+    } catch (error: any) {
+      console.error('Update membership error:', error);
+      res.status(500).json({ error: "Failed to update membership" });
+    }
+  });
+
+  // Calculate shop membership upgrade cost (pro-rated)
+  app.post("/api/shop/membership/calculate-upgrade", requireAuth, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const customer = await storage.getShopCustomerByUserId(userId);
+      
+      if (!customer) {
+        return res.status(404).json({ error: "Customer profile not found" });
+      }
+
+      const { planId, billingCycle } = req.body;
+
+      if (!planId || !billingCycle) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      // Get current membership
+      const membership = await storage.getShopMembershipByCustomerId(customer.id);
+      
+      if (!membership || !membership.renewalDate) {
+        return res.status(400).json({ error: "No active membership found" });
+      }
+
+      // Get target plan details
+      const planDetails = await db
+        .select()
+        .from(shopMembershipPlans)
+        .where(eq(shopMembershipPlans.planId, planId))
+        .limit(1);
+
+      if (!planDetails || planDetails.length === 0) {
+        return res.status(404).json({ error: "Plan not found" });
+      }
+
+      const targetPlan = planDetails[0];
+      
+      // Get current plan details
+      const currentPlanDetails = await db
+        .select()
+        .from(shopMembershipPlans)
+        .where(eq(shopMembershipPlans.planId, membership.plan))
+        .limit(1);
+
+      if (!currentPlanDetails || currentPlanDetails.length === 0) {
+        return res.status(404).json({ error: "Current plan not found" });
+      }
+
+      const currentPlan = currentPlanDetails[0];
+
+      // Calculate remaining days
+      const now = new Date();
+      const renewalDate = new Date(membership.renewalDate);
+      const daysRemaining = Math.max(0, Math.ceil((renewalDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+
+      // Determine days in period
+      const daysInPeriod = billingCycle === 'monthly' ? 30 : 365;
+
+      // Calculate credit from current plan
+      const currentPlanPrice = parseFloat(billingCycle === 'monthly' ? currentPlan.monthlyPrice : currentPlan.yearlyPrice);
+      const dailyRate = currentPlanPrice / daysInPeriod;
+      const credit = dailyRate * daysRemaining;
+
+      // Calculate target plan cost
+      const targetPlanPrice = parseFloat(billingCycle === 'monthly' ? targetPlan.monthlyPrice : targetPlan.yearlyPrice);
+
+      // Calculate upgrade cost
+      const upgradeCost = Math.max(0, targetPlanPrice - credit);
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          currentPlan: membership.plan,
+          targetPlan: planId,
+          daysRemaining,
+          credit: parseFloat(credit.toFixed(2)),
+          targetPlanPrice: parseFloat(targetPlanPrice.toFixed(2)),
+          upgradeCost: parseFloat(upgradeCost.toFixed(2)),
+          billingCycle,
+          renewalDate: renewalDate.toISOString()
+        }
+      });
+    } catch (error: any) {

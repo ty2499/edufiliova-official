@@ -1,0 +1,46 @@
+    }
+  });
+
+  // ============================================
+  // POST ENDPOINTS FOR SUBJECT-BASED EDUCATION
+  // ============================================
+
+  // Create a new subject
+  app.post("/api/subjects", async (req, res) => {
+    try {
+      const { name, gradeSystem, gradeLevel, description, iconUrl } = req.body;
+      
+      if (!name || !gradeSystem || !gradeLevel) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Missing required fields" 
+        });
+      }
+      
+      const newSubject = await db
+        .insert(subjects)
+        .values({
+          name,
+          gradeSystem,
+          gradeLevel: parseInt(gradeLevel),
+          description: description || null,
+          iconUrl: iconUrl || null,
+          createdBy: (req.user as any).id,
+          isActive: true
+        })
+        .returning();
+      
+      res.json({ success: true, data: newSubject[0] });
+    } catch (error: any) {
+      console.error("Subject creation error:", error);
+      res.status(500).json({ success: false, error: "Failed to create subject" });
+    }
+  });
+
+  // Delete a subject and all its related data
+  app.delete("/api/subjects/:subjectId", async (req, res) => {
+    try {
+      const { subjectId } = req.params;
+      
+      // Get all chapters for this subject
+      const chaptersToDelete = await db

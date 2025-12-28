@@ -1,0 +1,5000 @@
+          eq(studentProgress.userId, userId),
+          eq(studentProgress.subjectId, subjectId),
+          isNotNull(studentProgress.completedAt)
+        ));
+
+      const lessonsAccessed = accessedLessons[0]?.count || 0;
+
+      res.json({ success: true,
+        success: true,
+        accessedLessons: lessonsAccessed
+      });
+
+    } catch (error: any) {
+      console.error('Subject progress check error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to check subject progress' 
+      });
+    }
+  });
+  
+  // Get student dashboard data
+  app.get("/api/dashboard/student", async (req, res) => {
+    try {
+      const sessionId = req.headers['x-session-id'] as string;
+      if (!sessionId) {
+        return res.status(401).json({ success: false, error: 'No session ID provided' });
+      }
+
+      // Verify session and get user
+      const userSession = await db.select({
+        userId: userLoginSessions.userId,
+        sessionId: userLoginSessions.sessionId,
+        expiresAt: userLoginSessions.expiresAt,
+      })
+      .from(userLoginSessions)
+      .where(and(
+        eq(userLoginSessions.sessionId, sessionId),
+        eq(userLoginSessions.isActive, true),
+        gt(userLoginSessions.expiresAt, new Date())
+      ))
+      .limit(1);
+
+      if (userSession.length === 0) {
+        return res.status(401).json({ success: false, error: 'Invalid or expired session' });
+      }
+
+      // Get user profile
+      const profile = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, userSession[0].userId))
+        .limit(1);
+
+      if (profile.length === 0) {
+        return res.status(404).json({ success: false, error: 'Profile not found' });
+      }
+
+      // Get student progress for courses
+      const progress = await db.select()
+        .from(studentProgress)
+        .where(eq(studentProgress.userId, userSession[0].userId))
+        .limit(20);
+
+      // Get user's tasks/assignments
+      const assignments = await db.select()
+        .from(tasks)
+        .where(eq(tasks.userId, userSession[0].userId))
+        .orderBy(desc(tasks.createdAt))
+        .limit(10);
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          profile: profile[0],
+          subjects: [], // No subjects available
+          progress: progress,
+          assignments: assignments
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Dashboard data error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch dashboard data' });
+    }
+  });
+
+  // ======================= MESSAGING ROUTES =======================
+  
+  // Get user profile with role for messaging permissions (handles profile UUIDs, auth UUIDs, and text user IDs)
+  const getUserWithProfile = async (userIdOrTextId: string) => {
+    try {
+      // First try to find by text user ID (like "ADMIN00001", "HJOR2AC54I")
+      const textIdResult = await db.select({
+        id: users.id,
+        userId: users.userId,     // Text ID field (for permission checks)
+        textUserId: users.userId, // Text ID field
+        name: profiles.name,
+        role: profiles.role,
+        pronouns: profiles.pronouns,
+        avatarUrl: profiles.avatarUrl,
+        verificationBadge: profiles.verificationBadge
+      })
+      .from(users)
+      .innerJoin(profiles, eq(users.id, profiles.userId))
+      .where(eq(users.userId, userIdOrTextId))
+      .limit(1);
+      
+      if (textIdResult.length > 0) {
+        const user = textIdResult[0];
+        // Auto-assign blue badge for accountant and customer_service roles
+        if (user.role === 'accountant' || user.role === 'customer_service') {
+          user.verificationBadge = 'blue';
+        }
+        return user;
+      }
+      
+      // Try by profile UUID (for conversations API)
+      const profileResult = await db.select({
+        id: users.id,
+        userId: users.userId,     // Text ID field (for permission checks)
+        textUserId: users.userId, // Text ID field
+        name: profiles.name,
+        role: profiles.role,
+        pronouns: profiles.pronouns,
+        avatarUrl: profiles.avatarUrl,
+        verificationBadge: profiles.verificationBadge
+      })
+      .from(profiles)
+      .innerJoin(users, eq(profiles.userId, users.id))
+      .where(eq(profiles.id, userIdOrTextId))
+      .limit(1);
+      
+      if (profileResult.length > 0) {
+        const user = profileResult[0];
+        // Auto-assign blue badge for accountant and customer_service roles
+        if (user.role === 'accountant' || user.role === 'customer_service') {
+          user.verificationBadge = 'blue';
+        }
+        return user;
+      }
+      
+      // If not found by text ID or profile UUID, try with auth user UUID (for session compatibility)
+      const uuidResult = await db.select({
+        id: users.id,
+        userId: users.userId,     // Text ID field (for permission checks)
+        textUserId: users.userId, // Text ID field
+        name: profiles.name,
+        role: profiles.role,
+        pronouns: profiles.pronouns,
+        avatarUrl: profiles.avatarUrl,
+        verificationBadge: profiles.verificationBadge
+      })
+      .from(users)
+      .innerJoin(profiles, eq(users.id, profiles.userId))
+      .where(eq(users.id, userIdOrTextId))
+      .limit(1);
+      
+      if (uuidResult.length > 0 && uuidResult[0]) {
+        const user = uuidResult[0];
+        // Auto-assign blue badge for accountant and customer_service roles
+        if (user.role === 'accountant' || user.role === 'customer_service') {
+          user.verificationBadge = 'blue';
+        }
+        return user;
+      }
+      
+      return null;
+    } catch (error: any) {
+      console.error('Error in getUserWithProfile:', error);
+      return null;
+    }
+  };
+
+  // Get available contacts based on role
+  app.get("/api/messages/contacts", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const currentUser = await getUserWithProfile(session[0].userId);
+      if (!currentUser) {
+        return res.status(404).json({ success: false, error: "User not found" });
+      }
+      // Check cache first
+      const userProfileForCache = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.userId, currentUser.id)).limit(1);
+      const profileIdForCache = userProfileForCache.length > 0 ? userProfileForCache[0].id : currentUser.id;
+      const cacheKey = CacheKeys.contacts(profileIdForCache);
+      const cachedContacts = cache.get(cacheKey);
+      if (cachedContacts !== null) {
+        console.log(`✅ Cache HIT: contacts for user ${currentUser.id}`);
+        return res.json({ success: true, data: cachedContacts });
+      }
+
+      let contacts = [];
+
+      if (currentUser.role === 'student' || currentUser.role === 'user') {
+        // Students can see teachers, admins, and other students (with friendship status)
+        const allContacts = await db.select({
+          id: profiles.id, // Profile UUID for message matching
+          authUserId: users.id, // Auth user UUID for friendship lookup
+          userId: users.userId,
+          name: profiles.name,
+          role: profiles.role,
+          pronouns: profiles.pronouns,
+          avatarUrl: profiles.avatarUrl,
+          isOnline: profiles.isOnline,
+          lastSeen: profiles.lastSeen,
+          verificationBadge: profiles.verificationBadge
+        })
+        .from(users)
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(and(
+          or(eq(profiles.role, 'teacher'), eq(profiles.role, 'admin'), eq(profiles.role, 'student'), eq(profiles.role, 'user')),
+          ne(users.userId, currentUser.userId) // Exclude current user
+        ));
+
+        // Get current user's auth UUID for friendship lookup
+        const currentUserAuth = await db.select({ id: users.id })
+          .from(users)
+          .where(eq(users.userId, currentUser.userId))
+          .limit(1);
+        
+        const currentUserAuthId = currentUserAuth[0]?.id;
+
+        // For each contact, check friendship status
+        contacts = await Promise.all(allContacts.map(async (contact) => {
+          let friendshipStatus = 'none';
+          
+          // Only check friendship for student-to-student relationships (including 'user' role)
+          if ((contact.role === 'student' || contact.role === 'user') && currentUserAuthId) {
+            const friendship = await db.select({ status: friendships.status })
+              .from(friendships)
+              .where(and(
+                or(
+                  and(eq(friendships.requesterId, currentUserAuthId), eq(friendships.receiverId, contact.authUserId)),
+                  and(eq(friendships.requesterId, contact.authUserId), eq(friendships.receiverId, currentUserAuthId))
+                )
+              ))
+              .limit(1);
+            
+            if (friendship.length > 0) {
+              friendshipStatus = friendship[0].status;
+            }
+          } else {
+            // Teachers and admins are always "accessible" 
+            friendshipStatus = 'accessible';
+          }
+
+          return {
+            ...contact,
+            friendshipStatus
+          };
+        }));
+
+      } else if (currentUser.role === 'teacher') {
+        // Teachers only see admins and students who have messaged them
+        // First get all admins (support is always visible)
+        const adminContacts = await db.select({
+          id: profiles.id, // Profile UUID for message matching
+          userId: users.userId,
+          name: profiles.name,
+          role: profiles.role,
+          pronouns: profiles.pronouns,
+          avatarUrl: profiles.avatarUrl,
+          isOnline: profiles.isOnline,
+          lastSeen: profiles.lastSeen,
+          verificationBadge: profiles.verificationBadge
+        })
+        .from(users)
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(and(
+          eq(profiles.role, 'admin'),
+          ne(users.userId, currentUser.userId) // Exclude current user
+        ));
+
+        // Get current teacher's profile UUID for message lookup
+        const currentTeacherProfile = await db.select({ id: profiles.id })
+          .from(profiles)
+          .where(eq(profiles.userId, currentUser.id))
+          .limit(1);
+
+        const currentTeacherProfileId = currentTeacherProfile[0]?.id;
+
+        // Get students who have sent messages to this teacher
+        const studentMessages = await db.select({
+          senderId: messages.senderId,
+          receiverId: messages.receiverId
+        })
+        .from(messages)
+        .where(and(
+          or(
+            eq(messages.receiverId, currentTeacherProfileId), // Messages sent TO teacher
+            eq(messages.senderId, currentTeacherProfileId)    // Messages sent FROM teacher
+          )
+        ));
+
+        // Extract unique student profile IDs who have conversation with this teacher
+        const studentProfileIds = new Set();
+        studentMessages.forEach(msg => {
+          if (msg.senderId !== currentTeacherProfileId) {
+            studentProfileIds.add(msg.senderId);
+          }
+          if (msg.receiverId !== currentTeacherProfileId) {
+            studentProfileIds.add(msg.receiverId);
+          }
+        });
+
+        // Get student contacts who have messaged this teacher
+        let studentContacts = [];
+        if (studentProfileIds.size > 0) {
+          studentContacts = await db.select({
+            id: profiles.id, // Profile UUID for message matching
+            userId: users.userId,
+            name: profiles.name,
+            role: profiles.role,
+            pronouns: profiles.pronouns,
+            avatarUrl: profiles.avatarUrl,
+            isOnline: profiles.isOnline,
+            lastSeen: profiles.lastSeen,
+            verificationBadge: profiles.verificationBadge
+          })
+          .from(users)
+          .innerJoin(profiles, eq(users.id, profiles.userId))
+          .where(and(
+            or(eq(profiles.role, 'student'), eq(profiles.role, 'user')),
+            inArray(profiles.id, Array.from(studentProfileIds))
+          ));
+        }
+
+        // Combine admin contacts and student contacts who have messaged teacher
+        const allContacts = [...adminContacts, ...studentContacts];
+
+        // Teachers can message these contacts, so all are accessible
+        contacts = allContacts.map(contact => ({
+          ...contact,
+          friendshipStatus: 'accessible'
+        }));
+
+      } else if (currentUser.role === 'admin') {
+        // Admins can see everyone
+        const allContacts = await db.select({
+          id: profiles.id, // Profile UUID for message matching
+          userId: users.userId,
+          name: profiles.name,
+          role: profiles.role,
+          pronouns: profiles.pronouns,
+          avatarUrl: profiles.avatarUrl,
+          isOnline: profiles.isOnline,
+          lastSeen: profiles.lastSeen,
+          verificationBadge: profiles.verificationBadge
+        })
+        .from(users)
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(ne(users.userId, currentUser.userId));
+
+        // Admins can message anyone, so all contacts are accessible
+        contacts = allContacts.map(contact => ({
+          ...contact,
+          friendshipStatus: 'accessible'
+        }));
+      } else if (currentUser.role === 'freelancer') {
+        // Freelancers only see users they have had conversations with
+        // Get current freelancer's profile UUID for message lookup
+        const currentFreelancerProfile = await db.select({ id: profiles.id })
+          .from(profiles)
+          .where(eq(profiles.userId, currentUser.id))
+          .limit(1);
+
+        const currentFreelancerProfileId = currentFreelancerProfile[0]?.id;
+
+        // Get all users who have sent or received messages from this freelancer
+        const conversationMessages = await db.select({
+          senderId: messages.senderId,
+          receiverId: messages.receiverId
+        })
+        .from(messages)
+        .where(and(
+          or(
+            eq(messages.receiverId, currentFreelancerProfileId), // Messages sent TO freelancer
+            eq(messages.senderId, currentFreelancerProfileId)    // Messages sent FROM freelancer
+          )
+        ));
+
+        // Extract unique profile IDs who have conversation with this freelancer
+        const conversationProfileIds = new Set();
+        conversationMessages.forEach(msg => {
+          if (msg.senderId !== currentFreelancerProfileId) {
+            conversationProfileIds.add(msg.senderId);
+          }
+          if (msg.receiverId !== currentFreelancerProfileId) {
+            conversationProfileIds.add(msg.receiverId);
+          }
+        });
+
+        // Get contacts who have conversed with this freelancer
+        let conversationContacts = [];
+        if (conversationProfileIds.size > 0) {
+          conversationContacts = await db.select({
+            id: profiles.id, // Profile UUID for message matching
+            userId: users.userId,
+            name: profiles.name,
+            role: profiles.role,
+            pronouns: profiles.pronouns,
+            avatarUrl: profiles.avatarUrl,
+            isOnline: profiles.isOnline,
+            lastSeen: profiles.lastSeen,
+            verificationBadge: profiles.verificationBadge
+          })
+          .from(users)
+          .innerJoin(profiles, eq(users.id, profiles.userId))
+          .where(inArray(profiles.id, Array.from(conversationProfileIds)));
+        }
+
+        // Freelancers can message these contacts, so all are accessible
+        contacts = conversationContacts.map(contact => ({
+          ...contact,
+          friendshipStatus: 'accessible'
+        }));
+      } else if (currentUser.role === 'accountant' || currentUser.role === 'customer_service') {
+        // Support staff see users they've conversed with, but can search and initiate with anyone
+        // Get query params for filtering
+        const roleFilter = req.query.roleFilter as string | undefined; // 'student', 'freelancer', 'teacher'
+        const searchQuery = req.query.search as string | undefined;
+
+        // Get current support staff's profile UUID for message lookup
+        const currentSupportProfile = await db.select({ id: profiles.id })
+          .from(profiles)
+          .where(eq(profiles.userId, currentUser.id))
+          .limit(1);
+
+        const currentSupportProfileId = currentSupportProfile[0]?.id;
+
+        // Get users they've had conversations with
+        const conversationMessages = await db.select({
+          senderId: messages.senderId,
+          receiverId: messages.receiverId
+        })
+        .from(messages)
+        .where(and(
+          or(
+            eq(messages.receiverId, currentSupportProfileId),
+            eq(messages.senderId, currentSupportProfileId)
+          )
+        ));
+
+        const conversationProfileIds = new Set();
+        conversationMessages.forEach(msg => {
+          if (msg.senderId !== currentSupportProfileId) {
+            conversationProfileIds.add(msg.senderId);
+          }
+          if (msg.receiverId !== currentSupportProfileId) {
+            conversationProfileIds.add(msg.receiverId);
+          }
+        });
+
+        // Build query conditions
+        let queryConditions = [ne(users.userId, currentUser.userId)];
+        
+        // Add role filter if specified
+        if (roleFilter) {
+          queryConditions.push(eq(profiles.role, roleFilter));
+        }
+
+        // If searching, get all users matching search, otherwise only show conversations
+        let allContacts;
+        if (searchQuery && searchQuery.trim()) {
+          // When searching, show all users matching the search (filtered by role if specified)
+          queryConditions.push(
+            or(
+              sql`LOWER(${profiles.name}) LIKE LOWER(${`%${searchQuery}%`})`,
+              sql`LOWER(${users.userId}) LIKE LOWER(${`%${searchQuery}%`})`
+            )
+          );
+          
+          allContacts = await db.select({
+            id: profiles.id,
+            userId: users.userId,
+            name: profiles.name,
+            role: profiles.role,
+            pronouns: profiles.pronouns,
+            avatarUrl: profiles.avatarUrl,
+            isOnline: profiles.isOnline,
+            lastSeen: profiles.lastSeen,
+            verificationBadge: profiles.verificationBadge
+          })
+          .from(users)
+          .innerJoin(profiles, eq(users.id, profiles.userId))
+          .where(and(...queryConditions));
+        } else {
+          // Without search, only show conversations (filtered by role if specified)
+          if (conversationProfileIds.size > 0) {
+            queryConditions.push(inArray(profiles.id, Array.from(conversationProfileIds)));
+            
+            allContacts = await db.select({
+              id: profiles.id,
+              userId: users.userId,
+              name: profiles.name,
+              role: profiles.role,
+              pronouns: profiles.pronouns,
+              avatarUrl: profiles.avatarUrl,
+              isOnline: profiles.isOnline,
+              lastSeen: profiles.lastSeen,
+              verificationBadge: profiles.verificationBadge
+            })
+            .from(users)
+            .innerJoin(profiles, eq(users.id, profiles.userId))
+            .where(and(...queryConditions));
+          } else {
+            allContacts = [];
+          }
+        }
+
+        // Support staff can message anyone, so all contacts are accessible
+        contacts = (allContacts || []).map(contact => ({
+          ...contact,
+          friendshipStatus: 'accessible'
+        }));
+      }
+
+      // Automatically assign blue badge to accountant and customer_service roles
+      contacts = contacts.map(contact => ({
+        ...contact,
+        verificationBadge: (contact.role === 'accountant' || contact.role === 'customer_service') 
+          ? 'blue' 
+          : contact.verificationBadge
+      }));
+
+      console.log('🔍 Contacts API Debug:', {
+        currentUserRole: currentUser.role,
+        contactsFound: contacts.length,
+        contacts: contacts.map(c => ({ userId: c.userId, role: c.role, name: c.name }))
+      });
+      
+      // Cache the contacts for 60 seconds
+      cache.set(cacheKey, contacts, CacheTTL.SHORT);
+      res.json({ success: true, data: contacts });
+
+    } catch (error: any) {
+      console.error('Contacts fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch contacts" });
+    }
+  });
+
+  // Get user profile details for friend request preview
+  app.get("/api/users/:userId/profile-preview", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const { userId } = req.params;
+
+      // Get user profile details including country info
+      const userProfile = await db
+        .select({
+          userId: users.userId,
+          name: profiles.name,
+          avatarUrl: profiles.avatarUrl,
+          role: profiles.role,
+          pronouns: profiles.pronouns,
+          bio: profiles.bio,
+          age: profiles.age,
+          grade: profiles.grade,
+          country: profiles.country,
+          educationLevel: profiles.educationLevel,
+          createdAt: users.createdAt
+        })
+        .from(users)
+        .innerJoin(profiles, eq(users.id, profiles.userId))
+        .where(eq(users.userId, userId))
+        .limit(1);
+
+      if (userProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "User not found" });
+      }
+
+      res.json({ success: true, data: userProfile[0] });
+
+    } catch (error: any) {
+      console.error('Profile preview fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch user profile" });
+    }
+  });
+
+  // Get pending friend requests for messaging interface
+  app.get("/api/messages/friend-requests", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const currentUser = await getUserWithProfile(session[0].userId);
+      if (!currentUser) {
+        return res.status(404).json({ success: false, error: "User not found" });
+      }
+      // Check cache for friend requests
+      const frUserProfile = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.userId, currentUser.id)).limit(1);
+      const frProfileId = frUserProfile.length > 0 ? frUserProfile[0].id : currentUser.id;
+      const frCacheKey = CacheKeys.friendRequests(frProfileId);
+      const cachedFR = cache.get(frCacheKey);
+      if (cachedFR !== null) {
+        console.log(`✅ Cache HIT: friend-requests for user ${currentUser.id}`);
+        return res.json({ success: true, data: cachedFR });
+      }
+
+      // Get pending friend requests where current user is the receiver
+      const pendingRequests = await db.select({
+        id: friendships.id,
+        requesterId: friendships.requesterId,
+        receiverId: friendships.receiverId,
+        status: friendships.status,
+        requestMessage: friendships.requestMessage,
+        createdAt: friendships.createdAt,
+        // Requester info
+        requesterUserId: users.userId,
+        requesterName: profiles.name,
+        requesterAvatarUrl: profiles.avatarUrl,
+        requesterRole: profiles.role
+      })
+      .from(friendships)
+      .innerJoin(users, eq(friendships.requesterId, users.id))
+      .innerJoin(profiles, eq(users.id, profiles.userId))
+      .where(and(
+        eq(friendships.receiverId, currentUser.id),
+        eq(friendships.status, 'pending')
+      ))
+      .orderBy(desc(friendships.createdAt));
+
+      // Cache friend requests for 60 seconds
+      cache.set(frCacheKey, pendingRequests, CacheTTL.SHORT);
+      res.json({ success: true, data: pendingRequests });
+
+    } catch (error: any) {
+      console.error('Pending friend requests fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch pending friend requests" });
+    }
+  });
+
+
+  // Get conversations with unread counts
+  app.get("/api/messages/conversations", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const authUserId = session[0].userId; // auth_users UUID
+      
+      // Get current user's profile UUID  
+      const currentUserProfile = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.userId, authUserId)).limit(1);
+      if (currentUserProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "User profile not found" });
+      }
+      const uuidUserId = currentUserProfile[0].id; // profile UUID
+      // Check cache first for conversations
+      const convCacheKey = CacheKeys.conversations(uuidUserId);
+      const cachedConvs = cache.get(convCacheKey);
+      if (cachedConvs !== null) {
+        console.log(`✅ Cache HIT: conversations for user ${uuidUserId}`);
+        return res.json({ success: true, data: cachedConvs });
+      }
+
+      // Get all conversations using profile UUID - select only needed columns
+      const allMessages = await db
+        .select({
+          id: messages.id,
+          senderId: messages.senderId,
+          receiverId: messages.receiverId,
+          content: messages.content,
+          fileType: messages.fileType,
+          readAt: messages.readAt,
+          createdAt: messages.createdAt
+        })
+        .from(messages)
+        .where(or(
+          eq(messages.senderId, uuidUserId),
+          eq(messages.receiverId, uuidUserId)
+        ))
+        .orderBy(desc(messages.createdAt));
+
+      // Process conversations in JavaScript to avoid SQL complexity
+      const conversationMap = new Map<string, {
+        otherUserId: string;
+        lastMessage: string;
+        lastMessageTime: Date;
+        unreadCount: number;
+      }>();
+
+      allMessages.forEach(msg => {
+        const otherUserId = msg.senderId === uuidUserId ? msg.receiverId : msg.senderId;
+        
+        if (!conversationMap.has(otherUserId)) {
+          conversationMap.set(otherUserId, {
+            otherUserId,
+            lastMessage: msg.content || (msg.fileType ? `Sent a ${msg.fileType}` : 'Message'),
+            lastMessageTime: msg.createdAt,
+            unreadCount: 0
+          });
+        }
+
+        // Count unread messages
+        if (msg.receiverId === uuidUserId && !msg.readAt) {
+          const conv = conversationMap.get(otherUserId)!;
+          conv.unreadCount++;
+        }
+      });
+
+      const conversations = Array.from(conversationMap.values())
+        .sort((a, b) => new Date(b.lastMessageTime).getTime() - new Date(a.lastMessageTime).getTime());
+
+      // Get user details for each conversation
+      const conversationDetails = await Promise.all(
+        conversations.map(async (conv) => {
+          // otherUserId is already a UUID since we changed the messages table  
+          const otherUser = await getUserWithProfile(conv.otherUserId);
+          return {
+            ...conv,
+            otherUser
+          };
+        })
+      );
+
+
+      // Cache conversations for 60 seconds
+      cache.set(convCacheKey, conversationDetails, CacheTTL.SHORT);
+      res.json({ success: true, data: conversationDetails });
+
+    } catch (error: any) {
+      console.error('Conversations fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch conversations" });
+    }
+  });
+
+  // Get unified conversations (regular + support chats) - NEW UNIFIED ENDPOINT
+  app.get("/api/messages/unified-conversations", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const authUserId = session[0].userId; // auth_users UUID
+      
+      // Get current user's profile UUID  
+      const currentUserProfile = await db.select({ 
+        id: profiles.id, 
+        role: profiles.role 
+      }).from(profiles).where(eq(profiles.userId, authUserId)).limit(1);
+      
+      if (currentUserProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "User profile not found" });
+      }
+      
+      const uuidUserId = currentUserProfile[0].id; // profile UUID
+      // Check cache first for unified conversations
+      const unifiedCacheKey = CacheKeys.unifiedConversations(uuidUserId);
+      const cachedUnified = cache.get(unifiedCacheKey);
+      if (cachedUnified !== null) {
+        console.log(`✅ Cache HIT: unified-conversations for user ${uuidUserId}`);
+        return res.json({ success: true, data: cachedUnified });
+      }
+      const userRole = currentUserProfile[0].role;
+
+      const unifiedConversations = [];
+
+      // 1. Get regular user conversations from messages table
+      const allMessages = await db
+        .select({
+          id: messages.id,
+          senderId: messages.senderId,
+          receiverId: messages.receiverId,
+          content: messages.content,
+          fileType: messages.fileType,
+          readAt: messages.readAt,
+          createdAt: messages.createdAt
+        })
+        .from(messages)
+        .where(or(
+          eq(messages.senderId, uuidUserId),
+          eq(messages.receiverId, uuidUserId)
+        ))
+        .orderBy(desc(messages.createdAt));
+
+      // Process regular conversations
+      const conversationMap = new Map<string, {
+        id: string;
+        type: 'direct' | 'group' | 'support';
+        title: string;
+        otherUserId: string;
+        lastMessage: string;
+        lastMessageTime: Date;
+        unreadCount: number;
+        avatarUrl?: string;
+        participants?: any[];
+      }>();
+
+      allMessages.forEach(msg => {
+        const otherUserId = msg.senderId === uuidUserId ? msg.receiverId : msg.senderId;
+        const conversationId = `direct_${otherUserId}`;
+        
+        if (!conversationMap.has(conversationId)) {
+          conversationMap.set(conversationId, {
+            id: conversationId,
+            type: 'direct',
+            title: '', // Will be filled with user name later
+            otherUserId,
+            lastMessage: msg.content || (msg.fileType ? `Sent a ${msg.fileType}` : 'Message'),
+            lastMessageTime: msg.createdAt,
+            unreadCount: 0
+          });
+        }
+
+        // Count unread messages
+        if (msg.receiverId === uuidUserId && !msg.readAt) {
+          const conv = conversationMap.get(conversationId)!;
+          conv.unreadCount++;
+        }
+      });
+
+      // 1.5. Get freelancer chat threads (for both freelancers and customers/users)
+      const chatThreadsForUser = await db
+        .select({
+          id: chatThreads.id,
+          freelancerId: chatThreads.freelancerId,
+          customerId: chatThreads.customerId,
+          lastMessageAt: chatThreads.lastMessageAt,
+          lastMessagePreview: chatThreads.lastMessagePreview,
+          status: chatThreads.status
+        })
+        .from(chatThreads)
+        .where(or(
+          eq(chatThreads.freelancerId, authUserId),
+          eq(chatThreads.customerId, authUserId)
+        ))
+        .orderBy(desc(chatThreads.lastMessageAt));
+
+      console.log('🔍 Chat threads found:', chatThreadsForUser.length);
+
+      // Process chat threads and add to conversationMap
+      for (const thread of chatThreadsForUser) {
+        // Determine the other user (if current user is freelancer, other is customer, and vice versa)
+        const otherUserId = thread.freelancerId === authUserId ? thread.customerId : thread.freelancerId;
+        
+        // Get the other user's profile UUID - fallback to auth UUID if profile doesn't exist
+        const otherProfile = await db.select({ id: profiles.id })
+          .from(profiles)
+          .where(eq(profiles.userId, otherUserId))
+          .limit(1);
+        
+        // Use profile UUID if exists, otherwise fall back to auth UUID
+        // This ensures conversations with support/admin accounts (who may not have profiles) still appear
+        const otherProfileUuid = otherProfile.length > 0 ? otherProfile[0].id : otherUserId;
+        
+        if (!otherProfileUuid) {
+          console.warn(`⚠️ Skipping thread ${thread.id}: Could not resolve profile or auth UUID for user ${otherUserId}`);
+          continue;
+        }
+        
+        const conversationId = `direct_${otherProfileUuid}`;
+        
+        // Count unread messages for this thread
+        const unreadMessages = await db
+          .select({ count: sql<number>`count(*)::int` })
+          .from(messages)
+          .where(and(
+            eq(messages.threadId, thread.id),
+            eq(messages.receiverId, uuidUserId),
+            isNull(messages.readAt)
+          ));
+        
+        const unreadCount = unreadMessages[0]?.count || 0;
+        
+        // Only add if not already in the map (to avoid duplicates from regular messages)
+        // But update if we have more recent information from chatThreads
+        const existingConv = conversationMap.get(conversationId);
+        const threadLastMessageTime = thread.lastMessageAt || new Date(0);
+        
+        if (!existingConv || (existingConv && new Date(existingConv.lastMessageTime) < threadLastMessageTime)) {
+          conversationMap.set(conversationId, {
+            id: conversationId,
+            type: 'direct',
+            title: '', // Will be filled with user name later
+            otherUserId: otherProfileUuid,
+            lastMessage: thread.lastMessagePreview || 'Start a conversation',
+            lastMessageTime: thread.lastMessageAt || new Date(),
+            unreadCount: existingConv?.unreadCount || unreadCount
+          });
+          console.log(`✅ Added/updated chat thread conversation: ${conversationId} (profile: ${otherProfile.length > 0 ? 'found' : 'using auth UUID'})`);
+        }
+      }
+
+      // 2. Get support chat conversations (for admins and users who had support chats)
+      if (userRole === 'admin') {
+        // Admin: Get all active support sessions they're involved in
+        const supportSessions = await db
+          .select({
+            id: supportChatSessions.id,
+            guestId: supportChatSessions.guestId,
+            assignedAgentId: supportChatSessions.assignedAgentId,
+            adminTakenOver: supportChatSessions.adminTakenOver,
+            adminUserId: supportChatSessions.adminUserId,
+            lastActivityAt: supportChatSessions.lastActivityAt,
+            isActive: supportChatSessions.isActive,
+            // Get latest message for this session
+            agentName: supportAgents.name,
+            agentAvatar: supportAgents.avatarUrl
+          })
+          .from(supportChatSessions)
+          .leftJoin(supportAgents, eq(supportChatSessions.assignedAgentId, supportAgents.id))
+          .where(
+            and(
+              eq(supportChatSessions.isActive, true),
+              or(
+                eq(supportChatSessions.adminUserId, authUserId),
+                isNull(supportChatSessions.adminUserId) // Available to be taken over
+              )
+            )
+          )
+          .orderBy(desc(supportChatSessions.lastActivityAt));
+
+        // Get latest message for each support session
+        for (const session of supportSessions) {
+          const latestMessage = await db
+            .select({
+              message: helpChatMessages.message,
+              createdAt: helpChatMessages.createdAt,
+              sender: helpChatMessages.sender
+            })
+            .from(helpChatMessages)
+            .where(eq(helpChatMessages.guestId, session.guestId))
+            .orderBy(desc(helpChatMessages.createdAt))
+            .limit(1);
+
+          const conversationId = `support_${session.guestId}`;
+          const lastMsg = latestMessage[0];
+          
+          conversationMap.set(conversationId, {
+            id: conversationId,
+            type: 'support',
+            title: `Support Chat (${session.guestId.substring(0, 8)}...)`,
+            otherUserId: session.guestId,
+            lastMessage: lastMsg?.message || 'No messages yet',
+            lastMessageTime: lastMsg?.createdAt || session.lastActivityAt,
+            unreadCount: 0, // TODO: Implement support chat unread counts
+            avatarUrl: session.agentAvatar || '/default-support-avatar.png'
+          });
+        }
+      } else {
+        // Regular users (students, teachers, freelancers): Add Support and Tech Support contacts
+        console.log('🔍 Adding support contacts for user role:', userRole);
+        
+        // Add Support contact (ADMIN00001)
+        const supportAdmin = await db
+          .select({
+            id: profiles.id,
+            name: profiles.name,
+            avatarUrl: profiles.avatarUrl,
+            userId: users.userId
+          })
+          .from(users)
+          .innerJoin(profiles, eq(users.id, profiles.userId))
+          .where(eq(users.userId, 'ADMIN00001'))
+          .limit(1);
+
+        console.log('🔍 Support admin found:', supportAdmin.length > 0 ? supportAdmin[0] : 'Not found');
+
+        if (supportAdmin.length > 0) {
+          const supportConversationId = `direct_${supportAdmin[0].id}`;
+          conversationMap.set(supportConversationId, {
+            id: supportConversationId,
+            type: 'direct',
+            title: supportAdmin[0].name || 'Support',
+            otherUserId: supportAdmin[0].id,
+            lastMessage: 'Chat with our support team',
+            lastMessageTime: new Date(),
+            unreadCount: 0,
+            avatarUrl: supportAdmin[0].avatarUrl || '/default-support-avatar.png'
+          });
+          console.log('✅ Added Support contact to conversations');
+        }
+
+        // Add Tech Support contact (ADMIN00002)
+        const techSupportAdmin = await db
+          .select({
+            id: profiles.id,
+            name: profiles.name,
+            avatarUrl: profiles.avatarUrl,
+            userId: users.userId
+          })
+          .from(users)
+          .innerJoin(profiles, eq(users.id, profiles.userId))
+          .where(eq(users.userId, 'ADMIN00002'))
+          .limit(1);
+
+        console.log('🔍 Tech Support admin found:', techSupportAdmin.length > 0 ? techSupportAdmin[0] : 'Not found');
+
+        if (techSupportAdmin.length > 0) {
+          const techSupportConversationId = `direct_${techSupportAdmin[0].id}`;
+          conversationMap.set(techSupportConversationId, {
+            id: techSupportConversationId,
+            type: 'direct',
+            title: techSupportAdmin[0].name || 'Tech Support',
+            otherUserId: techSupportAdmin[0].id,
+            lastMessage: 'Get technical assistance',
+            lastMessageTime: new Date(),
+            unreadCount: 0,
+            avatarUrl: techSupportAdmin[0].avatarUrl || '/src/assets/tech-support-logo.jpg'
+          });
+          console.log('✅ Added Tech Support contact to conversations');
+        }
+      }
+
+      // Convert map to array and get user details
+      const conversations = Array.from(conversationMap.values())
+        .sort((a, b) => new Date(b.lastMessageTime).getTime() - new Date(a.lastMessageTime).getTime());
+
+      console.log('🔍 Total conversations before user details:', conversations.length);
+      console.log('🔍 Conversation types:', conversations.map(c => ({ id: c.id, type: c.type, title: c.title })));
+
+      // Get user details for direct conversations
+      const conversationDetails = await Promise.all(
+        conversations.map(async (conv) => {
+          if (conv.type === 'direct') {
+            const otherUser = await getUserWithProfile(conv.otherUserId);
+            console.log('🔍 Processing conversation:', conv.id, 'otherUser:', otherUser ? { name: otherUser.name, role: otherUser.role } : 'Not found');
+            return {
+              ...conv,
+              title: conv.title || otherUser?.name || 'Unknown User', // Keep existing title for support contacts
+              avatarUrl: conv.avatarUrl || otherUser?.avatarUrl || '/default-avatar.png',
+              otherUser
+            };
+          }
+          return conv; // Support conversations already have title and avatar
+        })
+      );
+
+      console.log('🔍 Final conversation details to send:', conversationDetails.map(c => ({ id: c.id, title: c.title, type: c.type })));
+
+      // Cache unified conversations for 60 seconds
+      cache.set(unifiedCacheKey, conversationDetails, CacheTTL.SHORT);
+      res.json({ success: true, data: conversationDetails });
+
+    } catch (error: any) {
+      console.error('Unified conversations fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch unified conversations" });
+    }
+  });
+
+  // Get messages for a specific conversation
+  app.get("/api/messages/conversation/:otherUserId", async (req, res) => {
+    try {
+      let { otherUserId } = req.params;
+      const { page = 1, limit = 50 } = req.query;
+      
+      // Strip conversation ID prefixes (direct_, support_, etc.)
+      if (otherUserId.startsWith('direct_')) {
+        otherUserId = otherUserId.replace('direct_', '');
+      } else if (otherUserId.startsWith('support_')) {
+        otherUserId = otherUserId.replace('support_', '');
+      }
+      
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const authUserId = session[0].userId; // This is auth_users UUID
+      
+      // Get current user's profile UUID
+      const currentUserProfile = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.userId, authUserId)).limit(1);
+      if (currentUserProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "User profile not found" });
+      }
+      const userId = currentUserProfile[0].id; // This is profile UUID
+      
+      // Convert otherUserId from text ID to profile UUID
+      let otherUserUuid;
+      if (otherUserId.length === 36 && otherUserId.includes('-')) {
+        // It's already a UUID, check if it's profile UUID or auth UUID
+        const profileCheck = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.id, otherUserId)).limit(1);
+        if (profileCheck.length > 0) {
+          otherUserUuid = otherUserId; // It's a profile UUID
+        } else {
+          // It might be an auth UUID, convert to profile UUID
+          const profileByAuth = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.userId, otherUserId)).limit(1);
+          if (profileByAuth.length === 0) {
+            return res.status(404).json({ success: false, error: "User profile not found" });
+          }
+          otherUserUuid = profileByAuth[0].id;
+        }
+      } else {
+        // It's a text ID, convert to profile UUID
+        const otherAuthUser = await db.select({ id: users.id }).from(users).where(eq(users.userId, otherUserId)).limit(1);
+        if (otherAuthUser.length === 0) {
+          return res.status(404).json({ success: false, error: "User not found" });
+        }
+        const otherProfile = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.userId, otherAuthUser[0].id)).limit(1);
+        if (otherProfile.length === 0) {
+          return res.status(404).json({ success: false, error: "User profile not found" });
+        }
+        otherUserUuid = otherProfile[0].id;
+      }
+      
+      console.log('🔍 Conversation Debug:', {
+        currentUserId: userId,
+        otherUserId: otherUserId,
+        otherUserUuid: otherUserUuid,
+        isCurrentUserUuid: userId.length === 36 && userId.includes('-'),
+        isOtherUserUuid: otherUserUuid.length === 36 && otherUserUuid.includes('-')
+      });
+      
+      // Get messages between the two users using UUID format - select only needed columns
+      const conversationMessages = await db.select({
+        id: messages.id,
+        senderId: messages.senderId,
+        receiverId: messages.receiverId,
+        content: messages.content,
+        messageType: messages.messageType,
+        fileUrl: messages.fileUrl,
+        fileType: messages.fileType,
+        isRead: messages.isRead,
+        deliveredAt: messages.deliveredAt,
+        readAt: messages.readAt,
+        createdAt: messages.createdAt
+      })
+        .from(messages)
+        .where(or(
+          and(eq(messages.senderId, userId), eq(messages.receiverId, otherUserUuid)),
+          and(eq(messages.senderId, otherUserUuid), eq(messages.receiverId, userId))
+        ))
+        .orderBy(messages.createdAt) // Order oldest first for proper chat chronology
+        .limit(Number(limit))
+        .offset((Number(page) - 1) * Number(limit));
+        
+      console.log('🔍 Query result:', {
+        messageCount: conversationMessages.length,
+        queryParams: { userId, otherUserUuid, page, limit },
+        firstMessage: conversationMessages[0] ? {
+          id: conversationMessages[0].id,
+          content: conversationMessages[0].content?.substring(0, 50) + '...',
+          senderId: conversationMessages[0].senderId,
+          receiverId: conversationMessages[0].receiverId
+        } : null
+      });
+
+      // Mark messages as read
+      await db.update(messages)
+        .set({ readAt: new Date() })
+        .where(and(
+          eq(messages.senderId, otherUserUuid),
+          eq(messages.receiverId, userId),
+          isNull(messages.readAt)
+        ));
+
+      // Transform messages to include fileMetadata for media messages
+      const transformedMessages = conversationMessages.map(msg => ({
+        ...msg,
+        fileMetadata: msg.fileUrl && msg.fileType ? {
+          url: msg.fileUrl,
+          fileName: msg.content || `${msg.fileType}-file`,
+          fileSize: 0, // Size not stored in current schema
+          mimeType: getMimeTypeFromFileType(msg.fileType)
+        } : null
+      }));
+
+      console.log('📤 Sending response with', transformedMessages.length, 'messages');
+      res.json({ success: true, data: transformedMessages });
+
+    } catch (error: any) {
+      console.error('Conversation messages fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch conversation messages" });
+    }
+  });
+
+  // Clear chat history for a specific conversation
+  app.delete("/api/messages/conversation/:otherUserId", async (req, res) => {
+    try {
+      const { otherUserId } = req.params;
+      
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const userId = session[0].userId;
+      
+      // Convert otherUserId from text ID to UUID if needed
+      let otherUserUuid;
+      if (otherUserId.length === 36 && otherUserId.includes('-')) {
+        // It's already a UUID
+        otherUserUuid = otherUserId;
+      } else {
+        // It's a text ID, convert to UUID
+        const otherUserRecord = await db.select({ id: users.id }).from(users).where(eq(users.userId, otherUserId)).limit(1);
+        if (otherUserRecord.length === 0) {
+          return res.status(404).json({ success: false, error: "User not found" });
+        }
+        otherUserUuid = otherUserRecord[0].id;
+      }
+      
+      // Delete all messages between the two users
+      await db.delete(messages)
+        .where(or(
+          and(eq(messages.senderId, userId), eq(messages.receiverId, otherUserUuid)),
+          and(eq(messages.senderId, otherUserUuid), eq(messages.receiverId, userId))
+        ));
+
+      res.json({ success: true, message: "Chat history cleared successfully" });
+
+    } catch (error: any) {
+      console.error('Clear chat error:', error);
+      res.status(500).json({ success: false, error: "Failed to clear chat history" });
+    }
+  });
+
+  // Check messaging permissions helper
+  const checkMessagingPermissions = async (sender: any, receiver: any) => {
+    if (sender.role === 'admin') {
+      return true; // Admins can message anyone
+    }
+    
+    // Accountant and customer service can message anyone
+    if (sender.role === 'accountant' || sender.role === 'customer_service') {
+      return true; // Support staff can message anyone
+    }
+    
+    // Anyone can message accountant or customer service for support
+    if (receiver.role === 'accountant' || receiver.role === 'customer_service') {
+      return true; // Anyone can contact support staff
+    }
+    
+    if ((sender.role === 'student' || sender.role === 'user') && receiver.role === 'admin') {
+      return true; // Students/users can message admin for support
+    }
+    
+    if ((sender.role === 'student' || sender.role === 'user') && receiver.role === 'teacher') {
+      return true; // Students/users can message teachers
+    }
+    
+    if (sender.role === 'teacher' && (receiver.role === 'student' || receiver.role === 'user')) {
+      // Teachers can message any student or user - no restrictions
+      return true;
+    }
+    
+    if (sender.role === 'teacher' && receiver.role === 'teacher') {
+      return true; // Teachers can message other teachers
+    }
+    
+    if (sender.role === 'teacher' && receiver.role === 'admin') {
+      return true; // Teachers can message admin
+    }
+    
+    // Freelancer permissions
+    if (sender.role === 'freelancer' && receiver.role === 'admin') {
+      return true; // Freelancers can message admins for support
+    }
+    
+    if (sender.role === 'freelancer' && receiver.role === 'teacher') {
+      return true; // Freelancers can message teachers
+    }
+    
+    if ((receiver.role === 'freelancer') && (sender.role === 'student' || sender.role === 'user')) {
+      return true; // Students/users can contact freelancers
+    }
+    
+    if (sender.role === 'freelancer' && (receiver.role === 'student' || receiver.role === 'user')) {
+      return true; // Freelancers can message students/users
+    }
+    
+    if (sender.role === 'freelancer' && receiver.role === 'freelancer') {
+      return true; // Freelancers can message other freelancers
+    }
+    
+    if (sender.role === 'teacher' && receiver.role === 'freelancer') {
+      return true; // Teachers can message freelancers
+    }
+    
+    // Student-to-student messaging requires accepted friendship
+    if ((sender.role === 'student' || sender.role === 'user') && (receiver.role === 'student' || receiver.role === 'user')) {
+      // Get auth UUIDs for both users to check friendship
+      const senderAuthUser = await db.select({ id: users.id }).from(users).where(eq(users.userId, sender.userId)).limit(1);
+      const receiverAuthUser = await db.select({ id: users.id }).from(users).where(eq(users.userId, receiver.userId)).limit(1);
+      
+      if (senderAuthUser.length === 0 || receiverAuthUser.length === 0) {
+        return false; // Can't find auth users
+      }
+      
+      const senderAuthId = senderAuthUser[0].id;
+      const receiverAuthId = receiverAuthUser[0].id;
+      
+      // Check for accepted friendship between the two users using auth UUIDs
+      const friendship = await db.select()
+        .from(friendships)
+        .where(and(
+          or(
+            and(eq(friendships.requesterId, senderAuthId), eq(friendships.receiverId, receiverAuthId)),
+            and(eq(friendships.requesterId, receiverAuthId), eq(friendships.receiverId, senderAuthId))
+          ),
+          eq(friendships.status, 'accepted')
+        ))
+        .limit(1);
+      
+      return friendship.length > 0;
+    }
+    
+    return false; // All other cases are not permitted
+  };
+
+  // Send a message with role-based permissions
+  app.post("/api/messages", async (req, res) => {
+    try {
+      const { receiverId, content, messageType = 'text', threadId } = req.body;
+
+      if (!receiverId || !content) {
+        return res.status(400).json({ success: false, error: 'Receiver ID and content are required' });
+      }
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const senderAuthUuid = session[0].userId;
+
+      // Get sender's text ID from auth_users table
+      const senderAuth = await db.select({ userId: users.userId }).from(users).where(eq(users.id, senderAuthUuid)).limit(1);
+      if (senderAuth.length === 0) {
+        return res.status(404).json({ success: false, error: "Sender not found" });
+      }
+      const senderTextId = senderAuth[0].userId;
+
+      // Get sender's profile UUID (needed for messages table foreign key)
+      const senderProfile = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.userId, senderAuthUuid)).limit(1);
+      if (senderProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "Sender profile not found" });
+      }
+      const senderProfileUuid = senderProfile[0].id;
+
+      // Debug: Log what receiverId we're trying to look up
+      console.log('🔍 /api/messages - Looking up receiver with ID:', receiverId, 'Type:', typeof receiverId);
+
+      // Verify messaging permissions
+      console.log('🔎 Looking up sender with textId:', senderTextId);
+      const sender = await getUserWithProfile(senderTextId);
+      console.log('🔎 Sender result:', sender);
+      
+      console.log('🔎 Looking up receiver with id:', receiverId);
+      const receiver = await getUserWithProfile(receiverId);
+      console.log('🔎 Receiver result:', receiver);
+
+      if (!sender || !receiver) {
+        console.log('❌ User lookup failed - Sender:', !!sender, 'Receiver:', !!receiver);
+        return res.status(404).json({ success: false, error: "User not found" });
+      }
+
+      console.log('👥 Permission check - Sender:', { name: sender.name, role: sender.role, textUserId: sender.textUserId });
+      console.log('👥 Permission check - Receiver:', { name: receiver.name, role: receiver.role, textUserId: receiver.textUserId });
+      
+      // TEMPORARY: Allow all freelancer messaging
+      const canMessage = sender.role === 'freelancer' || receiver.role === 'freelancer' ? true : await checkMessagingPermissions(sender, receiver);
+      console.log('✅ Permission check result:', canMessage);
+      
+      if (!canMessage) {
+        return res.status(403).json({ success: false, error: "Not authorized to message this user" });
+      }
+
+      // Get receiver's profile UUID for database insertion
+      // receiverId can be either a text ID (like "HJOR2AC54I") or a UUID (auth user ID)
+      // Try text ID first, then UUID
+      let receiverAuthUser = await db.select({ id: users.id }).from(users).where(eq(users.userId, receiverId)).limit(1);
+      
+      if (receiverAuthUser.length === 0) {
+        // Try as UUID
+        receiverAuthUser = await db.select({ id: users.id }).from(users).where(eq(users.id, receiverId)).limit(1);
+      }
+      
+      if (receiverAuthUser.length === 0) {
+        return res.status(404).json({ success: false, error: "Receiver not found" });
+      }
+      
+      const receiverProfile = await db.select({ id: profiles.id }).from(profiles).where(eq(profiles.userId, receiverAuthUser[0].id)).limit(1);
+      if (receiverProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "Receiver profile not found" });
+      }
+      const receiverProfileUuid = receiverProfile[0].id;
+      
+      // Create new message using profile UUIDs for foreign key compliance
+      const newMessage = await db.insert(messages).values({
+        senderId: senderProfileUuid,
+        receiverId: receiverProfileUuid,
+        content,
+        fileType: messageType === 'text' ? null : messageType,
+        threadId: threadId || null
+      }).returning();
+
+      // Update chat thread if this message belongs to a thread
+      if (threadId) {
+        await db.update(chatThreads)
+          .set({
+            lastMessageAt: new Date(),
+            lastMessagePreview: content.substring(0, 100)
+          })
+          .where(eq(chatThreads.id, threadId));
+      }
+
+      // Send via WebSocket if receiver is online (use receiver's text ID)
+      try {
+        const receiverTextId = receiver.textUserId;
+        const receiverWs = (global as any).wsClients?.get(receiverTextId);
+        console.log(`📨 HTTP API: Looking for receiver ${receiverTextId}, connection found: ${!!receiverWs}, state: ${receiverWs?.readyState}`);
+        if (receiverWs && receiverWs.readyState === 1) { // WebSocket.OPEN = 1
+          receiverWs.send(JSON.stringify({
+            type: 'new_message',
+            data: {
+              ...newMessage[0],
+              senderName: sender.name,
+              senderAvatarUrl: sender.avatarUrl
+            }
+          }));
+          console.log(`✅ HTTP API: Message sent to receiver ${receiverTextId} via WebSocket`);
+        } else {
+          console.log(`❌ HTTP API: Receiver ${receiverTextId} not connected or connection closed`);
+        }
+      } catch (wsError) {
+        console.log('WebSocket notification failed:', wsError);
+        // Continue without WebSocket notification
+      }
+
+      // Invalidate messaging caches for both sender and receiver
+      invalidateUserMessaging(senderProfileUuid);
+      invalidateUserMessaging(receiverProfileUuid);
+      res.json({ success: true,
+        success: true,
+        message: newMessage[0]
+      });
+
+    } catch (error: any) {
+      console.error('Send message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send message' });
+    }
+  });
+
+  // Admin welcome messages removed - using real conversations only
+
+  // General file upload endpoint for assignments and other features
+  app.post("/api/upload", upload.single('file'), async (req, res) => {
+    try {
+      const { type } = req.body;
+      const authHeader = req.headers.authorization;
+      
+      // Define allowed guest upload types
+      const allowedGuestUploadTypes = ['banner', 'design-inquiries'];
+      
+      console.log('🔍 Upload attempt:', { type, hasAuth: !!authHeader });
+      
+      // Allow guest uploads for banner advertisements and design inquiries
+      if (!authHeader && !allowedGuestUploadTypes.includes(type)) {
+        console.log('❌ Upload rejected: No auth and type is not in allowed guest types:', allowedGuestUploadTypes);
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+      
+      console.log('✅ Upload allowed:', allowedGuestUploadTypes.includes(type) ? `Guest ${type} upload` : 'Authenticated upload');
+
+      // Only validate session if authentication is required (not for allowed guest upload types)
+      console.log('🔍 Session validation check:', { authHeader: !!authHeader, type, shouldValidate: !!(authHeader && !allowedGuestUploadTypes.includes(type)) });
+      
+      if (authHeader && !allowedGuestUploadTypes.includes(type)) {
+        console.log('🔐 Validating session...');
+        const session = await db
+          .select()
+          .from(userLoginSessions)
+          .where(and(
+            eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+            eq(userLoginSessions.isActive, true),
+            gt(userLoginSessions.expiresAt, new Date())
+          ))
+          .limit(1);
+
+        if (session.length === 0) {
+          console.log('❌ Session validation failed');
+          return res.status(401).json({ success: false, error: "Invalid session" });
+        }
+        console.log('✅ Session validated successfully');
+      } else {
+        console.log('⏭️ Skipping session validation for guest upload type:', type);
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ success: false, error: 'No file uploaded' });
+      }
+
+      const file = req.file;
+      
+      // Determine folder based on type
+      let folder = 'documents';
+      if (type === 'assignment-attachment') {
+        folder = 'assignments';
+      } else if (type === 'profile-image') {
+        folder = 'avatars';
+      } else if (type === 'banner') {
+        folder = 'banners';
+      } else if (type === 'hero') {
+        folder = 'hero-sections';
+      } else if (type === 'portfolio') {
+        folder = 'portfolio';
+      }
+
+      try {
+        const detectedFileType = getFileType(file.mimetype);
+        validateFile(file, detectedFileType);
+        
+        console.log('📎 General upload:', {
+          originalname: file.originalname,
+          mimetype: file.mimetype,
+          size: file.size,
+          folder: folder
+        });
+
+        // Upload to Cloudinary
+        const result = await cloudinaryStorage.uploadFile(
+          file.buffer,
+          file.originalname,
+          file.mimetype,
+          folder
+        );
+
+        if (!result.success || !result.url) {
+          return res.status(500).json({ 
+            success: false, 
+            error: result.error || 'Upload failed'
+          });
+        }
+
+        res.json({ success: true,
+          success: true,
+          url: result.url,
+          fileName: file.originalname,
+          fileSize: file.size,
+          mimeType: file.mimetype
+        });
+
+      } catch (error: any) {
+        console.error('File upload error:', error);
+        res.status(400).json({ 
+          success: false, 
+          error: error instanceof Error ? error.message : 'Upload failed' 
+        });
+      }
+
+    } catch (error: any) {
+      console.error('Upload endpoint error:', error);
+      res.status(500).json({ success: false, error: 'Server error during upload' });
+    }
+  });
+
+  // Multiple files upload endpoint for portfolio and other features
+  app.post("/api/upload/multiple", upload.array('files', 10), async (req, res) => {
+    try {
+      const { type } = req.body;
+      const authHeader = req.headers.authorization;
+      
+      console.log('🔍 Multiple files upload attempt:', { type, hasAuth: !!authHeader, fileCount: req.files?.length });
+      
+      // Require authentication for multiple file uploads
+      if (!authHeader) {
+        console.log('❌ Multiple upload rejected: No auth');
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+      
+      console.log('🔐 Validating session...');
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        console.log('❌ Session validation failed');
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+      console.log('✅ Session validated successfully');
+
+      if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
+        return res.status(400).json({ success: false, error: 'No files uploaded' });
+      }
+
+      const files = req.files as Express.Multer.File[];
+      
+      // Determine folder based on type
+      let folder = 'documents';
+      if (type === 'portfolio') {
+        folder = 'portfolio';
+      } else if (type === 'products') {
+        folder = 'products';
+      }
+
+      try {
+        const uploadedFiles = [];
+        
+        for (const file of files) {
+          const detectedFileType = getFileType(file.mimetype);
+          validateFile(file, detectedFileType);
+          
+          console.log('📎 Uploading file:', {
+            originalname: file.originalname,
+            mimetype: file.mimetype,
+            size: file.size,
+            folder: folder
+          });
+
+          // Upload to Cloudinary
+          const result = await cloudinaryStorage.uploadFile(
+            file.buffer,
+            file.originalname,
+            file.mimetype,
+            folder
+          );
+
+          if (!result.success || !result.url) {
+            console.error('Failed to upload file:', file.originalname, result.error);
+            continue; // Skip this file but continue with others
+          }
+
+          uploadedFiles.push({
+            url: result.url,
+            fileName: file.originalname,
+            fileSize: file.size,
+            mimetype: file.mimetype
+          });
+        }
+
+        if (uploadedFiles.length === 0) {
+          return res.status(500).json({ 
+            success: false, 
+            error: 'All file uploads failed'
+          });
+        }
+
+        res.json({ success: true,
+          success: true,
+          files: uploadedFiles
+        });
+
+      } catch (error: any) {
+        console.error('Multiple file upload error:', error);
+        res.status(400).json({ 
+          success: false, 
+          error: error instanceof Error ? error.message : 'Upload failed' 
+        });
+      }
+
+    } catch (error: any) {
+      console.error('Multiple upload endpoint error:', error);
+      res.status(500).json({ success: false, error: 'Server error during upload' });
+    }
+  });
+
+
+  // Enhanced messaging - Send file/media message
+  app.post("/api/messages/file", upload.single('file'), async (req, res) => {
+    try {
+      const { receiverId, messageType, content = '', fileType } = req.body;
+      const file = req.file;
+
+      if (!receiverId) {
+        return res.status(400).json({ success: false, error: 'Receiver ID is required' });
+      }
+
+      if (!file && !content) {
+        return res.status(400).json({ success: false, error: 'File or content is required' });
+      }
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const senderUuid = session[0].userId;
+
+      // Get sender's text ID from auth_users table
+      const senderAuth = await db.select({ userId: users.userId }).from(users).where(eq(users.id, senderUuid)).limit(1);
+      if (senderAuth.length === 0) {
+        return res.status(404).json({ success: false, error: "Sender not found" });
+      }
+      const senderTextId = senderAuth[0].userId;
+
+      // Verify messaging permissions
+      const sender = await getUserWithProfile(senderUuid);
+      const receiver = await getUserWithProfile(receiverId);
+
+      if (!sender || !receiver) {
+        return res.status(404).json({ success: false, error: "User not found" });
+      }
+
+      const canMessage = await checkMessagingPermissions(sender, receiver);
+      if (!canMessage) {
+        return res.status(403).json({ success: false, error: "Not authorized to message this user" });
+      }
+
+      let fileMetadata: FileMetadata | null = null;
+
+      // Handle file upload if present
+      if (file) {
+        const detectedFileType = req.body.detectedFileType || getFileType(file.mimetype);
+        
+        try {
+          validateFile(file, detectedFileType);
+          
+          // Debug logging for file buffer
+          console.log('📎 File upload debug:', {
+            hasBuffer: !!file.buffer,
+            bufferLength: file.buffer?.length,
+            originalname: file.originalname,
+            mimetype: file.mimetype,
+            size: file.size,
+            detectedFileType
+          });
+
+          // Check if buffer exists
+          if (!file.buffer) {
+            throw new Error('File buffer is missing - multer memory storage may not be configured correctly');
+          }
+          
+          // Upload to Cloudinary
+          const uploadResult = await cloudinaryStorage.uploadFile(
+            file.buffer,
+            file.originalname,
+            file.mimetype,
+            FILE_CONFIGS[detectedFileType].folder
+          );
+
+          if (!uploadResult.success) {
+            throw new Error(uploadResult.error || 'Upload failed');
+          }
+
+          fileMetadata = {
+            url: uploadResult.url!,
+            fileName: file.originalname,
+            fileSize: file.size,
+            mimeType: file.mimetype,
+          };
+        } catch (uploadError) {
+          return res.status(400).json({ 
+            success: false, 
+            error: uploadError instanceof Error ? uploadError.message : 'File upload failed' 
+          });
+        }
+      }
+
+      // Convert text IDs to profile UUIDs for database insertion
+      const receiverUuid = await getUserUuidByUserId(receiverId);
+      
+      if (!receiverUuid) {
+        console.log(`❌ Receiver profile UUID not found for text ID: ${receiverId}`);
+        return res.status(404).json({ success: false, error: "Receiver not found" });
+      }
+
+      // Verify receiver profile exists
+      const receiverProfileCheck = await db
+        .select({ id: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.id, receiverUuid))
+        .limit(1);
+
+      if (receiverProfileCheck.length === 0) {
+        console.log(`❌ Receiver profile does not exist in profiles table: ${receiverUuid}`);
+        return res.status(404).json({ success: false, error: "Receiver profile not found" });
+      }
+
+      // Get sender's profile UUID (messages.senderId references profiles.id, not users.id)
+      const senderProfileUuid = await db
+        .select({ id: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.userId, senderUuid))
+        .limit(1);
+
+      if (senderProfileUuid.length === 0) {
+        return res.status(404).json({ success: false, error: "Sender profile not found" });
+      }
+      
+      // Determine the correct message type
+      const finalMessageType = messageType || (fileMetadata ? getFileType(fileMetadata.mimeType) : 'text');
+      
+      // Create new message using UUIDs and new schema
+      const newMessage = await db.insert(messages).values({
+        senderId: senderProfileUuid[0].id,
+        receiverId: receiverUuid,
+        content: content || (fileMetadata ? fileMetadata.fileName : 'Media message'),
+        messageType: finalMessageType, // Add the missing messageType field
+        fileUrl: fileMetadata?.url || null,
+        fileType: messageType || (fileMetadata ? getFileType(fileMetadata.mimeType) : null)
+      }).returning();
+
+      // Send via WebSocket if receiver is online (receiverId is already text ID)
+      try {
+        const receiverWs = (global as any).wsClients?.get(receiverId);
+        console.log(`📨 File API: Looking for receiver ${receiverId}, connection found: ${!!receiverWs}, state: ${receiverWs?.readyState}`);
+        if (receiverWs && receiverWs.readyState === 1) { // WebSocket.OPEN = 1
+          receiverWs.send(JSON.stringify({
+            type: 'new_message',
+            data: {
+              ...newMessage[0],
+              senderName: sender.name,
+              senderAvatarUrl: sender.avatarUrl,
+              fileMetadata
+            }
+          }));
+          console.log(`✅ File API: Message sent to receiver ${receiverId} via WebSocket`);
+        } else {
+          console.log(`❌ File API: Receiver ${receiverId} not connected or connection closed`);
+        }
+      } catch (wsError) {
+        console.log('WebSocket notification failed:', wsError);
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: {
+          ...newMessage[0],
+          fileMetadata
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Send file message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send message' });
+    }
+  });
+
+  // Enhanced messaging - Send location message
+  app.post("/api/messages/location", async (req, res) => {
+    try {
+      const { receiverId, latitude, longitude, address, content = '' } = req.body;
+
+      if (!receiverId || !latitude || !longitude) {
+        return res.status(400).json({ success: false, error: 'Receiver ID, latitude, and longitude are required' });
+      }
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const senderUuid = session[0].userId;
+
+      // Get sender's text ID from auth_users table
+      const senderAuth = await db.select({ userId: users.userId }).from(users).where(eq(users.id, senderUuid)).limit(1);
+      if (senderAuth.length === 0) {
+        return res.status(404).json({ success: false, error: "Sender not found" });
+      }
+      const senderTextId = senderAuth[0].userId;
+
+      // Verify messaging permissions
+      const sender = await getUserWithProfile(senderUuid);
+      const receiver = await getUserWithProfile(receiverId);
+
+      if (!sender || !receiver) {
+        return res.status(404).json({ success: false, error: "User not found" });
+      }
+
+      const canMessage = await checkMessagingPermissions(sender, receiver);
+      if (!canMessage) {
+        return res.status(403).json({ success: false, error: "Not authorized to message this user" });
+      }
+
+      // Create location data
+      const locationData = {
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        address: address || null
+      };
+
+      // Convert text IDs to UUIDs for database insertion
+      const receiverUuid = await getUserUuidByUserId(receiverId);
+      
+      if (!receiverUuid) {
+        return res.status(404).json({ success: false, error: "Receiver not found" });
+      }
+      
+      // Create new message using UUIDs and new schema
+      const newMessage = await db.insert(messages).values({
+        senderId: senderUuid,
+        receiverId: receiverUuid,
+        content: JSON.stringify(locationData),
+        fileType: 'location'
+      }).returning();
+
+      // Send via WebSocket if receiver is online (receiverId is already text ID)
+      try {
+        const receiverWs = (global as any).wsClients?.get(receiverId);
+        console.log(`📨 Location API: Looking for receiver ${receiverId}, connection found: ${!!receiverWs}, state: ${receiverWs?.readyState}`);
+        if (receiverWs && receiverWs.readyState === 1) { // WebSocket.OPEN = 1
+          receiverWs.send(JSON.stringify({
+            type: 'new_message',
+            data: {
+              ...newMessage[0],
+              senderName: sender.name,
+              senderAvatarUrl: sender.avatarUrl,
+              locationData
+            }
+          }));
+          console.log(`✅ Location API: Message sent to receiver ${receiverId} via WebSocket`);
+        } else {
+          console.log(`❌ Location API: Receiver ${receiverId} not connected or connection closed`);
+        }
+      } catch (wsError) {
+        console.log('WebSocket notification failed:', wsError);
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: {
+          ...newMessage[0],
+          locationData
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Send location message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send location message' });
+    }
+  });
+
+  // Enhanced messaging - Mark message as delivered
+  app.patch("/api/messages/:messageId/delivered", async (req, res) => {
+    try {
+      const { messageId } = req.params;
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const userId = session[0].userId;
+
+      // Update message as delivered (only if user is the receiver)
+      const updatedMessage = await db
+        .update(messages)
+        .set({ 
+          deliveredAt: new Date() 
+        })
+        .where(and(
+          eq(messages.id, messageId),
+          eq(messages.receiverId, userId),
+          isNull(messages.deliveredAt)
+        ))
+        .returning();
+
+      if (updatedMessage.length === 0) {
+        return res.status(404).json({ success: false, error: "Message not found or already delivered" });
+      }
+
+      // Notify sender via WebSocket
+      try {
+        const senderWs = (global as any).wsClients?.get(updatedMessage[0].senderId);
+        if (senderWs && senderWs.readyState === 1) {
+          senderWs.send(JSON.stringify({
+            type: 'message_delivered',
+            messageId,
+            deliveredAt: updatedMessage[0].deliveredAt
+          }));
+        }
+      } catch (wsError) {
+        console.log('WebSocket notification failed:', wsError);
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: 'Message marked as delivered'
+      });
+
+    } catch (error: any) {
+      console.error('Mark delivered error:', error);
+      res.status(500).json({ success: false, error: 'Failed to mark message as delivered' });
+    }
+  });
+
+  // Enhanced messaging - Mark message as read
+  app.patch("/api/messages/:messageId/read", async (req, res) => {
+    try {
+      const { messageId } = req.params;
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const userId = session[0].userId;
+
+      // Update message as read (only if user is the receiver)
+      const updatedMessage = await db
+        .update(messages)
+        .set({ 
+          readAt: new Date(),
+          deliveredAt: new Date(), // Ensure delivered is also set
+          isRead: true // Legacy compatibility
+        })
+        .where(and(
+          eq(messages.id, messageId),
+          eq(messages.receiverId, userId)
+        ))
+        .returning();
+
+      if (updatedMessage.length === 0) {
+        return res.status(404).json({ success: false, error: "Message not found" });
+      }
+
+      // Notify sender via WebSocket
+      try {
+        const senderWs = (global as any).wsClients?.get(updatedMessage[0].senderId);
+        if (senderWs && senderWs.readyState === 1) {
+          senderWs.send(JSON.stringify({
+            type: 'message_read',
+            messageId,
+            readAt: updatedMessage[0].readAt
+          }));
+        }
+      } catch (wsError) {
+        console.log('WebSocket notification failed:', wsError);
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: 'Message marked as read'
+      });
+
+    } catch (error: any) {
+      console.error('Mark read error:', error);
+      res.status(500).json({ success: false, error: 'Failed to mark message as read' });
+    }
+  });
+
+  // Get pending friend requests (for messaging interface)
+  app.get("/api/messages/friend-requests", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const user = await getUserFromSession(authHeader);
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Get pending friend requests where current user is the receiver
+      const requests = await db.select({
+        id: friendships.id,
+        requesterId: friendships.requesterId,
+        receiverId: friendships.receiverId,
+        status: friendships.status,
+        requestMessage: friendships.requestMessage,
+        createdAt: friendships.createdAt,
+        requesterName: sql<string>`COALESCE(${profiles.name}, ${profiles.displayName}, 'Unknown User')`.as('requesterName'),
+        requesterAvatarUrl: profiles.avatarUrl
+      })
+      .from(friendships)
+      .leftJoin(profiles, eq(friendships.requesterId, profiles.userId))
+      .where(
+        and(
+          eq(friendships.receiverId, user.id),
+          eq(friendships.status, 'pending')
+        )
+      )
+      .orderBy(desc(friendships.createdAt));
+
+      res.json({ success: true, data: requests });
+
+    } catch (error: any) {
+      console.error('Get friend requests error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get friend requests' });
+    }
+  });
+
+  // Respond to friend request (accept/reject)
+  app.post("/api/messages/friend-requests/:requestId/respond", async (req, res) => {
+    try {
+      const { requestId } = req.params;
+      const { action } = req.body;
+      
+      console.log('🔍 Friend request response debug:', { 
+        requestId, 
+        action, 
+        body: req.body,
+        hasAction: !!action,
+        actionType: typeof action 
+      });
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const user = await getUserFromSession(authHeader);
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      if (!['accept', 'reject'].includes(action)) {
+        return res.status(400).json({ success: false, error: 'Invalid action. Must be accept or reject' });
+      }
+
+      // Check if the friendship request exists and user is the receiver
+      const friendship = await db.select()
+        .from(friendships)
+        .where(
+          and(
+            eq(friendships.id, requestId),
+            eq(friendships.receiverId, user.id),
+            eq(friendships.status, 'pending')
+          )
+        )
+        .limit(1);
+
+      if (friendship.length === 0) {
+        return res.status(404).json({ success: false, error: 'Friend request not found or already responded' });
+      }
+
+      // Update friendship status
+      const [updatedFriendship] = await db.update(friendships)
+        .set({ 
+          status: action === 'accept' ? 'accepted' : 'rejected',
+          updatedAt: new Date()
+        })
+        .where(eq(friendships.id, requestId))
+        .returning();
+
+      // Send real-time notification to the requester
+      try {
+        const wss = (global as any).wss;
+        if (wss) {
+          // Get responder's profile information for the notification
+          const responderProfile = await db.select({
+            name: profiles.name,
+            userId: users.userId
+          })
+          .from(users)
+          .innerJoin(profiles, eq(users.id, profiles.userId))
+          .where(eq(users.id, user.id))
+          .limit(1);
+
+          const requesterProfile = await db.select({
+            userId: users.userId
+          })
+          .from(users)
+          .where(eq(users.id, friendship[0].requesterId))
+          .limit(1);
+
+          if (responderProfile.length > 0 && requesterProfile.length > 0) {
+            const requesterWs = wss.userConnections.get(requesterProfile[0].userId);
+            if (requesterWs && requesterWs.readyState === 1) { // WebSocket.OPEN = 1
+              requesterWs.send(JSON.stringify({
+                type: 'friend_request_response',
+                responderId: responderProfile[0].userId,
+                responderName: responderProfile[0].name,
+                action: action,
+                message: action === 'accept' 
+                  ? `${responderProfile[0].name} accepted your friend request`
+                  : `${responderProfile[0].name} declined your friend request`,
+                friendshipId: updatedFriendship.id
+              }));
+              console.log(`👥 Real-time friend request ${action} notification sent to ${requesterProfile[0].userId}`);
+            }
+          }
+        }
+      } catch (notificationError) {
+        console.error('Failed to send friend request response notification:', notificationError);
+        // Don't fail the request if notification fails
+      }
+
+      res.json({ 
+        success: true, 
+        message: `Friend request ${action}ed successfully`,
+        data: updatedFriendship
+      });
+
+    } catch (error: any) {
+      console.error('Respond to friend request error:', error);
+      res.status(500).json({ success: false, error: 'Failed to respond to friend request' });
+    }
+  });
+
+  // Helper function to get profile UUID by text userId
+  const getUserUuidByUserId = async (textUserId: string): Promise<string | null> => {
+    try {
+      // First get the user UUID from auth_users
+      const authUser = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.userId, textUserId))
+        .limit(1);
+      
+      if (authUser.length === 0) return null;
+      
+      // Then get the profile UUID
+      const profile = await db
+        .select({ id: profiles.id })
+        .from(profiles) 
+        .where(eq(profiles.userId, authUser[0].id))
+        .limit(1);
+        
+      return profile.length > 0 ? profile[0].id : null;
+    } catch (error: any) {
+      console.error('Error getting profile UUID:', error);
+      return null;
+    }
+  };
+
+  // Ensure admin user exists
+  const ensureAdminUserExists = async () => {
+    try {
+      // Create ADMIN00001 (Support)
+      const existingAdmin = await db
+        .select()
+        .from(users)
+        .where(eq(users.userId, 'ADMIN00001'))
+        .limit(1);
+      
+      if (existingAdmin.length === 0) {
+        console.log('🔧 Creating admin user ADMIN00001...');
+        
+        const [newAdmin] = await db.insert(users).values({
+          userId: 'ADMIN00001',
+          email: 'support@edufiliova.com',
+          passwordHash: await bcrypt.hash('AdminEduFiliova2025!', 10),
+          educationLevel: 'other',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }).returning();
+
+        // Create admin profile  
+        await db.insert(profiles).values({
+          userId: newAdmin.id, // Use the UUID from the users table
+          name: 'Support',
+          age: 30,
+          grade: 13,
+          avatarUrl: null,
+          country: 'Global',
+          educationLevel: 'other',
+          role: 'admin',
+          pronouns: 'they/them',
+          lastSeen: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }).onConflictDoNothing();
+
+        console.log('✅ Admin user ADMIN00001 created successfully');
+      } else {
+        console.log('✅ Admin user ADMIN00001 already exists');
+        
+        // Ensure the admin profile exists too and update name
+        const existingProfile = await db
+          .select()
+          .from(profiles)
+          .where(eq(profiles.userId, existingAdmin[0].id))
+          .limit(1);
+          
+        if (existingProfile.length === 0) {
+          console.log('🔧 Creating missing admin profile...');
+          await db.insert(profiles).values({
+            userId: existingAdmin[0].id,
+            name: 'Support',
+            age: 30,
+            grade: 13,
+            avatarUrl: null,
+            country: 'Global',
+            educationLevel: 'other',
+            role: 'admin',
+            pronouns: 'they/them',
+            lastSeen: new Date(),
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }).onConflictDoNothing();
+          console.log('✅ Admin profile created successfully');
+        } else {
+          // Update the existing profile name and ensure role is admin
+          await db.update(profiles)
+            .set({
+              name: 'Support',
+              role: 'admin',
+              updatedAt: new Date()
+            })
+            .where(eq(profiles.userId, existingAdmin[0].id));
+        }
+        
+        // Also ensure email is correct
+        await db.update(users)
+          .set({
+            email: 'support@edufiliova.com',
+            updatedAt: new Date()
+          })
+          .where(eq(users.userId, 'ADMIN00001'));
+      }
+
+      // Create ADMIN00002 (Tech Support)
+      const existingAdmin2 = await db
+        .select()
+        .from(users)
+        .where(eq(users.userId, 'ADMIN00002'))
+        .limit(1);
+      
+      if (existingAdmin2.length === 0) {
+        console.log('🔧 Creating admin user ADMIN00002...');
+        
+        const [newAdmin2] = await db.insert(users).values({
+          userId: 'ADMIN00002',
+          email: 'techverify@edufiliova.com',
+          passwordHash: await bcrypt.hash('AdminEduFiliova2025!', 10),
+          educationLevel: 'other',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }).returning();
+
+        // Create admin profile with Tech Support logo
+        await db.insert(profiles).values({
+          userId: newAdmin2.id,
+          name: 'Tech Support',
+          age: 30,
+          grade: 13,
+          avatarUrl: '/src/assets/tech-support-logo.jpg',
+          country: 'Global',
+          educationLevel: 'other',
+          role: 'admin',
+          pronouns: 'they/them',
+          lastSeen: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }).onConflictDoNothing();
+
+        console.log('✅ Admin user ADMIN00002 created successfully');
+      } else {
+        console.log('✅ Admin user ADMIN00002 already exists');
+        
+        // Update the existing ADMIN00002 profile to use the new name and logo
+        await db.update(profiles)
+          .set({
+            name: 'Tech Support',
+            avatarUrl: '/src/assets/tech-support-logo.jpg',
+            updatedAt: new Date()
+          })
+          .where(eq(profiles.userId, existingAdmin2[0].id));
+        
+        console.log('✅ Updated ADMIN00002 profile with new name and logo');
+      }
+    } catch (error: any) {
+      console.error('❌ Error ensuring admin user exists:', error);
+    }
+  };
+
+  // Initialize admin user on startup
+  ensureAdminUserExists();
+
+  // Enhanced messaging - Get conversation with delivery/read status
+  app.get("/api/messages/enhanced/:otherUserId", async (req, res) => {
+    try {
+      let { otherUserId } = req.params;
+      const { page = 1, limit = 50 } = req.query;
+
+      // Strip conversation ID prefixes (direct_, support_, etc.)
+      if (otherUserId.startsWith('direct_')) {
+        otherUserId = otherUserId.replace('direct_', '');
+      } else if (otherUserId.startsWith('support_')) {
+        otherUserId = otherUserId.replace('support_', '');
+      }
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const currentUserId = session[0].userId;
+
+      // Get UUID IDs for both users
+      const currentUserUuid = await getUserUuidByUserId(currentUserId);
+      
+      // Check if otherUserId is already a UUID (profile ID) or a text ID
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      let otherUserUuid: string | null;
+      
+      if (uuidRegex.test(otherUserId)) {
+        // It's already a UUID (profile ID), use it directly
+        otherUserUuid = otherUserId;
+      } else {
+        // It's a text ID, convert it to UUID
+        otherUserUuid = await getUserUuidByUserId(otherUserId);
+      }
+
+      if (!currentUserUuid || !otherUserUuid) {
+        return res.status(404).json({ success: false, error: "User not found" });
+      }
+
+      // Get conversation messages with enhanced fields
+      const conversation = await db
+        .select({
+          id: messages.id,
+          senderId: messages.senderId,
+          receiverId: messages.receiverId,
+          content: messages.content,
+          fileUrl: messages.fileUrl,
+          fileType: messages.fileType,
+          deliveredAt: messages.deliveredAt,
+          readAt: messages.readAt,
+          createdAt: messages.createdAt,
+          senderProfile: {
+            name: sql<string>`sender_profile.name`,
+            avatarUrl: sql<string>`sender_profile.avatar_url`
+          },
+          receiverProfile: {
+            name: sql<string>`receiver_profile.name`,
+            avatarUrl: sql<string>`receiver_profile.avatar_url`
+          }
+        })
+        .from(messages)
+        .leftJoin(sql`profiles AS sender_profile`, eq(messages.senderId, sql`sender_profile.id`))
+        .leftJoin(sql`profiles AS receiver_profile`, eq(messages.receiverId, sql`receiver_profile.id`))
+        .where(
+          or(
+            and(eq(messages.senderId, currentUserUuid), eq(messages.receiverId, otherUserUuid)),
+            and(eq(messages.senderId, otherUserUuid), eq(messages.receiverId, currentUserUuid))
+          )
+        )
+        .orderBy(desc(messages.createdAt))
+        .limit(parseInt(limit as string))
+        .offset((parseInt(page as string) - 1) * parseInt(limit as string));
+
+      // Mark messages as delivered if they haven't been already
+      const undeliveredMessages = conversation
+        .filter(msg => msg.receiverId === currentUserUuid && !msg.deliveredAt)
+        .map(msg => msg.id);
+
+      if (undeliveredMessages.length > 0) {
+        await db
+          .update(messages)
+          .set({ deliveredAt: new Date() })
+          .where(inArray(messages.id, undeliveredMessages));
+
+        // Notify sender via WebSocket
+        try {
+          const senderWs = (global as any).wsClients?.get(otherUserId);
+          if (senderWs && senderWs.readyState === 1) {
+            senderWs.send(JSON.stringify({
+              type: 'messages_delivered',
+              messageIds: undeliveredMessages,
+              deliveredAt: new Date()
+            }));
+          }
+        } catch (wsError) {
+          console.log('WebSocket notification failed:', wsError);
+        }
+      }
+
+      res.json({ success: true,
+        success: true,
+        conversation: conversation.reverse(), // Oldest first for chat display
+        pagination: {
+          page: parseInt(page as string),
+          limit: parseInt(limit as string),
+          hasMore: conversation.length === parseInt(limit as string)
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Get enhanced conversation error:', error);
+      res.status(500).json({ success: false, error: 'Failed to get conversation' });
+    }
+  });
+
+  // Group conversation routes
+  
+  
+  // Get messages for a specific group
+  app.get("/api/messages/group/:groupId", async (req, res) => {
+    try {
+      const { groupId } = req.params;
+      const { page = 1, limit = 50 } = req.query;
+      
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const userId = session[0].userId;
+      
+      // Verify user is a member of the group
+      const membership = await db
+        .select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, userId)
+        ))
+        .limit(1);
+        
+      if (membership.length === 0) {
+        return res.status(403).json({ success: false, error: "Not a member of this group" });
+      }
+      
+      // Get group messages
+      const groupMessages = await db.select({
+        id: messages.id,
+        senderId: messages.senderId,
+        groupId: messages.groupId,
+        content: messages.content,
+        fileUrl: messages.fileUrl,
+        fileType: messages.fileType,
+        deliveredAt: messages.deliveredAt,
+        readAt: messages.readAt,
+        createdAt: messages.createdAt
+      })
+        .from(messages)
+        .where(eq(messages.groupId, groupId))
+        .orderBy(asc(messages.createdAt))
+        .limit(Number(limit))
+        .offset((Number(page) - 1) * Number(limit));
+
+      console.log(`📨 Returning ${groupMessages.length} group messages for group ${groupId}`);
+      res.json({ success: true, data: groupMessages });
+
+    } catch (error: any) {
+      console.error('Group messages fetch error:', error);
+      res.status(500).json({ success: false, error: "Failed to fetch group messages" });
+    }
+  });
+
+  // Send message to group
+  app.post("/api/messages/group", async (req, res) => {
+    try {
+      const { groupId, content, fileType } = req.body;
+
+      if (!groupId || !content) {
+        return res.status(400).json({ success: false, error: 'Group ID and content are required' });
+      }
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const userUuid = session[0].userId;
+      
+      // Get profile UUID for this user
+      const userProfile = await db.select({ profileId: profiles.id })
+        .from(profiles)
+        .where(eq(profiles.userId, userUuid))
+        .limit(1);
+
+      if (userProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "User profile not found" });
+      }
+
+      const senderProfileUuid = userProfile[0].profileId;
+      
+      // Verify user is a member of the group
+      const membership = await db
+        .select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, userUuid)
+        ))
+        .limit(1);
+        
+      if (membership.length === 0) {
+        return res.status(403).json({ success: false, error: "Not a member of this group" });
+      }
+      
+      // Create new group message
+      const newMessage = await db.insert(messages).values({
+        senderId: senderProfileUuid,
+        groupId: groupId,
+        content,
+        fileType: fileType || null
+      }).returning();
+
+      // Broadcast message to all group members via WebSocket
+      try {
+        // Get all group members
+        const groupMembers = await db.select({ userId: communityGroupMembers.userId })
+          .from(communityGroupMembers)
+          .where(eq(communityGroupMembers.groupId, groupId));
+        
+        let sentCount = 0;
+        for (const member of groupMembers) {
+          // Get user's text ID for WebSocket lookup
+          const memberUser = await db.select({ userId: users.userId })
+            .from(users)
+            .where(eq(users.id, member.userId))
+            .limit(1);
+          
+          if (memberUser.length > 0) {
+            const memberTextId = memberUser[0].userId;
+            const memberWs = (global as any).wsClients?.get(memberTextId);
+            
+            if (memberWs && memberWs.readyState === 1) {
+              memberWs.send(JSON.stringify({
+                type: 'new_message',
+                data: newMessage[0]
+              }));
+              sentCount++;
+            }
+          }
+        }
+        
+        console.log(`✅ Group message broadcasted to ${sentCount} online members`);
+      } catch (wsError) {
+        console.log('WebSocket broadcast failed:', wsError);
+      }
+
+      res.json({ success: true,
+        success: true,
+        message: newMessage[0]
+      });
+
+    } catch (error: any) {
+      console.error('Send group message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to send group message' });
+    }
+  });
+
+  // Start freelancer chat
+  app.post("/api/messages/start-freelancer-chat", async (req, res) => {
+    try {
+      const { freelancerId } = req.body;
+
+      if (!freelancerId) {
+        return res.status(400).json({ success: false, error: 'Freelancer ID is required' });
+      }
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const customerUuid = session[0].userId;
+      
+      // Prevent self-contact
+      if (customerUuid === freelancerId) {
+        return res.status(400).json({ success: false, error: "Cannot start a chat with yourself" });
+      }
+
+      // Get customer profile UUID and role
+      const customerProfile = await db.select({ profileId: profiles.id, role: profiles.role })
+        .from(profiles)
+        .where(eq(profiles.userId, customerUuid))
+        .limit(1);
+
+      if (customerProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "Customer profile not found" });
+      }
+
+      const customerProfileUuid = customerProfile[0].profileId;
+      const customerRole = customerProfile[0].role;
+
+      // Get freelancer profile UUID and role
+      const freelancerProfile = await db.select({ profileId: profiles.id, role: profiles.role })
+        .from(profiles)
+        .where(eq(profiles.userId, freelancerId))
+        .limit(1);
+
+      if (freelancerProfile.length === 0) {
+        return res.status(404).json({ success: false, error: "Freelancer not found" });
+      }
+
+      const freelancerProfileUuid = freelancerProfile[0].profileId;
+      const freelancerRole = freelancerProfile[0].role;
+
+      // Use transaction-based upsert to prevent race conditions
+      let threadId;
+      let isNewThread = false;
+      
+      try {
+        // Try to create new chat thread - will fail if duplicate due to unique constraint
+        const result = await db.transaction(async (tx) => {
+          // Attempt to insert new thread
+          const newThread = await tx.insert(chatThreads).values({
+            customerId: customerUuid,
+            freelancerId: freelancerId,
+            status: 'open'
+          }).returning();
+          
+          const createdThreadId = newThread[0].id;
+          
+          // Insert participants idempotently using onConflictDoNothing with explicit target
+          await tx.insert(chatParticipants).values([
+            {
+              threadId: createdThreadId,
+              userId: customerUuid,
+              role: customerRole
+            },
+            {
+              threadId: createdThreadId,
+              userId: freelancerId,
+              role: freelancerRole
+            }
+          ]).onConflictDoNothing({ target: [chatParticipants.threadId, chatParticipants.userId] });
+          
+          return { threadId: createdThreadId, isNew: true };
+        });
+        
+        threadId = result.threadId;
+        isNewThread = result.isNew;
+        console.log(`✨ Created new chat thread ${threadId} between customer ${customerUuid} and freelancer ${freelancerId}`);
+        
+      } catch (error: any) {
+        // Check if this is a unique constraint violation
+        if (error.code === '23505' || error.message?.includes('unique_freelancer_customer')) {
+          // Thread already exists due to race condition, fetch it
+          const existingThread = await db
+            .select()
+            .from(chatThreads)
+            .where(
+              and(
+                eq(chatThreads.customerId, customerUuid),
+                eq(chatThreads.freelancerId, freelancerId)
+              )
+            )
+            .limit(1);
+            
+          if (existingThread.length > 0) {
+            threadId = existingThread[0].id;
+            isNewThread = false;
+            console.log(`📬 Using existing chat thread ${threadId} between customer ${customerUuid} and freelancer ${freelancerId} (race condition resolved)`);
+          } else {
+            // Unexpected state - thread should exist but we can't find it
+            throw new Error('Thread creation failed and existing thread not found');
+          }
+        } else {
+          // Re-throw other errors
+          throw error;
+        }
+      }
+
+      console.log(`🤝 Started/accessed freelancer chat between customer ${customerUuid} and freelancer ${freelancerId}`);
+
+      // Format conversation ID to match the unified-conversations format
+      // IMPORTANT: Use freelancerProfileUuid (profile UUID) to match unified-conversations API
+      const conversationId = `direct_${freelancerProfileUuid}`;
+
+      res.json({ success: true,
+        success: true,
+        conversationId: conversationId,
+        threadId: threadId,
+        isNewThread: isNewThread
+      });
+
+    } catch (error: any) {
+      console.error('Start freelancer chat error:', error);
+      res.status(500).json({ success: false, error: 'Failed to start chat with freelancer' });
+    }
+  });
+
+  // Teacher Announcements - Create announcement
+  app.post("/api/announcements", async (req, res) => {
+    try {
+      const { title, content, priority = 'normal', targetAudience = 'all_students', targetGrade, targetStudentIds, expiresAt } = req.body;
+
+      if (!title || !content) {
+        return res.status(400).json({ success: false, error: 'Title and content are required' });
+      }
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const teacher = await getUserWithProfile(session[0].userId);
+      if (!teacher || teacher.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: "Only teachers can create announcements" });
+      }
+
+      const newAnnouncement = await db.insert(announcements).values({
+        teacherId: teacher.userId,
+        title,
+        content,
+        priority,
+        targetAudience,
+        targetGrade: targetGrade || null,
+        targetStudentIds: targetStudentIds || [],
+        expiresAt: expiresAt ? new Date(expiresAt) : null
+      }).returning();
+
+      res.json({ success: true, data: newAnnouncement[0] });
+
+    } catch (error: any) {
+      console.error('Create announcement error:', error);
+      res.status(500).json({ success: false, error: 'Failed to create announcement' });
+    }
+  });
+
+  // Get announcements for student
+  app.get("/api/announcements", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const user = await getUserWithProfile(session[0].userId);
+      if (!user) {
+        return res.status(404).json({ success: false, error: "User not found" });
+      }
+
+      let userAnnouncements;
+
+      if (user.role === 'student') {
+        // Get announcements targeted to this student
+        userAnnouncements = await db.select({
+          id: announcements.id,
+          teacherId: announcements.teacherId,
+          title: announcements.title,
+          content: announcements.content,
+          priority: announcements.priority,
+          createdAt: announcements.createdAt,
+          teacherName: sql<string>`teacher_profile.name`
+        })
+        .from(announcements)
+        .leftJoin(sql`profiles AS teacher_profile`, sql`teacher_profile."userId" = ${announcements.teacherId}`)
+        .where(and(
+          eq(announcements.isActive, true),
+          or(
+            isNull(announcements.expiresAt),
+            gt(announcements.expiresAt, new Date())
+          ),
+          or(
+            eq(announcements.targetAudience, 'all_students'),
+            and(
+              eq(announcements.targetAudience, 'specific_grade'),
+              eq(announcements.targetGrade, user.grade)
+            ),
+            and(
+              eq(announcements.targetAudience, 'specific_students'),
+              sql`${user.userId} = ANY(${announcements.targetStudentIds})`
+            )
+          )
+        ))
+        .orderBy(desc(announcements.createdAt));
+
+      } else if (user.role === 'teacher') {
+        // Get announcements created by this teacher
+        userAnnouncements = await db.select()
+          .from(announcements)
+          .where(eq(announcements.teacherId, user.userId))
+          .orderBy(desc(announcements.createdAt));
+
+      } else if (user.role === 'admin') {
+        // Admins can see all announcements
+        userAnnouncements = await db.select({
+          id: announcements.id,
+          teacherId: announcements.teacherId,
+          title: announcements.title,
+          content: announcements.content,
+          priority: announcements.priority,
+          targetAudience: announcements.targetAudience,
+          targetGrade: announcements.targetGrade,
+          isActive: announcements.isActive,
+          createdAt: announcements.createdAt,
+          teacherName: sql<string>`teacher_profile.name`
+        })
+        .from(announcements)
+        .leftJoin(sql`profiles AS teacher_profile`, sql`teacher_profile."userId" = ${announcements.teacherId}`)
+        .orderBy(desc(announcements.createdAt));
+      }
+
+      res.json({ success: true, data: userAnnouncements });
+
+    } catch (error: any) {
+      console.error('Get announcements error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch announcements' });
+    }
+  });
+
+  // Teacher Dashboard - Get assigned students
+  app.get("/api/teacher/students", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const teacher = await getUserWithProfile(session[0].userId);
+      if (!teacher || teacher.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: "Only teachers can access this endpoint" });
+      }
+
+      // Use teacher.id (UUID) for database operations - teacher.userId is the text ID
+      const teacherUuid = teacher.id;
+
+      // Get students who have accepted appointments (confirmed status)
+      const studentsWithAppointments = await db.select({
+        studentId: appointments.studentId,
+        name: profiles.name,
+        pronouns: profiles.pronouns,
+        avatarUrl: profiles.avatarUrl,
+        grade: profiles.grade,
+        country: profiles.country,
+        appointmentDate: appointments.startDate,
+        appointmentStatus: appointments.status,
+        subject: appointments.subject,
+        lastMessageTime: sql<Date | null>`(
+          SELECT MAX(created_at) 
+          FROM messages 
+          WHERE (sender_id = ${teacherUuid} AND receiver_id = ${appointments.studentId})
+             OR (sender_id = ${appointments.studentId} AND receiver_id = ${teacherUuid})
+        )`,
+        unreadCount: sql<number>`(
+          SELECT COUNT(*) 
+          FROM messages 
+          WHERE sender_id = ${appointments.studentId} 
+            AND receiver_id = ${teacherUuid} 
+            AND is_read = false
+        )`
+      })
+      .from(appointments)
+      .innerJoin(profiles, eq(appointments.studentId, profiles.userId))
+      .where(and(
+        eq(appointments.teacherId, teacherUuid),
+        eq(appointments.status, 'confirmed')
+      ))
+      .orderBy(desc(appointments.startDate));
+
+      res.json({ success: true, data: studentsWithAppointments });
+
+    } catch (error: any) {
+      console.error('Get teacher students error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch assigned students' });
+    }
+  });
+
+  // Get detailed student progress for teachers
+  app.get("/api/teacher/students/progress", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const teacher = await getUserWithProfile(session[0].userId);
+      if (!teacher || teacher.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: "Only teachers can access this endpoint" });
+      }
+
+      // Use teacher.id (UUID) for database operations - teacher.userId is the text ID
+      const teacherUuid = teacher.id;
+
+      // Get students with confirmed appointments and their progress details
+      const rawStudentsData = await db.select({
+        studentId: appointments.studentId,
+        name: profiles.name,
+        pronouns: profiles.pronouns,
+        avatarUrl: profiles.avatarUrl,
+        grade: profiles.grade,
+        country: profiles.country,
+        appointmentDate: appointments.startDate,
+        appointmentStatus: appointments.status,
+        subject: appointments.subject,
+        assignedAt: appointments.createdAt, // Use appointment creation as assignment date
+        notes: appointments.notes,
+        lastMessageTime: sql<Date | null>`(
+          SELECT MAX(created_at) 
+          FROM messages 
+          WHERE (sender_id = ${teacherUuid} AND receiver_id = ${appointments.studentId})
+             OR (sender_id = ${appointments.studentId} AND receiver_id = ${teacherUuid})
+        )`,
+        unreadCount: sql<number>`(
+          SELECT COUNT(*) 
+          FROM messages 
+          WHERE sender_id = ${appointments.studentId} 
+            AND receiver_id = ${teacherUuid} 
+            AND is_read = false
+        )`,
+        totalLessonsStarted: sql<number>`(
+          SELECT COUNT(DISTINCT lesson_id) 
+          FROM lesson_progress 
+          WHERE user_id = ${appointments.studentId}
+        )`,
+        completedLessons: sql<number>`(
+          SELECT COUNT(DISTINCT lesson_id) 
+          FROM lesson_progress 
+          WHERE user_id = ${appointments.studentId} 
+            AND completed_at IS NOT NULL
+        )`,
+        averageProgress: sql<number>`(
+          SELECT COALESCE(AVG(progress_percent), 0) 
+          FROM lesson_progress 
+          WHERE user_id = ${appointments.studentId}
+        )`,
+        lastActiveAt: sql<Date | null>`(
+          SELECT MAX(updated_at) 
+          FROM lesson_progress 
+          WHERE user_id = ${appointments.studentId}
+        )`
+      })
+      .from(appointments)
+      .innerJoin(profiles, eq(appointments.studentId, profiles.userId))
+      .where(and(
+        eq(appointments.teacherId, teacherUuid),
+        eq(appointments.status, 'confirmed')
+      ))
+      .orderBy(desc(appointments.startDate));
+
+      // Group students by studentId and aggregate subjects
+      const studentsWithProgress = rawStudentsData.reduce((acc, student) => {
+        const existingStudent = acc.find(s => s.studentId === student.studentId);
+        
+        if (existingStudent) {
+          // Add subject to existing student if not already present
+          if (student.subject && !existingStudent.subjects.includes(student.subject)) {
+            existingStudent.subjects.push(student.subject);
+          }
+          // Update to most recent appointment date if newer
+          if (student.appointmentDate > existingStudent.appointmentDate) {
+            existingStudent.appointmentDate = student.appointmentDate;
+            existingStudent.assignedAt = student.assignedAt;
+            existingStudent.notes = student.notes;
+          }
+        } else {
+          // Create new student entry with subjects array
+          acc.push({
+            ...student,
+            subjects: student.subject ? [student.subject] : [],
+            // Keep subject field for backward compatibility, use first subject
+            subject: student.subject
+          });
+        }
+        
+        return acc;
+      }, [] as any[]);
+
+      res.json({ success: true, data: studentsWithProgress });
+
+    } catch (error: any) {
+      console.error('Get student progress error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch student progress' });
+    }
+  });
+
+  // =======================
+  // ASSIGNMENT SYSTEM API ROUTES
+  // =======================
+
+  // Teacher: Get all assignments created by this teacher
+  app.get("/api/teacher/assignments", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+      const { status, subject } = req.query;
+
+      let query = db
+        .select({
+          id: assignments.id,
+          title: assignments.title,
+          description: assignments.description,
+          instructions: assignments.instructions,
+          dueDate: assignments.dueDate,
+          attachments: assignments.attachments,
+          targetType: assignments.targetType,
+          targetStudents: assignments.targetStudents,
+          subject: assignments.subject,
+          grade: assignments.grade,
+          maxGrade: assignments.maxGrade,
+          allowLateSubmission: assignments.allowLateSubmission,
+          allowResubmission: assignments.allowResubmission,
+          questions: assignments.questions,
+          status: assignments.status,
+          createdAt: assignments.createdAt,
+          updatedAt: assignments.updatedAt,
+          submissionCount: count(assignmentSubmissions.id)
+        })
+        .from(assignments)
+        .leftJoin(assignmentSubmissions, eq(assignments.id, assignmentSubmissions.assignmentId))
+        .where(eq(assignments.teacherId, teacherUuid))
+        .groupBy(assignments.id)
+        .orderBy(desc(assignments.createdAt));
+
+      // Apply filters
+      if (status && status !== 'all') {
+        query = query.where(and(
+          eq(assignments.teacherId, teacherUuid),
+          eq(assignments.status, status as any)
+        ));
+      }
+
+      if (subject && subject !== 'all') {
+        query = query.where(and(
+          eq(assignments.teacherId, teacherUuid),
+          eq(assignments.subject, subject as string)
+        ));
+      }
+
+      const assignmentList = await query;
+      res.json({ success: true, data: assignmentList });
+
+    } catch (error: any) {
+      console.error('Get teacher assignments error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch assignments' });
+    }
+  });
+
+  // Teacher: Create new assignment
+  app.post("/api/teacher/assignments", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+      const {
+        title,
+        description,
+        instructions,
+        dueDate,
+        attachments,
+        questions,
+        targetType = 'all',
+        targetStudents,
+        subject,
+        grade,
+        maxGrade = 100,
+        allowLateSubmission = false,
+        allowResubmission = false
+      } = req.body;
+
+      if (!title || !description || !dueDate || !subject || !grade) {
+        return res.status(400).json({
+          success: false,
+          error: 'Missing required fields: title, description, dueDate, subject, grade'
+        });
+      }
+
+      const newAssignment = await db
+        .insert(assignments)
+        .values({
+          teacherId: teacherUuid,
+          title,
+          description,
+          instructions,
+          dueDate: new Date(dueDate),
+          attachments,
+          questions,
+          targetType,
+          targetStudents,
+          subject,
+          grade: parseInt(grade),
+          maxGrade,
+          allowLateSubmission,
+          allowResubmission,
+          status: 'draft'
+        })
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        data: newAssignment[0],
+        message: 'Assignment created successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Create assignment error:', error);
+      res.status(500).json({ success: false, error: 'Failed to create assignment' });
+    }
+  });
+
+  // Teacher: Update assignment
+  app.put("/api/teacher/assignments/:assignmentId", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+      const { assignmentId } = req.params;
+      const updateData = { ...req.body, updatedAt: new Date() };
+
+      // Verify teacher owns this assignment
+      const assignment = await db
+        .select()
+        .from(assignments)
+        .where(and(
+          eq(assignments.id, assignmentId),
+          eq(assignments.teacherId, teacherUuid)
+        ))
+        .limit(1);
+
+      if (assignment.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Assignment not found or unauthorized'
+        });
+      }
+
+      const updatedAssignment = await db
+        .update(assignments)
+        .set(updateData)
+        .where(eq(assignments.id, assignmentId))
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        data: updatedAssignment[0],
+        message: 'Assignment updated successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Update assignment error:', error);
+      res.status(500).json({ success: false, error: 'Failed to update assignment' });
+    }
+  });
+
+  // Teacher: Delete assignment
+  app.delete("/api/teacher/assignments/:assignmentId", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+      const { assignmentId } = req.params;
+
+      // Verify teacher owns this assignment
+      const assignment = await db
+        .select()
+        .from(assignments)
+        .where(and(
+          eq(assignments.id, assignmentId),
+          eq(assignments.teacherId, teacherUuid)
+        ))
+        .limit(1);
+
+      if (assignment.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Assignment not found or unauthorized'
+        });
+      }
+
+      // Delete related records first to handle foreign key constraints
+      // Delete assignment comments first (they reference submissions)
+      await db.delete(assignmentComments).where(
+        eq(assignmentComments.submissionId, 
+          sql`(SELECT id FROM ${assignmentSubmissions} WHERE assignment_id = ${assignmentId})`
+        )
+      );
+
+      // Delete assignment submissions
+      await db.delete(assignmentSubmissions).where(eq(assignmentSubmissions.assignmentId, assignmentId));
+
+      // Finally delete the assignment
+      await db.delete(assignments).where(eq(assignments.id, assignmentId));
+
+      res.json({ success: true,
+        success: true,
+        message: 'Assignment deleted successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Delete assignment error:', error);
+      res.status(500).json({ success: false, error: 'Failed to delete assignment' });
+    }
+  });
+
+  // Teacher: Publish assignment
+  app.patch("/api/teacher/assignments/:assignmentId/publish", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+      const { assignmentId } = req.params;
+
+      const updatedAssignment = await db
+        .update(assignments)
+        .set({ 
+          status: 'published',
+          updatedAt: new Date()
+        })
+        .where(and(
+          eq(assignments.id, assignmentId),
+          eq(assignments.teacherId, teacherUuid)
+        ))
+        .returning();
+
+      if (updatedAssignment.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Assignment not found or unauthorized'
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        data: updatedAssignment[0],
+        message: 'Assignment published successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Publish assignment error:', error);
+      res.status(500).json({ success: false, error: 'Failed to publish assignment' });
+    }
+  });
+
+  // Teacher: Get assignment submissions and grade them
+  app.get("/api/teacher/assignments/:assignmentId/submissions", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+      const { assignmentId } = req.params;
+
+      // Verify teacher owns this assignment
+      const assignment = await db
+        .select()
+        .from(assignments)
+        .where(and(
+          eq(assignments.id, assignmentId),
+          eq(assignments.teacherId, teacherUuid)
+        ))
+        .limit(1);
+
+      if (assignment.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Assignment not found or unauthorized'
+        });
+      }
+
+      // Get all submissions for this assignment
+      const submissions = await db
+        .select({
+          id: assignmentSubmissions.id,
+          studentId: assignmentSubmissions.studentId,
+          studentName: profiles.name,
+          fileUrls: assignmentSubmissions.fileUrls,
+          textContent: assignmentSubmissions.textContent,
+          questionAnswers: assignmentSubmissions.questionAnswers,
+          submittedAt: assignmentSubmissions.submittedAt,
+          grade: assignmentSubmissions.grade,
+          numericGrade: assignmentSubmissions.numericGrade,
+          feedback: assignmentSubmissions.feedback,
+          status: assignmentSubmissions.status,
+          isLate: assignmentSubmissions.isLate,
+          resubmissionCount: assignmentSubmissions.resubmissionCount,
+          gradedAt: assignmentSubmissions.gradedAt
+        })
+        .from(assignmentSubmissions)
+        .innerJoin(profiles, eq(assignmentSubmissions.studentId, profiles.userId))
+        .where(eq(assignmentSubmissions.assignmentId, assignmentId))
+        .orderBy(desc(assignmentSubmissions.submittedAt));
+
+      res.json({ success: true, data: submissions });
+
+    } catch (error: any) {
+      console.error('Get assignment submissions error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch submissions' });
+    }
+  });
+
+  // Teacher: Grade submission
+  app.patch("/api/teacher/assignments/:assignmentId/submissions/:submissionId/grade", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+      const { assignmentId, submissionId } = req.params;
+      const { grade, numericGrade, feedback, allowResubmission } = req.body;
+
+      // Verify teacher owns this assignment
+      const assignment = await db
+        .select()
+        .from(assignments)
+        .where(and(
+          eq(assignments.id, assignmentId),
+          eq(assignments.teacherId, teacherUuid)
+        ))
+        .limit(1);
+
+      if (assignment.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Assignment not found or unauthorized'
+        });
+      }
+
+      const gradedSubmission = await db
+        .update(assignmentSubmissions)
+        .set({
+          grade,
+          numericGrade,
+          feedback,
+          status: allowResubmission ? 'resubmit' : 'graded',
+          gradedAt: new Date(),
+          gradedBy: teacherUuid,
+          updatedAt: new Date()
+        })
+        .where(and(
+          eq(assignmentSubmissions.id, submissionId),
+          eq(assignmentSubmissions.assignmentId, assignmentId)
+        ))
+        .returning();
+
+      if (gradedSubmission.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Submission not found'
+        });
+      }
+
+      res.json({ success: true,
+        success: true,
+        data: gradedSubmission[0],
+        message: 'Submission graded successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Grade submission error:', error);
+      res.status(500).json({ success: false, error: 'Failed to grade submission' });
+    }
+  });
+
+  // Teacher: Get class performance analytics
+  app.get("/api/teacher/class-performance", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+
+      // Get aggregate performance data from assignment submissions
+      const performanceData = await db
+        .select({
+          subject: assignments.subject,
+          totalAssignments: sql<number>`COUNT(DISTINCT ${assignments.id})`,
+          totalSubmissions: sql<number>`COUNT(${assignmentSubmissions.id})`,
+          averageGrade: sql<number>`AVG(${assignmentSubmissions.numericGrade})`,
+        })
+        .from(assignments)
+        .leftJoin(assignmentSubmissions, eq(assignments.id, assignmentSubmissions.assignmentId))
+        .where(eq(assignments.teacherId, teacherUuid))
+        .groupBy(assignments.subject);
+
+      res.json({ success: true,
+        success: true,
+        data: performanceData,
+        summary: {
+          totalSubjects: performanceData.length,
+          overallAverage: performanceData.length > 0 
+            ? performanceData.reduce((sum, p) => sum + (p.averageGrade || 0), 0) / performanceData.length 
+            : 0
+        }
+      });
+    } catch (error: any) {
+      console.error('Class performance error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch class performance' });
+    }
+  });
+
+  // Teacher: Get recent activities
+  app.get("/api/teacher/recent-activities", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'teacher') {
+        return res.status(403).json({ success: false, error: 'Access denied. Teacher access required.' });
+      }
+
+      const teacherUuid = req.user.id;
+      const limit = parseInt(req.query.limit as string) || 20;
+
+      // Get recent assignment submissions for this teacher
+      const recentActivities = await db
+        .select({
+          id: assignmentSubmissions.id,
+          type: sql<string>`'submission'`,
+          assignmentTitle: assignments.title,
+          studentId: assignmentSubmissions.studentId,
+          status: assignmentSubmissions.status,
+          submittedAt: assignmentSubmissions.submittedAt,
+          grade: assignmentSubmissions.grade,
+        })
+        .from(assignmentSubmissions)
+        .innerJoin(assignments, eq(assignmentSubmissions.assignmentId, assignments.id))
+        .where(eq(assignments.teacherId, teacherUuid))
+        .orderBy(desc(assignmentSubmissions.submittedAt))
+        .limit(limit);
+
+      res.json({ success: true,
+        success: true,
+        data: recentActivities,
+        count: recentActivities.length
+      });
+    } catch (error: any) {
+      console.error('Recent activities error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch recent activities' });
+    }
+  });
+
+  // Student: Get assignments assigned to this student
+  app.get("/api/student/assignments", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'student') {
+        return res.status(403).json({ success: false, error: 'Access denied. Student access required.' });
+      }
+
+      const studentUuid = req.user.id;
+      const { status, subject } = req.query;
+
+      // Get student's grade from their profile
+      const studentProfile = await db
+        .select({ grade: profiles.grade })
+        .from(profiles)
+        .where(eq(profiles.userId, studentUuid))
+        .limit(1);
+
+      if (studentProfile.length === 0) {
+        return res.status(404).json({ success: false, error: 'Student profile not found' });
+      }
+
+      const studentGrade = studentProfile[0].grade;
+
+      let query = db
+        .select({
+          id: assignments.id,
+          title: assignments.title,
+          description: assignments.description,
+          instructions: assignments.instructions,
+          dueDate: assignments.dueDate,
+          attachments: assignments.attachments,
+          questions: assignments.questions,
+          subject: assignments.subject,
+          assignmentGrade: assignments.grade,
+          maxGrade: assignments.maxGrade,
+          allowLateSubmission: assignments.allowLateSubmission,
+          allowResubmission: assignments.allowResubmission,
+          createdAt: assignments.createdAt,
+          teacherName: profiles.name,
+          submissionId: assignmentSubmissions.id,
+          submissionStatus: assignmentSubmissions.status,
+          receivedGrade: assignmentSubmissions.grade,
+          feedback: assignmentSubmissions.feedback,
+          submittedAt: assignmentSubmissions.submittedAt,
+          gradedAt: assignmentSubmissions.gradedAt
+        })
+        .from(assignments)
+        .innerJoin(profiles, eq(assignments.teacherId, profiles.userId))
+        .leftJoin(assignmentSubmissions, and(
+          eq(assignments.id, assignmentSubmissions.assignmentId),
+          eq(assignmentSubmissions.studentId, studentUuid)
+        ))
+        .where(and(
+          eq(assignments.status, 'published'),
+          eq(assignments.grade, studentGrade), // Only show assignments for student's grade
+          or(
+            eq(assignments.targetType, 'all'),
+            sql`${assignments.targetStudents} @> ${JSON.stringify([studentUuid])}`
+          )
+        ))
+        .orderBy(desc(assignments.createdAt));
+
+      // Apply filters
+      if (status && status !== 'all') {
+        if (status === 'pending') {
+          query = query.where(and(
+            eq(assignments.status, 'published'),
+            isNull(assignmentSubmissions.id)
+          ));
+        } else if (status === 'submitted') {
+          query = query.where(and(
+            eq(assignments.status, 'published'),
+            eq(assignmentSubmissions.status, 'submitted')
+          ));
+        } else if (status === 'graded') {
+          query = query.where(and(
+            eq(assignments.status, 'published'),
+            eq(assignmentSubmissions.status, 'graded')
+          ));
+        }
+      }
+
+      if (subject && subject !== 'all') {
+        query = query.where(and(
+          eq(assignments.status, 'published'),
+          eq(assignments.subject, subject as string)
+        ));
+      }
+
+      const studentAssignments = await query;
+      res.json({ success: true, data: studentAssignments });
+
+    } catch (error: any) {
+      console.error('Get student assignments error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch assignments' });
+    }
+  });
+
+  // Student: Submit assignment
+  app.post("/api/student/assignments/:assignmentId/submit", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'student') {
+        return res.status(403).json({ success: false, error: 'Access denied. Student access required.' });
+      }
+
+      const studentUuid = req.user.id;
+      const { assignmentId } = req.params;
+      const { fileUrls, textContent, questionAnswers } = req.body;
+
+
+      // Check if assignment exists and is published first to determine validation
+      const assignment = await db
+        .select()
+        .from(assignments)
+        .where(and(
+          eq(assignments.id, assignmentId),
+          eq(assignments.status, 'published')
+        ))
+        .limit(1);
+
+      if (assignment.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Assignment not found or not available'
+        });
+      }
+
+      const assignmentData = assignment[0];
+      const hasQuestions = assignmentData.questions && Array.isArray(assignmentData.questions) && assignmentData.questions.length > 0;
+      
+      // Validate submission content based on assignment type
+      if (!hasQuestions && !fileUrls && !textContent) {
+        return res.status(400).json({
+          success: false,
+          error: 'Either file uploads or text content is required'
+        });
+      }
+
+      if (hasQuestions && !questionAnswers && !fileUrls && !textContent) {
+        return res.status(400).json({
+          success: false,
+          error: 'Please answer the questions or provide text content/files'
+        });
+      }
+      
+      // Check if assignment is targeted to this student
+      const isTargeted = assignmentData.targetType === 'all' || 
+        (assignmentData.targetStudents && 
+         Array.isArray(assignmentData.targetStudents) && 
+         assignmentData.targetStudents.includes(studentUuid));
+
+      if (!isTargeted) {
+        return res.status(403).json({
+          success: false,
+          error: 'You are not assigned to this assignment'
+        });
+      }
+
+      // Check for existing submission
+      const existingSubmission = await db
+        .select()
+        .from(assignmentSubmissions)
+        .where(and(
+          eq(assignmentSubmissions.assignmentId, assignmentId),
+          eq(assignmentSubmissions.studentId, studentUuid)
+        ))
+        .limit(1);
+
+      const isLate = new Date() > new Date(assignmentData.dueDate);
+      const now = new Date();
+
+      if (existingSubmission.length > 0) {
+        // Check if resubmission is allowed
+        if (existingSubmission[0].status === 'graded' && !assignmentData.allowResubmission) {
+          return res.status(400).json({
+            success: false,
+            error: 'Resubmission not allowed for this assignment'
+          });
+        }
+
+        // Update existing submission
+        const updatedSubmission = await db
+          .update(assignmentSubmissions)
+          .set({
+            fileUrls,
+            textContent,
+            questionAnswers,
+            status: 'submitted',
+            isLate,
+            resubmissionCount: sql`${assignmentSubmissions.resubmissionCount} + 1`,
+            submittedAt: now,
+            updatedAt: now
+          })
+          .where(eq(assignmentSubmissions.id, existingSubmission[0].id))
+          .returning();
+
+        res.json({ success: true,
+          success: true,
+          data: updatedSubmission[0],
+          message: 'Assignment resubmitted successfully'
+        });
+      } else {
+        // Create new submission
+        const newSubmission = await db
+          .insert(assignmentSubmissions)
+          .values({
+            assignmentId,
+            studentId: studentUuid,
+            fileUrls,
+            textContent,
+            questionAnswers,
+            submittedAt: now,
+            isLate,
+            status: 'submitted'
+          })
+          .returning();
+
+        res.json({ success: true,
+          success: true,
+          data: newSubmission[0],
+          message: 'Assignment submitted successfully'
+        });
+      }
+
+    } catch (error: any) {
+      console.error('Submit assignment error:', error);
+      res.status(500).json({ success: false, error: 'Failed to submit assignment' });
+    }
+  });
+
+  // Student: Get assignment details
+  app.get("/api/student/assignments/:assignmentId", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'student') {
+        return res.status(403).json({ success: false, error: 'Access denied. Student access required.' });
+      }
+
+      const studentUuid = req.user.id;
+      const { assignmentId } = req.params;
+
+      // Get assignment with teacher info and student's submission
+      const assignmentDetails = await db
+        .select({
+          id: assignments.id,
+          title: assignments.title,
+          description: assignments.description,
+          instructions: assignments.instructions,
+          dueDate: assignments.dueDate,
+          attachments: assignments.attachments,
+          subject: assignments.subject,
+          maxGrade: assignments.maxGrade,
+          allowLateSubmission: assignments.allowLateSubmission,
+          allowResubmission: assignments.allowResubmission,
+          createdAt: assignments.createdAt,
+          teacherName: profiles.name,
+          teacherEmail: profiles.email,
+          submissionId: assignmentSubmissions.id,
+          submissionStatus: assignmentSubmissions.status,
+          fileUrls: assignmentSubmissions.fileUrls,
+          textContent: assignmentSubmissions.textContent,
+          grade: assignmentSubmissions.grade,
+          numericGrade: assignmentSubmissions.numericGrade,
+          feedback: assignmentSubmissions.feedback,
+          submittedAt: assignmentSubmissions.submittedAt,
+          gradedAt: assignmentSubmissions.gradedAt,
+          resubmissionCount: assignmentSubmissions.resubmissionCount
+        })
+        .from(assignments)
+        .innerJoin(profiles, eq(assignments.teacherId, profiles.userId))
+        .leftJoin(assignmentSubmissions, and(
+          eq(assignments.id, assignmentSubmissions.assignmentId),
+          eq(assignmentSubmissions.studentId, studentUuid)
+        ))
+        .where(and(
+          eq(assignments.id, assignmentId),
+          eq(assignments.status, 'published'),
+          or(
+            eq(assignments.targetType, 'all'),
+            sql`${assignments.targetStudents} @> ${JSON.stringify([studentUuid])}`
+          )
+        ))
+        .limit(1);
+
+      if (assignmentDetails.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Assignment not found or not accessible'
+        });
+      }
+
+      res.json({ success: true, data: assignmentDetails[0] });
+
+    } catch (error: any) {
+      console.error('Get assignment details error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch assignment details' });
+    }
+  });
+
+  // Assignment Comments - Add comment to submission
+  app.post("/api/assignments/submissions/:submissionId/comments", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { submissionId } = req.params;
+      const { content, isPrivate = false } = req.body;
+      const authorId = req.user.id;
+
+      if (!content) {
+        return res.status(400).json({
+          success: false,
+          error: 'Content is required'
+        });
+      }
+
+      // Verify user has access to this submission
+      const submission = await db
+        .select({
+          id: assignmentSubmissions.id,
+          studentId: assignmentSubmissions.studentId,
+          teacherId: assignments.teacherId
+        })
+        .from(assignmentSubmissions)
+        .innerJoin(assignments, eq(assignmentSubmissions.assignmentId, assignments.id))
+        .where(eq(assignmentSubmissions.id, submissionId))
+        .limit(1);
+
+      if (submission.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Submission not found'
+        });
+      }
+
+      const submissionData = submission[0];
+      const hasAccess = authorId === submissionData.studentId || 
+                       authorId === submissionData.teacherId ||
+                       req.user.role === 'admin';
+
+      if (!hasAccess) {
+        return res.status(403).json({
+          success: false,
+          error: 'Access denied'
+        });
+      }
+
+      const newComment = await db
+        .insert(assignmentComments)
+        .values({
+          submissionId,
+          authorId,
+          content,
+          isPrivate
+        })
+        .returning();
+
+      res.json({ success: true,
+        success: true,
+        data: newComment[0],
+        message: 'Comment added successfully'
+      });
+
+    } catch (error: any) {
+      console.error('Add comment error:', error);
+      res.status(500).json({ success: false, error: 'Failed to add comment' });
+    }
+  });
+
+  // Assignment Comments - Get comments for submission
+  app.get("/api/assignments/submissions/:submissionId/comments", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      const { submissionId } = req.params;
+      const userId = req.user.id;
+
+      // Verify user has access to this submission
+      const submission = await db
+        .select({
+          id: assignmentSubmissions.id,
+          studentId: assignmentSubmissions.studentId,
+          teacherId: assignments.teacherId
+        })
+        .from(assignmentSubmissions)
+        .innerJoin(assignments, eq(assignmentSubmissions.assignmentId, assignments.id))
+        .where(eq(assignmentSubmissions.id, submissionId))
+        .limit(1);
+
+      if (submission.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: 'Submission not found'
+        });
+      }
+
+      const submissionData = submission[0];
+      const hasAccess = userId === submissionData.studentId || 
+                       userId === submissionData.teacherId ||
+                       req.user.role === 'admin';
+
+      if (!hasAccess) {
+        return res.status(403).json({
+          success: false,
+          error: 'Access denied'
+        });
+      }
+
+      // Get comments with author info
+      const comments = await db
+        .select({
+          id: assignmentComments.id,
+          content: assignmentComments.content,
+          isPrivate: assignmentComments.isPrivate,
+          createdAt: assignmentComments.createdAt,
+          authorId: assignmentComments.authorId,
+          authorName: profiles.name,
+          authorRole: profiles.role
+        })
+        .from(assignmentComments)
+        .innerJoin(profiles, eq(assignmentComments.authorId, profiles.userId))
+        .where(eq(assignmentComments.submissionId, submissionId))
+        .orderBy(asc(assignmentComments.createdAt));
+
+      res.json({ success: true, data: comments });
+
+    } catch (error: any) {
+      console.error('Get comments error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch comments' });
+    }
+  });
+
+  // Admin: Get all assignments overview
+  app.get("/api/admin/assignments", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'admin') {
+        return res.status(403).json({ success: false, error: 'Access denied. Admin access required.' });
+      }
+
+      const { page = 1, limit = 20, status, subject, teacherId } = req.query;
+      const offset = (parseInt(page as string) - 1) * parseInt(limit as string);
+
+      let whereConditions = [];
+      
+      if (status && status !== 'all') {
+        whereConditions.push(eq(assignments.status, status as any));
+      }
+      
+      if (subject && subject !== 'all') {
+        whereConditions.push(eq(assignments.subject, subject as string));
+      }
+      
+      if (teacherId) {
+        whereConditions.push(eq(assignments.teacherId, teacherId as string));
+      }
+
+      const whereClause = whereConditions.length > 0 ? and(...whereConditions) : undefined;
+
+      // Get assignments with teacher info and submission counts
+      const assignmentsList = await db
+        .select({
+          id: assignments.id,
+          title: assignments.title,
+          description: assignments.description,
+          subject: assignments.subject,
+          dueDate: assignments.dueDate,
+          status: assignments.status,
+          createdAt: assignments.createdAt,
+          teacherId: assignments.teacherId,
+          teacherName: profiles.name,
+          submissionCount: count(assignmentSubmissions.id),
+          gradedCount: sql`COUNT(CASE WHEN ${assignmentSubmissions.status} = 'graded' THEN 1 END)`,
+          avgGrade: avg(assignmentSubmissions.numericGrade)
+        })
+        .from(assignments)
+        .innerJoin(profiles, eq(assignments.teacherId, profiles.userId))
+        .leftJoin(assignmentSubmissions, eq(assignments.id, assignmentSubmissions.assignmentId))
+        .where(whereClause)
+        .groupBy(assignments.id, profiles.name)
+        .orderBy(desc(assignments.createdAt))
+        .limit(parseInt(limit as string))
+        .offset(offset);
+
+      // Get total count for pagination
+      const totalCountResult = await db
+        .select({ count: count() })
+        .from(assignments)
+        .where(whereClause);
+
+      const totalCount = totalCountResult[0]?.count || 0;
+
+      res.json({ success: true,
+        success: true,
+        data: assignmentsList,
+        pagination: {
+          page: parseInt(page as string),
+          limit: parseInt(limit as string),
+          total: totalCount,
+          totalPages: Math.ceil(totalCount / parseInt(limit as string))
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Get admin assignments error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch assignments overview' });
+    }
+  });
+
+  // Admin: Get assignment analytics
+  app.get("/api/admin/assignments/analytics", requireAuth, async (req: AuthenticatedRequest, res) => {
+    try {
+      if (req.user?.role !== 'admin') {
+        return res.status(403).json({ success: false, error: 'Access denied. Admin access required.' });
+      }
+
+      // Get overall statistics
+      const stats = await db
+        .select({
+          totalAssignments: count(assignments.id),
+          publishedAssignments: sql`COUNT(CASE WHEN ${assignments.status} = 'published' THEN 1 END)`,
+          totalSubmissions: count(assignmentSubmissions.id),
+          gradedSubmissions: sql`COUNT(CASE WHEN ${assignmentSubmissions.status} = 'graded' THEN 1 END)`,
+          averageGrade: avg(assignmentSubmissions.numericGrade)
+        })
+        .from(assignments)
+        .leftJoin(assignmentSubmissions, eq(assignments.id, assignmentSubmissions.assignmentId));
+
+      // Get submissions by subject
+      const subjectStats = await db
+        .select({
+          subject: assignments.subject,
+          assignmentCount: count(assignments.id),
+          submissionCount: count(assignmentSubmissions.id),
+          averageGrade: avg(assignmentSubmissions.numericGrade)
+        })
+        .from(assignments)
+        .leftJoin(assignmentSubmissions, eq(assignments.id, assignmentSubmissions.assignmentId))
+        .groupBy(assignments.subject)
+        .orderBy(desc(count(assignments.id)));
+
+      // Get monthly submission trends (last 6 months)
+      const monthlyTrends = await db
+        .select({
+          month: sql`DATE_TRUNC('month', ${assignmentSubmissions.submittedAt})`,
+          submissionCount: count(assignmentSubmissions.id)
+        })
+        .from(assignmentSubmissions)
+        .where(gte(assignmentSubmissions.submittedAt, sql`NOW() - INTERVAL '6 months'`))
+        .groupBy(sql`DATE_TRUNC('month', ${assignmentSubmissions.submittedAt})`)
+        .orderBy(sql`DATE_TRUNC('month', ${assignmentSubmissions.submittedAt})`);
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          overview: stats[0],
+          subjectBreakdown: subjectStats,
+          monthlyTrends
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Get assignment analytics error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch assignment analytics' });
+    }
+  });
+
+  // Admin Moderation - Search messages
+  app.get("/api/admin/messages/search", async (req, res) => {
+    try {
+      const { query, userId, startDate, endDate, page = 1, limit = 50 } = req.query;
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const admin = await getUserWithProfile(session[0].userId);
+      if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ success: false, error: "Admin access required" });
+      }
+
+      // Build search conditions
+      let conditions = [];
+      
+      if (query) {
+        conditions.push(sql`${messages.content} ILIKE ${'%' + query + '%'}`);
+      }
+      
+      if (userId) {
+        conditions.push(or(
+          eq(messages.senderId, userId as string),
+          eq(messages.receiverId, userId as string)
+        ));
+      }
+      
+      if (startDate) {
+        conditions.push(gte(messages.createdAt, new Date(startDate as string)));
+      }
+      
+      if (endDate) {
+        conditions.push(lte(messages.createdAt, new Date(endDate as string)));
+      }
+
+      const senderProfile = alias(profiles, 'senderProfile');
+      const receiverProfile = alias(profiles, 'receiverProfile');
+
+      const searchResults = await db.select({
+        id: messages.id,
+        senderId: messages.senderId,
+        receiverId: messages.receiverId,
+        content: messages.content,
+        messageType: messages.messageType,
+        isRead: messages.isRead,
+        createdAt: messages.createdAt,
+        senderName: sql<string>`COALESCE(${senderProfile.name}, 'Unknown User')`,
+        senderRole: sql<string>`COALESCE(${senderProfile.role}, 'unknown')`,
+        receiverName: sql<string>`COALESCE(${receiverProfile.name}, 'Unknown User')`,
+        receiverRole: sql<string>`COALESCE(${receiverProfile.role}, 'unknown')`
+      })
+      .from(messages)
+      .leftJoin(senderProfile, eq(senderProfile.userId, messages.senderId))
+      .leftJoin(receiverProfile, eq(receiverProfile.userId, messages.receiverId))
+      .where(conditions.length > 0 ? and(...conditions) : undefined)
+      .orderBy(desc(messages.createdAt))
+      .limit(Number(limit))
+      .offset((Number(page) - 1) * Number(limit));
+
+      res.json({ success: true, data: searchResults });
+
+    } catch (error: any) {
+      console.error('Admin message search error:', error);
+      res.status(500).json({ success: false, error: 'Failed to search messages' });
+    }
+  });
+
+  // Admin Moderation - Delete message
+  app.delete("/api/admin/messages/:messageId", async (req, res) => {
+    try {
+      const { messageId } = req.params;
+      const { reason } = req.body;
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const admin = await getUserWithProfile(session[0].userId);
+      if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ success: false, error: "Admin access required" });
+      }
+
+      // Get message before deletion for logging
+      const messageToDelete = await db.select()
+        .from(messages)
+        .where(eq(messages.id, messageId))
+        .limit(1);
+
+      if (messageToDelete.length === 0) {
+        return res.status(404).json({ success: false, error: "Message not found" });
+      }
+
+      // Log moderation action
+      await db.insert(moderationLogs).values({
+        moderatorId: admin.id,
+        actionType: 'message_delete',
+        targetType: 'message',
+        targetId: messageId,
+        reason: reason || 'No reason provided',
+        originalContent: messageToDelete[0].content,
+        details: { messageType: messageToDelete[0].messageType }
+      });
+
+      // Delete the message
+      await db.delete(messages).where(eq(messages.id, messageId));
+
+      res.json({ success: true, message: 'Message deleted successfully' });
+
+    } catch (error: any) {
+      console.error('Admin delete message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to delete message' });
+    }
+  });
+
+  // Admin Moderation - Flag message
+  app.post("/api/admin/messages/:messageId/flag", async (req, res) => {
+    try {
+      const { messageId } = req.params;
+      const { reason, severity = 'medium' } = req.body;
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const admin = await getUserWithProfile(session[0].userId);
+      if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ success: false, error: "Admin access required" });
+      }
+
+      // Get message for logging
+      const messageToFlag = await db.select()
+        .from(messages)
+        .where(eq(messages.id, messageId))
+        .limit(1);
+
+      if (messageToFlag.length === 0) {
+        return res.status(404).json({ success: false, error: "Message not found" });
+      }
+
+      // Log moderation action
+      await db.insert(moderationLogs).values({
+        moderatorId: admin.id,
+        actionType: 'message_flag',
+        targetType: 'message',
+        targetId: messageId,
+        reason: reason || 'Flagged for review',
+        originalContent: messageToFlag[0].content,
+        details: { severity, messageType: messageToFlag[0].messageType }
+      });
+
+      res.json({ success: true, message: 'Message flagged successfully' });
+
+    } catch (error: any) {
+      console.error('Admin flag message error:', error);
+      res.status(500).json({ success: false, error: 'Failed to flag message' });
+    }
+  });
+
+  // Admin - Get moderation logs
+  app.get("/api/admin/moderation-logs", async (req, res) => {
+    try {
+      const { page = 1, limit = 50, actionType, moderatorId } = req.query;
+
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ success: false, error: "Authorization required" });
+      }
+
+      const session = await db
+        .select()
+        .from(userLoginSessions)
+        .where(and(
+          eq(userLoginSessions.sessionId, authHeader.replace('Bearer ', '')),
+          eq(userLoginSessions.isActive, true),
+          gt(userLoginSessions.expiresAt, new Date())
+        ))
+        .limit(1);
+
+      if (session.length === 0) {
+        return res.status(401).json({ success: false, error: "Invalid session" });
+      }
+
+      const admin = await getUserWithProfile(session[0].userId);
+      if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ success: false, error: "Admin access required" });
+      }
+
+      let conditions = [];
+      
+      if (actionType) {
+        conditions.push(eq(moderationLogs.actionType, actionType as string));
+      }
+      
+      if (moderatorId) {
+        conditions.push(eq(moderationLogs.moderatorId, moderatorId as string));
+      }
+
+      const logs = await db.select({
+        id: moderationLogs.id,
+        moderatorId: moderationLogs.moderatorId,
+        actionType: moderationLogs.actionType,
+        targetType: moderationLogs.targetType,
+        targetId: moderationLogs.targetId,
+        reason: moderationLogs.reason,
+        details: moderationLogs.details,
+        originalContent: moderationLogs.originalContent,
+        createdAt: moderationLogs.createdAt,
+        moderatorName: sql<string>`moderator_profile.name`
+      })
+      .from(moderationLogs)
+      .leftJoin(sql`profiles AS moderator_profile`, sql`moderator_profile.user_id = ${moderationLogs.moderatorId}`)
+      .where(conditions.length > 0 ? and(...conditions) : undefined)
+      .orderBy(desc(moderationLogs.createdAt))
+      .limit(Number(limit))
+      .offset((Number(page) - 1) * Number(limit));
+
+      res.json({ success: true, data: logs });
+
+    } catch (error: any) {
+      console.error('Get moderation logs error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch moderation logs' });
+    }
+  });
+
+  // ======================= ENHANCED COMMUNITY ROUTES =======================
+  
+  // Get community groups
+  app.get("/api/community/groups", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // Get all public community groups with member info
+      const groupsData = await db
+        .select({
+          id: communityGroups.id,
+          name: communityGroups.name,
+          description: communityGroups.description,
+          createdBy: communityGroups.createdBy,
+          memberCount: communityGroups.memberCount,
+          postCount: communityGroups.postCount,
+          isPrivate: communityGroups.isPrivate,
+          tags: communityGroups.tags,
+          avatarUrl: communityGroups.avatarUrl,
+          createdAt: communityGroups.createdAt,
+          creatorName: sql<string>`creator_profile.name`,
+          creatorAvatar: sql<string>`creator_profile.avatar_url`,
+          isMember: sql<boolean>`user_membership.user_id IS NOT NULL`
+        })
+        .from(communityGroups)
+        .leftJoin(sql`profiles AS creator_profile`, sql`creator_profile.user_id = ${communityGroups.createdBy}`)
+        .leftJoin(sql`community_group_members AS user_membership`, sql`user_membership.group_id = ${communityGroups.id} AND user_membership.user_id = ${user.id}`)
+        .where(and(
+          eq(communityGroups.isActive, true),
+          or(
+            eq(communityGroups.isPrivate, false), // Public groups
+            sql`user_membership.user_id IS NOT NULL` // Or groups user is member of
+          )
+        ))
+        .orderBy(desc(communityGroups.createdAt));
+
+      res.json({ success: true,
+        success: true,
+        data: groupsData
+      });
+
+    } catch (error: any) {
+      console.error('Community groups error:', error);
+      res.status(500).json({ success: false, error: 'Failed to fetch community groups' });
+    }
+  });
+
+  // Create community group
+  app.post("/api/community/groups", createRateLimit(60000, 2), async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      // All students can create community groups
+
+      const { name, description, isPrivate = false, tags = [] } = req.body;
+
+      if (!name || !name.trim()) {
+        return res.status(400).json({ success: false, error: 'Group name is required' });
+      }
+
+      // Create the group
+      const [newGroup] = await db.insert(communityGroups).values({
+        name: name.trim(),
+        description: description?.trim() || null,
+        createdBy: user.id,
+        isPrivate,
+        isPublic: !isPrivate,
+        tags: tags.length > 0 ? tags : null,
+        memberCount: 1,
+        postCount: 0
+      }).returning();
+
+      // Add creator as first member
+      await db.insert(communityGroupMembers).values({
+        groupId: newGroup.id,
+        userId: user.id,
+        role: 'admin'
+      });
+
+      res.json({ success: true,
+        success: true,
+        data: {
+          ...newGroup,
+          creatorName: user.name,
+          creatorAvatar: user.avatarUrl,
+          isMember: true
+        }
+      });
+
+    } catch (error: any) {
+      console.error('Create group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to create group' });
+    }
+  });
+
+  // Join community group
+  app.post("/api/community/groups/:groupId/join", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { groupId } = req.params;
+
+      // Check if group exists and is active
+      const group = await db.select()
+        .from(communityGroups)
+        .where(and(
+          eq(communityGroups.id, groupId),
+          eq(communityGroups.isActive, true)
+        ))
+        .limit(1);
+
+      if (group.length === 0) {
+        return res.status(404).json({ success: false, error: 'Group not found' });
+      }
+
+      // Check if user is already a member
+      const existingMembership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      if (existingMembership.length > 0) {
+        return res.status(400).json({ success: false, error: 'Already a member of this group' });
+      }
+
+      // Add user to group
+      await db.insert(communityGroupMembers).values({
+        groupId,
+        userId: user.id,
+        role: 'member'
+      });
+
+      // Update member count
+      await db.update(communityGroups)
+        .set({ 
+          memberCount: sql`${communityGroups.memberCount} + 1`,
+          updatedAt: new Date()
+        })
+        .where(eq(communityGroups.id, groupId));
+
+      res.json({ success: true,
+        success: true,
+        message: 'Successfully joined group'
+      });
+
+    } catch (error: any) {
+      console.error('Join group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to join group' });
+    }
+  });
+
+  // Leave/Quit community group
+  app.post("/api/community/groups/:groupId/leave", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { groupId } = req.params;
+
+      // Check if user is a member
+      const membership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      if (membership.length === 0) {
+        return res.status(400).json({ success: false, error: 'Not a member of this group' });
+      }
+
+      // Check if user is the group creator/admin
+      const group = await db.select()
+        .from(communityGroups)
+        .where(eq(communityGroups.id, groupId))
+        .limit(1);
+
+      if (group.length > 0 && group[0].createdBy === user.id) {
+        return res.status(400).json({ success: false, error: 'Group creator cannot leave the group. Transfer ownership or delete the group instead.' });
+      }
+
+      // Remove user from group
+      await db.delete(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ));
+
+      // Update member count
+      await db.update(communityGroups)
+        .set({ 
+          memberCount: sql`${communityGroups.memberCount} - 1`,
+          updatedAt: new Date()
+        })
+        .where(eq(communityGroups.id, groupId));
+
+      res.json({ success: true,
+        success: true,
+        message: 'Successfully left group'
+      });
+
+    } catch (error: any) {
+      console.error('Leave group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to leave group' });
+    }
+  });
+
+  // Remove user from group (Group admin/creator only)
+  app.post("/api/community/groups/:groupId/remove-user", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { groupId } = req.params;
+      const { userId } = req.body;
+
+      if (!userId) {
+        return res.status(400).json({ success: false, error: 'User ID is required' });
+      }
+
+      // Check if current user is group admin or creator
+      const userMembership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, user.id)
+        ))
+        .limit(1);
+
+      const group = await db.select()
+        .from(communityGroups)
+        .where(eq(communityGroups.id, groupId))
+        .limit(1);
+
+      if (group.length === 0) {
+        return res.status(404).json({ success: false, error: 'Group not found' });
+      }
+
+      const isCreator = group[0].createdBy === user.id;
+      const isAdmin = userMembership.length > 0 && userMembership[0].role === 'admin';
+
+      if (!isCreator && !isAdmin) {
+        return res.status(403).json({ success: false, error: 'Only group admins can remove users' });
+      }
+
+      // Prevent removing the group creator
+      if (group[0].createdBy === userId) {
+        return res.status(400).json({ success: false, error: 'Cannot remove the group creator' });
+      }
+
+      // Check if target user is a member
+      const targetMembership = await db.select()
+        .from(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, userId)
+        ))
+        .limit(1);
+
+      if (targetMembership.length === 0) {
+        return res.status(400).json({ success: false, error: 'User is not a member of this group' });
+      }
+
+      // Remove user from group
+      await db.delete(communityGroupMembers)
+        .where(and(
+          eq(communityGroupMembers.groupId, groupId),
+          eq(communityGroupMembers.userId, userId)
+        ));
+
+      // Update member count
+      await db.update(communityGroups)
+        .set({ 
+          memberCount: sql`${communityGroups.memberCount} - 1`,
+          updatedAt: new Date()
+        })
+        .where(eq(communityGroups.id, groupId));
+
+      res.json({ success: true,
+        success: true,
+        message: 'User successfully removed from group'
+      });
+
+    } catch (error: any) {
+      console.error('Remove user from group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to remove user from group' });
+    }
+  });
+
+  // Delete community group (Admin only or group creator)
+  app.delete("/api/community/groups/:groupId", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
+      const { groupId } = req.params;
+
+      // Check if group exists
+      const group = await db.select()
+        .from(communityGroups)
+        .where(eq(communityGroups.id, groupId))
+        .limit(1);
+
+      if (group.length === 0) {
+        return res.status(404).json({ success: false, error: 'Group not found' });
+      }
+
+      // Check if user is admin or group creator
+      const isAdmin = user.role === 'admin';
+      const isCreator = group[0].createdBy === user.id;
+
+      if (!isAdmin && !isCreator) {
+        return res.status(403).json({ success: false, error: 'Only admins or group creators can delete groups' });
+      }
+
+      // Delete group members first (foreign key constraint)
+      await db.delete(communityGroupMembers)
+        .where(eq(communityGroupMembers.groupId, groupId));
+
+      // Delete group posts
+      await db.delete(communityPosts)
+        .where(eq(communityPosts.groupId, groupId));
+
+      // Delete the group
+      await db.delete(communityGroups)
+        .where(eq(communityGroups.id, groupId));
+
+      res.json({ success: true,
+        success: true,
+        message: 'Group successfully deleted'
+      });
+
+    } catch (error: any) {
+      console.error('Delete group error:', error);
+      res.status(500).json({ success: false, error: 'Failed to delete group' });
+    }
+  });
+
+  // Get group members
+  app.get("/api/community/groups/:groupId/members", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization as string;
+      const user = await getUserFromSession(authHeader);
+      
+      if (!user) {
+        return res.status(401).json({ success: false, error: 'Authentication required' });
+      }
+
