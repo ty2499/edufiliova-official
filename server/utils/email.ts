@@ -400,10 +400,21 @@ export class EmailService {
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
-    // Explicitly replace any remaining images/ paths in teacher approval
-    html = html.replace(/src="images\/logo\.png"/gi, `src="${emailAssetMap['logo.png']}"`);
-    html = html.replace(/src="images\/bbe5722d1ffd3c84888e18335965d5e5_1766647041212\.png"/gi, `src="${emailAssetMap['bbe5722d1ffd3c84888e18335965d5e5_1766647041212.png']}"`);
-    html = html.replace(/src="images\/d320764f7298e63f6b035289d4219bd8_1766647041216\.png"/gi, `src="${emailAssetMap['d320764f7298e63f6b035289d4219bd8_1766647041216.png']}"`);
+    // Explicitly replace ANY remaining images/ paths with Cloudinary URLs
+    Object.entries(emailAssetMap).forEach(([filename, url]) => {
+      const escapedFilename = filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      // Replace variations of the path that might be in templates (src="images/logo.png", src="logo.png", etc.)
+      const srcRegex = new RegExp(`src=["'](?:images/|https?://[^"'>\\s]+?/email-assets/)?${escapedFilename}["']`, 'gi');
+      html = html.replace(srcRegex, `src="${url}"`);
+      
+      // Also handle url() patterns in CSS
+      const urlRegex = new RegExp(`url\\(["']?(?:images/|https?://[^"'>\\s]+?/email-assets/)?${escapedFilename}["']?\\)`, 'gi');
+      html = html.replace(urlRegex, `url("${url}")`);
+
+      // Handle raw filename matches (case insensitive) for templates that might just have the name
+      const rawRegex = new RegExp(`(?<=src=)["']?${escapedFilename}["']?`, 'gi');
+      html = html.replace(rawRegex, `"${url}"`);
+    });
 
     // Use support@edufiliova.com as requested
     return this.sendEmail({
