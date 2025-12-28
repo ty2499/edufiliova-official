@@ -490,6 +490,58 @@ export async function sendPlanUpgradeEmail(recipientEmail, recipientName, upgrad
   }
 }
 
+export async function sendSuspensionEmail(recipientEmail, recipientName, suspensionReason) {
+  console.log(`📧 Sending suspension email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'suspension', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'User';
+    const reason = suspensionReason || 'Violation of platform policies.';
+    
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{suspensionReason\}\}/gi, reason);
+    
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Important: Your EduFiliova Account Status',
+      html: emailHtml,
+      from: `"EduFiliova Trust & Safety" <support@edufiliova.com>`
+    });
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending suspension email:`, error);
+    throw error;
+  }
+}
+
+export async function sendFreelancerUnderReviewEmail(recipientEmail, recipientName) {
+  console.log(`📧 Sending freelancer review email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'freelancer-application-under-review', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    
+    const fullName = recipientName || 'Freelancer';
+    
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Application Received - EduFiliova Freelancer Network',
+      html: emailHtml,
+      from: `"EduFiliova Review Team" <support@edufiliova.com>`
+    });
+    
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending freelancer review email:`, error);
+    throw error;
+  }
+}
+
 /**
  * Send teacher application decline email
  */
