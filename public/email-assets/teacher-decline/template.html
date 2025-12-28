@@ -39,11 +39,18 @@
         .cta-text { color: #0c332c; font-size: 15px; font-weight: bold; margin-bottom: 8px; }
         .cta-link { color: #0c332c; text-decoration: underline; font-weight: bold; }
         
-        .footer { padding: 25px 40px; text-align: center; color: #999; font-size: 12px; border-top: 1px solid #eee; }
-        .footer-note { margin: 8px 0; }
-        
         .closing { color: #666; font-size: 15px; margin-top: 30px; }
         .closing-sign { color: #0c332c; font-weight: bold; font-size: 14px; margin-top: 10px; }
+
+        .footer { background-color: #0c332c; padding: 40px 30px; color: #ffffff; }
+        .footer-content { max-width: 600px; margin: 0 auto; }
+        .footer-section { margin-bottom: 25px; }
+        .footer-title { color: #a0fab2; font-weight: bold; font-size: 13px; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
+        .footer-text { font-size: 12px; line-height: 1.8; color: #c7d8d3; }
+        .footer-link { color: #a0fab2; text-decoration: none; font-weight: 500; }
+        .footer-link:hover { text-decoration: underline; }
+        .footer-divider { height: 1px; background-color: #1a4a42; margin: 20px 0; }
+        .footer-bottom { text-align: center; color: #8fa9a3; font-size: 11px; padding-top: 15px; border-top: 1px solid #1a4a42; }
     </style>
 </head>
 <body>
@@ -135,10 +142,32 @@
             <p class="closing-sign">The EduFiliova Team</p>
         </div>
 
-        <!-- Footer -->
+        <!-- Professional Footer -->
         <div class="footer">
-            <div class="footer-note">&copy; 2025 EduFiliova. All rights reserved.</div>
-            <div class="footer-note">This email was sent to {{email}}</div>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-title">Support</div>
+                    <div class="footer-text">
+                        Email: <a href="mailto:support@edufiliova.com" class="footer-link">support@edufiliova.com</a><br>
+                        Visit: <a href="https://edufiliova.com/help/teachers" class="footer-link">Teacher Help Center</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <div class="footer-title">Resources</div>
+                    <div class="footer-text">
+                        <a href="https://edufiliova.com" class="footer-link">Visit EduFiliova</a><br>
+                        <a href="https://edufiliova.com/teacher/dashboard" class="footer-link">Teacher Dashboard</a>
+                    </div>
+                </div>
+
+                <div class="footer-divider"></div>
+
+                <div class="footer-bottom">
+                    <p>&copy; 2025 EduFiliova. All rights reserved.<br>
+                    This email was sent to {{email}}</p>
+                </div>
+            </div>
         </div>
     </div>
 </body>
