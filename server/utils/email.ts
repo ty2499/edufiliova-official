@@ -202,16 +202,28 @@ export class EmailService {
         return false;
       }
 
-      // Process images in HTML: replace local refs with Cloudinary URLs
-      let processedHtml = this.processEmailImages(options.html);
-      
-      const mailOptions = {
-        from,
-        to: options.to,
-        subject: options.subject,
-        html: processedHtml,
-        attachments: options.attachments || [],
-      };
+    // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
+    let processedHtml = this.processEmailImages(options.html);
+    
+    // Explicitly handle cid: references in HTML that might have been added manually
+    const cidRegex = /src="cid:([^"]+)"/gi;
+    processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
+      // Look for a mapping for this CID (assuming CID matches filename in asset map)
+      for (const [filename, url] of Object.entries(emailAssetMap)) {
+        if (filename.toLowerCase().startsWith(cid.toLowerCase())) {
+          return `src="${url}"`;
+        }
+      }
+      return match;
+    });
+
+    const mailOptions = {
+      from,
+      to: options.to,
+      subject: options.subject,
+      html: processedHtml,
+      attachments: [], // Clear attachments since we use Cloudinary URLs
+    };
       
     const result = await transporter.sendMail(mailOptions);
     return true;
