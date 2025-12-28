@@ -64,8 +64,11 @@ export class EmailService {
     // 1. Replace src="images/..." and href="images/..."
     const imageRegex = /(?:href|src)=["'](?:images\/)?([^"']+)["']/gi;
     let processedHtml = html.replace(imageRegex, (match, filename) => {
-      // 0. Skip Absolute URLs or Cloudinary URLs
-      if (filename.startsWith('http') || filename.startsWith('https://res.cloudinary.com') || filename.startsWith('mailto:')) {
+      // 0. Skip Absolute URLs, Cloudinary URLs, or CIDs
+      if (filename.startsWith('http') || 
+          filename.startsWith('https://res.cloudinary.com') || 
+          filename.startsWith('mailto:') ||
+          filename.startsWith('cid:')) {
         return match;
       }
 
