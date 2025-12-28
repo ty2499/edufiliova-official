@@ -213,18 +213,35 @@ export class EmailService {
         attachments: options.attachments || [],
       };
       
-      const result = await transporter.sendMail(mailOptions);
-      console.log(`📧 SMTP Response:
-   - Message ID: ${result.messageId}
-   - Response: ${result.response}
-   - Accepted: ${result.accepted?.join(', ')}
-   - Rejected: ${result.rejected?.join(', ') || 'none'}`);
-      return true;
-    } catch (error) {
-      console.error('❌ Error in sendEmail:', error);
-      return false;
+    const result = await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    if (error instanceof Error && (error as any).code === 'ESTREAM') {
+      console.warn('⚠️ ESTREAM error in sendEmail - likely missing attachment. Retrying without attachments...');
+      try {
+        const mailOptionsNoAttachments = {
+          from: options.from || `"EduFiliova" <orders@edufiliova.com>`,
+          to: options.to,
+          subject: options.subject,
+          html: this.processEmailImages(options.html),
+        };
+        const from = options.from || `"EduFiliova" <orders@edufiliova.com>`;
+        const emailMatch = from.match(/<(.+?)>/);
+        const senderEmail = emailMatch ? emailMatch[1] : from;
+        const transporter = this.transporters.get(senderEmail) || Array.from(this.transporters.values())[0];
+        if (transporter) {
+          await transporter.sendMail(mailOptionsNoAttachments);
+          console.log('✅ Email sent successfully without problematic attachments');
+          return true;
+        }
+      } catch (retryError) {
+        console.error('❌ Failed to send email even without attachments:', retryError);
+      }
     }
+    console.error('❌ Error in sendEmail:', error);
+    return false;
   }
+}
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
