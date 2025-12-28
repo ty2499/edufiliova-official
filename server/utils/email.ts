@@ -52,36 +52,72 @@ export class EmailService {
     
     return html.replace(imageRegex, (match, filename) => {
       try {
+        const cwdPath = process.cwd();
+        const emailAssetsRoot = path.resolve(cwdPath, 'public', 'email-assets');
+        
         // Try multiple possible paths where images could be stored
-        const possiblePaths = [
-          // Primary: public/email-assets subdirectories (most common)
-          ...fs.readdirSync(path.join('/home/runner/workspace/public/email-assets')).flatMap(dir => [
-            path.join('/home/runner/workspace/public/email-assets', dir, 'images', filename),
-            path.join('/home/runner/workspace/public/email-assets', dir, filename),
-          ]),
-          // Fallback: attached_assets and server templates
-          path.join('/home/runner/workspace/attached_assets', filename),
-          path.resolve(process.cwd(), 'attached_assets', filename),
-          path.resolve(process.cwd(), '..', 'attached_assets', filename),
-          path.join('/home/runner/workspace/public/email-assets', filename),
-        ];
+        const possiblePaths: string[] = [];
+        
+        // Try to scan public/email-assets subdirectories
+        try {
+          const emailAssetsDirs = fs.readdirSync(emailAssetsRoot);
+          for (const dir of emailAssetsDirs) {
+            possiblePaths.push(
+              path.join(emailAssetsRoot, dir, 'images', filename),
+              path.join(emailAssetsRoot, dir, filename)
+            );
+          }
+        } catch {
+          // Directory doesn't exist or can't be read
+        }
+        
+        // Add fallback paths
+        possiblePaths.push(
+          path.join(emailAssetsRoot, filename),
+          path.resolve(cwdPath, 'attached_assets', filename),
+          path.resolve(cwdPath, 'public', filename),
+        );
+        
+        // Try parent directories (for deployed scenarios)
+        try {
+          const parentEmailAssets = path.resolve(cwdPath, '..', 'public', 'email-assets');
+          if (fs.existsSync(parentEmailAssets)) {
+            const dirs = fs.readdirSync(parentEmailAssets);
+            for (const dir of dirs) {
+              possiblePaths.push(
+                path.join(parentEmailAssets, dir, 'images', filename),
+                path.join(parentEmailAssets, dir, filename)
+              );
+            }
+          }
+        } catch {
+          // Ignore
+        }
         
         let imagePath = '';
         for (const p of possiblePaths) {
-          if (fs.existsSync(p)) {
-            imagePath = p;
-            break;
+          try {
+            if (fs.existsSync(p)) {
+              imagePath = p;
+              break;
+            }
+          } catch {
+            // Continue to next path
           }
         }
         
         if (imagePath) {
-          const imageData = fs.readFileSync(imagePath);
-          const base64 = imageData.toString('base64');
-          const ext = path.extname(filename).slice(1).toLowerCase();
-          const mimeType = ext === 'png' ? 'image/png' : ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : ext === 'gif' ? 'image/gif' : 'image/png';
-          return `src="data:${mimeType};base64,${base64}"`;
+          try {
+            const imageData = fs.readFileSync(imagePath);
+            const base64 = imageData.toString('base64');
+            const ext = path.extname(filename).slice(1).toLowerCase();
+            const mimeType = ext === 'png' ? 'image/png' : ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : ext === 'gif' ? 'image/gif' : 'image/png';
+            return `src="data:${mimeType};base64,${base64}"`;
+          } catch (readErr) {
+            console.warn(`⚠️ Error reading image file ${imagePath}: ${readErr instanceof Error ? readErr.message : String(readErr)}`);
+          }
         } else {
-          console.warn(`⚠️ Could not find image file: ${filename}`);
+          console.warn(`⚠️ Could not find image file: ${filename} (checked ${possiblePaths.length} paths)`);
         }
       } catch (e) {
         console.warn(`⚠️ Error processing image: ${filename} - ${e instanceof Error ? e.message : String(e)}`);
