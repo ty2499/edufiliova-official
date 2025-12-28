@@ -514,7 +514,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
               className="p-0 h-8 w-8 rounded-full"
               data-testid="button-back"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="h-5 w-5 text-[#2f5a4e]" />
             </Button>
           )}
           <div>
