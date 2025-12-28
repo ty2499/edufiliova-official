@@ -16859,8 +16859,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       let conditions: any[] = [eq(subjects.isActive, true)];
 
-      if (creatorOnly === "true" && req.isAuthenticated()) {
-        conditions = [eq(subjects.createdBy, user.id)];
+      if (creatorOnly === "true" && req.user) {
+        console.log("DEBUG: Filtering by creator:", user.id);
+        conditions.push(eq(subjects.createdBy, user.id));
       } else if (isAdmin && creatorOnly === "false") {
         conditions = [];
       } else {
