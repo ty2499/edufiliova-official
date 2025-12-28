@@ -1147,7 +1147,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={formData.confirmPassword}
               onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
               placeholder="Confirm your password"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300"
+              className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-gray-300"
               data-testid="input-confirm-teacher-password"
             />
           </div>
@@ -1481,7 +1481,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
               value={forgotPasswordEmail}
               onChange={(e) => setForgotPasswordEmail(e.target.value)}
               placeholder="Enter your email"
-              className="h-12 text-base pl-10 rounded-lg border-gray-300"
+              className="h-12 text-base pl-10 rounded-lg border-white/20 bg-white/10 placeholder:text-base text-gray-300"
               data-testid="input-forgot-password-email"
             />
           </div>
@@ -1547,7 +1547,7 @@ const AuthModern = ({ onLogin, onTeacherRegistration, onNavigate, userType = 'st
             value={resetPin}
             onChange={(e) => setResetPin(e.target.value.toUpperCase())}
             placeholder="Enter 6-digit code"
-            className="h-12 text-base text-center text-lg tracking-wider rounded-lg border-gray-300"
+            className="h-12 text-base text-center text-lg tracking-wider rounded-lg border-white/20 bg-white/10 placeholder:text-base text-gray-300"
             maxLength={6}
             data-testid="input-reset-pin"
           />
