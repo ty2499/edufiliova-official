@@ -263,6 +263,7 @@ export async function sendSubscriptionCancellationEmail(
       html: emailHTML,
     };
 
+    console.log(`✉️ Final HTML for Subscription Cancellation to ${recipientEmail}:\n${emailHTML}`);
     await transporter.sendMail(mailOptions);
     console.log(`Subscription cancellation email sent to ${recipientEmail}`);
     return true;
@@ -671,6 +672,7 @@ export async function sendBulkVouchersEmail(
       ]
     };
 
+    console.log(`✉️ Final HTML for Bulk Vouchers to ${recipientEmail}:\n${emailHTML}`);
     await transporter.sendMail(mailOptions);
     return true;
   } catch (error) {
