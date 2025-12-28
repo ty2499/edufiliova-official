@@ -385,7 +385,7 @@ export default function TeacherSignup() {
 
                   <div className="border rounded-lg p-4 bg-gray-50">
                     <img 
-                      src="/attached_assets/edf90f7f-b602-47d9-bf09-080d690654d2_1766854999031.png" 
+                      src="/attached_assets/image_1766949735320.png" 
                       alt="Profile picture guidelines - what is and isn't accepted"
                       className="w-full rounded-lg"
                     />
