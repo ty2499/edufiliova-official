@@ -1865,7 +1865,7 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
     setIsLoggingOut(true);
     setTimeout(async () => {
       await logout();
-      onNavigate?.('shop-auth');
+      onNavigate?.('auth');
     }, 3000);
   };
 
