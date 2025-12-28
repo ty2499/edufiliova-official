@@ -59,11 +59,12 @@ export class EmailService {
 
   private processEmailImages(html: string): string {
     // Replace local image references with Cloudinary URLs
-    const imageRegex = /(?:href|src)="images\/([^"]+)"/g;
+    const imageRegex = /(?:href|src)="images\/([^"]+)"/gi;
     
     return html.replace(imageRegex, (match, filename) => {
       // Check if we have a Cloudinary URL for this image
       if (emailAssetMap[filename]) {
+        console.log(`✅ Cloudinary match found for: ${filename}`);
         return `src="${emailAssetMap[filename]}"`;
       }
       
@@ -77,6 +78,7 @@ export class EmailService {
       for (const variation of variations) {
         for (const [key, url] of Object.entries(emailAssetMap)) {
           if (key.toLowerCase() === variation.toLowerCase()) {
+            console.log(`✅ Cloudinary variation match found: ${filename} -> ${key}`);
             return `src="${url}"`;
           }
         }
