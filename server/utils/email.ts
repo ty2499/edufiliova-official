@@ -460,7 +460,7 @@ export class EmailService {
     return this.sendEmail({
       to: email,
       subject: 'Application Status Update - EduFiliova Teacher Application',
-      html,
+      html: this.processEmailImages(html), // Double ensure processing for decline template
       from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: []
     });
