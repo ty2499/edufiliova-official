@@ -517,34 +517,8 @@ export async function sendTeacherDeclineEmail(recipientEmail, recipientName, rea
       emailHtml = emailHtml.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
     }
 
-    // CDN Assets from email-assets-map.json
-    const assets = {
-      "bbe5722d1ffd3c84888e18335965d5e5.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908569/edufiliova/email-assets/bbe5722d1ffd3c84888e18335965d5e5_1766506747361.png",
-      "0ac9744033a7e26f12e08d761c703308.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908554/edufiliova/email-assets/0ac9744033a7e26f12e08d761c703308_1766647041179.png",
-      "d320764f7298e63f6b035289d4219bd8.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908569/edufiliova/email-assets/d320764f7298e63f6b035289d4219bd8_1766506747365.png",
-      "de497c5361453604d8a15c4fd9bde086.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908570/edufiliova/email-assets/de497c5361453604d8a15c4fd9bde086_1766647041219.png",
-      "e06e238bd6d74a3e48f94e5b0b81388d.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908571/edufiliova/email-assets/e06e238bd6d74a3e48f94e5b0b81388d_1766647041222.png",
-      "7976503d64a3eef4169fe235111cdc57.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908558/edufiliova/email-assets/7976503d64a3eef4169fe235111cdc57_1766647041205.png",
-      "917a6e905cf83da447efc0f5c2780aca.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908560/edufiliova/email-assets/917a6e905cf83da447efc0f5c2780aca_1766647041197.png",
-      "4a834058470b14425c9b32ace711ef17.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908554/edufiliova/email-assets/4a834058470b14425c9b32ace711ef17.png",
-      "9f7291948d8486bdd26690d0c32796e0.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908561/edufiliova/email-assets/9f7291948d8486bdd26690d0c32796e0_1766506747363.png"
-    };
-
-    // Standard replacement
-    for (const [img, url] of Object.entries(assets)) {
-      emailHtml = emailHtml.replace(new RegExp(`images\\/${img}`, 'g'), url);
-    }
-
-    // Handle split HTML spans in image paths (common in these templates)
-    for (const [img, url] of Object.entries(assets)) {
-      const imgParts = img.split('.');
-      if (imgParts.length === 2) {
-        const name = imgParts[0];
-        const ext = imgParts[1];
-        const splitRegex = new RegExp(`images\\/<\/span><span[^>]*>${name}<\/span><span[^>]*>\\.${ext}`, 'g');
-        emailHtml = emailHtml.replace(splitRegex, url);
-      }
-    }
+    // Aggressive tag cleanup for images/ paths before passing to emailService
+    emailHtml = emailHtml.replace(/images\/(?:<[^>]*>)*([^"'>\s]+)(?:<[^>]*>)*\.(png|jpg|jpeg|gif)/gi, 'images/$1.$2');
 
     const attachments = [];
 

@@ -62,23 +62,31 @@ export class EmailService {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
     // 1. Replace src="images/..." and href="images/..."
-    const imageRegex = /(?:href|src)=["'](?:images\/)?([^"']+)["']/gi;
+    // Aggressive pattern to catch split spans in images/ paths and handle varying quote styles
+    const imageRegex = /(?:href|src|url)\s*=\s*["']?((?:images\/)?(?:<span[^>]*>|<\/span>)*[^"'>\s]+(?:<span[^>]*>|<\/span>)*)["']?/gi;
     let processedHtml = html.replace(imageRegex, (match, filename) => {
+      // Strip any internal HTML tags from the filename (like spans)
+      const cleanPath = filename.replace(/<[^>]*>/g, '').trim();
+      
+      console.log(`🔍 Checking path: ${cleanPath}`);
+
       // 0. Skip Absolute URLs, Cloudinary URLs, or CIDs
-      if (filename.startsWith('http') || 
-          filename.startsWith('https://res.cloudinary.com') || 
-          filename.startsWith('mailto:') ||
-          filename.startsWith('cid:')) {
+      if (cleanPath.startsWith('http') || 
+          cleanPath.startsWith('https://res.cloudinary.com') || 
+          cleanPath.startsWith('mailto:') ||
+          cleanPath.startsWith('cid:')) {
         return match;
       }
 
-      // If filename still contains images/, strip it
-      const cleanFilename = filename.startsWith('images/') ? filename.substring(7) : filename;
+      // If cleanPath still contains images/, strip it
+      const cleanFilename = cleanPath.startsWith('images/') ? cleanPath.substring(7) : cleanPath;
       
       // Check if we have a Cloudinary URL for this image
       if (emailAssetMap[cleanFilename]) {
         console.log(`✅ Cloudinary match: ${cleanFilename} -> ${emailAssetMap[cleanFilename]}`);
-        return match.includes('href') ? `href="${emailAssetMap[cleanFilename]}"` : `src="${emailAssetMap[cleanFilename]}"`;
+        if (match.includes('href')) return `href="${emailAssetMap[cleanFilename]}"`;
+        if (match.includes('src')) return `src="${emailAssetMap[cleanFilename]}"`;
+        return `url="${emailAssetMap[cleanFilename]}"`;
       }
       
       // Try to find the image in the map by ignoring timestamps and matching the base filename
