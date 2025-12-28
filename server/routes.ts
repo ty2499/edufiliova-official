@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import type { Express, Response, Request } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
@@ -2567,6 +2568,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (whatsappOptIn && phone && whatsappResult.success) {
         // WhatsApp flow: Only store phone verification (email will be auto-verified)
+      // Delete old verification codes for this email
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
         await db.insert(verificationCodes).values({
           contactInfo: phone,
           type: 'phone',
@@ -2585,6 +2588,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       } else {
         // Email flow: Only store email verification
+      // Delete old verification codes for this email
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
         await db.insert(verificationCodes).values({
           contactInfo: email,
           type: 'email',
@@ -3093,6 +3098,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const emailCode = Math.floor(100000 + Math.random() * 900000).toString();
       
       // Store code in verification_codes table
+      // Delete old verification codes for this email
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
       await db.insert(verificationCodes).values({
         userId: user.id,
         code: emailCode,
@@ -3557,6 +3564,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Store email verification
+      // Delete old verification codes for this email
+      await db.delete(verificationCodes).where(eq(verificationCodes.contactInfo, email));
       await db.insert(verificationCodes).values({
         contactInfo: email,
         type: 'email',
