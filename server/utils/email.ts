@@ -68,9 +68,10 @@ export class EmailService {
       
       // Match src="...", href="...", url("..."), and even just the filename if it's in a src/href attribute
       // This catches: src="images/logo.png", src="logo.png", src="https://.../logo.png"
+      // Skip if the path is already a Cloudinary URL to prevent double processing
       const patterns = [
-        new RegExp(`(src|href|url)\\s*[:=]\\s*["']?([^"'>\\s]*${escapedFilename})["']?`, 'gi'),
-        new RegExp(`url\\(["']?([^"'>\\s]*${escapedFilename})["']?\\)`, 'gi')
+        new RegExp(`(src|href|url)\\s*[:=]\\s*["']?((?!https://res.cloudinary.com)[^"'>\\s]*${escapedFilename})["']?`, 'gi'),
+        new RegExp(`url\\(["']?((?!https://res.cloudinary.com)[^"'>\\s]*${escapedFilename})["']?\\)`, 'gi')
       ];
 
       patterns.forEach(pattern => {
@@ -90,7 +91,7 @@ export class EmailService {
     });
 
     // 2. Fallback: Catch any remaining cid: references we missed
-    html = html.replace(/src=["']cid:([^"']+)["']/gi, (match, cid) => {
+    html = html.replace(/src=["'](?!https:\/\/res\.cloudinary\.com)cid:([^"']+)["']/gi, (match, cid) => {
       const lowerCid = cid.toLowerCase().trim();
       for (const [key, url] of Object.entries(emailAssetMap)) {
         if (key.toLowerCase().includes(lowerCid)) {
@@ -437,7 +438,7 @@ export class EmailService {
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" class="logo">
+      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" class="logo">
     </div>
     <div class="content">
       <h1 class="title" style="color: #0c332c;">Account Update</h1>
