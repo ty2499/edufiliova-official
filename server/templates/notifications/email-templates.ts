@@ -296,7 +296,8 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     .logo { max-width: 180px; height: auto; }
     .content { padding: 40px; }
     .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
-    .tip-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 12px; margin: 20px 0; color: #fff; }
+    .feature-box { background: #f9fafb; padding: 20px; border-radius: 8px; margin: 15px 0; }
+    .tip-box { background: #0C332C; padding: 25px; border-radius: 12px; margin: 20px 0; color: #ffffff; }
     .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
   </style>
 </head>
