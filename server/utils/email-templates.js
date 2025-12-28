@@ -541,3 +541,66 @@ export async function sendTeacherDeclineEmail(recipientEmail, recipientName, rea
     throw error;
   }
 }
+
+export async function sendTeacherUnderReviewEmail(recipientEmail, recipientName) {
+  console.log(`📧 Sending teacher under review email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'teacher-application-under-review', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'Teacher';
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Application Update - EduFiliova Teacher Network',
+      html: emailHtml,
+      from: `"EduFiliova Review Team" <support@edufiliova.com>`
+    });
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending teacher under review email:`, error);
+    throw error;
+  }
+}
+
+export async function sendFreelancerApplicationSubmittedEmail(recipientEmail, recipientName) {
+  console.log(`📧 Sending freelancer application submitted email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'Freelancer';
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Application Received - EduFiliova Freelancer Network',
+      html: emailHtml,
+      from: `"EduFiliova Review Team" <support@edufiliova.com>`
+    });
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending freelancer application submitted email:`, error);
+    throw error;
+  }
+}
+
+export async function sendFreelancerApplicationApprovedEmail(recipientEmail, recipientName) {
+  console.log(`📧 Sending freelancer application approved email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'freelancer-application-approved', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'Freelancer';
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Welcome to EduFiliova Freelancer Network!',
+      html: emailHtml,
+      from: `"EduFiliova Review Team" <support@edufiliova.com>`
+    });
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending freelancer application approved email:`, error);
+    throw error;
+  }
+}
