@@ -16858,11 +16858,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/subjects", async (req, res) => {
     try {
       const { gradeLevel, gradeSystem, creatorOnly } = req.query;
+      const user = req.user as any;
+      const isAdmin = user?.role === "admin";
       
-      let conditions = [eq(subjects.isActive, true)];
+      let conditions: any[] = [eq(subjects.isActive, true)];
 
       if (creatorOnly === "true" && req.isAuthenticated()) {
-        conditions.push(eq(subjects.createdBy, (req.user as any).id));
+        conditions = [eq(subjects.createdBy, user.id)];
+      } else if (isAdmin && creatorOnly === "false") {
+        conditions = [];
       } else {
         if (gradeLevel) {
           const parsedGrade = parseInt(gradeLevel as string);
@@ -16882,7 +16886,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const subjectsData = await db
         .select()
         .from(subjects)
-        .where(and(...conditions))
+        .where(conditions.length > 0 ? and(...conditions) : undefined)
         .orderBy(subjects.name);
       
       res.json({ success: true, data: subjectsData });
