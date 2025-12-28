@@ -393,6 +393,7 @@ export default function AdminApplicationsManagement({ onNavigate }: AdminApplica
                 onClick={() => setStatusFilter("approved")}
                 size="sm"
                 data-testid="filter-approved"
+                className="bg-[#0c332c] text-white hover:bg-[#0c332c] hover:text-white"
               >
                 <CheckmarkIcon size="sm" variant="success" className="mr-1" />
                 Approved ({statusCounts.approved})
