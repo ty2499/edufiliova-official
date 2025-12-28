@@ -491,6 +491,73 @@ export async function sendPlanUpgradeEmail(recipientEmail, recipientName, upgrad
 }
 
 /**
+ * Send teacher application decline email
+ */
+export async function sendTeacherDeclineEmail(recipientEmail, recipientName, reason = null) {
+  console.log(`📧 Sending teacher application decline email to ${recipientEmail}...`);
+  console.log(`   - Recipient: ${recipientName}`);
+  if (reason) console.log(`   - Reason: ${reason}`);
+
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'teacher-decline', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+
+    const fullName = recipientName || 'Applicant';
+
+    // Handle placeholders
+    emailHtml = emailHtml.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, fullName);
+
+    if (reason) {
+      emailHtml = emailHtml.replace(/\{\{#if reason\}\}([\s\S]*?)\{\{\/if\}\}/gi, (match, p1) => {
+        return p1.replace(/\{\{\s*reason\s*\}\}/gi, reason)
+                 .replace(/\{\{<\/span><span[^>]*>reason<\/span><span[^>]*>\}\}/gi, reason);
+      });
+    } else {
+      emailHtml = emailHtml.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
+    }
+
+    // CDN Assets from email-assets-map.json
+    const assets = {
+      "bbe5722d1ffd3c84888e18335965d5e5.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908569/edufiliova/email-assets/bbe5722d1ffd3c84888e18335965d5e5_1766506747361.png",
+      "0ac9744033a7e26f12e08d761c703308.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908554/edufiliova/email-assets/0ac9744033a7e26f12e08d761c703308_1766647041179.png",
+      "d320764f7298e63f6b035289d4219bd8.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908569/edufiliova/email-assets/d320764f7298e63f6b035289d4219bd8_1766506747365.png",
+      "de497c5361453604d8a15c4fd9bde086.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908570/edufiliova/email-assets/de497c5361453604d8a15c4fd9bde086_1766647041219.png",
+      "e06e238bd6d74a3e48f94e5b0b81388d.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908571/edufiliova/email-assets/e06e238bd6d74a3e48f94e5b0b81388d_1766647041222.png",
+      "7976503d64a3eef4169fe235111cdc57.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908558/edufiliova/email-assets/7976503d64a3eef4169fe235111cdc57_1766647041205.png",
+      "917a6e905cf83da447efc0f5c2780aca.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908560/edufiliova/email-assets/917a6e905cf83da447efc0f5c2780aca_1766647041197.png",
+      "4a834058470b14425c9b32ace711ef17.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908554/edufiliova/email-assets/4a834058470b14425c9b32ace711ef17.png",
+      "9f7291948d8486bdd26690d0c32796e0.png": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco,v1766908561/edufiliova/email-assets/9f7291948d8486bdd26690d0c32796e0_1766506747363.png"
+    };
+
+    for (const [img, url] of Object.entries(assets)) {
+      emailHtml = emailHtml.replace(new RegExp(`images\\/${img}`, 'g'), url);
+    }
+
+    const attachments = [];
+
+    const result = await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Update on Your Teacher Application - EduFiliova',
+      html: emailHtml,
+      from: `"EduFiliova Review Team" <support@edufiliova.com>`,
+      attachments
+    });
+
+    if (result) {
+      console.log(`✅ Teacher application decline email sent successfully to ${recipientEmail}`);
+    } else {
+      console.error(`❌ Teacher application decline email failed to send to ${recipientEmail}`);
+    }
+
+    return result;
+  } catch (error) {
+    console.error(`❌ Error sending teacher decline email:`, error);
+    throw error;
+  }
+}
+
+/**
  * Send new device login alert email
  */
 export async function sendNewDeviceLoginEmail(recipientEmail, recipientName, loginData) {
