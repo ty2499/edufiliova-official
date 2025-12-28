@@ -2,54 +2,25 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <meta name="x-apple-disable-message-reformatting">
   <style>
-    body { width: 100%; margin: 0; padding: 0; background-color: #f0f1f5; font-family: Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-    .header { background-color: #0c332c; padding: 30px 40px; text-align: center; }
-    .content { background-color: #ffffff; padding: 40px; max-width: 600px; margin: 0 auto; border-radius: 0 0 8px 8px; }
-    .footer { padding: 30px; text-align: center; color: #666; font-size: 14px; }
-    .code-container { background-color: #f8fafc; border: 2px dashed #0c332c; padding: 30px; text-align: center; margin: 30px 0; border-radius: 12px; }
-    .code-label { color: #2f5a4e; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
-    .code-value { font-size: 42px; font-weight: 800; color: #0c332c; letter-spacing: 8px; font-family: 'Courier New', Courier, monospace; }
-    @media only screen and (max-width: 600px) {
-      .content { padding: 25px; }
-      .header { padding: 20px; }
-      .code-value { font-size: 32px; letter-spacing: 5px; }
-    }
+    body { background-color: #f0f1f5; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .header { background-color: #0c332c; padding: 30px; text-align: center; }
+    .content { background-color: #ffffff; padding: 40px; max-width: 600px; margin: 0 auto; color: #0c332c; }
+    .footer { padding: 20px; text-align: center; color: #666; font-size: 14px; }
   </style>
 </head>
-<body style="background-color: #f0f1f5;">
-  <div style="max-width: 600px; margin: 0 auto; padding: 20px 0;">
-    <div class="header" style="border-radius: 8px 8px 0 0;">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" style="max-width: 180px; height: auto; display: inline-block;">
-    </div>
-    <div class="content">
-      <h1 style="color: #0c332c; margin: 0 0 20px 0; font-size: 24px; font-weight: 800; text-align: center;">Freelancer Verification</h1>
-      
-      <p style="color: #0c332c; font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Hi <strong>{{fullName}}</strong>,</p>
-      
-      <p style="color: #0c332c; font-size: 16px; line-height: 1.6;">Thank you for joining our freelancer community. Please use the verification code below to complete your registration and start connecting with clients.</p>
-      
-      <div class="code-container">
-        <span class="code-label">Verification Code</span>
-        <div class="code-value">{{code}}</div>
-      </div>
-
-      <p style="color: #0c332c; font-size: 15px; line-height: 1.6; text-align: center;">
-        If you didn't start this registration, you can safely ignore this email.
-      </p>
-      
-      <div style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 30px;">
-        <p style="color: #2f5a4e; font-size: 13px; margin: 0; line-height: 1.5; text-align: center;">
-          Empowering freelancers to reach their full potential.
-        </p>
-      </div>
-    </div>
-    <div class="footer">
-      <p style="margin-bottom: 5px;">© 2025 EduFiliova. All rights reserved.</p>
-    </div>
+<body>
+  <div class="header">
+    <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" style="max-width: 180px;">
+  </div>
+  <div class="content">
+    <p>Hi <strong>{{fullName}}</strong>,</p>
+    <p>Thank you for joining our freelancer community. Please use the verification code below to complete your registration:</p>
+    <div style="background-color: #f8fafc; border: 2px dashed #0c332c; padding: 20px; text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0;">{{code}}</div>
+    <p>Empowering freelancers to reach their full potential.</p>
+  </div>
+  <div class="footer">
+    <p>© 2025 EduFiliova. All rights reserved.</p>
   </div>
 </body>
 </html>

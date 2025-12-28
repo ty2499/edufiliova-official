@@ -3,57 +3,32 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <meta name="x-apple-disable-message-reformatting">
   <style>
-    body { width: 100%; margin: 0; padding: 0; background-color: #f0f1f5; font-family: Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-    .header { background-color: #0c332c; padding: 30px 40px; text-align: center; }
-    p, h1, h2, h3, li { color: #0C332C !important; }
-    .content { background-color: #ffffff; padding: 40px; max-width: 600px; margin: 0 auto; border-radius: 0 0 8px 8px; }
-    .footer { padding: 30px; text-align: center; color: #666; font-size: 14px; }
-    .code-container { background-color: #f8fafc; border: 2px dashed #0c332c; padding: 30px; text-align: center; margin: 30px 0; border-radius: 12px; }
-    .code-label { color: #64748b; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
-    .code-value { font-size: 42px; font-weight: 800; color: #0c332c; letter-spacing: 8px; font-family: 'Courier New', Courier, monospace; }
-    .expires-badge { display: inline-block; background-color: #0c332c; color: #ffffff; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 15px; }
-    .btn { display: inline-block; background-color: #0c332c; color: #ffffff !important; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px; margin: 20px 0; }
-    @media only screen and (max-width: 600px) {
-      .content { padding: 25px; }
-      .header { padding: 20px; }
-      .code-value { font-size: 32px; letter-spacing: 5px; }
-    }
+    body { width: 100%; margin: 0; padding: 0; background-color: #f0f1f5; font-family: Arial, sans-serif; }
+    .header { background-color: #0c332c; padding: 30px; text-align: center; }
+    .content { background-color: #ffffff; padding: 40px; max-width: 600px; margin: 0 auto; border-radius: 0 0 8px 8px; color: #0c332c; }
+    .footer { padding: 20px; text-align: center; color: #666; font-size: 14px; }
+    .code-container { background-color: #f8fafc; border: 2px dashed #0c332c; padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px; }
+    .code-value { font-size: 32px; font-weight: bold; letter-spacing: 5px; }
   </style>
 </head>
-<body style="background-color: #f0f1f5;">
-  <div style="max-width: 600px; margin: 0 auto; padding: 20px 0;">
+<body>
+  <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
     <div class="header" style="border-radius: 8px 8px 0 0;">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" style="max-width: 180px; height: auto; display: inline-block;">
+      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" style="max-width: 180px;">
     </div>
     <div class="content">
-      <h1 style="margin: 0 0 20px 0; font-size: 24px; font-weight: 800; text-align: center;">Verify Your Identity</h1>
-      
-      <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">Hi <strong>{{fullName}}</strong>,</p>
-      
-      <p style="font-size: 16px; line-height: 1.6;">A request was made to reset your password. For your security, please use the following verification code to proceed with the password change.</p>
-      
+      <h1 style="text-align: center;">Verify Your Identity</h1>
+      <p>Hi <strong>{{fullName}}</strong>,</p>
+      <p>Please use the following code to proceed with your password change.</p>
       <div class="code-container">
-        <span class="code-label">Verification Code</span>
         <div class="code-value">{{code}}</div>
-        <div class="expires-badge">Expires in {{expiresIn}}</div>
+        <div style="margin-top: 10px; font-size: 12px;">Expires in {{expiresIn}}</div>
       </div>
-
-      <p style="font-size: 15px; line-height: 1.6; text-align: center;">
-        If you didn't request this, you can safely ignore this email. Your password will remain unchanged unless you use this code.
-      </p>
-      
-      <div style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 30px;">
-        <p style="color: #94a3b8; font-size: 13px; margin: 0; line-height: 1.5;">
-          <strong>Security Note:</strong> Never share this code with anyone. EduFiliova staff will never ask you for your verification codes or passwords via email.
-        </p>
-      </div>
+      <p style="font-size: 14px; color: #666;">If you didn't request this, please ignore this email.</p>
     </div>
     <div class="footer">
-      <p style="margin-bottom: 5px;">© 2025 EduFiliova. All rights reserved.</p>
-      <p style="margin-top: 0; color: #94a3b8;">Helping you reach your potential through education.</p>
+      <p>© 2025 EduFiliova. All rights reserved.</p>
     </div>
   </div>
 </body>
