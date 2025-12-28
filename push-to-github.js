@@ -19,7 +19,7 @@ async function main() {
     const repo = process.argv[3] || "edufiliova";
     const branch = process.argv[4] || "main";
 
-    console.log("🚀 Pushing ALL source code to GitHub\n");
+    console.log("🚀 Pushing source code to GitHub (Batched Mode)\n");
     console.log("📋 Configuration:");
     console.log(`   Owner: ${owner}`);
     console.log(`   Repo: ${repo}`);
@@ -31,11 +31,10 @@ async function main() {
     const { data: user } = await octokit.rest.users.getAuthenticated();
     console.log(`✅ Authenticated as: ${user.login}\n`);
 
-    console.log("📦 Collecting ALL source code files...");
-    const filesMap = new Map();
+    console.log("📦 Collecting files...");
+    const files = [];
     const baseDir = __dirname;
 
-    // Ignore patterns
     const ignoredPatterns = [
       ".git",
       "node_modules",
@@ -47,6 +46,9 @@ async function main() {
       ".config",
       "/dist",
       "/build",
+      ".replit",
+      "replit.nix",
+      "package-lock.json"
     ];
 
     function isIgnored(filePath) {
@@ -55,103 +57,97 @@ async function main() {
 
     function collectFiles(dir) {
       try {
-        const files = fs.readdirSync(dir);
-        files.forEach((file) => {
-          const filePath = path.join(dir, file);
-          const relativePath = path.relative(baseDir, filePath);
+        const items = fs.readdirSync(dir);
+        items.forEach((item) => {
+          const fullPath = path.join(dir, item);
+          const relativePath = path.relative(baseDir, fullPath);
 
           if (isIgnored(relativePath)) return;
 
-          const stat = fs.statSync(filePath);
+          const stat = fs.statSync(fullPath);
           if (stat.isDirectory()) {
-            collectFiles(filePath);
+            collectFiles(fullPath);
           } else {
-            try {
-              const content = fs.readFileSync(filePath, "utf-8");
-              filesMap.set(relativePath, content);
-            } catch (e) {
-              // Skip binary files
+            // Only push source files and essentials to avoid size limits
+            const ext = path.extname(item).toLowerCase();
+            const sourceExts = ['.ts', '.tsx', '.js', '.jsx', '.json', '.html', '.css', '.md', '.sql'];
+            if (sourceExts.includes(ext) || item === 'package.json') {
+              files.push(relativePath);
             }
           }
         });
-      } catch (e) {
-        // Skip directories that can't be read
-      }
+      } catch (e) {}
     }
 
     collectFiles(baseDir);
-    console.log(`✅ Found ${filesMap.size} files to push\n`);
+    console.log(`✅ Found ${files.length} files to push\n`);
 
-    if (filesMap.size === 0) {
-      console.error("❌ No files found to push");
-      process.exit(1);
+    const { data: ref } = await octokit.rest.git.getRef({
+      owner,
+      repo,
+      ref: `heads/${branch}`,
+    });
+    const baseCommitSha = ref.object.sha;
+
+    console.log("📤 Creating blobs...");
+    const treeItems = [];
+    const BATCH_SIZE = 50;
+
+    for (let i = 0; i < files.length; i += BATCH_SIZE) {
+      const batch = files.slice(i, i + BATCH_SIZE);
+      console.log(`   Processing batch ${Math.floor(i/BATCH_SIZE) + 1}/${Math.ceil(files.length/BATCH_SIZE)}...`);
+      
+      const blobs = await Promise.all(batch.map(async (file) => {
+        try {
+          const content = fs.readFileSync(path.join(baseDir, file), "base64");
+          const { data } = await octokit.rest.git.createBlob({
+            owner,
+            repo,
+            content,
+            encoding: "base64",
+          });
+          return {
+            path: file,
+            mode: "100644",
+            type: "blob",
+            sha: data.sha,
+          };
+        } catch (e) {
+          console.error(`   ⚠️ Failed to process ${file}: ${e.message}`);
+          return null;
+        }
+      }));
+
+      treeItems.push(...blobs.filter(Boolean));
     }
 
-    console.log("📤 Pushing to GitHub...");
+    console.log(`\n🏗️ Creating tree with ${treeItems.length} items...`);
+    const { data: treeData } = await octokit.rest.git.createTree({
+      owner,
+      repo,
+      tree: treeItems,
+      base_tree: baseCommitSha,
+    });
 
-    const tree = Array.from(filesMap.entries()).map(([filePath, content]) => ({
-      path: filePath,
-      mode: "100644",
-      type: "blob",
-      content,
-    }));
+    console.log("📝 Creating commit...");
+    const { data: newCommit } = await octokit.rest.git.createCommit({
+      owner,
+      repo,
+      message: `Sync from Replit - ${new Date().toLocaleString()}`,
+      tree: treeData.sha,
+      parents: [baseCommitSha],
+    });
 
-    try {
-      const { data: ref } = await octokit.rest.git.getRef({
-        owner,
-        repo,
-        ref: `heads/${branch}`,
-      });
-      const baseCommitSha = ref.object.sha;
+    console.log("🔗 Updating branch...");
+    await octokit.rest.git.updateRef({
+      owner,
+      repo,
+      ref: `heads/${branch}`,
+      sha: newCommit.sha,
+    });
 
-      console.log(`   Creating tree with ${tree.length} files...`);
-      const { data: treeData } = await octokit.rest.git.createTree({
-        owner,
-        repo,
-        tree,
-        base_tree: baseCommitSha,
-      });
-
-      console.log("   Creating commit...");
-      const { data: newCommit } = await octokit.rest.git.createCommit({
-        owner,
-        repo,
-        message: `Push all source code from Replit - ${new Date().toISOString()}`,
-        tree: treeData.sha,
-        parents: [baseCommitSha],
-        author: {
-          name: user.name || user.login,
-          email: user.email || `${user.login}@noreply.github.com`,
-          date: new Date().toISOString(),
-        },
-      });
-
-      console.log("   Updating branch reference...");
-      await octokit.rest.git.updateRef({
-        owner,
-        repo,
-        ref: `heads/${branch}`,
-        sha: newCommit.sha,
-      });
-
-      console.log(`\n✅ Success! ALL source code pushed to GitHub`);
-      console.log(`   Total files: ${tree.length}`);
-      console.log(`   Commit SHA: ${newCommit.sha}`);
-      console.log(
-        `   View at: https://github.com/${owner}/${repo}/commit/${newCommit.sha}\n`
-      );
-    } catch (error) {
-      if (error.status === 409) {
-        console.error(
-          "❌ Branch conflict. The branch may need fast-forward merge."
-        );
-      } else if (error.status === 404) {
-        console.error("❌ Repository not found.");
-      } else {
-        console.error("❌ Error:", error.message);
-      }
-      process.exit(1);
-    }
+    console.log(`\n✅ Success! Pushed to GitHub`);
+    console.log(`   Commit SHA: ${newCommit.sha}\n`);
   } catch (error) {
     console.error("❌ Error:", error.message);
     process.exit(1);
