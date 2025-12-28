@@ -391,11 +391,12 @@ export class EmailService {
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
+    // Use support@pacreatives.co.za as requested
     return this.sendEmail({
       to: email,
       subject: 'Welcome Aboard! Your Teacher Application is Approved - EduFiliova',
       html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
+      from: `"EduFiliova Support" <teach@pacreatives.co.za>`,
       attachments: [] // Images are handled via Cloudinary URLs in sendEmail
     });
   }
@@ -426,8 +427,7 @@ export class EmailService {
     html = this.forceReplaceName(html, fullName);
 
     // Handle conditional blocks and variables (Handlebars style)
-    if (reasonText) {
-      // If Handlebars isn't used as a real engine here, we manually handle the #if
+    if (reasonText && reasonText !== 'Application review completed') {
       html = html.replace(/{{#if reason}}[\s\S]*?{{reason}}[\s\S]*?{{\/if}}/gi, `
         <div style="margin-top:15px;padding:12px;background-color:#fee2e2;border-radius:6px;">
           <p style="margin:0;font-size:13px;color:#991b1b;"><strong>Reason provided:</strong></p>
@@ -447,7 +447,7 @@ export class EmailService {
       to: email,
       subject: 'Application Status Update - EduFiliova Teacher Application',
       html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
+      from: `"EduFiliova Support" <teach@pacreatives.co.za>`,
       attachments: []
     });
   }
