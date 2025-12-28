@@ -192,17 +192,17 @@ export class EngagementNotificationService {
       const hoursSinceCreation = (now.getTime() - new Date(reg.createdAt).getTime()) / (1000 * 60 * 60);
       let notificationType: EngagementNotificationType;
 
-      // Determine which template to use based on role
-      const isFreelancer = reg.role === 'freelancer';
+      // Determine which template to use based on registration type
+      const isFreelancer = reg.registrationType === 'freelancer';
 
-      if (hoursSinceCreation >= 24) {
-        notificationType = isFreelancer ? 
-          ENGAGEMENT_NOTIFICATION_TYPES.FREELANCER_INCOMPLETE_REGISTRATION_24H : 
-          ENGAGEMENT_NOTIFICATION_TYPES.INCOMPLETE_REGISTRATION_24H;
+      if (reg.registrationType === 'freelancer' && hoursSinceCreation >= 24) {
+        notificationType = ENGAGEMENT_NOTIFICATION_TYPES.FREELANCER_INCOMPLETE_REGISTRATION_24H;
+      } else if (reg.registrationType === 'freelancer' && hoursSinceCreation >= 1) {
+        notificationType = ENGAGEMENT_NOTIFICATION_TYPES.FREELANCER_INCOMPLETE_REGISTRATION_1H;
+      } else if (hoursSinceCreation >= 24) {
+        notificationType = ENGAGEMENT_NOTIFICATION_TYPES.INCOMPLETE_REGISTRATION_24H;
       } else if (hoursSinceCreation >= 1) {
-        notificationType = isFreelancer ? 
-          ENGAGEMENT_NOTIFICATION_TYPES.FREELANCER_INCOMPLETE_REGISTRATION_1H : 
-          ENGAGEMENT_NOTIFICATION_TYPES.INCOMPLETE_REGISTRATION_1H;
+        notificationType = ENGAGEMENT_NOTIFICATION_TYPES.INCOMPLETE_REGISTRATION_1H;
       } else {
         skipped++;
         continue;

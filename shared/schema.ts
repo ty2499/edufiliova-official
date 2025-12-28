@@ -5166,7 +5166,8 @@ export type InsertAdminAuditLog = typeof adminAuditLogs.$inferInsert;
 // Notification types for automated engagement emails
 export const engagementNotificationTypeEnum = pgEnum("engagement_notification_type", [
   "incomplete_registration_1h",
-  "incomplete_registration_24h",
+  "freelancer_incomplete_registration_1h",
+  "freelancer_incomplete_registration_24h",
   "welcome_day_0",
   "welcome_day_2",
   "welcome_day_5",
