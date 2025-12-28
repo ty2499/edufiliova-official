@@ -66,7 +66,7 @@ export class EmailService {
     let processedHtml = html.replace(imageRegex, (match, filename) => {
       // Check if we have a Cloudinary URL for this image
       if (emailAssetMap[filename]) {
-        console.log(`✅ Cloudinary match: ${filename}`);
+        console.log(`✅ Cloudinary match: ${filename} -> ${emailAssetMap[filename]}`);
         return match.includes('href') ? `href="${emailAssetMap[filename]}"` : `src="${emailAssetMap[filename]}"`;
       }
       
@@ -76,47 +76,41 @@ export class EmailService {
       // Look for any key that starts with this base name
       for (const [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
-        if (lowerKey.startsWith(baseName)) {
-          console.log(`✅ Image base match: ${filename} -> ${key}`);
+        if (lowerKey.startsWith(baseName) || lowerKey.includes(baseName)) {
+          console.log(`✅ Image base match: ${filename} -> ${key} -> ${url}`);
           return match.includes('href') ? `href="${url}"` : `src="${url}"`;
         }
       }
       
-      // Secondary fallback: search the filename anywhere in the keys
-      for (const [key, url] of Object.entries(emailAssetMap)) {
-        if (key.toLowerCase().includes(baseName)) {
-           console.log(`✅ Image partial match: ${filename} -> ${key}`);
-           return match.includes('href') ? `href="${url}"` : `src="${url}"`;
-        }
-      }
-
-      console.warn(`⚠️ No mapping for: ${filename}`);
+      console.warn(`⚠️ No mapping found for image: ${filename}`);
       return match;
     });
 
-    // 2. Explicitly handle cid: references
+    // 2. Explicitly handle any remaining relative images/ paths without quotes
+    const relativePathRegex = /src=images\/([^ >]+)/gi;
+    processedHtml = processedHtml.replace(relativePathRegex, (match, filename) => {
+      const baseName = filename.split('_')[0].split('.')[0].toLowerCase();
+      for (const [key, url] of Object.entries(emailAssetMap)) {
+        if (key.toLowerCase().includes(baseName)) {
+          console.log(`✅ Unquoted path match: ${filename} -> ${key} -> ${url}`);
+          return `src="${url}"`;
+        }
+      }
+      return match;
+    });
+
+    // 3. Explicitly handle cid: references
     const cidRegex = /src=["']cid:([^"']+)["']/gi;
     processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
       const lowerCid = cid.toLowerCase();
       
-      // Try exact or prefix match first
       for (const [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
-        if (lowerKey === lowerCid || lowerKey.startsWith(lowerCid)) {
-          console.log(`✅ CID match: ${cid} -> ${key}`);
+        if (lowerKey.includes(lowerCid)) {
+          console.log(`✅ CID match: ${cid} -> ${key} -> ${url}`);
           return `src="${url}"`;
         }
       }
-      
-      // Try base name matching for CIDs too
-      const baseCid = lowerCid.split('_')[0];
-      for (const [key, url] of Object.entries(emailAssetMap)) {
-        if (key.toLowerCase().startsWith(baseCid)) {
-          console.log(`✅ CID base match: ${cid} -> ${key}`);
-          return `src="${url}"`;
-        }
-      }
-      
       return match;
     });
 
