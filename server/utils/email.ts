@@ -428,19 +428,19 @@ export class EmailService {
     .header { background-color: #0c332c; padding: 50px; text-align: center; }
     .logo { max-width: 200px; height: auto; }
     .content { padding: 50px; }
-    .title { color: #d32f2f; font-size: 28px; font-weight: 700; margin: 0 0 25px 0; line-height: 1.3; }
+    .title { color: #0c332c; font-size: 28px; font-weight: 700; margin: 0 0 25px 0; line-height: 1.3; }
     .message { color: #333; font-size: 16px; line-height: 1.8; margin: 0 0 25px 0; }
-    .section { background-color: #fef5f5; border-left: 5px solid #d32f2f; padding: 25px; margin: 25px 0; border-radius: 4px; }
-    .section h3 { margin: 0 0 15px 0; color: #d32f2f; font-size: 18px; font-weight: 700; }
+    .section { background-color: #f0fdf4; border-left: 5px solid #0c332c; padding: 25px; margin: 25px 0; border-radius: 4px; }
+    .section h3 { margin: 0 0 15px 0; color: #0c332c; font-size: 18px; font-weight: 700; }
     .section p { margin: 0 0 12px 0; color: #333; font-size: 15px; line-height: 1.6; }
     .violations { list-style: none; padding: 0; margin: 15px 0; }
     .violations li { padding: 8px 0; color: #333; font-size: 15px; }
-    .reason-box { background-color: #f5f5f5; border: 2px solid #d32f2f; padding: 25px; margin: 25px 0; border-radius: 6px; }
-    .reason-box h3 { margin: 0 0 15px 0; color: #d32f2f; font-size: 18px; font-weight: 700; }
+    .reason-box { background-color: #f8fafc; border: 2px solid #0c332c; padding: 25px; margin: 25px 0; border-radius: 6px; }
+    .reason-box h3 { margin: 0 0 15px 0; color: #0c332c; font-size: 18px; font-weight: 700; }
     .reason-box p { margin: 0 0 12px 0; color: #333; font-size: 15px; line-height: 1.7; }
     .footer { background-color: #f5f5f5; padding: 30px; text-align: center; color: #666; font-size: 13px; border-top: 1px solid #ddd; }
     .footer p { margin: 8px 0; }
-    .support-email { color: #d32f2f; font-weight: 700; }
+    .support-email { color: #0c332c; font-weight: 700; }
   </style>
 </head>
 <body>
@@ -449,7 +449,7 @@ export class EmailService {
       <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" class="logo">
     </div>
     <div class="content">
-      <h1 class="title">Account Suspended - Policy Violation</h1>
+      <h1 class="title" style="color: #0c332c;">Account Update</h1>
       
       <p class="message">
         Dear {{fullName}},
