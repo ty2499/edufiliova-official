@@ -777,49 +777,37 @@ export default function TeacherSignup() {
                   </div>
 
                   <div className="border rounded-lg p-4 bg-gray-50">
-                    <p className="font-medium text-gray-900 mb-3">Resume Guidelines - Examples We Do NOT Accept:</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855463199.png" 
-                          alt="Generic professional resume - NOT ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-red-700">✗ Non-Teaching Resume</p>
-                        <p className="text-xs text-gray-600 mt-1">Not tailored for teaching role</p>
-                      </div>
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855472096.png" 
-                          alt="Generic template - NOT ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-red-700">✗ Generic Template</p>
-                        <p className="text-xs text-gray-600 mt-1">Generic format without teaching focus</p>
-                      </div>
-                      <div className="text-center">
-                        <img 
-                          src="/attached_assets/image_1766855560025.png" 
-                          alt="Personal CV format - NOT ACCEPTED"
-                          className="w-full h-40 object-cover rounded-lg border-2 border-red-500 mb-2"
-                        />
-                        <p className="text-sm font-medium text-red-700">✗ Generic CV Format</p>
-                        <p className="text-xs text-gray-600 mt-1">Not specific to teaching experience</p>
+                    <img 
+                      src="/cv-resume-guidelines.png" 
+                      alt="Teacher CV/Resume - Accepted vs Not Accepted"
+                      className="w-full rounded-lg"
+                    />
+                    <div className="mt-3 space-y-2 text-sm">
+                      <p className="font-medium text-gray-900">Summary of Resume Guidelines:</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="border-l-4 border-green-500 pl-3">
+                          <p className="font-medium text-green-700">✓ Accepted Examples</p>
+                          <ul className="text-gray-600 space-y-1 mt-1">
+                            <li>• Clearly showing work history</li>
+                            <li>• Education listed with dates</li>
+                            <li>• Smiling, child-friendly language</li>
+                            <li>• Clean, professional, well-formatted</li>
+                          </ul>
+                        </div>
+                        <div className="border-l-4 border-red-500 pl-3">
+                          <p className="font-medium text-red-700">✗ Not Accepted Examples</p>
+                          <ul className="text-gray-600 space-y-1 mt-1">
+                            <li>• Placeholders or text missing</li>
+                            <li>• Screenshots or blurry photos</li>
+                            <li>• Cartoon, fake, or colorful designs</li>
+                            <li>• Outdated, cramped, or cluttered</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                    <div className="border-l-4 border-red-500 pl-3 mb-4">
-                      <p className="font-medium text-red-700 mb-2">✗ Why We Reject Generic Resumes</p>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• Not focused on teaching experience and skills</li>
-                        <li>• Don't highlight educational background or certifications</li>
-                        <li>• Generic job experience (lawyers, business roles, etc.)</li>
-                        <li>• Missing teaching methodology and subject expertise</li>
-                        <li>• Don't demonstrate student impact or teaching achievements</li>
-                      </ul>
-                    </div>
-                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                       <p className="text-sm text-blue-900">
-                        <span className="font-medium">What we need instead:</span> Please provide a resume that specifically highlights your teaching experience, qualifications, subjects you teach, student outcomes, teaching methods, and educational achievements. Focus on your teaching role, not generic job experience.
+                        <span className="font-medium">Why this matters:</span> Professional, well-formatted resumes with clear work history are required for teacher verification. They help build trust with students and parents by demonstrating your qualifications and teaching experience.
                       </p>
                     </div>
                   </div>
