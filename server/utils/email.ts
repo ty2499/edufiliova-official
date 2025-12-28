@@ -39,6 +39,27 @@ export class EmailService {
     return 'https://edufiliova.com';
   }
 
+  private processEmailImages(html: string): string {
+    // Replace all image href/src references with base64-encoded versions
+    const imageRegex = /(?:href|src)="images\/([^"]+)"/g;
+    
+    return html.replace(imageRegex, (match, filename) => {
+      try {
+        const imagePath = path.resolve(process.cwd(), 'attached_assets', filename);
+        if (fs.existsSync(imagePath)) {
+          const imageData = fs.readFileSync(imagePath);
+          const base64 = imageData.toString('base64');
+          const ext = path.extname(filename).slice(1).toLowerCase();
+          const mimeType = ext === 'png' ? 'image/png' : ext === 'jpg' ? 'image/jpeg' : 'image/png';
+          return `src="data:${mimeType};base64,${base64}"`;
+        }
+      } catch (e) {
+        console.warn(`⚠️ Could not process image: ${filename}`);
+      }
+      return match;
+    });
+  }
+
   private initialize() {
     this.initializeFromDatabase();
   }
@@ -143,11 +164,14 @@ export class EmailService {
         return false;
       }
 
+      // Process images in HTML: convert to base64 data URIs
+      let processedHtml = this.processEmailImages(options.html);
+      
       const mailOptions = {
         from,
         to: options.to,
         subject: options.subject,
-        html: options.html,
+        html: processedHtml,
         attachments: options.attachments || [],
       };
       
