@@ -976,6 +976,36 @@ router.put('/applications/:id/status', async (req, res) => {
   }
 });
 
+// Get freelancer application status by ID
+router.get('/applications/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    if (!id || typeof id !== 'string') {
+      return res.status(400).json({
+        error: 'Invalid application ID',
+      });
+    }
+
+    const application = await db
+      .select()
+      .from(freelancerApplications)
+      .where(eq(freelancerApplications.id, id))
+      .limit(1);
+
+    if (application.length === 0) {
+      return res.status(404).json({ error: 'Application not found' });
+    }
+
+    res.json(application[0]);
+  } catch (error) {
+    console.error('Get freelancer application by ID error:', error);
+    res.status(500).json({
+      error: 'Failed to fetch application',
+    });
+  }
+});
+
 // Get freelancer application status by userId
 router.get('/applications/status/:userId', async (req, res) => {
   try {

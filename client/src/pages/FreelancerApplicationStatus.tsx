@@ -19,8 +19,8 @@ export default function FreelancerApplicationStatus() {
   const [resubmitError, setResubmitError] = useState("");
 
   const { data: application, isLoading, refetch } = useQuery<any>({
-    queryKey: [`/api/freelancer/applications/status/${applicationId}`],
-    queryFn: () => apiRequest(`/api/freelancer/applications/status/${applicationId}`),
+    queryKey: [`/api/freelancer/applications/${applicationId}`],
+    queryFn: () => apiRequest(`/api/freelancer/applications/${applicationId}`),
     enabled: !!applicationId,
   });
 
