@@ -518,7 +518,7 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
             </Button>
           )}
           <div>
-            <p className="text-gray-700 dark:text-gray-400 text-sm">
+            <p className="text-gray-900 dark:text-gray-100 text-sm font-medium">
               {viewMode === 'list' ? 'Create and manage subjects for students' : 
                viewMode === 'create' ? 'Fill in the details for your new subject' :
                'Add chapters, lessons and quizzes'}
