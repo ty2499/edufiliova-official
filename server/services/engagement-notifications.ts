@@ -192,10 +192,17 @@ export class EngagementNotificationService {
       const hoursSinceCreation = (now.getTime() - new Date(reg.createdAt).getTime()) / (1000 * 60 * 60);
       let notificationType: EngagementNotificationType;
 
+      // Determine which template to use based on role
+      const isFreelancer = reg.role === 'freelancer';
+
       if (hoursSinceCreation >= 24) {
-        notificationType = ENGAGEMENT_NOTIFICATION_TYPES.INCOMPLETE_REGISTRATION_24H;
+        notificationType = isFreelancer ? 
+          ENGAGEMENT_NOTIFICATION_TYPES.FREELANCER_INCOMPLETE_REGISTRATION_24H : 
+          ENGAGEMENT_NOTIFICATION_TYPES.INCOMPLETE_REGISTRATION_24H;
       } else if (hoursSinceCreation >= 1) {
-        notificationType = ENGAGEMENT_NOTIFICATION_TYPES.INCOMPLETE_REGISTRATION_1H;
+        notificationType = isFreelancer ? 
+          ENGAGEMENT_NOTIFICATION_TYPES.FREELANCER_INCOMPLETE_REGISTRATION_1H : 
+          ENGAGEMENT_NOTIFICATION_TYPES.INCOMPLETE_REGISTRATION_1H;
       } else {
         skipped++;
         continue;

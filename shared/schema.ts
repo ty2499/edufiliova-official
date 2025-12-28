@@ -5271,6 +5271,8 @@ export const insertEmailNotificationLogSchema = createInsertSchema(emailNotifica
 export const ENGAGEMENT_NOTIFICATION_TYPES = {
   INCOMPLETE_REGISTRATION_1H: "incomplete_registration_1h",
   INCOMPLETE_REGISTRATION_24H: "incomplete_registration_24h",
+  FREELANCER_INCOMPLETE_REGISTRATION_1H: "freelancer_incomplete_registration_1h",
+  FREELANCER_INCOMPLETE_REGISTRATION_24H: "freelancer_incomplete_registration_24h",
   WELCOME_DAY_0: "welcome_day_0",
   WELCOME_DAY_2: "welcome_day_2",
   WELCOME_DAY_5: "welcome_day_5",

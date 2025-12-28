@@ -101,6 +101,109 @@ export const NOTIFICATION_EMAIL_TEMPLATES = {
     `,
   },
 
+  freelancer_incomplete_registration_1h: {
+    subject: "{{displayName}}, finish setting up your freelance profile!",
+    html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
+    .logo { max-width: 180px; height: auto; }
+    .content { padding: 40px; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
+    </div>
+    <div class="content">
+      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Welcome to the Freelance Community, {{displayName}}!</h1>
+      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+        You're almost done! Complete your freelance profile to start connecting with clients and earning on EduFiliova.
+      </p>
+      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+        Complete your registration to:
+      </p>
+      <ul style="color: #666; font-size: 16px; line-height: 1.8;">
+        <li>Showcase your portfolio and skills</li>
+        <li>Connect with clients looking for your expertise</li>
+        <li>Start earning from day one</li>
+        <li>Build your professional reputation</li>
+      </ul>
+      <div style="text-align: center;">
+        <a href="{{completeUrl}}" class="btn">Complete Your Profile</a>
+      </div>
+      <p style="color: #999; font-size: 14px; margin-top: 30px;">
+        Questions? Reply to this email and our support team will help you get started!
+      </p>
+    </div>
+    <div class="footer">
+      <p>© {{currentYear}} EduFiliova. All rights reserved.</p>
+      <p><a href="{{unsubscribeLink}}" style="color: #999;">Unsubscribe</a></p>
+    </div>
+  </div>
+</body>
+</html>
+    `,
+  },
+
+  freelancer_incomplete_registration_24h: {
+    subject: "{{displayName}}, your freelancer registration expires in 24 hours!",
+    html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+    .header { background-color: #0C332C; padding: 30px 40px; text-align: center; }
+    .logo { max-width: 180px; height: auto; }
+    .content { padding: 40px; }
+    .btn { display: inline-block; background: #0C332C; color: #ffffff !important; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
+    .urgent-box { background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px 20px; margin: 20px 0; }
+    .footer { background: #1a1a1a; padding: 30px 40px; color: #999; text-align: center; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="{{logoUrl}}" alt="EduFiliova" class="logo" />
+    </div>
+    <div class="content">
+      <h1 style="color: #1a1a1a; margin: 0 0 20px;">Don't miss out on client opportunities, {{displayName}}!</h1>
+      <div class="urgent-box">
+        <p style="margin: 0; color: #e65100; font-weight: 600;">Your freelancer profile registration expires in 24 hours!</p>
+      </div>
+      <p style="color: #666; font-size: 16px; line-height: 1.6;">
+        Complete your registration now to start earning with EduFiliova. Finish setting up your profile before your opportunity expires!
+      </p>
+      <div style="text-align: center;">
+        <a href="{{completeUrl}}" class="btn">Activate Your Freelance Profile</a>
+      </div>
+      <p style="color: #999; font-size: 14px; margin-top: 30px;">
+        Need support? We're here to help. Reply to this email anytime.
+      </p>
+    </div>
+    <div class="footer">
+      <p>© {{currentYear}} EduFiliova. All rights reserved.</p>
+      <p><a href="{{unsubscribeLink}}" style="color: #999;">Unsubscribe</a></p>
+    </div>
+  </div>
+</body>
+</html>
+    `,
+  },
+
   welcome_day_0: {
     subject: "Welcome to EduFiliova, {{displayName}}!",
     html: `
