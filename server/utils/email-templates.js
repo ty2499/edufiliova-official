@@ -450,36 +450,154 @@ export async function sendSuspensionEmail(recipientEmail, recipientName, suspens
   }
 }
 
-export async function sendAccountRestrictionEmail(recipientEmail, recipientName, restrictionData) {
-  console.log(`📧 Sending account restriction email to ${recipientEmail}...`);
+export async function sendShopPurchaseEmail(recipientEmail, recipientName, purchaseData) {
+  console.log(`📧 Sending shop purchase email to ${recipientEmail}...`);
   try {
-    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'restriction', 'template.html');
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'shop-purchase', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    const fullName = recipientName || 'User';
+    const fullName = recipientName || 'Customer';
     
     const replacements = {
       'fullName': fullName,
-      'restrictionDate': restrictionData.restrictionDate || new Date().toLocaleDateString(),
-      'restrictionType': restrictionData.restrictionType || 'Account Restriction',
-      'duration': restrictionData.duration || 'Temporary',
-      'referenceId': restrictionData.referenceId || 'N/A',
-      'restrictionReason': restrictionData.restrictionReason || 'Violation of terms.',
-      'appealLink': restrictionData.appealLink || 'https://edufiliova.com/appeal'
+      'orderId': purchaseData.orderId || 'N/A',
+      'itemNames': purchaseData.itemNames || 'Items',
+      'totalAmount': purchaseData.totalAmount || '0.00',
+      'purchaseDate': purchaseData.purchaseDate || new Date().toLocaleDateString()
     };
     
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
     
-    const result = await emailService.sendEmail({
+    return await emailService.sendEmail({
       to: recipientEmail,
-      subject: 'Important: Your Account Has Been Restricted',
+      subject: `Order Confirmation #${purchaseData.orderId}`,
       html: emailHtml,
-      from: `"EduFiliova Trust & Safety" <support@edufiliova.com>`
+      from: `"EduFiliova Shop" <orders@edufiliova.com>`
     });
-    return result;
   } catch (error) {
-    console.error(`❌ Error sending account restriction email:`, error);
+    console.error(`❌ Error sending shop purchase email:`, error);
+    throw error;
+  }
+}
+
+export async function sendNewDeviceLoginEmail(recipientEmail, recipientName, loginData) {
+  console.log(`📧 Sending new device login email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'new-device-login', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'User';
+    
+    const replacements = {
+      'fullName': fullName,
+      'device': loginData.device || 'Unknown Device',
+      'location': loginData.location || 'Unknown Location',
+      'ip': loginData.ip || 'Unknown IP',
+      'time': loginData.time || new Date().toLocaleString()
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+    }
+    
+    return await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'New Device Login Alert',
+      html: emailHtml,
+      from: `"EduFiliova Security" <security@edufiliova.com>`
+    });
+  } catch (error) {
+    console.error(`❌ Error sending new device login email:`, error);
+    throw error;
+  }
+}
+
+export async function sendMeetingReminderEmail(recipientEmail, recipientName, meetingData) {
+  console.log(`📧 Sending meeting reminder email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'meeting-reminder', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'User';
+    
+    const replacements = {
+      'fullName': fullName,
+      'meetingTitle': meetingData.title || 'Meeting',
+      'meetingTime': meetingData.time || 'Scheduled Time',
+      'meetingLink': meetingData.link || '#'
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+    }
+    
+    return await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Reminder: ${meetingData.title}`,
+      html: emailHtml,
+      from: `"EduFiliova" <noreply@edufiliova.com>`
+    });
+  } catch (error) {
+    console.error(`❌ Error sending meeting reminder email:`, error);
+    throw error;
+  }
+}
+
+export async function sendCourseCompletionEmail(recipientEmail, recipientName, completionData) {
+  console.log(`📧 Sending course completion email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'course-completion', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'Student';
+    
+    const replacements = {
+      'fullName': fullName,
+      'courseName': completionData.courseName || 'Course',
+      'completionDate': completionData.date || new Date().toLocaleDateString(),
+      'certificateUrl': completionData.certificateUrl || '#'
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+    }
+    
+    return await emailService.sendEmail({
+      to: recipientEmail,
+      subject: `Congratulations on completing ${completionData.courseName}!`,
+      html: emailHtml,
+      from: `"EduFiliova" <noreply@edufiliova.com>`
+    });
+  } catch (error) {
+    console.error(`❌ Error sending course completion email:`, error);
+    throw error;
+  }
+}
+
+export async function sendPaymentFailedEmail(recipientEmail, recipientName, paymentData) {
+  console.log(`📧 Sending payment failed email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'payment-failed', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    const fullName = recipientName || 'Customer';
+    
+    const replacements = {
+      'fullName': fullName,
+      'amount': paymentData.amount || '0.00',
+      'reason': paymentData.reason || 'Payment declined',
+      'retryLink': paymentData.retryLink || '#'
+    };
+    
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+    }
+    
+    return await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Payment Failed',
+      html: emailHtml,
+      from: `"EduFiliova Billing" <billing@edufiliova.com>`
+    });
+  } catch (error) {
+    console.error(`❌ Error sending payment failed email:`, error);
     throw error;
   }
 }
