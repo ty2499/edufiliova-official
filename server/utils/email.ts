@@ -62,7 +62,6 @@ export class EmailService {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
     // 1. Replace src="images/..." and href="images/..."
-    // Note: The regex is case-insensitive and handles single/double quotes
     const imageRegex = /(?:href|src)=["']images\/([^"']+)["']/gi;
     let processedHtml = html.replace(imageRegex, (match, filename) => {
       // Check if we have a Cloudinary URL for this image
@@ -71,16 +70,26 @@ export class EmailService {
         return match.includes('href') ? `href="${emailAssetMap[filename]}"` : `src="${emailAssetMap[filename]}"`;
       }
       
-      // Fallback: try to find in map with slight variations (case, extensions)
-      const lowerFilename = filename.toLowerCase();
+      // Try to find the image in the map by ignoring timestamps and matching the base filename
+      const baseName = filename.split('_')[0].split('.')[0].toLowerCase();
+      
+      // Look for any key that starts with this base name
       for (const [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
-        if (lowerKey === lowerFilename || lowerKey.startsWith(lowerFilename.split('.')[0])) {
-          console.log(`✅ Cloudinary fallback match: ${filename} -> ${key}`);
+        if (lowerKey.startsWith(baseName)) {
+          console.log(`✅ Image base match: ${filename} -> ${key}`);
           return match.includes('href') ? `href="${url}"` : `src="${url}"`;
         }
       }
       
+      // Secondary fallback: search the filename anywhere in the keys
+      for (const [key, url] of Object.entries(emailAssetMap)) {
+        if (key.toLowerCase().includes(baseName)) {
+           console.log(`✅ Image partial match: ${filename} -> ${key}`);
+           return match.includes('href') ? `href="${url}"` : `src="${url}"`;
+        }
+      }
+
       console.warn(`⚠️ No mapping for: ${filename}`);
       return match;
     });
@@ -89,7 +98,8 @@ export class EmailService {
     const cidRegex = /src=["']cid:([^"']+)["']/gi;
     processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
       const lowerCid = cid.toLowerCase();
-      // Try exact match first
+      
+      // Try exact or prefix match first
       for (const [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
         if (lowerKey === lowerCid || lowerKey.startsWith(lowerCid)) {
@@ -97,13 +107,16 @@ export class EmailService {
           return `src="${url}"`;
         }
       }
-      // Try partial match
+      
+      // Try base name matching for CIDs too
+      const baseCid = lowerCid.split('_')[0];
       for (const [key, url] of Object.entries(emailAssetMap)) {
-        if (key.toLowerCase().includes(lowerCid)) {
-          console.log(`✅ CID partial match: ${cid} -> ${key}`);
+        if (key.toLowerCase().startsWith(baseCid)) {
+          console.log(`✅ CID base match: ${cid} -> ${key}`);
           return `src="${url}"`;
         }
       }
+      
       return match;
     });
 
