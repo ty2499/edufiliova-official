@@ -58,156 +58,49 @@ export class EmailService {
   }
 
   private processEmailImages(html: string): string {
-    // Log the incoming HTML length to ensure we are processing something
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
-    // 1. Replace src="images/..." and href="images/..."
-    // Aggressive pattern to catch split spans in images/ paths and handle varying quote styles
-    const imageRegex = /(?:href|src|url)\s*[:=]\s*["']?((?:https?:\/\/[^"'>\s]+?\/email-assets\/|images\/)(?:<span[^>]*>|<\/span>)*([^"'>\s]+?)(?:<span[^>]*>|<\/span>)*\.(?:png|jpg|jpeg|gif))["']?/gi;
-    let processedHtml = html.replace(imageRegex, (match, fullPath, filename) => {
-      // Strip any internal HTML tags from the filename (like spans)
-      let cleanFilename = filename.replace(/<[^>]*>/g, '').trim() + '.' + fullPath.split('.').pop().split(/[#"'>\s)]/)[0];
+    // 1. First, handle all Cloudinary mapping by filename to catch everything
+    // This is the most reliable way: look for anything that looks like a filename we know
+    Object.entries(emailAssetMap).forEach(([filename, url]) => {
+      // Escape for regex and ensure we match the filename but not as part of another word
+      const escapedFilename = filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       
-      // If the path is an absolute URL pointing to Cloudinary email-assets, extract the filename
-      if (fullPath.includes('/email-assets/')) {
-        const parts = fullPath.split('/');
-        const lastPart = parts[parts.length - 1];
-        // Extract base filename before timestamps if present (e.g., logo_123.png -> logo.png)
-        cleanFilename = lastPart.split('_')[0] + '.' + lastPart.split('.').pop();
-      }
+      // Match src="...", href="...", url("..."), and even just the filename if it's in a src/href attribute
+      // This catches: src="images/logo.png", src="logo.png", src="https://.../logo.png"
+      const patterns = [
+        new RegExp(`(src|href|url)\\s*[:=]\\s*["']?([^"'>\\s]*${escapedFilename})["']?`, 'gi'),
+        new RegExp(`url\\(["']?([^"'>\\s]*${escapedFilename})["']?\\)`, 'gi')
+      ];
 
-      console.log(`🔍 Checking filename: ${cleanFilename} from path: ${fullPath}`);
-
-      // Check if we have a Cloudinary URL for this image
-      if (emailAssetMap[cleanFilename]) {
-        let url = emailAssetMap[cleanFilename];
-        // Force f_png/f_jpg and remove f_auto as requested
-        if (url.includes('cloudinary.com')) {
-          url = url.replace(/\/f_auto,?/g, '/');
-          if (!url.includes('/f_')) {
-            const ext = cleanFilename.split('.').pop()?.toLowerCase();
-            const format = (ext === 'jpg' || ext === 'jpeg') ? 'f_jpg' : 'f_png';
-            url = url.replace(/\/upload\//, `/upload/${format}/`);
-          } else {
-            url = url.replace(/\/f_[^,\/]+/, (match) => {
-              if (match.includes('jpg') || match.includes('jpeg')) return 'f_jpg';
-              return 'f_png';
-            });
+      patterns.forEach(pattern => {
+        html = html.replace(pattern, (match, attr, path) => {
+          // If it's the url() pattern, attr will be the path
+          if (match.toLowerCase().startsWith('url')) {
+            return `url("${url}")`;
           }
-          // Ensure no trailing comma or double slash
-          url = url.replace(/,\//g, '/').replace(/\/\//g, '/').replace(/https:\//g, 'https://');
-          
-          // Add quality and fetch_format for better compatibility
-          if (!url.includes('q_auto')) {
-             url = url.replace(/\/upload\//, '/upload/q_auto:best/');
-          }
-        }
+          return `${attr}="${url}"`;
+        });
+      });
 
-        console.log(`✅ Cloudinary match: ${cleanFilename} -> ${url}`);
-        if (match.toLowerCase().includes('href')) return `href="${url}"`;
-        if (match.toLowerCase().includes('src')) return `src="${url}"`;
-        return `url("${url}")`;
-      }
-      
-      // Try to find the image in the map by ignoring timestamps and matching the base filename
-      const baseName = cleanFilename.split('_')[0].split('.')[0].toLowerCase();
-      
-      // Look for any key that starts with this base name
-      for (let [key, url] of Object.entries(emailAssetMap)) {
-        const lowerKey = key.toLowerCase();
-        const keyBase = key.split('_')[0].split('.')[0].toLowerCase();
-        
-        // Match conditions: 
-        // 1. Exact match (handled above, but here for robustness)
-        // 2. Base names match (logo.png vs logo_123.png)
-        // 3. Key contains the base name or vice-versa
-        if (lowerKey === cleanFilename.toLowerCase() || 
-            keyBase === baseName || 
-            keyBase.startsWith(baseName) ||
-            baseName.startsWith(keyBase)) {
-          
-          // Force f_png/f_jpg and remove f_auto
-          if (url.includes('cloudinary.com')) {
-            url = url.replace(/\/f_auto,?/g, '/');
-            if (!url.includes('/f_')) {
-              const ext = key.split('.').pop()?.toLowerCase();
-              const format = (ext === 'jpg' || ext === 'jpeg') ? 'f_jpg' : 'f_png';
-              url = url.replace(/\/upload\//, `/upload/${format}/`);
-            } else {
-              url = url.replace(/\/f_[^,\/]+/, (match) => {
-                if (match.includes('jpg') || match.includes('jpeg')) return 'f_jpg';
-                return 'f_png';
-              });
-            }
-            url = url.replace(/,\//g, '/').replace(/\/\//g, '/').replace(/https:\//g, 'https://');
-            
-            if (!url.includes('q_auto')) {
-               url = url.replace(/\/upload\//, '/upload/q_auto:best/');
-            }
-          }
-
-          console.log(`✅ Image base match: ${filename} -> ${key} -> ${url}`);
-          return match.includes('href') ? `href="${url}"` : `src="${url}"`;
-        }
-      }
-      
-      console.warn(`⚠️ No mapping found for image: ${filename}`);
-      return match;
+      // Catch CID references: src="cid:logo" where 'logo' matches filename without extension
+      const baseName = filename.split('.')[0];
+      const cidRegex = new RegExp(`src=["']cid:${baseName}["']`, 'gi');
+      html = html.replace(cidRegex, `src="${url}"`);
     });
 
-    // 2. Explicitly handle any remaining relative images/ paths without quotes
-    const relativePathRegex = /src=images\/([^ >]+)/gi;
-    processedHtml = processedHtml.replace(relativePathRegex, (match, filename) => {
-      const baseName = filename.split('_')[0].split('.')[0].toLowerCase();
-      for (const [key, url] of Object.entries(emailAssetMap)) {
-        if (key.toLowerCase().includes(baseName)) {
-          console.log(`✅ Unquoted path match: ${filename} -> ${key} -> ${url}`);
-          return `src="${url}"`;
-        }
-      }
-      return match;
-    });
-
-    // 3. Explicitly handle cid: references
-    const cidRegex = /src=["']cid:([^"']+)["']/gi;
-    processedHtml = processedHtml.replace(cidRegex, (match, cid) => {
+    // 2. Fallback: Catch any remaining cid: references we missed
+    html = html.replace(/src=["']cid:([^"']+)["']/gi, (match, cid) => {
       const lowerCid = cid.toLowerCase().trim();
-      console.log(`🔍 Checking CID: ${lowerCid}`);
-      
-      // First try exact or near-match in emailAssetMap
       for (const [key, url] of Object.entries(emailAssetMap)) {
-        const lowerKey = key.toLowerCase().trim();
-        if (lowerKey === lowerCid || 
-            lowerKey.startsWith(lowerCid + '_') || 
-            lowerKey.startsWith(lowerCid + '.') || 
-            lowerKey.includes(lowerCid)) {
-          console.log(`✅ CID match found: ${cid} -> ${key} -> ${url}`);
+        if (key.toLowerCase().includes(lowerCid)) {
           return `src="${url}"`;
         }
       }
-
-      // Try matching by base name (stripping extensions and timestamps)
-      const cidBase = lowerCid.split('.')[0].split('_')[0];
-      for (const [key, url] of Object.entries(emailAssetMap)) {
-        const keyBase = key.toLowerCase().split('.')[0].split('_')[0];
-        if (keyBase === cidBase) {
-          console.log(`✅ CID base match found: ${cid} -> ${key} -> ${url}`);
-          return `src="${url}"`;
-        }
-      }
-
-      console.warn(`⚠️ No mapping found for CID: ${cid}`);
       return match;
     });
 
-    // Final global cleanup for any missed src="cid:..." patterns
-    processedHtml = processedHtml.replace(/src=["']cid:([^"']+)["']/gi, (match, cid) => {
-      const key = cid.toLowerCase().trim();
-      if (emailAssetMap[key]) return `src="${emailAssetMap[key]}"`;
-      return match;
-    });
-
-    return processedHtml;
+    return html;
   }
 
   private async initializeFromDatabase() {
