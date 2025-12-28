@@ -391,12 +391,12 @@ export class EmailService {
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
 
-    // Use support@pacreatives.co.za as requested
+    // Use support@edufiliova.com as requested
     return this.sendEmail({
       to: email,
       subject: 'Welcome Aboard! Your Teacher Application is Approved - EduFiliova',
       html,
-      from: `"EduFiliova Support" <teach@pacreatives.co.za>`,
+      from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: [] // Images are handled via Cloudinary URLs in sendEmail
     });
   }
@@ -447,7 +447,7 @@ export class EmailService {
       to: email,
       subject: 'Application Status Update - EduFiliova Teacher Application',
       html,
-      from: `"EduFiliova Support" <teach@pacreatives.co.za>`,
+      from: `"EduFiliova Support" <support@edufiliova.com>`,
       attachments: []
     });
   }
