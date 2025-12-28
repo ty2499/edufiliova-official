@@ -129,7 +129,7 @@ export async function sendSubscriptionCancellationEmail(
     const baseUrl = process.env.REPLIT_DEV_DOMAIN 
       ? `https://${process.env.REPLIT_DEV_DOMAIN}`
       : 'https://edufiliova.com';
-    const whiteLogoUrl = process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+    const whiteLogoUrl = (process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png').replace(/\/f_auto,?/g, '/');
     const formattedExpiryDate = expiryDate ? new Date(expiryDate).toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
@@ -487,7 +487,7 @@ export async function sendBulkVouchersEmail(
     const baseUrl = process.env.REPLIT_DEV_DOMAIN 
       ? `https://${process.env.REPLIT_DEV_DOMAIN}`
       : 'https://edufiliova.com';
-    const whiteLogoUrl = process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+    const whiteLogoUrl = (process.env.EDUFILIOVA_WHITE_LOGO_URL || 'https://res.cloudinary.com/dl2lomrhp/image/upload/f_png/v1763935567/edufiliova/edufiliova-white-logo.png').replace(/\/f_auto,?/g, '/');
 
     const emailHTML = `
 <!DOCTYPE html>

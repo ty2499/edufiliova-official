@@ -78,17 +78,35 @@ export class EmailService {
 
       // Check if we have a Cloudinary URL for this image
       if (emailAssetMap[cleanFilename]) {
-        console.log(`✅ Cloudinary match: ${cleanFilename} -> ${emailAssetMap[cleanFilename]}`);
-        if (match.toLowerCase().includes('href')) return `href="${emailAssetMap[cleanFilename]}"`;
-        if (match.toLowerCase().includes('src')) return `src="${emailAssetMap[cleanFilename]}"`;
-        return `url("${emailAssetMap[cleanFilename]}")`;
+        let url = emailAssetMap[cleanFilename];
+        // Force f_png/f_jpg and remove f_auto as requested
+        if (url.includes('cloudinary.com')) {
+          url = url.replace(/\/f_auto,?/g, '/');
+          if (!url.includes('/f_')) {
+            const ext = cleanFilename.split('.').pop()?.toLowerCase();
+            const format = (ext === 'jpg' || ext === 'jpeg') ? 'f_jpg' : 'f_png';
+            url = url.replace(/\/upload\//, `/upload/${format}/`);
+          } else {
+            url = url.replace(/\/f_[^,\/]+/, (match) => {
+              if (match.includes('jpg') || match.includes('jpeg')) return 'f_jpg';
+              return 'f_png';
+            });
+          }
+          // Ensure no trailing comma or double slash
+          url = url.replace(/,\//g, '/').replace(/\/\//g, '/').replace(/https:\//g, 'https://');
+        }
+
+        console.log(`✅ Cloudinary match: ${cleanFilename} -> ${url}`);
+        if (match.toLowerCase().includes('href')) return `href="${url}"`;
+        if (match.toLowerCase().includes('src')) return `src="${url}"`;
+        return `url("${url}")`;
       }
       
       // Try to find the image in the map by ignoring timestamps and matching the base filename
       const baseName = cleanFilename.split('_')[0].split('.')[0].toLowerCase();
       
       // Look for any key that starts with this base name
-      for (const [key, url] of Object.entries(emailAssetMap)) {
+      for (let [key, url] of Object.entries(emailAssetMap)) {
         const lowerKey = key.toLowerCase();
         const keyBase = key.split('_')[0].split('.')[0].toLowerCase();
         
@@ -100,6 +118,23 @@ export class EmailService {
             keyBase === baseName || 
             keyBase.startsWith(baseName) ||
             baseName.startsWith(keyBase)) {
+          
+          // Force f_png/f_jpg and remove f_auto
+          if (url.includes('cloudinary.com')) {
+            url = url.replace(/\/f_auto,?/g, '/');
+            if (!url.includes('/f_')) {
+              const ext = key.split('.').pop()?.toLowerCase();
+              const format = (ext === 'jpg' || ext === 'jpeg') ? 'f_jpg' : 'f_png';
+              url = url.replace(/\/upload\//, `/upload/${format}/`);
+            } else {
+              url = url.replace(/\/f_[^,\/]+/, (match) => {
+                if (match.includes('jpg') || match.includes('jpeg')) return 'f_jpg';
+                return 'f_png';
+              });
+            }
+            url = url.replace(/,\//g, '/').replace(/\/\//g, '/').replace(/https:\//g, 'https://');
+          }
+
           console.log(`✅ Image base match: ${filename} -> ${key} -> ${url}`);
           return match.includes('href') ? `href="${url}"` : `src="${url}"`;
         }
@@ -288,6 +323,9 @@ export class EmailService {
 
     // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
     let processedHtml = this.processEmailImages(options.html);
+    
+    // Log the final HTML for verification as requested
+    console.log(`✉️ Final HTML generated for ${options.to} (Subject: ${options.subject}):\n${processedHtml}`);
     
     // CID replacement is now handled inside processEmailImages for consistency
     // No need for secondary replacement here as it might double-process or miss edge cases
