@@ -5,6 +5,9 @@ import studentsHeroImage from '@/assets/generated_images/students_studying_in_li
 import teachersHeroImage from '@/assets/generated_images/teacher_presenting_in_classroom.png';
 import freelancersHeroImage from '@/assets/generated_images/freelancer_working_at_home.png';
 import creatorsHeroImage from '@/assets/generated_images/creator_in_design_studio.png';
+import headshot1 from '@/assets/generated_images/young_woman_professional_headshot.png';
+import headshot2 from '@/assets/generated_images/man_professional_headshot_portrait.png';
+import headshot3 from '@/assets/generated_images/asian_woman_headshot_portrait.png';
 
 interface BentoHeroProps {
   onNavigate: (page: string) => void;
@@ -301,9 +304,9 @@ export default function BentoHero({ onNavigate }: BentoHeroProps) {
         <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-gray-500">
           <div className="flex items-center gap-2">
             <div className="flex -space-x-2">
-              <div className="w-8 h-8 rounded-full bg-[#0C332C] flex items-center justify-center text-white text-xs font-bold">E</div>
-              <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-xs font-bold">D</div>
-              <div className="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center text-white text-xs font-bold">U</div>
+              <img src={headshot1} alt="User" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+              <img src={headshot2} alt="User" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+              <img src={headshot3} alt="User" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
             </div>
             <span className="text-sm">Trusted Platform</span>
           </div>
