@@ -66,7 +66,6 @@ export class EmailService {
     const localAssetDir = path.resolve(process.cwd(), 'server/email-local-assets');
     const files = fs.existsSync(localAssetDir) ? fs.readdirSync(localAssetDir) : [];
     
-    // Create a data URI map for all local files
     const dataUriMap = new Map<string, string>();
     for (const fileName of files) {
       try {
@@ -80,39 +79,50 @@ export class EmailService {
       }
     }
 
-    // Process all src attributes
-    html = html.replace(/src=["']([^"']+)["']/gi, (match, src) => {
-      // 1. Check for cid:
-      if (src.toLowerCase().startsWith('cid:')) {
-        const cid = src.slice(4).toLowerCase();
-        for (const fileName of files) {
-          if (fileName.toLowerCase().startsWith(cid)) {
-            return `src="${dataUriMap.get(fileName)}"`;
+    // Comprehensive replacement for all attributes including src, href, style, and data-src
+    // This catches: src="...", href="...", url("..."), and more
+    const replaceFn = (match: string, prefix: string, quote: string, pathVal: string) => {
+      // Extract filename from the path
+      let fileName = pathVal.split('/').pop() || '';
+      
+      // Handle cid: references
+      if (pathVal.toLowerCase().startsWith('cid:')) {
+        const cid = pathVal.slice(4).toLowerCase();
+        for (const [key, dataUri] of dataUriMap.entries()) {
+          if (key.toLowerCase().startsWith(cid)) {
+            return `${prefix}=${quote}${dataUri}${quote}`;
           }
         }
       }
 
-      // 2. Check for images/filename or just filename
-      const fileName = src.split('/').pop();
-      if (fileName && dataUriMap.has(fileName)) {
-        return `src="${dataUriMap.get(fileName)}"`;
+      // Handle regular paths or filenames
+      if (dataUriMap.has(fileName)) {
+        return `${prefix}=${quote}${dataUriMap.get(fileName)}${quote}`;
       }
 
-      // 3. Check Cloudinary fallback
+      // Fallback to Cloudinary mapping
       for (const [key, url] of Object.entries(emailAssetMap)) {
-        if (src.includes(key)) {
-          return `src="${url}"`;
+        if (pathVal.includes(key)) {
+          return `${prefix}=${quote}${url}${quote}`;
         }
       }
 
       return match;
-    });
+    };
 
-    // Also handle preloads and background urls
-    html = html.replace(/(href|url)\(["']?([^"']+\.(?:png|jpg|jpeg|gif))["']?\)/gi, (match, attr, path) => {
-      const fileName = path.split('/').pop();
-      if (fileName && dataUriMap.has(fileName)) {
-        return `${attr}("${dataUriMap.get(fileName)}")`;
+    // Replace in attributes
+    html = html.replace(/(src|href|data-src|poster)\s*=\s*(["'])([^"']+)\2/gi, replaceFn);
+
+    // Replace in CSS url() patterns
+    html = html.replace(/url\((["']?)([^"'\)]+)\1\)/gi, (match, quote, pathVal) => {
+      let fileName = pathVal.split('/').pop() || '';
+      if (dataUriMap.has(fileName)) {
+        return `url(${quote}${dataUriMap.get(fileName)}${quote})`;
+      }
+      for (const [key, url] of Object.entries(emailAssetMap)) {
+        if (pathVal.includes(key)) {
+          return `url(${quote}${url}${quote})`;
+        }
       }
       return match;
     });
