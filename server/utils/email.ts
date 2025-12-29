@@ -63,9 +63,46 @@ export class EmailService {
   private async processEmailImages(html: string): Promise<string> {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
-    // Use absolute Cloudinary URLs first as a fallback
-    // Then attempt Base64 embedding for those we can fetch
-    
+    // Strategy: Try local Base64 embedding first for maximum reliability
+    // Fallback to Cloudinary URLs if local file is missing
+
+    const localAssetDir = path.resolve(process.cwd(), 'server/email-local-assets');
+
+    // 1. Process by explicit filename mapping from our local store
+    if (fs.existsSync(localAssetDir)) {
+      const files = fs.readdirSync(localAssetDir);
+      for (const fileName of files) {
+        const baseName = fileName.split('.')[0];
+        const filePath = path.join(localAssetDir, fileName);
+        
+        try {
+          const buffer = fs.readFileSync(filePath);
+          const ext = path.extname(fileName).slice(1) || 'png';
+          const base64 = buffer.toString('base64');
+          const dataUri = `data:image/${ext};base64,${base64}`;
+
+          // Match patterns: src="cid:logo", src="images/logo.png", src="logo.png"
+          const patterns = [
+            new RegExp(`src=["']cid:${baseName}["']`, 'gi'),
+            new RegExp(`src=["']images/${fileName}["']`, 'gi'),
+            new RegExp(`src=["']${fileName}["']`, 'gi'),
+            new RegExp(`src=["']images/${baseName}\\.png["']`, 'gi'),
+            new RegExp(`href=["']images/${baseName}\\.png["']`, 'gi')
+          ];
+
+          for (const pattern of patterns) {
+            if (pattern.test(html)) {
+              html = html.replace(pattern, (match) => match.includes('src=') ? `src="${dataUri}"` : `href="${dataUri}"`);
+              console.log(`✅ Embedded local image ${fileName} as Base64`);
+            }
+          }
+        } catch (err) {
+          console.warn(`⚠️ Failed to read local asset ${fileName}:`, err);
+        }
+      }
+    }
+
+    // 2. Fallback to Cloudinary URLs for anything remaining
     for (const [key, url] of Object.entries(emailAssetMap)) {
       const baseName = key.split('.')[0];
       const cleanUrl = url.replace(/\.(png|jpg|jpeg|gif|webp)\.\1$/i, '.$1');
@@ -80,9 +117,11 @@ export class EmailService {
 
       for (const pattern of patterns) {
         if (pattern.test(html)) {
-          // Replace with Cloudinary URL immediately as the most reliable remote source
-          html = html.replace(pattern, (match) => match.includes('src=') ? `src="${cleanUrl}"` : `href="${cleanUrl}"`);
-          console.log(`✅ Linked image ${key} to Cloudinary URL`);
+          // If it's still a CID or local path after Base64 attempt, use Cloudinary
+          if (!html.includes('data:image/')) {
+            html = html.replace(pattern, (match) => match.includes('src=') ? `src="${cleanUrl}"` : `href="${cleanUrl}"`);
+            console.log(`✅ Linked remaining image ${key} to Cloudinary URL`);
+          }
         }
       }
     }
