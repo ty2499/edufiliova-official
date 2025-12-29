@@ -375,8 +375,8 @@ export class EmailService {
         'utf-8'
       );
 
-      html = html.replace(/{{FullName}}/g, data.fullName);
-      // Processing is now handled inside sendEmail which handles attachments properly
+      // Use the bulletproof name replacement to handle span/styling issues in the template
+      html = this.forceReplaceName(html, data.fullName);
 
       return this.sendEmail({
         to: email,
