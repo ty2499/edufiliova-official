@@ -160,7 +160,7 @@ router.get("/my", requireAuth, async (req: AuthenticatedRequest, res: Response) 
 
         const [freelancer] = await db
           .select({
-            fullName: profiles.fullName,
+            fullName: profiles.name,
             profilePicture: profiles.profilePicture,
           })
           .from(profiles)
@@ -209,7 +209,7 @@ router.get("/selling", requireAuth, requireRole(['freelancer']), async (req: Aut
 
         const [client] = await db
           .select({
-            fullName: profiles.fullName,
+            fullName: profiles.name,
             profilePicture: profiles.profilePicture,
           })
           .from(profiles)
@@ -690,7 +690,7 @@ router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response)
 
     const [freelancer] = await db
       .select({
-        fullName: profiles.fullName,
+        fullName: profiles.name,
         profilePicture: profiles.profilePicture,
       })
       .from(profiles)
@@ -698,7 +698,7 @@ router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response)
 
     const [client] = await db
       .select({
-        fullName: profiles.fullName,
+        fullName: profiles.name,
         profilePicture: profiles.profilePicture,
       })
       .from(profiles)
@@ -1397,7 +1397,7 @@ router.get("/services/:serviceId/reviews", async (req, res: Response) => {
         comment: freelancerServiceReviews.comment,
         sellerResponse: freelancerServiceReviews.sellerResponse,
         createdAt: freelancerServiceReviews.createdAt,
-        reviewerName: profiles.fullName,
+        reviewerName: profiles.name,
         reviewerAvatar: profiles.profilePicture,
       })
       .from(freelancerServiceReviews)
@@ -1950,12 +1950,12 @@ router.get("/admin/orders", requireAuth, requireRole(['admin']), async (req: Aut
           .where(eq(freelancerServices.id, order.serviceId));
         
         const [freelancer] = await db
-          .select({ fullName: profiles.fullName, profilePicture: profiles.profilePicture })
+          .select({ fullName: profiles.name, profilePicture: profiles.profilePicture })
           .from(profiles)
           .where(eq(profiles.userId, order.freelancerId));
         
         const [client] = await db
-          .select({ fullName: profiles.fullName, profilePicture: profiles.profilePicture })
+          .select({ fullName: profiles.name, profilePicture: profiles.profilePicture })
           .from(profiles)
           .where(eq(profiles.userId, order.clientId));
         
