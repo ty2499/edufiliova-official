@@ -83,7 +83,9 @@ export class EmailService {
           if (match.toLowerCase().startsWith('url')) {
             return `url("${url}")`;
           }
-          return `${attr}="${url}"`;
+          // Clean up any double extension artifacts like .png.png
+          const cleanUrl = url.replace(/\.(png|jpg|jpeg|gif|webp)\.\1$/i, '.$1');
+          return `${attr}="${cleanUrl}"`;
         });
       });
 
@@ -105,6 +107,19 @@ export class EmailService {
     });
 
     return html;
+  }
+
+  // ✅ New CID Processor for clean mapping
+  private finalCidClean(html: string): string {
+    return html.replace(/src=["']cid:([^"']+)["']/gi, (match, cid) => {
+      const lowerCid = cid.toLowerCase().trim();
+      for (const [key, url] of Object.entries(emailAssetMap)) {
+        if (key.toLowerCase().includes(lowerCid)) {
+          return `src="${url}"`;
+        }
+      }
+      return match;
+    });
   }
 
   private async initializeFromDatabase() {
@@ -240,18 +255,8 @@ export class EmailService {
     // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
     let processedHtml = this.processEmailImages(options.html);
 
-    // Final check for any remaining CID references that might be in a different format
-    // some templates use cid:filename without extension
-    processedHtml = processedHtml.replace(/src=["']cid:([^"']+)["']/gi, (match, cid) => {
-      const lowerCid = cid.toLowerCase().trim();
-      for (const [key, url] of Object.entries(emailAssetMap)) {
-        // Match if cid is part of filename (e.g., 'logo' matches 'logo.png')
-        if (key.toLowerCase().includes(lowerCid)) {
-          return `src="${url}"`;
-        }
-      }
-      return match;
-    });
+    // Final CID pass using dedicated cleaner
+    processedHtml = this.finalCidClean(processedHtml);
 
     // Log final HTML after processing
     console.log(`✉️ Final HTML content:\n${processedHtml}`);
