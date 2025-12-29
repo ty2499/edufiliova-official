@@ -5326,6 +5326,8 @@ export const insertDeviceTokenSchema = createInsertSchema(deviceTokens).omit({
 export const freelancerServiceStatusEnum = pgEnum("freelancer_service_status", ["draft", "published", "paused"]);
 export const freelancerOrderStatusEnum = pgEnum("freelancer_order_status", [
   "pending_payment",
+  "awaiting_requirements",
+  "in_progress",
   "active", 
   "delivered",
   "revision_requested",
@@ -5390,6 +5392,9 @@ export const freelancerOrders = pgTable("freelancer_orders", {
   paidAt: timestamp("paid_at"),
   requirementsText: text("requirements_text"),
   requirementsFiles: jsonb("requirements_files").default(sql`'[]'::jsonb`), // Array of file URLs
+  requirementsStatus: text("requirements_status").default("not_requested"), // not_requested, requested, submitted
+  requirementsDueAt: timestamp("requirements_due_at"),
+  revisionCount: integer("revision_count").default(0),
   deliveryDueAt: timestamp("delivery_due_at"),
   deliveredAt: timestamp("delivered_at"),
   completedAt: timestamp("completed_at"),
@@ -5434,6 +5439,56 @@ export type FreelancerDeliverable = typeof freelancerDeliverables.$inferSelect;
 export type InsertFreelancerDeliverable = typeof freelancerDeliverables.$inferInsert;
 
 export const insertFreelancerDeliverableSchema = createInsertSchema(freelancerDeliverables).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Order Requirements table (for structured requirement requests from freelancer to buyer)
+export const orderRequirements = pgTable("order_requirements", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  orderId: uuid("order_id").references(() => freelancerOrders.id).notNull(),
+  freelancerId: uuid("freelancer_id").references(() => users.id).notNull(),
+  questions: jsonb("questions").default(sql`'[]'::jsonb`), // Array of questions { id, text, required }
+  answers: jsonb("answers").default(sql`'[]'::jsonb`), // Array of answers { questionId, text, files }
+  files: jsonb("files").default(sql`'[]'::jsonb`), // Array of uploaded files
+  status: text("status").default("pending"), // pending, submitted
+  submittedAt: timestamp("submitted_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  index("order_requirements_orderId_idx").on(table.orderId),
+  index("order_requirements_status_idx").on(table.status),
+]);
+
+export type OrderRequirement = typeof orderRequirements.$inferSelect;
+export type InsertOrderRequirement = typeof orderRequirements.$inferInsert;
+
+export const insertOrderRequirementSchema = createInsertSchema(orderRequirements).omit({
+  id: true,
+  submittedAt: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Order Events table (for timeline logging)
+export const orderEvents = pgTable("order_events", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  orderId: uuid("order_id").references(() => freelancerOrders.id).notNull(),
+  userId: uuid("user_id").references(() => users.id),
+  eventType: text("event_type").notNull(), // order_created, payment_received, requirements_requested, etc.
+  title: text("title").notNull(),
+  description: text("description"),
+  metadata: jsonb("metadata").default(sql`'{}'::jsonb`),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("order_events_orderId_idx").on(table.orderId),
+  index("order_events_createdAt_idx").on(table.createdAt.desc()),
+]);
+
+export type OrderEvent = typeof orderEvents.$inferSelect;
+export type InsertOrderEvent = typeof orderEvents.$inferInsert;
+
+export const insertOrderEventSchema = createInsertSchema(orderEvents).omit({
   id: true,
   createdAt: true,
 });
