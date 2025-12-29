@@ -22987,12 +22987,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const customerProfileUuid = customerProfile[0].profileId;
-      const rawCustomerRole = customerProfile[0].role;
-      // Map "general" role to "customer" for chat_participants enum compatibility
-      const customerRole = rawCustomerRole === 'general' ? 'customer' : rawCustomerRole;
+      const customerRole = customerProfile[0].role;
 
       // Get freelancer profile UUID and role
-      const freelancerProfile = await db.select({ profileId: profiles.id, role: profiles.role, approvalStatus: profiles.approvalStatus })
+      const freelancerProfile = await db.select({ profileId: profiles.id, role: profiles.role })
         .from(profiles)
         .where(eq(profiles.userId, freelancerId))
         .limit(1);
@@ -23001,15 +22999,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ success: false, error: "Freelancer not found" });
       }
 
-      // Verify freelancer is approved for chat
-      if (freelancerProfile[0].approvalStatus !== "approved") {
-        return res.status(403).json({ success: false, error: "This freelancer is not yet approved. They must be approved before you can start a chat." });
-      }
-
       const freelancerProfileUuid = freelancerProfile[0].profileId;
-      const rawFreelancerRole = freelancerProfile[0].role;
-      // Map "general" role to "customer" for chat_participants enum compatibility
-      const freelancerRole = rawFreelancerRole === 'general' ? 'customer' : rawFreelancerRole;
+      const freelancerRole = freelancerProfile[0].role;
 
       // Use transaction-based upsert to prevent race conditions
       let threadId;
