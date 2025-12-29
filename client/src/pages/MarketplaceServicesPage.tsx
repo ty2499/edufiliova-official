@@ -56,6 +56,10 @@ export default function MarketplaceServicesPage({ embedded = false }: Marketplac
   const [category, setCategory] = useState('');
   const [sortBy, setSortBy] = useState('recommended');
   const [priceRange, setPriceRange] = useState('');
+  
+  // Check if accessing from dashboard (hide header/footer)
+  const urlParams = new URLSearchParams(window.location.search);
+  const isFromDashboard = urlParams.get('from') === 'dashboard' || embedded;
 
   const { data, isLoading } = useQuery({
     queryKey: ['/api/marketplace/services', { search: searchQuery, category, sortBy, priceRange }],
@@ -82,8 +86,8 @@ export default function MarketplaceServicesPage({ embedded = false }: Marketplac
   };
 
   const pageContent = (
-    <div className={embedded ? "" : "min-h-screen bg-gray-50"}>
-      {!embedded && (
+    <div className={isFromDashboard ? "" : "min-h-screen bg-gray-50"}>
+      {!isFromDashboard && (
         <div className="bg-[#0c332c] text-white py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold mb-6">Find Services</h1>
@@ -212,7 +216,7 @@ export default function MarketplaceServicesPage({ embedded = false }: Marketplac
     </div>
   );
 
-  if (embedded) {
+  if (isFromDashboard) {
     return pageContent;
   }
 

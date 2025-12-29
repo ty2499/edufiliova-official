@@ -46,6 +46,11 @@ export default function ServiceDetailPage() {
   const [selectedPackage, setSelectedPackage] = useState<'basic' | 'standard' | 'premium'>('basic');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Check if accessing from dashboard
+  const urlParams = new URLSearchParams(window.location.search);
+  const isFromDashboard = urlParams.get('from') === 'dashboard';
+  const servicesUrl = isFromDashboard ? '/marketplace/services?from=dashboard' : '/marketplace/services';
+
   const handleContactSeller = () => {
     console.log('🟢 handleContactSeller called', { user, profile, freelancer });
     
@@ -103,7 +108,7 @@ export default function ServiceDetailPage() {
         <div className="text-center">
           <Package className="w-16 h-16 mx-auto text-gray-300 mb-4" />
           <h2 className="text-xl font-semibold mb-2">Service not found</h2>
-          <Button onClick={() => navigate('/marketplace/services')}>Browse Services</Button>
+          <Button onClick={() => navigate(servicesUrl)}>Browse Services</Button>
         </div>
       </div>
     );
@@ -113,7 +118,7 @@ export default function ServiceDetailPage() {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Button variant="ghost" onClick={() => navigate('/marketplace/services')} className="mb-6">
+          <Button variant="ghost" onClick={() => navigate(servicesUrl)} className="mb-6">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Services
           </Button>
@@ -148,7 +153,7 @@ export default function ServiceDetailPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Button variant="ghost" onClick={() => navigate('/marketplace/services')} className="mb-6">
+        <Button variant="ghost" onClick={() => navigate(servicesUrl)} className="mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Services
         </Button>
