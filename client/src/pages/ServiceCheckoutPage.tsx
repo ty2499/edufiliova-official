@@ -176,21 +176,30 @@ export default function ServiceCheckoutPage() {
 
   const handleGatewayPayment = async (orderId: string, gatewayId: string) => {
     try {
-      const response = await apiRequest(`/api/freelancer/orders/${gatewayId}/create-session`, {
+      // Use the shared DodoPay checkout endpoint for card payments
+      const response = await apiRequest('/api/dodopay/checkout-session', {
         method: 'POST',
         body: JSON.stringify({
-          orderId,
-          successUrl: `${window.location.origin}/orders/${orderId}?payment=success`,
-          cancelUrl: `${window.location.origin}/checkout/service/${serviceId}?package=${packageTier}&payment=cancelled`,
+          courseId: orderId,
+          courseName: service?.title || 'Freelancer Service',
+          productType: 'freelancer_service',
+          productName: service?.title,
+          productDescription: `${packageTier} Package`,
+          amount: total,
+          currency: 'USD',
+          returnUrl: `${window.location.origin}/orders/${orderId}?payment=success`,
         }),
       });
 
-      if (response.url) {
-        window.location.href = response.url;
+      const redirectUrl = response.checkoutUrl || response.redirectUrl || response.url;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      } else {
+        throw new Error('No checkout URL returned');
       }
     } catch (error: any) {
       setIsProcessing(false);
-      toast({ title: error.message || `Failed to initiate ${gatewayId} payment`, variant: 'destructive' });
+      toast({ title: error.message || `Failed to initiate payment`, variant: 'destructive' });
     }
   };
 
