@@ -1203,7 +1203,7 @@ export class EmailService {
 
     const fullName = data.fullName || 'User';
     const code = data.code || '000000';
-    const expiresIn = data.expiresIn || '10';
+    const expiresIn = data.expiresIn || '15';
 
     // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
     html = this.forceReplaceName(html, fullName);
@@ -1211,6 +1211,7 @@ export class EmailService {
     // Replace other dynamic placeholders
     html = html.replace(/\{\{code\}\}/gi, code);
     html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
+    html = html.replace(/\{\{fullName\}\}/gi, fullName); // Extra safety
 
     return this.sendEmail({
       to: email,
