@@ -11,6 +11,13 @@ import {
   Search, Filter, Star, Clock, Package, Loader2, ArrowLeft, ChevronDown
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+
+interface MarketplaceServicesPageProps {
+  embedded?: boolean;
+  [key: string]: any;
+}
 
 interface MarketplaceService {
   id: string;
@@ -43,7 +50,7 @@ const CATEGORIES = [
   'Education & Tutoring',
 ];
 
-export default function MarketplaceServicesPage() {
+export default function MarketplaceServicesPage({ embedded = false }: MarketplaceServicesPageProps) {
   const [, navigate] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [category, setCategory] = useState('');
@@ -74,34 +81,36 @@ export default function MarketplaceServicesPage() {
     return days.length > 0 ? Math.min(...days) : null;
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-[#0c332c] text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-4 mb-6">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="text-white hover:bg-white/10">
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <h1 className="text-3xl font-bold">Find Services</h1>
-          </div>
-          <div className="flex gap-4 max-w-3xl">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <Input
-                placeholder="Search for services..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 bg-white text-gray-900"
-              />
+  const pageContent = (
+    <div className={embedded ? "" : "min-h-screen bg-gray-50"}>
+      {!embedded && (
+        <div className="bg-[#0c332c] text-white py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-4 mb-6">
+              <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="text-white hover:bg-white/10">
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <h1 className="text-3xl font-bold">Find Services</h1>
             </div>
-            <Button className="h-12 px-6 bg-white text-[#0c332c] hover:bg-gray-100">
-              Search
-            </Button>
+            <div className="flex gap-4 max-w-3xl">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  placeholder="Search for services..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 h-12 bg-white text-gray-900"
+                />
+              </div>
+              <Button className="h-12 px-6 bg-white text-[#0c332c] hover:bg-gray-100">
+                Search
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${embedded ? 'py-4' : 'py-8'}`}>
         <div className="flex flex-wrap gap-4 mb-6">
           <Select value={category} onValueChange={setCategory}>
             <SelectTrigger className="w-[180px]">
@@ -205,6 +214,20 @@ export default function MarketplaceServicesPage() {
           </div>
         )}
       </div>
+    </div>
+  );
+
+  if (embedded) {
+    return pageContent;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header onNavigate={(page) => navigate(`/${page}`)} currentPage="freelancer" />
+      <main className="flex-1">
+        {pageContent}
+      </main>
+      <Footer onNavigate={(page) => navigate(`/${page}`)} />
     </div>
   );
 }
