@@ -634,6 +634,65 @@ router.post("/:orderId/approve", requireAuth, async (req: AuthenticatedRequest, 
   }
 });
 
+router.get("/payment-gateways", async (_req, res: Response) => {
+  try {
+    const { getEnabledPaymentGateways, getStripePublishableKey } = await import("../utils/payment-gateways");
+    
+    const gateways = await getEnabledPaymentGateways();
+    const stripePublishableKey = await getStripePublishableKey();
+    
+    const enabledGateways = gateways.map((g: any) => ({
+      id: g.gatewayId,
+      name: g.name,
+      displayName: g.displayName || g.name,
+      isPrimary: g.isPrimary,
+      logoUrl: g.logoUrl,
+    }));
+
+    enabledGateways.push({
+      id: 'wallet',
+      name: 'Wallet',
+      displayName: 'Wallet Balance',
+      isPrimary: false,
+      logoUrl: null,
+    });
+
+    res.json({
+      success: true,
+      gateways: enabledGateways,
+      stripePublishableKey,
+    });
+  } catch (error) {
+    console.error("Error fetching payment gateways:", error);
+    res.status(500).json({ error: "Failed to fetch payment gateways" });
+  }
+});
+
+router.get("/wallet/balance", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [userBalance] = await db
+      .select()
+      .from(userBalances)
+      .where(eq(userBalances.userId, userId));
+
+    const balance = userBalance?.availableBalance || "0.00";
+
+    res.json({
+      success: true,
+      balance,
+      currency: "USD",
+    });
+  } catch (error) {
+    console.error("Error fetching wallet balance:", error);
+    res.status(500).json({ error: "Failed to fetch wallet balance" });
+  }
+});
+
 export async function processAutoReleaseOrders(): Promise<{ processed: number; errors: number }> {
   const now = new Date();
   let processed = 0;
