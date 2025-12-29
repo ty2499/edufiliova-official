@@ -3,7 +3,47 @@
 ## Overview
 Education platform with comprehensive content moderation system that detects and removes personal information, prevents unsafe content, and enforces platform policies with professional email notifications.
 
-## Latest: Landing Page Hero Redesign (Dec 29, 2025)
+## Latest: Freelancer Order Tracking System (Dec 29, 2025)
+
+### Comprehensive Order Lifecycle Management
+**Similar to Upwork/Fiverr order tracking with full buyer-freelancer workflow**
+
+**Order Lifecycle Flow:**
+1. `pending_payment` - Order created, awaiting payment
+2. `awaiting_requirements` - Freelancer requested project info from buyer
+3. `in_progress` - Freelancer actively working
+4. `delivered` - Work submitted for review
+5. `revision_requested` - Buyer requested changes (loops back to in_progress)
+6. `completed` - Order finished, payment released
+
+**Database Changes:**
+- New `order_requirements` table: Questions from freelancer, answers from buyer
+- New `order_events` table: Timeline logging for all order actions
+- Extended `freelancer_orders` with: `requirements_status`, `requirements_due_at`, `revision_count`
+- Added enum values: `awaiting_requirements`, `in_progress`
+
+**Backend API Endpoints Added:**
+- `POST /api/freelancer/orders/:id/request-requirements` - Freelancer asks questions
+- `POST /api/freelancer/orders/:id/submit-requirements` - Buyer submits answers
+- `GET /api/freelancer/orders/:id/requirements` - Get requirements Q&A
+- `GET /api/freelancer/orders/:id/events` - Get order timeline
+- `GET /api/freelancer/orders/:id/deliverables` - Get all deliverables
+- `POST /api/freelancer/orders/:id/request-revision` - Buyer requests revision
+- `POST /api/freelancer/orders/:id/start-work` - Freelancer starts working
+
+**Frontend Updates:**
+- `OrderTrackerPage.tsx` - Full order tracking with requirements form, timeline, revision requests
+- `FreelancerOrdersPage.tsx` - Request requirements, start work, deliver, revision tabs
+
+**Files Modified:**
+- `shared/schema.ts` - New tables and types
+- `server/routes/freelancer-orders.routes.ts` - All new endpoints
+- `client/src/pages/OrderTrackerPage.tsx` - Enhanced buyer view
+- `client/src/pages/FreelancerOrdersPage.tsx` - Enhanced freelancer view
+
+---
+
+## Landing Page Hero Redesign (Dec 29, 2025)
 
 ### New BentoHero Component
 **Design Features:**

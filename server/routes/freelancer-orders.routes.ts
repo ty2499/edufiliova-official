@@ -1,7 +1,7 @@
 import { Router, Response } from "express";
 import { db } from "../db";
-import { freelancerServices, freelancerOrders, freelancerDeliverables, freelancerServiceReviews, profiles, transactions, userBalances } from "../../shared/schema";
-import { eq, and, desc, lte, sql, avg, count } from "drizzle-orm";
+import { freelancerServices, freelancerOrders, freelancerDeliverables, freelancerServiceReviews, profiles, transactions, userBalances, orderRequirements, orderEvents } from "../../shared/schema";
+import { eq, and, desc, lte, sql, avg, count, asc } from "drizzle-orm";
 import { requireAuth, requireRole, type AuthenticatedRequest } from "../middleware/auth";
 import { z } from "zod";
 
@@ -652,7 +652,49 @@ router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response)
       .from(freelancerServices)
       .where(eq(freelancerServices.id, order.serviceId));
 
-    res.json({ success: true, order, service: service || null });
+    const [freelancer] = await db
+      .select({
+        fullName: profiles.fullName,
+        profilePicture: profiles.profilePicture,
+      })
+      .from(profiles)
+      .where(eq(profiles.userId, order.freelancerId));
+
+    const [client] = await db
+      .select({
+        fullName: profiles.fullName,
+        profilePicture: profiles.profilePicture,
+      })
+      .from(profiles)
+      .where(eq(profiles.userId, order.clientId));
+
+    const [requirements] = await db
+      .select()
+      .from(orderRequirements)
+      .where(eq(orderRequirements.orderId, id));
+
+    const events = await db
+      .select()
+      .from(orderEvents)
+      .where(eq(orderEvents.orderId, id))
+      .orderBy(asc(orderEvents.createdAt));
+
+    const deliverables = await db
+      .select()
+      .from(freelancerDeliverables)
+      .where(eq(freelancerDeliverables.orderId, id))
+      .orderBy(desc(freelancerDeliverables.createdAt));
+
+    res.json({ 
+      success: true, 
+      order, 
+      service: service || null,
+      freelancer: freelancer || null,
+      client: client || null,
+      requirements: requirements || null,
+      events,
+      deliverables,
+    });
   } catch (error) {
     console.error("Error fetching order:", error);
     res.status(500).json({ error: "Failed to fetch order" });
@@ -884,7 +926,7 @@ router.post("/:orderId/deliver", requireAuth, requireRole(['freelancer']), async
       return res.status(403).json({ error: "Only the freelancer can deliver this order" });
     }
 
-    if (order.status !== "active" && order.status !== "revision_requested") {
+    if (order.status !== "active" && order.status !== "in_progress" && order.status !== "revision_requested") {
       return res.status(400).json({ 
         error: `Cannot deliver order with status: ${order.status}` 
       });
@@ -894,12 +936,14 @@ router.post("/:orderId/deliver", requireAuth, requireRole(['freelancer']), async
     const autoReleaseAt = new Date(deliveredAt);
     autoReleaseAt.setDate(autoReleaseAt.getDate() + AUTO_RELEASE_DAYS);
 
+    const isRevision = order.status === "revision_requested";
+
     await db.transaction(async (tx) => {
       await tx.insert(freelancerDeliverables).values({
         orderId: orderId,
         message: validated.message || null,
         files: validated.files || [],
-        isRevision: order.status === "revision_requested",
+        isRevision,
       });
 
       await tx
@@ -912,6 +956,14 @@ router.post("/:orderId/deliver", requireAuth, requireRole(['freelancer']), async
         })
         .where(eq(freelancerOrders.id, orderId));
     });
+
+    await logOrderEvent(
+      orderId, 
+      userId, 
+      isRevision ? "revision_delivered" : "order_delivered", 
+      isRevision ? "Revision Delivered" : "Order Delivered", 
+      validated.message?.slice(0, 100) || "Freelancer submitted deliverables"
+    );
 
     const [updatedOrder] = await db
       .select()
@@ -1267,6 +1319,462 @@ router.post("/reviews/:reviewId/respond", requireAuth, async (req: Authenticated
   } catch (error) {
     console.error("Error responding to review:", error);
     res.status(500).json({ error: "Failed to respond to review" });
+  }
+});
+
+// Helper function to log order events
+async function logOrderEvent(
+  orderId: string,
+  userId: string | null,
+  eventType: string,
+  title: string,
+  description?: string,
+  metadata?: Record<string, any>
+): Promise<void> {
+  try {
+    await db.insert(orderEvents).values({
+      orderId,
+      userId,
+      eventType,
+      title,
+      description: description || null,
+      metadata: metadata || {},
+    });
+  } catch (error) {
+    console.error("Error logging order event:", error);
+  }
+}
+
+// Request requirements from buyer (Freelancer action)
+const requestRequirementsSchema = z.object({
+  questions: z.array(z.object({
+    id: z.string(),
+    text: z.string().min(1).max(500),
+    required: z.boolean().optional(),
+  })).min(1).max(20),
+  dueInDays: z.number().min(1).max(7).optional(),
+});
+
+router.post("/:orderId/request-requirements", requireAuth, requireRole(['freelancer']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const validated = requestRequirementsSchema.parse(req.body);
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.freelancerId !== userId) {
+      return res.status(403).json({ error: "Only the freelancer can request requirements" });
+    }
+
+    if (order.status !== "active" && order.status !== "awaiting_requirements") {
+      return res.status(400).json({ 
+        error: `Cannot request requirements for order with status: ${order.status}` 
+      });
+    }
+
+    const requirementsDueAt = new Date();
+    requirementsDueAt.setDate(requirementsDueAt.getDate() + (validated.dueInDays || 3));
+
+    await db.transaction(async (tx) => {
+      const [existingReq] = await tx
+        .select()
+        .from(orderRequirements)
+        .where(eq(orderRequirements.orderId, orderId));
+
+      if (existingReq) {
+        await tx
+          .update(orderRequirements)
+          .set({
+            questions: validated.questions,
+            status: "pending",
+            updatedAt: new Date(),
+          })
+          .where(eq(orderRequirements.orderId, orderId));
+      } else {
+        await tx.insert(orderRequirements).values({
+          orderId,
+          freelancerId: userId,
+          questions: validated.questions,
+          status: "pending",
+        });
+      }
+
+      await tx
+        .update(freelancerOrders)
+        .set({
+          status: "awaiting_requirements",
+          requirementsStatus: "requested",
+          requirementsDueAt,
+          updatedAt: new Date(),
+        })
+        .where(eq(freelancerOrders.id, orderId));
+    });
+
+    await logOrderEvent(orderId, userId, "requirements_requested", "Requirements Requested", `Freelancer requested ${validated.questions.length} questions to be answered`, { questionCount: validated.questions.length });
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "Requirements requested. Waiting for buyer to respond.",
+      order: updatedOrder,
+      requirementsDueAt,
+    });
+  } catch (error) {
+    console.error("Error requesting requirements:", error);
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: "Validation failed", details: error.errors });
+    }
+    res.status(500).json({ error: "Failed to request requirements" });
+  }
+});
+
+// Submit requirements (Buyer action)
+const submitRequirementsSchema = z.object({
+  answers: z.array(z.object({
+    questionId: z.string(),
+    text: z.string().max(2000),
+    files: z.array(z.object({
+      url: z.string(),
+      name: z.string(),
+      size: z.number().optional(),
+      type: z.string().optional(),
+    })).optional(),
+  })),
+  files: z.array(z.object({
+    url: z.string(),
+    name: z.string(),
+    size: z.number().optional(),
+    type: z.string().optional(),
+  })).optional(),
+});
+
+router.post("/:orderId/submit-requirements", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const validated = submitRequirementsSchema.parse(req.body);
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the buyer can submit requirements" });
+    }
+
+    if (order.status !== "awaiting_requirements" && order.status !== "active") {
+      return res.status(400).json({ 
+        error: `Cannot submit requirements for order with status: ${order.status}` 
+      });
+    }
+
+    await db.transaction(async (tx) => {
+      await tx
+        .update(orderRequirements)
+        .set({
+          answers: validated.answers,
+          files: validated.files || [],
+          status: "submitted",
+          submittedAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .where(eq(orderRequirements.orderId, orderId));
+
+      await tx
+        .update(freelancerOrders)
+        .set({
+          status: "in_progress",
+          requirementsStatus: "submitted",
+          updatedAt: new Date(),
+        })
+        .where(eq(freelancerOrders.id, orderId));
+    });
+
+    await logOrderEvent(orderId, userId, "requirements_submitted", "Requirements Submitted", "Buyer submitted project requirements");
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "Requirements submitted. Freelancer can now start working.",
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error submitting requirements:", error);
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: "Validation failed", details: error.errors });
+    }
+    res.status(500).json({ error: "Failed to submit requirements" });
+  }
+});
+
+// Get order requirements
+router.get("/:orderId/requirements", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId && order.freelancerId !== userId) {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const [requirements] = await db
+      .select()
+      .from(orderRequirements)
+      .where(eq(orderRequirements.orderId, orderId));
+
+    res.json({ success: true, requirements: requirements || null });
+  } catch (error) {
+    console.error("Error fetching requirements:", error);
+    res.status(500).json({ error: "Failed to fetch requirements" });
+  }
+});
+
+// Get order timeline/events
+router.get("/:orderId/events", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId && order.freelancerId !== userId) {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const events = await db
+      .select()
+      .from(orderEvents)
+      .where(eq(orderEvents.orderId, orderId))
+      .orderBy(asc(orderEvents.createdAt));
+
+    res.json({ success: true, events });
+  } catch (error) {
+    console.error("Error fetching order events:", error);
+    res.status(500).json({ error: "Failed to fetch order events" });
+  }
+});
+
+// Get order deliverables
+router.get("/:orderId/deliverables", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId && order.freelancerId !== userId) {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const deliverables = await db
+      .select()
+      .from(freelancerDeliverables)
+      .where(eq(freelancerDeliverables.orderId, orderId))
+      .orderBy(desc(freelancerDeliverables.createdAt));
+
+    res.json({ success: true, deliverables });
+  } catch (error) {
+    console.error("Error fetching deliverables:", error);
+    res.status(500).json({ error: "Failed to fetch deliverables" });
+  }
+});
+
+// Request revision (Buyer action)
+const revisionSchema = z.object({
+  reason: z.string().min(10).max(2000),
+});
+
+router.post("/:orderId/request-revision", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const validated = revisionSchema.parse(req.body);
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the buyer can request a revision" });
+    }
+
+    if (order.status !== "delivered") {
+      return res.status(400).json({ 
+        error: `Cannot request revision for order with status: ${order.status}` 
+      });
+    }
+
+    const packageDetails = order.packageDetails as Record<string, any> || {};
+    const maxRevisions = packageDetails.revisions || 2;
+    const currentRevisions = (order as any).revisionCount || 0;
+
+    if (currentRevisions >= maxRevisions) {
+      return res.status(400).json({ 
+        error: `You have used all ${maxRevisions} revisions included in this package` 
+      });
+    }
+
+    await db
+      .update(freelancerOrders)
+      .set({
+        status: "revision_requested",
+        revisionCount: sql`COALESCE(revision_count, 0) + 1`,
+        autoReleaseAt: null,
+        updatedAt: new Date(),
+      })
+      .where(eq(freelancerOrders.id, orderId));
+
+    await logOrderEvent(orderId, userId, "revision_requested", "Revision Requested", validated.reason, { revisionNumber: currentRevisions + 1 });
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "Revision requested. Freelancer will update the delivery.",
+      order: updatedOrder,
+      revisionsUsed: currentRevisions + 1,
+      revisionsRemaining: maxRevisions - currentRevisions - 1,
+    });
+  } catch (error) {
+    console.error("Error requesting revision:", error);
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: "Validation failed", details: error.errors });
+    }
+    res.status(500).json({ error: "Failed to request revision" });
+  }
+});
+
+// Start work (Freelancer action - for orders without requirements)
+router.post("/:orderId/start-work", requireAuth, requireRole(['freelancer']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.freelancerId !== userId) {
+      return res.status(403).json({ error: "Only the freelancer can start work" });
+    }
+
+    if (order.status !== "active" && order.status !== "awaiting_requirements") {
+      return res.status(400).json({ 
+        error: `Cannot start work on order with status: ${order.status}` 
+      });
+    }
+
+    await db
+      .update(freelancerOrders)
+      .set({
+        status: "in_progress",
+        updatedAt: new Date(),
+      })
+      .where(eq(freelancerOrders.id, orderId));
+
+    await logOrderEvent(orderId, userId, "work_started", "Work Started", "Freelancer started working on the order");
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "Work started on the order.",
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error starting work:", error);
+    res.status(500).json({ error: "Failed to start work" });
   }
 });
 

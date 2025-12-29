@@ -7,9 +7,11 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { 
   ArrowLeft, Clock, RefreshCw, Package, Loader2, 
-  CheckCircle, Circle, AlertCircle, MessageSquare, FileText, Download, Star
+  CheckCircle, Circle, AlertCircle, MessageSquare, FileText, Download, Star,
+  FileQuestion, Send, RotateCcw, CalendarClock
 } from 'lucide-react';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
@@ -18,10 +20,23 @@ import { format, formatDistanceToNow } from 'date-fns';
 
 const ORDER_STEPS = [
   { key: 'pending_payment', label: 'Order Placed', description: 'Awaiting payment' },
-  { key: 'active', label: 'In Progress', description: 'Freelancer is working' },
+  { key: 'awaiting_requirements', label: 'Awaiting Requirements', description: 'Submit project details' },
+  { key: 'in_progress', label: 'In Progress', description: 'Freelancer is working' },
   { key: 'delivered', label: 'Delivered', description: 'Review the delivery' },
   { key: 'completed', label: 'Completed', description: 'Order finished' },
 ];
+
+const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
+  pending_payment: { label: 'Pending Payment', className: 'bg-yellow-100 text-yellow-800' },
+  awaiting_requirements: { label: 'Awaiting Requirements', className: 'bg-orange-100 text-orange-800' },
+  in_progress: { label: 'In Progress', className: 'bg-blue-100 text-blue-800' },
+  active: { label: 'In Progress', className: 'bg-blue-100 text-blue-800' },
+  delivered: { label: 'Delivered', className: 'bg-purple-100 text-purple-800' },
+  revision_requested: { label: 'Revision Requested', className: 'bg-orange-100 text-orange-800' },
+  completed: { label: 'Completed', className: 'bg-green-100 text-green-800' },
+  cancelled: { label: 'Cancelled', className: 'bg-red-100 text-red-800' },
+  disputed: { label: 'Disputed', className: 'bg-red-100 text-red-800' },
+};
 
 export default function OrderTrackerPage() {
   const [, navigate] = useLocation();
@@ -30,6 +45,12 @@ export default function OrderTrackerPage() {
   const { toast } = useToast();
   const { user, profile } = useAuth();
 
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewComment, setReviewComment] = useState('');
+  const [hasReviewed, setHasReviewed] = useState(false);
+  const [revisionReason, setRevisionReason] = useState('');
+  const [requirementAnswers, setRequirementAnswers] = useState<Record<string, string>>({});
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['/api/freelancer/orders', orderId],
     queryFn: () => apiRequest(`/api/freelancer/orders/${orderId}`),
@@ -37,15 +58,9 @@ export default function OrderTrackerPage() {
     refetchInterval: 30000,
   });
 
-  const [reviewRating, setReviewRating] = useState(5);
-  const [reviewComment, setReviewComment] = useState('');
-  const [hasReviewed, setHasReviewed] = useState(false);
-
   const approveMutation = useMutation({
     mutationFn: () =>
-      apiRequest(`/api/freelancer/orders/${orderId}/approve`, {
-        method: 'POST',
-      }),
+      apiRequest(`/api/freelancer/orders/${orderId}/approve`, { method: 'POST' }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/freelancer/orders', orderId] });
       toast({ title: 'Order approved! Payment released to freelancer.' });
@@ -71,16 +86,54 @@ export default function OrderTrackerPage() {
     },
   });
 
+  const submitRequirementsMutation = useMutation({
+    mutationFn: (answers: { questionId: string; text: string }[]) =>
+      apiRequest(`/api/freelancer/orders/${orderId}/submit-requirements`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/freelancer/orders', orderId] });
+      queryClient.invalidateQueries({ queryKey: ['/api/freelancer/orders', orderId, 'requirements'] });
+      toast({ title: 'Requirements submitted! Freelancer can now start working.' });
+    },
+    onError: (error: any) => {
+      toast({ title: error.message || 'Failed to submit requirements', variant: 'destructive' });
+    },
+  });
+
+  const requestRevisionMutation = useMutation({
+    mutationFn: (reason: string) =>
+      apiRequest(`/api/freelancer/orders/${orderId}/request-revision`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason }),
+      }),
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries({ queryKey: ['/api/freelancer/orders', orderId] });
+      setRevisionReason('');
+      toast({ 
+        title: 'Revision requested!', 
+        description: `${data.revisionsRemaining} revision(s) remaining.`
+      });
+    },
+    onError: (error: any) => {
+      toast({ title: error.message || 'Failed to request revision', variant: 'destructive' });
+    },
+  });
+
   const order = data?.order;
   const service = data?.service;
   const freelancer = data?.freelancer;
   const client = data?.client;
+  const requirements = data?.requirements;
+  const events = data?.events || [];
   const deliverables = data?.deliverables || [];
 
   const isClient = user?.id === order?.clientId;
   const isFreelancer = user?.id === order?.freelancerId;
 
-  // Redirect to login if not authenticated
   if (!user) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -116,12 +169,17 @@ export default function OrderTrackerPage() {
     );
   }
 
-  const currentStepIndex = ORDER_STEPS.findIndex(s => s.key === order.status);
+  const effectiveStatus = order.status === 'active' ? 'in_progress' : order.status;
+  const currentStepIndex = ORDER_STEPS.findIndex(s => s.key === effectiveStatus);
   const packageDetails = order.packageDetails || {};
+  const statusConfig = STATUS_CONFIG[order.status] || { label: order.status, className: 'bg-gray-100 text-gray-800' };
 
   const getStepIcon = (stepIndex: number) => {
     if (order.status === 'cancelled' || order.status === 'disputed') {
       return <AlertCircle className="w-6 h-6 text-red-500" />;
+    }
+    if (order.status === 'revision_requested' && stepIndex === 2) {
+      return <RotateCcw className="w-6 h-6 text-orange-500" />;
     }
     if (stepIndex < currentStepIndex || order.status === 'completed') {
       return <CheckCircle className="w-6 h-6 text-green-500" />;
@@ -130,6 +188,15 @@ export default function OrderTrackerPage() {
       return <Circle className="w-6 h-6 text-[#0c332c] fill-[#0c332c]" />;
     }
     return <Circle className="w-6 h-6 text-gray-300" />;
+  };
+
+  const handleSubmitRequirements = () => {
+    const questions = (requirements?.questions || []) as { id: string; text: string }[];
+    const answers = questions.map(q => ({
+      questionId: q.id,
+      text: requirementAnswers[q.id] || '',
+    }));
+    submitRequirementsMutation.mutate(answers);
   };
 
   return (
@@ -147,16 +214,8 @@ export default function OrderTrackerPage() {
               Created {format(new Date(order.createdAt), 'MMM d, yyyy')}
             </p>
           </div>
-          <Badge 
-            className={
-              order.status === 'completed' ? 'bg-green-100 text-green-800' :
-              order.status === 'active' ? 'bg-blue-100 text-blue-800' :
-              order.status === 'delivered' ? 'bg-purple-100 text-purple-800' :
-              order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-              'bg-gray-100 text-gray-800'
-            }
-          >
-            {order.status.replace('_', ' ')}
+          <Badge className={statusConfig.className}>
+            {statusConfig.label}
           </Badge>
         </div>
 
@@ -223,7 +282,72 @@ export default function OrderTrackerPage() {
               </CardContent>
             </Card>
 
-            {order.requirementsText && (
+            {(order.status === 'awaiting_requirements') && isClient && requirements && requirements.status === 'pending' && (
+              <Card className="border-2 border-orange-200 bg-orange-50">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileQuestion className="w-5 h-5 text-orange-600" />
+                    Submit Project Requirements
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-gray-600">
+                    The freelancer needs more information to start working on your order. Please answer the questions below.
+                  </p>
+                  {((requirements.questions || []) as { id: string; text: string; required?: boolean }[]).map((q, idx) => (
+                    <div key={q.id} className="space-y-2">
+                      <label className="block text-sm font-medium">
+                        {idx + 1}. {q.text}
+                        {q.required && <span className="text-red-500 ml-1">*</span>}
+                      </label>
+                      <Textarea
+                        placeholder="Your answer..."
+                        value={requirementAnswers[q.id] || ''}
+                        onChange={(e) => setRequirementAnswers(prev => ({ ...prev, [q.id]: e.target.value }))}
+                        rows={3}
+                      />
+                    </div>
+                  ))}
+                  <Button
+                    className="w-full bg-[#0c332c] hover:bg-[#0c332c]/90"
+                    onClick={handleSubmitRequirements}
+                    disabled={submitRequirementsMutation.isPending}
+                  >
+                    {submitRequirementsMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                    <Send className="w-4 h-4 mr-2" />
+                    Submit Requirements
+                  </Button>
+                  {order.requirementsDueAt && (
+                    <p className="text-sm text-gray-500 flex items-center gap-1">
+                      <CalendarClock className="w-4 h-4" />
+                      Due {formatDistanceToNow(new Date(order.requirementsDueAt), { addSuffix: true })}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
+            {requirements && requirements.status === 'submitted' && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Submitted Requirements</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {((requirements.questions || []) as { id: string; text: string }[]).map((q, idx) => {
+                    const answer = ((requirements.answers || []) as { questionId: string; text: string }[])
+                      .find(a => a.questionId === q.id);
+                    return (
+                      <div key={q.id} className="space-y-1">
+                        <p className="text-sm font-medium text-gray-600">{idx + 1}. {q.text}</p>
+                        <p className="text-gray-800 bg-gray-50 p-3 rounded-lg">{answer?.text || 'No answer provided'}</p>
+                      </div>
+                    );
+                  })}
+                </CardContent>
+              </Card>
+            )}
+
+            {order.requirementsText && !requirements && (
               <Card>
                 <CardHeader>
                   <CardTitle>Requirements</CardTitle>
@@ -246,18 +370,18 @@ export default function OrderTrackerPage() {
                         <span className="text-sm text-gray-500">
                           Delivered {formatDistanceToNow(new Date(del.createdAt), { addSuffix: true })}
                         </span>
-                        {del.revision > 0 && (
-                          <Badge variant="outline">Revision {del.revision}</Badge>
+                        {del.isRevision && (
+                          <Badge variant="outline">Revision</Badge>
                         )}
                       </div>
                       <p className="text-gray-700">{del.message}</p>
                       {del.files && del.files.length > 0 && (
-                        <div className="flex gap-2 mt-3">
-                          {del.files.map((file: string, fIdx: number) => (
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {del.files.map((file: any, fIdx: number) => (
                             <Button key={fIdx} variant="outline" size="sm" asChild>
-                              <a href={file} target="_blank" rel="noopener noreferrer">
+                              <a href={file.url || file} target="_blank" rel="noopener noreferrer">
                                 <Download className="w-4 h-4 mr-1" />
-                                File {fIdx + 1}
+                                {file.name || `File ${fIdx + 1}`}
                               </a>
                             </Button>
                           ))}
@@ -278,20 +402,55 @@ export default function OrderTrackerPage() {
                     <p className="text-gray-600 mb-4">
                       Review the delivery and approve to release payment to the freelancer.
                     </p>
-                    <Button
-                      className="bg-[#0c332c] hover:bg-[#0c332c]/90"
-                      onClick={() => approveMutation.mutate()}
-                      disabled={approveMutation.isPending}
-                    >
-                      {approveMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                      Approve & Release Payment
-                    </Button>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <Button
+                        className="bg-[#0c332c] hover:bg-[#0c332c]/90"
+                        onClick={() => approveMutation.mutate()}
+                        disabled={approveMutation.isPending}
+                      >
+                        {approveMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                        <CheckCircle className="w-4 h-4 mr-2" />
+                        Approve & Release Payment
+                      </Button>
+                    </div>
                     {order.autoReleaseAt && (
-                      <p className="text-sm text-gray-500 mt-2">
+                      <p className="text-sm text-gray-500 mt-3">
                         Auto-releases {formatDistanceToNow(new Date(order.autoReleaseAt), { addSuffix: true })}
                       </p>
                     )}
                   </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {order.status === 'delivered' && isClient && (
+              <Card className="border border-orange-200">
+                <CardHeader>
+                  <CardTitle className="text-orange-700 flex items-center gap-2">
+                    <RotateCcw className="w-5 h-5" />
+                    Request Revision
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm text-gray-600">
+                    Not satisfied? You have {(packageDetails.revisions || 2) - (order.revisionCount || 0)} revision(s) remaining.
+                  </p>
+                  <Textarea
+                    placeholder="Explain what changes you need (minimum 10 characters)..."
+                    value={revisionReason}
+                    onChange={(e) => setRevisionReason(e.target.value)}
+                    rows={3}
+                  />
+                  <Button
+                    variant="outline"
+                    className="w-full border-orange-300 text-orange-700 hover:bg-orange-50"
+                    onClick={() => requestRevisionMutation.mutate(revisionReason)}
+                    disabled={requestRevisionMutation.isPending || revisionReason.length < 10}
+                  >
+                    {requestRevisionMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Request Revision
+                  </Button>
                 </CardContent>
               </Card>
             )}
@@ -355,6 +514,32 @@ export default function OrderTrackerPage() {
                 </CardContent>
               </Card>
             )}
+
+            {events.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Order Timeline</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {events.map((event: any) => (
+                      <div key={event.id} className="flex gap-3">
+                        <div className="w-2 h-2 mt-2 rounded-full bg-[#0c332c] flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900">{event.title}</p>
+                          {event.description && (
+                            <p className="text-sm text-gray-600">{event.description}</p>
+                          )}
+                          <p className="text-xs text-gray-400 mt-1">
+                            {format(new Date(event.createdAt), 'MMM d, yyyy h:mm a')}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           <div className="lg:col-span-1 space-y-6">
@@ -380,6 +565,12 @@ export default function OrderTrackerPage() {
                   <div className="flex justify-between text-sm text-gray-500">
                     <span>Payment Held</span>
                     <span>${parseFloat(order.escrowHeldAmount).toFixed(2)}</span>
+                  </div>
+                )}
+                {order.revisionCount > 0 && (
+                  <div className="flex justify-between text-sm text-orange-600">
+                    <span>Revisions Used</span>
+                    <span>{order.revisionCount} / {packageDetails.revisions || 2}</span>
                   </div>
                 )}
               </CardContent>
