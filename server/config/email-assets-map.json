@@ -1,18 +1,10 @@
 {
-  "logo_header_tagline": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/4a834058470b14425c9b32ace711ef17.png",
-  "hand_gesture_white": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/7a8fa36020f4d01ec559e33b05f596eb.png",
-  "teacher_photo_banner": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/9eefdace1f726880f93c5a973a54c2f6.png",
-  "logo_footer_tagline": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/9f7291948d8486bdd26690d0c32796e0.png",
-  "loops_green_1": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/bbe5722d1ffd3c84888e18335965d5e5.png",
-  "logo_white": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/c9513ccbbd620ff1cc148b9f159cd39d.png",
-  "loops_green_2": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/d320764f7298e63f6b035289d4219bd8.png",
-  "teacher_approved_banner": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/e4d45170731072cbb168266fca3fd470.png",
-  "4a834058470b14425c9b32ace711ef17": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/4a834058470b14425c9b32ace711ef17.png",
-  "7a8fa36020f4d01ec559e33b05f596eb": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/7a8fa36020f4d01ec559e33b05f596eb.png",
-  "9eefdace1f726880f93c5a973a54c2f6": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/9eefdace1f726880f93c5a973a54c2f6.png",
-  "9f7291948d8486bdd26690d0c32796e0": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/9f7291948d8486bdd26690d0c32796e0.png",
-  "bbe5722d1ffd3c84888e18335965d5e5": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/bbe5722d1ffd3c84888e18335965d5e5.png",
-  "c9513ccbbd620ff1cc148b9f159cd39d": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/c9513ccbbd620ff1cc148b9f159cd39d.png",
-  "d320764f7298e63f6b035289d4219bd8": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/d320764f7298e63f6b035289d4219bd8.png",
-  "e4d45170731072cbb168266fca3fd470": "https://res.cloudinary.com/dl2lomrhp/image/upload/f_auto,q_auto:eco/edufiliova/email-assets/e4d45170731072cbb168266fca3fd470.png"
+  "4a834058470b14425c9b32ace711ef17": "https://edufiliova.com/email-assets/edufiliova_logo_teacher_approved.png",
+  "7a8fa36020f4d01ec559e33b05f596eb": "https://edufiliova.com/email-assets/teacher_approved_hero.png",
+  "9eefdace1f726880f93c5a973a54c2f6": "https://edufiliova.com/email-assets/teacher_approved_hero.png",
+  "9f7291948d8486bdd26690d0c32796e0": "https://edufiliova.com/email-assets/edufiliova_footer_logo.png",
+  "bbe5722d1ffd3c84888e18335965d5e5": "https://edufiliova.com/email-assets/bbe5722d1ffd3c84888e18335965d5e5_teacher_approved.png",
+  "c9513ccbbd620ff1cc148b9f159cd39d": "https://edufiliova.com/email-assets/c9513ccbbd620ff1cc148b9f159cd39d_teacher_approved.png",
+  "d320764f7298e63f6b035289d4219bd8": "https://edufiliova.com/email-assets/d320764f7298e63f6b035289d4219bd8_teacher_approved.png",
+  "e4d45170731072cbb168266fca3fd470": "https://edufiliova.com/email-assets/teacher_approved_banner.png"
 }
