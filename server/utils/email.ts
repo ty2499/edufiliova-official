@@ -63,13 +63,13 @@ export class EmailService {
   private async processEmailImages(html: string): Promise<string> {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
-    // Ensure we process all potential image references in the provided HTML
-    // and replace them with base64 data to ensure they show up.
-    // We DON'T change the HTML structure at all.
-
+    // Use absolute Cloudinary URLs first as a fallback
+    // Then attempt Base64 embedding for those we can fetch
+    
     for (const [key, url] of Object.entries(emailAssetMap)) {
       const baseName = key.split('.')[0];
-      // Match patterns that look like our images
+      const cleanUrl = url.replace(/\.(png|jpg|jpeg|gif|webp)\.\1$/i, '.$1');
+      
       const patterns = [
         new RegExp(`src=["']cid:${baseName}["']`, 'gi'),
         new RegExp(`src=["']images/${key}["']`, 'gi'),
@@ -80,29 +80,9 @@ export class EmailService {
 
       for (const pattern of patterns) {
         if (pattern.test(html)) {
-          try {
-            const response = await fetch(url);
-            const buffer = await response.arrayBuffer();
-            const contentType = response.headers.get('content-type') || 'image/png';
-            const base64 = Buffer.from(buffer).toString('base64');
-            const dataUri = `data:${contentType};base64,${base64}`;
-            
-            // Replace the reference with the data URI
-            if (pattern.source.includes('src=')) {
-              html = html.replace(pattern, `src="${dataUri}"`);
-            } else if (pattern.source.includes('href=')) {
-              html = html.replace(pattern, `href="${dataUri}"`);
-            }
-            console.log(`✅ Embedded image ${key} as Base64`);
-          } catch (err) {
-            console.warn(`⚠️ Failed to embed image ${key}:`, err);
-            // Fallback to Cloudinary URL if fetch fails
-            if (pattern.source.includes('src=')) {
-              html = html.replace(pattern, `src="${url}"`);
-            } else if (pattern.source.includes('href=')) {
-              html = html.replace(pattern, `href="${url}"`);
-            }
-          }
+          // Replace with Cloudinary URL immediately as the most reliable remote source
+          html = html.replace(pattern, (match) => match.includes('src=') ? `src="${cleanUrl}"` : `href="${cleanUrl}"`);
+          console.log(`✅ Linked image ${key} to Cloudinary URL`);
         }
       }
     }
