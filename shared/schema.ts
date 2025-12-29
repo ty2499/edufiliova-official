@@ -5319,3 +5319,120 @@ export const insertDeviceTokenSchema = createInsertSchema(deviceTokens).omit({
   lastUsed: true,
 });
 
+// ============================================
+// FREELANCER SERVICES / GIGS (Fiverr-style)
+// ============================================
+
+export const freelancerServiceStatusEnum = pgEnum("freelancer_service_status", ["draft", "published", "paused"]);
+export const freelancerOrderStatusEnum = pgEnum("freelancer_order_status", [
+  "pending_payment",
+  "active", 
+  "delivered",
+  "revision_requested",
+  "completed",
+  "cancelled",
+  "disputed"
+]);
+
+// Freelancer Services (Gigs) table
+export const freelancerServices = pgTable("freelancer_services", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  freelancerId: uuid("freelancer_id").references(() => users.id).notNull(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  category: text("category").notNull(),
+  tags: text("tags").array(),
+  images: jsonb("images").default(sql`'[]'::jsonb`), // Array of image URLs
+  status: freelancerServiceStatusEnum("status").default("draft").notNull(),
+  packages: jsonb("packages").default(sql`'{}'::jsonb`).notNull(), // { basic: {}, standard: {}, premium: {} }
+  addOns: jsonb("add_ons").default(sql`'[]'::jsonb`), // Array of add-on options
+  viewCount: integer("view_count").default(0),
+  orderCount: integer("order_count").default(0),
+  rating: numeric("rating", { precision: 3, scale: 2 }),
+  reviewCount: integer("review_count").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  index("freelancer_services_freelancerId_idx").on(table.freelancerId),
+  index("freelancer_services_category_idx").on(table.category),
+  index("freelancer_services_status_idx").on(table.status),
+  index("freelancer_services_createdAt_idx").on(table.createdAt.desc()),
+]);
+
+export type FreelancerService = typeof freelancerServices.$inferSelect;
+export type InsertFreelancerService = typeof freelancerServices.$inferInsert;
+
+export const insertFreelancerServiceSchema = createInsertSchema(freelancerServices).omit({
+  id: true,
+  viewCount: true,
+  orderCount: true,
+  rating: true,
+  reviewCount: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Freelancer Orders table
+export const freelancerOrders = pgTable("freelancer_orders", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  serviceId: uuid("service_id").references(() => freelancerServices.id).notNull(),
+  clientId: uuid("client_id").references(() => users.id).notNull(),
+  freelancerId: uuid("freelancer_id").references(() => users.id).notNull(),
+  selectedPackage: text("selected_package").notNull(), // 'basic', 'standard', 'premium'
+  packageDetails: jsonb("package_details").default(sql`'{}'::jsonb`), // Snapshot of package at time of order
+  addOns: jsonb("add_ons").default(sql`'[]'::jsonb`), // Selected add-ons
+  amountSubtotal: numeric("amount_subtotal", { precision: 10, scale: 2 }).notNull(),
+  platformFeeAmount: numeric("platform_fee_amount", { precision: 10, scale: 2 }).notNull(), // 15%
+  amountTotal: numeric("amount_total", { precision: 10, scale: 2 }).notNull(),
+  currency: text("currency").default("USD").notNull(),
+  status: freelancerOrderStatusEnum("status").default("pending_payment").notNull(),
+  requirementsText: text("requirements_text"),
+  requirementsFiles: jsonb("requirements_files").default(sql`'[]'::jsonb`), // Array of file URLs
+  deliveryDueAt: timestamp("delivery_due_at"),
+  deliveredAt: timestamp("delivered_at"),
+  completedAt: timestamp("completed_at"),
+  autoReleaseAt: timestamp("auto_release_at"), // When funds auto-release if no response
+  cancellationReason: text("cancellation_reason"),
+  disputeReason: text("dispute_reason"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  index("freelancer_orders_serviceId_idx").on(table.serviceId),
+  index("freelancer_orders_clientId_idx").on(table.clientId),
+  index("freelancer_orders_freelancerId_idx").on(table.freelancerId),
+  index("freelancer_orders_status_idx").on(table.status),
+  index("freelancer_orders_createdAt_idx").on(table.createdAt.desc()),
+]);
+
+export type FreelancerOrder = typeof freelancerOrders.$inferSelect;
+export type InsertFreelancerOrder = typeof freelancerOrders.$inferInsert;
+
+export const insertFreelancerOrderSchema = createInsertSchema(freelancerOrders).omit({
+  id: true,
+  deliveredAt: true,
+  completedAt: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Freelancer Deliverables table
+export const freelancerDeliverables = pgTable("freelancer_deliverables", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  orderId: uuid("order_id").references(() => freelancerOrders.id).notNull(),
+  message: text("message"),
+  files: jsonb("files").default(sql`'[]'::jsonb`), // Array of file objects { url, name, size, type }
+  isRevision: boolean("is_revision").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("freelancer_deliverables_orderId_idx").on(table.orderId),
+  index("freelancer_deliverables_createdAt_idx").on(table.createdAt.desc()),
+]);
+
+export type FreelancerDeliverable = typeof freelancerDeliverables.$inferSelect;
+export type InsertFreelancerDeliverable = typeof freelancerDeliverables.$inferInsert;
+
+export const insertFreelancerDeliverableSchema = createInsertSchema(freelancerDeliverables).omit({
+  id: true,
+  createdAt: true,
+});
+

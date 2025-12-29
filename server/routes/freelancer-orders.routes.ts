@@ -1,0 +1,264 @@
+import { Router, Response } from "express";
+import { db } from "../db";
+import { freelancerServices, freelancerOrders, profiles } from "../../shared/schema";
+import { eq, and, desc } from "drizzle-orm";
+import { requireAuth, requireRole, type AuthenticatedRequest } from "../middleware/auth";
+import { z } from "zod";
+
+const router = Router();
+
+const PLATFORM_FEE_PERCENT = 15;
+
+const checkoutSchema = z.object({
+  selectedPackage: z.enum(["basic", "standard", "premium"]),
+  selectedAddOnTitles: z.array(z.string()).optional(),
+  requirementsText: z.string().max(5000).optional(),
+});
+
+interface ServiceAddOn {
+  title: string;
+  description?: string;
+  price: number;
+  deliveryDaysExtra?: number;
+}
+
+router.post("/checkout/:serviceId", requireAuth, requireRole(['student', 'teacher', 'customer', 'admin']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { serviceId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const validated = checkoutSchema.parse(req.body);
+
+    const [service] = await db
+      .select()
+      .from(freelancerServices)
+      .where(and(
+        eq(freelancerServices.id, serviceId),
+        eq(freelancerServices.status, "published")
+      ));
+
+    if (!service) {
+      return res.status(404).json({ error: "Service not found or not available" });
+    }
+
+    if (service.freelancerId === userId) {
+      return res.status(400).json({ error: "You cannot order your own service" });
+    }
+
+    const packages = service.packages as Record<string, any>;
+    const selectedPkg = packages[validated.selectedPackage];
+
+    if (!selectedPkg) {
+      return res.status(400).json({ error: `Package '${validated.selectedPackage}' not available for this service` });
+    }
+
+    const packagePrice = Number(selectedPkg.price);
+    if (!packagePrice || packagePrice < 1 || isNaN(packagePrice)) {
+      return res.status(400).json({ error: "Invalid package price configuration" });
+    }
+
+    let subtotal = packagePrice;
+    let extraDeliveryDays = 0;
+    
+    const serviceAddOns = (service.addOns || []) as ServiceAddOn[];
+    const validatedAddOns: ServiceAddOn[] = [];
+    
+    if (validated.selectedAddOnTitles && validated.selectedAddOnTitles.length > 0) {
+      for (const requestedTitle of validated.selectedAddOnTitles) {
+        const catalogAddOn = serviceAddOns.find(a => a.title === requestedTitle);
+        if (!catalogAddOn) {
+          return res.status(400).json({ 
+            error: `Add-on '${requestedTitle}' is not available for this service` 
+          });
+        }
+        subtotal += Number(catalogAddOn.price);
+        extraDeliveryDays += catalogAddOn.deliveryDaysExtra || 0;
+        validatedAddOns.push(catalogAddOn);
+      }
+    }
+
+    const platformFee = (subtotal * PLATFORM_FEE_PERCENT) / 100;
+    const total = subtotal + platformFee;
+
+    const baseDeliveryDays = selectedPkg.deliveryDays || 7;
+    const totalDeliveryDays = baseDeliveryDays + extraDeliveryDays;
+    const deliveryDueAt = new Date();
+    deliveryDueAt.setDate(deliveryDueAt.getDate() + totalDeliveryDays);
+
+    const [order] = await db.insert(freelancerOrders).values({
+      serviceId: service.id,
+      clientId: userId,
+      freelancerId: service.freelancerId,
+      selectedPackage: validated.selectedPackage,
+      packageDetails: selectedPkg,
+      addOns: validatedAddOns,
+      amountSubtotal: subtotal.toFixed(2),
+      platformFeeAmount: platformFee.toFixed(2),
+      amountTotal: total.toFixed(2),
+      currency: "USD",
+      status: "pending_payment",
+      requirementsText: validated.requirementsText || null,
+      deliveryDueAt,
+    }).returning();
+
+    res.status(201).json({ 
+      success: true, 
+      order,
+      breakdown: {
+        packagePrice: Number(selectedPkg.price).toFixed(2),
+        addOnsTotal: (subtotal - Number(selectedPkg.price)).toFixed(2),
+        subtotal: subtotal.toFixed(2),
+        platformFee: platformFee.toFixed(2),
+        total: total.toFixed(2),
+        baseDeliveryDays,
+        extraDeliveryDays,
+        totalDeliveryDays,
+        deliveryDueAt,
+      }
+    });
+  } catch (error) {
+    console.error("Error creating order:", error);
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: "Validation failed", details: error.errors });
+    }
+    res.status(500).json({ error: "Failed to create order" });
+  }
+});
+
+router.get("/my", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const orders = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.clientId, userId))
+      .orderBy(desc(freelancerOrders.createdAt));
+
+    const ordersWithDetails = await Promise.all(
+      orders.map(async (order) => {
+        const [service] = await db
+          .select({
+            id: freelancerServices.id,
+            title: freelancerServices.title,
+            images: freelancerServices.images,
+          })
+          .from(freelancerServices)
+          .where(eq(freelancerServices.id, order.serviceId))
+          .limit(1);
+
+        const [freelancer] = await db
+          .select({
+            fullName: profiles.fullName,
+            profilePicture: profiles.profilePicture,
+          })
+          .from(profiles)
+          .where(eq(profiles.userId, order.freelancerId))
+          .limit(1);
+
+        return {
+          ...order,
+          service: service || null,
+          freelancer: freelancer || null,
+        };
+      })
+    );
+
+    res.json({ success: true, orders: ordersWithDetails });
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+
+router.get("/selling", requireAuth, requireRole(['freelancer']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const orders = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.freelancerId, userId))
+      .orderBy(desc(freelancerOrders.createdAt));
+
+    const ordersWithDetails = await Promise.all(
+      orders.map(async (order) => {
+        const [service] = await db
+          .select({
+            id: freelancerServices.id,
+            title: freelancerServices.title,
+            images: freelancerServices.images,
+          })
+          .from(freelancerServices)
+          .where(eq(freelancerServices.id, order.serviceId))
+          .limit(1);
+
+        const [client] = await db
+          .select({
+            fullName: profiles.fullName,
+            profilePicture: profiles.profilePicture,
+          })
+          .from(profiles)
+          .where(eq(profiles.userId, order.clientId))
+          .limit(1);
+
+        return {
+          ...order,
+          service: service || null,
+          client: client || null,
+        };
+      })
+    );
+
+    res.json({ success: true, orders: ordersWithDetails });
+  } catch (error) {
+    console.error("Error fetching selling orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+
+router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { id } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, id));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId && order.freelancerId !== userId) {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const [service] = await db
+      .select()
+      .from(freelancerServices)
+      .where(eq(freelancerServices.id, order.serviceId));
+
+    res.json({ success: true, order, service: service || null });
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    res.status(500).json({ error: "Failed to fetch order" });
+  }
+});
+
+export default router;

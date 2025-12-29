@@ -34313,6 +34313,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const githubRoutes = (await import("./routes/github-routes.js")).default;
   app.use("/api", githubRoutes);
 
+  // Freelancer Services (Fiverr-style gigs)
+  const freelancerServicesRoutes = (await import("./routes/freelancer-services.routes.js")).default;
+  app.use("/api/freelancer/services", freelancerServicesRoutes);
+
+  // Marketplace Services (public listing)
+  const marketplaceServicesRoutes = (await import("./routes/marketplace-services.routes.js")).default;
+  app.use("/api/marketplace/services", marketplaceServicesRoutes);
+
+  // Freelancer Orders
+  const freelancerOrdersRoutes = (await import("./routes/freelancer-orders.routes.js")).default;
+  app.use("/api/freelancer/orders", freelancerOrdersRoutes);
+
 
   // ==========================================
   // Python Course Content Generation (Step-by-step)
