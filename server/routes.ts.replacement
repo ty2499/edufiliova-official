@@ -1,0 +1,15 @@
+        // No WhatsApp opt-in: Send email verification only using new HTML template
+        try {
+          const { sendStudentVerificationEmail } = await import('./utils/email-templates.js');
+          const result = await sendStudentVerificationEmail(email, name, emailCode, 15);
+          if (!result) {
+            throw new Error("Email service failed to send verification email");
+          }
+          console.log('✅ Student verification email sent successfully to:', email);
+        } catch (emailError) {
+          console.error('❌ Failed to send student verification email:', emailError);
+          return res.status(500).json({
+            success: false,
+            error: "Failed to send verification email. Please try again."
+          });
+        }

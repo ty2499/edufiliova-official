@@ -49,12 +49,18 @@ export async function sendStudentVerificationEmail(recipientEmail, recipientName
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
     
-    return await emailService.sendEmail({
+    const result = await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Verify Your Student Account - EduFiliova',
       html: emailHtml,
-      from: `"EduFiliova" <verify@edufiliova.com>`
+      from: `"EduFiliova Verification" <verify@edufiliova.com>`
     });
+    
+    if (!result) {
+      console.error(`❌ Email service failed to send verification email to ${recipientEmail}`);
+      throw new Error('Email service failed to send verification email');
+    }
+    return result;
   } catch (error) {
     console.error(`❌ Error sending student verification email:`, error);
     throw error;

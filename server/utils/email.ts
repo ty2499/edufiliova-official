@@ -225,8 +225,13 @@ export class EmailService {
    - Available transporters: ${Array.from(this.transporters.keys()).join(', ')}`);
       
       if (!transporter) {
-        console.error('❌ No transporter available for email');
-        return false;
+        console.error('❌ No transporter available for email. Attempting re-initialization...');
+        await this.initializeFromDatabase();
+        transporter = this.transporters.get(senderEmail) || Array.from(this.transporters.values())[0];
+        if (!transporter) {
+          console.error('❌ Still no transporter available after re-initialization');
+          return false;
+        }
       }
 
     // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
