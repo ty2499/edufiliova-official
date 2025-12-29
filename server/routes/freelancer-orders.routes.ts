@@ -2082,6 +2082,125 @@ router.post("/admin/orders/:orderId/cancel", requireAuth, requireRole(['admin'])
   }
 });
 
+router.post("/admin/orders/:orderId/dispute", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const adminId = req.user?.id;
+    const { orderId } = req.params;
+    const { reason, resolution } = req.body;
+
+    if (!adminId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.status === "completed" || order.status === "refunded" || order.status === "cancelled") {
+      return res.status(400).json({ error: `Cannot mark dispute on ${order.status} order` });
+    }
+
+    await db
+      .update(freelancerOrders)
+      .set({
+        status: "disputed",
+        updatedAt: new Date(),
+      })
+      .where(eq(freelancerOrders.id, orderId));
+
+    await logOrderEvent(
+      orderId, 
+      adminId, 
+      "dispute_opened", 
+      "Dispute Opened", 
+      `Admin opened dispute. Reason: ${reason || "Dispute reported"}. Resolution: ${resolution || "Under review"}`
+    );
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "Order marked as disputed",
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error marking dispute (admin):", error);
+    res.status(500).json({ error: "Failed to mark dispute" });
+  }
+});
+
+router.post("/admin/orders/:orderId/override-status", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const adminId = req.user?.id;
+    const { orderId } = req.params;
+    const { newStatus, reason } = req.body;
+
+    if (!adminId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const validStatuses = ["active", "awaiting_requirements", "in_progress", "delivered", "revision_requested"];
+    if (!newStatus || !validStatuses.includes(newStatus)) {
+      return res.status(400).json({ 
+        error: `Invalid status. Allowed: ${validStatuses.join(", ")}` 
+      });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.status === "completed" || order.status === "refunded" || order.status === "cancelled") {
+      return res.status(400).json({ error: `Cannot override status of ${order.status} order` });
+    }
+
+    const previousStatus = order.status;
+
+    await db
+      .update(freelancerOrders)
+      .set({
+        status: newStatus,
+        updatedAt: new Date(),
+      })
+      .where(eq(freelancerOrders.id, orderId));
+
+    await logOrderEvent(
+      orderId, 
+      adminId, 
+      "admin_status_override", 
+      "Admin Status Override", 
+      `Changed status from "${previousStatus}" to "${newStatus}". Reason: ${reason || "Admin override"}`
+    );
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: `Order status changed to ${newStatus}`,
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error overriding order status (admin):", error);
+    res.status(500).json({ error: "Failed to override status" });
+  }
+});
+
 export async function processAutoReleaseOrders(): Promise<{ processed: number; errors: number }> {
   const now = new Date();
   let processed = 0;

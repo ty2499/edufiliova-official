@@ -30,6 +30,7 @@ Do not make changes to the file `Y`.
 - **Freelancer Dashboard Routes**: `/dashboard/freelancer/services` (list/manage), `/dashboard/freelancer/services/new` (create), `/dashboard/freelancer/services/:id/edit` (edit), `/dashboard/freelancer/orders` (manage orders).
 - **Marketplace Routes**: `/marketplace/services` (browse/filter), `/marketplace/services/:id` (service detail), `/checkout/service/:id` (checkout), `/orders/:id` (order tracker).
 - **API Endpoints**: Comprehensive set of API endpoints for managing freelancer orders, including fetching orders, requesting/submitting requirements, starting work, delivering, and requesting revisions.
+- **Admin Order Management Panel**: Service Orders tab in Admin Dashboard with order list, status filters, and admin actions (release payment, issue refund, cancel order, flag dispute, override status).
 
 ## External Dependencies
 - **OpenAI Vision**: Used for detecting nude/NSFW images in content moderation.

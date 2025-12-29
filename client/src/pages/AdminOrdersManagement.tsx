@@ -23,7 +23,8 @@ import {
   RefreshCw,
   AlertTriangle,
   Eye,
-  Wallet
+  Wallet,
+  Flag
 } from "lucide-react";
 import { format } from "date-fns";
 import { Link } from "wouter";
@@ -68,6 +69,7 @@ const statusColors: Record<string, string> = {
   completed: "bg-green-500",
   cancelled: "bg-gray-500",
   refunded: "bg-red-500",
+  disputed: "bg-rose-600",
 };
 
 const statusLabels: Record<string, string> = {
@@ -80,6 +82,7 @@ const statusLabels: Record<string, string> = {
   completed: "Completed",
   cancelled: "Cancelled",
   refunded: "Refunded",
+  disputed: "Disputed",
 };
 
 interface AdminOrdersManagementProps {
@@ -91,7 +94,7 @@ export default function AdminOrdersManagement({ isEmbedded = false }: AdminOrder
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [actionDialogOpen, setActionDialogOpen] = useState(false);
-  const [actionType, setActionType] = useState<"release" | "refund" | "cancel" | null>(null);
+  const [actionType, setActionType] = useState<"release" | "refund" | "cancel" | "dispute" | null>(null);
   const [actionReason, setActionReason] = useState("");
   const [refundAmount, setRefundAmount] = useState("");
   const itemsPerPage = 10;
@@ -137,7 +140,19 @@ export default function AdminOrdersManagement({ isEmbedded = false }: AdminOrder
     },
   });
 
-  const openActionDialog = (order: Order, type: "release" | "refund" | "cancel") => {
+  const disputeMutation = useMutation({
+    mutationFn: ({ orderId, reason }: { orderId: string; reason: string }) =>
+      apiRequest(`/api/freelancer/admin/orders/${orderId}/dispute`, {
+        method: 'POST',
+        body: JSON.stringify({ reason }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/freelancer/admin/orders'] });
+      closeActionDialog();
+    },
+  });
+
+  const openActionDialog = (order: Order, type: "release" | "refund" | "cancel" | "dispute") => {
     setSelectedOrder(order);
     setActionType(type);
     setActionReason("");
@@ -166,6 +181,9 @@ export default function AdminOrdersManagement({ isEmbedded = false }: AdminOrder
       case "cancel":
         cancelMutation.mutate({ orderId: selectedOrder.id, reason: actionReason });
         break;
+      case "dispute":
+        disputeMutation.mutate({ orderId: selectedOrder.id, reason: actionReason });
+        break;
     }
   };
 
@@ -180,6 +198,7 @@ export default function AdminOrdersManagement({ isEmbedded = false }: AdminOrder
           <TabsTrigger value="pending_payment">Pending Payment</TabsTrigger>
           <TabsTrigger value="in_progress">In Progress</TabsTrigger>
           <TabsTrigger value="delivered">Delivered</TabsTrigger>
+          <TabsTrigger value="disputed">Disputed</TabsTrigger>
           <TabsTrigger value="completed">Completed</TabsTrigger>
           <TabsTrigger value="refunded">Refunded</TabsTrigger>
         </TabsList>
@@ -295,6 +314,17 @@ export default function AdminOrdersManagement({ isEmbedded = false }: AdminOrder
                               >
                                 <XCircle className="w-4 h-4" />
                               </Button>
+                              {order.status !== "disputed" && (
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  className="text-rose-600 hover:text-rose-700"
+                                  onClick={() => openActionDialog(order, "dispute")}
+                                  title="Flag Dispute"
+                                >
+                                  <Flag className="w-4 h-4" />
+                                </Button>
+                              )}
                             </>
                           )}
                         </div>
@@ -344,11 +374,13 @@ export default function AdminOrdersManagement({ isEmbedded = false }: AdminOrder
               {actionType === "release" && "Release Payment to Freelancer"}
               {actionType === "refund" && "Issue Refund to Buyer"}
               {actionType === "cancel" && "Cancel Order"}
+              {actionType === "dispute" && "Flag Order as Disputed"}
             </DialogTitle>
             <DialogDescription>
               {actionType === "release" && "This will immediately release the escrow amount to the freelancer."}
               {actionType === "refund" && "This will refund the specified amount to the buyer's wallet and mark the order as refunded."}
               {actionType === "cancel" && "This will cancel the order. Consider issuing a refund separately if needed."}
+              {actionType === "dispute" && "This will mark the order as disputed and pause all actions until resolved."}
             </DialogDescription>
           </DialogHeader>
 
@@ -397,19 +429,21 @@ export default function AdminOrdersManagement({ isEmbedded = false }: AdminOrder
             </Button>
             <Button
               onClick={handleAction}
-              disabled={releaseMutation.isPending || refundMutation.isPending || cancelMutation.isPending}
+              disabled={releaseMutation.isPending || refundMutation.isPending || cancelMutation.isPending || disputeMutation.isPending}
               className={
                 actionType === "release" ? "bg-green-600 hover:bg-green-700" :
                 actionType === "refund" ? "bg-amber-600 hover:bg-amber-700" :
+                actionType === "dispute" ? "bg-rose-600 hover:bg-rose-700" :
                 "bg-red-600 hover:bg-red-700"
               }
             >
-              {(releaseMutation.isPending || refundMutation.isPending || cancelMutation.isPending) ? (
+              {(releaseMutation.isPending || refundMutation.isPending || cancelMutation.isPending || disputeMutation.isPending) ? (
                 <RefreshCw className="w-4 h-4 animate-spin mr-2" />
               ) : null}
               {actionType === "release" && "Release Payment"}
               {actionType === "refund" && "Issue Refund"}
               {actionType === "cancel" && "Cancel Order"}
+              {actionType === "dispute" && "Flag Dispute"}
             </Button>
           </DialogFooter>
         </DialogContent>
