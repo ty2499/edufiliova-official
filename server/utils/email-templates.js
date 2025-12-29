@@ -263,7 +263,14 @@ export async function sendSuspensionEmail(recipientEmail, recipientName, suspens
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     
     emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, recipientName || 'User');
-    emailHtml = emailHtml.replace(/\{\{suspensionReason\}\}/gi, suspensionReason || 'Violation of platform policies.');
+    
+    if (suspensionReason && suspensionReason.trim()) {
+      emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', 
+        `<p class="info-text" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;"><strong>Additional Details:</strong> ${suspensionReason}</p>`
+      );
+    } else {
+      emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', '');
+    }
     
     return await emailService.sendEmail({
       to: recipientEmail,

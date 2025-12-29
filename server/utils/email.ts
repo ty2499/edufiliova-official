@@ -414,16 +414,13 @@ export class EmailService {
       // Use the bulletproof name replacement to handle span/styling issues in the template
       html = this.forceReplaceName(html, data.fullName);
 
-      // Handle the optional reason - standard template placeholder
-      if (data.reason) {
-        // Replace the Handlebars-style conditional if it exists, or just the placeholder
-        html = html.replace(/{{#if reason}}[\s\S]*?{{reason}}[\s\S]*?{{\/if}}/gi, `Reason provided:<br>${data.reason}`);
-        html = html.replace(/{{reason}}/gi, data.reason);
-      } else {
-        // Remove the reason section completely if no reason provided
-        html = html.replace(/{{#if reason}}[\s\S]*?{{\/if}}/gi, '');
-        html = html.replace(/Reason provided:[\s\S]*?{{reason}}/gi, '');
-      }
+      // Handle the optional reason - replace placeholder and strip conditional syntax
+      const reasonText = data.reason && data.reason.trim() ? data.reason : '';
+      html = html.replace(/\{\{reason\}\}/gi, reasonText);
+      
+      // Always clean up any remaining Handlebars conditionals (strip the tags, keep content)
+      html = html.replace(/\{\{#if\s+[^}]+\}\}/gi, '');
+      html = html.replace(/\{\{\/if\}\}/gi, '');
 
       // Attachments with CID references for embedded images
       const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
@@ -806,8 +803,14 @@ export class EmailService {
 
       // Use bulletproof replacements
       html = this.forceReplaceName(html, fullName);
+      
+      // Replace placeholders first
       html = html.replace(/\{\{rejectionReason\}\}/gi, reasonText);
       html = html.replace(/\{\{reason\}\}/gi, reasonText);
+      
+      // Clean up any remaining Handlebars conditionals (strip the tags, keep content)
+      html = html.replace(/\{\{#if\s+[^}]+\}\}/gi, '');
+      html = html.replace(/\{\{\/if\}\}/gi, '');
 
       // Attachments with CID references
       const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');

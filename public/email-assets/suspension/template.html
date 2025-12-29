@@ -50,9 +50,7 @@
             <div class="info-box">
                 <div class="info-title">Reason for Suspension:</div>
                 <p class="info-text">We have detected unusual activity and an abuse of our policies on your account. As a result, your account has been suspended to ensure the safety and integrity of our community.</p>
-                {{#if suspensionReason}}
-                <p class="info-text" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;"><strong>Additional Details:</strong> {{suspensionReason}}</p>
-                {{/if}}
+                {{SUSPENSION_REASON_BLOCK}}
             </div>
 
             <div class="info-box">
