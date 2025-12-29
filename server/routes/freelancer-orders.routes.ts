@@ -376,46 +376,95 @@ router.post("/dodopay/create-session", requireAuth, async (req: AuthenticatedReq
     });
 
     const amountCents = Math.round(parseFloat(order.amountTotal) * 100);
+    const serviceName = service?.title || 'Freelancer Service';
+    const serviceDescription = `${order.selectedPackage} Package - ${serviceName}`;
     
-    // Create one-time product and checkout session
-    const payment = await dodo.payments.create({
-      billing: {
-        city: "N/A",
-        country: "US",
-        state: "N/A",
-        street: "N/A",
-        zipcode: "00000",
-      },
-      customer: {
-        email: req.user?.email || "customer@edufiliova.com",
-        name: req.user?.profile?.fullName || req.user?.email?.split('@')[0] || "Customer",
-      },
-      payment_link: true,
-      product_cart: [
-        {
-          product_id: `freelancer_order_${orderId}`,
-          quantity: 1,
+    // Step 1: Create a one-time product first (DodoPay requires this)
+    console.log(`🛒 Creating DodoPay product for freelancer order ${orderId}...`);
+    
+    let product: any;
+    try {
+      const productPayload = {
+        name: serviceName,
+        description: serviceDescription,
+        price: {
+          currency: (order.currency || 'USD').toUpperCase() as any,
+          discount: 0,
+          price: amountCents,
+          purchasing_power_parity: false,
+          type: 'one_time_price' as const,
         },
-      ],
-      return_url: successUrl || `${process.env.DOMAIN || 'https://edufiliova.com'}/orders/${orderId}?payment=success`,
-      metadata: {
-        orderId: orderId,
-        orderType: 'freelancer_service',
-        serviceId: order.serviceId,
-        clientId: userId,
-        freelancerId: order.freelancerId,
-      },
-    });
-
-    if (payment.payment_link) {
-      res.json({ 
-        success: true, 
-        url: payment.payment_link,
-        paymentId: payment.payment_id,
-      });
-    } else {
-      res.status(500).json({ error: "Failed to create payment session" });
+        tax_category: 'edtech' as any,
+      };
+      
+      product = await dodo.products.create(productPayload as any);
+      
+      if (!product?.product_id) {
+        throw new Error(`DodoPay did not return a product_id`);
+      }
+      console.log('✅ DodoPay product created:', product.product_id);
+    } catch (productError: any) {
+      console.error('❌ DodoPay product creation error:', productError?.message);
+      throw new Error(`Failed to create product: ${productError?.message || 'Unknown error'}`);
     }
+
+    // Step 2: Create checkout session with the product
+    const baseUrl = process.env.DOMAIN || 'https://edufiliova.com';
+    const returnUrl = successUrl || `${baseUrl}/orders/${orderId}?payment=success`;
+    
+    console.log(`🛒 Creating checkout session for product ${product.product_id}...`);
+    
+    let checkoutSession: any;
+    try {
+      const checkoutParams: any = {
+        product_cart: [
+          {
+            product_id: product.product_id,
+            quantity: 1,
+          }
+        ],
+        return_url: returnUrl,
+        metadata: {
+          orderId: orderId,
+          orderType: 'freelancer_service',
+          serviceId: order.serviceId,
+          clientId: userId,
+          freelancerId: order.freelancerId,
+        },
+      };
+      
+      if (req.user?.email) {
+        checkoutParams.customer = {
+          email: req.user.email,
+          name: req.user?.profile?.fullName || req.user.email.split('@')[0],
+        };
+      }
+      
+      checkoutSession = await dodo.checkoutSessions.create(checkoutParams);
+      
+      if (!checkoutSession) {
+        throw new Error('DodoPay returned empty checkout session response');
+      }
+    } catch (sessionError: any) {
+      console.error('❌ DodoPay checkout session error:', sessionError?.message);
+      throw new Error(`Failed to create checkout session: ${sessionError?.message || 'Unknown error'}`);
+    }
+
+    const sessionId = checkoutSession?.session_id || checkoutSession?.checkout_session_id || checkoutSession?.id;
+    const checkoutUrl = checkoutSession?.url || checkoutSession?.checkout_url || 
+      (sessionId ? `https://checkout.dodopayments.com/session/${sessionId}` : null);
+
+    if (!checkoutUrl) {
+      throw new Error('Failed to get checkout URL from DodoPay');
+    }
+
+    console.log('✅ DodoPay checkout session created:', sessionId);
+
+    res.json({ 
+      success: true, 
+      url: checkoutUrl,
+      sessionId: sessionId,
+    });
   } catch (error: any) {
     console.error("Error creating Dodo payment session:", error);
     res.status(500).json({ error: error.message || "Failed to create payment session" });

@@ -525,19 +525,11 @@ export default function ServiceCheckoutPage() {
                   getGatewayIcon(selectedGateway.id)
                 )}
                 <div>
-                  <p className="font-medium text-sm">{selectedGateway.displayName}</p>
+                  <p className="font-medium text-sm">{getGatewayDisplayName(selectedGateway)}</p>
                   <p className="text-xs text-gray-500">{getGatewayDescription(selectedGateway)}</p>
                 </div>
               </div>
             )}
-
-            <div className="flex items-start gap-2 p-3 bg-green-50 rounded-lg border border-green-200">
-              <Shield className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-              <div className="text-sm">
-                <p className="font-medium text-green-800">Escrow Protection</p>
-                <p className="text-green-700 text-xs">Your payment is held securely until you approve the delivered work.</p>
-              </div>
-            </div>
           </div>
 
           <div className="flex gap-3">
