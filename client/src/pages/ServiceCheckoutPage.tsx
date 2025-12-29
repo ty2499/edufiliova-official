@@ -46,6 +46,7 @@ export default function ServiceCheckoutPage() {
   const [showPayPalModal, setShowPayPalModal] = useState(false);
   const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   const { data: serviceData, isLoading: isLoadingService } = useQuery({
     queryKey: ['/api/marketplace/services', serviceId],
@@ -129,12 +130,12 @@ export default function ServiceCheckoutPage() {
     onSuccess: (data) => {
       setIsProcessing(false);
       setShowPaymentModal(false);
-      toast({ title: 'Payment successful!' });
+      setPaymentError(null);
       navigate(`/orders/${data.order.id}`);
     },
     onError: (error: any) => {
       setIsProcessing(false);
-      toast({ title: error.message || 'Payment failed', variant: 'destructive' });
+      setPaymentError(error.message || 'Payment failed. Please try again.');
     },
   });
 
@@ -152,10 +153,10 @@ export default function ServiceCheckoutPage() {
       });
       
       setShowPayPalModal(false);
-      toast({ title: 'Payment successful!' });
+      setPaymentError(null);
       navigate(`/orders/${createdOrderId}`);
     } catch (error: any) {
-      toast({ title: error.message || 'Failed to confirm payment', variant: 'destructive' });
+      setPaymentError(error.message || 'Failed to confirm payment. Please try again.');
     } finally {
       setIsProcessing(false);
     }
@@ -186,11 +187,12 @@ export default function ServiceCheckoutPage() {
       }
     } catch (error: any) {
       setIsProcessing(false);
-      toast({ title: error.message || `Failed to initiate payment`, variant: 'destructive' });
+      setPaymentError(error.message || 'Failed to initiate payment. Please try again.');
     }
   };
 
   const handleProceedToPayment = () => {
+    setPaymentError(null);
     setShowPaymentModal(true);
   };
 
@@ -542,6 +544,13 @@ export default function ServiceCheckoutPage() {
                 </div>
               </div>
             )}
+
+            {paymentError && (
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-red-700">{paymentError}</p>
+              </div>
+            )}
           </div>
 
           <div className="flex gap-3">
@@ -594,12 +603,19 @@ export default function ServiceCheckoutPage() {
                 onSuccess={handlePayPalSuccess}
                 onError={(error) => {
                   console.error('PayPal error:', error);
-                  toast({ title: 'PayPal payment failed. Please try again.', variant: 'destructive' });
+                  setPaymentError('PayPal payment failed. Please try again.');
                 }}
                 onCancel={() => {
                   setShowPayPalModal(false);
                 }}
               />
+              
+              {paymentError && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 mt-4">
+                  <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-red-700">{paymentError}</p>
+                </div>
+              )}
             </div>
             
             <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
