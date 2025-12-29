@@ -277,100 +277,162 @@ export class EmailService {
   }
 }
 
+  private getGlobalTemplate(title: string, content: string): string {
+    return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>${title}</title>
+  <style type="text/css">
+    body { margin: 0; padding: 0; min-width: 100%; background-color: #f4f7f9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .wrapper { width: 100%; table-layout: fixed; background-color: #f4f7f9; padding-bottom: 40px; }
+    .main-table { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .header { background-color: #0c332c; padding: 40px 0; text-align: center; }
+    .content { padding: 40px 50px; color: #333333; line-height: 1.6; }
+    .content h1 { color: #0c332c; font-size: 24px; margin-bottom: 20px; font-weight: 700; }
+    .content p { font-size: 16px; margin-bottom: 20px; }
+    .footer { background-color: #f8fafc; padding: 40px 50px; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 13px; }
+    .footer p { margin: 10px 0; line-height: 1.5; }
+    .footer a { color: #0c332c; text-decoration: none; font-weight: 600; }
+    .divider { height: 1px; background-color: #e2e8f0; margin: 20px 0; }
+    .btn { display: inline-block; padding: 12px 24px; background-color: #0c332c; color: #ffffff !important; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+    .highlight { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <table class="main-table" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td class="header">
+          <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" width="180" style="display: block; margin: 0 auto;" />
+        </td>
+      </tr>
+      <tr>
+        <td class="content">
+          ${content}
+        </td>
+      </tr>
+      <tr>
+        <td class="footer">
+          <p><strong>EduFiliova</strong></p>
+          <p>Empowering global talent through education and opportunity.</p>
+          <div class="divider"></div>
+          <p>This is an automated message. Please do not reply directly to this email. For assistance, contact our support team at <a href="mailto:support@edufiliova.com">support@edufiliova.com</a>.</p>
+          <p>&copy; 2025 EduFiliova. All rights reserved.</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>`;
+  }
+
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'server/templates/teacher_approval_template/email.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
-
-    const fullName = data.fullName || 'Teacher';
-    
-    // ✅ USE BULLETPROOF NAME REPLACEMENT
-    html = this.forceReplaceName(html, fullName);
-    
-    // Final cleanup
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
-    // Explicitly replace ANY remaining images/ paths with Cloudinary URLs
-    Object.entries(emailAssetMap).forEach(([filename, url]) => {
-      const escapedFilename = filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      // Replace variations of the path that might be in templates (src="images/logo.png", src="logo.png", etc.)
-      const srcRegex = new RegExp(`src=["'](?:images/|https?://[^"'>\\s]+?/email-assets/)?${escapedFilename}["']`, 'gi');
-      html = html.replace(srcRegex, `src="${url}"`);
-      
-      // Also handle url() patterns in CSS
-      const urlRegex = new RegExp(`url\\(["']?(?:images/|https?://[^"'>\\s]+?/email-assets/)?${escapedFilename}["']?\\)`, 'gi');
-      html = html.replace(urlRegex, `url("${url}")`);
-
-      // Handle raw filename matches (case insensitive) for templates that might just have the name
-      const rawRegex = new RegExp(`(?<=src=)["']?${escapedFilename}["']?`, 'gi');
-      html = html.replace(rawRegex, `"${url}"`);
-    });
-
-    // Use support@edufiliova.com as requested
+    const content = `
+      <h1>Application Approved</h1>
+      <p>Hello ${data.fullName},</p>
+      <p>Great news! Your teacher application has been approved. You can now log in to your dashboard and start creating courses.</p>
+      <a href="${this.getBaseUrl()}/login" class="btn">Go to Dashboard</a>
+      <p>Welcome to the EduFiliova community!</p>
+    `;
     return this.sendEmail({
       to: email,
-      subject: 'Welcome Aboard! Your Teacher Application is Approved - EduFiliova',
-      html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [] // Images are handled via Cloudinary URLs in sendEmail
+      subject: 'Your Teacher Application has been Approved - EduFiliova',
+      html: this.getGlobalTemplate('Application Approved', content),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
     });
   }
 
-  async sendTeacherRejectionEmail(email: string, data: { fullName: string; displayName?: string; reason?: string }): Promise<boolean> {
-    return this.sendTeacherApplicationDeclinedEmail(email, data);
-  }
-
-  async sendTeacherApplicationDeclinedEmail(email: string, data: { fullName: string; displayName?: string; reason?: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/teacher-application-declined/template.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
-    
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
-
-    const fullName = data.fullName || 'Teacher';
-    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Application review completed';
-
-    // ✅ USE BULLETPROOF NAME REPLACEMENT FIRST
-    html = this.forceReplaceName(html, fullName);
-
-    // Handle conditional blocks and variables (Handlebars style)
-    if (reasonText && reasonText !== 'Application review completed') {
-      html = html.replace(/{{#if reason}}[\s\S]*?{{reason}}[\s\S]*?{{\/if}}/gi, `
-        <div style="margin-top:15px;padding:12px;background-color:#fee2e2;border-radius:6px;">
-          <p style="margin:0;font-size:13px;color:#991b1b;"><strong>Reason provided:</strong></p>
-          <p style="margin:5px 0 0 0;font-size:13px;color:#7f1d1d;">${reasonText}</p>
-        </div>
-      `);
-    } else {
-      html = html.replace(/{{#if reason}}[\s\S]*?{{\/if}}/gi, '');
-    }
-
-    // Final variable cleanup
-    html = html.replace(/{{reason}}/gi, reasonText);
-    html = html.replace(/{{baseUrl}}/gi, baseUrl);
-
-    // STEP 6: Send with Cloudinary processing via sendEmail()
+  async sendTeacherApplicationDeclinedEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
+    const reasonText = data.reason ? `<div class="highlight"><p><strong>Reason:</strong> ${data.reason}</p></div>` : '';
+    const content = `
+      <h1>Application Update</h1>
+      <p>Hello ${data.fullName},</p>
+      <p>Thank you for your interest in teaching on EduFiliova. After reviewing your application, we regret to inform you that we cannot approve it at this time.</p>
+      ${reasonText}
+      <p>You may update your profile and try again in the future.</p>
+    `;
     return this.sendEmail({
       to: email,
-      subject: 'Application Status Update - EduFiliova Teacher Application',
-      html: this.processEmailImages(html), // Double ensure processing for decline template
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: []
+      subject: 'Teacher Application Update - EduFiliova',
+      html: this.getGlobalTemplate('Application Update', content),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
+    });
+  }
+
+  async sendTeacherUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    const content = `
+      <h1>Application Under Review</h1>
+      <p>Hello ${data.fullName},</p>
+      <p>Your teacher application is now under review by our team. We'll notify you as soon as there's an update.</p>
+      <p>Thank you for your patience.</p>
+    `;
+    return this.sendEmail({
+      to: email,
+      subject: 'Application Under Review - EduFiliova',
+      html: this.getGlobalTemplate('Application Under Review', content),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
+    });
+  }
+
+  async sendApplicationSubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    const content = `
+      <h1>Application Received</h1>
+      <p>Hello ${data.fullName},</p>
+      <p>Your application has been successfully submitted and is waiting for review.</p>
+      <p>We'll get back to you within 3-5 business days.</p>
+    `;
+    return this.sendEmail({
+      to: email,
+      subject: 'Application Received - EduFiliova',
+      html: this.getGlobalTemplate('Application Received', content),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
+    });
+  }
+
+  async sendFreelancerApprovalEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    const content = `
+      <h1>Freelancer Account Approved</h1>
+      <p>Hello ${data.fullName},</p>
+      <p>Congratulations! Your freelancer application has been approved. You can now start bidding on projects and showcasing your services.</p>
+      <a href="${this.getBaseUrl()}/login" class="btn">Login to Account</a>
+    `;
+    return this.sendEmail({
+      to: email,
+      subject: 'Freelancer Account Approved - EduFiliova',
+      html: this.getGlobalTemplate('Account Approved', content),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
+    });
+  }
+
+  async sendFreelancerUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    const content = `
+      <h1>Freelancer Application Under Review</h1>
+      <p>Hello ${data.fullName},</p>
+      <p>Your freelancer application is being reviewed. We'll let you know once the process is complete.</p>
+    `;
+    return this.sendEmail({
+      to: email,
+      subject: 'Application Under Review - EduFiliova',
+      html: this.getGlobalTemplate('Application Under Review', content),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
+    });
+  }
+
+  async sendFreelancerRejectionEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
+    const reasonText = data.reason ? `<div class="highlight"><p><strong>Reason:</strong> ${data.reason}</p></div>` : '';
+    const content = `
+      <h1>Freelancer Application Update</h1>
+      <p>Hello ${data.fullName},</p>
+      <p>Thank you for applying to be a freelancer on EduFiliova. At this time, we are unable to approve your application.</p>
+      ${reasonText}
+    `;
+    return this.sendEmail({
+      to: email,
+      subject: 'Freelancer Application Update - EduFiliova',
+      html: this.getGlobalTemplate('Application Update', content),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
     });
   }
 
