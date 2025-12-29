@@ -33,6 +33,7 @@ import dodopayRoutes from "./dodopay-routes.js";
 import vodapayRoutes from "./vodapay-routes.js";
 import ecocashRoutes from "./routes/ecocash-routes.js";
 import healthRoutes from "./routes/health.routes.js";
+import coursesRoutes from "./routes/courses.routes.js";
 import { clearSettingsCache } from "./utils/settings.js";
 import { generateCertificateWithCertifier, generateVerificationCode } from "./utils/certifier-certificate-generator.js";
 import { 
@@ -1083,6 +1084,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Health check route
   app.use(healthRoutes);
+
+  // Courses routes
+  app.use(coursesRoutes);
 
   // Advertisement routes - Full CRUD Management System
   app.get('/api/ads/manage', requireAuth, adsRoutes.getManageAds);           // Get all ads (admin) or user's own ads
