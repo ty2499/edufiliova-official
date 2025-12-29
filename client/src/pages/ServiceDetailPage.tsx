@@ -243,7 +243,7 @@ export default function ServiceDetailPage() {
                   </Tabs>
                   <div className="p-4 pt-0">
                     <Button 
-                      className="w-full bg-[#0c332c] hover:bg-[#0c332c]/90 h-12 text-lg"
+                      className="w-full bg-[#228B22] text-white hover:bg-[#228B22] h-12 text-lg"
                       onClick={handleContinue}
                     >
                       Continue (${currentPackage.price || 0})
