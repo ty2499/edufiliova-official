@@ -5384,8 +5384,10 @@ export const freelancerOrders = pgTable("freelancer_orders", {
   amountSubtotal: numeric("amount_subtotal", { precision: 10, scale: 2 }).notNull(),
   platformFeeAmount: numeric("platform_fee_amount", { precision: 10, scale: 2 }).notNull(), // 15%
   amountTotal: numeric("amount_total", { precision: 10, scale: 2 }).notNull(),
+  escrowHeldAmount: numeric("escrow_held_amount", { precision: 10, scale: 2 }),
   currency: text("currency").default("USD").notNull(),
   status: freelancerOrderStatusEnum("status").default("pending_payment").notNull(),
+  paidAt: timestamp("paid_at"),
   requirementsText: text("requirements_text"),
   requirementsFiles: jsonb("requirements_files").default(sql`'[]'::jsonb`), // Array of file URLs
   deliveryDueAt: timestamp("delivery_due_at"),

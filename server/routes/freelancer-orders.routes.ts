@@ -1,7 +1,7 @@
 import { Router, Response } from "express";
 import { db } from "../db";
-import { freelancerServices, freelancerOrders, profiles } from "../../shared/schema";
-import { eq, and, desc } from "drizzle-orm";
+import { freelancerServices, freelancerOrders, profiles, transactions, userBalances } from "../../shared/schema";
+import { eq, and, desc, sql } from "drizzle-orm";
 import { requireAuth, requireRole, type AuthenticatedRequest } from "../middleware/auth";
 import { z } from "zod";
 
@@ -258,6 +258,121 @@ router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response)
   } catch (error) {
     console.error("Error fetching order:", error);
     res.status(500).json({ error: "Failed to fetch order" });
+  }
+});
+
+router.post("/:orderId/pay", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the client can pay for this order" });
+    }
+
+    if (order.status !== "pending_payment") {
+      return res.status(400).json({ 
+        error: `Order is not awaiting payment. Current status: ${order.status}` 
+      });
+    }
+
+    const orderTotal = parseFloat(order.amountTotal);
+    if (isNaN(orderTotal) || orderTotal <= 0) {
+      return res.status(400).json({ error: "Invalid order amount" });
+    }
+
+    const [balance] = await db
+      .select()
+      .from(userBalances)
+      .where(eq(userBalances.userId, userId));
+
+    const availableBalance = balance ? parseFloat(balance.availableBalance) : 0;
+
+    if (availableBalance < orderTotal) {
+      return res.status(400).json({ 
+        error: "Insufficient wallet balance",
+        required: orderTotal.toFixed(2),
+        available: availableBalance.toFixed(2),
+        shortfall: (orderTotal - availableBalance).toFixed(2)
+      });
+    }
+
+    const [service] = await db
+      .select({ title: freelancerServices.title })
+      .from(freelancerServices)
+      .where(eq(freelancerServices.id, order.serviceId));
+
+    const serviceName = service?.title || "Freelancer Service";
+
+    await db.transaction(async (tx) => {
+      const newBalance = (availableBalance - orderTotal).toFixed(2);
+      
+      await tx
+        .update(userBalances)
+        .set({ 
+          availableBalance: newBalance,
+          lastUpdated: new Date()
+        })
+        .where(eq(userBalances.userId, userId));
+
+      await tx.insert(transactions).values({
+        userId: userId,
+        type: "debit",
+        amount: orderTotal.toFixed(2),
+        status: "completed",
+        description: `Freelancer order payment: ${serviceName} (${order.selectedPackage} package) - Funds held in escrow`,
+        reference: orderId,
+      });
+
+      await tx
+        .update(freelancerOrders)
+        .set({ 
+          status: "active",
+          escrowHeldAmount: orderTotal.toFixed(2),
+          paidAt: new Date(),
+          updatedAt: new Date()
+        })
+        .where(eq(freelancerOrders.id, orderId));
+    });
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    const [updatedBalance] = await db
+      .select()
+      .from(userBalances)
+      .where(eq(userBalances.userId, userId));
+
+    res.json({ 
+      success: true, 
+      message: "Payment successful. Order is now active.",
+      order: updatedOrder,
+      walletBalance: updatedBalance?.availableBalance || "0.00",
+      payment: {
+        method: "wallet",
+        amount: orderTotal.toFixed(2),
+        escrowHeld: orderTotal.toFixed(2),
+        platformFee: order.platformFeeAmount,
+      }
+    });
+  } catch (error) {
+    console.error("Error processing payment:", error);
+    res.status(500).json({ error: "Failed to process payment" });
   }
 });
 

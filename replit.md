@@ -3,7 +3,52 @@
 ## Overview
 Education platform with comprehensive content moderation system that detects and removes personal information, prevents unsafe content, and enforces platform policies with professional email notifications.
 
-## Latest: Email Images Migrated to Cloudinary (Dec 28, 2025)
+## Latest: Freelancer Services Wallet Payment (Dec 29, 2025)
+
+### Freelancer Marketplace Payment System
+**Endpoint:** `POST /api/freelancer/orders/:orderId/pay`
+
+**Features:**
+- Wallet-based payment from user's available balance
+- Escrow system: funds held until order completion
+- 15% platform fee calculated at checkout
+- Transaction ledger logging for audit trail
+
+**Payment Flow:**
+1. Client creates order via `POST /api/freelancer/orders/checkout/:serviceId`
+2. Order created with status `pending_payment`
+3. Client pays via `POST /api/freelancer/orders/:orderId/pay`
+4. System validates wallet balance
+5. Deducts total from client's wallet
+6. Creates transaction record (debit, completed)
+7. Stores `escrow_held_amount` on order
+8. Order status becomes `active`
+
+**Database Changes:**
+- Added `escrow_held_amount` column to `freelancer_orders` table
+- Added `paid_at` timestamp column to `freelancer_orders` table
+
+**Security:**
+- Only the order's client can pay
+- Balance validation before deduction
+- Atomic transaction (balance update + transaction record + order update)
+- Clear error messages for insufficient funds
+
+**Response includes:**
+- Updated order details
+- New wallet balance
+- Payment breakdown (method, amount, escrow held, platform fee)
+
+---
+
+## Email Templates Fixed (Dec 29, 2025)
+- Fixed Handlebars conditionals showing raw in user inboxes
+- `{{#if ...}}` and `{{/if}}` tags now properly stripped
+- Suspension, freelancer rejection, teacher rejection emails all clean
+
+---
+
+## Email Images Migrated to Cloudinary (Dec 28, 2025)
 - ✅ 227 email asset images uploaded to Cloudinary
 - ✅ Cloudinary URL mapping created: `server/config/email-assets-map.json`
 - ✅ Email service updated to use Cloudinary CDN instead of base64 encoding
