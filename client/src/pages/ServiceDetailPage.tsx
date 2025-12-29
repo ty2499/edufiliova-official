@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { useAuth } from '@/hooks/useAuth';
+import { useFreelancerChat } from '@/contexts/FreelancerChatContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface ServicePackage {
   name: string;
@@ -27,10 +29,35 @@ export default function ServiceDetailPage() {
   const [, navigate] = useLocation();
   const [, params] = useRoute('/marketplace/services/:id');
   const serviceId = params?.id;
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
+  const { setIsChatOpen, setFreelancerInfo, setCurrentUserId } = useFreelancerChat();
+  const { toast } = useToast();
 
   const [selectedPackage, setSelectedPackage] = useState<'basic' | 'standard' | 'premium'>('basic');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleContactSeller = () => {
+    if (!user) {
+      toast({ title: 'Please sign in to contact the seller', variant: 'destructive' });
+      navigate('/login');
+      return;
+    }
+    
+    if (!freelancer || !profile) return;
+    
+    if (user.id === freelancer.id) {
+      toast({ title: 'You cannot message yourself', variant: 'destructive' });
+      return;
+    }
+
+    setFreelancerInfo({
+      id: freelancer.id,
+      name: freelancer.fullName || 'Freelancer',
+      avatarUrl: freelancer.profilePicture || null,
+    });
+    setCurrentUserId(profile.id);
+    setIsChatOpen(true);
+  };
 
   const { data, isLoading } = useQuery({
     queryKey: ['/api/marketplace/services', serviceId],
@@ -194,7 +221,12 @@ export default function ServiceDetailPage() {
                     {freelancer?.bio && (
                       <p className="text-gray-600 text-sm mt-2">{freelancer.bio}</p>
                     )}
-                    <Button variant="outline" className="mt-4">
+                    <Button 
+                      variant="outline" 
+                      className="mt-4"
+                      onClick={handleContactSeller}
+                      disabled={user?.id === freelancer?.id}
+                    >
                       <MessageSquare className="w-4 h-4 mr-2" />
                       Contact Seller
                     </Button>
