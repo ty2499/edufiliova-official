@@ -453,18 +453,35 @@ export class EmailService {
   }
 
   async sendTeacherUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
-    const content = `
-      <h1>Application Under Review</h1>
-      <p>Hello ${data.fullName},</p>
-      <p>Your teacher application is now under review by our team. We'll notify you as soon as there's an update.</p>
-      <p>Thank you for your patience.</p>
-    `;
-    return this.sendEmail({
-      to: email,
-      subject: 'Application Under Review - EduFiliova',
-      html: this.getGlobalTemplate('Application Under Review', content),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/teacher_application_under_review_template/email.html'),
+        'utf-8'
+      );
+
+      // Use bulletproof name replacement
+      html = this.forceReplaceName(html, data.fullName || 'Teacher');
+
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: '98fc7367ed0e72d7900d5717bd41ec08.png', path: path.join(imagesPath, '98fc7367ed0e72d7900d5717bd41ec08.png'), cid: 'teacherapp', contentType: 'image/png' },
+        { filename: '3d94f798ad2bd582f8c3afe175798088.png', path: path.join(imagesPath, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+      ];
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Your Teacher Application is Under Review - EduFiliova',
+        html,
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending teacher under review email:', error);
+      return false;
+    }
   }
 
   async sendApplicationSubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
@@ -806,48 +823,8 @@ export class EmailService {
   }
 
   async sendTeacherPendingEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/teacher_submission_template.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
-    
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
-
-    const fullName = data.fullName || 'Teacher';
-    
-    // ✅ USE BULLETPROOF NAME REPLACEMENT
-    html = this.forceReplaceName(html, fullName);
-    
-    // Final cleanup
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/98fc7367ed0e72d7900d5717bd41ec08.png', 'cid:teacher_banner');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
-    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
-
-    return this.sendEmail({
-      to: email,
-      subject: 'Application Under Review - Your Teacher Application at EduFiliova',
-      html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'teacher_banner.png', path: assetPath('98fc7367ed0e72d7900d5717bd41ec08_linking.png'), cid: 'teacher_banner', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'corner', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_linking.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'social', contentType: 'image/png' }
-      ]
-    });
+    // Redirect to under review email (same template)
+    return this.sendTeacherUnderReviewEmail(email, { fullName: data.fullName });
   }
 
   async sendSubscriptionConfirmationEmail(email: string, data: { customerName: string; planName: string; billingCycle: string; orderId: string; price: string; activationDate: string; nextBillingDate?: string; dashboardUrl?: string }): Promise<boolean> {
@@ -1806,30 +1783,6 @@ export class EmailService {
     }
   }
 
-  async sendTeacherUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
-    try {
-      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-under-review', 'template.html');
-      let html = fs.readFileSync(templatePath, 'utf-8');
-
-      const fullName = data.fullName || 'Teacher';
-
-      // USE BULLETPROOF NAME REPLACEMENT
-      html = this.forceReplaceName(html, fullName);
-
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
-
-      return this.sendEmail({
-        to: email,
-        subject: 'Your Application is Now Under Review - EduFiliova',
-        html,
-        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments: []
-      });
-    } catch (error) {
-      console.error('❌ Error sending teacher under review email:', error);
-      return false;
-    }
-  }
 
   async sendFreelancerUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
     try {
