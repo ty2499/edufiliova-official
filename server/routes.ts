@@ -18983,11 +18983,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Send cancellation email
           if (userEmail) {
             try {
-              const { sendSubscriptionCancellationEmail } = await import('./email.js');
+              const { emailService } = await import('./utils/email.js');
               const expiryDate = subscription.current_period_end 
                 ? new Date(subscription.current_period_end * 1000).toISOString()
                 : profile.planExpiry;
-              await sendSubscriptionCancellationEmail(userEmail, userName, planName, expiryDate);
+              await emailService.sendSubscriptionCancellationEmail(userEmail, userName, planName, expiryDate);
             } catch (emailError) {
               console.error('Failed to send cancellation email:', emailError);
             }
@@ -19025,8 +19025,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Send cancellation email
           if (userEmail) {
             try {
-              const { sendSubscriptionCancellationEmail } = await import('./email.js');
-              await sendSubscriptionCancellationEmail(userEmail, userName, planName, profile.planExpiry);
+              const { emailService } = await import('./utils/email.js');
+              await emailService.sendSubscriptionCancellationEmail(userEmail, userName, planName, profile.planExpiry);
             } catch (emailError) {
               console.error('Failed to send cancellation email:', emailError);
             }

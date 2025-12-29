@@ -946,6 +946,73 @@ export class EmailService {
     });
   }
 
+
+  async sendSubscriptionCancellationEmail(email: string, customerName: string, planName: string, expiryDate?: string): Promise<boolean> {
+    const baseUrl = this.getBaseUrl();
+    const formattedExpiryDate = expiryDate ? new Date(expiryDate).toLocaleDateString() : 'the end of your billing period';
+    
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Cancelled</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f7fa; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 0 auto; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .header { background-color: #0c332c; padding: 30px 40px; text-align: center; }
+    .content { padding: 40px; }
+    .info-box { background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #0c332c; }
+    .info-item { margin: 10px 0; font-size: 16px; }
+    .message { color: #64748b; font-size: 16px; line-height: 1.6; margin: 20px 0; }
+    .cta-button { display: inline-block; background-color: #0c332c; color: white !important; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; }
+    .footer { background: #0c332c; padding: 30px 40px; color: #ffffff; text-align: center; }
+    .footer-text { margin: 5px 0; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 style="color: #ffffff; margin: 0;">EduFiliova</h1>
+    </div>
+    <div class="content">
+      <h2 style="color: #1a1a1a; margin-top: 0;">Subscription Cancelled</h2>
+      <p style="color: #64748b;">Hello ${customerName || 'Valued Customer'},</p>
+      <p class="message">We're sorry to see you go. Your <strong>${planName}</strong> subscription has been cancelled.</p>
+      <div class="info-box">
+        <div class="info-item"><strong>Plan:</strong> ${planName}</div>
+        <div class="info-item"><strong>Access Until:</strong> ${formattedExpiryDate}</div>
+        <div class="info-item"><strong>Status:</strong> Cancelled</div>
+      </div>
+      <div class="message">
+        You'll continue to have full access to all premium features until <strong>${formattedExpiryDate}</strong>. After that, your account will switch to the free plan.
+      </div>
+      <div class="message">
+        Changed your mind? You can reactivate your subscription anytime before it expires.
+      </div>
+      <div style="text-align: center;">
+        <a href="${baseUrl}/?page=student-dashboard" class="cta-button">Visit Your Dashboard</a>
+      </div>
+      <div class="message" style="margin-top: 30px; font-size: 14px; color: #718096;">
+        If you have any questions or feedback about why you cancelled, we'd love to hear from you. Simply reply to this email or contact our support team.
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer-text">Thank you for being part of the EduFiliova community!</div>
+      <div class="footer-text">&copy; ${new Date().getFullYear()} EduFiliova. All rights reserved.</div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    return this.sendEmail({
+      to: email,
+      subject: `Your ${planName} Subscription Has Been Cancelled`,
+      html,
+      from: `"EduFiliova" <support@edufiliova.com>`
+    });
+  }
   async sendPaymentFailedEmail(email: string, data: { customerName: string; orderId: string; amount: string; reason?: string; retryPaymentUrl?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const htmlPath = path.resolve(process.cwd(), 'attached_assets/payment_failed_template.html');
