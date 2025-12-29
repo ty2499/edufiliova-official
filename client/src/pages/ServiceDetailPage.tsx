@@ -95,7 +95,7 @@ export default function ServiceDetailPage() {
 
   const service = data?.service;
   const reviews: Review[] = reviewsData?.reviews || [];
-  const freelancer = data?.freelancer;
+  const freelancer = service?.freelancer;
 
   if (!service && !isLoading) {
     return (
