@@ -238,7 +238,7 @@ router.get("/payment-gateways", async (_req, res: Response) => {
     const stripePublishableKey = await getStripePublishableKey();
     
     const alwaysShowGateways = ['paypal'];
-    const cardGateways = ['stripe', 'dodo', 'dodopayments', 'flutterwave', 'paynow'];
+    const cardGateways = ['stripe', 'dodo', 'dodopay', 'dodopayments', 'flutterwave', 'paynow', 'vodapay'];
     
     const filteredGateways: any[] = [];
     let primaryCardGateway: any = null;
@@ -249,19 +249,19 @@ router.get("/payment-gateways", async (_req, res: Response) => {
       if (alwaysShowGateways.includes(gatewayId)) {
         filteredGateways.push({
           id: g.gatewayId,
-          name: g.name,
-          displayName: g.displayName || g.name,
+          name: g.gatewayName || g.gatewayId,
+          displayName: g.gatewayName || g.gatewayId,
           isPrimary: g.isPrimary,
-          logoUrl: g.logoUrl,
+          logoUrl: null,
         });
       } else if (cardGateways.includes(gatewayId)) {
         if (g.isPrimary || !primaryCardGateway) {
           primaryCardGateway = {
             id: g.gatewayId,
-            name: g.name,
-            displayName: g.displayName || g.name,
+            name: g.gatewayName || g.gatewayId,
+            displayName: g.gatewayName || g.gatewayId,
             isPrimary: g.isPrimary,
-            logoUrl: g.logoUrl,
+            logoUrl: null,
           };
         }
       }

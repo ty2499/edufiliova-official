@@ -28,12 +28,16 @@ interface PaymentGateway {
 export default function ServiceCheckoutPage() {
   const [, navigate] = useLocation();
   const [, params] = useRoute('/checkout/service/:id');
-  const serviceId = params?.id;
   const { toast } = useToast();
   const { user } = useAuth();
 
   const searchParams = new URLSearchParams(window.location.search);
   const packageTier = searchParams.get('package') || 'basic';
+  
+  // Extract just the UUID from the id param (handles both ? and encoded %3F)
+  const rawId = params?.id || '';
+  const decodedId = decodeURIComponent(rawId);
+  const serviceId = decodedId.split('?')[0];
 
   const [requirements, setRequirements] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<string>('');

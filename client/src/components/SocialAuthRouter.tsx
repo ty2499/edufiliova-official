@@ -18,7 +18,8 @@ export function SocialAuthRouter() {
   const isSocialAuthRoute = location.startsWith('/auth/callback') ||
                            location.startsWith('/profile-completion') ||
                            location.startsWith('/role-selection') ||
-                           location.startsWith('/checkout');
+                           location === '/checkout/auth' ||
+                           location === '/checkout/role-selection';
 
   // Only render if we're on a social auth route
   if (!isSocialAuthRoute) {
