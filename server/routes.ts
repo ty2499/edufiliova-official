@@ -6194,7 +6194,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/vouchers/bulk", requireAuth, requireAdmin, async (req, res) => {
     try {
       const userId = (req as AuthenticatedRequest).user?.id;
-      const { count, amount, description, recipientEmail, recipientName, expiresAt } = req.body;
+      const { count, amount, description, expiresAt, recipients, sendEmail, emailDistributionMode } = req.body;
+
+      console.log("📧 Bulk voucher request:", { count, amount, sendEmail, emailDistributionMode, recipientsCount: recipients?.length });
 
       if (!count || count < 1 || count > 100) {
         return res.status(400).json({ error: "Count must be between 1 and 100" });
@@ -6207,11 +6209,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const vouchers = [];
       for (let i = 0; i < count; i++) {
         const code = generateVoucherCode();
+        const recipient = recipients && recipients[i] ? recipients[i] : (recipients && recipients[0] ? recipients[0] : null);
         
         const voucher = await storage.createVoucher({
           code: code.toUpperCase(),
           amount: amount.toString(),
-          description: description || `Bulk voucher for ${recipientName || "recipient"}`,
+          description: description || `Gift voucher${recipient?.name ? ` for ${recipient.name}` : ""}`,
           maxRedemptions: 1,
           expiresAt: expiresAt ? new Date(expiresAt) : null,
           isActive: true,
@@ -6221,28 +6224,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
         vouchers.push(voucher);
       }
 
-      console.log("📧 Bulk voucher email check - recipientEmail:", recipientEmail, "vouchers count:", vouchers.length);
-      // Send email with voucher codes if recipient email provided
-      if (recipientEmail && vouchers.length > 0) {
-        try {
-          const { emailService } = await import("./utils/email.js") as any;
-          const emailResult = await emailService.sendEmail({
-            to: recipientEmail,
-            subject: `Your ${vouchers.length} Voucher Code(s) - EduFiliova`,
-            html: `<h2>Hello ${recipientName || "Valued Customer"},</h2><p>You have received ${vouchers.length} voucher code(s) worth $${amount} each:</p><ul>${vouchers.map(v => `<li><strong>${v.code}</strong> - $${amount}</li>`).join("")}</ul><p>Use these codes at checkout to redeem your credit.</p><p>Best regards,<br>EduFiliova Team</p>`
-          });
-        } catch (emailError) {
-          console.error("❌ Failed to send voucher email:", emailError);
+      const emailResults: { recipient: string; success: boolean; error?: string }[] = [];
+      
+      if (sendEmail && recipients && recipients.length > 0) {
+        const { emailService } = await import("./utils/email.js") as any;
+        
+        if (emailDistributionMode === 'single') {
+          const recipient = recipients[0];
+          if (recipient?.email) {
+            try {
+              console.log("📧 Sending all vouchers to single recipient:", recipient.email);
+              const result = await emailService.sendEmail({
+                to: recipient.email,
+                subject: `Your ${vouchers.length} Voucher Code(s) - EduFiliova`,
+                html: `<h2>Hello ${recipient.name || "Valued Customer"},</h2><p>You have received ${vouchers.length} voucher code(s) worth $${amount} each:</p><ul>${vouchers.map(v => `<li><strong>${v.code}</strong> - $${amount}</li>`).join("")}</ul><p>Use these codes at checkout to redeem your credit.</p><p>Best regards,<br>EduFiliova Team</p>`
+              });
+              console.log("✅ Email sent result:", result);
+              emailResults.push({ recipient: recipient.email, success: result });
+            } catch (emailError: any) {
+              console.error("❌ Failed to send voucher email:", emailError);
+              emailResults.push({ recipient: recipient.email, success: false, error: emailError.message });
+            }
+          }
+        } else {
+          for (let i = 0; i < vouchers.length; i++) {
+            const recipient = recipients[i];
+            const voucher = vouchers[i];
+            if (recipient?.email && voucher) {
+              try {
+                console.log(`📧 Sending voucher ${i + 1} to:`, recipient.email);
+                const result = await emailService.sendEmail({
+                  to: recipient.email,
+                  subject: `Your Voucher Code - EduFiliova`,
+                  html: `<h2>Hello ${recipient.name || "Valued Customer"},</h2><p>You have received a voucher code worth $${amount}:</p><p><strong>${voucher.code}</strong></p><p>Use this code at checkout to redeem your credit.</p><p>Best regards,<br>EduFiliova Team</p>`
+                });
+                emailResults.push({ recipient: recipient.email, success: result });
+              } catch (emailError: any) {
+                console.error("❌ Failed to send voucher email to", recipient.email, ":", emailError);
+                emailResults.push({ recipient: recipient.email, success: false, error: emailError.message });
+              }
+            }
+          }
         }
       }
 
-      res.json({ success: true, vouchers, count: vouchers.length });
+      console.log("📧 Email results:", emailResults);
+      res.json({ success: true, vouchers, count: vouchers.length, emailResults });
     } catch (error: any) {
       console.error("Bulk create voucher error:", error);
       res.status(500).json({ error: "Failed to create vouchers" });
     }
   });
-
   // Get all vouchers (admin only)
   app.get("/api/admin/vouchers", requireAuth, requireAdmin, async (req, res) => {
     try {
