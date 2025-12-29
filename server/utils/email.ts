@@ -710,35 +710,39 @@ export class EmailService {
   }
 
   async sendFreelancerApprovalEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/freelancer-application-approved/template.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/freelancer_application_approved_template/email.html'),
+        'utf-8'
+      );
 
-    // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
-    
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+      // Use the bulletproof name replacement
+      html = this.forceReplaceName(html, data.fullName || 'Freelancer');
 
-    const fullName = data.fullName || 'Freelancer';
-    
-    // ✅ USE BULLETPROOF NAME REPLACEMENT
-    html = this.forceReplaceName(html, fullName);
-    
-    // Final cleanup
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
+      // Attachments with CID references for embedded images
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'bbe5722d1ffd3c84888e18335965d5e5.png', path: path.join(imagesPath, 'bbe5722d1ffd3c84888e18335965d5e5.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: '3c3a32d57b55881831d31127dddaf32b.png', path: path.join(imagesPath, '3c3a32d57b55881831d31127dddaf32b.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'd320764f7298e63f6b035289d4219bd8.png', path: path.join(imagesPath, 'd320764f7298e63f6b035289d4219bd8.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: '5079c2203be6bb217e9e7c150f5f0d60.png', path: path.join(imagesPath, '5079c2203be6bb217e9e7c150f5f0d60.png'), cid: 'freelancerapp', contentType: 'image/png' },
+        { filename: '3d94f798ad2bd582f8c3afe175798088.png', path: path.join(imagesPath, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: 'c147000ffb2efef7ba64fa6ce5415a30.png', path: path.join(imagesPath, 'c147000ffb2efef7ba64fa6ce5415a30.png'), cid: 'freelancerbanner', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+      ];
 
-    return this.sendEmail({
-      to: email,
-      subject: 'Welcome Aboard! Your Freelancer Application is Approved - EduFiliova',
-      html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [] // Images are handled via Cloudinary URLs in sendEmail
-    });
+      return this.sendEmail({
+        to: email,
+        subject: 'Welcome Aboard! Your Freelancer Application is Approved - EduFiliova',
+        html,
+        from: `"EduFiliova Support" <support@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending freelancer approval email:', error);
+      return false;
+    }
   }
 
   async sendFreelancerApplicationStatusEmail(email: string, data: { fullName: string; status: 'pending' | 'under_review' | 'approved' | 'rejected'; rejectionReason?: string }): Promise<boolean> {
