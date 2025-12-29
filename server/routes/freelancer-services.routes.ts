@@ -160,6 +160,55 @@ router.put("/:id", requireAuth, requireRole(['freelancer']), async (req: Authent
   }
 });
 
+router.patch("/:id", requireAuth, requireRole(['freelancer']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { id } = req.params;
+    const { status } = req.body;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [existing] = await db
+      .select()
+      .from(freelancerServices)
+      .where(and(
+        eq(freelancerServices.id, id),
+        eq(freelancerServices.freelancerId, userId)
+      ));
+
+    if (!existing) {
+      return res.status(404).json({ error: "Service not found" });
+    }
+
+    if (status && !['draft', 'published', 'paused'].includes(status)) {
+      return res.status(400).json({ error: "Invalid status" });
+    }
+
+    if (status === 'published') {
+      const packages = existing.packages as any;
+      if (!packages?.basic?.price) {
+        return res.status(400).json({ error: "Service must have at least a basic package with price to publish" });
+      }
+    }
+
+    const [updated] = await db
+      .update(freelancerServices)
+      .set({ 
+        ...(status && { status }),
+        updatedAt: new Date() 
+      })
+      .where(eq(freelancerServices.id, id))
+      .returning();
+
+    res.json({ success: true, service: updated });
+  } catch (error) {
+    console.error("Error updating service status:", error);
+    res.status(500).json({ error: "Failed to update service" });
+  }
+});
+
 router.post("/:id/publish", requireAuth, requireRole(['freelancer']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
