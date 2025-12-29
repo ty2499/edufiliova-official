@@ -9,7 +9,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { 
   ArrowLeft, Star, Clock, RefreshCw, Check, Heart, Share2, 
-  MessageSquare, Package, Loader2, ChevronLeft, ChevronRight
+  MessageSquare, Package, Loader2, ChevronLeft, ChevronRight, BadgeCheck
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { useAuth } from '@/hooks/useAuth';
@@ -244,7 +244,12 @@ export default function ServiceDetailPage() {
                     <AvatarFallback className="text-xl">{freelancer?.fullName?.[0] || 'F'}</AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-lg">{freelancer?.fullName}</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-semibold text-lg">{freelancer?.fullName}</h3>
+                      {freelancer?.isVerified && (
+                        <BadgeCheck className="w-5 h-5 text-blue-500 fill-blue-500" />
+                      )}
+                    </div>
                     {freelancer?.displayLevel && (
                       <Badge variant="secondary" className="mb-2">{freelancer.displayLevel}</Badge>
                     )}
@@ -255,10 +260,10 @@ export default function ServiceDetailPage() {
                       variant="outline" 
                       className="mt-4"
                       onClick={handleContactSeller}
-                      disabled={profile?.id === freelancer?.id}
+                      disabled={!!user && profile?.id === freelancer?.id}
                     >
                       <MessageSquare className="w-4 h-4 mr-2" />
-                      Contact Seller
+                      {!user ? 'Sign in to Contact' : 'Contact Seller'}
                     </Button>
                   </div>
                 </div>
