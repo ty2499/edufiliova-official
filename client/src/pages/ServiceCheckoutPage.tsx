@@ -461,7 +461,7 @@ export default function ServiceCheckoutPage() {
                 </Button>
                 <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
                   <Shield className="w-4 h-4" />
-                  <span>Secure payment protected by escrow</span>
+                  <span>Secure payment with buyer protection</span>
                 </div>
 
                 <Separator className="my-4" />
@@ -469,7 +469,7 @@ export default function ServiceCheckoutPage() {
                 <div className="space-y-3">
                   <h4 className="font-medium text-sm text-gray-900">How This Works</h4>
                   <ol className="text-xs text-gray-600 space-y-2 list-decimal list-inside">
-                    <li>Your payment is held securely in escrow until the order is completed.</li>
+                    <li>Your payment is held securely until the order is completed.</li>
                     <li>The freelancer receives your requirements and begins working on your order.</li>
                     <li>Once the work is delivered, you have 3 days to review and request revisions if needed.</li>
                     <li>Approve the delivery to release the payment to the freelancer.</li>

@@ -279,9 +279,9 @@ export default function OrderTrackerPage() {
                   <span>Total</span>
                   <span>${parseFloat(order.amountTotal).toFixed(2)}</span>
                 </div>
-                {order.escrowHeldAmount && (
+                {order.escrowHeldAmount && order.status !== 'completed' && (
                   <div className="flex justify-between text-sm text-gray-500">
-                    <span>Escrow Held</span>
+                    <span>Payment Held</span>
                     <span>${parseFloat(order.escrowHeldAmount).toFixed(2)}</span>
                   </div>
                 )}
