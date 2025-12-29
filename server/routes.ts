@@ -6190,6 +6190,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Bulk create vouchers (admin only)
+  app.post("/api/admin/vouchers/bulk", requireAuth, requireAdmin, async (req, res) => {
+    try {
+      const userId = (req as AuthenticatedRequest).user?.id;
+      const { count, amount, description, recipientEmail, recipientName, expiresAt } = req.body;
+
+      if (!count || count < 1 || count > 100) {
+        return res.status(400).json({ error: "Count must be between 1 and 100" });
+      }
+
+      if (!amount || parseFloat(amount) <= 0) {
+        return res.status(400).json({ error: "Valid amount is required" });
+      }
+
+      const vouchers = [];
+      for (let i = 0; i < count; i++) {
+        const code = generateVoucherCode();
+        
+        const voucher = await storage.createVoucher({
+          code: code.toUpperCase(),
+          amount: amount.toString(),
+          description: description || `Bulk voucher for ${recipientName || "recipient"}`,
+          maxRedemptions: 1,
+          expiresAt: expiresAt ? new Date(expiresAt) : null,
+          isActive: true,
+          createdBy: userId,
+        });
+        
+        vouchers.push(voucher);
+      }
+
+      // Send email with voucher codes if recipient email provided
+      if (recipientEmail && vouchers.length > 0) {
+        try {
+          const { emailService } = await import("./utils/email.js") as any;
+          await emailService.sendEmail({
+            to: recipientEmail,
+            subject: `Your ${vouchers.length} Voucher Code(s) - EduFiliova`,
+            html: `<h2>Hello ${recipientName || "Valued Customer"},</h2><p>You have received ${vouchers.length} voucher code(s) worth $${amount} each:</p><ul>${vouchers.map(v => `<li><strong>${v.code}</strong> - $${amount}</li>`).join("")}</ul><p>Use these codes at checkout to redeem your credit.</p><p>Best regards,<br>EduFiliova Team</p>`
+          });
+        } catch (emailError) {
+          console.error("Failed to send voucher email:", emailError);
+        }
+      }
+
+      res.json({ success: true, vouchers, count: vouchers.length });
+    } catch (error: any) {
+      console.error("Bulk create voucher error:", error);
+      res.status(500).json({ error: "Failed to create vouchers" });
+    }
+  });
+
   // Get all vouchers (admin only)
   app.get("/api/admin/vouchers", requireAuth, requireAdmin, async (req, res) => {
     try {
