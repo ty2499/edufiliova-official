@@ -142,8 +142,8 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
     >
       <div className="space-y-6">
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Search className="h-4 w-4" /> Explore Learning
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Search className="h-4 w-4 text-[#0C332C]" /> Explore Learning
           </h3>
           <MegaMenuGrid columns={3}>
             {filteredExplore.map((item, index) => (
@@ -162,8 +162,8 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
 
         {filteredStudent.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <Library className="h-4 w-4" /> My Learning
+            <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <Library className="h-4 w-4 text-[#0C332C]" /> My Learning
             </h3>
             <MegaMenuGrid columns={3}>
               {filteredStudent.map((item, index) => (
@@ -182,8 +182,8 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
         )}
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Award className="h-4 w-4" /> Certificates
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Award className="h-4 w-4 text-[#0C332C]" /> Certificates
           </h3>
           <MegaMenuGrid columns={3}>
             {filteredCertificates.map((item, index) => (
@@ -202,8 +202,8 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
 
         {filteredGetStarted.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <UserPlus className="h-4 w-4" /> Get Started
+            <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <UserPlus className="h-4 w-4 text-[#0C332C]" /> Get Started
             </h3>
             <MegaMenuGrid columns={3}>
               {filteredGetStarted.map((item, index) => (

@@ -83,8 +83,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
     >
       <div className="space-y-6">
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Info className="h-4 w-4" /> Company
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Info className="h-4 w-4 text-[#0C332C]" /> Company
           </h3>
           <MegaMenuGrid columns={4}>
             {companyPages.map((item, index) => (
@@ -102,8 +102,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <GraduationCap className="h-4 w-4" /> Education
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <GraduationCap className="h-4 w-4 text-[#0C332C]" /> Education
           </h3>
           <MegaMenuGrid columns={4}>
             {educationPages.map((item, index) => (
@@ -121,8 +121,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Store className="h-4 w-4" /> Marketplace
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Store className="h-4 w-4 text-[#0C332C]" /> Marketplace
           </h3>
           <MegaMenuGrid columns={4}>
             {marketplacePages.map((item, index) => (
@@ -140,8 +140,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <CreditCard className="h-4 w-4" /> Pricing Plans
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <CreditCard className="h-4 w-4 text-[#0C332C]" /> Pricing Plans
           </h3>
           <MegaMenuGrid columns={4}>
             {pricingPages.map((item, index) => (
@@ -159,8 +159,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Settings className="h-4 w-4" /> Account & Orders
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Settings className="h-4 w-4 text-[#0C332C]" /> Account & Orders
           </h3>
           <MegaMenuGrid columns={4}>
             {accountPages.map((item, index) => (
@@ -178,8 +178,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <HelpCircle className="h-4 w-4" /> Help & Support
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <HelpCircle className="h-4 w-4 text-[#0C332C]" /> Help & Support
           </h3>
           <MegaMenuGrid columns={4}>
             {supportPages.map((item, index) => (
@@ -197,8 +197,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Shield className="h-4 w-4" /> Legal & Policies
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Shield className="h-4 w-4 text-[#0C332C]" /> Legal & Policies
           </h3>
           <MegaMenuGrid columns={3}>
             {legalPages.map((item, index) => (

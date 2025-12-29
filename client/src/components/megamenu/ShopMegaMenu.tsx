@@ -127,8 +127,8 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
     >
       <div className="space-y-6">
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Store className="h-4 w-4" /> Explore
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Store className="h-4 w-4 text-[#0C332C]" /> Explore
           </h3>
           <MegaMenuGrid columns={3}>
             {exploreItems.map((item, index) => (
@@ -146,8 +146,8 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <FolderOpen className="h-4 w-4" /> My Account
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <FolderOpen className="h-4 w-4 text-[#0C332C]" /> My Account
           </h3>
           <MegaMenuGrid columns={3}>
             {filteredAccount.map((item, index) => (
@@ -166,8 +166,8 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
 
         {filteredSell.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <PlusCircle className="h-4 w-4" /> Sell Your Work
+            <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <PlusCircle className="h-4 w-4 text-[#0C332C]" /> Sell Your Work
             </h3>
             <MegaMenuGrid columns={3}>
               {filteredSell.map((item, index) => (
@@ -186,8 +186,8 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
         )}
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <CreditCard className="h-4 w-4" /> Pricing
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <CreditCard className="h-4 w-4 text-[#0C332C]" /> Pricing
           </h3>
           <MegaMenuGrid columns={2}>
             {pricingItems.map((item, index) => (

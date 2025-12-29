@@ -53,8 +53,8 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
       ctaOnClick={() => handleNavigate("education-pricing")}
     >
       <div>
-        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-          <Coins className="h-4 w-4" /> Pricing Plans
+        <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+          <Coins className="h-4 w-4 text-[#0C332C]" /> Pricing Plans
         </h3>
         <MegaMenuGrid columns={2}>
           {pricingOptions.map((item, index) => (

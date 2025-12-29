@@ -136,8 +136,8 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
     >
       <div className="space-y-6">
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <UserPlus className="h-4 w-4" /> Get Started
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <UserPlus className="h-4 w-4 text-[#0C332C]" /> Get Started
           </h3>
           <MegaMenuGrid columns={3}>
             {filteredGetStarted.map((item, index) => (
@@ -155,8 +155,8 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <ShoppingBag className="h-4 w-4" /> Marketplace
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <ShoppingBag className="h-4 w-4 text-[#0C332C]" /> Marketplace
           </h3>
           <MegaMenuGrid columns={3}>
             {marketplaceItems.map((item, index) => (
@@ -175,8 +175,8 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
 
         {filteredPortfolio.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <IdCard className="h-4 w-4" /> Portfolio & Services
+            <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <IdCard className="h-4 w-4 text-[#0C332C]" /> Portfolio & Services
             </h3>
             <MegaMenuGrid columns={3}>
               {filteredPortfolio.map((item, index) => (
@@ -196,8 +196,8 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
 
         {filteredDashboard.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" /> Dashboard & Earnings
+            <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <BarChart3 className="h-4 w-4 text-[#0C332C]" /> Dashboard & Earnings
             </h3>
             <MegaMenuGrid columns={3}>
               {filteredDashboard.map((item, index) => (

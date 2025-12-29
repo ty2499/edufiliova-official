@@ -93,8 +93,8 @@ export const StudentsMegaMenu = ({ isOpen, onNavigate, onClose }: StudentsMegaMe
     >
       <div className="space-y-6">
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Gauge className="h-4 w-4" /> Dashboard
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Gauge className="h-4 w-4 text-[#0C332C]" /> Dashboard
           </h3>
           <MegaMenuGrid columns={3}>
             {dashboardItems.map((item, index) => (
@@ -112,8 +112,8 @@ export const StudentsMegaMenu = ({ isOpen, onNavigate, onClose }: StudentsMegaMe
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <GraduationCap className="h-4 w-4" /> Learning
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <GraduationCap className="h-4 w-4 text-[#0C332C]" /> Learning
           </h3>
           <MegaMenuGrid columns={3}>
             {learningItems.map((item, index) => (
@@ -131,8 +131,8 @@ export const StudentsMegaMenu = ({ isOpen, onNavigate, onClose }: StudentsMegaMe
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <Users className="h-4 w-4" /> Community
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Users className="h-4 w-4 text-[#0C332C]" /> Community
           </h3>
           <MegaMenuGrid columns={3}>
             {communityItems.map((item, index) => (

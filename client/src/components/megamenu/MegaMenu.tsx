@@ -34,12 +34,12 @@ export const MegaMenu = ({
           {(title || subtitle) && (
             <div className="mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
               {title && (
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                <h2 className="text-xl font-bold text-[#0C332C] dark:text-white mb-1">
                   {title}
                 </h2>
               )}
               {subtitle && (
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-[#0C332C]/70 dark:text-gray-400">
                   {subtitle}
                 </p>
               )}
@@ -53,13 +53,13 @@ export const MegaMenu = ({
             
             {promoImage && (
               <div className="hidden lg:block w-72 flex-shrink-0">
-                <div className="relative h-full min-h-[320px] rounded-2xl overflow-hidden bg-gradient-to-br from-emerald-500 to-teal-600">
+                <div className="relative h-full min-h-[320px] rounded-2xl overflow-hidden bg-gradient-to-br from-[#0C332C] to-[#164038]">
                   <img 
                     src={promoImage} 
                     alt={promoTitle || "Promotion"} 
                     className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-90"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 via-emerald-700/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C332C]/90 via-[#0C332C]/50 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                     {promoTitle && (
                       <h3 className="text-2xl font-bold mb-1 leading-tight">
@@ -67,7 +67,7 @@ export const MegaMenu = ({
                       </h3>
                     )}
                     {promoSubtitle && (
-                      <p className="text-sm text-emerald-100 mb-3 opacity-90">
+                      <p className="text-sm text-[#A0FAB2] mb-3 opacity-90">
                         {promoSubtitle}
                       </p>
                     )}
@@ -81,7 +81,7 @@ export const MegaMenu = ({
             <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
               <button
                 onClick={ctaOnClick}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold rounded-full hover:from-rose-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#0C332C] text-white font-semibold rounded-full hover:bg-[#0C332C]/90 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 {ctaText}
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,11 +122,11 @@ export const MegaMenuCategory = ({
       data-testid={testId}
     >
       <div className="flex items-start gap-3">
-        <div className="flex-shrink-0 w-10 h-10 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+        <div className="flex-shrink-0 w-10 h-10 bg-[#0C332C]/10 dark:bg-[#0C332C]/30 rounded-lg flex items-center justify-center text-[#0C332C] dark:text-[#A0FAB2] group-hover:scale-110 transition-transform">
           {icon}
         </div>
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-sm text-gray-900 dark:text-white mb-0.5 flex items-center gap-2">
+          <h4 className="font-semibold text-sm text-[#0C332C] dark:text-white mb-0.5 flex items-center gap-2">
             {title}
             {comingSoon && (
               <span className="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full font-medium">
@@ -135,12 +135,12 @@ export const MegaMenuCategory = ({
             )}
           </h4>
           {description && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+            <p className="text-xs text-[#0C332C]/70 dark:text-gray-400 line-clamp-2 mb-2">
               {description}
             </p>
           )}
           {!comingSoon ? (
-            <span className="text-xs font-semibold text-rose-500 hover:text-rose-600 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+            <span className="text-xs font-semibold text-[#0C332C] hover:text-[#0C332C]/80 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
               {linkText}
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -183,23 +183,23 @@ export const MegaMenuItem = ({ icon, title, description, onClick, badge, testId,
             <img src={image} alt={title} className="w-full h-full object-cover" />
           </div>
         ) : (
-          <div className={`flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 ${iconBg || 'bg-emerald-50 dark:bg-emerald-900/30'} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`}>
-            <div className={`text-base sm:text-lg ${iconColor || 'text-emerald-600 dark:text-emerald-400'}`}>
+          <div className={`flex-shrink-0 w-10 sm:w-12 h-10 sm:h-12 ${iconBg || 'bg-[#0C332C]/10 dark:bg-[#0C332C]/30'} rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform`}>
+            <div className={`text-base sm:text-lg ${iconColor || 'text-[#0C332C] dark:text-[#A0FAB2]'}`}>
               {icon}
             </div>
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-xs sm:text-sm text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+          <h4 className="font-semibold text-xs sm:text-sm text-[#0C332C] dark:text-white group-hover:text-[#0C332C]/80 dark:group-hover:text-[#A0FAB2] transition-colors">
             {title}
           </h4>
           {description && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 sm:mt-1 line-clamp-1">
+            <p className="text-xs text-[#0C332C]/70 dark:text-gray-400 mt-0.5 sm:mt-1 line-clamp-1">
               {description}
             </p>
           )}
           {badge && (
-            <span className="px-2 py-0.5 text-xs font-medium bg-emerald-500 text-white rounded-full inline-block mt-1">
+            <span className="px-2 py-0.5 text-xs font-medium bg-[#0C332C] text-white rounded-full inline-block mt-1">
               {badge}
             </span>
           )}
@@ -227,8 +227,8 @@ export const MegaMenuSection = ({ title, children, className = "", icon }: MegaM
     <div className={className}>
       {title && (
         <div className="flex items-center gap-2 mb-3 px-1 sm:px-2">
-          {icon && <div className="text-emerald-600 dark:text-emerald-400 text-sm sm:text-base">{icon}</div>}
-          <h3 className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">
+          {icon && <div className="text-[#0C332C] dark:text-[#A0FAB2] text-sm sm:text-base">{icon}</div>}
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 dark:text-gray-500 uppercase tracking-wide">
             {title}
           </h3>
         </div>
@@ -251,27 +251,27 @@ interface MegaMenuHighlightProps {
 
 export const MegaMenuHighlight = ({ image, title, description, buttonText, onClick, stats }: MegaMenuHighlightProps) => {
   return (
-    <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-2xl p-6 h-full flex flex-col border border-emerald-100 dark:border-emerald-800/50">
+    <div className="bg-gradient-to-br from-[#0C332C]/5 to-[#0C332C]/10 dark:from-[#0C332C]/20 dark:to-[#0C332C]/30 rounded-2xl p-6 h-full flex flex-col border border-[#0C332C]/10 dark:border-[#0C332C]/50">
       {image && (
         <div className="mb-4 rounded-xl overflow-hidden h-32">
           <img src={image} alt={title} className="w-full h-full object-cover" />
         </div>
       )}
-      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{title}</h3>
-      <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-1">{description}</p>
+      <h3 className="text-lg font-bold text-[#0C332C] dark:text-white mb-2">{title}</h3>
+      <p className="text-sm text-[#0C332C]/70 dark:text-gray-400 mb-4 flex-1">{description}</p>
       {stats && stats.length > 0 && (
         <div className="grid grid-cols-2 gap-3 mb-4">
           {stats.map((stat, index) => (
             <div key={index} className="text-center p-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-              <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400">{stat.value}</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">{stat.label}</div>
+              <div className="text-lg font-bold text-[#0C332C] dark:text-[#A0FAB2]">{stat.value}</div>
+              <div className="text-xs text-[#0C332C]/60 dark:text-gray-400">{stat.label}</div>
             </div>
           ))}
         </div>
       )}
       <button
         onClick={onClick}
-        className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]"
+        className="w-full bg-[#0C332C] hover:bg-[#0C332C]/90 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]"
         data-testid="megamenu-highlight-action"
       >
         {buttonText}

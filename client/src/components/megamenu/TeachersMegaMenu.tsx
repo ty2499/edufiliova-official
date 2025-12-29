@@ -135,8 +135,8 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
     >
       <div className="space-y-6">
         <div>
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-            <UserPlus className="h-4 w-4" /> Get Started
+          <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <UserPlus className="h-4 w-4 text-[#0C332C]" /> Get Started
           </h3>
           <MegaMenuGrid columns={3}>
             {filteredGetStarted.map((item, index) => (
@@ -155,8 +155,8 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
 
         {filteredTeaching.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <BookOpen className="h-4 w-4" /> Teaching Tools
+            <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-[#0C332C]" /> Teaching Tools
             </h3>
             <MegaMenuGrid columns={3}>
               {filteredTeaching.map((item, index) => (
@@ -176,8 +176,8 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
 
         {filteredManagement.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <Users className="h-4 w-4" /> Manage
+            <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <Users className="h-4 w-4 text-[#0C332C]" /> Manage
             </h3>
             <MegaMenuGrid columns={3}>
               {filteredManagement.map((item, index) => (
@@ -197,8 +197,8 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
 
         {filteredAnalytics.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" /> Analytics & Earnings
+            <h3 className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <BarChart3 className="h-4 w-4 text-[#0C332C]" /> Analytics & Earnings
             </h3>
             <MegaMenuGrid columns={3}>
               {filteredAnalytics.map((item, index) => (
