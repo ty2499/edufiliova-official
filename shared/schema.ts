@@ -5438,3 +5438,37 @@ export const insertFreelancerDeliverableSchema = createInsertSchema(freelancerDe
   createdAt: true,
 });
 
+// Freelancer Service Reviews table
+export const freelancerServiceReviews = pgTable("freelancer_service_reviews", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  serviceId: uuid("service_id").references(() => freelancerServices.id).notNull(),
+  orderId: uuid("order_id").references(() => freelancerOrders.id).notNull(),
+  reviewerId: uuid("reviewer_id").references(() => users.id).notNull(),
+  freelancerId: uuid("freelancer_id").references(() => users.id).notNull(),
+  rating: integer("rating").notNull(), // 1-5 stars
+  comment: text("comment"),
+  sellerResponse: text("seller_response"),
+  sellerRespondedAt: timestamp("seller_responded_at"),
+  isPublic: boolean("is_public").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  index("freelancer_reviews_serviceId_idx").on(table.serviceId),
+  index("freelancer_reviews_orderId_idx").on(table.orderId),
+  index("freelancer_reviews_reviewerId_idx").on(table.reviewerId),
+  index("freelancer_reviews_freelancerId_idx").on(table.freelancerId),
+  index("freelancer_reviews_rating_idx").on(table.rating),
+  index("freelancer_reviews_createdAt_idx").on(table.createdAt.desc()),
+]);
+
+export type FreelancerServiceReview = typeof freelancerServiceReviews.$inferSelect;
+export type InsertFreelancerServiceReview = typeof freelancerServiceReviews.$inferInsert;
+
+export const insertFreelancerServiceReviewSchema = createInsertSchema(freelancerServiceReviews).omit({
+  id: true,
+  sellerResponse: true,
+  sellerRespondedAt: true,
+  createdAt: true,
+  updatedAt: true,
+});
+

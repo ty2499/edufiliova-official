@@ -43,7 +43,10 @@ export default function ServiceDetailPage() {
       return;
     }
     
-    if (!freelancer || !profile) return;
+    if (!freelancer) {
+      toast({ title: 'Seller information not available', variant: 'destructive' });
+      return;
+    }
     
     if (user.id === freelancer.id) {
       toast({ title: 'You cannot message yourself', variant: 'destructive' });
@@ -55,7 +58,7 @@ export default function ServiceDetailPage() {
       name: freelancer.fullName || 'Freelancer',
       avatarUrl: freelancer.profilePicture || null,
     });
-    setCurrentUserId(profile.id);
+    setCurrentUserId(user.id);
     setIsChatOpen(true);
   };
 
