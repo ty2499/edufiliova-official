@@ -153,7 +153,7 @@ export default function ImageViewer({ isOpen, onClose, src, alt = 'Image', fileN
               variant="ghost"
               size="sm"
               onClick={handleDownload}
-              className="text-white hover:bg-white/20 border-0" transition-all duration-300
+              className="text-white hover:bg-white/20 border-0 transition-all duration-300"
               title="Download image"
             >
               <Download className="h-4 w-4" />
@@ -163,7 +163,7 @@ export default function ImageViewer({ isOpen, onClose, src, alt = 'Image', fileN
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="text-white hover:bg-white/20 border-0" transition-all duration-300
+              className="text-white hover:bg-white/20 border-0 transition-all duration-300"
               title="Close (Esc)"
             >
               <X className="h-5 w-5" />
@@ -202,7 +202,7 @@ export default function ImageViewer({ isOpen, onClose, src, alt = 'Image', fileN
               variant="ghost"
               size="sm"
               onClick={handleZoomOut}
-              className="text-white hover:bg-white/20 border-0" transition-all duration-300
+              className="text-white hover:bg-white/20 border-0 transition-all duration-300"
               title="Zoom out (-)"
             >
               <ZoomOut className="h-4 w-4" />
@@ -216,7 +216,7 @@ export default function ImageViewer({ isOpen, onClose, src, alt = 'Image', fileN
               variant="ghost"
               size="sm"
               onClick={handleZoomIn}
-              className="text-white hover:bg-white/20 border-0" transition-all duration-300
+              className="text-white hover:bg-white/20 border-0 transition-all duration-300"
               title="Zoom in (+)"
             >
               <ZoomIn className="h-4 w-4" />
@@ -226,7 +226,7 @@ export default function ImageViewer({ isOpen, onClose, src, alt = 'Image', fileN
               variant="ghost"
               size="sm"
               onClick={handleRotate}
-              className="text-white hover:bg-white/20 border-0" transition-all duration-300
+              className="text-white hover:bg-white/20 border-0 transition-all duration-300"
               title="Rotate (R)"
             >
               <RotateCw className="h-4 w-4" />
@@ -236,7 +236,7 @@ export default function ImageViewer({ isOpen, onClose, src, alt = 'Image', fileN
               variant="ghost"
               size="sm"
               onClick={resetView}
-              className="text-white hover:bg-white/20 border-0" transition-all duration-300
+              className="text-white hover:bg-white/20 border-0 transition-all duration-300"
               title="Reset view (0)"
             >
               Reset

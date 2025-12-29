@@ -321,7 +321,7 @@ export const AnnouncementFeed: React.FC<AnnouncementFeedProps> = ({
                       variant="ghost"
                       size="sm"
                       onClick={() => toggleExpanded(announcement.id)}
-                      className="mt-2 p-0 h-auto text-[#A0FAB2] hover:text-[#A0FAB2]/80 font-medium" transition-all duration-300
+                      className="mt-2 p-0 h-auto text-[#A0FAB2] hover:text-[#A0FAB2]/80 font-medium transition-all duration-300"
                       data-testid={`expand-button-${announcement.id}`}
                     >
                       {isExpanded ? (

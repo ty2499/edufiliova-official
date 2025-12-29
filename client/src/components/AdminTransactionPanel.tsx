@@ -526,7 +526,7 @@ export default function AdminTransactionPanel() {
             {stats?.userWallets && stats.userWallets.length > 0 ? (
               <>
                 {stats.userWallets.slice((walletUsersPage - 1) * 5, walletUsersPage * 5).map((wallet) => (
-                  <div key={wallet.userId} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors" transition-all duration-300>
+                  <div key={wallet.userId} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all duration-300">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <p className="font-medium text-sm truncate">{wallet.userName}</p>
@@ -602,7 +602,7 @@ export default function AdminTransactionPanel() {
               {stats?.topFreelancers && stats.topFreelancers.length > 0 ? (
                 <>
                   {stats.topFreelancers.slice((topEarnersPage - 1) * 5, topEarnersPage * 5).map((freelancer, index) => (
-                    <div key={freelancer.userId} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors" transition-all duration-300>
+                    <div key={freelancer.userId} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all duration-300">
                       <div className="flex items-center gap-3">
                         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm">
                           {(topEarnersPage - 1) * 5 + index + 1}
@@ -668,7 +668,7 @@ export default function AdminTransactionPanel() {
               {stats?.recentTransactions && stats.recentTransactions.length > 0 ? (
                 <>
                   {stats.recentTransactions.slice((recentTransactionsPage - 1) * 5, recentTransactionsPage * 5).map((transaction) => (
-                    <div key={transaction.id} className="flex items-center justify-between p-2 rounded hover:bg-gray-50 transition-colors" transition-all duration-300>
+                    <div key={transaction.id} className="flex items-center justify-between p-2 rounded hover:bg-gray-50 transition-all duration-300">
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm truncate">{transaction.userName}</p>
                         <p className="text-xs text-muted-foreground truncate">{transaction.description}</p>
@@ -863,7 +863,7 @@ export default function AdminTransactionPanel() {
                           <Button
                             size="sm"
                             onClick={() => handleProcessPayout(transaction, 'approve')}
-                            className="bg-primary hover:bg-primary" transition-all duration-300
+                            className="bg-primary hover:bg-primary transition-all duration-300"
                             data-testid={`button-approve-${transaction.id}`}
                           >
                             <CheckmarkIcon size="sm" />
@@ -1020,7 +1020,7 @@ export default function AdminTransactionPanel() {
                             <Button
                               size="sm"
                               onClick={() => handleProcessAccount(account, 'approve')}
-                              className="bg-primary hover:bg-primary" transition-all duration-300
+                              className="bg-primary hover:bg-primary transition-all duration-300"
                               data-testid={`button-approve-account-${account.id}`}
                             >
                               <CheckmarkIcon size="sm" />

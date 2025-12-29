@@ -619,7 +619,7 @@ export default function MessageComposer({
                   setFilePreview(null);
                   setUploadProgress(prev => prev.filter(p => p.file !== selectedFile));
                 }}
-                className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded transition-colors" transition-all duration-300
+                className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded transition-all duration-300"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -660,7 +660,7 @@ export default function MessageComposer({
                       fileInputRef.current?.click();
                       fileInputRef.current?.setAttribute('accept', accept);
                     }}
-                    className="flex items-center space-x-3 w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors" transition-all duration-300
+                    className="flex items-center space-x-3 w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-all duration-300"
                   >
                     <Icon className={cn('w-5 h-5', color)} />
                     <span className="text-sm">{label}</span>

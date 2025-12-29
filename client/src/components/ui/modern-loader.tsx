@@ -1,3 +1,4 @@
+import React from 'react'
 import { cn } from '@/lib/utils'
 
 // Modern Pulse Loader
@@ -129,7 +130,7 @@ export const InfiniteScrollLoader = ({
       ) : (
         <button 
           onClick={onLoadMore}
-          className="text-foreground hover:text-foreground/80 text-sm" transition-all duration-300
+          className="text-foreground hover:text-foreground/80 text-sm transition-all duration-300"
         >
           Load more
         </button>

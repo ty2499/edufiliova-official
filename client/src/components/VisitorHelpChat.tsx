@@ -810,7 +810,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                 // Initialize audio context on first user interaction
                 initializeAudioContext();
               }}
-              className="h-14 w-14 md:h-16 md:w-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 relative" transition-all duration-300
+              className="h-14 w-14 md:h-16 md:w-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 relative"
               style={{ backgroundColor: '#0C332C' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#a0fab2'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0C332C'}
@@ -854,7 +854,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                   {isMobile && (
                     <button 
                       onClick={() => setIsOpen(false)}
-                      className="p-2 mr-3 hover:bg-white/10 rounded-full transition-colors" transition-all duration-300
+                      className="p-2 mr-3 hover:bg-white/10 rounded-full transition-all duration-300"
                       data-testid="back-to-contacts"
                     >
                       <ChevronLeft className="h-6 w-6 text-white stroke-[2]" />
@@ -929,7 +929,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                   {!isMobile && (
                     <button 
                       onClick={() => setIsOpen(false)}
-                      className="p-1 hover:bg-white/10 rounded-full transition-colors" transition-all duration-300
+                      className="p-1 hover:bg-white/10 rounded-full transition-all duration-300"
                       data-testid="close-chat"
                     >
                       <X className="h-5 w-5 text-white" />
@@ -1096,7 +1096,7 @@ export default function VisitorHelpChat({ isAuthenticated = false, alwaysVisible
                           key={index}
                           variant="ghost"
                           size="sm"
-                          className="h-8 w-8 p-0 hover:bg-gray-100 rounded-lg text-base transition-all" transition-all duration-300
+                          className="h-8 w-8 p-0 hover:bg-gray-100 rounded-lg text-base transition-all duration-300"
                           onClick={() => handleEmojiSelect(emoji)}
                           data-testid={`emoji-${index}`}
                         >

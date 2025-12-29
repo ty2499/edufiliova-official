@@ -227,7 +227,7 @@ function AppDownloadsManagement() {
           <Button
             onClick={handleSave}
             disabled={updateAppLinksMutation.isPending || loadingDownloadLinks}
-            className="bg-primary hover:bg-primary text-white" transition-all duration-300
+            className="bg-primary hover:bg-primary text-white transition-all duration-300"
             data-testid="button-save-app-links"
           >
             <Save className="h-4 w-4 mr-2" />

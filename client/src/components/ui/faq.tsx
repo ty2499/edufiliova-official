@@ -63,7 +63,7 @@ export default function FAQ() {
             <AccordionItem 
               key={index} 
               value={`item-${index}`}
-              className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-6 transition-colors hover:border-[#0C332C]/50" transition-all duration-300
+              className="bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl px-6 transition-all duration-300 hover:border-[#0C332C]/50"
               data-testid={`accordion-item-${index}`}
             >
               <AccordionTrigger className="text-left text-base md:text-lg font-semibold text-gray-900 dark:text-white transition-colors py-5" style={{ color: 'inherit' }} onMouseEnter={(e) => e.currentTarget.style.color = '#0C332C'} onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>

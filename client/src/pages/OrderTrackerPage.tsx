@@ -80,6 +80,22 @@ export default function OrderTrackerPage() {
   const isClient = user?.id === order?.clientId;
   const isFreelancer = user?.id === order?.freelancerId;
 
+  // Redirect to login if not authenticated
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <Package className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+          <h2 className="text-xl font-semibold mb-2">Sign in to track orders</h2>
+          <p className="text-gray-600 mb-4">You need to be logged in to view your order details.</p>
+          <Button onClick={() => window.location.href = '?page=auth'} className="bg-[#0c332c] hover:bg-[#0c332c]/90">
+            Sign In
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">

@@ -123,49 +123,49 @@ const Footer = ({ onNavigate }: FooterProps) => {
                 <div className="space-y-3">
                   <button
                     onClick={() => onNavigate("home")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-home"
                   >
                     Home
                   </button>
                   <button
                     onClick={() => onNavigate("learn-more")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-learn-more"
                   >
                     Learn More
                   </button>
                   <button
                     onClick={() => onNavigate("student-dashboard")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-for-students"
                   >
                     For Students
                   </button>
                   <button
                     onClick={() => onNavigate("teacher-application")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-for-teachers"
                   >
                     For Teachers
                   </button>
                   <button
                     onClick={() => onNavigate("freelancer-signup")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-for-freelancers"
                   >
                     For Freelancers
                   </button>
                   <button
                     onClick={() => onNavigate("product-shop")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-shop-product"
                   >
                     Shop
                   </button>
                   <button
                     onClick={() => onNavigate("education-pricing")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-pricing"
                   >
                     Pricing
@@ -186,28 +186,28 @@ const Footer = ({ onNavigate }: FooterProps) => {
                 <div className="space-y-3">
                   <button
                     onClick={() => onNavigate("course-browse")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-browse-courses"
                   >
                     Browse Courses
                   </button>
                   <button
                     onClick={() => onNavigate("my-certificates")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-my-certificates"
                   >
                     My Certificates
                   </button>
                   <button
                     onClick={() => onNavigate("verify-certificate")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-verify-certificate"
                   >
                     Verify Certificate
                   </button>
                   <button
                     onClick={() => onNavigate("claim-certificate")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-claim-certificate"
                   >
                     Claim Certificate
@@ -228,35 +228,35 @@ const Footer = ({ onNavigate }: FooterProps) => {
                 <div className="space-y-3">
                   <button
                     onClick={() => onNavigate("teacher-application")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-become-teacher-creators"
                   >
                     Become a Teacher
                   </button>
                   <button
                     onClick={() => onNavigate("freelancer-signup")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-become-freelancer"
                   >
                     Become a Freelancer
                   </button>
                   <button
                     onClick={() => onNavigate("product-creation")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-sell-products"
                   >
                     Sell Products
                   </button>
                   <button
                     onClick={() => onNavigate("networking")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-find-talent"
                   >
                     Find Talent
                   </button>
                   <button
                     onClick={() => onNavigate("advertise-with-us")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-advertise-creators"
                   >
                     Advertise With Us
@@ -277,35 +277,35 @@ const Footer = ({ onNavigate }: FooterProps) => {
                 <div className="space-y-3">
                   <button
                     onClick={() => onNavigate("about")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-about-company"
                   >
                     About
                   </button>
                   <button
                     onClick={() => onNavigate("contact")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-contact-company"
                   >
                     Contact
                   </button>
                   <button
                     onClick={() => onNavigate("help")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-help-company"
                   >
                     Help Center
                   </button>
                   <button
                     onClick={() => onNavigate("blog")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-blog-company"
                   >
                     Blog
                   </button>
                   <button
                     onClick={() => onNavigate("design-team-contact")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-design-team"
                   >
                     Design Team Contact
@@ -326,35 +326,35 @@ const Footer = ({ onNavigate }: FooterProps) => {
                 <div className="space-y-3">
                   <button
                     onClick={() => onNavigate("terms")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-terms-legal"
                   >
                     Terms & Conditions
                   </button>
                   <button
                     onClick={() => onNavigate("privacy")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-privacy-legal"
                   >
                     Privacy Policy
                   </button>
                   <button
                     onClick={() => onNavigate("cookies-policy")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-cookies-legal"
                   >
                     Cookies Policy
                   </button>
                   <button
                     onClick={() => onNavigate("refund-policy")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-refund-legal"
                   >
                     Refund Policy
                   </button>
                   <button
                     onClick={() => onNavigate("community-guidelines")}
-                    className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                    className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                     data-testid="link-community-guidelines"
                   >
                     Community Guidelines
@@ -363,7 +363,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                   {/* Show More Policies Button */}
                   <button
                     onClick={() => setShowMorePolicies(!showMorePolicies)}
-                    className="block text-sm text-blue-600 hover:text-blue-800 transition-colors font-medium" transition-all duration-300
+                    className="block text-sm text-blue-600 hover:text-blue-800 transition-all duration-300 font-medium"
                     data-testid="button-show-more-policies-mobile"
                   >
                     {showMorePolicies ? 'Show less policies' : 'Show more policies'}
@@ -373,56 +373,56 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     <>
                       <button
                         onClick={() => onNavigate("payment-billing")}
-                        className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                        className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                         data-testid="link-payment-billing"
                       >
                         Payment & Billing Policy
                       </button>
                       <button
                         onClick={() => onNavigate("payout-policy")}
-                        className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                        className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                         data-testid="link-payout-policy"
                       >
                         Payout Policy
                       </button>
                       <button
                         onClick={() => onNavigate("data-retention")}
-                        className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                        className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                         data-testid="link-data-retention"
                       >
                         Data Retention Policy
                       </button>
                       <button
                         onClick={() => onNavigate("copyright-dmca")}
-                        className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                        className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                         data-testid="link-copyright-dmca"
                       >
                         Copyright & DMCA
                       </button>
                       <button
                         onClick={() => onNavigate("whatsapp-policy")}
-                        className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                        className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                         data-testid="link-whatsapp-policy"
                       >
                         WhatsApp Policy
                       </button>
                       <button
                         onClick={() => onNavigate("student-terms")}
-                        className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                        className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                         data-testid="link-student-terms"
                       >
                         Student Terms
                       </button>
                       <button
                         onClick={() => onNavigate("teacher-terms")}
-                        className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                        className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                         data-testid="link-teacher-terms"
                       >
                         Teacher Terms
                       </button>
                       <button
                         onClick={() => onNavigate("school-terms")}
-                        className="block text-sm text-gray-600 hover:text-gray-900 transition-colors" transition-all duration-300
+                        className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300"
                         data-testid="link-school-terms"
                       >
                         School / Institution Terms
@@ -441,49 +441,49 @@ const Footer = ({ onNavigate }: FooterProps) => {
           <FooterColumn title="Product">
             <button
               onClick={() => onNavigate("home")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-home-desktop"
             >
               Home
             </button>
             <button
               onClick={() => onNavigate("learn-more")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-learn-more-desktop"
             >
               Learn More
             </button>
             <button
               onClick={() => onNavigate("student-dashboard")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-for-students-desktop"
             >
               For Students
             </button>
             <button
               onClick={() => onNavigate("teacher-application")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-for-teachers-desktop"
             >
               For Teachers
             </button>
             <button
               onClick={() => onNavigate("freelancer-signup")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-for-freelancers-desktop"
             >
               For Freelancers
             </button>
             <button
               onClick={() => onNavigate("product-shop")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-shop-desktop"
             >
               Shop
             </button>
             <button
               onClick={() => onNavigate("education-pricing")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-pricing-desktop"
             >
               Pricing
@@ -494,28 +494,28 @@ const Footer = ({ onNavigate }: FooterProps) => {
           <FooterColumn title="Learn & Tools">
             <button
               onClick={() => onNavigate("course-browse")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-browse-courses-desktop"
             >
               Browse Courses
             </button>
             <button
               onClick={() => onNavigate("my-certificates")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-my-certificates-desktop"
             >
               My Certificates
             </button>
             <button
               onClick={() => onNavigate("verify-certificate")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-verify-certificate-desktop"
             >
               Verify Certificate
             </button>
             <button
               onClick={() => onNavigate("claim-certificate")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-claim-certificate-desktop"
             >
               Claim Certificate
@@ -526,35 +526,35 @@ const Footer = ({ onNavigate }: FooterProps) => {
           <FooterColumn title="Creators & Business">
             <button
               onClick={() => onNavigate("teacher-application")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-become-teacher-desktop"
             >
               Become a Teacher
             </button>
             <button
               onClick={() => onNavigate("freelancer-signup")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-become-freelancer-desktop"
             >
               Become a Freelancer
             </button>
             <button
               onClick={() => onNavigate("product-creation")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-sell-products-desktop"
             >
               Sell Products
             </button>
             <button
               onClick={() => onNavigate("networking")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-find-talent-desktop"
             >
               Find Talent
             </button>
             <button
               onClick={() => onNavigate("advertise-with-us")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-advertise-desktop"
             >
               Advertise With Us
@@ -565,35 +565,35 @@ const Footer = ({ onNavigate }: FooterProps) => {
           <FooterColumn title="Company">
             <button
               onClick={() => onNavigate("about")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-about-desktop"
             >
               About
             </button>
             <button
               onClick={() => onNavigate("contact")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-contact-desktop"
             >
               Contact
             </button>
             <button
               onClick={() => onNavigate("help")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-help-desktop"
             >
               Help Center
             </button>
             <button
               onClick={() => onNavigate("blog")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-blog-desktop"
             >
               Blog
             </button>
             <button
               onClick={() => onNavigate("design-team-contact")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-design-team-desktop"
             >
               Design Team Contact
@@ -604,35 +604,35 @@ const Footer = ({ onNavigate }: FooterProps) => {
           <FooterColumn title="Legal & Policies">
             <button
               onClick={() => onNavigate("terms")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-terms-desktop"
             >
               Terms & Conditions
             </button>
             <button
               onClick={() => onNavigate("privacy")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-privacy-desktop"
             >
               Privacy Policy
             </button>
             <button
               onClick={() => onNavigate("cookies-policy")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-cookies-desktop"
             >
               Cookies Policy
             </button>
             <button
               onClick={() => onNavigate("refund-policy")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-refund-desktop"
             >
               Refund Policy
             </button>
             <button
               onClick={() => onNavigate("community-guidelines")}
-              className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+              className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
               data-testid="link-community-guidelines-desktop"
             >
               Community Guidelines
@@ -641,7 +641,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
             {/* Show More Policies Button */}
             <button
               onClick={() => setShowMorePolicies(!showMorePolicies)}
-              className="block text-sm text-[#2f5a4e] hover:text-[#1a3a32] transition-colors font-medium text-left" transition-all duration-300
+              className="block text-sm text-[#2f5a4e] hover:text-[#1a3a32] transition-all duration-300 font-medium text-left"
               data-testid="button-show-more-policies"
             >
               {showMorePolicies ? 'Show less' : 'Show more policies'}
@@ -651,56 +651,56 @@ const Footer = ({ onNavigate }: FooterProps) => {
               <>
                 <button
                   onClick={() => onNavigate("payment-billing")}
-                  className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+                  className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
                   data-testid="link-payment-billing-desktop"
                 >
                   Payment & Billing
                 </button>
                 <button
                   onClick={() => onNavigate("payout-policy")}
-                  className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+                  className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
                   data-testid="link-payout-policy-desktop"
                 >
                   Payout Policy
                 </button>
                 <button
                   onClick={() => onNavigate("data-retention")}
-                  className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+                  className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
                   data-testid="link-data-retention-desktop"
                 >
                   Data Retention
                 </button>
                 <button
                   onClick={() => onNavigate("copyright-dmca")}
-                  className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+                  className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
                   data-testid="link-copyright-dmca-desktop"
                 >
                   Copyright & DMCA
                 </button>
                 <button
                   onClick={() => onNavigate("whatsapp-policy")}
-                  className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+                  className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
                   data-testid="link-whatsapp-policy-desktop"
                 >
                   WhatsApp Policy
                 </button>
                 <button
                   onClick={() => onNavigate("student-terms")}
-                  className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+                  className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
                   data-testid="link-student-terms-desktop"
                 >
                   Student Terms
                 </button>
                 <button
                   onClick={() => onNavigate("teacher-terms")}
-                  className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+                  className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
                   data-testid="link-teacher-terms-desktop"
                 >
                   Teacher Terms
                 </button>
                 <button
                   onClick={() => onNavigate("school-terms")}
-                  className="block text-sm text-gray-600 hover:text-gray-900 transition-colors text-left" transition-all duration-300
+                  className="block text-sm text-gray-600 hover:text-gray-900 transition-all duration-300 text-left"
                   data-testid="link-school-terms-desktop"
                 >
                   School / Institution
@@ -719,7 +719,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                   href={appDownloadLinks.appStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" transition-all duration-300
+                  className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-all duration-300"
                   data-testid="link-app-store-section"
                   aria-label="Download on App Store"
                 >
@@ -737,7 +737,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                   href={appDownloadLinks.googlePlayUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" transition-all duration-300
+                  className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-all duration-300"
                   data-testid="link-google-play-section"
                   aria-label="Get it on Google Play"
                 >
@@ -755,7 +755,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                   href={appDownloadLinks.huaweiGalleryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors" transition-all duration-300
+                  className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-all duration-300"
                   data-testid="link-huawei-gallery-section"
                   aria-label="Explore it on Huawei AppGallery"
                 >
@@ -801,7 +801,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.facebookUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="Facebook"
                     data-testid="link-facebook-footer"
                   >
@@ -813,7 +813,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.xUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="X (Twitter)"
                     data-testid="link-x-footer"
                   >
@@ -825,7 +825,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.instagramUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="Instagram"
                     data-testid="link-instagram-footer"
                   >
@@ -837,7 +837,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.linkedinUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="LinkedIn"
                     data-testid="link-linkedin-footer"
                   >
@@ -849,7 +849,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.whatsappUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="WhatsApp"
                     data-testid="link-whatsapp-footer"
                   >
@@ -861,7 +861,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.telegramUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="Telegram"
                     data-testid="link-telegram-footer"
                   >
@@ -873,7 +873,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.tiktokUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="TikTok"
                     data-testid="link-tiktok-footer"
                   >
@@ -885,7 +885,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.pinterestUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="Pinterest"
                     data-testid="link-pinterest-footer"
                   >
@@ -897,7 +897,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.threadsUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="Threads"
                     data-testid="link-threads-footer"
                   >
@@ -909,7 +909,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.dribbbleUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="Dribbble"
                     data-testid="link-dribbble-footer"
                   >
@@ -921,7 +921,7 @@ const Footer = ({ onNavigate }: FooterProps) => {
                     href={socialLinks.behanceUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors" transition-all duration-300
+                    className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all duration-300"
                     title="Behance"
                     data-testid="link-behance-footer"
                   >
