@@ -1,7 +1,11 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
-import { MegaMenu, MegaMenuItem, MegaMenuSection } from "./MegaMenu";
-import { UserPlus, IdCard, Upload, Users2, Briefcase, ShoppingBag } from "lucide-react";
+import { MegaMenu, MegaMenuCategory, MegaMenuGrid } from "./MegaMenu";
+import { 
+  UserPlus, IdCard, Upload, Users2, Briefcase, ShoppingBag, 
+  Star, Wallet, Settings, BarChart3, FileText, CreditCard
+} from "lucide-react";
+import promoImage from "@assets/generated_images/freelancer_in_home_office.png";
 
 interface FreelanceMegaMenuProps {
   isOpen: boolean;
@@ -24,105 +28,192 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
     onClose();
   };
 
-  const startFreelancing = [
+  const getStartedItems = [
     {
-      icon: <UserPlus className="h-5 w-5 " />,
+      icon: <UserPlus className="h-5 w-5" />,
       title: "Become a Freelancer",
-      description: "Start your freelancing journey",
+      description: "Start your freelancing journey and offer your services",
       page: "freelancer-signup-basic",
+    },
+    {
+      icon: <CreditCard className="h-5 w-5" />,
+      title: "Freelancer Pricing",
+      description: "View pricing plans and commission rates",
+      page: "creator-pricing",
+    },
+    {
+      icon: <FileText className="h-5 w-5" />,
+      title: "Application Status",
+      description: "Check your freelancer application status",
+      page: "freelancer-application-status",
+      requiresAuth: true,
     },
   ];
 
-  const portfolio = [
+  const portfolioItems = [
     {
       icon: <IdCard className="h-5 w-5" />,
-      title: "My Portfolio",
-      description: "View and manage your portfolio",
+      title: "My Profile",
+      description: "View and manage your freelancer profile",
       page: "freelancer-profile",
+      requiresCreator: true,
     },
     {
       icon: <Upload className="h-5 w-5" />,
       title: "Create Portfolio",
-      description: "Build your professional showcase",
+      description: "Build your professional portfolio showcase",
       page: "portfolio-create",
+      requiresCreator: true,
+    },
+    {
+      icon: <Star className="h-5 w-5" />,
+      title: "My Services",
+      description: "Manage services you offer to clients",
+      page: "freelancer-services",
+      requiresCreator: true,
     },
   ];
 
-  const marketplace = [
+  const marketplaceItems = [
     {
       icon: <ShoppingBag className="h-5 w-5" />,
       title: "Browse Services",
-      description: "Find services from freelancers",
+      description: "Find services from talented freelancers",
       route: "/marketplace/services",
     },
     {
       icon: <Users2 className="h-5 w-5" />,
       title: "Find Talent",
-      description: "Browse skilled freelancers",
-      page: "portfolio-gallery",
+      description: "Browse skilled freelancers for your projects",
+      page: "find-talent",
     },
     {
       icon: <IdCard className="h-5 w-5" />,
-      title: "Browse Portfolio",
-      description: "Explore freelancer portfolios",
+      title: "Browse Portfolios",
+      description: "Explore freelancer portfolios and work samples",
       page: "portfolio-gallery",
     },
   ];
 
+  const dashboardItems = [
+    {
+      icon: <BarChart3 className="h-5 w-5" />,
+      title: "Dashboard",
+      description: "View your freelancer analytics and stats",
+      page: "freelancer-dashboard",
+      requiresCreator: true,
+    },
+    {
+      icon: <Wallet className="h-5 w-5" />,
+      title: "Earnings",
+      description: "Track your revenue and payouts",
+      page: "creator-earnings",
+      requiresCreator: true,
+    },
+    {
+      icon: <Settings className="h-5 w-5" />,
+      title: "Settings",
+      description: "Manage your freelancer preferences",
+      page: "freelancer-dashboard",
+      requiresCreator: true,
+    },
+  ];
+
+  const filteredGetStarted = getStartedItems.filter(item => !item.requiresAuth || user);
+  const filteredPortfolio = portfolioItems.filter(item => !item.requiresCreator || isCreator);
+  const filteredDashboard = dashboardItems.filter(item => !item.requiresCreator || isCreator);
+
   return (
     <MegaMenu 
       isOpen={isOpen}
+      title="Freelance Marketplace"
+      subtitle="Join our community of talented freelancers or find the perfect professional for your project."
+      promoImage={promoImage}
+      promoTitle="Work Your Way"
+      promoSubtitle="Build your freelance career with freedom"
+      ctaText="Start Freelancing"
+      ctaOnClick={() => handleNavigate("freelancer-signup-basic")}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        <MegaMenuSection 
-          title="Start Freelancing" 
-          icon={<Briefcase className="h-4 w-4 text-[#a0fab2]" />}
-        >
-          {startFreelancing.map((item, index) => (
-            <MegaMenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-              onClick={() => handleNavigate(item.page)}
-              testId={`megamenu-freelance-start-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-            />
-          ))}
-        </MegaMenuSection>
-
-        {isCreator && (
-          <MegaMenuSection 
-            title="Portfolio" 
-            icon={<IdCard className="h-4 w-4 text-[#a0fab2]" />}
-          >
-            {portfolio.map((item, index) => (
-              <MegaMenuItem
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <UserPlus className="h-4 w-4" /> Get Started
+          </h3>
+          <MegaMenuGrid columns={3}>
+            {filteredGetStarted.map((item, index) => (
+              <MegaMenuCategory
                 key={index}
                 icon={item.icon}
                 title={item.title}
                 description={item.description}
                 onClick={() => handleNavigate(item.page)}
-                testId={`megamenu-freelance-portfolio-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                linkText="Learn More"
+                testId={`megamenu-freelance-start-${index}`}
               />
             ))}
-          </MegaMenuSection>
+          </MegaMenuGrid>
+        </div>
+
+        <div>
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <ShoppingBag className="h-4 w-4" /> Marketplace
+          </h3>
+          <MegaMenuGrid columns={3}>
+            {marketplaceItems.map((item, index) => (
+              <MegaMenuCategory
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                onClick={() => item.route ? handleRouteNavigate(item.route) : handleNavigate(item.page!)}
+                linkText="Browse"
+                testId={`megamenu-freelance-marketplace-${index}`}
+              />
+            ))}
+          </MegaMenuGrid>
+        </div>
+
+        {filteredPortfolio.length > 0 && (
+          <div>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <IdCard className="h-4 w-4" /> Portfolio & Services
+            </h3>
+            <MegaMenuGrid columns={3}>
+              {filteredPortfolio.map((item, index) => (
+                <MegaMenuCategory
+                  key={index}
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                  onClick={() => handleNavigate(item.page)}
+                  linkText="Open"
+                  testId={`megamenu-freelance-portfolio-${index}`}
+                />
+              ))}
+            </MegaMenuGrid>
+          </div>
         )}
 
-        <MegaMenuSection 
-          title="Marketplace" 
-          icon={<Users2 className="h-4 w-4 text-[#a0fab2]" />}
-        >
-          {marketplace.map((item, index) => (
-            <MegaMenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-              onClick={() => item.route ? handleRouteNavigate(item.route) : handleNavigate(item.page!)}
-              testId={`megamenu-freelance-marketplace-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-            />
-          ))}
-        </MegaMenuSection>
+        {filteredDashboard.length > 0 && (
+          <div>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" /> Dashboard & Earnings
+            </h3>
+            <MegaMenuGrid columns={3}>
+              {filteredDashboard.map((item, index) => (
+                <MegaMenuCategory
+                  key={index}
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                  onClick={() => handleNavigate(item.page)}
+                  linkText="View"
+                  testId={`megamenu-freelance-dashboard-${index}`}
+                />
+              ))}
+            </MegaMenuGrid>
+          </div>
+        )}
       </div>
     </MegaMenu>
   );

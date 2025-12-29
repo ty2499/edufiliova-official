@@ -1,6 +1,10 @@
 import { useAuth } from "@/hooks/useAuth";
-import { MegaMenu, MegaMenuItem, MegaMenuSection } from "./MegaMenu";
-import { Store, Tag, FolderOpen, PlusCircle, ShoppingBag, Gift } from "lucide-react";
+import { MegaMenu, MegaMenuCategory, MegaMenuGrid } from "./MegaMenu";
+import { 
+  Store, Tag, FolderOpen, PlusCircle, ShoppingBag, Gift, 
+  ShoppingCart, Palette, Image, FileText, Wallet, CreditCard
+} from "lucide-react";
+import promoImage from "@assets/generated_images/creative_designer_with_tablet.png";
 
 interface ShopMegaMenuProps {
   isOpen: boolean;
@@ -17,27 +21,6 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
     onClose();
   };
 
-  const explore = [
-    {
-      icon: <Store className="h-5 w-5" />,
-      title: "Design Marketplace",
-      description: "Discover premium design resources",
-      page: "product-shop",
-      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
-      iconBg: "bg-[#a0fab2]",
-      iconColor: "#2f5a4e",
-    },
-    {
-      icon: <Tag className="h-5 w-5" />,
-      title: "Browse Designs",
-      description: "Templates, graphics & creative assets",
-      page: "product-shop",
-      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
-      iconBg: "bg-[#a0fab2]",
-      iconColor: "#2f5a4e",
-    },
-  ];
-
   const getDashboardPage = () => {
     if (profile?.role === 'admin') return "admin-dashboard";
     if (profile?.role === 'teacher') return "teacher-dashboard";
@@ -46,95 +29,180 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
     return "student-dashboard";
   };
 
-  const myAccount = [
+  const exploreItems = [
+    {
+      icon: <Store className="h-5 w-5" />,
+      title: "Design Marketplace",
+      description: "Discover premium design resources and templates",
+      page: "product-shop",
+    },
+    {
+      icon: <Tag className="h-5 w-5" />,
+      title: "Browse Designs",
+      description: "Templates, graphics and creative assets",
+      page: "product-shop",
+    },
+    {
+      icon: <Palette className="h-5 w-5" />,
+      title: "Categories",
+      description: "Browse by design categories",
+      page: "category-management",
+    },
+  ];
+
+  const accountItems = [
     {
       icon: <FolderOpen className="h-5 w-5" />,
       title: "My Purchases",
       description: "Access your downloaded design assets",
       page: getDashboardPage(),
-      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
-      iconBg: "bg-[#a0fab2]",
-      iconColor: "#2f5a4e",
+      requiresAuth: true,
+    },
+    {
+      icon: <ShoppingCart className="h-5 w-5" />,
+      title: "My Cart",
+      description: "View items in your shopping cart",
+      page: "cart",
     },
     {
       icon: <Gift className="h-5 w-5" />,
       title: "Gift Vouchers",
-      description: "Buy gift vouchers for friends",
+      description: "Buy gift vouchers for friends and family",
       page: "buy-voucher",
-      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
-      iconBg: "bg-[#a0fab2]",
-      iconColor: "#2f5a4e",
     },
   ];
 
-  const sell = [
+  const sellItems = [
     {
       icon: <PlusCircle className="h-5 w-5" />,
       title: "Add Product",
-      description: "List your products for sale",
+      description: "List your digital products for sale",
       page: "freelancer-dashboard",
-      bgColor: "bg-gradient-to-br from-[#2f5a4e]/10 to-[#a0fab2]/10",
-      iconBg: "bg-[#a0fab2]",
-      iconColor: "#2f5a4e",
+      requiresCreator: true,
+    },
+    {
+      icon: <Image className="h-5 w-5" />,
+      title: "My Products",
+      description: "Manage your listed products",
+      page: "freelancer-dashboard",
+      requiresCreator: true,
+    },
+    {
+      icon: <Wallet className="h-5 w-5" />,
+      title: "Sales & Earnings",
+      description: "Track your sales and revenue",
+      page: "creator-earnings",
+      requiresCreator: true,
     },
   ];
+
+  const pricingItems = [
+    {
+      icon: <CreditCard className="h-5 w-5" />,
+      title: "Customer Plans",
+      description: "Membership plans for buyers",
+      page: "customer-pricing",
+    },
+    {
+      icon: <FileText className="h-5 w-5" />,
+      title: "Creator Plans",
+      description: "Plans for sellers and creators",
+      page: "creator-pricing",
+    },
+  ];
+
+  const filteredAccount = accountItems.filter(item => !item.requiresAuth || user);
+  const filteredSell = sellItems.filter(item => !item.requiresCreator || isCreator);
 
   return (
     <MegaMenu 
       isOpen={isOpen}
+      title="Creative Space"
+      subtitle="Discover premium design resources, templates, and creative assets from talented creators."
+      promoImage={promoImage}
+      promoTitle="Create & Sell"
+      promoSubtitle="Turn your creativity into income"
+      ctaText="Browse Marketplace"
+      ctaOnClick={() => handleNavigate("product-shop")}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        <MegaMenuSection title="Explore" icon={<ShoppingBag className="h-4 w-4 text-[#a0fab2]" />}>
-          {explore.map((item: any, index) => (
-            <MegaMenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-              onClick={() => handleNavigate(item.page)}
-              bgColor={item.bgColor}
-              iconBg={item.iconBg}
-              iconColor={item.iconColor}
-              testId={`megamenu-shop-explore-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-            />
-          ))}
-        </MegaMenuSection>
-
-        {user && (
-          <MegaMenuSection title="My Account" icon={<FolderOpen className="h-4 w-4 text-[#a0fab2]" />}>
-            {myAccount.map((item: any, index) => (
-              <MegaMenuItem
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Store className="h-4 w-4" /> Explore
+          </h3>
+          <MegaMenuGrid columns={3}>
+            {exploreItems.map((item, index) => (
+              <MegaMenuCategory
                 key={index}
                 icon={item.icon}
                 title={item.title}
                 description={item.description}
                 onClick={() => handleNavigate(item.page)}
-                bgColor={item.bgColor}
-                iconBg={item.iconBg}
-                iconColor={item.iconColor}
-                testId={`megamenu-shop-account-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                linkText="Browse"
+                testId={`megamenu-shop-explore-${index}`}
               />
             ))}
-          </MegaMenuSection>
-        )}
+          </MegaMenuGrid>
+        </div>
 
-        {isCreator && (
-          <MegaMenuSection title="Sell" icon={<PlusCircle className="h-4 w-4 text-[#a0fab2]" />}>
-            {sell.map((item: any, index) => (
-              <MegaMenuItem
+        <div>
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <FolderOpen className="h-4 w-4" /> My Account
+          </h3>
+          <MegaMenuGrid columns={3}>
+            {filteredAccount.map((item, index) => (
+              <MegaMenuCategory
                 key={index}
                 icon={item.icon}
                 title={item.title}
                 description={item.description}
                 onClick={() => handleNavigate(item.page)}
-                bgColor={item.bgColor}
-                iconBg={item.iconBg}
-                iconColor={item.iconColor}
-                testId={`megamenu-shop-sell-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                linkText="Open"
+                testId={`megamenu-shop-account-${index}`}
               />
             ))}
-          </MegaMenuSection>
+          </MegaMenuGrid>
+        </div>
+
+        {filteredSell.length > 0 && (
+          <div>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" /> Sell Your Work
+            </h3>
+            <MegaMenuGrid columns={3}>
+              {filteredSell.map((item, index) => (
+                <MegaMenuCategory
+                  key={index}
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                  onClick={() => handleNavigate(item.page)}
+                  linkText="Manage"
+                  testId={`megamenu-shop-sell-${index}`}
+                />
+              ))}
+            </MegaMenuGrid>
+          </div>
         )}
+
+        <div>
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <CreditCard className="h-4 w-4" /> Pricing
+          </h3>
+          <MegaMenuGrid columns={2}>
+            {pricingItems.map((item, index) => (
+              <MegaMenuCategory
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                onClick={() => handleNavigate(item.page)}
+                linkText="View Plans"
+                testId={`megamenu-shop-pricing-${index}`}
+              />
+            ))}
+          </MegaMenuGrid>
+        </div>
       </div>
     </MegaMenu>
   );

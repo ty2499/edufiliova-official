@@ -1,7 +1,8 @@
-import { MegaMenu, MegaMenuItem, MegaMenuSection } from "./MegaMenu";
-import { Search, Library, Award, FileCheck, GraduationCap, UserPlus, Sparkles, Zap } from "lucide-react";
+import { MegaMenu, MegaMenuCategory, MegaMenuGrid } from "./MegaMenu";
+import { Search, Library, Award, FileCheck, GraduationCap, UserPlus, BookOpen, Video, ClipboardCheck, Users } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
+import promoImage from "@assets/generated_images/students_studying_together.png";
 
 interface LearnMegaMenuProps {
   isOpen: boolean;
@@ -13,7 +14,6 @@ interface LearnMegaMenuProps {
 export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = false }: LearnMegaMenuProps) => {
   const { user } = useAuth();
   
-  // Fetch claimable certificates count
   const { data: claimableData } = useQuery({
     queryKey: ['/api/certificates/claimable-count', user?.id],
     queryFn: async () => {
@@ -29,141 +29,197 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
   });
 
   const claimableCertificatesCount = claimableData?.count || 0;
+  
   const handleNavigate = (page: string) => {
     onNavigate(page);
     onClose();
   };
 
-  const exploreLearning = [
+  const exploreItems = [
     {
       icon: <Search className="h-5 w-5" />,
       title: "Browse Courses",
-      description: "Explore our complete course catalog",
+      description: "Explore our complete catalog of courses across all subjects",
       page: "course-browse",
-      iconBg: "bg-[#a0fab2]",
     },
-  ];
-
-  const getStarted = [
     {
-      icon: <UserPlus className="h-5 w-5" />,
-      title: "Create an Account",
-      description: "Sign up and start learning today",
-      page: "student-signup",
-      iconBg: "bg-[#a0fab2]",
-      requiresAuth: false,
-      showWhenNotAuth: true,
+      icon: <BookOpen className="h-5 w-5" />,
+      title: "Study Materials",
+      description: "Access notes, papers, and learning resources",
+      page: "study-settings",
     },
-  ];
-
-  const myLearning = [
     {
-      icon: <Library className="h-5 w-5" />,
-      title: "My Subjects",
-      description: "Access your enrolled courses",
-      page: "student-dashboard",
-      iconBg: "bg-[#a0fab2]",
+      icon: <Video className="h-5 w-5" />,
+      title: "Live Classes",
+      description: "Join live sessions with expert teachers",
+      page: "student-meetings",
       requiresAuth: true,
     },
   ];
 
-  const certificates = [
+  const studentItems = [
+    {
+      icon: <Library className="h-5 w-5" />,
+      title: "My Subjects",
+      description: "Access your enrolled courses and continue learning",
+      page: "student-dashboard",
+      requiresAuth: true,
+    },
+    {
+      icon: <ClipboardCheck className="h-5 w-5" />,
+      title: "Assignments",
+      description: "View and submit your assignments",
+      page: "student-dashboard",
+      requiresAuth: true,
+    },
+    {
+      icon: <Users className="h-5 w-5" />,
+      title: "Student Network",
+      description: "Connect with fellow students and study groups",
+      page: "student-networking",
+      requiresAuth: true,
+    },
+  ];
+
+  const certificateItems = [
     {
       icon: <Award className="h-5 w-5" />,
       title: "My Certificates",
-      description: "View earned certificates",
+      description: "View all your earned certificates and achievements",
       page: "my-certificates",
-      iconBg: "bg-[#a0fab2]",
       requiresAuth: true,
     },
     {
       icon: <FileCheck className="h-5 w-5" />,
       title: "Claim Certificate",
-      description: "Claim your earned certificates",
+      description: "Claim certificates for completed courses",
       page: "claim-certificate",
-      iconBg: "bg-[#a0fab2]",
       requiresAuth: true,
+      badge: claimableCertificatesCount > 0 ? `${claimableCertificatesCount} available` : undefined,
+    },
+    {
+      icon: <GraduationCap className="h-5 w-5" />,
+      title: "Verify Certificate",
+      description: "Verify the authenticity of any certificate",
+      page: "verify-certificate",
     },
   ];
 
-  const filteredGetStarted = getStarted.filter(item => !isAuthenticated && item.showWhenNotAuth);
-  const filteredMyLearning = myLearning.filter(item => {
-    // "My Subjects" only visible to students
-    if (item.page === 'student-dashboard' && user?.role !== 'student') {
-      return false;
-    }
+  const getStartedItems = [
+    {
+      icon: <UserPlus className="h-5 w-5" />,
+      title: "Create Account",
+      description: "Sign up and start your learning journey today",
+      page: "auth",
+      showWhenNotAuth: true,
+    },
+    {
+      icon: <GraduationCap className="h-5 w-5" />,
+      title: "Education Plans",
+      description: "View student subscription options and pricing",
+      page: "education-pricing",
+    },
+  ];
+
+  const filteredExplore = exploreItems.filter(item => !item.requiresAuth || isAuthenticated);
+  const filteredStudent = studentItems.filter(item => !item.requiresAuth || isAuthenticated);
+  const filteredCertificates = certificateItems.filter(item => {
+    if (item.page === 'claim-certificate' && claimableCertificatesCount === 0) return false;
     return !item.requiresAuth || isAuthenticated;
   });
-  const filteredCertificates = certificates.filter(item => {
-    // Hide "Claim Certificate" if user has no claimable certificates
-    if (item.page === 'claim-certificate' && claimableCertificatesCount === 0) {
-      return false;
-    }
-    return !item.requiresAuth || isAuthenticated;
-  });
+  const filteredGetStarted = getStartedItems.filter(item => !item.showWhenNotAuth || !isAuthenticated);
 
   return (
-    <MegaMenu isOpen={isOpen}>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        <MegaMenuSection title="Explore Learning" icon={<Search className="h-4 w-4 text-[#a0fab2]" />}>
-          {exploreLearning.map((item, index) => (
-            <MegaMenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-              onClick={() => handleNavigate(item.page)}
-              iconBg={item.iconBg}
-              testId={`megamenu-learn-explore-${index}`}
-            />
-          ))}
-        </MegaMenuSection>
+    <MegaMenu 
+      isOpen={isOpen}
+      title="Learn & Grow"
+      subtitle="Discover courses, earn certificates, and advance your skills with our comprehensive learning platform."
+      promoImage={promoImage}
+      promoTitle="Start Learning"
+      promoSubtitle="Join thousands of students achieving their goals"
+      ctaText="Browse All Courses"
+      ctaOnClick={() => handleNavigate("course-browse")}
+    >
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Search className="h-4 w-4" /> Explore Learning
+          </h3>
+          <MegaMenuGrid columns={3}>
+            {filteredExplore.map((item, index) => (
+              <MegaMenuCategory
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                onClick={() => handleNavigate(item.page)}
+                linkText="Explore"
+                testId={`megamenu-learn-explore-${index}`}
+              />
+            ))}
+          </MegaMenuGrid>
+        </div>
+
+        {filteredStudent.length > 0 && (
+          <div>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <Library className="h-4 w-4" /> My Learning
+            </h3>
+            <MegaMenuGrid columns={3}>
+              {filteredStudent.map((item, index) => (
+                <MegaMenuCategory
+                  key={index}
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                  onClick={() => handleNavigate(item.page)}
+                  linkText="Open"
+                  testId={`megamenu-learn-student-${index}`}
+                />
+              ))}
+            </MegaMenuGrid>
+          </div>
+        )}
+
+        <div>
+          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+            <Award className="h-4 w-4" /> Certificates
+          </h3>
+          <MegaMenuGrid columns={3}>
+            {filteredCertificates.map((item, index) => (
+              <MegaMenuCategory
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                onClick={() => handleNavigate(item.page)}
+                linkText="View"
+                testId={`megamenu-learn-cert-${index}`}
+              />
+            ))}
+          </MegaMenuGrid>
+        </div>
 
         {filteredGetStarted.length > 0 && (
-          <MegaMenuSection title="Get Started" icon={<UserPlus className="h-4 w-4 text-[#a0fab2]" />}>
-            {filteredGetStarted.map((item, index) => (
-              <MegaMenuItem
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                description={item.description}
-                onClick={() => handleNavigate(item.page)}
-                iconBg={item.iconBg}
-                testId={`megamenu-learn-start-${index}`}
-              />
-            ))}
-          </MegaMenuSection>
+          <div>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 flex items-center gap-2">
+              <UserPlus className="h-4 w-4" /> Get Started
+            </h3>
+            <MegaMenuGrid columns={3}>
+              {filteredGetStarted.map((item, index) => (
+                <MegaMenuCategory
+                  key={index}
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                  onClick={() => handleNavigate(item.page)}
+                  linkText="Start"
+                  testId={`megamenu-learn-start-${index}`}
+                />
+              ))}
+            </MegaMenuGrid>
+          </div>
         )}
-
-        {filteredMyLearning.length > 0 && (
-          <MegaMenuSection title="My Learning" icon={<Library className="h-4 w-4 text-[#a0fab2]" />}>
-            {filteredMyLearning.map((item, index) => (
-              <MegaMenuItem
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                description={item.description}
-                onClick={() => handleNavigate(item.page)}
-                iconBg={item.iconBg}
-                testId={`megamenu-learn-my-${index}`}
-              />
-            ))}
-          </MegaMenuSection>
-        )}
-
-        <MegaMenuSection title="Certificates" icon={<Award className="h-4 w-4 text-[#a0fab2]" />}>
-          {filteredCertificates.map((item, index) => (
-            <MegaMenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-              onClick={() => handleNavigate(item.page)}
-              iconBg={item.iconBg}
-              testId={`megamenu-learn-cert-${index}`}
-            />
-          ))}
-        </MegaMenuSection>
       </div>
     </MegaMenu>
   );

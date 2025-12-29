@@ -271,7 +271,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
             <Button 
               size="sm" 
               variant="outline" 
-              className="ml-4 bg-white text-primary hover:bg-primary/10 border-white h-7" transition-all duration-300
+              className="ml-4 bg-white text-primary hover:bg-primary/10 border-white h-7"
               onClick={handleReturnToAdmin}
             >
               Return to Admin Dashboard
@@ -287,7 +287,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               type="home"
               logoSize="square"
               onClick={() => handleNavigation("home")}
-              className="animate-fade-in hover:opacity-80 transition-opacity" transition-all duration-300
+              className="animate-fade-in hover:opacity-80 transition-opacity"
             />
           </div>
 
@@ -310,7 +310,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsLearnOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
                 >
                   Learn
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isLearnOpen ? 'rotate-180' : ''}`} />
@@ -331,7 +331,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         setIsStudentsOpen(true);
                       }
                     }}
-                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
                   >
                     Students
                     <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isStudentsOpen ? 'rotate-180' : ''}`} />
@@ -353,7 +353,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                         setIsTeachersOpen(true);
                       }
                     }}
-                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
                   >
                     Teachers
                     <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isTeachersOpen ? 'rotate-180' : ''}`} />
@@ -374,7 +374,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsFreelanceOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
                 >
                   Freelancers
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isFreelanceOpen ? 'rotate-180' : ''}`} />
@@ -394,7 +394,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsShopOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
                 >
                   Creative Space
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isShopOpen ? 'rotate-180' : ''}`} />
@@ -414,7 +414,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsPricingOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
                 >
                   Pricing
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isPricingOpen ? 'rotate-180' : ''}`} />
@@ -424,7 +424,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               {/* Blog */}
               <button 
                 onClick={() => handleNavigation("blog")}
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
               >
                 Blog
               </button>
@@ -432,7 +432,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               {/* About Us */}
               <button 
                 onClick={() => handleNavigation("about")}
-                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
                 data-testid="nav-about-us"
               >
                 About Us
@@ -451,7 +451,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       setIsPagesOpen(true);
                     }
                   }}
-                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors" transition-all duration-300
+                  className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1.5 transition-colors"
                 >
                   Pages
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isPagesOpen ? 'rotate-180' : ''}`} />
@@ -533,7 +533,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
             type="home"
             logoSize="square"
             onClick={() => {handleNavigation("home"); setIsMobileMenuOpen(false);}}
-            className="animate-fade-in hover:opacity-80 transition-opacity" transition-all duration-300
+            className="animate-fade-in hover:opacity-80 transition-opacity"
           />
           
           <div className="flex items-center gap-3">
@@ -558,7 +558,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobileLearnOpen(!isMobileLearnOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
                 >
                   Learn
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobileLearnOpen ? 'rotate-180' : ''}`} />
@@ -575,7 +575,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                 <div className="border-b border-gray-200 dark:border-gray-800">
                   <button 
                     onClick={() => setIsMobileTeachersOpen(!isMobileTeachersOpen)}
-                    className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
+                    className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
                   >
                     For Teachers
                     <ChevronDown className={`h-4 w-4 transition-transform ${isMobileTeachersOpen ? 'rotate-180' : ''}`} />
@@ -592,7 +592,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobileFreelanceOpen(!isMobileFreelanceOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
                 >
                   Freelancers
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobileFreelanceOpen ? 'rotate-180' : ''}`} />
@@ -608,7 +608,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobileShopOpen(!isMobileShopOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
                 >
                   Creative Space
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobileShopOpen ? 'rotate-180' : ''}`} />
@@ -624,7 +624,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobilePricingOpen(!isMobilePricingOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
                 >
                   Pricing
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobilePricingOpen ? 'rotate-180' : ''}`} />
@@ -640,7 +640,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => {handleNavigation("blog"); setIsMobileMenuOpen(false);}}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" transition-all duration-300
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   Blog
                 </button>
@@ -650,7 +650,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => {handleNavigation("about"); setIsMobileMenuOpen(false);}}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" transition-all duration-300
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
                   data-testid="nav-about-us-mobile"
                 >
                   About Us
@@ -661,7 +661,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               <div className="border-b border-gray-200 dark:border-gray-800">
                 <button 
                   onClick={() => setIsMobilePagesOpen(!isMobilePagesOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between" transition-all duration-300
+                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
                 >
                   Pages
                   <ChevronDown className={`h-4 w-4 transition-transform ${isMobilePagesOpen ? 'rotate-180' : ''}`} />
@@ -670,7 +670,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                   <div className="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 space-y-2">
                     <button 
                       onClick={() => {handleNavigation("about"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                       <Info className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -680,7 +680,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {handleNavigation("contact"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                       <Mail className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -690,7 +690,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("advertise-with-us"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                       <Megaphone className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -700,7 +700,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {handleNavigation("help"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                       <HelpCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -710,7 +710,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("privacy-policy"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                       <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -720,7 +720,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("terms"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                       <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -730,7 +730,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                     </button>
                     <button 
                       onClick={() => {onNavigate("community-guidelines"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" transition-all duration-300
+                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                     >
                       <Users className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
                       <div>
@@ -751,7 +751,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                 <Button
                   size="sm"
                   onClick={() => {onNavigate("auth"); setIsMobileMenuOpen(false);}}
-                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-primary text-white rounded-full bg-[#0C332C]" transition-all duration-300
+                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-primary text-white rounded-full bg-[#0C332C]"
                   data-testid="button-signin-mobile"
                 >
                   Sign In
@@ -773,7 +773,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
                       }
                       setIsMobileMenuOpen(false);
                     }}
-                    className="w-full text-left px-4 py-3 flex items-start gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" transition-all duration-300
+                    className="w-full text-left px-4 py-3 flex items-start gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     data-testid="button-account-mobile"
                   >
                     {(profile?.profilePicture || profile?.avatarUrl) ? (
