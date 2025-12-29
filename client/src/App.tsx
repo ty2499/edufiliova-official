@@ -15,9 +15,25 @@ import { useInactivityLogout } from "@/hooks/useInactivityLogout";
 import NetworkErrorBoundary from "@/components/NetworkErrorBoundary";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { useLocation } from "wouter";
+import { useLocation, Route, Switch } from "wouter";
 import { useDomainDetection } from "@/hooks/useDomainDetection";
 import { isInCordovaApp } from "@/lib/utils";
+import { lazy, Suspense } from "react";
+import { Loader2 } from "lucide-react";
+
+const FreelancerServicesPage = lazy(() => import("./pages/FreelancerServicesPage"));
+const FreelancerServiceFormPage = lazy(() => import("./pages/FreelancerServiceFormPage"));
+const FreelancerOrdersPage = lazy(() => import("./pages/FreelancerOrdersPage"));
+const MarketplaceServicesPage = lazy(() => import("./pages/MarketplaceServicesPage"));
+const ServiceDetailPage = lazy(() => import("./pages/ServiceDetailPage"));
+const ServiceCheckoutPage = lazy(() => import("./pages/ServiceCheckoutPage"));
+const OrderTrackerPage = lazy(() => import("./pages/OrderTrackerPage"));
+
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <Loader2 className="w-8 h-8 animate-spin text-[#0c332c]" />
+  </div>
+);
 
 const AppContent = () => {
   const { user, profile, loading } = useAuth();
@@ -58,14 +74,22 @@ const AppContent = () => {
       <FreelancerChatProvider>
         <MeetingProvider>
           <TooltipProvider>
-            {/* Social Auth Router handles OAuth callbacks and social auth flow */}
             <SocialAuthRouter />
-            <Index />
-            {/* Help chat available for all users including authenticated - hidden on auth pages and .click domain */}
+            <Suspense fallback={<PageLoader />}>
+              <Switch>
+                <Route path="/dashboard/freelancer/services/new" component={FreelancerServiceFormPage} />
+                <Route path="/dashboard/freelancer/services/:id/edit" component={FreelancerServiceFormPage} />
+                <Route path="/dashboard/freelancer/services" component={FreelancerServicesPage} />
+                <Route path="/dashboard/freelancer/orders" component={FreelancerOrdersPage} />
+                <Route path="/marketplace/services/:id" component={ServiceDetailPage} />
+                <Route path="/marketplace/services" component={MarketplaceServicesPage} />
+                <Route path="/checkout/service/:id" component={ServiceCheckoutPage} />
+                <Route path="/orders/:id" component={OrderTrackerPage} />
+                <Route>{() => <Index />}</Route>
+              </Switch>
+            </Suspense>
             {shouldShowChat && <VisitorHelpChat isAuthenticated={!!user} userRole={profile?.role} alwaysVisible={true} />}
-            {/* Freelancer Chat Widget - rendered at app level like VisitorHelpChat - hidden on auth pages and .click domain */}
             {shouldShowChat && <FreelancerChatWidget />}
-            {/* Minimized Meeting Window - rendered at app level */}
             <MinimizedMeeting />
             <Toaster />
           </TooltipProvider>
