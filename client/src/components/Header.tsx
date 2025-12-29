@@ -16,6 +16,7 @@ import { FreelanceMegaMenu } from "@/components/megamenu/FreelanceMegaMenu";
 import { ShopMegaMenu } from "@/components/megamenu/ShopMegaMenu";
 import { PricingMegaMenu } from "@/components/megamenu/PricingMegaMenu";
 import { PagesMegaMenu } from "@/components/megamenu/PagesMegaMenu";
+import { MobileNavMenu } from "@/components/megamenu/MobileNavMenu";
 
 interface HeaderProps {
   onNavigate: (page: string) => void;
@@ -40,12 +41,6 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
   const [isBlogOpen, setIsBlogOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileLearnOpen, setIsMobileLearnOpen] = useState(false);
-  const [isMobileTeachersOpen, setIsMobileTeachersOpen] = useState(false);
-  const [isMobileFreelanceOpen, setIsMobileFreelanceOpen] = useState(false);
-  const [isMobileShopOpen, setIsMobileShopOpen] = useState(false);
-  const [isMobilePricingOpen, setIsMobilePricingOpen] = useState(false);
-  const [isMobilePagesOpen, setIsMobilePagesOpen] = useState(false);
 
   const closeAllMegaMenus = () => {
     setIsLearnOpen(false);
@@ -552,247 +547,13 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 max-h-[70vh] overflow-y-auto">
-            <nav className="flex flex-col py-2 px-0 gap-0">
-              {/* LEARN */}
-              <div className="border-b border-gray-200 dark:border-gray-800">
-                <button 
-                  onClick={() => setIsMobileLearnOpen(!isMobileLearnOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
-                >
-                  Learn
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobileLearnOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isMobileLearnOpen && (
-                  <div className="px-4 py-4 bg-gray-50 dark:bg-gray-800/50">
-                    <LearnMegaMenu isOpen={true} onNavigate={onNavigate} onClose={() => setIsMobileMenuOpen(false)} isAuthenticated={isAuthenticated} />
-                  </div>
-                )}
-              </div>
-
-              {/* TEACHERS - Only show to guests, teachers, or admins */}
-              {(!isAuthenticated || profile?.role === 'teacher' || profile?.role === 'admin') && (
-                <div className="border-b border-gray-200 dark:border-gray-800">
-                  <button 
-                    onClick={() => setIsMobileTeachersOpen(!isMobileTeachersOpen)}
-                    className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
-                  >
-                    For Teachers
-                    <ChevronDown className={`h-4 w-4 transition-transform ${isMobileTeachersOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  {isMobileTeachersOpen && (
-                    <div className="px-4 py-4 bg-gray-50 dark:bg-gray-800/50">
-                      <TeachersMegaMenu isOpen={true} onNavigate={onNavigate} onClose={() => setIsMobileMenuOpen(false)} isAuthenticated={isAuthenticated} isApproved={profile?.role === 'teacher'} />
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* FREELANCERS */}
-              <div className="border-b border-gray-200 dark:border-gray-800">
-                <button 
-                  onClick={() => setIsMobileFreelanceOpen(!isMobileFreelanceOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
-                >
-                  Freelancers
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobileFreelanceOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isMobileFreelanceOpen && (
-                  <div className="px-4 py-4 bg-gray-50 dark:bg-gray-800/50">
-                    <FreelanceMegaMenu isOpen={true} onNavigate={onNavigate} onClose={() => setIsMobileMenuOpen(false)} />
-                  </div>
-                )}
-              </div>
-
-              {/* CREATIVE SPACE */}
-              <div className="border-b border-gray-200 dark:border-gray-800">
-                <button 
-                  onClick={() => setIsMobileShopOpen(!isMobileShopOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
-                >
-                  Creative Space
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobileShopOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isMobileShopOpen && (
-                  <div className="px-4 py-4 bg-gray-50 dark:bg-gray-800/50">
-                    <ShopMegaMenu isOpen={true} onNavigate={onNavigate} onClose={() => setIsMobileMenuOpen(false)} />
-                  </div>
-                )}
-              </div>
-
-              {/* PRICING */}
-              <div className="border-b border-gray-200 dark:border-gray-800">
-                <button 
-                  onClick={() => setIsMobilePricingOpen(!isMobilePricingOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
-                >
-                  Pricing
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobilePricingOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isMobilePricingOpen && (
-                  <div className="px-4 py-4 bg-gray-50 dark:bg-gray-800/50">
-                    <PricingMegaMenu isOpen={true} onNavigate={onNavigate} onClose={() => setIsMobileMenuOpen(false)} />
-                  </div>
-                )}
-              </div>
-
-              {/* BLOG */}
-              <div className="border-b border-gray-200 dark:border-gray-800">
-                <button 
-                  onClick={() => {handleNavigation("blog"); setIsMobileMenuOpen(false);}}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                >
-                  Blog
-                </button>
-              </div>
-
-              {/* ABOUT US */}
-              <div className="border-b border-gray-200 dark:border-gray-800">
-                <button 
-                  onClick={() => {handleNavigation("about"); setIsMobileMenuOpen(false);}}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                  data-testid="nav-about-us-mobile"
-                >
-                  About Us
-                </button>
-              </div>
-
-              {/* PAGES */}
-              <div className="border-b border-gray-200 dark:border-gray-800">
-                <button 
-                  onClick={() => setIsMobilePagesOpen(!isMobilePagesOpen)}
-                  className="w-full text-left px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between"
-                >
-                  Pages
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobilePagesOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {isMobilePagesOpen && (
-                  <div className="bg-gray-50 dark:bg-gray-800/50 px-4 py-2 space-y-2">
-                    <button 
-                      onClick={() => {handleNavigation("about"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <Info className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">About Us</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">Learn about our platform and mission</div>
-                      </div>
-                    </button>
-                    <button 
-                      onClick={() => {handleNavigation("contact"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <Mail className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">Contact</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">Get in touch with our team</div>
-                      </div>
-                    </button>
-                    <button 
-                      onClick={() => {onNavigate("advertise-with-us"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <Megaphone className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">Advertise With Us</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">Explore advertising opportunities</div>
-                      </div>
-                    </button>
-                    <button 
-                      onClick={() => {handleNavigation("help"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <HelpCircle className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">Help & Support</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">Find answers and get support</div>
-                      </div>
-                    </button>
-                    <button 
-                      onClick={() => {onNavigate("privacy-policy"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">Privacy Policy</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">How we protect your data</div>
-                      </div>
-                    </button>
-                    <button 
-                      onClick={() => {onNavigate("terms"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <FileText className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">Terms of Service</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">Our terms and conditions</div>
-                      </div>
-                    </button>
-                    <button 
-                      onClick={() => {onNavigate("community-guidelines"); setIsMobileMenuOpen(false);}}
-                      className="w-full text-left px-3 py-2 text-xs rounded flex items-start gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      <Users className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "#0C332C" }} />
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-100">Community Guidelines</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">Community standards and rules</div>
-                      </div>
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* SIGN IN / ACCOUNT */}
-              {authLoading ? (
-                <div className="m-4 w-[calc(100%-32px)] flex items-center justify-center py-3">
-                  <div className="w-5 h-5 border-2 border-gray-300 border-t-[#0C332C] rounded-full animate-spin"></div>
-                </div>
-              ) : showLoginControls ? (
-                <Button
-                  size="sm"
-                  onClick={() => {onNavigate("auth"); setIsMobileMenuOpen(false);}}
-                  className="m-4 w-[calc(100%-32px)] text-sm font-medium hover:bg-primary text-white rounded-full bg-[#0C332C]"
-                  data-testid="button-signin-mobile"
-                >
-                  Sign In
-                </Button>
-              ) : (
-                <div className="border-t border-gray-200 dark:border-gray-800 py-2">
-                  <button 
-                    onClick={() => {
-                      if (profile?.role === 'admin') {
-                        onNavigate("admin-dashboard");
-                      } else if (profile?.role === 'teacher') {
-                        onNavigate("teacher-dashboard");
-                      } else if (profile?.role === 'freelancer') {
-                        onNavigate("freelancer-dashboard");
-                      } else if (profile?.role === 'general') {
-                        onNavigate("customer-dashboard");
-                      } else {
-                        onNavigate("student-dashboard");
-                      }
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-3 flex items-start gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    data-testid="button-account-mobile"
-                  >
-                    {(profile?.profilePicture || profile?.avatarUrl) ? (
-                      <img 
-                        src={(profile.profilePicture || profile.avatarUrl) as string} 
-                        alt="Profile" 
-                        className="h-8 w-8 rounded-full object-cover border border-gray-200 flex-shrink-0"
-                      />
-                    ) : (
-                      <UserCircle className="h-8 w-8 flex-shrink-0" style={{ color: "#0C332C" }} />
-                    )}
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-gray-100 text-xs">My Account</div>
-                      <div className="text-gray-600 dark:text-gray-400 text-xs">{profile?.name || 'User'}</div>
-                    </div>
-                  </button>
-                </div>
-              )}
-            </nav>
+          <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 max-h-[85vh] overflow-y-auto">
+            <MobileNavMenu 
+              onNavigate={onNavigate} 
+              onClose={() => setIsMobileMenuOpen(false)} 
+              isAuthenticated={isAuthenticated}
+              userRole={profile?.role}
+            />
           </div>
         )}
 
