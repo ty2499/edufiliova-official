@@ -411,11 +411,26 @@ export class EmailService {
         html = html.replace(/Reason provided:[\s\S]*?{{reason}}/gi, '');
       }
 
+      // Attachments with CID references for embedded images
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'bbe5722d1ffd3c84888e18335965d5e5.png', path: path.join(imagesPath, 'bbe5722d1ffd3c84888e18335965d5e5.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: '0ac9744033a7e26f12e08d761c703308.png', path: path.join(imagesPath, '0ac9744033a7e26f12e08d761c703308.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'd320764f7298e63f6b035289d4219bd8.png', path: path.join(imagesPath, 'd320764f7298e63f6b035289d4219bd8.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: '917a6e905cf83da447efc0f5c2780aca.png', path: path.join(imagesPath, '917a6e905cf83da447efc0f5c2780aca.png'), cid: 'teacherapp', contentType: 'image/png' },
+        { filename: 'de497c5361453604d8a15c4fd9bde086.png', path: path.join(imagesPath, 'de497c5361453604d8a15c4fd9bde086.png'), cid: 'declinedicon', contentType: 'image/png' },
+        { filename: '7976503d64a3eef4169fe235111cdc57.png', path: path.join(imagesPath, '7976503d64a3eef4169fe235111cdc57.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: 'e06e238bd6d74a3e48f94e5b0b81388d.png', path: path.join(imagesPath, 'e06e238bd6d74a3e48f94e5b0b81388d.png'), cid: 'teacherbanner', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+      ];
+
       return this.sendEmail({
         to: email,
         subject: 'Teacher Application Update - EduFiliova',
         html: html,
-        from: '"EduFiliova Support" <support@edufiliova.com>'
+        from: '"EduFiliova Support" <support@edufiliova.com>',
+        attachments
       });
     } catch (error) {
       console.error('Error sending teacher application declined email:', error);
