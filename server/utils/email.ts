@@ -234,11 +234,13 @@ export class EmailService {
         }
       }
 
+    // Log final HTML before sending as requested
+    console.log(`✉️ Sending email to: ${options.to} | Subject: ${options.subject}`);
+    
     // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
     let processedHtml = this.processEmailImages(options.html);
     
-    // Log final HTML before sending as requested
-    console.log(`✉️ Sending email to: ${options.to} | Subject: ${options.subject}`);
+    // Log final HTML after processing
     console.log(`✉️ Final HTML content:\n${processedHtml}`);
     
     // CID replacement is now handled inside processEmailImages for consistency
