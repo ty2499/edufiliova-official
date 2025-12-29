@@ -223,11 +223,17 @@ export default function FreelancerServicesPage() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/freelancer/services/${service.id}/edit`)}>
+                        <DropdownMenuItem 
+                          onClick={() => navigate(`/dashboard/freelancer/services/${service.id}/edit`)}
+                          className="hover:bg-[#0c332c] hover:text-white focus:bg-[#0c332c] focus:text-white"
+                        >
                           <Edit className="w-4 h-4 mr-2" />
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate(`/marketplace/services/${service.id}`)}>
+                        <DropdownMenuItem 
+                          onClick={() => navigate(`/marketplace/services/${service.id}`)}
+                          className="hover:bg-[#0c332c] hover:text-white focus:bg-[#0c332c] focus:text-white"
+                        >
                           <Eye className="w-4 h-4 mr-2" />
                           View Live
                         </DropdownMenuItem>
@@ -236,6 +242,7 @@ export default function FreelancerServicesPage() {
                             serviceId: service.id,
                             status: service.status === 'published' ? 'paused' : 'published'
                           })}
+                          className="hover:bg-[#0c332c] hover:text-white focus:bg-[#0c332c] focus:text-white"
                         >
                           {service.status === 'published' ? (
                             <>
@@ -250,7 +257,7 @@ export default function FreelancerServicesPage() {
                           )}
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                          className="text-red-600"
+                          className="text-red-600 hover:bg-red-600 hover:text-white focus:bg-red-600 focus:text-white"
                           onClick={() => deleteMutation.mutate(service.id)}
                         >
                           <Trash2 className="w-4 h-4 mr-2" />
