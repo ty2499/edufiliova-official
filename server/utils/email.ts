@@ -334,19 +334,25 @@ export class EmailService {
   }
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
-    const content = `
-      <h1>Application Approved</h1>
-      <p>Hello ${data.fullName},</p>
-      <p>Great news! Your teacher application has been approved. You can now log in to your dashboard and start creating courses.</p>
-      <a href="${this.getBaseUrl()}/login" class="btn">Go to Dashboard</a>
-      <p>Welcome to the EduFiliova community!</p>
-    `;
-    return this.sendEmail({
-      to: email,
-      subject: 'Your Teacher Application has been Approved - EduFiliova',
-      html: this.getGlobalTemplate('Application Approved', content),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/teacher_application_approved_template/email.html'),
+        'utf-8'
+      );
+
+      html = html.replace(/{{FullName}}/g, data.fullName);
+      html = this.processEmailImages(html);
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Congratulations! Your Teacher Application has been Approved - EduFiliova',
+        html: html,
+        from: '"EduFiliova Support" <support@edufiliova.com>'
+      });
+    } catch (error) {
+      console.error('Error sending teacher approval email:', error);
+      return false;
+    }
   }
 
   async sendTeacherApplicationDeclinedEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {

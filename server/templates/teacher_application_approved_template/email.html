@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+  <meta name="x-apple-disable-message-reformatting">
+  <style>
+    body {
+      background-color: #f0f1f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+    .header {
+      background-color: #0d3931;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    .header img {
+      max-width: 200px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    .banner-section {
+      position: relative;
+      background-color: #0d3931;
+      padding: 0;
+      overflow: hidden;
+    }
+    .banner-section img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .content {
+      padding: 40px 30px;
+      background-color: #ffffff;
+    }
+    .greeting {
+      color: #0d3931;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 20px 0;
+      line-height: 1.6;
+    }
+    .intro-text {
+      color: #333333;
+      font-size: 15px;
+      line-height: 1.8;
+      margin: 0 0 25px 0;
+    }
+    .highlights-section {
+      background-color: #f9f9f9;
+      border-left: 4px solid #22c55e;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 4px;
+    }
+    .highlights-title {
+      color: #0d3931;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 15px 0;
+      display: flex;
+      align-items: center;
+    }
+    .highlights-title img {
+      max-width: 20px;
+      height: auto;
+      margin-right: 10px;
+    }
+    .highlights-list {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0;
+      padding-left: 20px;
+    }
+    .highlights-list li {
+      margin-bottom: 8px;
+      color: #333;
+    }
+    .next-steps {
+      margin: 30px 0;
+    }
+    .next-steps-title {
+      color: #0d3931;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 15px 0;
+    }
+    .steps-list {
+      color: #555;
+      font-size: 14px;
+      line-height: 2;
+      margin: 0;
+      padding-left: 20px;
+    }
+    .steps-list li {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .steps-list strong {
+      color: #0d3931;
+      font-weight: 600;
+    }
+    .important-notes {
+      background-color: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 4px;
+    }
+    .important-notes-title {
+      color: #92400e;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+    }
+    .important-notes-text {
+      color: #78350f;
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #22c55e;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 30px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      margin: 25px 0;
+      text-align: center;
+    }
+    .footer {
+      background-color: #0d3931;
+      color: #ffffff;
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .footer-logo {
+      max-width: 120px;
+      height: auto;
+      display: block;
+      margin: 0 auto 15px;
+    }
+    .footer-text {
+      margin: 10px 0;
+      color: rgba(255,255,255,0.9);
+    }
+    .footer-links {
+      margin: 15px 0;
+      font-size: 12px;
+    }
+    .footer-links a {
+      color: #22c55e;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    .decorative-icon {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @media (max-width: 600px) {
+      .content {
+        padding: 20px 15px;
+      }
+      .greeting {
+        font-size: 16px;
+      }
+      .intro-text {
+        font-size: 14px;
+      }
+      .footer {
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#f0f1f5" style="background-color:#f0f1f5">
+    <tbody>
+      <tr>
+        <td style="background-color:#f0f1f5">
+          <table align="center" width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;">
+            <tbody>
+              <!-- Header -->
+              <tr>
+                <td style="background-color:#0d3931;padding:30px 20px;text-align:center;">
+                  <img src="cid:logo_edufiliova" alt="EduFiliova" style="max-width:200px;height:auto;" />
+                </td>
+              </tr>
+
+              <!-- Banner Section -->
+              <tr>
+                <td style="background-color:#0d3931;padding:0;overflow:hidden;">
+                  <img src="cid:banner_teacher_approved" alt="Teacher Approved" style="width:100%;height:auto;display:block;" />
+                </td>
+              </tr>
+
+              <!-- Content -->
+              <tr>
+                <td style="background-color:#ffffff;padding:40px 30px;">
+                  <p style="color:#0d3931;font-size:18px;font-weight:600;margin:0 0 20px 0;line-height:1.6;">Hi {{FullName}},</p>
+
+                  <p style="color:#333333;font-size:15px;line-height:1.8;margin:0 0 25px 0;">We're excited to share some great news with you!</p>
+
+                  <p style="color:#333333;font-size:15px;line-height:1.8;margin:0 0 25px 0;">After a careful review of your application, qualifications, and submitted documents, we're happy to inform you that your teacher application has been successfully approved. You are now officially part of the EduFiliova global teaching community.</p>
+
+                  <!-- What This Means -->
+                  <div style="background-color:#f9f9f9;border-left:4px solid #22c55e;padding:20px;margin:25px 0;border-radius:4px;">
+                    <p style="color:#0d3931;font-size:16px;font-weight:600;margin:0 0 15px 0;display:flex;align-items:center;">
+                      <img src="cid:icon_checkmark" alt="✓" style="max-width:20px;height:auto;margin-right:10px;" />
+                      What This Means for You
+                    </p>
+                    <ul style="color:#555;font-size:14px;line-height:1.8;margin:0;padding-left:20px;list-style:none;">
+                      <li style="margin-bottom:8px;color:#333;">✓ Create and publish structured courses and lessons</li>
+                      <li style="margin-bottom:8px;color:#333;">✓ Schedule and host live classes or meetings</li>
+                      <li style="margin-bottom:8px;color:#333;">✓ Assign quizzes, exercises, and learning materials</li>
+                      <li style="margin-bottom:8px;color:#333;">✓ Communicate with students through secure messaging</li>
+                      <li style="margin-bottom:8px;color:#333;">✓ Earn income through courses, live sessions, and academic services</li>
+                      <li style="margin-bottom:8px;color:#333;">✓ Reach students from multiple countries and education systems</li>
+                    </ul>
+                    <p style="color:#0d3931;font-weight:600;margin:15px 0 0 0;font-size:14px;">Your teacher dashboard is now fully unlocked and ready for use.</p>
+                  </div>
+
+                  <!-- Next Steps -->
+                  <div style="margin:30px 0;">
+                    <p style="color:#0d3931;font-size:16px;font-weight:600;margin:0 0 15px 0;">Next Steps:</p>
+                    <p style="color:#555;font-size:14px;line-height:1.8;margin:0 0 15px 0;">To help you succeed on the platform, we recommend completing the following steps:</p>
+                    <ol style="color:#555;font-size:14px;line-height:2;margin:0;padding-left:20px;">
+                      <li style="margin-bottom:10px;color:#333;"><strong style="color:#0d3931;">Access your Teacher Dashboard</strong> – Log in and explore your dashboard to familiarize yourself with available tools and features.</li>
+                      <li style="margin-bottom:10px;color:#333;"><strong style="color:#0d3931;">Complete Your Teacher Profile</strong> – Add a professional photo, bio, teaching style, subjects, and experience. A complete profile helps students trust and choose you.</li>
+                      <li style="margin-bottom:10px;color:#333;"><strong style="color:#0d3931;">Create Your First Course or Lesson</strong> – Start with a clear, structured course aligned to a grade level or subject you specialize in.</li>
+                      <li style="margin-bottom:10px;color:#333;"><strong style="color:#0d3931;">Set Your Availability (Optional)</strong> – If you plan to host live classes or meetings, set your availability to allow students to book sessions.</li>
+                      <li style="color:#333;"><strong style="color:#0d3931;">Review Teacher Guidelines</strong> – Make sure you understand EduFiliova's teaching standards, content policies, and Students Rights.</li>
+                    </ol>
+                  </div>
+
+                  <!-- Important Notes -->
+                  <div style="background-color:#fef3c7;border-left:4px solid #f59e0b;padding:20px;margin:25px 0;border-radius:4px;">
+                    <p style="color:#92400e;font-size:14px;font-weight:600;margin:0 0 10px 0;">⚠️ Important Notes</p>
+                    <ul style="color:#78350f;font-size:13px;line-height:1.7;margin:0;padding-left:20px;">
+                      <li>Your account has been approved for teaching purposes only.</li>
+                      <li>All content is subject to periodic quality and policy review to ensure a safe learning environment.</li>
+                      <li>Earnings and payouts are managed through your teacher dashboard and follow our payout policies.</li>
+                    </ul>
+                  </div>
+
+                  <!-- Support Section -->
+                  <div style="background-color:#e8f5e9;padding:20px;margin:25px 0;border-radius:4px;text-align:center;">
+                    <p style="color:#0d3931;font-size:15px;font-weight:600;margin:0 0 10px 0;">Support & Help</p>
+                    <p style="color:#333;font-size:14px;line-height:1.8;margin:0;">If you need help setting up your profile, creating courses, or understanding how teaching works on EduFiliova, we're here for you.</p>
+                  </div>
+
+                  <p style="color:#333333;font-size:15px;line-height:1.8;margin:30px 0 20px 0;">We're proud to welcome you as an educator on EduFiliova and look forward to seeing the positive impact you'll make on learners around the world.</p>
+
+                  <p style="color:#666;font-size:15px;margin:20px 0;font-weight:600;">Warm regards,<br/>The EduFiliova Support Team</p>
+                </td>
+              </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="background-color:#0d3931;color:#ffffff;padding:30px 20px;text-align:center;font-size:13px;line-height:1.8;">
+                  <img src="cid:footer_logo" alt="EduFiliova" style="max-width:120px;height:auto;display:block;margin:0 auto 15px;" />
+                  
+                  <p style="margin:10px 0;color:rgba(255,255,255,0.9);font-size:14px;">Thank you for joining our community!</p>
+                  
+                  <p style="margin:15px 0;color:rgba(255,255,255,0.8);font-size:13px;">Feel free to reach out if you have any questions.</p>
+                  
+                  <div style="margin:15px 0;font-size:12px;">
+                    <a href="https://edufiliova.com/help" style="color:#22c55e;text-decoration:none;margin:0 8px;">Visit Teacher Help Center</a>
+                    <br/>
+                    <a href="mailto:support@edufiliova.com" style="color:#22c55e;text-decoration:none;margin:0 8px;">Contact Support</a>
+                  </div>
+                  
+                  <p style="margin:15px 0 0 0;color:rgba(255,255,255,0.6);font-size:12px;">
+                    © 2025 EduFiliova. All rights reserved.<br/>
+                    Where Knowledge Meets Opportunity
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
