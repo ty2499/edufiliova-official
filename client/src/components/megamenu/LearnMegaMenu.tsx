@@ -46,7 +46,7 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
       icon: <BookOpen className="h-5 w-5" />,
       title: "Study Materials",
       description: "Access notes, papers, and learning resources",
-      page: "study-settings",
+      page: "dashboard",
     },
     {
       icon: <Video className="h-5 w-5" />,

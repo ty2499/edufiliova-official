@@ -52,7 +52,7 @@ export const MobileNavMenu = ({ onNavigate, onClose, isAuthenticated = false, us
       icon: <Search className="h-4 w-4" />,
       links: [
         { icon: <Search className="h-4 w-4" />, title: "Browse Courses", page: "course-browse" },
-        { icon: <BookOpen className="h-4 w-4" />, title: "Study Materials", page: "study-settings" },
+        { icon: <BookOpen className="h-4 w-4" />, title: "Study Materials", page: "dashboard" },
         { icon: <Video className="h-4 w-4" />, title: "Live Classes", page: "student-meetings" },
       ]
     },
