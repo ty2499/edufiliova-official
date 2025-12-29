@@ -22987,7 +22987,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const customerProfileUuid = customerProfile[0].profileId;
-      const customerRole = customerProfile[0].role;
+      // Map role to valid app_role enum value for chat_participants
+      const validChatRoles = ["admin", "moderator", "teacher", "student", "freelancer", "accountant", "customer_service"];
+      const rawCustomerRole = customerProfile[0].role;
+      const customerRole = validChatRoles.includes(rawCustomerRole) ? rawCustomerRole : "student";
 
       // Get freelancer profile UUID and role
       const freelancerProfile = await db.select({ profileId: profiles.id, role: profiles.role })
@@ -23000,7 +23003,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const freelancerProfileUuid = freelancerProfile[0].profileId;
-      const freelancerRole = freelancerProfile[0].role;
+      // Map freelancer role to valid app_role enum value
+      const rawFreelancerRole = freelancerProfile[0].role;
+      const freelancerRole = validChatRoles.includes(rawFreelancerRole) ? rawFreelancerRole : "freelancer";
 
       // Use transaction-based upsert to prevent race conditions
       let threadId;
