@@ -1813,6 +1813,275 @@ router.post("/:orderId/start-work", requireAuth, requireRole(['freelancer']), as
   }
 });
 
+// ============================================
+// ADMIN ORDER MANAGEMENT ENDPOINTS
+// ============================================
+
+router.get("/admin/orders", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { status, page = '1', limit = '20' } = req.query;
+    const pageNum = parseInt(page as string) || 1;
+    const limitNum = Math.min(parseInt(limit as string) || 20, 100);
+    const offset = (pageNum - 1) * limitNum;
+
+    let query = db
+      .select()
+      .from(freelancerOrders)
+      .orderBy(desc(freelancerOrders.createdAt));
+
+    if (status && status !== 'all') {
+      query = query.where(eq(freelancerOrders.status, status as string)) as any;
+    }
+
+    const orders = await query.limit(limitNum).offset(offset);
+
+    const ordersWithDetails = await Promise.all(
+      orders.map(async (order) => {
+        const [service] = await db
+          .select({ title: freelancerServices.title })
+          .from(freelancerServices)
+          .where(eq(freelancerServices.id, order.serviceId));
+        
+        const [freelancer] = await db
+          .select({ fullName: profiles.fullName, profilePicture: profiles.profilePicture })
+          .from(profiles)
+          .where(eq(profiles.userId, order.freelancerId));
+        
+        const [client] = await db
+          .select({ fullName: profiles.fullName, profilePicture: profiles.profilePicture })
+          .from(profiles)
+          .where(eq(profiles.userId, order.clientId));
+        
+        return {
+          ...order,
+          service: service || null,
+          freelancer: freelancer || null,
+          client: client || null,
+        };
+      })
+    );
+
+    const [countResult] = await db
+      .select({ count: count() })
+      .from(freelancerOrders);
+
+    res.json({
+      success: true,
+      orders: ordersWithDetails,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total: countResult?.count || 0,
+        totalPages: Math.ceil((countResult?.count || 0) / limitNum),
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching admin orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+
+router.post("/admin/orders/:orderId/release", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const adminId = req.user?.id;
+    const { orderId } = req.params;
+    const { reason } = req.body;
+
+    if (!adminId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.status === "completed" || order.status === "refunded") {
+      return res.status(400).json({ error: `Cannot release escrow for ${order.status} order` });
+    }
+
+    const result = await releaseEscrow(orderId, false);
+    
+    if (!result.success) {
+      return res.status(400).json({ error: result.error });
+    }
+
+    await logOrderEvent(
+      orderId, 
+      adminId, 
+      "admin_release", 
+      "Admin Released Payment", 
+      reason || "Admin manually released escrow to freelancer"
+    );
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "Escrow released to freelancer successfully",
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error releasing escrow (admin):", error);
+    res.status(500).json({ error: "Failed to release escrow" });
+  }
+});
+
+router.post("/admin/orders/:orderId/refund", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const adminId = req.user?.id;
+    const { orderId } = req.params;
+    const { reason, refundAmount } = req.body;
+
+    if (!adminId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.status === "completed" || order.status === "refunded") {
+      return res.status(400).json({ error: `Cannot refund ${order.status} order` });
+    }
+
+    const amountToRefund = refundAmount ? parseFloat(refundAmount) : parseFloat(order.amountTotal);
+
+    const [clientBalance] = await db
+      .select()
+      .from(userBalances)
+      .where(eq(userBalances.userId, order.clientId));
+
+    const currentBalance = parseFloat(clientBalance?.availableBalance || "0");
+
+    await db.transaction(async (tx) => {
+      if (clientBalance) {
+        await tx
+          .update(userBalances)
+          .set({
+            availableBalance: (currentBalance + amountToRefund).toFixed(2),
+            updatedAt: new Date(),
+          })
+          .where(eq(userBalances.userId, order.clientId));
+      } else {
+        await tx.insert(userBalances).values({
+          userId: order.clientId,
+          availableBalance: amountToRefund.toFixed(2),
+          pendingBalance: "0.00",
+        });
+      }
+
+      await tx.insert(transactions).values({
+        userId: order.clientId,
+        type: "refund",
+        amount: amountToRefund.toFixed(2),
+        currency: order.currency || "USD",
+        status: "completed",
+        description: `Refund for order #${orderId.slice(0, 8)} - ${reason || "Admin initiated refund"}`,
+        metadata: { orderId, adminId, reason },
+      });
+
+      await tx
+        .update(freelancerOrders)
+        .set({
+          status: "refunded",
+          escrowHeldAmount: "0.00",
+          updatedAt: new Date(),
+        })
+        .where(eq(freelancerOrders.id, orderId));
+    });
+
+    await logOrderEvent(
+      orderId, 
+      adminId, 
+      "admin_refund", 
+      "Admin Issued Refund", 
+      `Refunded $${amountToRefund.toFixed(2)} to buyer. Reason: ${reason || "Admin decision"}`
+    );
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: `Refund of $${amountToRefund.toFixed(2)} issued to buyer`,
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error issuing refund (admin):", error);
+    res.status(500).json({ error: "Failed to issue refund" });
+  }
+});
+
+router.post("/admin/orders/:orderId/cancel", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const adminId = req.user?.id;
+    const { orderId } = req.params;
+    const { reason } = req.body;
+
+    if (!adminId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.status === "completed" || order.status === "refunded" || order.status === "cancelled") {
+      return res.status(400).json({ error: `Cannot cancel ${order.status} order` });
+    }
+
+    await db
+      .update(freelancerOrders)
+      .set({
+        status: "cancelled",
+        updatedAt: new Date(),
+      })
+      .where(eq(freelancerOrders.id, orderId));
+
+    await logOrderEvent(
+      orderId, 
+      adminId, 
+      "admin_cancel", 
+      "Admin Cancelled Order", 
+      reason || "Order cancelled by admin"
+    );
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "Order cancelled successfully",
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error cancelling order (admin):", error);
+    res.status(500).json({ error: "Failed to cancel order" });
+  }
+});
+
 export async function processAutoReleaseOrders(): Promise<{ processed: number; errors: number }> {
   const now = new Date();
   let processed = 0;
