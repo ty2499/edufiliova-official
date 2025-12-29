@@ -690,7 +690,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                         )}
                       </div>
                       <CardHeader className="p-4">
-                        <CardTitle className="text-sm font-semibold line-clamp-2 group-hover:text-foreground transition-colors" transition-all duration-300>
+                        <CardTitle className="text-sm font-semibold line-clamp-2 group-hover:text-foreground transition-colors transition-all duration-300">
                           {product.name}
                         </CardTitle>
                       </CardHeader>
@@ -1119,7 +1119,7 @@ const PricingSlideshow = ({ onNavigate }: { onNavigate: (page: string) => void }
                         data-testid={`button-view-${slideData.id}-pricing`}
                       >
                         {slideData.ctaText}
-                        <ArrowRight className="ml-2 h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" transition-all duration-300 />
+                        <ArrowRight className="ml-2 h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform transition-all duration-300" />
                       </Button>
                     </div>
                   </div>
