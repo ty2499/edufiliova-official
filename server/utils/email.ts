@@ -63,7 +63,7 @@ export class EmailService {
   private async processEmailImages(html: string): Promise<string> {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
-    // We only process src="cid:..." or src="images/..." or direct image filenames
+    // Ensure we process all potential image references in the provided HTML
     // and replace them with base64 data to ensure they show up.
     // We DON'T change the HTML structure at all.
 
@@ -74,7 +74,8 @@ export class EmailService {
         new RegExp(`src=["']cid:${baseName}["']`, 'gi'),
         new RegExp(`src=["']images/${key}["']`, 'gi'),
         new RegExp(`src=["']${key}["']`, 'gi'),
-        new RegExp(`src=["']images/${baseName}\\.png["']`, 'gi')
+        new RegExp(`src=["']images/${baseName}\\.png["']`, 'gi'),
+        new RegExp(`href=["']images/${baseName}\\.png["']`, 'gi')
       ];
 
       for (const pattern of patterns) {
@@ -86,12 +87,21 @@ export class EmailService {
             const base64 = Buffer.from(buffer).toString('base64');
             const dataUri = `data:${contentType};base64,${base64}`;
             
-            html = html.replace(pattern, `src="${dataUri}"`);
+            // Replace the reference with the data URI
+            if (pattern.source.includes('src=')) {
+              html = html.replace(pattern, `src="${dataUri}"`);
+            } else if (pattern.source.includes('href=')) {
+              html = html.replace(pattern, `href="${dataUri}"`);
+            }
             console.log(`✅ Embedded image ${key} as Base64`);
           } catch (err) {
             console.warn(`⚠️ Failed to embed image ${key}:`, err);
             // Fallback to Cloudinary URL if fetch fails
-            html = html.replace(pattern, `src="${url}"`);
+            if (pattern.source.includes('src=')) {
+              html = html.replace(pattern, `src="${url}"`);
+            } else if (pattern.source.includes('href=')) {
+              html = html.replace(pattern, `href="${url}"`);
+            }
           }
         }
       }
