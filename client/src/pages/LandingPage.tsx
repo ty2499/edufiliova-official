@@ -759,6 +759,20 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                 </Card>
               ))}
             </div>
+            
+            {/* Browse Services CTA */}
+            <div className="text-center scroll-animate">
+              <Button 
+                size="lg" 
+                onClick={() => navigate('/marketplace/services')}
+                style={{ backgroundColor: '#0c332c', color: 'white' }}
+                className="hover:bg-[#0c332c]/90"
+                data-testid="button-browse-services"
+              >
+                Browse Freelancer Services
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </section>
 
