@@ -47,9 +47,8 @@ router.get("/", async (req: Request, res: Response) => {
           .select({
             id: profiles.id,
             userId: profiles.userId,
-            fullName: profiles.fullName,
+            name: profiles.name,
             profilePicture: profiles.profilePicture,
-            verificationBadge: profiles.verificationBadge,
           })
           .from(profiles)
           .where(eq(profiles.userId, service.freelancerId))
@@ -121,10 +120,9 @@ router.get("/:id", async (req: Request, res: Response) => {
       .select({
         id: profiles.id,
         userId: profiles.userId,
-        fullName: profiles.fullName,
+        name: profiles.name,
         profilePicture: profiles.profilePicture,
         bio: profiles.bio,
-        verificationBadge: profiles.verificationBadge,
       })
       .from(profiles)
       .where(eq(profiles.userId, service.freelancerId))
