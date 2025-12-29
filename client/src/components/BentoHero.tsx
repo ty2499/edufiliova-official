@@ -24,8 +24,8 @@ const heroImages: Record<string, string> = {
 const heroContent = [
   {
     type: 'Students',
-    headline: 'Master any subject;',
-    headlineLine2: 'at your own pace.',
+    headline: 'Master any subject',
+    headlineLine2: 'at your own pace',
     description: 'EduFiliova helps students of all ages access personalized courses, expert tutors, and earn certificates that advance their education.',
     cta: 'Start Learning Free',
     ctaAction: 'auth',
@@ -48,8 +48,8 @@ const heroContent = [
   },
   {
     type: 'Teachers',
-    headline: 'Share knowledge;',
-    headlineLine2: 'inspire generations.',
+    headline: 'Share knowledge',
+    headlineLine2: 'inspire generations',
     description: 'EduFiliova empowers teachers to create courses, reach global audiences, and build sustainable income from their expertise.',
     cta: 'Start Teaching',
     ctaAction: 'teacher-application',
@@ -72,8 +72,8 @@ const heroContent = [
   },
   {
     type: 'Freelancers',
-    headline: 'Build your brand;',
-    headlineLine2: 'grow your income.',
+    headline: 'Build your brand',
+    headlineLine2: 'grow your income',
     description: 'EduFiliova connects freelancers with clients seeking quality services, from tutoring to course creation and consulting.',
     cta: 'Join as Freelancer',
     ctaAction: 'freelancer-signup-basic',
@@ -97,8 +97,8 @@ const heroContent = [
   },
   {
     type: 'Creators',
-    headline: 'Create once;',
-    headlineLine2: 'earn forever.',
+    headline: 'Create once',
+    headlineLine2: 'earn forever',
     description: 'EduFiliova enables creators to sell digital products, templates, and educational resources to a worldwide audience.',
     cta: 'Start Selling',
     ctaAction: 'auth',
