@@ -1327,6 +1327,49 @@ export class EmailService {
     }
   }
 
+  async sendShopPurchaseReceiptEmail(email: string, data: { 
+    fullName: string; 
+    orderId: string; 
+    totalPrice: string; 
+    purchaseDate: string;
+  }): Promise<boolean> {
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/shop_purchase_receipt_template/email.html'),
+        'utf-8'
+      );
+
+      const { fullName, orderId, totalPrice, purchaseDate } = data;
+
+      // Use bulletproof name replacement
+      html = this.forceReplaceName(html, fullName || 'Customer');
+      html = html.replace(/\{\{orderId\}\}/gi, orderId || 'N/A');
+      html = html.replace(/\{\{totalPrice\}\}/gi, totalPrice || '0.00');
+      html = html.replace(/\{\{purchaseDate\}\}/gi, purchaseDate || new Date().toLocaleDateString());
+
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'db561a55b2cf0bc6e877bb934b39b700.png', path: path.join(imagesPath, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: 'f4a85d998eb4f45ce242a7b73cf561d5.png', path: path.join(imagesPath, 'f4a85d998eb4f45ce242a7b73cf561d5.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: '83faf7f361d9ba8dfdc904427b5b6423.png', path: path.join(imagesPath, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' },
+        { filename: '3d94f798ad2bd582f8c3afe175798088.png', path: path.join(imagesPath, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'whitearrow', contentType: 'image/png' }
+      ];
+
+      return this.sendEmail({
+        to: email,
+        subject: `Your EduFiliova Order Confirmation - #${orderId}`,
+        html,
+        from: `"EduFiliova Orders" <orders@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending shop purchase receipt email:', error);
+      return false;
+    }
+  }
+
   async sendVoucherEmail(to: string, data: {
     fullName: string;
     senderName: string;
