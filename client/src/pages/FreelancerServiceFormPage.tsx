@@ -56,9 +56,9 @@ export default function FreelancerServiceFormPage() {
 
   const [images, setImages] = useState<string[]>([]);
   const [packages, setPackages] = useState({
-    basic: { name: 'Basic', description: '', price: 25, deliveryDays: 7, revisions: 1, features: [''] },
-    standard: { name: 'Standard', description: '', price: 50, deliveryDays: 5, revisions: 2, features: [''] },
-    premium: { name: 'Premium', description: '', price: 100, deliveryDays: 3, revisions: 3, features: [''] },
+    basic: { title: 'Basic', description: '', price: 25, deliveryDays: 7, revisions: 1, features: [] as string[] },
+    standard: { title: 'Standard', description: '', price: 50, deliveryDays: 5, revisions: 2, features: [] as string[] },
+    premium: { title: 'Premium', description: '', price: 100, deliveryDays: 3, revisions: 3, features: [] as string[] },
   });
   const [addOns, setAddOns] = useState<Array<{ title: string; description: string; price: number }>>([]);
 
