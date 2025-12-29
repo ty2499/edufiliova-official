@@ -1370,6 +1370,48 @@ export class EmailService {
     }
   }
 
+  async sendRequestPasswordEmail(email: string, data: { 
+    fullName: string; 
+    code: string; 
+    expiresIn: string;
+  }): Promise<boolean> {
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/request_password_template/email.html'),
+        'utf-8'
+      );
+
+      const fullName = data.fullName || 'User';
+      const code = data.code || '000000';
+      const expiresIn = data.expiresIn || '10';
+
+      // Use bulletproof name replacement
+      html = this.forceReplaceName(html, fullName);
+      html = html.replace(/\{\{code\}\}/gi, code);
+      html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
+
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'db561a55b2cf0bc6e877bb934b39b700.png', path: path.join(imagesPath, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: '41506b29d7f0bbde9fcb0d4afb720c70.png', path: path.join(imagesPath, '41506b29d7f0bbde9fcb0d4afb720c70.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: '83faf7f361d9ba8dfdc904427b5b6423.png', path: path.join(imagesPath, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+      ];
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Password Change Request - EduFiliova',
+        html,
+        from: `"EduFiliova Security" <verify@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending request password email:', error);
+      return false;
+    }
+  }
+
   async sendVoucherEmail(to: string, data: {
     fullName: string;
     senderName: string;
