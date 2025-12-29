@@ -852,11 +852,11 @@ router.post("/:orderId/pay", requireAuth, async (req: AuthenticatedRequest, res:
       // Email to customer
       if (customerProfile?.email) {
         emailService.sendFreelancerOrderPlacedEmail(customerProfile.email, {
-          customerName: customerProfile.fullName || 'Customer',
+          customerName: customerProfile.displayName || customerProfile.name || 'Customer',
           orderId: orderId,
           serviceTitle: serviceName,
           packageName: packageName,
-          freelancerName: freelancerProfile?.fullName || 'Freelancer',
+          freelancerName: freelancerProfile?.displayName || freelancerProfile?.name || 'Freelancer',
           amount: orderTotal.toFixed(2),
           deliveryDays: deliveryDays,
           orderDate: orderDate,
@@ -866,11 +866,11 @@ router.post("/:orderId/pay", requireAuth, async (req: AuthenticatedRequest, res:
       // Email to freelancer
       if (freelancerProfile?.email) {
         emailService.sendFreelancerOrderReceivedEmail(freelancerProfile.email, {
-          freelancerName: freelancerProfile.fullName || 'Freelancer',
+          freelancerName: freelancerProfile.displayName || freelancerProfile.name || 'Freelancer',
           orderId: orderId,
           serviceTitle: serviceName,
           packageName: packageName,
-          customerName: customerProfile?.fullName || 'Customer',
+          customerName: customerProfile?.displayName || customerProfile?.name || 'Customer',
           amount: orderTotal.toFixed(2),
           platformFee: platformFee.toFixed(2),
           netAmount: netAmount,
@@ -886,9 +886,9 @@ router.post("/:orderId/pay", requireAuth, async (req: AuthenticatedRequest, res:
         orderId: orderId,
         serviceTitle: serviceName,
         packageName: packageName,
-        customerName: customerProfile?.fullName || 'Customer',
+        customerName: customerProfile?.displayName || customerProfile?.name || 'Customer',
         customerEmail: customerProfile?.email || 'N/A',
-        freelancerName: freelancerProfile?.fullName || 'Freelancer',
+        freelancerName: freelancerProfile?.displayName || freelancerProfile?.name || 'Freelancer',
         freelancerEmail: freelancerProfile?.email || 'N/A',
         amount: orderTotal.toFixed(2),
         platformFee: platformFee.toFixed(2),
@@ -1205,11 +1205,11 @@ async function releaseEscrow(orderId: string, isAutoRelease: boolean = false): P
       // Email to customer
       if (customerProfile?.email) {
         emailService.sendFreelancerOrderCompletedToCustomerEmail(customerProfile.email, {
-          customerName: customerProfile.fullName || 'Customer',
+          customerName: customerProfile.displayName || customerProfile.name || 'Customer',
           orderId: orderId,
           serviceTitle: serviceName,
           packageName: packageName,
-          freelancerName: freelancerProfile?.fullName || 'Freelancer',
+          freelancerName: freelancerProfile?.displayName || freelancerProfile?.name || 'Freelancer',
           amount: escrowAmount.toFixed(2),
           completedDate: completedDate,
         }).catch(err => console.error('Failed to send customer completion email:', err));
@@ -1218,11 +1218,11 @@ async function releaseEscrow(orderId: string, isAutoRelease: boolean = false): P
       // Email to freelancer
       if (freelancerProfile?.email) {
         emailService.sendFreelancerOrderCompletedToSellerEmail(freelancerProfile.email, {
-          freelancerName: freelancerProfile.fullName || 'Freelancer',
+          freelancerName: freelancerProfile.displayName || freelancerProfile.name || 'Freelancer',
           orderId: orderId,
           serviceTitle: serviceName,
           packageName: packageName,
-          customerName: customerProfile?.fullName || 'Customer',
+          customerName: customerProfile?.displayName || customerProfile?.name || 'Customer',
           amount: escrowAmount.toFixed(2),
           platformFee: platformFee.toFixed(2),
           netAmount: freelancerEarnings.toFixed(2),
