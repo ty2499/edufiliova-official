@@ -22992,13 +22992,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const customerRole = rawCustomerRole === 'general' ? 'customer' : rawCustomerRole;
 
       // Get freelancer profile UUID and role
-      const freelancerProfile = await db.select({ profileId: profiles.id, role: profiles.role })
+      const freelancerProfile = await db.select({ profileId: profiles.id, role: profiles.role, approvalStatus: profiles.approvalStatus })
         .from(profiles)
         .where(eq(profiles.userId, freelancerId))
         .limit(1);
 
       if (freelancerProfile.length === 0) {
         return res.status(404).json({ success: false, error: "Freelancer not found" });
+      }
+
+      // Verify freelancer is approved for chat
+      if (freelancerProfile[0].approvalStatus !== "approved") {
+        return res.status(403).json({ success: false, error: "This freelancer is not yet approved. They must be approved before you can start a chat." });
       }
 
       const freelancerProfileUuid = freelancerProfile[0].profileId;
