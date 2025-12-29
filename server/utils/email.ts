@@ -1485,7 +1485,7 @@ export class EmailService {
 
     const fullName = data.fullName || 'User';
     const code = data.code || '000000';
-    const expiresIn = data.expiresIn || '24 hours';
+    const expiresIn = data.expiresIn || '15 minutes';
 
     // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
     html = this.forceReplaceName(html, fullName);
