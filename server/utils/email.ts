@@ -2153,6 +2153,398 @@ export class EmailService {
       return false;
     }
   }
+
+  // ============================================
+  // FREELANCER ORDER EMAILS
+  // ============================================
+
+  async sendFreelancerOrderPlacedEmail(email: string, data: {
+    customerName: string;
+    orderId: string;
+    serviceTitle: string;
+    packageName: string;
+    freelancerName: string;
+    amount: string;
+    deliveryDays: number;
+    orderDate: string;
+  }): Promise<boolean> {
+    try {
+      const content = `
+        <h2 style="color: #0c332c; margin-bottom: 20px;">Order Confirmation</h2>
+        <p>Dear ${data.customerName},</p>
+        <p>Thank you for your order. Your purchase has been successfully processed and the freelancer has been notified.</p>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 24px 0;">
+          <h3 style="color: #0c332c; margin-top: 0;">Order Details</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order ID:</td>
+              <td style="padding: 8px 0; font-weight: 600;">#${data.orderId.substring(0, 8).toUpperCase()}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Service:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.serviceTitle}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Package:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.packageName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Freelancer:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.freelancerName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Amount Paid:</td>
+              <td style="padding: 8px 0; font-weight: 600; color: #0c332c;">$${data.amount}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Expected Delivery:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.deliveryDays} days</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order Date:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.orderDate}</td>
+            </tr>
+          </table>
+        </div>
+
+        <h3 style="color: #0c332c;">What Happens Next</h3>
+        <ol style="color: #444; line-height: 1.8;">
+          <li>The freelancer will review your requirements and may reach out for clarification.</li>
+          <li>Work will begin on your order within 24 hours.</li>
+          <li>You will receive updates as the project progresses.</li>
+          <li>Once delivered, you will have 3 days to review and request revisions if needed.</li>
+          <li>Approve the delivery to release payment to the freelancer.</li>
+        </ol>
+
+        <p style="margin-top: 24px;">Your payment is held securely in escrow until you approve the delivery. This protects both you and the freelancer.</p>
+        
+        <p style="margin-top: 24px;">You can track your order status at any time from your dashboard.</p>
+      `;
+
+      const html = this.wrapWithBrandedTemplate('Order Confirmation', content);
+      
+      return this.sendEmail({
+        to: email,
+        subject: `Order Confirmed - ${data.serviceTitle} - #${data.orderId.substring(0, 8).toUpperCase()}`,
+        html,
+        from: `"EduFiliova Orders" <orders@edufiliova.com>`
+      });
+    } catch (error) {
+      console.error('❌ Error sending freelancer order placed email:', error);
+      return false;
+    }
+  }
+
+  async sendFreelancerOrderReceivedEmail(email: string, data: {
+    freelancerName: string;
+    orderId: string;
+    serviceTitle: string;
+    packageName: string;
+    customerName: string;
+    amount: string;
+    platformFee: string;
+    netAmount: string;
+    deliveryDays: number;
+    requirements?: string;
+    orderDate: string;
+  }): Promise<boolean> {
+    try {
+      const content = `
+        <h2 style="color: #0c332c; margin-bottom: 20px;">New Order Received</h2>
+        <p>Dear ${data.freelancerName},</p>
+        <p>Congratulations! You have received a new order for your service. Please review the details below and begin working on this project.</p>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 24px 0;">
+          <h3 style="color: #0c332c; margin-top: 0;">Order Details</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order ID:</td>
+              <td style="padding: 8px 0; font-weight: 600;">#${data.orderId.substring(0, 8).toUpperCase()}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Service:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.serviceTitle}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Package:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.packageName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Client:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.customerName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order Amount:</td>
+              <td style="padding: 8px 0; font-weight: 600;">$${data.amount}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Platform Fee (15%):</td>
+              <td style="padding: 8px 0; color: #666;">-$${data.platformFee}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Your Earnings:</td>
+              <td style="padding: 8px 0; font-weight: 600; color: #0c332c;">$${data.netAmount}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Delivery Deadline:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.deliveryDays} days</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order Date:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.orderDate}</td>
+            </tr>
+          </table>
+        </div>
+
+        ${data.requirements ? `
+        <div style="background-color: #fff3cd; padding: 16px; border-radius: 8px; margin: 24px 0; border-left: 4px solid #ffc107;">
+          <h4 style="color: #856404; margin-top: 0;">Client Requirements</h4>
+          <p style="color: #856404; margin-bottom: 0; white-space: pre-wrap;">${data.requirements}</p>
+        </div>
+        ` : ''}
+
+        <h3 style="color: #0c332c;">Next Steps</h3>
+        <ol style="color: #444; line-height: 1.8;">
+          <li>Review the client's requirements carefully.</li>
+          <li>If you need additional information, reach out to the client through the messaging system.</li>
+          <li>Begin working on the project and deliver within the specified timeframe.</li>
+          <li>Once completed, submit your delivery through your dashboard.</li>
+          <li>Your earnings will be released after the client approves the delivery or after 3 days if no action is taken.</li>
+        </ol>
+
+        <p style="margin-top: 24px;">Manage your orders from your freelancer dashboard.</p>
+      `;
+
+      const html = this.wrapWithBrandedTemplate('New Order Received', content);
+      
+      return this.sendEmail({
+        to: email,
+        subject: `New Order - ${data.serviceTitle} - #${data.orderId.substring(0, 8).toUpperCase()}`,
+        html,
+        from: `"EduFiliova Orders" <orders@edufiliova.com>`
+      });
+    } catch (error) {
+      console.error('❌ Error sending freelancer order received email:', error);
+      return false;
+    }
+  }
+
+  async sendFreelancerOrderAdminNotificationEmail(email: string, data: {
+    orderId: string;
+    serviceTitle: string;
+    packageName: string;
+    customerName: string;
+    customerEmail: string;
+    freelancerName: string;
+    freelancerEmail: string;
+    amount: string;
+    platformFee: string;
+    orderDate: string;
+  }): Promise<boolean> {
+    try {
+      const content = `
+        <h2 style="color: #0c332c; margin-bottom: 20px;">New Freelancer Service Order</h2>
+        <p>A new freelancer service order has been placed on the platform.</p>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 24px 0;">
+          <h3 style="color: #0c332c; margin-top: 0;">Order Summary</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order ID:</td>
+              <td style="padding: 8px 0; font-weight: 600;">#${data.orderId.substring(0, 8).toUpperCase()}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Service:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.serviceTitle}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Package:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.packageName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order Amount:</td>
+              <td style="padding: 8px 0; font-weight: 600;">$${data.amount}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Platform Fee (15%):</td>
+              <td style="padding: 8px 0; font-weight: 600; color: #0c332c;">$${data.platformFee}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order Date:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.orderDate}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="background-color: #e8f5e9; padding: 20px; border-radius: 8px; margin: 24px 0;">
+          <h3 style="color: #2e7d32; margin-top: 0;">Customer Details</h3>
+          <p style="margin: 4px 0;"><strong>Name:</strong> ${data.customerName}</p>
+          <p style="margin: 4px 0;"><strong>Email:</strong> ${data.customerEmail}</p>
+        </div>
+
+        <div style="background-color: #e3f2fd; padding: 20px; border-radius: 8px; margin: 24px 0;">
+          <h3 style="color: #1565c0; margin-top: 0;">Freelancer Details</h3>
+          <p style="margin: 4px 0;"><strong>Name:</strong> ${data.freelancerName}</p>
+          <p style="margin: 4px 0;"><strong>Email:</strong> ${data.freelancerEmail}</p>
+        </div>
+
+        <p>This order has been added to the admin dashboard for monitoring. Funds are held in escrow until the order is completed.</p>
+      `;
+
+      const html = this.wrapWithBrandedTemplate('New Freelancer Service Order', content);
+      
+      return this.sendEmail({
+        to: email,
+        subject: `New Order - ${data.serviceTitle} - $${data.amount} - #${data.orderId.substring(0, 8).toUpperCase()}`,
+        html,
+        from: `"EduFiliova System" <noreply@edufiliova.com>`
+      });
+    } catch (error) {
+      console.error('❌ Error sending freelancer order admin notification email:', error);
+      return false;
+    }
+  }
+
+  async sendFreelancerOrderCompletedToCustomerEmail(email: string, data: {
+    customerName: string;
+    orderId: string;
+    serviceTitle: string;
+    packageName: string;
+    freelancerName: string;
+    amount: string;
+    completedDate: string;
+  }): Promise<boolean> {
+    try {
+      const content = `
+        <h2 style="color: #0c332c; margin-bottom: 20px;">Order Completed</h2>
+        <p>Dear ${data.customerName},</p>
+        <p>Great news! Your order has been marked as completed. The payment has been released to the freelancer.</p>
+        
+        <div style="background-color: #e8f5e9; padding: 20px; border-radius: 8px; margin: 24px 0; border-left: 4px solid #4caf50;">
+          <h3 style="color: #2e7d32; margin-top: 0;">Order Summary</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order ID:</td>
+              <td style="padding: 8px 0; font-weight: 600;">#${data.orderId.substring(0, 8).toUpperCase()}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Service:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.serviceTitle}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Package:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.packageName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Freelancer:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.freelancerName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Amount:</td>
+              <td style="padding: 8px 0; font-weight: 600;">$${data.amount}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Completed:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.completedDate}</td>
+            </tr>
+          </table>
+        </div>
+
+        <p>Thank you for using EduFiliova Marketplace. We hope you are satisfied with the work delivered.</p>
+        
+        <p>If you have any feedback about your experience, please consider leaving a review for the freelancer. Your feedback helps other customers make informed decisions.</p>
+        
+        <p style="margin-top: 24px;">Need more services? Browse our marketplace to find talented freelancers for your next project.</p>
+      `;
+
+      const html = this.wrapWithBrandedTemplate('Order Completed', content);
+      
+      return this.sendEmail({
+        to: email,
+        subject: `Order Completed - ${data.serviceTitle} - #${data.orderId.substring(0, 8).toUpperCase()}`,
+        html,
+        from: `"EduFiliova Orders" <orders@edufiliova.com>`
+      });
+    } catch (error) {
+      console.error('❌ Error sending freelancer order completed to customer email:', error);
+      return false;
+    }
+  }
+
+  async sendFreelancerOrderCompletedToSellerEmail(email: string, data: {
+    freelancerName: string;
+    orderId: string;
+    serviceTitle: string;
+    packageName: string;
+    customerName: string;
+    amount: string;
+    platformFee: string;
+    netAmount: string;
+    completedDate: string;
+  }): Promise<boolean> {
+    try {
+      const content = `
+        <h2 style="color: #0c332c; margin-bottom: 20px;">Order Completed - Payment Released</h2>
+        <p>Dear ${data.freelancerName},</p>
+        <p>Congratulations! Your order has been completed and your earnings have been added to your wallet.</p>
+        
+        <div style="background-color: #e8f5e9; padding: 20px; border-radius: 8px; margin: 24px 0; border-left: 4px solid #4caf50;">
+          <h3 style="color: #2e7d32; margin-top: 0;">Earnings Summary</h3>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order ID:</td>
+              <td style="padding: 8px 0; font-weight: 600;">#${data.orderId.substring(0, 8).toUpperCase()}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Service:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.serviceTitle}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Package:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.packageName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Client:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.customerName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Order Amount:</td>
+              <td style="padding: 8px 0; font-weight: 600;">$${data.amount}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Platform Fee (15%):</td>
+              <td style="padding: 8px 0; color: #666;">-$${data.platformFee}</td>
+            </tr>
+            <tr style="background-color: #c8e6c9;">
+              <td style="padding: 12px 8px; color: #1b5e20; font-weight: 600;">Amount Credited:</td>
+              <td style="padding: 12px 8px; font-weight: 700; color: #1b5e20; font-size: 18px;">$${data.netAmount}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;">Completed:</td>
+              <td style="padding: 8px 0; font-weight: 600;">${data.completedDate}</td>
+            </tr>
+          </table>
+        </div>
+
+        <p>Your earnings have been added to your wallet and are available for withdrawal according to our payout schedule.</p>
+        
+        <p style="margin-top: 24px;">Keep up the great work! Continue delivering quality services to build your reputation on the platform.</p>
+      `;
+
+      const html = this.wrapWithBrandedTemplate('Order Completed - Payment Released', content);
+      
+      return this.sendEmail({
+        to: email,
+        subject: `Payment Received - $${data.netAmount} - Order #${data.orderId.substring(0, 8).toUpperCase()}`,
+        html,
+        from: `"EduFiliova Payments" <orders@edufiliova.com>`
+      });
+    } catch (error) {
+      console.error('❌ Error sending freelancer order completed to seller email:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();

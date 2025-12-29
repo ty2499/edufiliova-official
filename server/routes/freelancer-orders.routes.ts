@@ -4,6 +4,7 @@ import { freelancerServices, freelancerOrders, freelancerDeliverables, freelance
 import { eq, and, desc, lte, sql, avg, count, asc } from "drizzle-orm";
 import { requireAuth, requireRole, type AuthenticatedRequest } from "../middleware/auth";
 import { z } from "zod";
+import { emailService } from "../utils/email";
 
 const PLATFORM_USER_ID = "00000000-0000-0000-0000-000000000000";
 const AUTO_RELEASE_DAYS = 3;
@@ -833,6 +834,70 @@ router.post("/:orderId/pay", requireAuth, async (req: AuthenticatedRequest, res:
       .from(userBalances)
       .where(eq(userBalances.userId, userId));
 
+    // Send order emails to customer, freelancer, and admin
+    try {
+      const [customerProfile] = await db.select().from(profiles).where(eq(profiles.userId, userId));
+      const [freelancerProfile] = await db.select().from(profiles).where(eq(profiles.userId, order.freelancerId));
+      const [fullService] = await db.select().from(freelancerServices).where(eq(freelancerServices.id, order.serviceId));
+      
+      const packageDetails = order.packageDetails as Record<string, any>;
+      const packageName = packageDetails?.name || order.selectedPackage;
+      const deliveryDays = packageDetails?.deliveryDays || 7;
+      const platformFee = parseFloat(order.platformFeeAmount);
+      const netAmount = (orderTotal - platformFee).toFixed(2);
+      const orderDate = new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', month: 'long', day: 'numeric' 
+      });
+
+      // Email to customer
+      if (customerProfile?.email) {
+        emailService.sendFreelancerOrderPlacedEmail(customerProfile.email, {
+          customerName: customerProfile.fullName || 'Customer',
+          orderId: orderId,
+          serviceTitle: serviceName,
+          packageName: packageName,
+          freelancerName: freelancerProfile?.fullName || 'Freelancer',
+          amount: orderTotal.toFixed(2),
+          deliveryDays: deliveryDays,
+          orderDate: orderDate,
+        }).catch(err => console.error('Failed to send customer order email:', err));
+      }
+
+      // Email to freelancer
+      if (freelancerProfile?.email) {
+        emailService.sendFreelancerOrderReceivedEmail(freelancerProfile.email, {
+          freelancerName: freelancerProfile.fullName || 'Freelancer',
+          orderId: orderId,
+          serviceTitle: serviceName,
+          packageName: packageName,
+          customerName: customerProfile?.fullName || 'Customer',
+          amount: orderTotal.toFixed(2),
+          platformFee: platformFee.toFixed(2),
+          netAmount: netAmount,
+          deliveryDays: deliveryDays,
+          requirements: order.requirementsText || undefined,
+          orderDate: orderDate,
+        }).catch(err => console.error('Failed to send freelancer order email:', err));
+      }
+
+      // Email to admin
+      const adminEmail = process.env.ADMIN_EMAIL || 'admin@edufiliova.com';
+      emailService.sendFreelancerOrderAdminNotificationEmail(adminEmail, {
+        orderId: orderId,
+        serviceTitle: serviceName,
+        packageName: packageName,
+        customerName: customerProfile?.fullName || 'Customer',
+        customerEmail: customerProfile?.email || 'N/A',
+        freelancerName: freelancerProfile?.fullName || 'Freelancer',
+        freelancerEmail: freelancerProfile?.email || 'N/A',
+        amount: orderTotal.toFixed(2),
+        platformFee: platformFee.toFixed(2),
+        orderDate: orderDate,
+      }).catch(err => console.error('Failed to send admin order notification:', err));
+    } catch (emailError) {
+      console.error('Error sending order notification emails:', emailError);
+    }
+
     res.json({ 
       success: true, 
       message: "Payment successful. Order is now active.",
@@ -1125,6 +1190,48 @@ async function releaseEscrow(orderId: string, isAutoRelease: boolean = false): P
         })
         .where(eq(freelancerOrders.id, orderId));
     });
+
+    // Send completion emails to customer and freelancer
+    try {
+      const [customerProfile] = await db.select().from(profiles).where(eq(profiles.userId, order.clientId));
+      const [freelancerProfile] = await db.select().from(profiles).where(eq(profiles.userId, order.freelancerId));
+      
+      const packageDetails = order.packageDetails as Record<string, any>;
+      const packageName = packageDetails?.name || order.selectedPackage;
+      const completedDate = new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', month: 'long', day: 'numeric' 
+      });
+
+      // Email to customer
+      if (customerProfile?.email) {
+        emailService.sendFreelancerOrderCompletedToCustomerEmail(customerProfile.email, {
+          customerName: customerProfile.fullName || 'Customer',
+          orderId: orderId,
+          serviceTitle: serviceName,
+          packageName: packageName,
+          freelancerName: freelancerProfile?.fullName || 'Freelancer',
+          amount: escrowAmount.toFixed(2),
+          completedDate: completedDate,
+        }).catch(err => console.error('Failed to send customer completion email:', err));
+      }
+
+      // Email to freelancer
+      if (freelancerProfile?.email) {
+        emailService.sendFreelancerOrderCompletedToSellerEmail(freelancerProfile.email, {
+          freelancerName: freelancerProfile.fullName || 'Freelancer',
+          orderId: orderId,
+          serviceTitle: serviceName,
+          packageName: packageName,
+          customerName: customerProfile?.fullName || 'Customer',
+          amount: escrowAmount.toFixed(2),
+          platformFee: platformFee.toFixed(2),
+          netAmount: freelancerEarnings.toFixed(2),
+          completedDate: completedDate,
+        }).catch(err => console.error('Failed to send freelancer completion email:', err));
+      }
+    } catch (emailError) {
+      console.error('Error sending order completion emails:', emailError);
+    }
 
     return { success: true };
   } catch (error) {
