@@ -50,7 +50,6 @@ export default function ServiceDetailPage() {
     console.log('🟢 handleContactSeller called', { user, profile, freelancer });
     
     if (!user || !profile) {
-      toast({ title: 'Please sign in to contact the seller', variant: 'destructive' });
       navigate('/login');
       return;
     }
