@@ -1439,7 +1439,20 @@ export class EmailService {
 
   async sendFreelancerVerificationEmail(email: string, data: { fullName: string; verificationCode: string; expiresIn?: string }): Promise<boolean> {
     const htmlPath = path.resolve(process.cwd(), 'server/templates/freelancer_verification_template/email.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
+    
+    // Ensure template exists, if not use a robust fallback
+    let html: string;
+    try {
+      if (fs.existsSync(htmlPath)) {
+        html = fs.readFileSync(htmlPath, 'utf-8');
+      } else {
+        console.warn(`⚠️ Freelancer verification template not found at ${htmlPath}. Using fallback.`);
+        html = `<!DOCTYPE html><html><body><h1>Verify Your Email</h1><p>Hi {{fullName}},</p><p>Your verification code is: <strong>{{code}}</strong></p><p>Expires in: {{expiresIn}}</p></body></html>`;
+      }
+    } catch (err) {
+      console.error('❌ Error reading freelancer verification template:', err);
+      html = `<!DOCTYPE html><html><body><h1>Verify Your Email</h1><p>Your verification code is: <strong>{{code}}</strong></p></body></html>`;
+    }
 
     const fullName = data.fullName || 'User';
     const code = data.verificationCode || '000000';
@@ -1456,7 +1469,7 @@ export class EmailService {
       to: email,
       subject: 'Verify Your Freelancer Account - EduFiliova',
       html,
-      from: `"EduFiliova Security" <support@edufiliova.com>`
+      from: `"EduFiliova Security" <verify@edufiliova.com>`
     });
   }
 
