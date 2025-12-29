@@ -32,6 +32,7 @@ import { seedAPIKeys } from "./seed-api-keys.js";
 import dodopayRoutes from "./dodopay-routes.js";
 import vodapayRoutes from "./vodapay-routes.js";
 import ecocashRoutes from "./routes/ecocash-routes.js";
+import healthRoutes from "./routes/health.routes.js";
 import { clearSettingsCache } from "./utils/settings.js";
 import { generateCertificateWithCertifier, generateVerificationCode } from "./utils/certifier-certificate-generator.js";
 import { 
@@ -1080,6 +1081,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // EcoCash routes (Zimbabwe only)
   app.use("/api", ecocashRoutes);
 
+  // Health check route
+  app.use(healthRoutes);
+
   // Advertisement routes - Full CRUD Management System
   app.get('/api/ads/manage', requireAuth, adsRoutes.getManageAds);           // Get all ads (admin) or user's own ads
   app.get('/api/ads/my-ads', requireAuth, adsRoutes.getMyAds);               // Get current user's ads
@@ -1467,78 +1471,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ success: false, error: 'Failed to toggle follow' });
     }
   });
-
-  // Comprehensive health check endpoint
-  app.get("/api/health", async (_req, res) => {
-    try {
-      const startTime = Date.now();
-      
-      // Database connectivity check
-      await db.select().from(users).limit(1);
-      
-      // Check if countries are properly seeded
-      const countriesCount = await db.select({ count: count() }).from(countries);
-      const isCountriesHealthy = countriesCount[0].count >= 190; // Should have ~199 countries
-      
-      // Check if grade systems are properly seeded
-      const gradeSystemsCount = await db.select({ count: count() }).from(gradeSystems);
-      const isGradeSystemsHealthy = gradeSystemsCount[0].count >= 2000; // Should have ~2987 grade systems
-      
-      // Check verification codes cleanup
-      const expiredCodesCount = await db
-        .select({ count: count() })
-        .from(verificationCodes)
-        .where(lt(verificationCodes.expiresAt, new Date()));
-      
-      const responseTime = Date.now() - startTime;
-      
-      const healthStatus = {
-        status: "healthy",
-        timestamp: new Date().toISOString(),
-        responseTime: `${responseTime}ms`,
-        database: {
-          connected: true,
-          countries: {
-            count: countriesCount[0].count,
-            healthy: isCountriesHealthy
-          },
-          gradeSystems: {
-            count: gradeSystemsCount[0].count,
-            healthy: isGradeSystemsHealthy
-          },
-          verificationCodes: {
-            expiredCount: expiredCodesCount[0].count,
-            needsCleanup: expiredCodesCount[0].count > 100
-          }
-        },
-        services: {
-          emailService: "configured",
-          smsService: process.env.VONAGE_API_KEY ? "configured" : "missing",
-          stripeService: process.env.STRIPE_SECRET_KEY ? "configured" : "missing"
-        },
-        loginSystem: {
-          status: isCountriesHealthy && isGradeSystemsHealthy ? "operational" : "degraded",
-          countriesAvailable: isCountriesHealthy,
-          gradeSystemsAvailable: isGradeSystemsHealthy
-        }
-      };
-      
-      const statusCode = (isCountriesHealthy && isGradeSystemsHealthy) ? 200 : 206;
-      res.status(statusCode).json(healthStatus);
-      
-    } catch (error: any) {
-      res.status(503).json({ 
-        status: "unhealthy", 
-        timestamp: new Date().toISOString(),
-        database: "disconnected",
-        error: error instanceof Error ? error.message : 'Unknown error',
-        loginSystem: {
-          status: "unavailable"
-        }
-      });
-    }
-  });
-
   // Countries API with auto-recovery
   app.get("/api/countries", async (_req, res) => {
     try {
