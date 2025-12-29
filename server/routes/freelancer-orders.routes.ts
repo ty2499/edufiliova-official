@@ -230,6 +230,91 @@ router.get("/selling", requireAuth, requireRole(['freelancer']), async (req: Aut
   }
 });
 
+router.get("/payment-gateways", async (_req, res: Response) => {
+  try {
+    const { getEnabledPaymentGateways, getStripePublishableKey } = await import("../utils/payment-gateways");
+    
+    const gateways = await getEnabledPaymentGateways();
+    const stripePublishableKey = await getStripePublishableKey();
+    
+    const alwaysShowGateways = ['paypal'];
+    const cardGateways = ['stripe', 'dodo', 'dodopayments', 'flutterwave', 'paynow'];
+    
+    const filteredGateways: any[] = [];
+    let primaryCardGateway: any = null;
+    
+    for (const g of gateways) {
+      const gatewayId = g.gatewayId?.toLowerCase();
+      
+      if (alwaysShowGateways.includes(gatewayId)) {
+        filteredGateways.push({
+          id: g.gatewayId,
+          name: g.name,
+          displayName: g.displayName || g.name,
+          isPrimary: g.isPrimary,
+          logoUrl: g.logoUrl,
+        });
+      } else if (cardGateways.includes(gatewayId)) {
+        if (g.isPrimary || !primaryCardGateway) {
+          primaryCardGateway = {
+            id: g.gatewayId,
+            name: g.name,
+            displayName: g.displayName || g.name,
+            isPrimary: g.isPrimary,
+            logoUrl: g.logoUrl,
+          };
+        }
+      }
+    }
+    
+    if (primaryCardGateway) {
+      filteredGateways.unshift(primaryCardGateway);
+    }
+
+    filteredGateways.push({
+      id: 'wallet',
+      name: 'Wallet',
+      displayName: 'Wallet Balance',
+      isPrimary: false,
+      logoUrl: null,
+    });
+
+    res.json({
+      success: true,
+      gateways: filteredGateways,
+      stripePublishableKey,
+    });
+  } catch (error) {
+    console.error("Error fetching payment gateways:", error);
+    res.status(500).json({ error: "Failed to fetch payment gateways" });
+  }
+});
+
+router.get("/wallet/balance", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [userBalance] = await db
+      .select()
+      .from(userBalances)
+      .where(eq(userBalances.userId, userId));
+
+    const balance = userBalance?.availableBalance || "0.00";
+
+    res.json({
+      success: true,
+      balance,
+      currency: "USD",
+    });
+  } catch (error) {
+    console.error("Error fetching wallet balance:", error);
+    res.status(500).json({ error: "Failed to fetch wallet balance" });
+  }
+});
+
 router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
@@ -631,91 +716,6 @@ router.post("/:orderId/approve", requireAuth, async (req: AuthenticatedRequest, 
   } catch (error) {
     console.error("Error approving order:", error);
     res.status(500).json({ error: "Failed to approve order" });
-  }
-});
-
-router.get("/payment-gateways", async (_req, res: Response) => {
-  try {
-    const { getEnabledPaymentGateways, getStripePublishableKey } = await import("../utils/payment-gateways");
-    
-    const gateways = await getEnabledPaymentGateways();
-    const stripePublishableKey = await getStripePublishableKey();
-    
-    const alwaysShowGateways = ['paypal'];
-    const cardGateways = ['stripe', 'dodo', 'dodopayments', 'flutterwave', 'paynow'];
-    
-    const filteredGateways: any[] = [];
-    let primaryCardGateway: any = null;
-    
-    for (const g of gateways) {
-      const gatewayId = g.gatewayId?.toLowerCase();
-      
-      if (alwaysShowGateways.includes(gatewayId)) {
-        filteredGateways.push({
-          id: g.gatewayId,
-          name: g.name,
-          displayName: g.displayName || g.name,
-          isPrimary: g.isPrimary,
-          logoUrl: g.logoUrl,
-        });
-      } else if (cardGateways.includes(gatewayId)) {
-        if (g.isPrimary || !primaryCardGateway) {
-          primaryCardGateway = {
-            id: g.gatewayId,
-            name: g.name,
-            displayName: g.displayName || g.name,
-            isPrimary: g.isPrimary,
-            logoUrl: g.logoUrl,
-          };
-        }
-      }
-    }
-    
-    if (primaryCardGateway) {
-      filteredGateways.unshift(primaryCardGateway);
-    }
-
-    filteredGateways.push({
-      id: 'wallet',
-      name: 'Wallet',
-      displayName: 'Wallet Balance',
-      isPrimary: false,
-      logoUrl: null,
-    });
-
-    res.json({
-      success: true,
-      gateways: filteredGateways,
-      stripePublishableKey,
-    });
-  } catch (error) {
-    console.error("Error fetching payment gateways:", error);
-    res.status(500).json({ error: "Failed to fetch payment gateways" });
-  }
-});
-
-router.get("/wallet/balance", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
-  try {
-    const userId = req.user?.id;
-    if (!userId) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    const [userBalance] = await db
-      .select()
-      .from(userBalances)
-      .where(eq(userBalances.userId, userId));
-
-    const balance = userBalance?.availableBalance || "0.00";
-
-    res.json({
-      success: true,
-      balance,
-      currency: "USD",
-    });
-  } catch (error) {
-    console.error("Error fetching wallet balance:", error);
-    res.status(500).json({ error: "Failed to fetch wallet balance" });
   }
 });
 
