@@ -467,6 +467,22 @@ export default function ServiceCheckoutPage() {
                   <Shield className="w-4 h-4" />
                   <span>Secure payment protected by escrow</span>
                 </div>
+
+                <Separator className="my-4" />
+
+                <div className="space-y-3">
+                  <h4 className="font-medium text-sm text-gray-900">How This Works</h4>
+                  <ol className="text-xs text-gray-600 space-y-2 list-decimal list-inside">
+                    <li>Your payment is held securely in escrow until the order is completed.</li>
+                    <li>The freelancer receives your requirements and begins working on your order.</li>
+                    <li>Once the work is delivered, you have 3 days to review and request revisions if needed.</li>
+                    <li>Approve the delivery to release the payment to the freelancer.</li>
+                    <li>If no action is taken within 3 days after delivery, the payment is automatically released.</li>
+                  </ol>
+                  <p className="text-xs text-gray-500 pt-1">
+                    For any disputes or concerns, please contact our support team.
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </div>
