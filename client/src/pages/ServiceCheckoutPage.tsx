@@ -16,6 +16,7 @@ import {
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import PayPalButton from '@/components/PayPalButton';
 
 interface PaymentGateway {
   id: string;
@@ -42,6 +43,8 @@ export default function ServiceCheckoutPage() {
   const [requirements, setRequirements] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<string>('');
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showPayPalModal, setShowPayPalModal] = useState(false);
+  const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { data: serviceData, isLoading: isLoadingService } = useQuery({
@@ -101,12 +104,13 @@ export default function ServiceCheckoutPage() {
         }),
       }),
     onSuccess: async (data) => {
+      setCreatedOrderId(data.order.id);
       if (paymentMethod === 'wallet') {
         payMutation.mutate(data.order.id);
-      } else if (paymentMethod === 'stripe') {
-        await handleStripePayment(data.order.id);
       } else if (paymentMethod === 'paypal') {
-        await handlePayPalPayment(data.order.id);
+        setShowPaymentModal(false);
+        setShowPayPalModal(true);
+        setIsProcessing(false);
       } else {
         await handleGatewayPayment(data.order.id, paymentMethod);
       }
@@ -134,43 +138,26 @@ export default function ServiceCheckoutPage() {
     },
   });
 
-  const handleStripePayment = async (orderId: string) => {
+  const handlePayPalSuccess = async (paypalData: any) => {
+    if (!createdOrderId) return;
+    
     try {
-      const response = await apiRequest('/api/freelancer/orders/stripe/create-session', {
+      setIsProcessing(true);
+      await apiRequest(`/api/freelancer/orders/${createdOrderId}/confirm-paypal`, {
         method: 'POST',
         body: JSON.stringify({
-          orderId,
-          successUrl: `${window.location.origin}/orders/${orderId}?payment=success`,
-          cancelUrl: `${window.location.origin}/checkout/service/${serviceId}?package=${packageTier}&payment=cancelled`,
+          paypalOrderId: paypalData.id,
+          paypalCaptureId: paypalData.purchase_units?.[0]?.payments?.captures?.[0]?.id,
         }),
       });
-
-      if (response.url) {
-        window.location.href = response.url;
-      }
+      
+      setShowPayPalModal(false);
+      toast({ title: 'Payment successful!' });
+      navigate(`/orders/${createdOrderId}`);
     } catch (error: any) {
+      toast({ title: error.message || 'Failed to confirm payment', variant: 'destructive' });
+    } finally {
       setIsProcessing(false);
-      toast({ title: error.message || 'Failed to initiate Stripe payment', variant: 'destructive' });
-    }
-  };
-
-  const handlePayPalPayment = async (orderId: string) => {
-    try {
-      const response = await apiRequest('/api/freelancer/orders/paypal/create-order', {
-        method: 'POST',
-        body: JSON.stringify({
-          orderId,
-          returnUrl: `${window.location.origin}/orders/${orderId}?payment=success`,
-          cancelUrl: `${window.location.origin}/checkout/service/${serviceId}?package=${packageTier}&payment=cancelled`,
-        }),
-      });
-
-      if (response.approvalUrl) {
-        window.location.href = response.approvalUrl;
-      }
-    } catch (error: any) {
-      setIsProcessing(false);
-      toast({ title: error.message || 'Failed to initiate PayPal payment', variant: 'destructive' });
     }
   };
 
@@ -580,6 +567,45 @@ export default function ServiceCheckoutPage() {
                 `Pay $${total.toFixed(2)}`
               )}
             </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showPayPalModal} onOpenChange={setShowPayPalModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Complete PayPal Payment</DialogTitle>
+            <DialogDescription>
+              Click the PayPal button below to complete your payment securely.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="flex justify-between items-center mb-4">
+                <span className="font-medium">Total Amount</span>
+                <span className="text-lg font-semibold">${total.toFixed(2)}</span>
+              </div>
+              
+              <PayPalButton
+                amount={total.toFixed(2)}
+                currency="USD"
+                intent="CAPTURE"
+                onSuccess={handlePayPalSuccess}
+                onError={(error) => {
+                  console.error('PayPal error:', error);
+                  toast({ title: 'PayPal payment failed. Please try again.', variant: 'destructive' });
+                }}
+                onCancel={() => {
+                  setShowPayPalModal(false);
+                }}
+              />
+            </div>
+            
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+              <Shield className="w-4 h-4" />
+              <span>Secure payment via PayPal</span>
+            </div>
           </div>
         </DialogContent>
       </Dialog>

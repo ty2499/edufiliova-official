@@ -774,6 +774,82 @@ router.post("/:orderId/pay", requireAuth, async (req: AuthenticatedRequest, res:
   }
 });
 
+router.post("/:orderId/confirm-paypal", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    const { paypalOrderId, paypalCaptureId } = req.body;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the client can confirm this payment" });
+    }
+
+    if (order.status !== "pending_payment") {
+      return res.status(400).json({ 
+        error: `Order is not awaiting payment. Current status: ${order.status}` 
+      });
+    }
+
+    const orderTotal = parseFloat(order.amountTotal);
+    
+    const [service] = await db
+      .select({ title: freelancerServices.title })
+      .from(freelancerServices)
+      .where(eq(freelancerServices.id, order.serviceId));
+
+    const serviceName = service?.title || "Freelancer Service";
+
+    await db.transaction(async (tx) => {
+      await tx.insert(transactions).values({
+        userId: userId,
+        type: "debit",
+        amount: orderTotal.toFixed(2),
+        status: "completed",
+        description: `PayPal payment for: ${serviceName} (${order.selectedPackage} package) - Funds held in escrow`,
+        reference: orderId,
+        metadata: { paypalOrderId, paypalCaptureId },
+      });
+
+      await tx
+        .update(freelancerOrders)
+        .set({ 
+          status: "active",
+          escrowHeldAmount: orderTotal.toFixed(2),
+          paidAt: new Date(),
+          updatedAt: new Date()
+        })
+        .where(eq(freelancerOrders.id, orderId));
+    });
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "PayPal payment confirmed. Order is now active.",
+      order: updatedOrder,
+    });
+  } catch (error) {
+    console.error("Error confirming PayPal payment:", error);
+    res.status(500).json({ error: "Failed to confirm PayPal payment" });
+  }
+});
+
 const deliverSchema = z.object({
   message: z.string().max(5000).optional(),
   files: z.array(z.object({
