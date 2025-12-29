@@ -1477,39 +1477,43 @@ export class EmailService {
   }
 
   async sendFreelancerVerificationEmail(email: string, data: { fullName: string; verificationCode: string; expiresIn?: string }): Promise<boolean> {
-    const htmlPath = path.resolve(process.cwd(), 'server/templates/freelancer_verification_template/email.html');
-    
-    // Ensure template exists, if not use a robust fallback
-    let html: string;
     try {
-      if (fs.existsSync(htmlPath)) {
-        html = fs.readFileSync(htmlPath, 'utf-8');
-      } else {
-        console.warn(`⚠️ Freelancer verification template not found at ${htmlPath}. Using fallback.`);
-        html = `<!DOCTYPE html><html><body><h1>Verify Your Email</h1><p>Hi {{fullName}},</p><p>Your verification code is: <strong>{{code}}</strong></p><p>Expires in: {{expiresIn}}</p></body></html>`;
-      }
-    } catch (err) {
-      console.error('❌ Error reading freelancer verification template:', err);
-      html = `<!DOCTYPE html><html><body><h1>Verify Your Email</h1><p>Your verification code is: <strong>{{code}}</strong></p></body></html>`;
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/freelancer_verification_template/email.html'),
+        'utf-8'
+      );
+
+      const fullName = data.fullName || 'User';
+      const code = data.verificationCode || '000000';
+      const expiresIn = data.expiresIn || '10';
+
+      // Use bulletproof name replacement
+      html = this.forceReplaceName(html, fullName);
+      html = html.replace(/\{\{code\}\}/gi, code);
+      html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
+
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'db561a55b2cf0bc6e877bb934b39b700.png', path: path.join(imagesPath, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: '9564092012b952eb113aed5a5f2f67f8.png', path: path.join(imagesPath, '9564092012b952eb113aed5a5f2f67f8.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: '83faf7f361d9ba8dfdc904427b5b6423.png', path: path.join(imagesPath, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: '1bf5815502d2621deb8af9e7b0187f86.png', path: path.join(imagesPath, '1bf5815502d2621deb8af9e7b0187f86.png'), cid: 'freelancerbanner', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' },
+        { filename: '53d788456ae4cc2800001f0737c2d843.png', path: path.join(imagesPath, '53d788456ae4cc2800001f0737c2d843.png'), cid: 'arrow', contentType: 'image/png' }
+      ];
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Verify Your Freelancer Account - EduFiliova',
+        html,
+        from: `"EduFiliova Security" <verify@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending freelancer verification email:', error);
+      return false;
     }
-
-    const fullName = data.fullName || 'User';
-    const code = data.verificationCode || '000000';
-    const expiresIn = data.expiresIn || '24 hours';
-
-    // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
-    html = this.forceReplaceName(html, fullName);
-    
-    // Replace other dynamic placeholders
-    html = html.replace(/\{\{code\}\}/gi, code);
-    html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
-
-    return this.sendEmail({
-      to: email,
-      subject: 'Verify Your Freelancer Account - EduFiliova',
-      html,
-      from: `"EduFiliova Security" <verify@edufiliova.com>`
-    });
   }
 
   async sendCustomerVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
