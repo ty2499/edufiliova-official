@@ -25,9 +25,9 @@ interface MarketplaceService {
   orderCount: number;
   freelancer: {
     id: string;
-    fullName: string;
+    name: string;
     profilePicture: string;
-    displayLevel: string;
+    displayLevel?: string;
   };
 }
 
@@ -133,7 +133,7 @@ export default function MarketplaceServicesPage() {
               <SelectValue placeholder="Budget" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Any Budget</SelectItem>
+              <SelectItem value="any">Any Budget</SelectItem>
               <SelectItem value="0-25">Under $25</SelectItem>
               <SelectItem value="25-50">$25 - $50</SelectItem>
               <SelectItem value="50-100">$50 - $100</SelectItem>
@@ -178,9 +178,9 @@ export default function MarketplaceServicesPage() {
                   <div className="flex items-center gap-2 mb-2">
                     <Avatar className="w-6 h-6">
                       <AvatarImage src={service.freelancer?.profilePicture} />
-                      <AvatarFallback>{service.freelancer?.fullName?.[0] || 'F'}</AvatarFallback>
+                      <AvatarFallback>{service.freelancer?.name?.[0] || 'F'}</AvatarFallback>
                     </Avatar>
-                    <span className="text-sm text-gray-600 truncate">{service.freelancer?.fullName}</span>
+                    <span className="text-sm text-gray-600 truncate">{service.freelancer?.name}</span>
                     {service.freelancer?.displayLevel && (
                       <Badge variant="secondary" className="text-xs">{service.freelancer.displayLevel}</Badge>
                     )}
