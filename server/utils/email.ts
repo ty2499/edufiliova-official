@@ -1412,6 +1412,40 @@ export class EmailService {
     }
   }
 
+  async sendPasswordChangedEmail(email: string, data: { fullName: string }): Promise<boolean> {
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/password_changed_template/email.html'),
+        'utf-8'
+      );
+
+      // Use bulletproof name replacement
+      html = this.forceReplaceName(html, data.fullName || 'User');
+
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'db561a55b2cf0bc6e877bb934b39b700.png', path: path.join(imagesPath, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: '41506b29d7f0bbde9fcb0d4afb720c70.png', path: path.join(imagesPath, '41506b29d7f0bbde9fcb0d4afb720c70.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: '83faf7f361d9ba8dfdc904427b5b6423.png', path: path.join(imagesPath, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' },
+        { filename: '230f9575641a060a9b3772a9085c3203.png', path: path.join(imagesPath, '230f9575641a060a9b3772a9085c3203.png'), cid: 'banner', contentType: 'image/png' },
+        { filename: '3d94f798ad2bd582f8c3afe175798088.png', path: path.join(imagesPath, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'whitearrow', contentType: 'image/png' }
+      ];
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Password Successfully Changed - EduFiliova',
+        html,
+        from: `"EduFiliova Security" <verify@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending password changed email:', error);
+      return false;
+    }
+  }
+
   async sendVoucherEmail(to: string, data: {
     fullName: string;
     senderName: string;
