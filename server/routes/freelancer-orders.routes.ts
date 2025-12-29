@@ -26,7 +26,7 @@ interface ServiceAddOn {
   deliveryDaysExtra?: number;
 }
 
-router.post("/checkout/:serviceId", requireAuth, requireRole(['student', 'teacher', 'customer', 'admin', 'user']), async (req: AuthenticatedRequest, res: Response) => {
+router.post("/checkout/:serviceId", requireAuth, requireRole(['student', 'teacher', 'customer', 'admin', 'user', 'general']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
     const { serviceId } = req.params;
