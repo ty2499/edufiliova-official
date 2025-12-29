@@ -1364,7 +1364,10 @@ function ServiceOrdersPage({ onNavigate }: { onNavigate?: (page: string) => void
             <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No orders yet</h3>
             <p className="text-gray-600 mb-4">You haven't purchased any freelancer services yet.</p>
-            <Button onClick={() => navigate('/marketplace/services?from=dashboard')}>
+            <Button 
+              onClick={() => navigate('/marketplace/services?from=dashboard')}
+              className="bg-[#0c332c] text-white hover:bg-[#0c332c]"
+            >
               Browse Services
             </Button>
           </CardContent>
