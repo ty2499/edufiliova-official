@@ -3050,7 +3050,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const profile = await db.query.profiles.findFirst({ where: eq(profiles.userId, user.id) });
 
       const { emailService } = await import('./utils/email.js');
-      await emailService.sendEmail({
+      const emailResult = await emailService.sendEmail({
         to: email,
         subject: 'Password Reset Verification Code',
         html: htmlContent
@@ -5931,7 +5931,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         // Send email notification to admin
         try {
-          await emailService.sendEmail({
+          const emailResult = await emailService.sendEmail({
             to: 'support@edufiliova.com',
             subject: `New Support Ticket: ${subject}`,
             html: `
@@ -5953,7 +5953,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Send confirmation email to customer
         if (customer.email) {
           try {
-            await emailService.sendEmail({
+            const emailResult = await emailService.sendEmail({
               to: customer.email,
               subject: `Support Ticket Received: ${subject}`,
               html: `
@@ -6016,7 +6016,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (existingTicket.adminEmail && existingTicket.adminReply) {
         try {
           const { emailService } = await import('./utils/email.js');
-          await emailService.sendEmail({
+          const emailResult = await emailService.sendEmail({
             to: existingTicket.adminEmail,
             subject: `Customer Reply to Ticket: ${existingTicket.subject}`,
             html: `
@@ -6087,7 +6087,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (customer[0].email) {
         try {
           const { emailService } = await import('./utils/email.js');
-          await emailService.sendEmail({
+          const emailResult = await emailService.sendEmail({
             to: customer[0].email,
             subject: `Support Team Response: ${ticket.subject}`,
             html: `
@@ -6221,17 +6221,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         vouchers.push(voucher);
       }
 
+      console.log("📧 Bulk voucher email check - recipientEmail:", recipientEmail, "vouchers count:", vouchers.length);
       // Send email with voucher codes if recipient email provided
       if (recipientEmail && vouchers.length > 0) {
         try {
           const { emailService } = await import("./utils/email.js") as any;
-          await emailService.sendEmail({
+          const emailResult = await emailService.sendEmail({
             to: recipientEmail,
             subject: `Your ${vouchers.length} Voucher Code(s) - EduFiliova`,
             html: `<h2>Hello ${recipientName || "Valued Customer"},</h2><p>You have received ${vouchers.length} voucher code(s) worth $${amount} each:</p><ul>${vouchers.map(v => `<li><strong>${v.code}</strong> - $${amount}</li>`).join("")}</ul><p>Use these codes at checkout to redeem your credit.</p><p>Best regards,<br>EduFiliova Team</p>`
           });
         } catch (emailError) {
-          console.error("Failed to send voucher email:", emailError);
+          console.error("❌ Failed to send voucher email:", emailError);
         }
       }
 
@@ -14935,7 +14936,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           ];
 
-          await emailService.sendEmail({
+          const emailResult = await emailService.sendEmail({
             to: user.email,
             subject: `Important: Your EduFiliova Account Has Been ${statusLabel}`,
             html: emailHtml,
@@ -14972,7 +14973,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 </body>
 </html>`;
           
-          await emailService.sendEmail({
+          const emailResult = await emailService.sendEmail({
             to: user.email,
             subject: 'Your EduFiliova Account Has Been Activated',
             html: emailHtml,
