@@ -1574,28 +1574,64 @@ export class EmailService {
   }
 
   async sendFreelancerApplicationSubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
-    try {
-      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'template.html');
-      let html = fs.readFileSync(templatePath, 'utf-8');
+    const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Application Received - EduFiliova</title>
+  <style type="text/css">
+    body { margin: 0; padding: 0; min-width: 100%; background-color: #f4f7f9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .wrapper { width: 100%; table-layout: fixed; background-color: #f4f7f9; padding-bottom: 40px; }
+    .main-table { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .header { background-color: #0c332c; padding: 40px 0; text-align: center; }
+    .content { padding: 40px 50px; color: #333333; line-height: 1.6; }
+    .content h1 { color: #0c332c; font-size: 24px; margin-bottom: 20px; font-weight: 700; }
+    .content p { font-size: 16px; margin-bottom: 20px; }
+    .footer { background-color: #f8fafc; padding: 40px 50px; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 13px; }
+    .footer p { margin: 10px 0; line-height: 1.5; }
+    .footer a { color: #0c332c; text-decoration: none; font-weight: 600; }
+    .divider { height: 1px; background-color: #e2e8f0; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <table class="main-table" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td class="header">
+          <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" width="180" style="display: block; margin: 0 auto;" />
+        </td>
+      </tr>
+      <tr>
+        <td class="content">
+          <h1>Application Received</h1>
+          <p>Hello {{fullName}},</p>
+          <p>We've successfully received your freelancer application. Our team will review your profile and portfolio samples shortly.</p>
+          <p>The review process typically takes 3-5 business days. We will notify you via email as soon as an update is available.</p>
+          <p>Thank you for your patience and interest in EduFiliova.</p>
+          <p>Best regards,<br />The EduFiliova Team</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="footer">
+          <p><strong>EduFiliova</strong></p>
+          <p>Empowering global talent through education and opportunity.</p>
+          <div class="divider"></div>
+          <p>This is an automated message. Please do not reply directly to this email. For assistance, contact our support team at <a href="mailto:support@edufiliova.com">support@edufiliova.com</a>.</p>
+          <p>&copy; 2025 EduFiliova. All rights reserved.</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>`;
 
-      const fullName = data.fullName || 'Freelancer';
-
-      // ✅ USE BULLETPROOF NAME REPLACEMENT
-      html = this.forceReplaceName(html, fullName);
-
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
-
-      return this.sendEmail({
-        to: email,
-        subject: 'Application Received - Your Freelancer Application is Under Review',
-        html,
-        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments: []
-      });
-    } catch (error) {
-      console.error('❌ Error sending freelancer application submitted email:', error);
-      return false;
-    }
+    return this.sendEmail({
+      to: email,
+      subject: 'Your Freelancer Application has been Received - EduFiliova',
+      html: this.forceReplaceName(html, data.fullName),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
+    });
   }
 
   async sendFreelancerApplicationResubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {

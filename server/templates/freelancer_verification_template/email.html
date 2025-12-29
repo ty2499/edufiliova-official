@@ -1,26 +1,120 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { background-color: #f0f1f5; font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    .header { background-color: #0c332c; padding: 30px; text-align: center; }
-    .content { background-color: #ffffff; padding: 40px; max-width: 600px; margin: 0 auto; color: #0c332c; }
-    .footer { padding: 20px; text-align: center; color: #666; font-size: 14px; }
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Freelancer Verification - EduFiliova</title>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+      min-width: 100%;
+      background-color: #f4f7f9;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .wrapper {
+      width: 100%;
+      table-layout: fixed;
+      background-color: #f4f7f9;
+      padding-bottom: 40px;
+    }
+    .main-table {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .header {
+      background-color: #0c332c;
+      padding: 40px 0;
+      text-align: center;
+    }
+    .content {
+      padding: 40px 50px;
+      color: #333333;
+      line-height: 1.6;
+    }
+    .content h1 {
+      color: #0c332c;
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .content p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .code-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 30px;
+      text-align: center;
+      margin: 30px 0;
+    }
+    .code-text {
+      font-size: 32px;
+      font-weight: 700;
+      color: #0c332c;
+      letter-spacing: 5px;
+    }
+    .footer {
+      background-color: #f8fafc;
+      padding: 40px 50px;
+      border-top: 1px solid #e2e8f0;
+      color: #64748b;
+      font-size: 13px;
+    }
+    .footer p {
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+    .footer a {
+      color: #0c332c;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .divider {
+      height: 1px;
+      background-color: #e2e8f0;
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" style="max-width: 180px;">
-  </div>
-  <div class="content">
-    <p>Hi <strong>{{fullName}}</strong>,</p>
-    <p>Thank you for joining our freelancer community. Please use the verification code below to complete your registration:</p>
-    <div style="background-color: #f8fafc; border: 2px dashed #0c332c; padding: 20px; text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0;">{{code}}</div>
-    <p>Empowering freelancers to reach their full potential.</p>
-  </div>
-  <div class="footer">
-    <p>© 2025 EduFiliova. All rights reserved.</p>
+  <div class="wrapper">
+    <table class="main-table" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td class="header">
+          <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" width="180" style="display: block; margin: 0 auto;" />
+        </td>
+      </tr>
+      <tr>
+        <td class="content">
+          <h1>Freelancer Verification</h1>
+          <p>Hello {{fullName}},</p>
+          <p>Thank you for starting your journey with EduFiliova. To complete your freelancer registration and secure your account, please use the verification code provided below.</p>
+          
+          <div class="code-box">
+            <div class="code-text">{{code}}</div>
+          </div>
+          
+          <p>Enter this code on the registration page to proceed. This code is valid for a limited time and should not be shared with anyone.</p>
+          <p>Best regards,<br />The EduFiliova Team</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="footer">
+          <p><strong>EduFiliova</strong></p>
+          <p>Empowering global talent through education and opportunity.</p>
+          <div class="divider"></div>
+          <p>This is an automated message. Please do not reply directly to this email. For assistance, contact our support team at <a href="mailto:support@edufiliova.com">support@edufiliova.com</a>.</p>
+          <p>&copy; 2025 EduFiliova. All rights reserved.</p>
+        </td>
+      </tr>
+    </table>
   </div>
 </body>
 </html>
