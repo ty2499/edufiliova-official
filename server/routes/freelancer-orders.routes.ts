@@ -315,6 +315,267 @@ router.get("/wallet/balance", requireAuth, async (req: AuthenticatedRequest, res
   }
 });
 
+// Dodo Payments session creation for freelancer orders
+router.post("/dodopay/create-session", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId, successUrl, cancelUrl } = req.body;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    if (!orderId) {
+      return res.status(400).json({ error: "Order ID is required" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the client can pay for this order" });
+    }
+
+    if (order.status !== "pending_payment") {
+      return res.status(400).json({ error: "Order is not in pending payment status" });
+    }
+
+    const [service] = await db
+      .select()
+      .from(freelancerServices)
+      .where(eq(freelancerServices.id, order.serviceId));
+
+    // Import DodoPayments dynamically
+    const DodoPayments = (await import('dodopayments')).default;
+    const { storage } = await import('../storage.js');
+    
+    const dodoGateway = await storage.getPaymentGateway('dodopay');
+    
+    if (!dodoGateway || !dodoGateway.isEnabled) {
+      return res.status(400).json({ error: "Dodo Payments is not enabled" });
+    }
+
+    let secretKey = dodoGateway.secretKey;
+    if (secretKey?.startsWith('ENV:')) {
+      secretKey = process.env[secretKey.substring(4)] || null;
+    }
+
+    if (!secretKey) {
+      return res.status(500).json({ error: "Dodo Payments not properly configured" });
+    }
+
+    const dodo = new DodoPayments({
+      bearerToken: secretKey,
+      environment: dodoGateway.testMode ? 'test_mode' : 'live_mode',
+    });
+
+    const amountCents = Math.round(parseFloat(order.amountTotal) * 100);
+    
+    // Create one-time product and checkout session
+    const payment = await dodo.payments.create({
+      billing: {
+        city: "N/A",
+        country: "US",
+        state: "N/A",
+        street: "N/A",
+        zipcode: "00000",
+      },
+      customer: {
+        email: req.user?.email || "customer@edufiliova.com",
+        name: req.user?.profile?.fullName || req.user?.email?.split('@')[0] || "Customer",
+      },
+      payment_link: true,
+      product_cart: [
+        {
+          product_id: `freelancer_order_${orderId}`,
+          quantity: 1,
+        },
+      ],
+      return_url: successUrl || `${process.env.DOMAIN || 'https://edufiliova.com'}/orders/${orderId}?payment=success`,
+      metadata: {
+        orderId: orderId,
+        orderType: 'freelancer_service',
+        serviceId: order.serviceId,
+        clientId: userId,
+        freelancerId: order.freelancerId,
+      },
+    });
+
+    if (payment.payment_link) {
+      res.json({ 
+        success: true, 
+        url: payment.payment_link,
+        paymentId: payment.payment_id,
+      });
+    } else {
+      res.status(500).json({ error: "Failed to create payment session" });
+    }
+  } catch (error: any) {
+    console.error("Error creating Dodo payment session:", error);
+    res.status(500).json({ error: error.message || "Failed to create payment session" });
+  }
+});
+
+// PayPal order creation for freelancer orders
+router.post("/paypal/create-order", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId, returnUrl, cancelUrl } = req.body;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    if (!orderId) {
+      return res.status(400).json({ error: "Order ID is required" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the client can pay for this order" });
+    }
+
+    if (order.status !== "pending_payment") {
+      return res.status(400).json({ error: "Order is not in pending payment status" });
+    }
+
+    const [service] = await db
+      .select()
+      .from(freelancerServices)
+      .where(eq(freelancerServices.id, order.serviceId));
+
+    const { isPayPalConfigured } = await import('../paypal.js');
+    
+    if (!isPayPalConfigured) {
+      return res.status(400).json({ error: "PayPal is not configured" });
+    }
+
+    // Forward to the main PayPal order creation with the order details
+    req.body = {
+      amount: order.amountTotal,
+      currency: order.currency || 'USD',
+      intent: 'CAPTURE',
+      freelancerOrderId: orderId,
+    };
+
+    const { createPaypalOrder } = await import('../paypal.js');
+    return createPaypalOrder(req, res);
+  } catch (error: any) {
+    console.error("Error creating PayPal order:", error);
+    res.status(500).json({ error: error.message || "Failed to create PayPal order" });
+  }
+});
+
+// Stripe session creation for freelancer orders
+router.post("/stripe/create-session", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId, successUrl, cancelUrl } = req.body;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    if (!orderId) {
+      return res.status(400).json({ error: "Order ID is required" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the client can pay for this order" });
+    }
+
+    if (order.status !== "pending_payment") {
+      return res.status(400).json({ error: "Order is not in pending payment status" });
+    }
+
+    const [service] = await db
+      .select()
+      .from(freelancerServices)
+      .where(eq(freelancerServices.id, order.serviceId));
+
+    const Stripe = (await import('stripe')).default;
+    const { storage } = await import('../storage.js');
+    
+    const stripeGateway = await storage.getPaymentGateway('stripe');
+    
+    if (!stripeGateway || !stripeGateway.isEnabled) {
+      return res.status(400).json({ error: "Stripe is not enabled" });
+    }
+
+    let secretKey = stripeGateway.secretKey;
+    if (secretKey?.startsWith('ENV:')) {
+      secretKey = process.env[secretKey.substring(4)] || null;
+    }
+
+    if (!secretKey) {
+      return res.status(500).json({ error: "Stripe not properly configured" });
+    }
+
+    const stripe = new Stripe(secretKey);
+
+    const amountCents = Math.round(parseFloat(order.amountTotal) * 100);
+    
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: order.currency?.toLowerCase() || 'usd',
+            product_data: {
+              name: service?.title || 'Freelancer Service',
+              description: `${order.selectedPackage} Package`,
+            },
+            unit_amount: amountCents,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: successUrl || `${process.env.DOMAIN || 'https://edufiliova.com'}/orders/${orderId}?payment=success`,
+      cancel_url: cancelUrl || `${process.env.DOMAIN || 'https://edufiliova.com'}/checkout/service/${order.serviceId}`,
+      metadata: {
+        orderId: orderId,
+        orderType: 'freelancer_service',
+        serviceId: order.serviceId,
+        clientId: userId,
+        freelancerId: order.freelancerId,
+      },
+    });
+
+    res.json({ 
+      success: true, 
+      url: session.url,
+      sessionId: session.id,
+    });
+  } catch (error: any) {
+    console.error("Error creating Stripe session:", error);
+    res.status(500).json({ error: error.message || "Failed to create Stripe session" });
+  }
+});
+
 router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
