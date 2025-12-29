@@ -378,11 +378,25 @@ export class EmailService {
       // Use the bulletproof name replacement to handle span/styling issues in the template
       html = this.forceReplaceName(html, data.fullName);
 
+      // Attachments with CID references for embedded images
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'bbe5722d1ffd3c84888e18335965d5e5.png', path: path.join(imagesPath, 'bbe5722d1ffd3c84888e18335965d5e5.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: 'c9513ccbbd620ff1cc148b9f159cd39d.png', path: path.join(imagesPath, 'c9513ccbbd620ff1cc148b9f159cd39d.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'd320764f7298e63f6b035289d4219bd8.png', path: path.join(imagesPath, 'd320764f7298e63f6b035289d4219bd8.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: 'e4d45170731072cbb168266fca3fd470.png', path: path.join(imagesPath, 'e4d45170731072cbb168266fca3fd470.png'), cid: 'teacherapp', contentType: 'image/png' },
+        { filename: '7a8fa36020f4d01ec559e33b05f596eb.png', path: path.join(imagesPath, '7a8fa36020f4d01ec559e33b05f596eb.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: '9eefdace1f726880f93c5a973a54c2f6.png', path: path.join(imagesPath, '9eefdace1f726880f93c5a973a54c2f6.png'), cid: 'teacherbanner', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+      ];
+
       return this.sendEmail({
         to: email,
         subject: 'Congratulations! Your Teacher Application has been Approved - EduFiliova',
         html: html,
-        from: '"EduFiliova Support" <support@edufiliova.com>'
+        from: '"EduFiliova Support" <support@edufiliova.com>',
+        attachments
       });
     } catch (error) {
       console.error('Error sending teacher approval email:', error);
