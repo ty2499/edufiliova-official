@@ -203,34 +203,42 @@ export default function ServiceCheckoutPage() {
     checkoutMutation.mutate();
   };
 
+  const isCardGateway = (gatewayId: string) => {
+    return ['stripe', 'dodopay', 'dodo', 'dodopayments', 'flutterwave', 'vodapay', 'paynow'].includes(gatewayId.toLowerCase());
+  };
+
   const getGatewayIcon = (gatewayId: string) => {
-    switch (gatewayId) {
-      case 'wallet':
-        return <Wallet className="w-5 h-5 text-[#0c332c]" />;
-      case 'stripe':
-        return <CreditCard className="w-5 h-5 text-[#635bff]" />;
-      case 'paypal':
-        return (
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#003087">
-            <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.217a.804.804 0 0 1 .794-.679h6.405c2.166 0 3.739.537 4.681 1.597.893 1.003 1.137 2.467.724 4.354l-.006.032c-.553 2.886-2.093 4.896-4.584 5.979-1.168.507-2.447.754-3.81.754H7.67a.805.805 0 0 0-.794.68l-1.247 5.403a.805.805 0 0 1-.794.68H7.076z"/>
-          </svg>
-        );
-      default:
-        return <CreditCard className="w-5 h-5 text-gray-600" />;
+    if (gatewayId === 'wallet') {
+      return <Wallet className="w-6 h-6 text-[#0c332c]" />;
     }
+    if (gatewayId === 'paypal') {
+      return (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="#003087">
+          <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.217a.804.804 0 0 1 .794-.679h6.405c2.166 0 3.739.537 4.681 1.597.893 1.003 1.137 2.467.724 4.354l-.006.032c-.553 2.886-2.093 4.896-4.584 5.979-1.168.507-2.447.754-3.81.754H7.67a.805.805 0 0 0-.794.68l-1.247 5.403a.805.805 0 0 1-.794.68H7.076z"/>
+        </svg>
+      );
+    }
+    return <CreditCard className="w-6 h-6 text-[#0c332c]" />;
+  };
+
+  const getGatewayDisplayName = (gateway: PaymentGateway) => {
+    if (gateway.id === 'wallet') return 'Wallet Balance';
+    if (gateway.id === 'paypal') return 'PayPal';
+    if (isCardGateway(gateway.id)) return 'Card';
+    return gateway.displayName || gateway.name;
   };
 
   const getGatewayDescription = (gateway: PaymentGateway) => {
-    switch (gateway.id) {
-      case 'wallet':
-        return `$${walletBalance.toFixed(2)} available`;
-      case 'stripe':
-        return 'Pay with credit or debit card';
-      case 'paypal':
-        return 'Pay with your PayPal account';
-      default:
-        return gateway.displayName || gateway.name;
+    if (gateway.id === 'wallet') {
+      return `$${walletBalance.toFixed(2)} available`;
     }
+    if (gateway.id === 'paypal') {
+      return 'Pay with your PayPal account';
+    }
+    if (isCardGateway(gateway.id)) {
+      return 'Pay with credit or debit card';
+    }
+    return 'Secure payment';
   };
 
   if (!service && !isLoadingService) {
@@ -371,60 +379,55 @@ export default function ServiceCheckoutPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Select Payment Method</CardTitle>
+            <Card className="shadow-sm">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg">Select Payment Method</CardTitle>
               </CardHeader>
               <CardContent>
                 <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-3">
                   {availableGateways.map((gateway) => (
-                    <div 
+                    <label
                       key={gateway.id}
-                      className={`flex items-center space-x-3 p-4 rounded-lg border cursor-pointer transition-colors ${
+                      htmlFor={gateway.id}
+                      className={`relative flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                         paymentMethod === gateway.id 
-                          ? 'border-[#0c332c] bg-[#0c332c]/5' 
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-[#0c332c] bg-[#0c332c]/5 shadow-sm' 
+                          : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
                       }`}
                     >
-                      <RadioGroupItem value={gateway.id} id={gateway.id} />
-                      <Label htmlFor={gateway.id} className="flex-1 cursor-pointer">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                              {gateway.logoUrl ? (
-                                <img src={gateway.logoUrl} alt={gateway.name} className="w-6 h-6 object-contain" />
-                              ) : (
-                                getGatewayIcon(gateway.id)
-                              )}
-                            </div>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <p className="font-medium">{gateway.displayName}</p>
-                                {gateway.isPrimary && (
-                                  <span className="text-xs bg-[#0c332c] text-white px-2 py-0.5 rounded">Primary</span>
-                                )}
-                              </div>
-                              <p className="text-sm text-gray-500">{getGatewayDescription(gateway)}</p>
-                            </div>
-                          </div>
-                          {gateway.id === 'wallet' && (
-                            hasEnoughBalance ? (
-                              <CheckCircle className="w-5 h-5 text-green-500" />
-                            ) : (
-                              <AlertCircle className="w-5 h-5 text-yellow-500" />
-                            )
+                      <RadioGroupItem value={gateway.id} id={gateway.id} className="sr-only" />
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                        paymentMethod === gateway.id ? 'bg-[#0c332c]/10' : 'bg-gray-100'
+                      }`}>
+                        {getGatewayIcon(gateway.id)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-gray-900">{getGatewayDisplayName(gateway)}</p>
+                        <p className="text-sm text-gray-500 mt-0.5">{getGatewayDescription(gateway)}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {gateway.id === 'wallet' && !hasEnoughBalance && (
+                          <span className="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded-full">Low balance</span>
+                        )}
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                          paymentMethod === gateway.id 
+                            ? 'border-[#0c332c] bg-[#0c332c]' 
+                            : 'border-gray-300'
+                        }`}>
+                          {paymentMethod === gateway.id && (
+                            <div className="w-2 h-2 rounded-full bg-white" />
                           )}
                         </div>
-                      </Label>
-                    </div>
+                      </div>
+                    </label>
                   ))}
                 </RadioGroup>
 
                 {!hasEnoughBalance && paymentMethod === 'wallet' && (
-                  <div className="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <div className="mt-4 p-4 bg-yellow-50 rounded-xl border border-yellow-100">
                     <p className="text-sm text-yellow-700 flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4" />
-                      Insufficient wallet balance. Please select another payment method or add funds to your wallet.
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      Insufficient wallet balance. Please add funds or select another payment method.
                     </p>
                   </div>
                 )}
