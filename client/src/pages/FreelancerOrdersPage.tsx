@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 import { formatDistanceToNow } from 'date-fns';
 
 interface Order {
@@ -39,6 +40,7 @@ interface Order {
 export default function FreelancerOrdersPage() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
   const [deliverDialogOpen, setDeliverDialogOpen] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [deliveryMessage, setDeliveryMessage] = useState('');
@@ -46,7 +48,29 @@ export default function FreelancerOrdersPage() {
   const { data: ordersData, isLoading } = useQuery({
     queryKey: ['/api/freelancer/orders/selling'],
     queryFn: () => apiRequest('/api/freelancer/orders/selling'),
+    enabled: !!user,
   });
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#0c332c]" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Package className="w-12 h-12 mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Please sign in</h3>
+          <p className="text-gray-500 mb-4">You need to be logged in to view your orders</p>
+          <Button onClick={() => navigate('/login')} className="bg-[#0c332c]">Sign In</Button>
+        </div>
+      </div>
+    );
+  }
 
   const deliverMutation = useMutation({
     mutationFn: ({ orderId, message }: { orderId: string; message: string }) =>

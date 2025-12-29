@@ -33,12 +33,35 @@ interface FreelancerService {
 export default function FreelancerServicesPage() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
+  const { user, loading: authLoading } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: servicesData, isLoading } = useQuery({
+  const { data: servicesData, isLoading, error } = useQuery({
     queryKey: ['/api/freelancer/services/my'],
     queryFn: () => apiRequest('/api/freelancer/services/my'),
+    enabled: !!user,
   });
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#0c332c]" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Package className="w-12 h-12 mx-auto text-gray-300 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Please sign in</h3>
+          <p className="text-gray-500 mb-4">You need to be logged in to view your services</p>
+          <Button onClick={() => navigate('/login')} className="bg-[#0c332c]">Sign In</Button>
+        </div>
+      </div>
+    );
+  }
 
   const deleteMutation = useMutation({
     mutationFn: (serviceId: string) => apiRequest(`/api/freelancer/services/${serviceId}`, { method: 'DELETE' }),

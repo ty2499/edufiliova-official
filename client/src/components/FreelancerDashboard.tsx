@@ -1298,6 +1298,7 @@ interface FreelancerDashboardProps {
 
 export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashboardProps) {
   const { user, profile, logout } = useAuth();
+  const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState<'overview' | 'portfolio' | 'shop' | 'courses' | 'course-detail' | 'course-player' | 'marketplace' | 'portfolio-gallery' | 'portfolio-preview' | 'freelancer-profile' | 'create-course' | 'messages' | 'payments' | 'settings' | 'purchases' | 'wallet' | 'billing' | 'create-ad' | 'pricing-plans' | 'receipts' | 'buy-voucher'>(initialTab as any || 'overview');
   const [showMobileMenu, setShowMobileMenu] = useState(() => {
     // Open sidebar by default on desktop (lg breakpoint is 1024px)
@@ -2016,7 +2017,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
             
             <div className="space-y-1">
               <button
-                onClick={() => { window.location.href = '/dashboard/freelancer/services'; }}
+                onClick={() => { navigate('/dashboard/freelancer/services'); setShowMobileMenu(false); }}
                 className="w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors text-gray-700 hover:bg-gray-50"
                 data-testid="nav-my-services"
               >
@@ -2025,7 +2026,7 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
               </button>
               
               <button
-                onClick={() => { window.location.href = '/dashboard/freelancer/orders'; }}
+                onClick={() => { navigate('/dashboard/freelancer/orders'); setShowMobileMenu(false); }}
                 className="w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors text-gray-700 hover:bg-gray-50"
                 data-testid="nav-my-orders"
               >
