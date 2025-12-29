@@ -125,12 +125,18 @@ export async function sendCoursePurchaseEmail(recipientEmail, recipientName, cou
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
     
-    return await emailService.sendEmail({
+    const result = await emailService.sendEmail({
       to: recipientEmail,
       subject: `Course Purchase Confirmed - ${replacements.courseName}`,
       html: emailHtml,
       from: `"EduFiliova Orders" <orders@edufiliova.com>`
     });
+
+    if (!result) {
+      console.error(`❌ Email service failed to send course purchase email to ${recipientEmail}`);
+      throw new Error('Email service failed to send course purchase email');
+    }
+    return result;
   } catch (error) {
     console.error(`❌ Error sending course purchase email:`, error);
     throw error;
