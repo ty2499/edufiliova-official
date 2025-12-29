@@ -1467,6 +1467,52 @@ export class EmailService {
     }
   }
 
+  async sendIncompleteSignupEmail(email: string, data: { 
+    fullName: string; 
+    accountType: 'student' | 'freelancer' | 'teacher';
+  }): Promise<boolean> {
+    try {
+      const templateMap = {
+        student: 'incomplete_signup_student_template',
+        freelancer: 'incomplete_signup_freelancer_template',
+        teacher: 'incomplete_signup_teacher_template'
+      };
+
+      const subjectMap = {
+        student: 'Complete Your Student Account - Unlock Learning Opportunities',
+        freelancer: 'Complete Your Freelancer Account - Start Earning Today',
+        teacher: 'Complete Your Teacher Account - Start Teaching Today'
+      };
+
+      const templateName = templateMap[data.accountType];
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), `server/templates/${templateName}/email.html`),
+        'utf-8'
+      );
+
+      // Use bulletproof name replacement
+      html = this.forceReplaceName(html, data.fullName || 'User');
+
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'f28befc0a869e8a352bf79aa02080dc7.png', path: path.join(imagesPath, 'f28befc0a869e8a352bf79aa02080dc7.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+      ];
+
+      return this.sendEmail({
+        to: email,
+        subject: subjectMap[data.accountType],
+        html,
+        from: `"EduFiliova" <noreply@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending incomplete signup email:', error);
+      return false;
+    }
+  }
+
   async sendVoucherEmail(to: string, data: {
     fullName: string;
     senderName: string;
