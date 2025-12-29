@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { 
-  Search, Filter, Star, Clock, Package, Loader2, ArrowLeft, ChevronDown
+  Search, Filter, Star, Clock, Package, Loader2, ChevronDown
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import Header from '@/components/Header';
@@ -84,14 +84,9 @@ export default function MarketplaceServicesPage({ embedded = false }: Marketplac
   const pageContent = (
     <div className={embedded ? "" : "min-h-screen bg-gray-50"}>
       {!embedded && (
-        <div className="bg-[#0c332c] text-white py-12">
+        <div className="bg-[#0c332c] text-white py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-4 mb-6">
-              <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="text-white hover:bg-white/10">
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <h1 className="text-3xl font-bold">Find Services</h1>
-            </div>
+            <h1 className="text-3xl font-bold mb-6">Find Services</h1>
             <div className="flex gap-4 max-w-3xl">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
