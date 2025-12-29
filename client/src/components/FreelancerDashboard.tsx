@@ -2007,6 +2007,33 @@ export function FreelancerDashboard({ onNavigate, initialTab }: FreelancerDashbo
               </div>
             )}
             
+            {/* MY SERVICES Section - Gig Management */}
+            <div className="pt-3">
+              <div className="px-4 py-2 text-xs text-gray-400 uppercase tracking-wider">
+                <span>My Services</span>
+              </div>
+            </div>
+            
+            <div className="space-y-1">
+              <button
+                onClick={() => { window.location.href = '/dashboard/freelancer/services'; }}
+                className="w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors text-gray-700 hover:bg-gray-50"
+                data-testid="nav-my-services"
+              >
+                <Package className="h-5 w-5 mr-3" />
+                Manage Services
+              </button>
+              
+              <button
+                onClick={() => { window.location.href = '/dashboard/freelancer/orders'; }}
+                className="w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors text-gray-700 hover:bg-gray-50"
+                data-testid="nav-my-orders"
+              >
+                <ShoppingCart className="h-5 w-5 mr-3" />
+                My Orders
+              </button>
+            </div>
+            
             {/* MARKETPLACE Section - Collapsible */}
             <div className="pt-3">
               <button
