@@ -63,43 +63,35 @@ export class EmailService {
   private async processEmailImages(html: string): Promise<string> {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
-    const cidPatterns = [
-      /src=["']cid:([^"']+)["']/gi,
-      /src=["']([^"']+\.(?:png|jpg|jpeg|gif|webp))["']/gi
-    ];
+    // We only process src="cid:..." or src="images/..." or direct image filenames
+    // and replace them with base64 data to ensure they show up.
+    // We DON'T change the HTML structure at all.
 
-    for (const pattern of cidPatterns) {
-      const matches = [...html.matchAll(pattern)];
-      for (const match of matches) {
-        const originalAttr = match[0];
-        const fileNameOrCid = match[1];
-        
-        // Find matching asset in map
-        let assetUrl = '';
-        const lowerSearch = fileNameOrCid.toLowerCase();
-        
-        for (const [key, url] of Object.entries(emailAssetMap)) {
-          if (key.toLowerCase().includes(lowerSearch) || lowerSearch.includes(key.toLowerCase().split('.')[0])) {
-            assetUrl = url;
-            break;
-          }
-        }
+    for (const [key, url] of Object.entries(emailAssetMap)) {
+      const baseName = key.split('.')[0];
+      // Match patterns that look like our images
+      const patterns = [
+        new RegExp(`src=["']cid:${baseName}["']`, 'gi'),
+        new RegExp(`src=["']images/${key}["']`, 'gi'),
+        new RegExp(`src=["']${key}["']`, 'gi'),
+        new RegExp(`src=["']images/${baseName}\\.png["']`, 'gi')
+      ];
 
-        if (assetUrl) {
+      for (const pattern of patterns) {
+        if (pattern.test(html)) {
           try {
-            // Fetch and convert to Base64
-            const response = await fetch(assetUrl);
+            const response = await fetch(url);
             const buffer = await response.arrayBuffer();
             const contentType = response.headers.get('content-type') || 'image/png';
             const base64 = Buffer.from(buffer).toString('base64');
             const dataUri = `data:${contentType};base64,${base64}`;
             
-            html = html.replace(originalAttr, `src="${dataUri}"`);
-            console.log(`✅ Embedded image as Base64: ${fileNameOrCid}`);
+            html = html.replace(pattern, `src="${dataUri}"`);
+            console.log(`✅ Embedded image ${key} as Base64`);
           } catch (err) {
-            console.warn(`⚠️ Failed to embed image ${fileNameOrCid}:`, err);
-            // Fallback to URL if base64 fails
-            html = html.replace(originalAttr, `src="${assetUrl}"`);
+            console.warn(`⚠️ Failed to embed image ${key}:`, err);
+            // Fallback to Cloudinary URL if fetch fails
+            html = html.replace(pattern, `src="${url}"`);
           }
         }
       }
