@@ -25,6 +25,16 @@ interface ServicePackage {
   features: string[];
 }
 
+interface Review {
+  id: string;
+  rating: number;
+  comment: string | null;
+  sellerResponse: string | null;
+  createdAt: string;
+  reviewerName: string | null;
+  reviewerAvatar: string | null;
+}
+
 export default function ServiceDetailPage() {
   const [, navigate] = useLocation();
   const [, params] = useRoute('/marketplace/services/:id');
@@ -78,7 +88,14 @@ export default function ServiceDetailPage() {
     enabled: !!serviceId,
   });
 
+  const { data: reviewsData } = useQuery({
+    queryKey: ['/api/freelancer/orders/services', serviceId, 'reviews'],
+    queryFn: () => apiRequest(`/api/freelancer/orders/services/${serviceId}/reviews`),
+    enabled: !!serviceId,
+  });
+
   const service = data?.service;
+  const reviews: Review[] = reviewsData?.reviews || [];
   const freelancer = data?.freelancer;
 
   if (!service && !isLoading) {
@@ -250,10 +267,61 @@ export default function ServiceDetailPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Reviews</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  Reviews
+                  {service?.totalReviews > 0 && (
+                    <span className="text-sm font-normal text-gray-500">
+                      ({service.totalReviews})
+                    </span>
+                  )}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-500 text-center py-8">No reviews yet</p>
+                {reviews.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">No reviews yet</p>
+                ) : (
+                  <div className="space-y-6">
+                    {reviews.map((review) => (
+                      <div key={review.id} className="border-b pb-4 last:border-0 last:pb-0">
+                        <div className="flex items-start gap-3">
+                          <Avatar className="w-10 h-10">
+                            <AvatarImage src={review.reviewerAvatar || undefined} />
+                            <AvatarFallback>{review.reviewerName?.[0] || 'U'}</AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium">{review.reviewerName || 'Anonymous'}</span>
+                              <div className="flex items-center gap-0.5">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <Star
+                                    key={star}
+                                    className={`w-4 h-4 ${
+                                      star <= review.rating
+                                        ? 'fill-yellow-400 text-yellow-400'
+                                        : 'text-gray-300'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1">
+                              {new Date(review.createdAt).toLocaleDateString()}
+                            </p>
+                            {review.comment && (
+                              <p className="mt-2 text-gray-700">{review.comment}</p>
+                            )}
+                            {review.sellerResponse && (
+                              <div className="mt-3 pl-4 border-l-2 border-gray-200">
+                                <p className="text-sm font-medium text-gray-600">Seller Response:</p>
+                                <p className="text-sm text-gray-600 mt-1">{review.sellerResponse}</p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

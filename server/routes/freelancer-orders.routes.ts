@@ -1,7 +1,7 @@
 import { Router, Response } from "express";
 import { db } from "../db";
-import { freelancerServices, freelancerOrders, freelancerDeliverables, profiles, transactions, userBalances } from "../../shared/schema";
-import { eq, and, desc, lte, sql } from "drizzle-orm";
+import { freelancerServices, freelancerOrders, freelancerDeliverables, freelancerServiceReviews, profiles, transactions, userBalances } from "../../shared/schema";
+import { eq, and, desc, lte, sql, avg, count } from "drizzle-orm";
 import { requireAuth, requireRole, type AuthenticatedRequest } from "../middleware/auth";
 import { z } from "zod";
 
@@ -1102,6 +1102,171 @@ router.post("/:orderId/approve", requireAuth, async (req: AuthenticatedRequest, 
   } catch (error) {
     console.error("Error approving order:", error);
     res.status(500).json({ error: "Failed to approve order" });
+  }
+});
+
+// Submit a review for a completed order
+const reviewSchema = z.object({
+  rating: z.number().min(1).max(5),
+  comment: z.string().max(2000).optional(),
+});
+
+router.post("/:orderId/review", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const validated = reviewSchema.parse(req.body);
+
+    // Get the order
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    // Only the client can review
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the buyer can leave a review" });
+    }
+
+    // Order must be completed
+    if (order.status !== "completed") {
+      return res.status(400).json({ error: "You can only review completed orders" });
+    }
+
+    // Check if already reviewed
+    const [existingReview] = await db
+      .select()
+      .from(freelancerServiceReviews)
+      .where(eq(freelancerServiceReviews.orderId, orderId));
+
+    if (existingReview) {
+      return res.status(400).json({ error: "You have already reviewed this order" });
+    }
+
+    // Create the review
+    const [review] = await db.insert(freelancerServiceReviews).values({
+      serviceId: order.serviceId,
+      orderId: order.id,
+      reviewerId: userId,
+      freelancerId: order.freelancerId,
+      rating: validated.rating,
+      comment: validated.comment || null,
+    }).returning();
+
+    // Update service average rating
+    const ratingResult = await db
+      .select({
+        avgRating: avg(freelancerServiceReviews.rating),
+        totalReviews: count(freelancerServiceReviews.id),
+      })
+      .from(freelancerServiceReviews)
+      .where(eq(freelancerServiceReviews.serviceId, order.serviceId));
+
+    if (ratingResult[0]) {
+      await db
+        .update(freelancerServices)
+        .set({
+          averageRating: ratingResult[0].avgRating ? parseFloat(String(ratingResult[0].avgRating)).toFixed(1) : null,
+          totalReviews: Number(ratingResult[0].totalReviews),
+        })
+        .where(eq(freelancerServices.id, order.serviceId));
+    }
+
+    res.json({ success: true, review });
+  } catch (error) {
+    console.error("Error submitting review:", error);
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: error.errors[0].message });
+    }
+    res.status(500).json({ error: "Failed to submit review" });
+  }
+});
+
+// Get reviews for a service (public endpoint)
+router.get("/services/:serviceId/reviews", async (req, res: Response) => {
+  try {
+    const { serviceId } = req.params;
+
+    const reviews = await db
+      .select({
+        id: freelancerServiceReviews.id,
+        rating: freelancerServiceReviews.rating,
+        comment: freelancerServiceReviews.comment,
+        sellerResponse: freelancerServiceReviews.sellerResponse,
+        createdAt: freelancerServiceReviews.createdAt,
+        reviewerName: profiles.fullName,
+        reviewerAvatar: profiles.profilePicture,
+      })
+      .from(freelancerServiceReviews)
+      .leftJoin(profiles, eq(freelancerServiceReviews.reviewerId, profiles.id))
+      .where(and(
+        eq(freelancerServiceReviews.serviceId, serviceId),
+        eq(freelancerServiceReviews.isPublic, true)
+      ))
+      .orderBy(desc(freelancerServiceReviews.createdAt));
+
+    res.json({ reviews });
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    res.status(500).json({ error: "Failed to fetch reviews" });
+  }
+});
+
+// Freelancer responds to a review
+router.post("/reviews/:reviewId/respond", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { reviewId } = req.params;
+    const { response } = req.body;
+
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    if (!response || typeof response !== "string" || response.length > 1000) {
+      return res.status(400).json({ error: "Response must be between 1-1000 characters" });
+    }
+
+    const [review] = await db
+      .select()
+      .from(freelancerServiceReviews)
+      .where(eq(freelancerServiceReviews.id, reviewId));
+
+    if (!review) {
+      return res.status(404).json({ error: "Review not found" });
+    }
+
+    if (review.freelancerId !== userId) {
+      return res.status(403).json({ error: "Only the seller can respond to this review" });
+    }
+
+    if (review.sellerResponse) {
+      return res.status(400).json({ error: "You have already responded to this review" });
+    }
+
+    const [updated] = await db
+      .update(freelancerServiceReviews)
+      .set({
+        sellerResponse: response,
+        sellerRespondedAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .where(eq(freelancerServiceReviews.id, reviewId))
+      .returning();
+
+    res.json({ success: true, review: updated });
+  } catch (error) {
+    console.error("Error responding to review:", error);
+    res.status(500).json({ error: "Failed to respond to review" });
   }
 });
 
