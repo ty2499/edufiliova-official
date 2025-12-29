@@ -799,4 +799,35 @@ router.post('/test-emails/account-restriction', async (req: Request, res: Respon
   }
 });
 
+// Test endpoint specifically for teacher approval email
+router.post('/test-emails/teacher-approval', async (req: Request, res: Response) => {
+  try {
+    const { testEmail, fullName, displayName } = req.body;
+    
+    if (!testEmail) {
+      return res.status(400).json({ error: 'testEmail is required' });
+    }
+
+    console.log(`📧 Testing teacher approval email to ${testEmail}...`);
+
+    const result = await emailService.sendTeacherApprovalEmail(testEmail, {
+      fullName: fullName || 'Test Teacher',
+      displayName: displayName || 'Test Teacher'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Teacher approval email sent successfully' : 'Failed to send teacher approval email',
+      details: {
+        recipientEmail: testEmail,
+        fullName: fullName || 'Test Teacher',
+        displayName: displayName || 'Test Teacher'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending teacher approval test email:', error);
+    res.status(500).json({ error: 'Failed to send teacher approval email', details: error.message });
+  }
+});
+
 export default router;
