@@ -625,6 +625,41 @@ router.post("/stripe/create-session", requireAuth, async (req: AuthenticatedRequ
   }
 });
 
+router.get("/my-orders", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const orders = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.clientId, userId))
+      .orderBy(desc(freelancerOrders.createdAt));
+
+    const ordersWithServices = await Promise.all(
+      orders.map(async (order) => {
+        const [service] = await db
+          .select({ title: freelancerServices.title })
+          .from(freelancerServices)
+          .where(eq(freelancerServices.id, order.serviceId));
+        
+        return {
+          ...order,
+          service: service || null,
+        };
+      })
+    );
+
+    res.json({ success: true, orders: ordersWithServices });
+  } catch (error) {
+    console.error("Error fetching buyer orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+
 router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user?.id;

@@ -66,7 +66,8 @@ import {
   Users,
   Gift,
   Key,
-  ShoppingCart
+  ShoppingCart,
+  CheckCircle2
 } from 'lucide-react';
 import { AjaxLoader, type AjaxOperation } from '@/components/ui/ajax-loader';
 import VisitorHelpChat from '@/components/VisitorHelpChat';
@@ -93,7 +94,7 @@ interface CustomerDashboardProps {
   };
 }
 
-type DashboardPage = 'home' | 'purchases' | 'downloads' | 'ads' | 'courses' | 'course-detail' | 'course-player' | 'marketplace' | 'portfolio-gallery' | 'membership' | 'wallet' | 'billing' | 'receipts' | 'support' | 'settings' | 'become-student' | 'become-freelancer' | 'create-ad' | 'buy-voucher' | 'api' | 'shop';
+type DashboardPage = 'home' | 'purchases' | 'downloads' | 'ads' | 'courses' | 'course-detail' | 'course-player' | 'marketplace' | 'portfolio-gallery' | 'service-orders' | 'membership' | 'wallet' | 'billing' | 'receipts' | 'support' | 'settings' | 'become-student' | 'become-freelancer' | 'create-ad' | 'buy-voucher' | 'api' | 'shop';
 
 export default function CustomerDashboard({ onNavigate, navigationOptions }: CustomerDashboardProps) {
   const { user, profile, logout } = useAuth();
@@ -242,6 +243,7 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
     { id: 'courses', name: 'Courses', icon: BookOpen },
     { id: 'portfolio-gallery', name: 'Freelancer Works', icon: LayoutGrid },
     { id: 'marketplace', name: 'Find Freelancers', icon: Users },
+    { id: 'service-orders', name: 'Service Orders', icon: Package },
     { id: 'buy-voucher', name: 'Buy Voucher', icon: Gift },
     { id: 'membership', name: 'Membership', icon: Receipt },
     { id: 'wallet', name: 'Wallet', icon: Wallet },
@@ -294,6 +296,8 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
         return <FindTalent onNavigate={handleCourseNavigation} context="dashboard" />;
       case 'portfolio-gallery':
         return <PortfolioGallery onNavigate={handleCourseNavigation} context="dashboard" />;
+      case 'service-orders':
+        return <ServiceOrdersPage onNavigate={handleCourseNavigation} />;
       case 'membership':
         return <MembershipPage />;
       case 'wallet':
@@ -1284,6 +1288,136 @@ function DownloadsPage() {
                     >
                       <Download className="h-4 w-4 mr-2" />
                       {download.isExpired ? 'Link Expired' : 'Download'}
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Service Orders Page - Track purchased freelancer services
+function ServiceOrdersPage({ onNavigate }: { onNavigate?: (page: string) => void }) {
+  const [, navigate] = useLocation();
+  
+  const { data, isLoading } = useQuery<{ orders: any[] }>({
+    queryKey: ['/api/freelancer/orders/my-orders'],
+    refetchOnMount: true,
+    staleTime: 30 * 1000,
+  });
+
+  const orders = data?.orders || [];
+
+  const getStatusBadge = (status: string) => {
+    const statusConfig: Record<string, { label: string; className: string }> = {
+      pending_payment: { label: 'Pending Payment', className: 'bg-yellow-100 text-yellow-800' },
+      awaiting_requirements: { label: 'Awaiting Info', className: 'bg-blue-100 text-blue-800' },
+      in_progress: { label: 'In Progress', className: 'bg-purple-100 text-purple-800' },
+      active: { label: 'Active', className: 'bg-green-100 text-green-800' },
+      delivered: { label: 'Delivered', className: 'bg-teal-100 text-teal-800' },
+      revision_requested: { label: 'Revision', className: 'bg-orange-100 text-orange-800' },
+      completed: { label: 'Completed', className: 'bg-green-200 text-green-900' },
+      cancelled: { label: 'Cancelled', className: 'bg-gray-100 text-gray-800' },
+      refunded: { label: 'Refunded', className: 'bg-red-100 text-red-800' },
+    };
+    const config = statusConfig[status] || { label: status, className: 'bg-gray-100 text-gray-800' };
+    return <Badge className={config.className}>{config.label}</Badge>;
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-gray-900">Service Orders</h1>
+        </div>
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Service Orders</h1>
+          <p className="text-gray-600 text-sm">Track your purchased freelancer services</p>
+        </div>
+        <Button
+          variant="outline"
+          onClick={() => navigate('/marketplace/services')}
+          className="text-sm"
+        >
+          Browse Services
+        </Button>
+      </div>
+
+      {orders.length === 0 ? (
+        <Card className="border-dashed">
+          <CardContent className="py-12 text-center">
+            <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No orders yet</h3>
+            <p className="text-gray-600 mb-4">You haven't purchased any freelancer services yet.</p>
+            <Button onClick={() => navigate('/marketplace/services')}>
+              Browse Services
+            </Button>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="space-y-4">
+          {orders.map((order: any) => (
+            <Card 
+              key={order.id} 
+              className="hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => navigate(`/orders/${order.id}`)}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      {getStatusBadge(order.status)}
+                      <span className="text-xs text-gray-500">
+                        Order #{order.id.slice(0, 8)}
+                      </span>
+                    </div>
+                    <h3 className="font-medium text-gray-900 truncate">
+                      {order.service?.title || 'Freelancer Service'}
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      {order.packageType} Package
+                    </p>
+                    <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(order.createdAt).toLocaleDateString()}
+                      </span>
+                      {order.deliveredAt && (
+                        <span className="flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3 text-green-500" />
+                          Delivered
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-lg text-gray-900">
+                      ${parseFloat(order.amountTotal).toFixed(2)}
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="mt-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/orders/${order.id}`);
+                      }}
+                    >
+                      View Order
                     </Button>
                   </div>
                 </div>
