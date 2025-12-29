@@ -10,7 +10,7 @@ const AUTO_RELEASE_DAYS = 3;
 
 const router = Router();
 
-const PLATFORM_FEE_PERCENT = 15;
+const PLATFORM_FEE_PERCENT = 6;
 
 const checkoutSchema = z.object({
   selectedPackage: z.enum(["basic", "standard", "premium"]),

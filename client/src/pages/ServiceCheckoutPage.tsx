@@ -87,7 +87,7 @@ export default function ServiceCheckoutPage() {
   const walletBalance = parseFloat(walletData?.balance || '0');
 
   const subtotal = parseFloat(selectedPackage.price) || 0;
-  const platformFee = subtotal * 0.15;
+  const platformFee = subtotal * 0.06;
   const total = subtotal + platformFee;
   const hasEnoughBalance = walletBalance >= total;
 
@@ -447,7 +447,7 @@ export default function ServiceCheckoutPage() {
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Platform Fee (15%)</span>
+                    <span className="text-gray-600">Platform Fee (6%)</span>
                     <span>${platformFee.toFixed(2)}</span>
                   </div>
                 </div>
@@ -507,7 +507,7 @@ export default function ServiceCheckoutPage() {
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Platform Fee (15%)</span>
+                <span className="text-gray-600">Platform Fee (6%)</span>
                 <span>${platformFee.toFixed(2)}</span>
               </div>
               <Separator />
