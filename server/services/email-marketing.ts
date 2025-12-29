@@ -10,6 +10,7 @@ import type {
   CampaignDelivery,
   SegmentFilters 
 } from '@shared/schema';
+import { generateBrandedPDF } from '../utils/pdf';
 
 Handlebars.registerHelper('eq', (a: unknown, b: unknown) => a === b);
 Handlebars.registerHelper('neq', (a: unknown, b: unknown) => a !== b);
@@ -193,6 +194,61 @@ export class EmailMarketingService {
     return `${baseUrl}/unsubscribe?token=${token}`;
   }
 
+  private wrapWithBrandedTemplate(title: string, content: string, unsubscribeLink?: string): string {
+    const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+    
+    return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>${title}</title>
+  <style type="text/css">
+    body { margin: 0; padding: 0; min-width: 100%; background-color: #f4f7f9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .wrapper { width: 100%; table-layout: fixed; background-color: #f4f7f9; padding-bottom: 40px; }
+    .main-table { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .header { background-color: #0c332c; padding: 40px 0; text-align: center; }
+    .content { padding: 40px 50px; color: #333333; line-height: 1.6; }
+    .content h1 { color: #0c332c; font-size: 24px; margin-bottom: 20px; font-weight: 700; }
+    .content h2 { color: #0c332c; font-size: 20px; margin-bottom: 15px; font-weight: 600; }
+    .content p { font-size: 16px; margin-bottom: 20px; }
+    .footer { background-color: #f8fafc; padding: 40px 50px; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 13px; }
+    .footer p { margin: 10px 0; line-height: 1.5; }
+    .footer a { color: #0c332c; text-decoration: none; font-weight: 600; }
+    .divider { height: 1px; background-color: #e2e8f0; margin: 20px 0; }
+    .btn { display: inline-block; padding: 12px 24px; background-color: #0c332c; color: #ffffff !important; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+    .highlight { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 20px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <table class="main-table" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td class="header">
+          <img src="${logoUrl}" alt="EduFiliova" width="180" style="display: block; margin: 0 auto;" />
+        </td>
+      </tr>
+      <tr>
+        <td class="content">
+          ${content}
+        </td>
+      </tr>
+      <tr>
+        <td class="footer">
+          <p><strong>EduFiliova</strong></p>
+          <p>Empowering global talent through education and opportunity.</p>
+          <div class="divider"></div>
+          <p>This is an automated message from EduFiliova. For assistance, contact our support team at <a href="mailto:support@edufiliova.com">support@edufiliova.com</a>.</p>
+          ${unsubscribeLink ? `<p><a href="${unsubscribeLink}" style="color: #64748b; text-decoration: underline;">Unsubscribe</a> from marketing emails</p>` : ''}
+          <p>&copy; ${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>`;
+  }
+
   async sendCampaignEmail(
     delivery: CampaignDelivery,
     campaign: EmailCampaign,
@@ -214,14 +270,9 @@ export class EmailMarketingService {
         currentDate: new Date().toISOString(),
       };
 
-      let htmlContent = this.renderTemplate(campaign.htmlContent, variables, `campaign_${campaign.id}_html`);
+      const renderedContent = this.renderTemplate(campaign.htmlContent, variables, `campaign_${campaign.id}_html`);
       
-      htmlContent += `
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; font-size: 12px; color: #666;">
-          <p>You're receiving this email because you're subscribed to updates from EduFiliova.</p>
-          <p><a href="${unsubscribeLink}" style="color: #666;">Unsubscribe</a> from marketing emails</p>
-        </div>
-      `;
+      const htmlContent = this.wrapWithBrandedTemplate(campaign.subject, renderedContent, unsubscribeLink);
 
       const textContent = campaign.textContent 
         ? this.renderTemplate(campaign.textContent, variables, `campaign_${campaign.id}_text`) + `\n\nUnsubscribe: ${unsubscribeLink}`
@@ -393,19 +444,83 @@ export class EmailMarketingService {
     recipientEmail: string,
     subject: string,
     htmlContent: string,
-    textContent?: string
+    textContent?: string,
+    pdfBuffer?: Buffer,
+    pdfFilename?: string
   ): Promise<{ success: boolean; error?: string }> {
     if (!this.transporter || !this.config) {
       return { success: false, error: 'Email service not configured' };
     }
 
     try {
+      const brandedHtml = this.wrapWithBrandedTemplate(subject, htmlContent);
+      
+      const attachments: Array<{ filename: string; content: Buffer; contentType: string }> = [];
+      if (pdfBuffer && pdfFilename) {
+        attachments.push({
+          filename: pdfFilename,
+          content: pdfBuffer,
+          contentType: 'application/pdf'
+        });
+      }
+      
       await this.transporter.sendMail({
         from: `"${this.config.fromName}" <${this.config.fromEmail}>`,
         to: recipientEmail,
         subject: `[TEST] ${subject}`,
-        html: htmlContent,
+        html: brandedHtml,
         text: textContent,
+        attachments
+      });
+
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: (error as Error).message };
+    }
+  }
+
+  async sendEmailWithPDF(
+    recipientEmail: string,
+    recipientName: string,
+    subject: string,
+    htmlContent: string,
+    pdfContent?: string,
+    pdfTitle?: string
+  ): Promise<{ success: boolean; error?: string }> {
+    if (!this.transporter || !this.config) {
+      return { success: false, error: 'Email service not configured' };
+    }
+
+    try {
+      const personalizedContent = htmlContent
+        .replace(/{{recipientName}}/gi, recipientName)
+        .replace(/{{fullName}}/gi, recipientName);
+      
+      const brandedHtml = this.wrapWithBrandedTemplate(subject, personalizedContent);
+      
+      const attachments: Array<{ filename: string; content: Buffer; contentType: string }> = [];
+      
+      if (pdfContent && pdfTitle) {
+        const pdfBuffer = await generateBrandedPDF({
+          title: pdfTitle,
+          content: pdfContent,
+          recipientName,
+          includeDate: true
+        });
+        
+        attachments.push({
+          filename: `${pdfTitle.replace(/\s+/g, '_')}.pdf`,
+          content: pdfBuffer,
+          contentType: 'application/pdf'
+        });
+      }
+      
+      await this.transporter.sendMail({
+        from: `"${this.config.fromName}" <${this.config.fromEmail}>`,
+        to: recipientEmail,
+        subject,
+        html: brandedHtml,
+        attachments
       });
 
       return { success: true };

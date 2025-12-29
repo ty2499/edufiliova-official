@@ -1859,6 +1859,96 @@ export class EmailService {
       return false;
     }
   }
+
+  wrapWithBrandedTemplate(title: string, content: string, unsubscribeLink?: string): string {
+    const baseHtml = this.getGlobalTemplate(title, content);
+    
+    if (unsubscribeLink) {
+      return baseHtml.replace(
+        '<p>&copy; 2025 EduFiliova. All rights reserved.</p>',
+        `<p><a href="${unsubscribeLink}" style="color: #64748b; text-decoration: underline;">Unsubscribe</a> from marketing emails</p>
+        <p>&copy; 2025 EduFiliova. All rights reserved.</p>`
+      );
+    }
+    
+    return baseHtml;
+  }
+
+  async sendBulkEmailWithAttachment(options: {
+    to: string;
+    recipientName: string;
+    subject: string;
+    bodyContent: string;
+    pdfBuffer?: Buffer;
+    pdfFilename?: string;
+    unsubscribeLink?: string;
+    from?: string;
+  }): Promise<boolean> {
+    try {
+      const personalizedContent = this.forceReplaceName(options.bodyContent, options.recipientName);
+      const html = this.wrapWithBrandedTemplate(options.subject, personalizedContent, options.unsubscribeLink);
+      
+      const attachments: EmailAttachment[] = [];
+      if (options.pdfBuffer && options.pdfFilename) {
+        attachments.push({
+          filename: options.pdfFilename,
+          content: options.pdfBuffer,
+          contentType: 'application/pdf'
+        });
+      }
+      
+      return this.sendEmail({
+        to: options.to,
+        subject: options.subject,
+        html,
+        from: options.from || `"EduFiliova" <support@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('❌ Error sending bulk email with attachment:', error);
+      return false;
+    }
+  }
+
+  async sendMarketingEmail(options: {
+    to: string;
+    recipientName: string;
+    subject: string;
+    htmlContent: string;
+    unsubscribeLink?: string;
+    pdfBuffer?: Buffer;
+    pdfFilename?: string;
+    from?: string;
+  }): Promise<boolean> {
+    try {
+      let content = options.htmlContent;
+      content = this.forceReplaceName(content, options.recipientName);
+      content = content.replace(/{{recipientName}}/gi, options.recipientName);
+      content = content.replace(/{{recipientEmail}}/gi, options.to);
+      
+      const html = this.wrapWithBrandedTemplate(options.subject, content, options.unsubscribeLink);
+      
+      const attachments: EmailAttachment[] = [];
+      if (options.pdfBuffer && options.pdfFilename) {
+        attachments.push({
+          filename: options.pdfFilename,
+          content: options.pdfBuffer,
+          contentType: 'application/pdf'
+        });
+      }
+      
+      return this.sendEmail({
+        to: options.to,
+        subject: options.subject,
+        html,
+        from: options.from || `"EduFiliova" <support@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('❌ Error sending marketing email:', error);
+      return false;
+    }
+  }
 }
 
 export const emailService = new EmailService();
