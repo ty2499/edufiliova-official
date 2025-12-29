@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import { BannerAdDisplay } from "@/components/BannerAdDisplay";
 import { HomeHeroSection } from "@/components/HeroSectionDisplay";
-import AnimatedGlobeHero from "@/components/AnimatedGlobeHero";
+import BentoHero from "@/components/BentoHero";
 import Testimonials from "@/components/ui/testimonials";
 import FAQ from "@/components/ui/faq";
 import { useAuth } from "@/hooks/useAuth";
@@ -444,8 +444,8 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
     <div className="min-h-screen flex flex-col pt-16">
       <Header onNavigate={onNavigate} currentPage="home" />
       <main className="flex-1">
-        {/* Animated Globe Hero Section */}
-        <AnimatedGlobeHero onNavigate={onNavigate} />
+        {/* Bento Hero Section */}
+        <BentoHero onNavigate={onNavigate} />
 
         {/* Trending Courses Section */}
         <section className="py-6 md:py-8 bg-gradient-to-br from-purple-50 to-pink-50">

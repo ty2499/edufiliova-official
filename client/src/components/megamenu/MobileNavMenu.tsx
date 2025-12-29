@@ -171,7 +171,7 @@ export const MobileNavMenu = ({ onNavigate, onClose, isAuthenticated = false, us
       icon: <Coins className="h-4 w-4" />,
       links: [
         { icon: <GraduationCap className="h-4 w-4" />, title: "Student Pricing", page: "education-pricing" },
-        { icon: <ShoppingCart className="h-4 w-4" />, title: "Customer Pricing", page: "customer-pricing" },
+        { icon: <ShoppingCart className="h-4 w-4" />, title: "Creator Pricing", page: "customer-pricing" },
         { icon: <Briefcase className="h-4 w-4" />, title: "Freelancer Pricing", page: "creator-pricing" },
         { icon: <Building2 className="h-4 w-4" />, title: "Teacher Pricing", page: "teacher-pricing" },
       ]
