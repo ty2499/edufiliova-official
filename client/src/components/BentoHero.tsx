@@ -235,15 +235,9 @@ export default function BentoHero({ onNavigate }: BentoHeroProps) {
                 <p className="text-xs text-white/60 mb-2">Join the community with</p>
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-white/30 border-2 border-white flex items-center justify-center">
-                      <Users className="h-4 w-4 text-white" />
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-white/20 border-2 border-white flex items-center justify-center">
-                      <Award className="h-4 w-4 text-white" />
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-white/10 border-2 border-white flex items-center justify-center">
-                      <TrendingUp className="h-4 w-4 text-white" />
-                    </div>
+                    <img src={headshot1} alt="Community member" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                    <img src={headshot2} alt="Community member" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
+                    <img src={headshot3} alt="Community member" className="w-8 h-8 rounded-full object-cover border-2 border-white" />
                   </div>
                   <div>
                     <span className="text-lg font-bold">{currentContent.statCard.stat}</span>
