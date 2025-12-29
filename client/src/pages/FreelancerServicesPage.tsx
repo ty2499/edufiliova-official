@@ -133,14 +133,14 @@ export default function FreelancerServicesPage() {
           <Button 
             size="icon" 
             onClick={() => navigate('/dashboard/freelancer/services/new')} 
-            className="bg-[#228B22] text-white hover:bg-[#228B22] sm:hidden"
+            className="bg-[#0c332c] text-white hover:bg-[#0c332c] sm:hidden"
           >
             <Plus className="w-5 h-5" />
           </Button>
           {/* Desktop: Full button */}
           <Button 
             onClick={() => navigate('/dashboard/freelancer/services/new')} 
-            className="bg-[#228B22] text-white hover:bg-[#228B22] hidden sm:flex"
+            className="bg-[#0c332c] text-white hover:bg-[#0c332c] hidden sm:flex"
           >
             <Plus className="w-4 h-4 mr-2" />
             Create Service
@@ -165,7 +165,7 @@ export default function FreelancerServicesPage() {
               <Package className="w-12 h-12 mx-auto text-gray-300 mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">No services yet</h3>
               <p className="text-gray-500 mb-4">Create your first service to start earning</p>
-              <Button onClick={() => navigate('/dashboard/freelancer/services/new')} className="bg-[#228B22] text-white hover:bg-[#228B22]">
+              <Button onClick={() => navigate('/dashboard/freelancer/services/new')} className="bg-[#0c332c] text-white hover:bg-[#0c332c]">
                 <Plus className="w-4 h-4 mr-2" />
                 Create Your First Service
               </Button>
