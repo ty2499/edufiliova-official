@@ -3,7 +3,43 @@
 ## Overview
 Education platform with comprehensive content moderation system that detects and removes personal information, prevents unsafe content, and enforces platform policies with professional email notifications.
 
-## Latest: Freelancer Services Wallet Payment (Dec 29, 2025)
+## Latest: Freelancer Marketplace Frontend (Dec 29, 2025)
+
+### Frontend Pages Added (Fiverr-like UX)
+
+**Freelancer Dashboard Routes:**
+- `/dashboard/freelancer/services` - List and manage services
+- `/dashboard/freelancer/services/new` - Create new service
+- `/dashboard/freelancer/services/:id/edit` - Edit existing service
+- `/dashboard/freelancer/orders` - Manage orders with deliver action
+
+**Marketplace Routes:**
+- `/marketplace/services` - Browse services with search/filter
+- `/marketplace/services/:id` - Service detail with package selector
+- `/checkout/service/:id` - Checkout with wallet payment
+- `/orders/:id` - Order tracker with status stepper
+
+**Implementation:**
+- Lazy-loaded pages via React.lazy() for performance
+- Uses wouter Route/Switch at App.tsx level
+- Consistent shadcn/ui components throughout
+- React Query for data fetching
+- Status stepper (Pending -> Active -> Delivered -> Completed)
+- Wallet-only payment (creates order + pays atomically)
+- 3-day auto-release countdown shown after delivery
+
+**Files Created:**
+- `client/src/pages/FreelancerServicesPage.tsx`
+- `client/src/pages/FreelancerServiceFormPage.tsx`
+- `client/src/pages/FreelancerOrdersPage.tsx`
+- `client/src/pages/MarketplaceServicesPage.tsx`
+- `client/src/pages/ServiceDetailPage.tsx`
+- `client/src/pages/ServiceCheckoutPage.tsx`
+- `client/src/pages/OrderTrackerPage.tsx`
+
+---
+
+## Freelancer Services Wallet Payment (Dec 29, 2025)
 
 ### Freelancer Marketplace Payment System
 **Endpoint:** `POST /api/freelancer/orders/:orderId/pay`
