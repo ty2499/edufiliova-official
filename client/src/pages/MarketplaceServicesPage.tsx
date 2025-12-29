@@ -143,11 +143,7 @@ export default function MarketplaceServicesPage() {
           </Select>
         </div>
 
-        {isLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 animate-spin text-[#0c332c]" />
-          </div>
-        ) : services.length === 0 ? (
+        {services.length === 0 && !isLoading ? (
           <div className="text-center py-12">
             <Package className="w-16 h-16 mx-auto text-gray-300 mb-4" />
             <h3 className="text-xl font-medium text-gray-900 mb-2">No services found</h3>

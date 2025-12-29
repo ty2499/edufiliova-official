@@ -229,15 +229,7 @@ export default function ServiceCheckoutPage() {
     }
   };
 
-  if (isLoadingService || isLoadingGateways) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-[#0c332c]" />
-      </div>
-    );
-  }
-
-  if (!service) {
+  if (!service && !isLoadingService) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -249,7 +241,7 @@ export default function ServiceCheckoutPage() {
     );
   }
 
-  if (availableGateways.length === 0) {
+  if (availableGateways.length === 0 && !isLoadingGateways) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center max-w-md">
