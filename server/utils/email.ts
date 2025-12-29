@@ -471,13 +471,34 @@ export class EmailService {
         { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
       ];
 
-      return this.sendEmail({
+      // Send to applicant
+      const sentToApplicant = await this.sendEmail({
         to: email,
         subject: 'Your Teacher Application is Under Review - EduFiliova',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
         attachments
       });
+
+      // Forward notification to support team
+      const supportNotification = `
+        <h2>New Teacher Application Submitted</h2>
+        <p><strong>Applicant Details:</strong></p>
+        <ul>
+          <li><strong>Name:</strong> ${data.fullName}</li>
+          <li><strong>Email:</strong> ${email}</li>
+          <li><strong>Submitted:</strong> ${new Date().toLocaleString()}</li>
+        </ul>
+        <p>Please review the application documents in the admin dashboard.</p>
+      `;
+      this.sendEmail({
+        to: 'support@edufiliova.com',
+        subject: `New Teacher Application: ${data.fullName}`,
+        html: this.getGlobalTemplate('New Teacher Application', supportNotification),
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`
+      }).catch(err => console.error('Failed to notify support of teacher application:', err));
+
+      return sentToApplicant;
     } catch (error) {
       console.error('Error sending teacher under review email:', error);
       return false;
@@ -1960,13 +1981,34 @@ export class EmailService {
         { filename: 'd249f4ce7bc112aa2f2b471a0d9e4605.png', path: path.join(imagesPath, 'd249f4ce7bc112aa2f2b471a0d9e4605.png'), cid: 'freelancerbanner', contentType: 'image/png' }
       ];
 
-      return this.sendEmail({
+      // Send to applicant
+      const sentToApplicant = await this.sendEmail({
         to: email,
         subject: 'Your Freelancer Application is Under Review - EduFiliova',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
         attachments
       });
+
+      // Forward notification to support team
+      const supportNotification = `
+        <h2>New Freelancer Application Submitted</h2>
+        <p><strong>Applicant Details:</strong></p>
+        <ul>
+          <li><strong>Name:</strong> ${data.fullName}</li>
+          <li><strong>Email:</strong> ${email}</li>
+          <li><strong>Submitted:</strong> ${new Date().toLocaleString()}</li>
+        </ul>
+        <p>Please review the application documents in the admin dashboard.</p>
+      `;
+      this.sendEmail({
+        to: 'support@edufiliova.com',
+        subject: `New Freelancer Application: ${data.fullName}`,
+        html: this.getGlobalTemplate('New Freelancer Application', supportNotification),
+        from: `"EduFiliova Applications" <noreply@edufiliova.com>`
+      }).catch(err => console.error('Failed to notify support of freelancer application:', err));
+
+      return sentToApplicant;
     } catch (error) {
       console.error('Error sending freelancer under review email:', error);
       return false;
