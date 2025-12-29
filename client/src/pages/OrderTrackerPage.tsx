@@ -16,6 +16,7 @@ import {
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
+import { useFreelancerChat } from '@/contexts/FreelancerChatContext';
 import { format, formatDistanceToNow } from 'date-fns';
 
 const ORDER_STEPS = [
@@ -44,6 +45,7 @@ export default function OrderTrackerPage() {
   const orderId = params?.id;
   const { toast } = useToast();
   const { user, profile } = useAuth();
+  const { setIsChatOpen, setFreelancerInfo, setCurrentUserId } = useFreelancerChat();
 
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewComment, setReviewComment] = useState('');
@@ -133,6 +135,27 @@ export default function OrderTrackerPage() {
 
   const isClient = user?.id === order?.clientId;
   const isFreelancer = user?.id === order?.freelancerId;
+
+  const handleOpenChat = () => {
+    if (!profile) {
+      toast({ title: 'Please sign in to send messages', variant: 'destructive' });
+      return;
+    }
+
+    const chatPartner = isClient ? freelancer : client;
+    if (!chatPartner) {
+      toast({ title: 'Unable to start chat', variant: 'destructive' });
+      return;
+    }
+
+    setFreelancerInfo({
+      id: chatPartner.id,
+      name: chatPartner.fullName || chatPartner.name || 'User',
+      avatarUrl: chatPartner.profilePicture || undefined,
+    });
+    setCurrentUserId(profile.id);
+    setIsChatOpen(true);
+  };
 
   if (!user) {
     return (
@@ -592,7 +615,7 @@ export default function OrderTrackerPage() {
                     <p className="font-medium">{isClient ? freelancer?.fullName : client?.fullName}</p>
                   </div>
                 </div>
-                <Button variant="outline" className="w-full mt-4">
+                <Button variant="outline" className="w-full mt-4" onClick={handleOpenChat}>
                   <MessageSquare className="w-4 h-4 mr-2" />
                   Message
                 </Button>
