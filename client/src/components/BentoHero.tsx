@@ -182,10 +182,10 @@ export default function BentoHero({ onNavigate }: BentoHeroProps) {
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-10">
           <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-normal text-[#1a1a1a] leading-[1.1] mb-2">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a1a] leading-[1.1] mb-2">
               {currentContent.headline}
             </h1>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-normal text-[#1a1a1a]/60 leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a1a]/60 leading-[1.1]">
               {currentContent.headlineLine2}
             </h1>
           </div>
