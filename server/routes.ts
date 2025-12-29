@@ -2545,7 +2545,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // No WhatsApp opt-in: Send email verification only using new HTML template
         try {
           const { sendStudentVerificationEmail } = await import('./utils/email-templates.js');
-          await sendStudentVerificationEmail(email, name, emailCode, 15);
+          const result = await sendStudentVerificationEmail(email, name, emailCode, 15);
+          if (!result) {
+            throw new Error("Email service failed to send verification email");
+          }
           console.log('✅ Student verification email sent successfully to:', email);
         } catch (emailError) {
           console.error('❌ Failed to send student verification email:', emailError);
