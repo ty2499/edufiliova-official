@@ -37,7 +37,9 @@ export default function ServiceDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleContactSeller = () => {
-    if (!user) {
+    console.log('🟢 handleContactSeller called', { user, profile, freelancer });
+    
+    if (!user || !profile) {
       toast({ title: 'Please sign in to contact the seller', variant: 'destructive' });
       navigate('/login');
       return;
@@ -48,18 +50,26 @@ export default function ServiceDetailPage() {
       return;
     }
     
-    if (user.id === freelancer.id) {
+    if (profile.id === freelancer.id) {
       toast({ title: 'You cannot message yourself', variant: 'destructive' });
       return;
     }
 
+    console.log('🟢 Setting chat info', { 
+      freelancerId: freelancer.id, 
+      freelancerName: freelancer.fullName, 
+      profileId: profile.id 
+    });
+    
     setFreelancerInfo({
       id: freelancer.id,
       name: freelancer.fullName || 'Freelancer',
-      avatarUrl: freelancer.profilePicture || null,
+      avatarUrl: freelancer.profilePicture || undefined,
     });
-    setCurrentUserId(user.id);
+    setCurrentUserId(profile.id);
     setIsChatOpen(true);
+    
+    console.log('🟢 Chat should be open now');
   };
 
   const { data, isLoading } = useQuery({
@@ -228,7 +238,7 @@ export default function ServiceDetailPage() {
                       variant="outline" 
                       className="mt-4"
                       onClick={handleContactSeller}
-                      disabled={user?.id === freelancer?.id}
+                      disabled={profile?.id === freelancer?.id}
                     >
                       <MessageSquare className="w-4 h-4 mr-2" />
                       Contact Seller
