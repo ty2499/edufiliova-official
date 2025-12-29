@@ -80,6 +80,7 @@ import ShopAuth from "./ShopAuth";
 import CustomerDashboard from "./CustomerDashboard";
 import CreatorEarningsDashboard from "./CreatorEarningsDashboard";
 import AdminPayoutManagement from "./AdminPayoutManagement";
+import AdminOrdersManagement from "./AdminOrdersManagement";
 import TeacherMeetings from "./TeacherMeetings";
 import TeacherMeetingDetail from "./TeacherMeetingDetail";
 import StudentMeetings from "./StudentMeetings";
@@ -2156,6 +2157,18 @@ const Index = () => {
         return (
           <div className="instant-transition">
             <AdminPayoutManagement />
+          </div>
+        );
+
+      case "admin-orders-management":
+        if (!user) return <div className="instant-transition"><AuthModern onLogin={handleLogin} /></div>;
+        if (profile && !["admin"].includes(profile.role)) {
+          handleNavigation("customer-dashboard");
+          return <div className="instant-transition">Redirecting...</div>;
+        }
+        return (
+          <div className="instant-transition">
+            <AdminOrdersManagement />
           </div>
         );
 

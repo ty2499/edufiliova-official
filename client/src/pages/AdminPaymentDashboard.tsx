@@ -115,6 +115,7 @@ import { ProfileBoostManager } from '@/components/ProfileBoostManager';
 import { WorkBoostManager } from '@/components/WorkBoostManager';
 import { WorkCommentBoostManager } from '@/components/WorkCommentBoostManager';
 import AdminPayoutManagement from '@/pages/AdminPayoutManagement';
+import AdminOrdersManagement from '@/pages/AdminOrdersManagement';
 
 interface AdminSetting {
   id: string;
@@ -2799,6 +2800,24 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
               <TrendingUp className="w-5 h-5 mr-3" />
               <span>Payout Management</span>
             </Button>
+            
+            <Button
+              variant="ghost"
+              className={`w-full h-11 rounded-lg transition-colors justify-start ${
+                selectedTab === "service-orders" 
+                  ? "text-black hover:bg-[#c4ee3d] hover:text-black" 
+                  : "text-white hover:bg-[#c4ee3d] hover:text-black"
+              }`}
+              style={{
+                backgroundColor: selectedTab === "service-orders" ? "#c4ee3d" : undefined,
+                color: selectedTab === "service-orders" ? "black" : undefined
+              }}
+              onClick={() => { setSelectedTab("service-orders"); setShowMobileMenu(false); }}
+              data-testid="nav-service-orders"
+            >
+              <Package className="w-5 h-5 mr-3" />
+              <span>Service Orders</span>
+            </Button>
             </>
             )}
             
@@ -4242,6 +4261,11 @@ export default function AdminPaymentDashboard({ onNavigate }: AdminPaymentDashbo
           {/* Payout Management */}
           <TabsContent value="payouts" className="space-y-6">
             <AdminPayoutManagement isEmbedded={true} />
+          </TabsContent>
+
+          {/* Service Orders Management */}
+          <TabsContent value="service-orders" className="space-y-6">
+            <AdminOrdersManagement isEmbedded={true} />
           </TabsContent>
 
           {/* Vouchers Management */}
