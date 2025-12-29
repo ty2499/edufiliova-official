@@ -663,8 +663,7 @@ export class EmailService {
 
   async sendFreelancerRejectionEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    // Use freelancer-specific decline template
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/freelancer_decline_template.html');
+    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/freelancer-application-declined/template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
@@ -678,49 +677,27 @@ export class EmailService {
     html = html.replace('</head>', `${iphoneFontStack}</head>`);
 
     const fullName = data.fullName || 'Freelancer';
-    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Missing documentation';
+    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Your application did not meet our current freelancer requirements. Please review the feedback and strengthen your profile before reapplying.';
 
     // ✅ USE BULLETPROOF NAME REPLACEMENT FIRST - THIS IS CRITICAL
     html = this.forceReplaceName(html, fullName);
 
-    // Handle conditional reason blocks
-    html = html.replace(/\{\{#if rejectionReason\}\}[\s\S]*?\{\{rejectionReason\}\}[\s\S]*?\{\{\/if\}\}/gi, `Reason provided: ${reasonText}`);
-
     // Final cleanup
     html = html.replace(/\{\{rejectionReason\}\}/gi, reasonText);
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{#if rejectionReason\}\}/gi, '');
-    html = html.replace(/\{\{\/if\}\}/gi, '');
-
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/b3f1ba1bfd2e78319f53bcae30119f17.png', 'cid:freelancer_working');
-    html = html.replaceAll('images/de497c5361453604d8a15c4fd9bde086.png', 'cid:rejection_icon');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
-    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
-    html = html.replaceAll('images/8889f49340b6e80a36b597a426a461b7.png', 'cid:freelancer_label');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+    html = html.replace(/\{\{email\}\}/gi, email);
 
     return this.sendEmail({
       to: email,
       subject: 'Freelancer Application Status Update - EduFiliova',
       html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'freelancer_working.png', path: assetPath('b3f1ba1bfd2e78319f53bcae30119f17_linking.png'), cid: 'freelancer_working', contentType: 'image/png' },
-        { filename: 'rejection_icon.png', path: assetPath('de497c5361453604d8a15c4fd9bde086_linking.png'), cid: 'rejection_icon', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'corner', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_linking.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'social', contentType: 'image/png' },
-        { filename: 'freelancer_label.png', path: assetPath('8889f49340b6e80a36b597a426a461b7_linking.png'), cid: 'freelancer_label', contentType: 'image/png' }
-      ]
+      from: `"EduFiliova Support" <support@edufiliova.com>`
     });
   }
 
   async sendFreelancerSubmissionEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/freelancer_submission_template.html');
+    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/freelancer-application-submitted/template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
@@ -740,34 +717,19 @@ export class EmailService {
     
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/f7daaf49aba7bad7f235cf99406c847a.png', 'cid:freelancer_happy');
-    html = html.replaceAll('images/d249f4ce7bc112aa2f2b471a0d9e4605.png', 'cid:freelancer_working');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
-    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+    html = html.replace(/\{\{email\}\}/gi, email);
 
     return this.sendEmail({
       to: email,
       subject: 'Your Freelancer Application Has Been Received - EduFiliova',
       html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'freelancer_happy.png', path: assetPath('f7daaf49aba7bad7f235cf99406c847a_linking.png'), cid: 'freelancer_happy', contentType: 'image/png' },
-        { filename: 'freelancer_working.png', path: assetPath('d249f4ce7bc112aa2f2b471a0d9e4605_linking.png'), cid: 'freelancer_working', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'corner', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_linking.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'social', contentType: 'image/png' }
-      ]
+      from: `"EduFiliova Support" <support@edufiliova.com>`
     });
   }
 
   async sendFreelancerPendingEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/freelancer_pending_template.html');
+    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/freelancer-application-under-review/template.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     // Remove preloads and add iPhone font support
@@ -787,28 +749,13 @@ export class EmailService {
     
     // Final cleanup
     html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
-    // Replace image paths with CIDs
-    html = html.replaceAll('images/05e55bd45b360af065b59fc6f57acfee.png', 'cid:freelancer_laptop');
-    html = html.replaceAll('images/2085c996cc224d012156b3a727be8488.png', 'cid:freelancer_worker');
-    html = html.replaceAll('images/3d94f798ad2bd582f8c3afe175798088.png', 'cid:corner');
-    html = html.replaceAll('images/4a834058470b14425c9b32ace711ef17.png', 'cid:footer_logo');
-    html = html.replaceAll('images/9f7291948d8486bdd26690d0c32796e0.png', 'cid:social');
-
-    const assetPath = (filename: string) => path.resolve(process.cwd(), 'attached_assets', filename);
+    html = html.replace(/\{\{email\}\}/gi, email);
 
     return this.sendEmail({
       to: email,
-      subject: 'Your Freelancer Application Status: Pending - EduFiliova',
+      subject: 'Your Freelancer Application Status: Under Review - EduFiliova',
       html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: [
-        { filename: 'freelancer_laptop.png', path: assetPath('05e55bd45b360af065b59fc6f57acfee_linking.png'), cid: 'freelancer_laptop', contentType: 'image/png' },
-        { filename: 'freelancer_worker.png', path: assetPath('2085c996cc224d012156b3a727be8488_linking.png'), cid: 'freelancer_worker', contentType: 'image/png' },
-        { filename: 'corner.png', path: assetPath('3d94f798ad2bd582f8c3afe175798088_linking.png'), cid: 'corner', contentType: 'image/png' },
-        { filename: 'footer_logo.png', path: assetPath('4a834058470b14425c9b32ace711ef17_linking.png'), cid: 'footer_logo', contentType: 'image/png' },
-        { filename: 'social.png', path: assetPath('9f7291948d8486bdd26690d0c32796e0_linking.png'), cid: 'social', contentType: 'image/png' }
-      ]
+      from: `"EduFiliova Support" <support@edufiliova.com>`
     });
   }
 
