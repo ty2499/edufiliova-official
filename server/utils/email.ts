@@ -63,68 +63,59 @@ export class EmailService {
   private async processEmailImages(html: string): Promise<string> {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
-    // Strategy: Try local Base64 embedding first for maximum reliability
-    // Fallback to Cloudinary URLs if local file is missing
-
     const localAssetDir = path.resolve(process.cwd(), 'server/email-local-assets');
-
-    // 1. Process by explicit filename mapping from our local store
-    if (fs.existsSync(localAssetDir)) {
-      const files = fs.readdirSync(localAssetDir);
-      for (const fileName of files) {
-        const baseName = fileName.split('.')[0];
+    const files = fs.existsSync(localAssetDir) ? fs.readdirSync(localAssetDir) : [];
+    
+    // Create a data URI map for all local files
+    const dataUriMap = new Map<string, string>();
+    for (const fileName of files) {
+      try {
         const filePath = path.join(localAssetDir, fileName);
-        
-        try {
-          const buffer = fs.readFileSync(filePath);
-          const ext = path.extname(fileName).slice(1) || 'png';
-          const base64 = buffer.toString('base64');
-          const dataUri = `data:image/${ext};base64,${base64}`;
-
-          // Match patterns: src="cid:logo", src="images/logo.png", src="logo.png"
-          const patterns = [
-            new RegExp(`src=["']cid:${baseName}["']`, 'gi'),
-            new RegExp(`src=["']images/${fileName}["']`, 'gi'),
-            new RegExp(`src=["']${fileName}["']`, 'gi'),
-            new RegExp(`src=["']images/${baseName}\\.png["']`, 'gi'),
-            new RegExp(`href=["']images/${baseName}\\.png["']`, 'gi')
-          ];
-
-          for (const pattern of patterns) {
-            if (pattern.test(html)) {
-              html = html.replace(pattern, (match) => match.includes('src=') ? `src="${dataUri}"` : `href="${dataUri}"`);
-              console.log(`✅ Embedded local image ${fileName} as Base64`);
-            }
-          }
-        } catch (err) {
-          console.warn(`⚠️ Failed to read local asset ${fileName}:`, err);
-        }
+        const buffer = fs.readFileSync(filePath);
+        const ext = path.extname(fileName).slice(1) || 'png';
+        const base64 = buffer.toString('base64');
+        dataUriMap.set(fileName, `data:image/${ext};base64,${base64}`);
+      } catch (err) {
+        console.warn(`⚠️ Failed to read local asset ${fileName}:`, err);
       }
     }
 
-    // 2. Fallback to Cloudinary URLs for anything remaining
-    for (const [key, url] of Object.entries(emailAssetMap)) {
-      const baseName = key.split('.')[0];
-      const cleanUrl = url.replace(/\.(png|jpg|jpeg|gif|webp)\.\1$/i, '.$1');
-      
-      const patterns = [
-        new RegExp(`src=["']cid:${baseName}["']`, 'gi'),
-        new RegExp(`src=["']images/${key}["']`, 'gi'),
-        new RegExp(`src=["']${key}["']`, 'gi'),
-        new RegExp(`src=["']images/${baseName}\\.png["']`, 'gi'),
-        new RegExp(`href=["']images/${baseName}\\.png["']`, 'gi')
-      ];
-
-      for (const pattern of patterns) {
-        if (pattern.test(html)) {
-          // If it's still a CID or local path after Base64 attempt, use Cloudinary
-          if (!html.includes('data:image/')) {
-            html = html.replace(pattern, (match) => match.includes('src=') ? `src="${cleanUrl}"` : `href="${cleanUrl}"`);
-            console.log(`✅ Linked remaining image ${key} to Cloudinary URL`);
+    // Process all src attributes
+    html = html.replace(/src=["']([^"']+)["']/gi, (match, src) => {
+      // 1. Check for cid:
+      if (src.toLowerCase().startsWith('cid:')) {
+        const cid = src.slice(4).toLowerCase();
+        for (const fileName of files) {
+          if (fileName.toLowerCase().startsWith(cid)) {
+            return `src="${dataUriMap.get(fileName)}"`;
           }
         }
       }
-    }
+
+      // 2. Check for images/filename or just filename
+      const fileName = src.split('/').pop();
+      if (fileName && dataUriMap.has(fileName)) {
+        return `src="${dataUriMap.get(fileName)}"`;
+      }
+
+      // 3. Check Cloudinary fallback
+      for (const [key, url] of Object.entries(emailAssetMap)) {
+        if (src.includes(key)) {
+          return `src="${url}"`;
+        }
+      }
+
+      return match;
+    });
+
+    // Also handle preloads and background urls
+    html = html.replace(/(href|url)\(["']?([^"']+\.(?:png|jpg|jpeg|gif))["']?\)/gi, (match, attr, path) => {
+      const fileName = path.split('/').pop();
+      if (fileName && dataUriMap.has(fileName)) {
+        return `${attr}("${dataUriMap.get(fileName)}")`;
+      }
+      return match;
+    });
 
     return html;
   }
