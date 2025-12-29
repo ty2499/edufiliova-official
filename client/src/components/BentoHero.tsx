@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star, Users, BookOpen, Briefcase, Palette, GraduationCap, Award, TrendingUp } from 'lucide-react';
 import studentsHeroImage from '@/assets/generated_images/students_studying_in_library.png';
@@ -77,7 +78,8 @@ const heroContent = [
     cta: 'Join as Freelancer',
     ctaAction: 'freelancer-signup-basic',
     secondaryCta: 'Explore Services',
-    secondaryAction: 'marketplace-services',
+    secondaryAction: '/marketplace/services',
+    isRoute: true,
     statCard: {
       title: 'Freelancer',
       subtitle: 'marketplace',
@@ -127,8 +129,17 @@ const typeIcons: Record<string, React.ReactNode> = {
 };
 
 export default function BentoHero({ onNavigate }: BentoHeroProps) {
+  const [, navigate] = useLocation();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleSecondaryAction = (content: typeof heroContent[0]) => {
+    if (content.isRoute) {
+      navigate(content.secondaryAction);
+    } else {
+      onNavigate(content.secondaryAction);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -203,7 +214,7 @@ export default function BentoHero({ onNavigate }: BentoHeroProps) {
               </Button>
               <Button 
                 variant="outline"
-                onClick={() => onNavigate(currentContent.secondaryAction)}
+                onClick={() => handleSecondaryAction(currentContent)}
                 className="border-gray-300 text-gray-700 hover:bg-gray-100 px-6 py-3 h-auto text-base font-medium rounded-lg"
               >
                 {currentContent.secondaryCta}
