@@ -60,47 +60,43 @@ export class EmailService {
     return 'https://edufiliova.com';
   }
 
-  private async processEmailImages(html: string): Promise<string> {
+  private async processEmailImages(html: string): Promise<{ html: string; attachments: EmailAttachment[] }> {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
     const localAssetDir = path.resolve(process.cwd(), 'server/email-local-assets');
     const files = fs.existsSync(localAssetDir) ? fs.readdirSync(localAssetDir) : [];
-    
-    const dataUriMap = new Map<string, string>();
-    for (const fileName of files) {
-      try {
-        const filePath = path.join(localAssetDir, fileName);
-        const buffer = fs.readFileSync(filePath);
-        const ext = path.extname(fileName).slice(1) || 'png';
-        const base64 = buffer.toString('base64');
-        dataUriMap.set(fileName, `data:image/${ext};base64,${base64}`);
-      } catch (err) {
-        console.warn(`⚠️ Failed to read local asset ${fileName}:`, err);
-      }
-    }
+    const attachments: EmailAttachment[] = [];
+    const usedCids = new Set<string>();
+
+    const getExt = (name: string) => path.extname(name).slice(1) || 'png';
 
     // Comprehensive replacement for all attributes including src, href, style, and data-src
-    // This catches: src="...", href="...", url("..."), and more
     const replaceFn = (match: string, prefix: string, quote: string, pathVal: string) => {
-      // Extract filename from the path
       let fileName = pathVal.split('/').pop() || '';
-      
-      // Handle cid: references
+      let targetFile = '';
+
+      // 1. Resolve target file
       if (pathVal.toLowerCase().startsWith('cid:')) {
         const cid = pathVal.slice(4).toLowerCase();
-        for (const [key, dataUri] of dataUriMap.entries()) {
-          if (key.toLowerCase().startsWith(cid)) {
-            return `${prefix}=${quote}${dataUri}${quote}`;
-          }
+        targetFile = files.find(f => f.toLowerCase().startsWith(cid)) || '';
+      } else if (dataUriMap.has(fileName)) {
+        targetFile = fileName;
+      }
+
+      if (targetFile) {
+        const cid = targetFile.split('.')[0];
+        if (!usedCids.has(cid)) {
+          attachments.push({
+            filename: targetFile,
+            path: path.join(localAssetDir, targetFile),
+            cid: cid
+          });
+          usedCids.add(cid);
         }
+        return `${prefix}=${quote}cid:${cid}${quote}`;
       }
 
-      // Handle regular paths or filenames
-      if (dataUriMap.has(fileName)) {
-        return `${prefix}=${quote}${dataUriMap.get(fileName)}${quote}`;
-      }
-
-      // Fallback to Cloudinary mapping
+      // Fallback to Cloudinary mapping if no local file found
       for (const [key, url] of Object.entries(emailAssetMap)) {
         if (pathVal.includes(key)) {
           return `${prefix}=${quote}${url}${quote}`;
@@ -110,6 +106,9 @@ export class EmailService {
       return match;
     };
 
+    // We need a map for quick lookup if we wanted base64, but here we want CID
+    const dataUriMap = new Set(files);
+
     // Replace in attributes
     html = html.replace(/(src|href|data-src|poster)\s*=\s*(["'])([^"']+)\2/gi, replaceFn);
 
@@ -117,17 +116,21 @@ export class EmailService {
     html = html.replace(/url\((["']?)([^"'\)]+)\1\)/gi, (match, quote, pathVal) => {
       let fileName = pathVal.split('/').pop() || '';
       if (dataUriMap.has(fileName)) {
-        return `url(${quote}${dataUriMap.get(fileName)}${quote})`;
-      }
-      for (const [key, url] of Object.entries(emailAssetMap)) {
-        if (pathVal.includes(key)) {
-          return `url(${quote}${url}${quote})`;
+        const cid = fileName.split('.')[0];
+        if (!usedCids.has(cid)) {
+          attachments.push({
+            filename: fileName,
+            path: path.join(localAssetDir, fileName),
+            cid: cid
+          });
+          usedCids.add(cid);
         }
+        return `url(${quote}cid:${cid}${quote})`;
       }
       return match;
     });
 
-    return html;
+    return { html, attachments };
   }
 
   // ✅ Keep for legacy or if processing fails
@@ -266,10 +269,10 @@ export class EmailService {
     console.log(`✉️ Sending email to: ${options.to} | Subject: ${options.subject}`);
     
     // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
-    let processedHtml = await this.processEmailImages(options.html);
+    const { html: processedHtml, attachments: imageAttachments } = await this.processEmailImages(options.html);
 
-    // Final CID pass using dedicated cleaner
-    processedHtml = this.finalCidClean(processedHtml);
+    // Final CID pass using dedicated cleaner (if needed, but processEmailImages handles it)
+    // processedHtml = this.finalCidClean(processedHtml);
 
     // Log final HTML after processing
     console.log(`✉️ Final HTML content:\n${processedHtml}`);
@@ -279,7 +282,7 @@ export class EmailService {
       to: options.to,
       subject: options.subject,
       html: processedHtml,
-      attachments: [], 
+      attachments: [...(options.attachments || []), ...imageAttachments], 
     };
       
     const result = await transporter.sendMail(mailOptions);
@@ -288,11 +291,13 @@ export class EmailService {
     if (error instanceof Error && (error as any).code === 'ESTREAM') {
       console.warn('⚠️ ESTREAM error in sendEmail - likely missing attachment. Retrying without attachments...');
       try {
+        const { html: finalHtml, attachments: retryAttachments } = await this.processEmailImages(options.html);
         const mailOptionsNoAttachments = {
           from: options.from || `"EduFiliova" <orders@edufiliova.com>`,
           to: options.to,
           subject: options.subject,
-          html: await this.processEmailImages(options.html),
+          html: finalHtml,
+          attachments: retryAttachments
         };
         const from = options.from || `"EduFiliova" <orders@edufiliova.com>`;
         const emailMatch = from.match(/<(.+?)>/);
@@ -371,7 +376,7 @@ export class EmailService {
       );
 
       html = html.replace(/{{FullName}}/g, data.fullName);
-      html = await this.processEmailImages(html);
+      // Processing is now handled inside sendEmail which handles attachments properly
 
       return this.sendEmail({
         to: email,
