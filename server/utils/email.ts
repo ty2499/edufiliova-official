@@ -391,82 +391,18 @@ export class EmailService {
     });
   }
 
-  async sendFreelancerApprovalEmail(email: string, data: { fullName: string }): Promise<boolean> {
-    const content = `
-      <h1>Freelancer Account Approved</h1>
-      <p>Hello ${data.fullName},</p>
-      <p>Congratulations! Your freelancer application has been approved. You can now start bidding on projects and showcasing your services.</p>
-      <a href="${this.getBaseUrl()}/login" class="btn">Login to Account</a>
-    `;
-    return this.sendEmail({
-      to: email,
-      subject: 'Freelancer Account Approved - EduFiliova',
-      html: this.getGlobalTemplate('Account Approved', content),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
-  }
-
-  async sendFreelancerUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
-    const content = `
-      <h1>Freelancer Application Under Review</h1>
-      <p>Hello ${data.fullName},</p>
-      <p>Your freelancer application is being reviewed. We'll let you know once the process is complete.</p>
-    `;
-    return this.sendEmail({
-      to: email,
-      subject: 'Application Under Review - EduFiliova',
-      html: this.getGlobalTemplate('Application Under Review', content),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
-  }
-
-  async sendFreelancerRejectionEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
-    const reasonText = data.reason ? `<div class="highlight"><p><strong>Reason:</strong> ${data.reason}</p></div>` : '';
-    const content = `
-      <h1>Freelancer Application Update</h1>
-      <p>Hello ${data.fullName},</p>
-      <p>Thank you for applying to be a freelancer on EduFiliova. At this time, we are unable to approve your application.</p>
-      ${reasonText}
-    `;
-    return this.sendEmail({
-      to: email,
-      subject: 'Freelancer Application Update - EduFiliova',
-      html: this.getGlobalTemplate('Application Update', content),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
-  }
-
   async sendApplicationResubmittedEmail(email: string, data: { fullName: string; applicationType: 'teacher' | 'freelancer' }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'attached_assets/resubmission_template.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="images\/.*?">/g, '');
-    
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
-
-    const fullName = data.fullName || (data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer');
     const appType = data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer';
-    
-    // ✅ USE BULLETPROOF NAME REPLACEMENT
-    html = this.forceReplaceName(html, fullName);
-    
-    // Final cleanup
-    html = html.replace(/\{\{appType\}\}/gi, appType);
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-
+    const content = `
+      <h1>Application Resubmitted</h1>
+      <p>Hello ${data.fullName},</p>
+      <p>Your ${appType} application resubmission has been received. Our team will review the updated information and get back to you soon.</p>
+    `;
     return this.sendEmail({
       to: email,
       subject: `Your ${appType} Application Resubmission Received - EduFiliova`,
-      html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`,
-      attachments: []
+      html: this.getGlobalTemplate('Application Resubmitted', content),
+      from: '"EduFiliova Support" <support@edufiliova.com>'
     });
   }
 
