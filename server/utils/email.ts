@@ -796,67 +796,13 @@ export class EmailService {
   }
 
   async sendFreelancerSubmissionEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/freelancer-application-submitted/template.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
-    
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
-
-    const fullName = data.fullName || 'Freelancer';
-    
-    // ✅ USE BULLETPROOF NAME REPLACEMENT
-    html = this.forceReplaceName(html, fullName);
-    
-    // Final cleanup
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{email\}\}/gi, email);
-
-    return this.sendEmail({
-      to: email,
-      subject: 'Your Freelancer Application Has Been Received - EduFiliova',
-      html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`
-    });
+    // Redirect to under review email (same template)
+    return this.sendFreelancerUnderReviewEmail(email, { fullName: data.fullName });
   }
 
   async sendFreelancerPendingEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/freelancer-application-under-review/template.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
-
-    // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
-    
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
-
-    const fullName = data.fullName || 'Freelancer';
-    
-    // ✅ USE BULLETPROOF NAME REPLACEMENT
-    html = this.forceReplaceName(html, fullName);
-    
-    // Final cleanup
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{email\}\}/gi, email);
-
-    return this.sendEmail({
-      to: email,
-      subject: 'Your Freelancer Application Status: Under Review - EduFiliova',
-      html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`
-    });
+    // Redirect to under review email (same template)
+    return this.sendFreelancerUnderReviewEmail(email, { fullName: data.fullName });
   }
 
   async sendTeacherPendingEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
@@ -1887,25 +1833,33 @@ export class EmailService {
 
   async sendFreelancerUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
     try {
-      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-under-review', 'template.html');
-      let html = fs.readFileSync(templatePath, 'utf-8');
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/freelancer_application_under_review_template/email.html'),
+        'utf-8'
+      );
 
-      const fullName = data.fullName || 'Freelancer';
+      // Use bulletproof name replacement
+      html = this.forceReplaceName(html, data.fullName || 'Freelancer');
 
-      // USE BULLETPROOF NAME REPLACEMENT
-      html = this.forceReplaceName(html, fullName);
-
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'f7daaf49aba7bad7f235cf99406c847a.png', path: path.join(imagesPath, 'f7daaf49aba7bad7f235cf99406c847a.png'), cid: 'freelancerapp', contentType: 'image/png' },
+        { filename: '3d94f798ad2bd582f8c3afe175798088.png', path: path.join(imagesPath, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' },
+        { filename: 'd249f4ce7bc112aa2f2b471a0d9e4605.png', path: path.join(imagesPath, 'd249f4ce7bc112aa2f2b471a0d9e4605.png'), cid: 'freelancerbanner', contentType: 'image/png' }
+      ];
 
       return this.sendEmail({
         to: email,
-        subject: 'Your Application is Now Under Review - EduFiliova',
+        subject: 'Your Freelancer Application is Under Review - EduFiliova',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments: []
+        attachments
       });
     } catch (error) {
-      console.error('❌ Error sending freelancer under review email:', error);
+      console.error('Error sending freelancer under review email:', error);
       return false;
     }
   }
