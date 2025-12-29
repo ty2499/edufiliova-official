@@ -14983,38 +14983,121 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
           
+      // Send reactivation email when user is activated from ban/suspension
+      if (status === 'active') {
         try {
-          const emailHtml = `<!DOCTYPE html>
-<html>
+          const baseUrl = process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : process.env.BASE_URL || 'https://edufiliova.com';
+          const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
+          
+          const emailHtml = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<style>body{font-family:Arial,sans-serif;line-height:1.6;color:#333}.container{max-width:600px;margin:0 auto;padding:20px}.header{background-color:#4CAF50;color:white;padding:20px;text-align:center;border-radius:5px}.content{padding:20px;background-color:#f9f9f9;margin-top:20px;border-radius:5px}.footer{text-align:center;padding:20px;color:#999;font-size:12px}.button{display:inline-block;background-color:#4CAF50;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;margin-top:20px}</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account Reactivated</title>
+  <style type="text/css">
+    body { margin: 0; padding: 0; min-width: 100%; background-color: #f4f7f9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .wrapper { width: 100%; table-layout: fixed; background-color: #f4f7f9; padding-bottom: 40px; }
+    .main-table { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .header { background-color: #0c332c; padding: 40px 0; text-align: center; }
+    .content { padding: 40px 50px; color: #333333; line-height: 1.7; }
+    .content h1 { color: #0c332c; font-size: 24px; margin-bottom: 20px; font-weight: 700; }
+    .content h2 { color: #0c332c; font-size: 18px; margin: 25px 0 15px 0; font-weight: 600; }
+    .content p { font-size: 16px; margin-bottom: 16px; }
+    .content ul { margin: 15px 0; padding-left: 25px; }
+    .content li { font-size: 15px; margin-bottom: 10px; line-height: 1.6; }
+    .footer { background-color: #f8fafc; padding: 40px 50px; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 13px; }
+    .footer p { margin: 10px 0; line-height: 1.5; }
+    .footer a { color: #0c332c; text-decoration: none; font-weight: 600; }
+    .divider { height: 1px; background-color: #e2e8f0; margin: 25px 0; }
+    .btn { display: inline-block; padding: 14px 28px; background-color: #0c332c; color: #ffffff !important; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+    .highlight-box { background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 20px; margin: 25px 0; }
+    .important-box { background-color: #f8fafc; border-left: 4px solid #0c332c; padding: 20px; margin: 25px 0; }
+  </style>
 </head>
 <body>
-<div class="container">
-<div class="header"><h1>Your Account Has Been Activated!</h1></div>
-<div class="content">
-<p>Hi ${userName},</p>
-<p>Great news! Your EduFiliova account has been successfully activated.</p>
-<p>You can now access all features, enroll in courses, and connect with peers.</p>
-<a href="${process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : process.env.BASE_URL || 'https://edufiliova.com'}/student-dashboard" class="button">Go to Dashboard</a>
-<p>Happy learning!<br>The EduFiliova Team</p>
-</div>
-<div class="footer"><p>&copy; 2025 EduFiliova. All rights reserved.</p></div>
-</div>
+  <div class="wrapper">
+    <table class="main-table" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td class="header">
+          <img src="\${logoUrl}" alt="EduFiliova" width="180" style="display: block; margin: 0 auto;" />
+        </td>
+      </tr>
+      <tr>
+        <td class="content">
+          <h1>Your Account Has Been Reactivated</h1>
+          
+          <p>Dear \${userName},</p>
+          
+          <p>We are pleased to inform you that your EduFiliova account has been successfully reactivated. You now have full access to all platform features, courses, and services.</p>
+          
+          <div class="highlight-box">
+            <strong>Important Notice:</strong> Your account was previously restricted due to a policy violation. This reactivation is an opportunity to continue using our platform responsibly.
+          </div>
+          
+          <h2>Terms of Service Reminder</h2>
+          <p>By using EduFiliova, you agree to comply with our platform policies. Please review and adhere to the following:</p>
+          
+          <ul>
+            <li><strong>Respect Community Guidelines:</strong> Treat all users, teachers, and staff with respect. Harassment, discrimination, or abusive behavior will not be tolerated.</li>
+            <li><strong>No Sharing of Personal Contact Information:</strong> Do not share email addresses, phone numbers, or social media handles in messages, course descriptions, or any public content.</li>
+            <li><strong>Content Integrity:</strong> Only submit original content or content you have permission to use. Plagiarism and copyright violations are strictly prohibited.</li>
+            <li><strong>Account Security:</strong> Keep your login credentials secure and do not share your account with others.</li>
+            <li><strong>Appropriate Content Only:</strong> Do not upload or share inappropriate, offensive, or adult content on the platform.</li>
+            <li><strong>Fair Usage:</strong> Do not attempt to exploit, hack, or misuse platform features for personal gain or to harm others.</li>
+          </ul>
+          
+          <div class="important-box">
+            <strong>Please Note:</strong> Future violations of our Terms of Service may result in permanent account suspension without the possibility of reactivation. We encourage you to familiarize yourself with our complete policies.
+          </div>
+          
+          <h2>Access Your Account</h2>
+          <p>You can now log in and access all features of your account:</p>
+          
+          <p style="text-align: center;">
+            <a href="\${baseUrl}/auth" class="btn">Log In to Your Account</a>
+          </p>
+          
+          <h2>Need Help?</h2>
+          <p>If you have any questions about our policies or need assistance, please do not hesitate to contact our support team. We are here to help you succeed on EduFiliova.</p>
+          
+          <p>Thank you for your understanding and cooperation. We look forward to seeing you thrive on our platform.</p>
+          
+          <p>Warm regards,<br><strong>The EduFiliova Trust & Safety Team</strong></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="footer">
+          <p><strong>EduFiliova</strong></p>
+          <p>Empowering global talent through education and opportunity.</p>
+          <div class="divider"></div>
+          <p><strong>Important Links:</strong></p>
+          <p>
+            <a href="\${baseUrl}/terms">Terms of Service</a> | 
+            <a href="\${baseUrl}/privacy-policy">Privacy Policy</a> | 
+            <a href="\${baseUrl}/community-guidelines">Community Guidelines</a>
+          </p>
+          <p>For support, contact us at <a href="mailto:support@edufiliova.com">support@edufiliova.com</a></p>
+          <p>&copy; \${new Date().getFullYear()} EduFiliova. All rights reserved.</p>
+        </td>
+      </tr>
+    </table>
+  </div>
 </body>
 </html>`;
           
           const emailResult = await emailService.sendEmail({
             to: user.email,
-            subject: 'Your EduFiliova Account Has Been Activated',
+            subject: 'Your EduFiliova Account Has Been Reactivated - Important Information',
             html: emailHtml,
-            from: '"EduFiliova Support" <support@edufiliova.com>'
+            from: '"EduFiliova Trust & Safety" <support@edufiliova.com>'
           });
-          console.log(`📧 Activation email sent to ${user.email}`);
+          console.log(`📧 Reactivation email sent to ${user.email}`);
         } catch (emailError) {
-          console.error('Failed to send activation email:', emailError);
+          console.error('Failed to send reactivation email:', emailError);
         }
+      }
+
       const statusMessage = status === 'active' ? 'User unbanned successfully' : 
                            status === 'banned' ? 'User banned successfully' : 
                            'User suspended successfully';
