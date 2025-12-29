@@ -1207,7 +1207,7 @@ router.get("/services/:serviceId/reviews", async (req, res: Response) => {
         reviewerAvatar: profiles.profilePicture,
       })
       .from(freelancerServiceReviews)
-      .leftJoin(profiles, eq(freelancerServiceReviews.reviewerId, profiles.id))
+      .leftJoin(profiles, eq(freelancerServiceReviews.reviewerId, profiles.userId))
       .where(and(
         eq(freelancerServiceReviews.serviceId, serviceId),
         eq(freelancerServiceReviews.isPublic, true)

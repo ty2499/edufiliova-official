@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useLocation, useRoute } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Textarea } from '@/components/ui/textarea';
 import { 
   ArrowLeft, Clock, RefreshCw, Package, Loader2, 
-  CheckCircle, Circle, AlertCircle, MessageSquare, FileText, Download
+  CheckCircle, Circle, AlertCircle, MessageSquare, FileText, Download, Star
 } from 'lucide-react';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
@@ -36,6 +37,10 @@ export default function OrderTrackerPage() {
     refetchInterval: 30000,
   });
 
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewComment, setReviewComment] = useState('');
+  const [hasReviewed, setHasReviewed] = useState(false);
+
   const approveMutation = useMutation({
     mutationFn: () =>
       apiRequest(`/api/freelancer/orders/${orderId}/approve`, {
@@ -47,6 +52,22 @@ export default function OrderTrackerPage() {
     },
     onError: (error: any) => {
       toast({ title: error.message || 'Failed to approve order', variant: 'destructive' });
+    },
+  });
+
+  const reviewMutation = useMutation({
+    mutationFn: () =>
+      apiRequest(`/api/freelancer/orders/${orderId}/review`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating: reviewRating, comment: reviewComment || undefined }),
+      }),
+    onSuccess: () => {
+      setHasReviewed(true);
+      toast({ title: 'Review submitted! Thank you for your feedback.' });
+    },
+    onError: (error: any) => {
+      toast({ title: error.message || 'Failed to submit review', variant: 'destructive' });
     },
   });
 
@@ -255,6 +276,66 @@ export default function OrderTrackerPage() {
                       </p>
                     )}
                   </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {order.status === 'completed' && isClient && !hasReviewed && (
+              <Card className="border-2 border-blue-200 bg-blue-50">
+                <CardHeader>
+                  <CardTitle>Leave a Review</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Rating</label>
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setReviewRating(star)}
+                            className="focus:outline-none"
+                          >
+                            <Star
+                              className={`w-8 h-8 transition-colors ${
+                                star <= reviewRating
+                                  ? 'fill-yellow-400 text-yellow-400'
+                                  : 'text-gray-300 hover:text-yellow-300'
+                              }`}
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Comment (optional)</label>
+                      <Textarea
+                        placeholder="Share your experience with this freelancer..."
+                        value={reviewComment}
+                        onChange={(e) => setReviewComment(e.target.value)}
+                        rows={4}
+                      />
+                    </div>
+                    <Button
+                      className="w-full bg-[#0c332c] hover:bg-[#0c332c]/90"
+                      onClick={() => reviewMutation.mutate()}
+                      disabled={reviewMutation.isPending}
+                    >
+                      {reviewMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                      Submit Review
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {order.status === 'completed' && isClient && hasReviewed && (
+              <Card className="border-2 border-green-200 bg-green-50">
+                <CardContent className="py-6 text-center">
+                  <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">Thank you for your review!</h3>
+                  <p className="text-gray-600">Your feedback helps other buyers make informed decisions.</p>
                 </CardContent>
               </Card>
             )}
