@@ -16881,6 +16881,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const user = req.user as any;
       const isAdmin = user?.role === "admin";
       
+      console.log('DEBUG /api/subjects:', { userId: user?.id, userRole: user?.role, isAdmin, creatorOnly, gradeLevel, gradeSystem });
       let conditions: any[] = [eq(subjects.isActive, true)];
 
       if (creatorOnly === "true" && req.user) {
