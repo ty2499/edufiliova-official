@@ -641,15 +641,41 @@ router.get("/payment-gateways", async (_req, res: Response) => {
     const gateways = await getEnabledPaymentGateways();
     const stripePublishableKey = await getStripePublishableKey();
     
-    const enabledGateways = gateways.map((g: any) => ({
-      id: g.gatewayId,
-      name: g.name,
-      displayName: g.displayName || g.name,
-      isPrimary: g.isPrimary,
-      logoUrl: g.logoUrl,
-    }));
+    const alwaysShowGateways = ['paypal'];
+    const cardGateways = ['stripe', 'dodo', 'dodopayments', 'flutterwave', 'paynow'];
+    
+    const filteredGateways: any[] = [];
+    let primaryCardGateway: any = null;
+    
+    for (const g of gateways) {
+      const gatewayId = g.gatewayId?.toLowerCase();
+      
+      if (alwaysShowGateways.includes(gatewayId)) {
+        filteredGateways.push({
+          id: g.gatewayId,
+          name: g.name,
+          displayName: g.displayName || g.name,
+          isPrimary: g.isPrimary,
+          logoUrl: g.logoUrl,
+        });
+      } else if (cardGateways.includes(gatewayId)) {
+        if (g.isPrimary || !primaryCardGateway) {
+          primaryCardGateway = {
+            id: g.gatewayId,
+            name: g.name,
+            displayName: g.displayName || g.name,
+            isPrimary: g.isPrimary,
+            logoUrl: g.logoUrl,
+          };
+        }
+      }
+    }
+    
+    if (primaryCardGateway) {
+      filteredGateways.unshift(primaryCardGateway);
+    }
 
-    enabledGateways.push({
+    filteredGateways.push({
       id: 'wallet',
       name: 'Wallet',
       displayName: 'Wallet Balance',
@@ -659,7 +685,7 @@ router.get("/payment-gateways", async (_req, res: Response) => {
 
     res.json({
       success: true,
-      gateways: enabledGateways,
+      gateways: filteredGateways,
       stripePublishableKey,
     });
   } catch (error) {
