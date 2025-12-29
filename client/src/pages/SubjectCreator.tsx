@@ -180,14 +180,30 @@ export default function SubjectCreator({ onNavigate, userRole }: SubjectCreatorP
 
   const [creatorOnlyFilter, setCreatorOnlyFilter] = useState(userRole !== 'admin');
 
+  // Sync filter when userRole changes (e.g., after auth loads)
+  useEffect(() => {
+    const shouldShowAll = userRole === 'admin';
+    if (shouldShowAll && creatorOnlyFilter) {
+      setCreatorOnlyFilter(false);
+    }
+  }, [userRole]);
+
+  // Debug logging
+  console.log('SubjectCreator - userRole:', userRole, 'creatorOnlyFilter:', creatorOnlyFilter);
+
   // Get user's subjects
-  const { data: subjects, isLoading: subjectsLoading } = useQuery({
+  const { data: subjects, isLoading: subjectsLoading, error: subjectsError } = useQuery({
     queryKey: ['/api/subjects', { creatorOnly: creatorOnlyFilter }],
     queryFn: async () => {
-      const subjects = await apiRequest(`/api/subjects?creatorOnly=${creatorOnlyFilter}`);
-      return subjects.data || [];
+      console.log('Fetching subjects with creatorOnly:', creatorOnlyFilter);
+      const response = await apiRequest(`/api/subjects?creatorOnly=${creatorOnlyFilter}`);
+      console.log('Subjects API response:', response);
+      return response.data || [];
     }
   });
+
+  // Log subjects data
+  console.log('Subjects data:', subjects, 'loading:', subjectsLoading, 'error:', subjectsError);
 
   // Get specific subject with chapters/lessons/exercises
   const { data: subjectDetails, refetch: refetchSubjectDetails } = useQuery({

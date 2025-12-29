@@ -16875,7 +16875,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ============================================
 
   // Get subjects filtered by grade level and system (for primary/secondary students)
-  app.get("/api/subjects", async (req, res) => {
+  app.get("/api/subjects", optionalAuth, async (req, res) => {
     try {
       const { gradeLevel, gradeSystem, creatorOnly } = req.query;
       const user = req.user as any;
