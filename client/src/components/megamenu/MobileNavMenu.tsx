@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
 import { 
   Search, Library, Award, BookOpen, Video, ClipboardCheck, Users, GraduationCap,
@@ -12,7 +13,8 @@ import {
 interface MobileNavLink {
   icon: React.ReactNode;
   title: string;
-  page: string;
+  page?: string;
+  route?: string;
 }
 
 interface MobileNavSection {
@@ -31,10 +33,21 @@ interface MobileNavMenuProps {
 export const MobileNavMenu = ({ onNavigate, onClose, isAuthenticated = false, userRole }: MobileNavMenuProps) => {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [openSubSection, setOpenSubSection] = useState<string | null>(null);
+  const [, navigate] = useLocation();
 
   const handleNavigate = (page: string) => {
     onNavigate(page);
     onClose();
+  };
+
+  const handleLinkClick = (link: MobileNavLink) => {
+    if (link.route) {
+      navigate(link.route);
+      onClose();
+    } else if (link.page) {
+      onNavigate(link.page);
+      onClose();
+    }
   };
 
   const toggleSection = (section: string) => {
@@ -119,7 +132,7 @@ export const MobileNavMenu = ({ onNavigate, onClose, isAuthenticated = false, us
       title: "MARKETPLACE",
       icon: <ShoppingBag className="h-4 w-4" />,
       links: [
-        { icon: <ShoppingBag className="h-4 w-4" />, title: "Browse Services", page: "marketplace-services" },
+        { icon: <ShoppingBag className="h-4 w-4" />, title: "Browse Services", route: "/marketplace/services" },
         { icon: <Users2 className="h-4 w-4" />, title: "Find Talent", page: "find-talent" },
         { icon: <IdCard className="h-4 w-4" />, title: "Browse Portfolios", page: "portfolio-gallery" },
       ]
@@ -221,7 +234,7 @@ export const MobileNavMenu = ({ onNavigate, onClose, isAuthenticated = false, us
         {section.links.map((link, idx) => (
           <button
             key={idx}
-            onClick={() => handleNavigate(link.page)}
+            onClick={() => handleLinkClick(link)}
             className="w-full text-left px-6 py-2.5 text-sm text-[#0C332C] hover:bg-gray-50 flex items-center gap-3"
           >
             {link.title}
