@@ -18,6 +18,7 @@ const PortfolioNavigation = ({ onNavigate, hideDashboardButton = false, hideNavI
   const navigationItems = [
     { id: "home", label: "Home", hasDropdown: false },
     { id: "portfolio-gallery", label: "Explore", hasDropdown: true },
+    { id: "marketplace-services", label: "Services", hasDropdown: false },
     { id: "community", label: "Find Talent", hasDropdown: true }
   ];
 
