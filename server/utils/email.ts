@@ -391,20 +391,36 @@ export class EmailService {
   }
 
   async sendTeacherApplicationDeclinedEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
-    const reasonText = data.reason ? `<div class="highlight"><p><strong>Reason:</strong> ${data.reason}</p></div>` : '';
-    const content = `
-      <h1>Application Update</h1>
-      <p>Hello ${data.fullName},</p>
-      <p>Thank you for your interest in teaching on EduFiliova. After reviewing your application, we regret to inform you that we cannot approve it at this time.</p>
-      ${reasonText}
-      <p>You may update your profile and try again in the future.</p>
-    `;
-    return this.sendEmail({
-      to: email,
-      subject: 'Teacher Application Update - EduFiliova',
-      html: this.getGlobalTemplate('Application Update', content),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/teacher_application_declined_template/email.html'),
+        'utf-8'
+      );
+
+      // Use the bulletproof name replacement to handle span/styling issues in the template
+      html = this.forceReplaceName(html, data.fullName);
+
+      // Handle the optional reason - standard template placeholder
+      if (data.reason) {
+        // Replace the Handlebars-style conditional if it exists, or just the placeholder
+        html = html.replace(/{{#if reason}}[\s\S]*?{{reason}}[\s\S]*?{{\/if}}/gi, `Reason provided:<br>${data.reason}`);
+        html = html.replace(/{{reason}}/gi, data.reason);
+      } else {
+        // Remove the reason section completely if no reason provided
+        html = html.replace(/{{#if reason}}[\s\S]*?{{\/if}}/gi, '');
+        html = html.replace(/Reason provided:[\s\S]*?{{reason}}/gi, '');
+      }
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Teacher Application Update - EduFiliova',
+        html: html,
+        from: '"EduFiliova Support" <support@edufiliova.com>'
+      });
+    } catch (error) {
+      console.error('Error sending teacher application declined email:', error);
+      return false;
+    }
   }
 
   async sendTeacherUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
