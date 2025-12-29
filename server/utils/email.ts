@@ -1288,27 +1288,43 @@ export class EmailService {
   }
 
   async sendStudentVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
-    const htmlPath = path.resolve(process.cwd(), 'server/templates/student_verification_template/email.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/student_verification_template/email.html'),
+        'utf-8'
+      );
 
-    const fullName = data.fullName || 'User';
-    const code = data.code || '000000';
-    const expiresIn = data.expiresIn || '15';
+      const fullName = data.fullName || 'User';
+      const code = data.code || '000000';
+      const expiresIn = data.expiresIn || '10';
 
-    // ✅ USE BULLETPROOF NAME REPLACEMENT - handles split HTML spans
-    html = this.forceReplaceName(html, fullName);
-    
-    // Replace other dynamic placeholders
-    html = html.replace(/\{\{code\}\}/gi, code);
-    html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
-    html = html.replace(/\{\{fullName\}\}/gi, fullName); // Extra safety
+      // Use bulletproof name replacement
+      html = this.forceReplaceName(html, fullName);
+      html = html.replace(/\{\{code\}\}/gi, code);
+      html = html.replace(/\{\{expiresIn\}\}/gi, expiresIn);
 
-    return this.sendEmail({
-      to: email,
-      subject: 'Verify Your Student Account - EduFiliova',
-      html,
-      from: `"EduFiliova Security" <support@edufiliova.com>`
-    });
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'db561a55b2cf0bc6e877bb934b39b700.png', path: path.join(imagesPath, 'db561a55b2cf0bc6e877bb934b39b700.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: 'f28befc0a869e8a352bf79aa02080dc7.png', path: path.join(imagesPath, 'f28befc0a869e8a352bf79aa02080dc7.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: '83faf7f361d9ba8dfdc904427b5b6423.png', path: path.join(imagesPath, '83faf7f361d9ba8dfdc904427b5b6423.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: '50df79cf94bcde6e18f9cb9ac1a740dd.png', path: path.join(imagesPath, '50df79cf94bcde6e18f9cb9ac1a740dd.png'), cid: 'studentbanner', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' },
+        { filename: '8c5dfa6f6ff7f681bbf586933883b270.png', path: path.join(imagesPath, '8c5dfa6f6ff7f681bbf586933883b270.png'), cid: 'arrow', contentType: 'image/png' }
+      ];
+
+      return this.sendEmail({
+        to: email,
+        subject: 'Verify Your Student Account - EduFiliova',
+        html,
+        from: `"EduFiliova Security" <verify@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending student verification email:', error);
+      return false;
+    }
   }
 
   async sendVoucherEmail(to: string, data: {
