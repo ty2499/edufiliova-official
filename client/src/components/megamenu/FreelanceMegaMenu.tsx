@@ -1,6 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
+import { useLocation } from "wouter";
 import { MegaMenu, MegaMenuItem, MegaMenuSection } from "./MegaMenu";
-import { UserPlus, IdCard, Upload, Users2, Briefcase } from "lucide-react";
+import { UserPlus, IdCard, Upload, Users2, Briefcase, ShoppingBag } from "lucide-react";
 
 interface FreelanceMegaMenuProps {
   isOpen: boolean;
@@ -10,10 +11,16 @@ interface FreelanceMegaMenuProps {
 
 export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMegaMenuProps) => {
   const { user, profile } = useAuth();
+  const [, navigate] = useLocation();
   const isCreator = user && (profile?.role === 'creator' || profile?.role === 'freelancer');
 
   const handleNavigate = (page: string) => {
     onNavigate(page);
+    onClose();
+  };
+
+  const handleRouteNavigate = (path: string) => {
+    navigate(path);
     onClose();
   };
 
@@ -42,6 +49,12 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
   ];
 
   const marketplace = [
+    {
+      icon: <ShoppingBag className="h-5 w-5" />,
+      title: "Browse Services",
+      description: "Find services from freelancers",
+      route: "/marketplace/services",
+    },
     {
       icon: <Users2 className="h-5 w-5" />,
       title: "Find Talent",
@@ -105,7 +118,7 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
               icon={item.icon}
               title={item.title}
               description={item.description}
-              onClick={() => handleNavigate(item.page)}
+              onClick={() => item.route ? handleRouteNavigate(item.route) : handleNavigate(item.page!)}
               testId={`megamenu-freelance-marketplace-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
             />
           ))}
