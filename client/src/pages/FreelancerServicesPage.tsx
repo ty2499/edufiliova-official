@@ -121,15 +121,27 @@ export default function FreelancerServicesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-3 mb-6">
           <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard')}>
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold text-gray-900">My Services</h1>
-            <p className="text-gray-500">Manage your freelancer services and gigs</p>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-lg sm:text-xl font-bold text-gray-900">My Services</h1>
+            <p className="text-xs sm:text-sm text-gray-500">Manage your services and gigs</p>
           </div>
-          <Button onClick={() => navigate('/dashboard/freelancer/services/new')} className="bg-[#228B22] text-white hover:bg-[#228B22]">
+          {/* Mobile: Icon only */}
+          <Button 
+            size="icon" 
+            onClick={() => navigate('/dashboard/freelancer/services/new')} 
+            className="bg-[#228B22] text-white hover:bg-[#228B22] sm:hidden"
+          >
+            <Plus className="w-5 h-5" />
+          </Button>
+          {/* Desktop: Full button */}
+          <Button 
+            onClick={() => navigate('/dashboard/freelancer/services/new')} 
+            className="bg-[#228B22] text-white hover:bg-[#228B22] hidden sm:flex"
+          >
             <Plus className="w-4 h-4 mr-2" />
             Create Service
           </Button>
