@@ -268,9 +268,8 @@ router.get('/applications/verify-link', async (req, res) => {
     const acceptHeader = req.headers.accept || '';
     if (acceptHeader.includes('text/html')) {
       // Redirect to frontend verification success page
-      const baseUrl = process.env.REPLIT_DEV_DOMAIN 
-        ? `https://${process.env.REPLIT_DEV_DOMAIN}`
-        : process.env.BASE_URL || 'http://localhost:5000';
+      const baseUrl = process.env.BASE_URL || 
+        (process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : 'http://localhost:5000');
       return res.redirect(`${baseUrl}/?verified=freelancer&email=${encodeURIComponent(pending.email)}`);
     }
 
@@ -507,9 +506,8 @@ router.post('/applications/resend-code', async (req, res) => {
         .set({ token: newToken, expiresAt })
         .where(eq(pendingRegistrations.email, email));
 
-      const baseUrl = process.env.REPLIT_DEV_DOMAIN 
-        ? `https://${process.env.REPLIT_DEV_DOMAIN}`
-        : process.env.BASE_URL || 'http://localhost:5000';
+      const baseUrl = process.env.BASE_URL || 
+        (process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : 'http://localhost:5000');
       const verificationLink = `${baseUrl}/verify-email?token=${newToken}`;
 
       const emailSent = await emailService.sendVerificationLinkEmail(email, {

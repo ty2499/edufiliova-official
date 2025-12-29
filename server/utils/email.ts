@@ -48,12 +48,15 @@ export class EmailService {
   }
 
   private getBaseUrl(): string {
-    if (process.env.REPLIT_DEV_DOMAIN) {
-      return `https://${process.env.REPLIT_DEV_DOMAIN}`;
-    }
+    // Priority 1: Use BASE_URL if explicitly set (usually production)
     if (process.env.BASE_URL) {
       return process.env.BASE_URL;
     }
+    // Priority 2: Use REPLIT_DEV_DOMAIN for development environment
+    if (process.env.REPLIT_DEV_DOMAIN) {
+      return `https://${process.env.REPLIT_DEV_DOMAIN}`;
+    }
+    // Priority 3: Fallback
     return 'https://edufiliova.com';
   }
 
