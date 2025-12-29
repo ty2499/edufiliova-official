@@ -275,7 +275,7 @@ export class EmailService {
     // processedHtml = this.finalCidClean(processedHtml);
 
     // Log final HTML after processing
-    console.log(`✉️ Final HTML content:\n${processedHtml}`);
+    // console.log(`✉️ Final HTML content:\n${processedHtml}`);
 
     const mailOptions = {
       from,
