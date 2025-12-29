@@ -74,6 +74,7 @@ import VisitorHelpChat from '@/components/VisitorHelpChat';
 import BillingPage from '@/components/BillingPage';
 import MyAdsPage from './MyAdsPage';
 import FreelancerPricingPlans from '@/components/FreelancerPricingPlans';
+import FreelancerSignupBasic from './FreelancerSignupBasic';
 import { SiPaypal } from 'react-icons/si';
 import MyAds from '@/components/MyAds';
 import { CoursesSection } from './StudentDashboard';
@@ -4154,13 +4155,9 @@ function BecomeStudentPage() {
 
 // Become a Freelancer Page
 function BecomeFreelancerPage() {
-  const handlePlanSelect = (planId: string, billingPeriod: 'monthly' | 'yearly' | 'lifetime') => {// TODO: Integrate with Stripe or payment gateway
-    console.log('Selected plan:', { planId, billingPeriod });
-  };
-
   return (
     <div className="space-y-6">
-      <FreelancerPricingPlans onPlanSelect={handlePlanSelect} />
+      <FreelancerSignupBasic />
     </div>
   );
 }
