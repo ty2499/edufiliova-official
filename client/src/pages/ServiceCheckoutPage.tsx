@@ -14,7 +14,6 @@ import {
   Package, AlertCircle, CheckCircle, CreditCard, Shield
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
-import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import PayPalButton from '@/components/PayPalButton';
 
@@ -29,7 +28,6 @@ interface PaymentGateway {
 export default function ServiceCheckoutPage() {
   const [, navigate] = useLocation();
   const [, params] = useRoute('/checkout/service/:id');
-  const { toast } = useToast();
   const { user } = useAuth();
 
   const searchParams = new URLSearchParams(window.location.search);
@@ -118,7 +116,7 @@ export default function ServiceCheckoutPage() {
     },
     onError: (error: any) => {
       setIsProcessing(false);
-      toast({ title: error.message || 'Failed to create order', variant: 'destructive' });
+      setPaymentError(error.message || 'Failed to create order');
     },
   });
 
