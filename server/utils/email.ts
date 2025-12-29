@@ -60,66 +60,57 @@ export class EmailService {
     return 'https://edufiliova.com';
   }
 
-  private processEmailImages(html: string): string {
+  private async processEmailImages(html: string): Promise<string> {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
-    // 1. First, handle all Cloudinary mapping by filename to catch everything
-    // This is the most reliable way: look for anything that looks like a filename we know
-    Object.entries(emailAssetMap).forEach(([filename, url]) => {
-      // Escape for regex and ensure we match the filename but not as part of another word
-      const escapedFilename = filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      
-      // Match src="...", href="...", url("..."), and even just the filename if it's in a src/href attribute
-      // This catches: src="images/logo.png", src="logo.png", src="https://.../logo.png"
-      // Skip if the path is already a Cloudinary URL to prevent double processing
-      const patterns = [
-        new RegExp(`(src|href|url)\\s*[:=]\\s*["']?((?!https://res.cloudinary.com)[^"'>\\s]*${escapedFilename})["']?`, 'gi'),
-        new RegExp(`url\\(["']?((?!https://res.cloudinary.com)[^"'>\\s]*${escapedFilename})["']?\\)`, 'gi')
-      ];
+    const cidPatterns = [
+      /src=["']cid:([^"']+)["']/gi,
+      /src=["']([^"']+\.(?:png|jpg|jpeg|gif|webp))["']/gi
+    ];
 
-      patterns.forEach(pattern => {
-        html = html.replace(pattern, (match, attr, path) => {
-          // If it's the url() pattern, attr will be the path
-          if (match.toLowerCase().startsWith('url')) {
-            return `url("${url}")`;
+    for (const pattern of cidPatterns) {
+      const matches = [...html.matchAll(pattern)];
+      for (const match of matches) {
+        const originalAttr = match[0];
+        const fileNameOrCid = match[1];
+        
+        // Find matching asset in map
+        let assetUrl = '';
+        const lowerSearch = fileNameOrCid.toLowerCase();
+        
+        for (const [key, url] of Object.entries(emailAssetMap)) {
+          if (key.toLowerCase().includes(lowerSearch) || lowerSearch.includes(key.toLowerCase().split('.')[0])) {
+            assetUrl = url;
+            break;
           }
-          // Clean up any double extension artifacts like .png.png
-          const cleanUrl = url.replace(/\.(png|jpg|jpeg|gif|webp)\.\1$/i, '.$1');
-          return `${attr}="${cleanUrl}"`;
-        });
-      });
+        }
 
-      // Catch CID references: src="cid:logo" where 'logo' matches filename without extension
-      const baseName = filename.split('.')[0];
-      const cidRegex = new RegExp(`src=["']cid:${baseName}["']`, 'gi');
-      html = html.replace(cidRegex, `src="${url}"`);
-    });
-
-    // 2. Fallback: Catch any remaining cid: references we missed
-    html = html.replace(/src=["'](?!https:\/\/res\.cloudinary\.com)cid:([^"']+)["']/gi, (match, cid) => {
-      const lowerCid = cid.toLowerCase().trim();
-      for (const [key, url] of Object.entries(emailAssetMap)) {
-        if (key.toLowerCase().includes(lowerCid)) {
-          return `src="${url}"`;
+        if (assetUrl) {
+          try {
+            // Fetch and convert to Base64
+            const response = await fetch(assetUrl);
+            const buffer = await response.arrayBuffer();
+            const contentType = response.headers.get('content-type') || 'image/png';
+            const base64 = Buffer.from(buffer).toString('base64');
+            const dataUri = `data:${contentType};base64,${base64}`;
+            
+            html = html.replace(originalAttr, `src="${dataUri}"`);
+            console.log(`✅ Embedded image as Base64: ${fileNameOrCid}`);
+          } catch (err) {
+            console.warn(`⚠️ Failed to embed image ${fileNameOrCid}:`, err);
+            // Fallback to URL if base64 fails
+            html = html.replace(originalAttr, `src="${assetUrl}"`);
+          }
         }
       }
-      return match;
-    });
+    }
 
     return html;
   }
 
-  // ✅ New CID Processor for clean mapping
+  // ✅ Keep for legacy or if processing fails
   private finalCidClean(html: string): string {
-    return html.replace(/src=["']cid:([^"']+)["']/gi, (match, cid) => {
-      const lowerCid = cid.toLowerCase().trim();
-      for (const [key, url] of Object.entries(emailAssetMap)) {
-        if (key.toLowerCase().includes(lowerCid)) {
-          return `src="${url}"`;
-        }
-      }
-      return match;
-    });
+    return html; // Base64 embedding handles this now
   }
 
   private async initializeFromDatabase() {
@@ -253,23 +244,20 @@ export class EmailService {
     console.log(`✉️ Sending email to: ${options.to} | Subject: ${options.subject}`);
     
     // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
-    let processedHtml = this.processEmailImages(options.html);
+    let processedHtml = await this.processEmailImages(options.html);
 
     // Final CID pass using dedicated cleaner
     processedHtml = this.finalCidClean(processedHtml);
 
     // Log final HTML after processing
     console.log(`✉️ Final HTML content:\n${processedHtml}`);
-    
-    // CID replacement is now handled inside processEmailImages for consistency
-    // No need for secondary replacement here as it might double-process or miss edge cases
 
     const mailOptions = {
       from,
       to: options.to,
       subject: options.subject,
       html: processedHtml,
-      attachments: [], // We use Cloudinary URLs instead of attachments to prevent ESTREAM errors
+      attachments: [], 
     };
       
     const result = await transporter.sendMail(mailOptions);
@@ -282,7 +270,7 @@ export class EmailService {
           from: options.from || `"EduFiliova" <orders@edufiliova.com>`,
           to: options.to,
           subject: options.subject,
-          html: this.processEmailImages(options.html),
+          html: await this.processEmailImages(options.html),
         };
         const from = options.from || `"EduFiliova" <orders@edufiliova.com>`;
         const emailMatch = from.match(/<(.+?)>/);
@@ -361,7 +349,7 @@ export class EmailService {
       );
 
       html = html.replace(/{{FullName}}/g, data.fullName);
-      html = this.processEmailImages(html);
+      html = await this.processEmailImages(html);
 
       return this.sendEmail({
         to: email,
