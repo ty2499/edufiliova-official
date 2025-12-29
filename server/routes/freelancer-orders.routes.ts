@@ -1,9 +1,12 @@
 import { Router, Response } from "express";
 import { db } from "../db";
-import { freelancerServices, freelancerOrders, profiles, transactions, userBalances } from "../../shared/schema";
-import { eq, and, desc, sql } from "drizzle-orm";
+import { freelancerServices, freelancerOrders, freelancerDeliverables, profiles, transactions, userBalances } from "../../shared/schema";
+import { eq, and, desc, lte, sql } from "drizzle-orm";
 import { requireAuth, requireRole, type AuthenticatedRequest } from "../middleware/auth";
 import { z } from "zod";
+
+const PLATFORM_USER_ID = "00000000-0000-0000-0000-000000000000";
+const AUTO_RELEASE_DAYS = 3;
 
 const router = Router();
 
@@ -375,5 +378,293 @@ router.post("/:orderId/pay", requireAuth, async (req: AuthenticatedRequest, res:
     res.status(500).json({ error: "Failed to process payment" });
   }
 });
+
+const deliverSchema = z.object({
+  message: z.string().max(5000).optional(),
+  files: z.array(z.object({
+    url: z.string(),
+    name: z.string(),
+    size: z.number().optional(),
+    type: z.string().optional(),
+  })).optional(),
+});
+
+router.post("/:orderId/deliver", requireAuth, requireRole(['freelancer']), async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const validated = deliverSchema.parse(req.body);
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.freelancerId !== userId) {
+      return res.status(403).json({ error: "Only the freelancer can deliver this order" });
+    }
+
+    if (order.status !== "active" && order.status !== "revision_requested") {
+      return res.status(400).json({ 
+        error: `Cannot deliver order with status: ${order.status}` 
+      });
+    }
+
+    const deliveredAt = new Date();
+    const autoReleaseAt = new Date(deliveredAt);
+    autoReleaseAt.setDate(autoReleaseAt.getDate() + AUTO_RELEASE_DAYS);
+
+    await db.transaction(async (tx) => {
+      await tx.insert(freelancerDeliverables).values({
+        orderId: orderId,
+        message: validated.message || null,
+        files: validated.files || [],
+        isRevision: order.status === "revision_requested",
+      });
+
+      await tx
+        .update(freelancerOrders)
+        .set({ 
+          status: "delivered",
+          deliveredAt,
+          autoReleaseAt,
+          updatedAt: new Date()
+        })
+        .where(eq(freelancerOrders.id, orderId));
+    });
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    res.json({ 
+      success: true, 
+      message: "Order delivered successfully. Client has 3 days to review.",
+      order: updatedOrder,
+      autoReleaseAt: autoReleaseAt.toISOString(),
+    });
+  } catch (error) {
+    console.error("Error delivering order:", error);
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: "Validation failed", details: error.errors });
+    }
+    res.status(500).json({ error: "Failed to deliver order" });
+  }
+});
+
+async function releaseEscrow(orderId: string, isAutoRelease: boolean = false): Promise<{ success: boolean; error?: string }> {
+  try {
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return { success: false, error: "Order not found" };
+    }
+
+    if (order.status !== "delivered") {
+      return { success: false, error: `Cannot release escrow for order with status: ${order.status}` };
+    }
+
+    const escrowAmount = parseFloat(order.escrowHeldAmount || order.amountTotal);
+    const platformFee = parseFloat(order.platformFeeAmount);
+    const freelancerEarnings = escrowAmount - platformFee;
+
+    const [service] = await db
+      .select({ title: freelancerServices.title })
+      .from(freelancerServices)
+      .where(eq(freelancerServices.id, order.serviceId));
+
+    const serviceName = service?.title || "Freelancer Service";
+    const releaseType = isAutoRelease ? "Auto-released" : "Approved by client";
+
+    await db.transaction(async (tx) => {
+      const [freelancerBalance] = await tx
+        .select()
+        .from(userBalances)
+        .where(eq(userBalances.userId, order.freelancerId));
+
+      const currentFreelancerBalance = freelancerBalance ? parseFloat(freelancerBalance.availableBalance) : 0;
+      const newFreelancerBalance = (currentFreelancerBalance + freelancerEarnings).toFixed(2);
+
+      if (freelancerBalance) {
+        await tx
+          .update(userBalances)
+          .set({ 
+            availableBalance: newFreelancerBalance,
+            totalEarnings: sql`COALESCE(total_earnings, 0) + ${freelancerEarnings.toFixed(2)}::numeric`,
+            lastUpdated: new Date()
+          })
+          .where(eq(userBalances.userId, order.freelancerId));
+      } else {
+        await tx.insert(userBalances).values({
+          userId: order.freelancerId,
+          availableBalance: freelancerEarnings.toFixed(2),
+          totalEarnings: freelancerEarnings.toFixed(2),
+        });
+      }
+
+      await tx.insert(transactions).values({
+        userId: order.freelancerId,
+        type: "credit",
+        amount: freelancerEarnings.toFixed(2),
+        status: "completed",
+        description: `Freelancer earnings: ${serviceName} (${order.selectedPackage}) - ${releaseType}`,
+        reference: orderId,
+      });
+
+      const [platformBalance] = await tx
+        .select()
+        .from(userBalances)
+        .where(eq(userBalances.userId, PLATFORM_USER_ID));
+
+      const currentPlatformBalance = platformBalance ? parseFloat(platformBalance.availableBalance) : 0;
+      const newPlatformBalance = (currentPlatformBalance + platformFee).toFixed(2);
+
+      if (platformBalance) {
+        await tx
+          .update(userBalances)
+          .set({ 
+            availableBalance: newPlatformBalance,
+            totalEarnings: sql`COALESCE(total_earnings, 0) + ${platformFee.toFixed(2)}::numeric`,
+            lastUpdated: new Date()
+          })
+          .where(eq(userBalances.userId, PLATFORM_USER_ID));
+      } else {
+        await tx.insert(userBalances).values({
+          userId: PLATFORM_USER_ID,
+          availableBalance: platformFee.toFixed(2),
+          totalEarnings: platformFee.toFixed(2),
+        });
+      }
+
+      await tx.insert(transactions).values({
+        userId: PLATFORM_USER_ID,
+        type: "credit",
+        amount: platformFee.toFixed(2),
+        status: "completed",
+        description: `Platform fee: ${serviceName} (${order.selectedPackage}) - Order #${orderId.slice(0, 8)}`,
+        reference: orderId,
+      });
+
+      await tx
+        .update(freelancerOrders)
+        .set({ 
+          status: "completed",
+          completedAt: new Date(),
+          updatedAt: new Date()
+        })
+        .where(eq(freelancerOrders.id, orderId));
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error releasing escrow:", error);
+    return { success: false, error: "Failed to release escrow" };
+  }
+}
+
+router.post("/:orderId/approve", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const [order] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    if (order.clientId !== userId) {
+      return res.status(403).json({ error: "Only the client can approve this order" });
+    }
+
+    if (order.status !== "delivered") {
+      return res.status(400).json({ 
+        error: `Cannot approve order with status: ${order.status}` 
+      });
+    }
+
+    const result = await releaseEscrow(orderId, false);
+
+    if (!result.success) {
+      return res.status(400).json({ error: result.error });
+    }
+
+    const [updatedOrder] = await db
+      .select()
+      .from(freelancerOrders)
+      .where(eq(freelancerOrders.id, orderId));
+
+    const escrowAmount = parseFloat(order.escrowHeldAmount || order.amountTotal);
+    const platformFee = parseFloat(order.platformFeeAmount);
+    const freelancerEarnings = escrowAmount - platformFee;
+
+    res.json({ 
+      success: true, 
+      message: "Order approved. Payment released to freelancer.",
+      order: updatedOrder,
+      escrowRelease: {
+        totalReleased: escrowAmount.toFixed(2),
+        freelancerEarnings: freelancerEarnings.toFixed(2),
+        platformFee: platformFee.toFixed(2),
+      }
+    });
+  } catch (error) {
+    console.error("Error approving order:", error);
+    res.status(500).json({ error: "Failed to approve order" });
+  }
+});
+
+export async function processAutoReleaseOrders(): Promise<{ processed: number; errors: number }> {
+  const now = new Date();
+  let processed = 0;
+  let errors = 0;
+
+  try {
+    const ordersToRelease = await db
+      .select()
+      .from(freelancerOrders)
+      .where(and(
+        eq(freelancerOrders.status, "delivered"),
+        lte(freelancerOrders.autoReleaseAt, now)
+      ));
+
+    console.log(`[Auto-Release] Found ${ordersToRelease.length} orders to auto-release`);
+
+    for (const order of ordersToRelease) {
+      const result = await releaseEscrow(order.id, true);
+      if (result.success) {
+        processed++;
+        console.log(`[Auto-Release] Successfully released order ${order.id}`);
+      } else {
+        errors++;
+        console.error(`[Auto-Release] Failed to release order ${order.id}: ${result.error}`);
+      }
+    }
+  } catch (error) {
+    console.error("[Auto-Release] Error processing auto-release orders:", error);
+  }
+
+  return { processed, errors };
+}
 
 export default router;

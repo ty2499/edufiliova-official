@@ -39,6 +39,31 @@ Education platform with comprehensive content moderation system that detects and
 - New wallet balance
 - Payment breakdown (method, amount, escrow held, platform fee)
 
+### Delivery & Escrow Release System
+
+**Delivery Endpoint:** `POST /api/freelancer/orders/:orderId/deliver`
+- Freelancer submits deliverable (message + files)
+- Creates deliverable record in `freelancer_deliverables` table
+- Sets order status to `delivered`
+- Sets `autoReleaseAt` = `deliveredAt` + 3 days
+
+**Approve Endpoint:** `POST /api/freelancer/orders/:orderId/approve`
+- Client approves delivery, releases escrow
+- Credits freelancer wallet with (amountTotal - platformFeeAmount)
+- Credits platform wallet with platformFeeAmount (using PLATFORM_USER_ID)
+- Creates transaction records for both credits
+- Marks order `completed`
+
+**Auto-Release Scheduler:**
+- Runs hourly on server startup
+- Checks for delivered orders where `autoReleaseAt <= now`
+- Automatically releases escrow (same as approve) if client doesn't respond within 3 days
+
+**Escrow Release Breakdown:**
+- Total escrow = `amountTotal` (stored in `escrow_held_amount`)
+- Freelancer receives: `escrowAmount - platformFee` (85%)
+- Platform receives: `platformFeeAmount` (15%)
+
 ---
 
 ## Email Templates Fixed (Dec 29, 2025)

@@ -306,6 +306,28 @@ app.use('/attached_assets', express.static('attached_assets'));
     console.error('❌ Engagement notification scheduler failed to start:', error);
   }
 
+  // Freelancer order auto-release scheduler - releases escrow for unreviewed deliveries
+  try {
+    const { processAutoReleaseOrders } = await import('./routes/freelancer-orders.routes.js');
+    
+    // Run every hour to check for orders that need auto-release
+    const runAutoRelease = async () => {
+      const result = await processAutoReleaseOrders();
+      if (result.processed > 0 || result.errors > 0) {
+        console.log(`📦 [Auto-Release] Processed: ${result.processed}, Errors: ${result.errors}`);
+      }
+    };
+    
+    // Run immediately on startup
+    await runAutoRelease();
+    
+    // Then run every hour
+    setInterval(runAutoRelease, 60 * 60 * 1000);
+    console.log('✅ Freelancer order auto-release scheduler started (hourly)');
+  } catch (error) {
+    console.error('❌ Freelancer auto-release scheduler failed to start:', error);
+  }
+
   // Meeting notification scheduler - DISABLED to reduce database egress
   // Users can manually send notifications or we can enable this selectively
   // try {
