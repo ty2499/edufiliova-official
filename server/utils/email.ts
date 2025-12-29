@@ -757,37 +757,42 @@ export class EmailService {
   }
 
   async sendFreelancerRejectionEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
-    const htmlPath = path.resolve(process.cwd(), 'public/email-assets/freelancer-application-declined/template.html');
-    let html = fs.readFileSync(htmlPath, 'utf-8');
+    try {
+      let html = fs.readFileSync(
+        path.resolve(process.cwd(), 'server/templates/freelancer_application_declined_template/email.html'),
+        'utf-8'
+      );
 
-    // Remove preloads and add iPhone font support
-    html = html.replace(/<link rel="preload" as="image" href="[^"]*">/g, '');
-    
-    const iphoneFontStack = `
-    <style>
-      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-      body, p, h1, h2, h3, h4, span, div, td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important; }
-    </style>`;
-    html = html.replace('</head>', `${iphoneFontStack}</head>`);
+      const fullName = data.fullName || 'Freelancer';
+      const reasonText = data.reason && data.reason.trim() ? data.reason : 'Your application did not meet our current freelancer requirements. Please review the feedback and strengthen your profile before reapplying.';
 
-    const fullName = data.fullName || 'Freelancer';
-    const reasonText = data.reason && data.reason.trim() ? data.reason : 'Your application did not meet our current freelancer requirements. Please review the feedback and strengthen your profile before reapplying.';
+      // Use bulletproof replacements
+      html = this.forceReplaceName(html, fullName);
+      html = html.replace(/\{\{rejectionReason\}\}/gi, reasonText);
+      html = html.replace(/\{\{reason\}\}/gi, reasonText);
 
-    // ✅ USE BULLETPROOF NAME REPLACEMENT FIRST - THIS IS CRITICAL
-    html = this.forceReplaceName(html, fullName);
+      // Attachments with CID references
+      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
+      const attachments = [
+        { filename: 'b3f1ba1bfd2e78319f53bcae30119f17.png', path: path.join(imagesPath, 'b3f1ba1bfd2e78319f53bcae30119f17.png'), cid: 'freelancerapp', contentType: 'image/png' },
+        { filename: 'de497c5361453604d8a15c4fd9bde086.png', path: path.join(imagesPath, 'de497c5361453604d8a15c4fd9bde086.png'), cid: 'declinedicon', contentType: 'image/png' },
+        { filename: '3d94f798ad2bd582f8c3afe175798088.png', path: path.join(imagesPath, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' },
+        { filename: '8889f49340b6e80a36b597a426a461b7.png', path: path.join(imagesPath, '8889f49340b6e80a36b597a426a461b7.png'), cid: 'freelancerbanner', contentType: 'image/png' }
+      ];
 
-    // Final cleanup
-    html = html.replace(/\{\{rejectionReason\}\}/gi, reasonText);
-    html = html.replace(/\{\{baseUrl\}\}/gi, baseUrl);
-    html = html.replace(/\{\{email\}\}/gi, email);
-
-    return this.sendEmail({
-      to: email,
-      subject: 'Freelancer Application Status Update - EduFiliova',
-      html,
-      from: `"EduFiliova Support" <support@edufiliova.com>`
-    });
+      return this.sendEmail({
+        to: email,
+        subject: 'Freelancer Application Status Update - EduFiliova',
+        html,
+        from: `"EduFiliova Support" <support@edufiliova.com>`,
+        attachments
+      });
+    } catch (error) {
+      console.error('Error sending freelancer rejection email:', error);
+      return false;
+    }
   }
 
   async sendFreelancerSubmissionEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
