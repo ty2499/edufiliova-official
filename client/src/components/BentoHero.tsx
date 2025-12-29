@@ -43,7 +43,7 @@ const heroContent = [
       label: 'Completed Today',
       progress: 78
     },
-    photoAlt: 'Students learning together'
+    photoAlt: 'Enroll Today - Start Your Learning Journey'
   },
   {
     type: 'Teachers',
@@ -67,7 +67,7 @@ const heroContent = [
       label: 'This Month',
       progress: 85
     },
-    photoAlt: 'Teacher in classroom'
+    photoAlt: 'Start Your Teaching Journey Today'
   },
   {
     type: 'Freelancers',
@@ -91,7 +91,7 @@ const heroContent = [
       label: 'Average Income',
       progress: 72
     },
-    photoAlt: 'Freelancer working remotely'
+    photoAlt: 'Hire a Freelancer - Get Projects Done'
   },
   {
     type: 'Creators',
@@ -115,7 +115,7 @@ const heroContent = [
       label: 'Products Sold',
       progress: 91
     },
-    photoAlt: 'Creative designer at work'
+    photoAlt: 'Sell Your Creations - Earn Passive Income'
   }
 ];
 

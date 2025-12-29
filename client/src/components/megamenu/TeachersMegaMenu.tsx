@@ -128,9 +128,9 @@ export const TeachersMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated 
       title="For Teachers"
       subtitle="Share your knowledge, inspire students, and build your teaching career with our comprehensive tools."
       promoImage={promoImage}
-      promoTitle="Teach & Inspire"
-      promoSubtitle="Empower the next generation of learners"
-      ctaText="Start Teaching Today"
+      promoTitle="Start Your Teaching Journey"
+      promoSubtitle="Share knowledge, inspire students, earn income"
+      ctaText="Apply to Teach"
       ctaOnClick={() => handleNavigate("teacher-application")}
     >
       <div className="space-y-6">

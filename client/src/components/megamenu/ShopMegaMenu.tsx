@@ -120,9 +120,9 @@ export const ShopMegaMenu = ({ isOpen, onNavigate, onClose }: ShopMegaMenuProps)
       title="Creative Space"
       subtitle="Discover premium design resources, templates, and creative assets from talented creators."
       promoImage={promoImage}
-      promoTitle="Create & Sell"
-      promoSubtitle="Turn your creativity into income"
-      ctaText="Browse Marketplace"
+      promoTitle="Shop Digital Products"
+      promoSubtitle="Premium designs, templates & creative assets"
+      ctaText="Explore Now"
       ctaOnClick={() => handleNavigate("product-shop")}
     >
       <div className="space-y-6">

@@ -129,9 +129,9 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
       title="Freelance Marketplace"
       subtitle="Join our community of talented freelancers or find the perfect professional for your project."
       promoImage={promoImage}
-      promoTitle="Work Your Way"
-      promoSubtitle="Build your freelance career with freedom"
-      ctaText="Start Freelancing"
+      promoTitle="Hire a Freelancer"
+      promoSubtitle="Find skilled professionals for any project"
+      ctaText="Browse Talent"
       ctaOnClick={() => handleNavigate("freelancer-signup-basic")}
     >
       <div className="space-y-6">

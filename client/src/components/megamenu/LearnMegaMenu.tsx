@@ -135,9 +135,9 @@ export const LearnMegaMenu = ({ isOpen, onNavigate, onClose, isAuthenticated = f
       title="Learn & Grow"
       subtitle="Discover courses, earn certificates, and advance your skills with our comprehensive learning platform."
       promoImage={promoImage}
-      promoTitle="Start Learning"
-      promoSubtitle="Join thousands of students achieving their goals"
-      ctaText="Browse All Courses"
+      promoTitle="Enroll Today"
+      promoSubtitle="Join 25,000+ students achieving their dreams"
+      ctaText="Start Learning Free"
       ctaOnClick={() => handleNavigate("course-browse")}
     >
       <div className="space-y-6">
