@@ -23,9 +23,9 @@ export const PricingMegaMenu = ({ isOpen, onNavigate, onClose }: PricingMegaMenu
     },
     {
       icon: <ShoppingCart className="h-5 w-5" />,
-      title: "Customer Pricing",
-      description: "Membership plans for buyers and customers",
-      page: "customer-pricing",
+      title: "Creator Pricing",
+      description: "Plans for creators selling products and content",
+      page: "creator-pricing",
     },
     {
       icon: <Briefcase className="h-5 w-5" />,

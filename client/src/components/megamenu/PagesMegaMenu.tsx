@@ -48,8 +48,8 @@ export const PagesMegaMenu = ({ isOpen, onNavigate, onClose }: PagesMegaMenuProp
   ];
 
   const pricingPages = [
-    { icon: <CreditCard className="h-5 w-5" />, title: "Customer Pricing", description: "Plans for buyers and shoppers", page: "customer-pricing" },
-    { icon: <Briefcase className="h-5 w-5" />, title: "Creator Pricing", description: "Plans for sellers and creators", page: "creator-pricing" },
+    { icon: <CreditCard className="h-5 w-5" />, title: "Creator Pricing", description: "Plans for creators selling products", page: "creator-pricing" },
+    { icon: <Briefcase className="h-5 w-5" />, title: "Freelancer Pricing", description: "Plans for freelancers and service providers", page: "creator-pricing" },
     { icon: <GraduationCap className="h-5 w-5" />, title: "Education Pricing", description: "Student subscription plans", page: "education-pricing" },
     { icon: <Building2 className="h-5 w-5" />, title: "Teacher Pricing", description: "Plans for educators", page: "teacher-pricing" },
   ];
