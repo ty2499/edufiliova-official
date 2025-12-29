@@ -690,6 +690,7 @@ router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response)
 
     const [freelancer] = await db
       .select({
+        id: profiles.userId,
         fullName: profiles.name,
         profilePicture: profiles.profilePicture,
       })
@@ -698,6 +699,7 @@ router.get("/:id", requireAuth, async (req: AuthenticatedRequest, res: Response)
 
     const [client] = await db
       .select({
+        id: profiles.userId,
         fullName: profiles.name,
         profilePicture: profiles.profilePicture,
       })
