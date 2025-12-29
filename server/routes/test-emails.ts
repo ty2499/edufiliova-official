@@ -493,6 +493,33 @@ router.post('/test-emails/digital-purchase', async (req: Request, res: Response)
   }
 });
 
+// Test endpoint for teacher application declined email
+router.post('/test-emails/teacher-declined', async (req: Request, res: Response) => {
+  try {
+    const { testEmail = 'admin@pacreatives.co.za', fullName = 'Test Teacher', reason } = req.body;
+    
+    console.log(`📧 Testing teacher application declined email to ${testEmail}...`);
+
+    const result = await emailService.sendTeacherApplicationDeclinedEmail(testEmail, {
+      fullName,
+      reason: reason || 'Missing required qualifications or certifications'
+    });
+
+    res.json({
+      success: result,
+      message: result ? 'Teacher declined email sent successfully' : 'Failed to send teacher declined email',
+      details: {
+        recipientEmail: testEmail,
+        fullName,
+        reason: reason || 'Missing required qualifications or certifications'
+      }
+    });
+  } catch (error: any) {
+    console.error('❌ Error sending teacher declined test email:', error);
+    res.status(500).json({ error: 'Failed to send teacher declined email', details: error.message });
+  }
+});
+
 // Test endpoint specifically for device login email
 router.post('/test-emails/device-login', async (req: Request, res: Response) => {
   try {
