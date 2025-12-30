@@ -13,14 +13,14 @@ RUN apt-get update && apt-get install -y \
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies (frozen-lockfile equivalent for npm)
+RUN npm ci
 
 # Copy source code
 COPY . .
 
 # Build frontend and backend
-# We use CI=true to prevent interactive prompts and ensure clean build
+# CI=true prevents interactive prompts
 RUN CI=true npm run build
 
 # Final stage
