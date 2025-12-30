@@ -1,0 +1,184 @@
+Close
+Starting logs stream.
+2025-12-30T01:00:35Z Cloning into '/repo'...
+2025-12-30T01:01:17Z Updating files: 24% (960/3917) Updating files: 25% (980/3917) Updating files: 26% (1019/3917) Updating files: 27% (1058/3917) Updating files: 28% (1097/3917) Updating files: 29% (1136/3917) Updating files: 30% (1176/3917) Updating files: 31% (1215/3917) Updating files: 32% (1254/3917) Updating files: 33% (1293/3917) Updating files: 34% (1332/3917) Updating files: 35% (1371/3917) Updating files: 36% (1411/3917) Updating files: 37% (1450/3917) Updating files: 38% (1489/3917) Updating files: 39% (1528/3917) Updating files: 40% (1567/3917) Updating files: 41% (1606/3917) Updating files: 42% (1646/3917) Updating files: 43% (1685/3917) Updating files: 44% (1724/3917) Updating files: 45% (1763/3917) Updating files: 46% (1802/3917) Updating files: 47% (1841/3917) Updating files: 48% (1881/3917) Updating files: 49% (1920/3917) Updating files: 50% (1959/3917) Updating files: 51% (1998/3917) Updating files: 52% (2037/3917) Updating files: 53% (2077/3917) Updating files: 54% (2116/3917) Updating files: 55% (2155/3917) Updating files: 56% (2194/3917) Updating files: 57% (2233/3917) Updating files: 58% (2272/3917) Updating files: 59% (2312/3917) Updating files: 60% (2351/3917) Updating files: 61% (2390/3917) Updating files: 62% (2429/3917) Updating files: 63% (2468/3917) Updating files: 64% (2507/3917) Updating files: 65% (2547/3917) Updating files: 65% (2571/3917) Updating files: 66% (2586/3917) Updating files: 67% (2625/3917) Updating files: 68% (2664/3917) Updating files: 69% (2703/3917) Updating files: 70% (2742/3917) Updating files: 71% (2782/3917) Updating files: 72% (2821/3917) Updating files: 73% (2860/3917) Updating files: 74% (2899/3917) Updating files: 75% (2938/3917) Updating files: 76% (2977/3917) Updating files: 76% (2983/3917) Updating files: 77% (3017/3917) Updating files: 78% (3056/3917) Updating files: 79% (3095/3917) Updating files: 80% (3134/3917) Updating files: 81% (3173/3917) Updating files: 82% (3212/3917) Updating files: 83% (3252/3917) Updating files: 84% (3291/3917) Updating files: 85% (3330/3917) Updating files: 86% (3369/3917) Updating files: 87% (3408/3917) Updating files: 88% (3447/3917) Updating files: 89% (3487/3917) Updating files: 90% (3526/3917) Updating files: 91% (3565/3917) Updating files: 92% (3604/3917) Updating files: 93% (3643/3917) Updating files: 94% (3682/3917) Updating files: 95% (3722/3917) Updating files: 96% (3761/3917) Updating files: 97% (3800/3917) Updating files: 98% (3839/3917) Updating files: 99% (3878/3917) Updating files: 100% (3917/3917) Updating files: 100% (3917/3917), done.
+2025-12-30T01:01:22Z INFO[0000] Resolved base name node:20-alpine to builder
+2025-12-30T01:01:22Z INFO[0000] Resolved base name node:20-alpine to runner
+2025-12-30T01:01:22Z INFO[0000] Using dockerignore file: /repo/.dockerignore
+2025-12-30T01:01:22Z INFO[0000] Retrieving image manifest node:20-alpine
+2025-12-30T01:01:23Z INFO[0000] Retrieving image manifest node:20-alpine
+2025-12-30T01:01:23Z INFO[0000] Returning cached image manifest
+2025-12-30T01:01:23Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-30T01:01:23Z INFO[0001] Returning cached image manifest
+2025-12-30T01:01:23Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-30T01:01:23Z INFO[0001] Returning cached image manifest
+2025-12-30T01:01:23Z INFO[0001] Built cross stage deps: map[0:[/app/package.json /app/package-lock.json /app/node_modules /app/dist]]
+2025-12-30T01:01:23Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-30T01:01:23Z INFO[0001] Returning cached image manifest
+2025-12-30T01:01:23Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-30T01:01:23Z INFO[0001] Returning cached image manifest
+2025-12-30T01:01:23Z INFO[0001] Executing 0 build triggers
+2025-12-30T01:01:23Z INFO[0001] Building stage 'node:20-alpine' [idx: '0', base-idx: '-1']
+2025-12-30T01:01:23Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4972/hyperlift-4972/cache:9754597c2bce11ef817bf63fd44a434c8571356218ce1baa27b6d5414c721017...
+2025-12-30T01:01:23Z INFO[0001] Using caching version of cmd: RUN apk add --no-cache python3 make g++ gcc libc-dev
+2025-12-30T01:01:23Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4972/hyperlift-4972/cache:a5b7f83e42a6ab466b9d6dab241ffc0ad9dda528abf2b7110009aae7ad9ec2a7...
+2025-12-30T01:01:23Z INFO[0001] Using caching version of cmd: RUN npm ci --include=dev
+2025-12-30T01:01:25Z INFO[0002] No cached layer found for cmd RUN echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"
+2025-12-30T01:01:25Z INFO[0002] Unpacking rootfs as cmd COPY package.json package-lock.json ./ requires it.
+2025-12-30T01:01:27Z INFO[0004] ARG BUILD_VERSION=20251218-v4
+2025-12-30T01:01:27Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-30T01:01:27Z INFO[0004] ENV BUILD_VERSION=${BUILD_VERSION}
+2025-12-30T01:01:27Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-30T01:01:27Z INFO[0004] ENV NODE_OPTIONS="--max-old-space-size=2048"
+2025-12-30T01:01:27Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-30T01:01:27Z INFO[0004] RUN apk add --no-cache python3 make g++ gcc libc-dev
+2025-12-30T01:01:27Z INFO[0004] Found cached layer, extracting to filesystem
+2025-12-30T01:01:41Z INFO[0019] WORKDIR /app
+2025-12-30T01:01:41Z INFO[0019] Cmd: workdir
+2025-12-30T01:01:41Z INFO[0019] Changed working directory to /app
+2025-12-30T01:01:41Z INFO[0019] Creating directory /app with uid -1 and gid -1
+2025-12-30T01:01:41Z INFO[0019] Taking snapshot of files...
+2025-12-30T01:01:41Z INFO[0019] COPY package.json package-lock.json ./
+2025-12-30T01:01:41Z INFO[0019] Taking snapshot of files...
+2025-12-30T01:01:41Z INFO[0019] RUN npm ci --include=dev
+2025-12-30T01:01:41Z INFO[0019] Found cached layer, extracting to filesystem
+2025-12-30T01:02:33Z INFO[0070] COPY tsconfig.json ./
+2025-12-30T01:02:33Z INFO[0070] Taking snapshot of files...
+2025-12-30T01:02:33Z INFO[0070] COPY vite.config.ts ./
+2025-12-30T01:02:33Z INFO[0070] Taking snapshot of files...
+2025-12-30T01:02:33Z INFO[0070] COPY tailwind.config.ts ./
+2025-12-30T01:02:33Z INFO[0070] Taking snapshot of files...
+2025-12-30T01:02:33Z INFO[0070] COPY postcss.config.js ./
+2025-12-30T01:02:33Z INFO[0070] Taking snapshot of files...
+2025-12-30T01:02:33Z INFO[0070] COPY components.json ./
+2025-12-30T01:02:33Z INFO[0070] Taking snapshot of files...
+2025-12-30T01:02:33Z INFO[0070] COPY shared ./shared
+2025-12-30T01:02:33Z INFO[0070] Taking snapshot of files...
+2025-12-30T01:02:33Z INFO[0070] COPY client ./client
+2025-12-30T01:02:33Z INFO[0071] Taking snapshot of files...
+2025-12-30T01:02:34Z INFO[0072] COPY server ./server
+2025-12-30T01:02:34Z INFO[0072] Taking snapshot of files...
+2025-12-30T01:02:35Z INFO[0073] COPY attached_assets ./attached_assets
+2025-12-30T01:02:36Z INFO[0074] Taking snapshot of files...
+2025-12-30T01:02:39Z INFO[0077] RUN echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"
+2025-12-30T01:02:39Z INFO[0077] Initializing snapshotter ...
+2025-12-30T01:02:39Z INFO[0077] Taking snapshot of full filesystem...
+2025-12-30T01:02:49Z INFO[0087] Cmd: /bin/sh
+2025-12-30T01:02:49Z INFO[0087] Args: [-c echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"]
+2025-12-30T01:02:49Z INFO[0087] Running: [/bin/sh -c echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"]
+2025-12-30T01:02:49Z 🔨 Starting build process...
+2025-12-30T01:02:49Z
+2025-12-30T01:02:49Z > rest-express@1.0.0 build
+2025-12-30T01:02:49Z > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+2025-12-30T01:02:49Z
+2025-12-30T01:02:50Z vite v5.4.14 building for production...
+2025-12-30T01:02:50Z transforming...
+2025-12-30T01:03:13Z ✓ 3375 modules transformed.
+2025-12-30T01:03:15Z rendering chunks...
+2025-12-30T01:03:18Z computing gzip size...
+2025-12-30T01:03:18Z ../dist/public/index.html 3.28 kB │ gzip: 1.25 kB
+2025-12-30T01:03:18Z ../dist/public/assets/math-lesson-CCp6M77C.jpg 63.58 kB
+2025-12-30T01:03:18Z ../dist/public/assets/coding-lesson-39bLgdAN.jpg 78.29 kB
+2025-12-30T01:03:18Z ../dist/public/assets/science-lesson-CpACM_OK.jpg 99.06 kB
+2025-12-30T01:03:18Z ../dist/public/assets/geography-lesson-DPQRxTk5.jpg 99.82 kB
+2025-12-30T01:03:18Z ../dist/public/assets/webdev-lesson-CGZAJSWZ.jpg 217.61 kB
+2025-12-30T01:03:18Z ../dist/public/assets/art-lesson-Bc5LVBIT.jpg 219.13 kB
+2025-12-30T01:03:18Z ../dist/public/assets/literature-lesson-CU-U2o8L.jpg 228.40 kB
+2025-12-30T01:03:18Z ../dist/public/assets/music-lesson-AhwXqzu7.jpg 286.82 kB
+2025-12-30T01:03:18Z ../dist/public/assets/modern_ui_dashboard_design-Ci0HmB6D.png 1,098.24 kB
+2025-12-30T01:03:18Z ../dist/public/assets/teacher_presenting_in_classroom-Dhf1i0cX.png 1,326.47 kB
+2025-12-30T01:03:18Z ../dist/public/assets/professional_woman_at_laptop-BOzTv4Yy.png 1,414.84 kB
+2025-12-30T01:03:18Z ../dist/public/assets/creative_designer_with_tablet-Bjoo8fu7.png 1,516.58 kB
+2025-12-30T01:03:18Z ../dist/public/assets/freelancer_in_home_office-WW8fAxpz.png 1,598.25 kB
+2025-12-30T01:03:18Z ../dist/public/assets/students_studying_together-DAby4fbT.png 1,663.24 kB
+2025-12-30T01:03:18Z ../dist/public/assets/young_woman_professional_headshot-BI980DGe.png 2,211.57 kB
+2025-12-30T01:03:18Z ../dist/public/assets/asian_woman_headshot_portrait-Ci2Nqy-K.png 2,418.76 kB
+2025-12-30T01:03:18Z ../dist/public/assets/teacher_presenting_in_classroom-DXlXbrvZ.png 2,420.10 kB
+2025-12-30T01:03:18Z ../dist/public/assets/freelancer_working_at_home-DpcYzccA.png 2,506.93 kB
+2025-12-30T01:03:18Z ../dist/public/assets/man_professional_headshot_portrait-D1eU6g7F.png 2,548.32 kB
+2025-12-30T01:03:18Z ../dist/public/assets/students_studying_in_library-CPRIS1xI.png 2,901.26 kB
+2025-12-30T01:03:18Z ../dist/public/assets/creator_in_design_studio-DmZb-qr4.png 3,173.39 kB
+2025-12-30T01:03:18Z ../dist/public/assets/index-DogjyVua.css 288.95 kB │ gzip: 40.20 kB
+2025-12-30T01:03:18Z ../dist/public/assets/file-question-KePWZUJ7.js 0.45 kB │ gzip: 0.32 kB
+2025-12-30T01:03:18Z ../dist/public/assets/MarketplaceServicesPage-DRb1bXc0.js 5.64 kB │ gzip: 2.12 kB
+2025-12-30T01:03:18Z ../dist/public/assets/FreelancerServicesPage-Brt7bIqj.js 6.70 kB │ gzip: 2.06 kB
+2025-12-30T01:03:18Z ../dist/public/assets/ServiceDetailPage-QHZCZgWd.js 8.15 kB │ gzip: 2.57 kB
+2025-12-30T01:03:18Z ../dist/public/assets/FreelancerServiceFormPage-B56wL5Pj.js 8.46 kB │ gzip: 2.85 kB
+2025-12-30T01:03:18Z ../dist/public/assets/FreelancerOrdersPage-DdpGc4Ez.js 10.99 kB │ gzip: 3.18 kB
+2025-12-30T01:03:18Z ../dist/public/assets/ServiceCheckoutPage-C5Q-HWaD.js 15.97 kB │ gzip: 4.57 kB
+2025-12-30T01:03:18Z ../dist/public/assets/OrderTrackerPage-j1dJGzaQ.js 17.92 kB │ gzip: 4.96 kB
+2025-12-30T01:03:18Z ../dist/public/assets/index-Bpp4BoaV.js 6,284.36 kB │ gzip: 1,537.92 kB
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z (!) Some chunks are larger than 500 kB after minification. Consider:
+2025-12-30T01:03:18Z - Using dynamic import() to code-split the application
+2025-12-30T01:03:18Z - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+2025-12-30T01:03:18Z - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+2025-12-30T01:03:18Z ✓ built in 28.45s
+2025-12-30T01:03:18Z ✘ [ERROR] Could not resolve "../utils/pdf"
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/services/email-marketing.ts:13:35:
+2025-12-30T01:03:18Z 13 │ import { generateBrandedPDF } from '../utils/pdf';
+2025-12-30T01:03:18Z ╵ ~~~~~~~~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z ▲ [WARNING] Duplicate member "sendApplicationSubmittedEmail" in class body [duplicate-class-member]
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/utils/email.ts:1787:8:
+2025-12-30T01:03:18Z 1787 │ async sendApplicationSubmittedEmail(email: string, data: { ful...
+2025-12-30T01:03:18Z ╵ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z The original member "sendApplicationSubmittedEmail" is here:
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/utils/email.ts:505:8:
+2025-12-30T01:03:18Z 505 │ async sendApplicationSubmittedEmail(email: string, data: { full...
+2025-12-30T01:03:18Z ╵ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z ▲ [WARNING] Duplicate member "sendApplicationResubmittedEmail" in class body [duplicate-class-member]
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/utils/email.ts:1812:8:
+2025-12-30T01:03:18Z 1812 │ async sendApplicationResubmittedEmail(email: string, data: { f...
+2025-12-30T01:03:18Z ╵ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z The original member "sendApplicationResubmittedEmail" is here:
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/utils/email.ts:520:8:
+2025-12-30T01:03:18Z 520 │ async sendApplicationResubmittedEmail(email: string, data: { fu...
+2025-12-30T01:03:18Z ╵ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z ▲ [WARNING] Duplicate member "sendPaymentFailedEmail" in class body [duplicate-class-member]
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/utils/email.ts:1924:8:
+2025-12-30T01:03:18Z 1924 │ async sendPaymentFailedEmail(email: string, data: {
+2025-12-30T01:03:18Z ╵ ~~~~~~~~~~~~~~~~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z The original member "sendPaymentFailedEmail" is here:
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/utils/email.ts:1001:8:
+2025-12-30T01:03:18Z 1001 │ async sendPaymentFailedEmail(email: string, data: { customerNa...
+2025-12-30T01:03:18Z ╵ ~~~~~~~~~~~~~~~~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z ▲ [WARNING] Duplicate key "success" in object literal [duplicate-object-key]
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/routes.ts:1224:8:
+2025-12-30T01:03:18Z 1224 │ success: true,
+2025-12-30T01:03:18Z ╵ ~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z The original key "success" is here:
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/routes.ts:1223:17:
+2025-12-30T01:03:18Z 1223 │ res.json({ success: true,
+2025-12-30T01:03:18Z ╵ ~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z ▲ [WARNING] Duplicate key "success" in object literal [duplicate-object-key]
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/routes.ts:1281:8:
+2025-12-30T01:03:18Z 1281 │ success: true,
+2025-12-30T01:03:18Z ╵ ~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z The original key "success" is here:
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z server/routes.ts:1280:17:
+2025-12-30T01:03:18Z 1280 │ res.json({ success: true,
+2025-12-30T01:03:18Z ╵ ~~~~~~~
+2025-12-30T01:03:18Z
+2025-12-30T01:03:18Z 5 of 224 warnings and 1 error shown (disable the message limit with --log-limit=0)
+2025-12-30T01:03:18Z error building image: error building stage: failed to execute command: waiting for process to exit: exit status 1
