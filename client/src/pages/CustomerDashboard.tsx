@@ -239,7 +239,6 @@ export default function CustomerDashboard({ onNavigate, navigationOptions }: Cus
     { id: 'home', name: 'Dashboard', icon: Home },
     { id: 'purchases', name: 'Purchases', icon: ShoppingBag },
     { id: 'downloads', name: 'Downloads', icon: Download },
-    { id: 'shop', name: 'Explore Shop', icon: ShoppingCart },
     { id: 'ads', name: 'Advertising', icon: Megaphone },
     { id: 'courses', name: 'Courses', icon: BookOpen },
     { id: 'portfolio-gallery', name: 'Freelancer Works', icon: LayoutGrid },
