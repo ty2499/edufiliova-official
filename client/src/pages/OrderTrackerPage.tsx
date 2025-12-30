@@ -227,6 +227,15 @@ export default function OrderTrackerPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Button 
+          variant="ghost" 
+          size="sm"
+          onClick={() => navigate(isEmbeddedInDashboard ? '/?page=customer-dashboard' : '/dashboard')} 
+          className="mb-4 text-gray-600 hover:text-gray-900"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Dashboard
+        </Button>
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Order #{order.id.slice(0, 8)}</h1>
