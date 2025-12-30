@@ -1,73 +1,44 @@
-FROM node:20-alpine AS builder
+# Build stage
+FROM node:20-slim AS builder
 
-# Cache buster - change this to force rebuild
-ARG BUILD_VERSION=20251218-v4
-ENV BUILD_VERSION=${BUILD_VERSION}
+WORKDIR /app
 
-# Node.js memory limit for builds (2GB should be sufficient)
-ENV NODE_OPTIONS="--max-old-space-size=2048"
-
-RUN apk add --no-cache \
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
     python3 \
     make \
     g++ \
-    gcc \
-    libc-dev
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Build frontend and backend
+RUN npm run build
+
+# Final stage
+FROM node:20-slim
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-
-RUN npm ci --include=dev
-
-COPY tsconfig.json ./
-COPY vite.config.ts ./
-COPY tailwind.config.ts ./
-COPY postcss.config.js ./
-COPY components.json ./
-
-COPY shared ./shared
-COPY client ./client
-COPY server ./server
-COPY attached_assets ./attached_assets
-
-# Build application with timeout and progress
-RUN echo "🔨 Starting build process..." && \
-    timeout 600 npm run build 2>&1 || { \
-      EXIT_CODE=$?; \
-      if [ $EXIT_CODE -eq 124 ]; then \
-        echo "❌ Build timeout after 10 minutes"; \
-      fi; \
-      exit $EXIT_CODE; \
-    } && \
-    echo "✅ Build completed successfully"
-
-# Prune development dependencies
-RUN npm prune --production && echo "✅ Dependencies pruned" || (echo "❌ Prune failed" && exit 1)
-
-FROM node:20-alpine AS runner
-
-RUN apk add --no-cache \
-    fontconfig \
-    ttf-dejavu \
-    ca-certificates \
-    curl
-
-WORKDIR /app
-
-ENV NODE_ENV=production
-ENV PORT=8080
-
-COPY --from=builder /app/package.json /app/package-lock.json ./
-COPY --from=builder /app/node_modules ./node_modules
+# Copy built assets and production dependencies
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/public ./public
 
-# Copy public assets if they exist (using RUN to handle optional directory)
-RUN mkdir -p ./public
+# Environment variables
+ENV NODE_ENV=production
+ENV PORT=5000
 
-EXPOSE 8080
+# Expose port
+EXPOSE 5000
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD sh -c 'curl -f http://localhost:${PORT}/healthz || exit 1'
-
+# Start command
 CMD ["npm", "start"]
