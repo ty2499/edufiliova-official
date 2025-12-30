@@ -81,6 +81,7 @@ const AppContent = () => {
                 <Route path="/dashboard/freelancer/services/:id/edit" component={FreelancerServiceFormPage} />
                 <Route path="/dashboard/freelancer/services" component={FreelancerServicesPage} />
                 <Route path="/dashboard/freelancer/orders" component={FreelancerOrdersPage} />
+                <Route path="/dashboard/orders/:id" component={OrderTrackerPage} />
                 <Route path="/marketplace/services/:id" component={ServiceDetailPage} />
                 <Route path="/marketplace/services" component={MarketplaceServicesPage} />
                 <Route path="/checkout/service/:id" component={ServiceCheckoutPage} />

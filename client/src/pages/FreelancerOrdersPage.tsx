@@ -231,7 +231,7 @@ export default function FreelancerOrdersPage() {
                 )}
               </div>
               <div className="flex flex-wrap gap-2 mt-3">
-                <Button variant="outline" size="sm" onClick={() => navigate(`/orders/${order.id}`)}>
+                <Button variant="outline" size="sm" onClick={() => navigate(`/dashboard/orders/${order.id}`)}>
                   View Details
                 </Button>
                 {canRequestRequirements && !isWaitingForRequirements && (

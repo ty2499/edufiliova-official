@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useLocation, useRoute } from 'wouter';
+import { useLocation, useRoute, useParams } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -40,9 +40,11 @@ const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
 };
 
 export default function OrderTrackerPage() {
-  const [, navigate] = useLocation();
-  const [, params] = useRoute('/orders/:id');
-  const orderId = params?.id;
+  const [location, navigate] = useLocation();
+  const [, standaloneParams] = useRoute('/orders/:id');
+  const [, dashboardParams] = useRoute('/dashboard/orders/:id');
+  const orderId = dashboardParams?.id || standaloneParams?.id;
+  const isEmbeddedInDashboard = location.startsWith('/dashboard/orders/');
   const { toast } = useToast();
   const { user, profile } = useAuth();
   const { setIsChatOpen, setFreelancerInfo, setCurrentUserId } = useFreelancerChat();
@@ -225,11 +227,6 @@ export default function OrderTrackerPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
-
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Order #{order.id.slice(0, 8)}</h1>

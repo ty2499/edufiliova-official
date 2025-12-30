@@ -1378,7 +1378,7 @@ function ServiceOrdersPage({ onNavigate }: { onNavigate?: (page: string) => void
             <Card 
               key={order.id} 
               className="hover:shadow-md transition-shadow cursor-pointer"
-              onClick={() => navigate(`/orders/${order.id}`)}
+              onClick={() => navigate(`/dashboard/orders/${order.id}`)}
             >
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-4">
@@ -1418,7 +1418,7 @@ function ServiceOrdersPage({ onNavigate }: { onNavigate?: (page: string) => void
                       className="mt-2"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/orders/${order.id}`);
+                        navigate(`/dashboard/orders/${order.id}`);
                       }}
                     >
                       View Order

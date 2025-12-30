@@ -1504,7 +1504,7 @@ function ServiceOrdersSection({ onNavigate }: { onNavigate: (path: string) => vo
             <Card 
               key={order.id} 
               className="hover:shadow-md transition-shadow cursor-pointer"
-              onClick={() => navigate(`/orders/${order.id}`)}
+              onClick={() => navigate(`/dashboard/orders/${order.id}`)}
             >
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-4">
@@ -1544,7 +1544,7 @@ function ServiceOrdersSection({ onNavigate }: { onNavigate: (path: string) => vo
                       className="mt-2"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/orders/${order.id}`);
+                        navigate(`/dashboard/orders/${order.id}`);
                       }}
                     >
                       View Order
