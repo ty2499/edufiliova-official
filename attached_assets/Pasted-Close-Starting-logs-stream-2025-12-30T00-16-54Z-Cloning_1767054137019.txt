@@ -1,0 +1,85 @@
+Close
+Starting logs stream.
+2025-12-30T00:16:54Z Cloning into '/repo'...
+2025-12-30T00:18:09Z Updating files: 26% (1042/3913) Updating files: 27% (1057/3913) Updating files: 28% (1096/3913) Updating files: 29% (1135/3913) Updating files: 30% (1174/3913) Updating files: 31% (1214/3913) Updating files: 32% (1253/3913) Updating files: 33% (1292/3913) Updating files: 34% (1331/3913) Updating files: 35% (1370/3913) Updating files: 36% (1409/3913) Updating files: 37% (1448/3913) Updating files: 38% (1487/3913) Updating files: 39% (1527/3913) Updating files: 40% (1566/3913) Updating files: 41% (1605/3913) Updating files: 42% (1644/3913) Updating files: 43% (1683/3913) Updating files: 43% (1702/3913) Updating files: 44% (1722/3913) Updating files: 45% (1761/3913) Updating files: 46% (1800/3913) Updating files: 47% (1840/3913) Updating files: 48% (1879/3913) Updating files: 49% (1918/3913) Updating files: 50% (1957/3913) Updating files: 51% (1996/3913) Updating files: 52% (2035/3913) Updating files: 53% (2074/3913) Updating files: 54% (2114/3913) Updating files: 55% (2153/3913) Updating files: 56% (2192/3913) Updating files: 57% (2231/3913) Updating files: 58% (2270/3913) Updating files: 59% (2309/3913) Updating files: 60% (2348/3913) Updating files: 61% (2387/3913) Updating files: 62% (2427/3913) Updating files: 63% (2466/3913) Updating files: 64% (2505/3913) Updating files: 65% (2544/3913) Updating files: 66% (2583/3913) Updating files: 66% (2611/3913) Updating files: 67% (2622/3913) Updating files: 68% (2661/3913) Updating files: 69% (2700/3913) Updating files: 70% (2740/3913) Updating files: 71% (2779/3913) Updating files: 72% (2818/3913) Updating files: 73% (2857/3913) Updating files: 74% (2896/3913) Updating files: 75% (2935/3913) Updating files: 76% (2974/3913) Updating files: 77% (3014/3913) Updating files: 78% (3053/3913) Updating files: 79% (3092/3913) Updating files: 80% (3131/3913) Updating files: 81% (3170/3913) Updating files: 82% (3209/3913) Updating files: 82% (3234/3913) Updating files: 83% (3248/3913) Updating files: 84% (3287/3913) Updating files: 85% (3327/3913) Updating files: 86% (3366/3913) Updating files: 87% (3405/3913) Updating files: 88% (3444/3913) Updating files: 89% (3483/3913) Updating files: 90% (3522/3913) Updating files: 91% (3561/3913) Updating files: 92% (3600/3913) Updating files: 93% (3640/3913) Updating files: 94% (3679/3913) Updating files: 95% (3718/3913) Updating files: 96% (3757/3913) Updating files: 97% (3796/3913) Updating files: 98% (3835/3913) Updating files: 99% (3874/3913) Updating files: 100% (3913/3913) Updating files: 100% (3913/3913), done.
+2025-12-30T00:18:12Z INFO[0000] Resolved base name node:20-alpine to builder
+2025-12-30T00:18:12Z INFO[0000] Resolved base name node:20-alpine to runner
+2025-12-30T00:18:12Z INFO[0000] Using dockerignore file: /repo/.dockerignore
+2025-12-30T00:18:12Z INFO[0000] Retrieving image manifest node:20-alpine
+2025-12-30T00:18:12Z INFO[0000] Retrieving image node:20-alpine from registry index.docker.io
+2025-12-30T00:18:13Z INFO[0000] Retrieving image manifest node:20-alpine
+2025-12-30T00:18:13Z INFO[0000] Returning cached image manifest
+2025-12-30T00:18:13Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-30T00:18:13Z INFO[0001] Returning cached image manifest
+2025-12-30T00:18:13Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-30T00:18:13Z INFO[0001] Returning cached image manifest
+2025-12-30T00:18:13Z INFO[0001] Built cross stage deps: map[0:[/app/package.json /app/package-lock.json /app/node_modules /app/dist]]
+2025-12-30T00:18:13Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-30T00:18:13Z INFO[0001] Returning cached image manifest
+2025-12-30T00:18:13Z INFO[0001] Retrieving image manifest node:20-alpine
+2025-12-30T00:18:13Z INFO[0001] Returning cached image manifest
+2025-12-30T00:18:13Z INFO[0001] Executing 0 build triggers
+2025-12-30T00:18:13Z INFO[0001] Building stage 'node:20-alpine' [idx: '0', base-idx: '-1']
+2025-12-30T00:18:13Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4972/hyperlift-4972/cache:9754597c2bce11ef817bf63fd44a434c8571356218ce1baa27b6d5414c721017...
+2025-12-30T00:18:13Z INFO[0001] Using caching version of cmd: RUN apk add --no-cache python3 make g++ gcc libc-dev
+2025-12-30T00:18:13Z INFO[0001] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4972/hyperlift-4972/cache:a5b7f83e42a6ab466b9d6dab241ffc0ad9dda528abf2b7110009aae7ad9ec2a7...
+2025-12-30T00:18:14Z INFO[0001] Using caching version of cmd: RUN npm ci --include=dev
+2025-12-30T00:18:14Z INFO[0002] Checking for cached layer harbor-hyperlift.namecheapcloud.net/production-hyperlift-4972/hyperlift-4972/cache:3363a4deb10204507888f8f90b79d3225b3f69c3c888c84ed8f80cf354eecde3...
+2025-12-30T00:18:14Z INFO[0002] No cached layer found for cmd RUN echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"
+2025-12-30T00:18:14Z INFO[0002] Unpacking rootfs as cmd COPY package.json package-lock.json ./ requires it.
+2025-12-30T00:18:16Z INFO[0004] ARG BUILD_VERSION=20251218-v4
+2025-12-30T00:18:16Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-30T00:18:16Z INFO[0004] ENV BUILD_VERSION=${BUILD_VERSION}
+2025-12-30T00:18:16Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-30T00:18:16Z INFO[0004] ENV NODE_OPTIONS="--max-old-space-size=2048"
+2025-12-30T00:18:16Z INFO[0004] No files changed in this command, skipping snapshotting.
+2025-12-30T00:18:16Z INFO[0004] RUN apk add --no-cache python3 make g++ gcc libc-dev
+2025-12-30T00:18:16Z INFO[0004] Found cached layer, extracting to filesystem
+2025-12-30T00:18:30Z INFO[0018] WORKDIR /app
+2025-12-30T00:18:30Z INFO[0018] Cmd: workdir
+2025-12-30T00:18:30Z INFO[0018] Changed working directory to /app
+2025-12-30T00:18:30Z INFO[0018] Creating directory /app with uid -1 and gid -1
+2025-12-30T00:18:30Z INFO[0018] Taking snapshot of files...
+2025-12-30T00:18:30Z INFO[0018] COPY package.json package-lock.json ./
+2025-12-30T00:18:30Z INFO[0018] Taking snapshot of files...
+2025-12-30T00:18:30Z INFO[0018] RUN npm ci --include=dev
+2025-12-30T00:18:30Z INFO[0018] Found cached layer, extracting to filesystem
+2025-12-30T00:19:20Z INFO[0068] COPY tsconfig.json ./
+2025-12-30T00:19:20Z INFO[0068] Taking snapshot of files...
+2025-12-30T00:19:20Z INFO[0068] COPY vite.config.ts ./
+2025-12-30T00:19:20Z INFO[0068] Taking snapshot of files...
+2025-12-30T00:19:20Z INFO[0068] COPY tailwind.config.ts ./
+2025-12-30T00:19:20Z INFO[0068] Taking snapshot of files...
+2025-12-30T00:19:20Z INFO[0068] COPY postcss.config.js ./
+2025-12-30T00:19:20Z INFO[0068] Taking snapshot of files...
+2025-12-30T00:19:20Z INFO[0068] COPY components.json ./
+2025-12-30T00:19:20Z INFO[0068] Taking snapshot of files...
+2025-12-30T00:19:20Z INFO[0068] COPY shared ./shared
+2025-12-30T00:19:20Z INFO[0068] Taking snapshot of files...
+2025-12-30T00:19:20Z INFO[0068] COPY client ./client
+2025-12-30T00:19:21Z INFO[0068] Taking snapshot of files...
+2025-12-30T00:19:21Z INFO[0069] COPY server ./server
+2025-12-30T00:19:21Z INFO[0069] Taking snapshot of files...
+2025-12-30T00:19:22Z INFO[0069] RUN echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"
+2025-12-30T00:19:22Z INFO[0069] Initializing snapshotter ...
+2025-12-30T00:19:22Z INFO[0069] Taking snapshot of full filesystem...
+2025-12-30T00:19:30Z INFO[0078] Cmd: /bin/sh
+2025-12-30T00:19:30Z INFO[0078] Args: [-c echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"]
+2025-12-30T00:19:30Z INFO[0078] Running: [/bin/sh -c echo "🔨 Starting build process..." && timeout 600 npm run build 2>&1 || { EXIT_CODE=$?; if [ $EXIT_CODE -eq 124 ]; then echo "❌ Build timeout after 10 minutes"; fi; exit $EXIT_CODE; } && echo "✅ Build completed successfully"]
+2025-12-30T00:19:30Z 🔨 Starting build process...
+2025-12-30T00:19:30Z
+2025-12-30T00:19:30Z > rest-express@1.0.0 build
+2025-12-30T00:19:30Z > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+2025-12-30T00:19:30Z
+2025-12-30T00:19:31Z vite v5.4.14 building for production...
+2025-12-30T00:19:31Z transforming...
+2025-12-30T00:19:35Z ✓ 66 modules transformed.
+2025-12-30T00:19:35Z x Build failed in 4.91s
+2025-12-30T00:19:35Z error during build:
+2025-12-30T00:19:35Z Could not resolve "./AdminOrdersManagement" from "client/src/pages/Index.tsx"
+2025-12-30T00:19:35Z file: /app/client/src/pages/Index.tsx
+2025-12-30T00:19:35Z at getRollupError (file:///app/node_modules/rollup/dist/es/shared/parseAst.js:396:41)
+2025-12-30T00:19:35Z at error (file:///app/node_modules/rollup/dist/es/shared/parseAst.js:392:42)
+2025-12-30T00:19:35Z at ModuleLoader.handleInvalidResolvedId (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20065:24)
+2025-12-30T00:19:35Z at file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20025:26
+2025-12-30T00:19:36Z error building image: error building stage: failed to execute command: waiting for process to exit: exit status 1
