@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <meta name="x-apple-disable-message-reformatting">
+    <title>EduFiliova Voucher</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #f0f1f5; font-family: Arial, Helvetica, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+        .header { background-color: #a0fab2; padding: 30px 40px; text-align: center; }
+        .header img { max-width: 200px; height: auto; display: block; }
+        .content { padding: 40px; color: #333; line-height: 1.6; }
+        .content h2 { color: #2f5a4e; font-size: 24px; margin-top: 20px; margin-bottom: 15px; }
+        .content p { margin: 10px 0; color: #666; font-size: 16px; }
+        .voucher-code { background-color: #f9f9f9; border: 2px solid #2f5a4e; padding: 20px; margin: 20px 0; text-align: center; border-radius: 8px; }
+        .voucher-code .label { color: #999; font-size: 12px; text-transform: uppercase; margin-bottom: 10px; }
+        .voucher-code .code { font-size: 24px; font-weight: bold; color: #2f5a4e; font-family: 'Courier New', monospace; letter-spacing: 2px; }
+        .footer { padding: 20px 40px; text-align: center; color: #999; font-size: 12px; border-top: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Logo -->
+        <div class="header">
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <p>Hi {{fullName}},</p>
+
+            <h2>Your Voucher Code</h2>
+            <p>Thank you for your purchase! Below is your EduFiliova voucher code that you can use to access courses and learning materials.</p>
+
+            <div class="voucher-code">
+                <div class="label">Voucher Code</div>
+                <div class="code">{{voucherCode}}</div>
+            </div>
+
+            <h2>How to Use Your Voucher</h2>
+            <p>1. Visit EduFiliova and log into your account</p>
+            <p>2. Navigate to the course or product you wish to purchase</p>
+            <p>3. Enter this voucher code at checkout</p>
+            <p>4. Your discount will be applied automatically</p>
+
+            <h2>Voucher Details</h2>
+            <p><strong>Valid Until:</strong> {{expiresAt}}</p>
+            <p><strong>Discount Amount:</strong> ${{amount}}</p>
+            <p><strong>Personal Message:</strong> {{personalMessage}}</p>
+
+            <p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+
+            <p>Happy learning!<br><strong>The EduFiliova Team</strong></p>
+        </div>
+
+        <!-- Enhanced Professional Footer -->
+        <div style="background: linear-gradient(135deg, #0c332c 0%, #1a4a42 100%); padding: 40px 30px; color: #ffffff;">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <!-- Quick Links Grid -->
+                <div style="display: table; width: 100%; margin-bottom: 30px;">
+                    <div style="display: table-cell; width: 50%; padding: 0 15px; vertical-align: top; padding-left: 0;">
+                        <div style="margin-bottom: 25px;">
+                            <div style="color: #a0fab2; font-weight: bold; font-size: 12px; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px; border-bottom: 1px solid #1a4a42; padding-bottom: 8px;">Support</div>
+                            <div style="font-size: 12px; line-height: 1.9; color: #d4e4df;">
+                                <a href="mailto:support@edufiliova.com" style="color:#a0fab2; text-decoration:none; font-weight: 500;">support@edufiliova.com</a><br>
+                                <a href="https://edufiliova.com/help" style="color:#a0fab2; text-decoration:none; font-weight: 500;">Help Center</a><br>
+                                <a href="https://edufiliova.com/blog" style="color:#a0fab2; text-decoration:none; font-weight: 500;">Blog</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: table-cell; width: 50%; padding: 0 15px; vertical-align: top; padding-right: 0;">
+                        <div style="margin-bottom: 25px;">
+                            <div style="color: #a0fab2; font-weight: bold; font-size: 12px; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px; border-bottom: 1px solid #1a4a42; padding-bottom: 8px;">Resources</div>
+                            <div style="font-size: 12px; line-height: 1.9; color: #d4e4df;">
+                                <a href="https://edufiliova.com/login" style="color:#a0fab2; text-decoration:none; font-weight: 500;">Dashboard</a><br>
+                                <a href="https://edufiliova.com/about" style="color:#a0fab2; text-decoration:none; font-weight: 500;">About Us</a><br>
+                                <a href="https://edufiliova.com/shop" style="color:#a0fab2; text-decoration:none; font-weight: 500;">Digital Resources</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Important Info Box -->
+                <div style="background-color: rgba(255,255,255,0.05); padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+                    <div style="font-size: 11px; line-height: 1.8; color: #c7d8d3;">
+                        <a href="https://edufiliova.com/community-guidelines" style="color:#a0fab2; text-decoration:none; font-weight: 500;">Community Guidelines</a>
+                    </div>
+                </div>
+
+                <div style="height: 1px; background-color: #1a4a42; margin: 20px 0;"></div>
+
+                <!-- Footer Bottom -->
+                <div style="text-align: center; color: #8fa9a3; font-size: 11px; padding-top: 15px; border-top: 1px solid #1a4a42;">
+                    <p style="margin: 5px 0;">&copy; 2025 EduFiliova. All rights reserved.</p>
+                    <p style="margin: 5px 0;">This email was sent to {{email}}</p>
+                    <div style="text-align: center; margin: 15px 0;">
+                        <a href="https://edufiliova.com/unsubscribe" style="color: #a0fab2; text-decoration: none; margin: 0 8px; font-size: 11px; font-weight: bold;">Unsubscribe</a> | 
+                        <a href="https://edufiliova.com/privacy" style="color: #a0fab2; text-decoration: none; margin: 0 8px; font-size: 11px; font-weight: bold;">Privacy Policy</a> | 
+                        <a href="https://edufiliova.com/terms" style="color: #a0fab2; text-decoration: none; margin: 0 8px; font-size: 11px; font-weight: bold;">Terms</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{
+  "book": {
+    "title": "Grade 7 Social Studies",
+    "grade": 7,
+    "language": "en",
+    "chapters": [
+      {
+        "id": "C01",
+        "title": "Geography",
+        "lessons": [
+          {
+            "id": "SS-7-GEO-001",
+            "lessonNumber": 1,
+            "lessonOrder": 1,
+            "locked": false,
+            "title": "Understanding Maps and Globes",
+            "content": "Maps and globes are important tools for understanding our world. A map is a flat representation of Earth's surface, while a globe is a three-dimensional model. Both use symbols, colors, and labels to show geographic features like continents, countries, cities, mountains, and rivers.",
+            "examples": [
+              {"problem": "Explain the difference between physical and political maps", "solution": ["Step 1: Physical maps show natural features like mountains, rivers, and elevation", "Step 2: Political maps show human-made boundaries like countries, states, and cities", "Step 3: Physical maps use colors for elevation, political maps use colors for different regions"]},
+              {"problem": "Why might you use a globe instead of a flat map?", "solution": ["Step 1: Globes show true shapes and sizes of continents", "Step 2: Flat maps distort areas, especially near the poles", "Step 3: Globes help understand distance and direction better"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id": "Q1", "text": "What is the main advantage of a globe over a flat map?", "options": ["Easier to carry", "Shows true shapes and sizes", "Has more details"], "correct": 1},
+              {"id": "Q2", "text": "Which type of map would best show mountain ranges?", "options": ["Political map", "Physical map", "Road map"], "correct": 1},
+              {"id": "Q3", "text": "What do political maps primarily show?", "options": ["Natural features", "Human-made boundaries", "Weather patterns"], "correct": 1}
+            ]
+          },
+          {
+            "id": "SS-7-GEO-002",
+            "lessonNumber": 2,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Climate and Weather",
+            "content": "Climate and weather are related but different concepts. Weather is the day-to-day conditions in a specific place, while climate is the average weather patterns over many years. Climate is affected by factors like latitude, elevation, distance from water, and landforms.",
+            "examples": [
+              {"problem": "Compare the climate of a coastal city to an inland city at the same latitude", "solution": ["Step 1: Coastal cities have moderate temperatures due to water's heat capacity", "Step 2: Inland cities have more extreme temperatures - hotter summers, colder winters", "Step 3: Coastal areas often have more precipitation from ocean moisture"]},
+              {"problem": "Explain why mountaintop temperatures are cooler than valley temperatures", "solution": ["Step 1: Temperature decreases with elevation", "Step 2: Air becomes thinner at higher altitudes", "Step 3: Mountains receive less direct sunlight and lose heat quickly"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id": "Q4", "text": "What is the difference between weather and climate?", "options": ["Weather is long-term, climate is daily", "Weather is daily, climate is long-term averages", "They mean the same thing"], "correct": 1},
+              {"id": "Q5", "text": "Which factor most affects temperature as you move toward the poles?", "options": ["Elevation", "Latitude", "Distance from water"], "correct": 1}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "C02",
+        "title": "History",
+        "lessons": [
+          {
+            "id": "SS-7-HIST-001",
+            "lessonNumber": 3,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Ancient Civilizations",
+            "content": "Ancient civilizations developed around rivers because water provided irrigation for farming, transportation for trade, and fresh water for drinking. Major river valley civilizations included Mesopotamia (Tigris and Euphrates), Egypt (Nile), India (Indus), and China (Yellow River).",
+            "examples": [
+              {"problem": "Explain why the Nile River was so important to ancient Egypt", "solution": ["Step 1: Annual floods deposited fertile soil for farming", "Step 2: Provided transportation and trade routes", "Step 3: Source of fresh water in a desert region", "Step 4: Enabled Egyptian civilization to flourish for thousands of years"]},
+              {"problem": "Compare how Mesopotamians and Egyptians used their rivers differently", "solution": ["Step 1: Both used rivers for irrigation and transportation", "Step 2: Mesopotamians built complex canal systems for unpredictable flooding", "Step 3: Egyptians relied on predictable annual Nile floods", "Step 4: Different flooding patterns led to different agricultural techniques"]}
+            ],
+            "mediaUrl": "",
+            "quiz": [
+              {"id": "Q6", "text": "Why did ancient civilizations develop near rivers?", "options": ["Rivers provided water, transportation, and fertile soil", "Rivers were good for defense", "Rivers had fish to eat"], "correct": 0},
+              {"id": "Q7", "text": "Which river was most important to ancient Egyptian civilization?", "options": ["Tigris River", "Nile River", "Yellow River"], "correct": 1}
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

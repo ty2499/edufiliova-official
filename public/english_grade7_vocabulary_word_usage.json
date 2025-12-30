@@ -1,0 +1,132 @@
+{
+  "subject": "English",
+  "grade": 7,
+  "system": "all",
+  "chapters": [
+    {
+      "title": "Vocabulary & Word Usage",
+      "lessons": [
+        {
+          "id": "ENG-7-006",
+          "lessonNumber": 1,
+          "lessonOrder": 6,
+          "locked": false,
+          "title": "Synonyms & Antonyms",
+          "content": "Learn words with similar meanings (synonyms) and opposite meanings (antonyms).",
+          "examples": [
+            {"problem":"Synonym of 'Happy'?","solution":["Joyful, Cheerful, Glad"]},
+            {"problem":"Antonym of 'Hot'?","solution":["Cold, Cool"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q051","text":"Synonym of 'Big'?","options":["Large","Small","Tiny","Short"],"correct":0},
+            {"id":"ENG-Q052","text":"Antonym of 'Fast'?","options":["Slow","Quick","Rapid","Swift"],"correct":0},
+            {"id":"ENG-Q053","text":"Synonym of 'Angry'?","options":["Furious","Calm","Peaceful","Happy"],"correct":0},
+            {"id":"ENG-Q054","text":"Antonym of 'Happy'?","options":["Sad","Joyful","Excited","Glad"],"correct":0},
+            {"id":"ENG-Q055","text":"Synonym of 'Smart'?","options":["Intelligent","Dumb","Lazy","Weak"],"correct":0},
+            {"id":"ENG-Q056","text":"Antonym of 'Strong'?","options":["Weak","Powerful","Mighty","Tough"],"correct":0},
+            {"id":"ENG-Q057","text":"Synonym of 'Beautiful'?","options":["Pretty","Ugly","Plain","Boring"],"correct":0},
+            {"id":"ENG-Q058","text":"Antonym of 'Hot'?","options":["Cold","Warm","Boiling","Fiery"],"correct":0},
+            {"id":"ENG-Q059","text":"Synonym of 'Quick'?","options":["Fast","Slow","Sluggish","Late"],"correct":0},
+            {"id":"ENG-Q060","text":"Antonym of 'Light'?","options":["Heavy","Bright","Shiny","Clear"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-007",
+          "lessonNumber": 2,
+          "lessonOrder": 7,
+          "locked": true,
+          "title": "Homophones & Homonyms",
+          "content": "Learn words that sound the same but have different meanings (homophones) and words that are spelled the same but have different meanings (homonyms).",
+          "examples":[
+            {"problem":"Homophones: 'Pair' and 'Pear'","solution":["Same pronunciation, different meaning and spelling"]},
+            {"problem":"Homonyms: 'Bat' (animal) and 'Bat' (sports)","solution":["Same spelling, different meaning"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q061","text":"Homophone of 'Sea'?","options":["See","Tree","Tea","Bee"],"correct":0},
+            {"id":"ENG-Q062","text":"Homonym: 'Bank' meaning riverside?","options":["Yes","No"],"correct":0},
+            {"id":"ENG-Q063","text":"Homophone of 'Right'?","options":["Write","Rite","Rite","All"],"correct":0},
+            {"id":"ENG-Q064","text":"Homonym: 'Bark' of tree or dog?","options":["Both","Dog only","Tree only","None"],"correct":0},
+            {"id":"ENG-Q065","text":"Homophone: 'Flower'?","options":["Flour","Power","Tower","Shower"],"correct":0},
+            {"id":"ENG-Q066","text":"Homonym: 'Match' game or fire?","options":["Both","Game only","Fire only","None"],"correct":0},
+            {"id":"ENG-Q067","text":"Homophone: 'Two'?","options":["Too","To","Toe","All"],"correct":0},
+            {"id":"ENG-Q068","text":"Homonym: 'Spring' season or water source?","options":["Both","Season only","Water only","None"],"correct":0},
+            {"id":"ENG-Q069","text":"Homophone: 'Knight'?","options":["Night","Light","Right","Write"],"correct":0},
+            {"id":"ENG-Q070","text":"Homonym: 'Bat' animal or cricket tool?","options":["Both","Animal only","Tool only","None"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-008",
+          "lessonNumber": 3,
+          "lessonOrder": 8,
+          "locked": true,
+          "title": "Idioms & Phrases",
+          "content": "Learn common English idioms and phrases, and their meanings.",
+          "examples":[
+            {"problem":"Break a leg","solution":["Good luck"]},
+            {"problem":"Piece of cake","solution":["Something very easy"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q071","text":"Meaning of 'Hit the sack'?","options":["Go to sleep","Fight","Sleepy","None"],"correct":0},
+            {"id":"ENG-Q072","text":"Meaning of 'Once in a blue moon'?","options":["Rarely","Often","Always","Never"],"correct":0},
+            {"id":"ENG-Q073","text":"Meaning of 'Spill the beans'?","options":["Reveal a secret","Cook","Hide","Forget"],"correct":0},
+            {"id":"ENG-Q074","text":"Meaning of 'Under the weather'?","options":["Sick","Sunny","Happy","Sad"],"correct":0},
+            {"id":"ENG-Q075","text":"Meaning of 'Break the ice'?","options":["Make people comfortable","Break something","Fight","Sleep"],"correct":0},
+            {"id":"ENG-Q076","text":"Meaning of 'Piece of cake'?","options":["Easy","Hard","Impossible","Complicated"],"correct":0},
+            {"id":"ENG-Q077","text":"Meaning of 'Bite the bullet'?","options":["Face difficulty bravely","Run away","Cry","Eat"],"correct":0},
+            {"id":"ENG-Q078","text":"Meaning of 'Cost an arm and a leg'?","options":["Very expensive","Cheap","Nothing","Moderate"],"correct":0},
+            {"id":"ENG-Q079","text":"Meaning of 'Let the cat out of the bag'?","options":["Reveal secret","Hide secret","Cook","Sleep"],"correct":0},
+            {"id":"ENG-Q080","text":"Meaning of 'Hit the nail on the head'?","options":["Exactly right","Wrong","Almost","Partly right"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-009",
+          "lessonNumber": 4,
+          "lessonOrder": 9,
+          "locked": true,
+          "title": "Word Formation",
+          "content": "Learn how new words are formed using prefixes, suffixes, and root words.",
+          "examples":[
+            {"problem":"Happy + ness = Happiness","solution":["Form a noun using suffix '-ness'"]},
+            {"problem":"Un + happy = Unhappy","solution":["Form opposite using prefix 'Un-'"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q081","text":"Form noun: Kind + ?","options":["ness","ly","ful","ing"],"correct":0},
+            {"id":"ENG-Q082","text":"Form adjective: Care + ?","options":["ful","ness","ly","ing"],"correct":0},
+            {"id":"ENG-Q083","text":"Form opposite: Regular + ?","options":["Ir","Un","Re","In"],"correct":0},
+            {"id":"ENG-Q084","text":"Form verb: Soft + ?","options":["en","ness","ly","ful"],"correct":0},
+            {"id":"ENG-Q085","text":"Form adverb: Quick + ?","options":["ly","ness","ful","ing"],"correct":0},
+            {"id":"ENG-Q086","text":"Form noun: Brave + ?","options":["ry","ness","ly","ful"],"correct":1},
+            {"id":"ENG-Q087","text":"Form adjective: Hope + ?","options":["ful","ness","ly","ing"],"correct":0},
+            {"id":"ENG-Q088","text":"Form opposite: Possible + ?","options":["Im","Un","In","Ir"],"correct":0},
+            {"id":"ENG-Q089","text":"Form noun: Happy + ?","options":["ness","ly","ful","ing"],"correct":0},
+            {"id":"ENG-Q090","text":"Form adverb: Careful + ?","options":["ly","ness","ful","ing"],"correct":0}
+          ]
+        },
+        {
+          "id": "ENG-7-010",
+          "lessonNumber": 5,
+          "lessonOrder": 10,
+          "locked": true,
+          "title": "Contextual Vocabulary",
+          "content": "Learn to choose the correct word based on context and sentence meaning.",
+          "examples":[
+            {"problem":"She felt very ____ after winning.","solution":["happy, joyful, excited"]},
+            {"problem":"He entered the room ____ and quietly.","solution":["slowly, silently"]}
+          ],
+          "quiz":[
+            {"id":"ENG-Q091","text":"Fill: He is very ___ at football.","options":["good","well","bad","better"],"correct":0},
+            {"id":"ENG-Q092","text":"Choose: She ran ___ to catch the bus.","options":["quickly","quick","fast","fastly"],"correct":0},
+            {"id":"ENG-Q093","text":"Fill: The cake tastes ___","options":["delicious","delightful","sweetly","bitter"],"correct":0},
+            {"id":"ENG-Q094","text":"Choose: He speaks ___ English.","options":["fluent","fluently","fluency","flow"],"correct":1},
+            {"id":"ENG-Q095","text":"Fill: The movie was very ___","options":["interesting","interest","interested","interests"],"correct":0},
+            {"id":"ENG-Q096","text":"Choose: She sings ___","options":["beautifully","beautiful","beauty","beautify"],"correct":0},
+            {"id":"ENG-Q097","text":"Fill: The room was ___","options":["clean","cleanly","cleansing","cleaner"],"correct":0},
+            {"id":"ENG-Q098","text":"Choose: He did the work ___","options":["carefully","careful","caring","care"],"correct":0},
+            {"id":"ENG-Q099","text":"Fill: The story is very ___","options":["exciting","excite","excited","excitement"],"correct":0},
+            {"id":"ENG-Q100","text":"Choose: She dressed ___","options":["nicely","nice","nicer","nicest"],"correct":0}
+          ]
+        }
+      ]
+    }
+  ]
+}

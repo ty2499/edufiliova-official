@@ -1,0 +1,3767 @@
+{
+  "book": {
+    "title": "Grade 8 Mathematics",
+    "grade": 8,
+    "language": "en",
+    "chapters": [
+      {
+        "id": "M01",
+        "title": "Algebraic Expressions",
+        "lessons": [
+          {
+            "id": "MAT-8-001",
+            "lessonNumber": 1,
+            "lessonOrder": 1,
+            "locked": false,
+            "title": "Variables and constants",
+            "content": "Welcome to the exciting world of Algebra! Today, we'll be learning about the basic building blocks of algebra: variables and constants. Algebra is a branch of mathematics that helps us describe mathematical situations using symbols. It can be very useful in solving real-life problems like calculating your shopping costs, figuring out travel times, or even analyzing sports statistics.\n\nLet's start by understanding what variables and constants are.\n\n**Variables**\nVariables are symbols, often letters, that represent unknown numbers or values. They are like placeholders that can take different values. For example, in the expression 3x + 5, 'x' is the variable. Variables are useful because they allow us to write general expressions and equations. We can then substitute them with specific numbers to find out what the expression or equation equals.\n\n**Constants**\nConstants, on the other hand, are fixed values that do not change. They are numbers without any variables attached to them. In the same expression 3x + 5, '5' is the constant. It remains the same no matter what value the variable 'x' takes.\n\nTogether, variables and constants create 'algebraic expressions.' An algebraic expression is a mathematical phrase involving at least one variable, along with constants and operation symbols like addition, subtraction, multiplication, or division.\n\n**Why Are Variables and Constants Important?**\nVariables and constants let us generalize mathematical operations and solve a wide range of problems without knowing the exact values involved. For instance, navigators use variables to plot courses in airplanes, and engineers calculate loads in structures using algebraic expressions.\n\nNow that we understand the basic definitions, let's look at how we can work with these in practical scenarios.",
+            "examples": [
+              {
+                "problem": "Example 1: Consider the expression 4x + 7. Evaluate the expression when x = 3.",
+                "solution": [
+                  "Step 1: Substitute 3 for x in the expression, giving us 4(3) + 7.",
+                  "Step 2: Multiply 4 by 3 to get 12.",
+                  "Step 3: Add the constant 7 to 12, resulting in 19."
+                ]
+              },
+              {
+                "problem": "Example 2: Simplify the expression 5a - 3a + 10.",
+                "solution": [
+                  "Step 1: Identify like terms (5a and -3a are like terms because they both have 'a' as the variable).",
+                  "Step 2: Subtract 3a from 5a, yielding 2a.",
+                  "Step 3: The simplified expression is 2a + 10."
+                ]
+              },
+              {
+                "problem": "Example 3: If the expression 7y - 2 equals 19, solve for the variable y.",
+                "solution": [
+                  "Step 1: Set up the equation from the expression: 7y - 2 = 19.",
+                  "Step 2: Add 2 to both sides to isolate the term with the variable: 7y = 21.",
+                  "Step 3: Divide both sides by 7 to solve for y: y = 3."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/9c948367-3d1f-4b53-bad2-5a3403f4f60b.png",
+            "quiz": [
+              {
+                "id": "Q001-1",
+                "text": "What is a variable?",
+                "options": [
+                  "A symbol that represents a number",
+                  "A fixed number",
+                  "A mathematical operation",
+                  "None of the above"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q001-2",
+                "text": "In the expression 9x + 2, what is the constant?",
+                "options": [
+                  "9",
+                  "x",
+                  "2",
+                  "9x"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q001-3",
+                "text": "Simplify the expression: 6n - 2n",
+                "options": [
+                  "4n",
+                  "8n",
+                  "12n",
+                  "4"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q001-4",
+                "text": "If y = 4, what is the value of 3y + 7?",
+                "options": [
+                  "10",
+                  "15",
+                  "19",
+                  "6"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q001-5",
+                "text": "What is the term for numbers that do not change?",
+                "options": [
+                  "Variables",
+                  "Constants",
+                  "Operators",
+                  "Expressions"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q001-6",
+                "text": "Which part of the expression 5x + 8 is the variable?",
+                "options": [
+                  "5",
+                  "x",
+                  "8",
+                  "+ 8"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q001-7",
+                "text": "Evaluate the expression 2b + 3 when b = 5.",
+                "options": [
+                  "7",
+                  "10",
+                  "13",
+                  "8"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q001-8",
+                "text": "In the expression a + 3b, how many variables are there?",
+                "options": [
+                  "0",
+                  "1",
+                  "2",
+                  "3"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q001-9",
+                "text": "What is the coefficient of 'y' in the expression 12y + 4?",
+                "options": [
+                  "12",
+                  "y",
+                  "16",
+                  "4"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q001-10",
+                "text": "Solve for x: 2x + 5 = 17",
+                "options": [
+                  "6",
+                  "5",
+                  "7",
+                  "12"
+                ],
+                "correct": 1
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-002",
+            "lessonNumber": 2,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Like and unlike terms",
+            "content": "Hello, students! Today, we will delve into the exciting world of algebra and learn about like and unlike terms. This is a fundamental concept that will help you simplify and solve algebraic expressions.\n\n### Understanding Algebraic Expressions\n\nAn algebraic expression is a combination of numbers, variables (like x or y), and arithmetic operations such as addition, subtraction, multiplication, and division. For instance, 3x + 5, 2a - b, and 4m^2 + 3n - 7 are all algebraic expressions.\n\n### What Are Terms?\n\nBefore we dive into like and unlike terms, let's understand what a 'term' is. In algebra, a term is a single mathematical expression that might be a number, a variable, or the product of numbers and variables. For example, in the expression 4x + 7y - 3, there are three terms: 4x, 7y, and -3.\n\n### Like Terms\n\nLike terms are the terms in an expression that have the same variables raised to the same powers. The coefficients (the numerical parts) of these terms can be different. For example, in the expression 3x + 5x - 2y, the terms 3x and 5x are like terms because they have the same variable, 'x', raised to the same power.\n\n### Unlike Terms\n\nUnlike terms are terms that have different variables or the same variables raised to different powers. In the expression 4a^2 + 3b + 7a, 4a^2 and 7a are unlike terms because even though they both have the variable 'a', they are raised to different powers.\n\n### Why Do Like and Unlike Terms Matter?\n\nKnowing how to identify like and unlike terms is crucial because it allows us to simplify algebraic expressions effectively. Simplifying means combining like terms to make expressions easier to work with. For instance, in solving equations, we often reduce the number of terms by combining like terms, making it easier to find the value of variables.\n\nLet's solidify these concepts with some examples and practice questions!\n\n### Engagement\n\nRemember, understanding these basic concepts will make algebra much easier as you get into more complex problems. Think of like terms as siblings—similar, and they like to 'hang out' or combine with each other, but unlike terms are like distant cousins—they have differences that keep them apart. Now, let's apply what we've learned in some worked examples.\n\nKeep on practicing, and don't hesitate to ask questions if you're unsure about something. Happy learning!",
+            "examples": [
+              {
+                "problem": "Simplify the expression: 2x + 3x - 4y + 7 - 3y.",
+                "solution": [
+                  "Step 1: Identify like terms in the expression.",
+                  "Step 2: Combine the like terms 2x and 3x to get 5x.",
+                  "Step 3: Combine the unlike terms -4y and -3y to get -7y.",
+                  "Step 4: The constant 7 remains unchanged as no other constants are present.",
+                  "Final Expression: 5x - 7y + 7."
+                ]
+              },
+              {
+                "problem": "Simplify the expression: 5a + 8 + 3a - 4.",
+                "solution": [
+                  "Step 1: Identify like terms.",
+                  "Step 2: Combine the like terms 5a and 3a to get 8a.",
+                  "Step 3: Simplify the constants 8 and -4 to get 4.",
+                  "Final Expression: 8a + 4."
+                ]
+              },
+              {
+                "problem": "Simplify the expression: x^2 + 2x - x^2 + 4x + 1.",
+                "solution": [
+                  "Step 1: Identify and combine like terms.",
+                  "Step 2: x^2 and -x^2 cancel each other out as they are like terms.",
+                  "Step 3: Combine 2x and 4x to get 6x.",
+                  "Step 4: The term '1' remains unchanged.",
+                  "Final Expression: 6x + 1."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/22c5fea7-5cc1-4d8d-881e-e395bb59ccb7.png",
+            "quiz": [
+              {
+                "id": "Q002-1",
+                "text": "Which of the following are like terms?",
+                "options": [
+                  "3x and 4x",
+                  "2x^2 and 2x",
+                  "5y and 5z",
+                  "x and y"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q002-2",
+                "text": "What is the simplified form of the expression: 5n + 3m - 2n + m?",
+                "options": [
+                  "5n + 4m",
+                  "3n + 4m",
+                  "7n + 4m",
+                  "3n + 3m"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q002-3",
+                "text": "In the expression 6ab + 2a, what are the like terms?",
+                "options": [
+                  "6ab and 2a",
+                  "6ab and a",
+                  "2a and a",
+                  "None"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q002-4",
+                "text": "Which terms are unlike: 4k, 4a, 4, 4k?",
+                "options": [
+                  "4k and 4a",
+                  "4k and 4k",
+                  "4a and 4",
+                  "4k and 4"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q002-5",
+                "text": "Which of these statements is true?",
+                "options": [
+                  "x and x^2 are like terms",
+                  "y and -y are like terms",
+                  "2p and 2q are like terms",
+                  "3x and 3x are unlike terms"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q002-6",
+                "text": "If you combine like terms in the expression 4j + 7 - 2j, what do you get?",
+                "options": [
+                  "2j + 7",
+                  "6j + 7",
+                  "2j - 7",
+                  "9j - 14"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q002-7",
+                "text": "Which set of terms can be combined?",
+                "options": [
+                  "a^2, ab",
+                  "3xy, 2xy",
+                  "a, a^2",
+                  "ab, a"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q002-8",
+                "text": "What is the result of simplifying: 9x + 3 - 4x + 1?",
+                "options": [
+                  "13x + 4",
+                  "5x + 4",
+                  "4x + 3",
+                  "5x + 3"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q002-9",
+                "text": "Are 2x and x^2 considered like terms?",
+                "options": [
+                  "Yes",
+                  "No",
+                  "Sometimes",
+                  "Cannot be determined"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q002-10",
+                "text": "Which of the following is not a like term with 7m?",
+                "options": [
+                  "7m",
+                  "4m",
+                  "m",
+                  "m^2"
+                ],
+                "correct": 3
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-003",
+            "lessonNumber": 3,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Addition and subtraction of algebraic expressions",
+            "content": "Welcome to Lesson 3 of our Algebraic Expressions chapter! Today, we are going to learn about the addition and subtraction of algebraic expressions. This is an essential topic that helps you understand how to manipulate and simplify expressions, which will be useful as you progress in mathematics.\n\n**What is an Algebraic Expression?**\n\nAn algebraic expression is a combination of numbers, variables (like x or y), and arithmetic operations such as addition, subtraction, multiplication, and division. For example, 3x + 5, 4a - 7b + 9, and 2n + 3m - 5 are all algebraic expressions.\n\n**Key Concepts:**\n\n1. **Like Terms**: These are terms in an expression that have the same variable raised to the same power. For example, in the expression 3x + 4x, both terms are like terms because they contain the variable x with the same power of 1.\n\n2. **Unlike Terms**: These are terms that do not have the same variables or powers. For example, 3x and 5y are unlike terms because they contain different variables.\n\n3. **Coefficient**: This is the numerical part of a term that contains a variable. For instance, in 5x, 5 is the coefficient of the term.\n\n**Addition and Subtraction of Algebraic Expressions**:\n\nWhen adding or subtracting algebraic expressions, we combine like terms. This involves grouping together terms that have the same variable raised to the same power and then adding or subtracting their coefficients.\n\n**Steps to Add and Subtract Algebraic Expressions:**\n\n1. Identify and group like terms.\n2. Add or subtract the coefficients of the like terms.\n3. Keep the variables and their exponents unchanged.\n\n**Example**: Let's consider the example of adding 2x + 3 and 4x - 1.\n\n- Step 1: Identify like terms: 2x and 4x are like terms, while 3 and -1 are like terms.\n- Step 2: Add the coefficients of the like terms: (2x + 4x) and (3 + (-1)).\n- Step 3: The expression becomes 6x + 2.\n\nIn subtraction, the process is similar, but we need to distribute the negative sign through the terms. For example, subtracting (4x - 1) from (2x + 3):\n\n- Step 1: Rewrite the subtraction as addition of negative: (2x + 3) + (-4x + 1).\n- Step 2: Combine like terms: (2x + (-4x)) and (3 + 1).\n- Step 3: The expression becomes -2x + 4.\n\n**Practical Applications**:\n\nThe addition and subtraction of expressions are used in everyday problem-solving, such as calculating distances, finding costs, and developing formulas in various scenarios such as engineering or physics.\n\nNow, let's move onto some examples to practice these concepts further.",
+            "examples": [
+              {
+                "problem": "Add the expressions 5x + 3 and 2x + 7.",
+                "solution": [
+                  "Step 1: Identify like terms.",
+                  "Step 2: Add the coefficients of like terms: (5x + 2x) and (3 + 7).",
+                  "Step 3: Simplify the expression to get 7x + 10."
+                ]
+              },
+              {
+                "problem": "Subtract the expression 3x - 4 from 7x + 2.",
+                "solution": [
+                  "Step 1: Rewrite subtraction as adding the negative: (7x + 2) + (-3x + 4).",
+                  "Step 2: Combine like terms: (7x - 3x) and (2 + 4).",
+                  "Step 3: Simplify the expression to get 4x + 6."
+                ]
+              },
+              {
+                "problem": "Add the expressions 9a + 2b - 5 and 4a - 3b + 7.",
+                "solution": [
+                  "Step 1: Identify like terms.",
+                  "Step 2: Add the coefficients of the like terms: (9a + 4a), (2b - 3b), and (-5 + 7).",
+                  "Step 3: Simplify the expression to get 13a - b + 2."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/c11450be-77a6-459b-ad71-c0e50e14c059.png",
+            "quiz": [
+              {
+                "id": "Q003-1",
+                "text": "What is the coefficient of x in the expression 7x + 3?",
+                "options": [
+                  "7",
+                  "3",
+                  "x",
+                  "10"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q003-2",
+                "text": "Which of the following are like terms?",
+                "options": [
+                  "4x and 5y",
+                  "3a and 3b",
+                  "7x and 2x",
+                  "9 and 9y"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q003-3",
+                "text": "Simplify: (3x + 4) - (x - 2).",
+                "options": [
+                  "2x + 6",
+                  "4x + 6",
+                  "2x + 2",
+                  "3x - x + 2"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q003-4",
+                "text": "Add: 6y + 5 and 3y - 2.",
+                "options": [
+                  "9y - 3",
+                  "6y + 3y + 3",
+                  "9y + 3",
+                  "11y + 3"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q003-5",
+                "text": "What do you get when you subtract (2z - 4) from (5z + 6)?",
+                "options": [
+                  "7z - 2",
+                  "3z + 10",
+                  "3z + 2",
+                  "7z + 10"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q003-6",
+                "text": "Which term is not a like term with 8x?",
+                "options": [
+                  "8x",
+                  "7x",
+                  "2x^2",
+                  "3x"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q003-7",
+                "text": "If you add x + 2x, what is the simplified form?",
+                "options": [
+                  "3x",
+                  "x^2",
+                  "x",
+                  "2x"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q003-8",
+                "text": "Simplify: 5a - (3a - 2).",
+                "options": [
+                  "2a + 2",
+                  "8a - 2",
+                  "2a - 2",
+                  "8a + 2"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q003-9",
+                "text": "The expression 4x - x is equal to:",
+                "options": [
+                  "3x",
+                  "5x",
+                  "4x",
+                  "x"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q003-10",
+                "text": "Subtract: 7b - 2 from 10b + 5.",
+                "options": [
+                  "3b + 3",
+                  "17b + 3",
+                  "3b + 7",
+                  "10b - 7b"
+                ],
+                "correct": 2
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-004",
+            "lessonNumber": 4,
+            "lessonOrder": 4,
+            "locked": true,
+            "title": "Multiplication of algebraic expressions",
+            "content": "Welcome to our lesson on multiplying algebraic expressions! Algebraic expressions are made up of variables, numbers, and operations. For example, in the expression 2x + 3, 'x' is a variable, '2' is a coefficient, and '+' is an operation. Today, we'll learn how to multiply these expressions. When you multiply algebraic expressions, you apply the distributive property and use rules of arithmetic to simplify them.\n\nLet's start by understanding why we need to multiply algebraic expressions. This process is very useful in algebra for expanding expressions and solving equations. For example, multiplying can help you find the area of a rectangle if each side is represented by an algebraic expression.\n\n### Steps for Multiplying Algebraic Expressions\n1. **Distribute Each Term:** For expressions like (a + b)(c + d), distribute each term in the first set of parentheses to each term in the second set. This is known as the distributive property.\n2. **Multiply Coefficients and Variables:** Multiply the numerical coefficients and variables separately. Remember, multiplying variables is straightforward: x * x = x².\n3. **Combine Like Terms:** After distributing and multiplying, often you'll have similar terms that you can combine. Like terms are terms that have the same variables raised to the same power.\n4. **Simplify Further if Possible:** Sometimes simplifying the expression involves factoring back out or reducing coefficients or constants.\n\n### Specific Rules to Remember\n- When multiplying variables with the same base, add the exponents.\n- Always look out for like terms after distribution to combine them.\n\nNow, let's explore this topic with some practical examples.\n",
+            "examples": [
+              {
+                "problem": "Multiply (2x + 3)(x + 4)",
+                "solution": [
+                  "Step 1: Distribute each term in the first parenthesis across each term in the second one: 2x(x) + 2x(4) + 3(x) + 3(4)",
+                  "Step 2: Perform the multiplications: 2x^2 + 8x + 3x + 12",
+                  "Step 3: Combine like terms: 2x^2 + 11x + 12"
+                ]
+              },
+              {
+                "problem": "Multiply (x + 5)(3x - 2)",
+                "solution": [
+                  "Step 1: Distribute each term: x(3x) + x(-2) + 5(3x) + 5(-2)",
+                  "Step 2: Perform the multiplications: 3x^2 - 2x + 15x - 10",
+                  "Step 3: Combine like terms: 3x^2 + 13x - 10"
+                ]
+              },
+              {
+                "problem": "Multiply (3x - 1)(x - 7)",
+                "solution": [
+                  "Step 1: Distribute each term: 3x(x) + 3x(-7) - 1(x) - 1(-7)",
+                  "Step 2: Perform the multiplications: 3x^2 - 21x - x + 7",
+                  "Step 3: Combine like terms: 3x^2 - 22x + 7"
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/c99b08b0-1999-4ab4-8539-6b3fb8973adb.png",
+            "quiz": [
+              {
+                "id": "Q004-1",
+                "text": "What is the first step in multiplying algebraic expressions?",
+                "options": [
+                  "Combine like terms",
+                  "Distribute each term",
+                  "Simplify",
+                  "Factor"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q004-2",
+                "text": "What is (x + 2)(x + 3)?",
+                "options": [
+                  "x^2 + 5x + 6",
+                  "x^2 + 6",
+                  "2x + 5",
+                  "x^2 + 2x + 3x + 6"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q004-3",
+                "text": "If you multiply x by x, you get?",
+                "options": [
+                  "x",
+                  "2x",
+                  "2x^2",
+                  "x^2"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q004-4",
+                "text": "Which of the following distributions is correct for (2x + 3)(x + 4)?",
+                "options": [
+                  "2x(x) + 3(x)",
+                  "2x(+4) + 3",
+                  "2x(x) + 2x(4) + 3(x) + 3(4)",
+                  "2x(4) + 3(x+4)"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q004-5",
+                "text": "After distribution, what's the next step?",
+                "options": [
+                  "Combine like terms",
+                  "Factor the expression",
+                  "Add coefficients",
+                  "Multiply exponents"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q004-6",
+                "text": "What is the result of (x + 1)(x - 1)?",
+                "options": [
+                  "x^2 - 1",
+                  "x^2 + 1",
+                  "x^2",
+                  "x^2 - 2x - 1"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q004-7",
+                "text": "Which property is applied when multiplying expressions like (a + b)(c + d)?",
+                "options": [
+                  "Associative",
+                  "Distributive",
+                  "Commutative",
+                  "Identity"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q004-8",
+                "text": "What is 3(x+4)(2x+1) distributed?",
+                "options": [
+                  "3x^2 + 12x + 12",
+                  "6x^2 + 15x + 12",
+                  "6x^2 + 15x + 3",
+                  "6x^2 + 21x + 3"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q004-9",
+                "text": "What do you get if you multiply 2 by each term in (x+5)?",
+                "options": [
+                  "x+5",
+                  "2x+10",
+                  "2x+5",
+                  "5x+2"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q004-10",
+                "text": "How do you handle multiplying two variables with exponents, e.g., x^3 * x^2?",
+                "options": [
+                  "Add exponents",
+                  "Multiply exponents",
+                  "Subtract exponents",
+                  "Divide the bases"
+                ],
+                "correct": 0
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-005",
+            "lessonNumber": 5,
+            "lessonOrder": 5,
+            "locked": true,
+            "title": "Factorization",
+            "content": "Welcome to Lesson 5 of our Algebraic Expressions chapter! Today's focus is on factorization, a key skill in algebra. Factorization is the process of breaking down algebraic expressions into their simplest components, called factors. Factors are expressions that can be multiplied together to give the original expression.\n\nLet's start with a basic concept. Imagine you have a pizza cut into slices. Each slice represents a part that combines together to make the whole pizza. In algebra, the whole expression is like the pizza, and the factors are like the slices.\n\nWhy is factorization important? Factorization helps simplify expressions, making them easier to work with. It is particularly useful in solving equations, simplifying fractions, and finding roots of polynomials.\n\nThere are several common methods of factorization:\n1. **Common Factor Method**: Identify the greatest common factor of the terms and factor it out.\n2. **Difference of Squares**: Used when an expression is a difference of two perfect squares, patterned as \\(a^2 - b^2 = (a + b)(a - b)\\).\n3. **Trinomials**: Factor trinomials of the form \\(ax^2 + bx + c\\) into two binomials.\n4. **Grouping**: Used when an expression has four or more terms.\n\nLet's look at these methods with clear examples.",
+            "examples": [
+              {
+                "problem": "Factor the expression 12x^3y - 6x^2y^2.",
+                "solution": [
+                  "Step 1: Identify the greatest common factor of the terms, which is 6x^2y.",
+                  "Step 2: Factor out 6x^2y from each term: \\(12x^3y - 6x^2y^2 = 6x^2y(2x - y)\\).",
+                  "Step 3: The factorized form of the expression is 6x^2y(2x - y)."
+                ]
+              },
+              {
+                "problem": "Factor the expression x^2 - 16.",
+                "solution": [
+                  "Step 1: Recognize that this is a difference of squares: \\(x^2 - 16 = x^2 - 4^2\\).",
+                  "Step 2: Use the difference of squares formula \\(a^2 - b^2 = (a + b)(a - b)\\).",
+                  "Step 3: Factor into \\((x + 4)(x - 4)\\)."
+                ]
+              },
+              {
+                "problem": "Factor the trinomial x^2 + 5x + 6.",
+                "solution": [
+                  "Step 1: Identify two numbers that multiply to 6 and add to 5, which are 2 and 3.",
+                  "Step 2: Write the trinomial as the product of two binomials: \\((x + 2)(x + 3)\\).",
+                  "Step 3: Verify by expanding: \\((x + 2)(x + 3) = x^2 + 3x + 2x + 6 = x^2 + 5x + 6\\)."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/ba5813db-6ec6-4ca1-b65a-d58f8caec133.png",
+            "quiz": [
+              {
+                "id": "Q005-1",
+                "text": "What is the greatest common factor of 8a^2b and 12ab^2?",
+                "options": [
+                  "4ab",
+                  "8a",
+                  "2b",
+                  "ab"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q005-2",
+                "text": "Factor the expression x^2 - 9.",
+                "options": [
+                  "(x - 9)(x + 9)",
+                  "(x + 3)(x - 3)",
+                  "(x - 3)(x + 6)",
+                  "(x + 9)(x - 6)"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q005-3",
+                "text": "What are the factors of x^2 + 7x + 10?",
+                "options": [
+                  "(x + 2)(x + 5)",
+                  "(x + 1)(x + 10)",
+                  "(x + 7)(x + 2)",
+                  "(x + 5)(x + 5)"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q005-4",
+                "text": "Simplify the expression by factoring: 3x^3 + 6x^2.",
+                "options": [
+                  "3x(x^2 + 2x)",
+                  "3x^2(x + 2)",
+                  "x(3x^2 + 6x)",
+                  "3(x^3 + 2x^2)"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q005-5",
+                "text": "Factor completely: 4x^2 - 4.",
+                "options": [
+                  "4(x^2 - 1)",
+                  "2(x + 1)(x - 1)",
+                  "(2x + 2)(2x - 2)",
+                  "4(x + 1)(x - 1)"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q005-6",
+                "text": "Find the common factor in the expression 14y^2 - 28y + 35.",
+                "options": [
+                  "7",
+                  "14",
+                  "y",
+                  "-7"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q005-7",
+                "text": "Factor 15x^2 + 25x.",
+                "options": [
+                  "5x(3x + 5)",
+                  "3x(5x + 5)",
+                  "25x(3x + 1)",
+                  "15x(x + 1)"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q005-8",
+                "text": "If x^2 - 4x = x(x - 4), what is x?",
+                "options": [
+                  "8",
+                  "2",
+                  "4",
+                  "0"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q005-9",
+                "text": "What is the factored form of 9x^2 - 16y^2?",
+                "options": [
+                  "(3x - 4y)(3x + 4y)",
+                  "(x - y)(x + y)",
+                  "9(x^2 - y^2)",
+                  "(3x - y)(3x + y)"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q005-10",
+                "text": "Factor by grouping: x^3 + 3x^2 - x - 3.",
+                "options": [
+                  "(x + 3)(x^2 - 1)",
+                  "(x^2 - 1)(x + 3)",
+                  "(x + 1)(x^2 - 3)",
+                  "(x - 1)(x^2 + 3)"
+                ],
+                "correct": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M02",
+        "title": "Linear Equations",
+        "lessons": [
+          {
+            "id": "MAT-8-006",
+            "lessonNumber": 6,
+            "lessonOrder": 1,
+            "locked": true,
+            "title": "Solving linear equations",
+            "content": "Welcome to Lesson 6 on solving linear equations in our Grade 8 Mathematics class. Linear equations are equations that represent a straight line when graphed on a coordinate plane. They usually take the form 'ax + b = c', where 'a', 'b', and 'c' are constants, and 'x' is the variable we need to solve for. Solving linear equations involves finding the value of 'x' that makes the equation true.\\n\\n**Key Concepts:**\\n1. **Balance the Equation:** Think of the equation as a balance scale. Whatever operation you perform on one side, you must also do it to the other side to keep it balanced.\\n2. **Inverse Operations:** Use inverse operations to isolate the variable. Inverse operations are pairs of operations that undo each other, such as addition and subtraction, or multiplication and division.\\n3. **Simplifying Equations:** Simplify both sides of the equation by combining like terms.\\n\\n**Real-Life Example:** Imagine you're at a store buying a t-shirt. If the t-shirt costs 15 dollars, and you have already spent 6 dollars, how much more do you need to spend to pay for the shirt? This situation can be written as an equation: x + 6 = 15, where x is the amount you need to spend. Solving this equation will help you find out how much more money is required.\\n\\n**Steps for Solving Linear Equations:**\\n1. Simplify each side of the equation separately by combining like terms.\\n2. Use the inverse operations to get the variable on one side of the equation and the constants on the other.\\n3. Solve for the variable and verify your solution by plugging it back into the original equation.\\n\\nRemember, practice is essential when learning how to solve linear equations. Understanding each step is crucial for mastering this topic.",
+            "examples": [
+              {
+                "problem": "Solve: 2x + 3 = 11",
+                "solution": [
+                  "Step 1: Start with the equation 2x + 3 = 11.",
+                  "Step 2: Subtract 3 from both sides to isolate the term with the variable: 2x + 3 - 3 = 11 - 3, which simplifies to 2x = 8.",
+                  "Step 3: Divide both sides by 2 to solve for x: 2x/2 = 8/2, giving x = 4."
+                ]
+              },
+              {
+                "problem": "Solve: 5x - 4 = 16",
+                "solution": [
+                  "Step 1: Begin with the equation 5x - 4 = 16.",
+                  "Step 2: Add 4 to both sides to isolate the term with x: 5x - 4 + 4 = 16 + 4, simplifying to 5x = 20.",
+                  "Step 3: Divide both sides by 5: 5x/5 = 20/5, resulting in x = 4."
+                ]
+              },
+              {
+                "problem": "Solve: 3x + 7 = x + 15",
+                "solution": [
+                  "Step 1: Start by subtracting x from both sides: 3x - x + 7 = x - x + 15, which simplifies to 2x + 7 = 15.",
+                  "Step 2: Subtract 7 from both sides: 2x + 7 - 7 = 15 - 7, leading to 2x = 8.",
+                  "Step 3: Divide both sides by 2: 2x/2 = 8/2, giving x = 4."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/977aad40-5c87-43cf-813f-fda2b7b7319d.png",
+            "quiz": [
+              {
+                "id": "Q006-1",
+                "text": "What is the solution to the equation 2x + 5 = 13?",
+                "options": [
+                  "A) x = 4",
+                  "B) x = 5",
+                  "C) x = 6",
+                  "D) x = 3"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q006-2",
+                "text": "Solving the equation 4x - 7 = 9 gives:",
+                "options": [
+                  "A) x = 1",
+                  "B) x = 4",
+                  "C) x = 3",
+                  "D) x = 5"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q006-3",
+                "text": "What is x if 7x + 3 = 24?",
+                "options": [
+                  "A) x = 3",
+                  "B) x = 6",
+                  "C) x = 2",
+                  "D) x = 4"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q006-4",
+                "text": "If x - 4 = 6, then x equals:",
+                "options": [
+                  "A) x = 8",
+                  "B) x = 9",
+                  "C) x = 10",
+                  "D) x = 11"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q006-5",
+                "text": "Solve for x: 3(x + 5) = 21.",
+                "options": [
+                  "A) x = 2",
+                  "B) x = 1",
+                  "C) x = 4",
+                  "D) x = 6"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q006-6",
+                "text": "What is the solution to x/2 + 4 = 10?",
+                "options": [
+                  "A) x = 12",
+                  "B) x = 10",
+                  "C) x = 14",
+                  "D) x = 16"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q006-7",
+                "text": "If 2(x - 3) = 8, what is x?",
+                "options": [
+                  "A) x = 4",
+                  "B) x = 5",
+                  "C) x = 7",
+                  "D) x = 6"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q006-8",
+                "text": "Solve: 5x = 3x + 14.",
+                "options": [
+                  "A) x = 7",
+                  "B) x = 8",
+                  "C) x = 5",
+                  "D) x = 6"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q006-9",
+                "text": "What is x in x + 6 = 2x - 3?",
+                "options": [
+                  "A) x = 7",
+                  "B) x = 9",
+                  "C) x = 3",
+                  "D) x = 6"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q006-10",
+                "text": "If 4x + 8 = 2(x + 6), what is the value of x?",
+                "options": [
+                  "A) x = 1",
+                  "B) x = -2",
+                  "C) x = 4",
+                  "D) x = 8"
+                ],
+                "correct": 1
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-007",
+            "lessonNumber": 7,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Word problems with equations",
+            "content": "Welcome, students, to Lesson 7 of our chapter on Linear Equations. Today's topic is solving word problems using linear equations, an important skill that helps us apply math to real-life situations.\n\nUnderstanding how linear equations apply to everyday situations is essential. Consider scenarios like calculating distances, managing budgets, or even determining the time it takes to complete a task; all of these can be modeled using linear equations. As you dive into word problems, remember that the goal is to translate the words into a mathematical sentence—a linear equation—that you can solve.\n\n**Key Concepts:**\n- **Variables**: These represent unknown values in the problem, which you will solve for.\n- **Translate words into equations**: Identify keywords and phrases in the problem that indicate mathematical operations.\n- **Solve the equation**: Use algebraic methods to find the unknown variable.\n\nLet's explore the process step-by-step with some examples. When you face a word problem, follow these steps:\n1. **Read the problem carefully**: Understand the scenario and what is being asked.\n2. **Identify the unknown**: Choose a variable to represent the unknown quantity.\n3. **Formulate an equation**: Use information given in the problem to write an equation.\n4. **Solve the equation**: Solve for the variable.\n5. **Check your answer**: Substitute your solution back into the problem to ensure it makes sense.\n\nBy practicing these steps, you'll gain confidence in tackling a variety of word problems. Let's dive into some examples to see how this process works in action.",
+            "examples": [
+              {
+                "problem": "A school is selling tickets for a play. Adult tickets cost $6 each, and student tickets cost $4 each. If the school sells a total of 100 tickets and collects $540, how many of each type of ticket were sold?",
+                "solution": [
+                  "Step 1: Let x be the number of adult tickets and y be the number of student tickets.",
+                  "Step 2: Formulate the equations based on the information given. Equation 1: x + y = 100 (total tickets), Equation 2: 6x + 4y = 540 (total sales).",
+                  "Step 3: Solve the system of equations. Use substitution or elimination. Let's use substitution. From Equation 1, y = 100 - x. Substitute into Equation 2: 6x + 4(100 - x) = 540.",
+                  "Step 4: Simplify and solve: 6x + 400 - 4x = 540 -> 2x + 400 = 540 -> 2x = 140 -> x = 70.",
+                  "Step 5: Substitute back: y = 100 - 70 = 30. Thus, 70 adult tickets and 30 student tickets were sold."
+                ]
+              },
+              {
+                "problem": "Jenna has three times as many dimes as nickels. If the total value of her coins is $4.50, how many of each coin does she have?",
+                "solution": [
+                  "Step 1: Let n be the number of nickels and 3n be the number of dimes.",
+                  "Step 2: Create the equation based on total value: 5n + 10(3n) = 450 (since $4.50 = 450 cents).",
+                  "Step 3: Simplify and solve: 5n + 30n = 450 -> 35n = 450.",
+                  "Step 4: Divide both sides by 35: n = 450 / 35 -> n = 12.857, round to nearest whole number (since you can't have a fraction of a coin), n = 13.",
+                  "Step 5: Calculate dimes: 3n = 3 * 13 = 39.",
+                  "Thus, Jenna has 13 nickels and 39 dimes."
+                ]
+              },
+              {
+                "problem": "A family took a road trip. They drove for 3 hours at an average speed of 60 miles per hour and then for 2 more hours at an average speed of 50 miles per hour. What was the total distance they traveled?",
+                "solution": [
+                  "Step 1: Distance = speed × time for each segment of the trip.",
+                  "Step 2: Calculate the distance for each segment: First segment: 3 hours * 60 mph = 180 miles. Second segment: 2 hours * 50 mph = 100 miles.",
+                  "Step 3: Add the distances: 180 miles + 100 miles = 280 miles.",
+                  "The total distance traveled is 280 miles."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/21414206-c4ac-402b-be18-5461d73e2c7b.png",
+            "quiz": [
+              {
+                "id": "Q007-1",
+                "text": "If a train travels 240 miles in 3 hours, what is its average speed?",
+                "options": [
+                  "60 mph",
+                  "70 mph",
+                  "80 mph",
+                  "90 mph"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q007-2",
+                "text": "Sophie buys 3 apples and 5 oranges for $13. If oranges cost $2 each, how much does each apple cost?",
+                "options": [
+                  "$1",
+                  "$2",
+                  "$3",
+                  "$4"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q007-3",
+                "text": "If 5 pencils and 2 pens cost $12, and each pen costs $3, what is the cost of one pencil?",
+                "options": [
+                  "$1",
+                  "$2",
+                  "$3",
+                  "$4"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q007-4",
+                "text": "A rectangular garden has a length of 40 meters and a width that is half of its length. What is the width?",
+                "options": [
+                  "10 meters",
+                  "15 meters",
+                  "20 meters",
+                  "25 meters"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q007-5",
+                "text": "A cat travels 15 meters in 5 seconds. What is its speed in meters per second?",
+                "options": [
+                  "1.5 m/s",
+                  "2.5 m/s",
+                  "3 m/s",
+                  "4 m/s"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q007-6",
+                "text": "A student scores an average of 78 in four tests. What is the total score?",
+                "options": [
+                  "310",
+                  "312",
+                  "314",
+                  "320"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q007-7",
+                "text": "If 2x + 3 = 11, what is the value of x?",
+                "options": [
+                  "3",
+                  "4",
+                  "6",
+                  "7"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q007-8",
+                "text": "Mary’s age is twice John’s age. If the sum of their ages is 54, how old is John?",
+                "options": [
+                  "9",
+                  "12",
+                  "18",
+                  "36"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q007-9",
+                "text": "A book costs $15. If you buy 4 books with a $5 discount on the total purchase, how much do you pay?",
+                "options": [
+                  "$55",
+                  "$50",
+                  "$45",
+                  "$60"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q007-10",
+                "text": "If a bag contains 4 blue, 5 red, and 6 green marbles, what is the probability of picking a red marble?",
+                "options": [
+                  "1/2",
+                  "1/3",
+                  "5/15",
+                  "5/14"
+                ],
+                "correct": 3
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-008",
+            "lessonNumber": 8,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Equations with fractions",
+            "content": "Welcome to today’s lesson on solving linear equations with fractions. These types of equations might seem tricky at first, but with a systematic approach, solving them can become very straightforward. As you know, a linear equation is one that forms a line when graphed and has no exponents higher than one. When these equations involve fractions, our task is to find a solution that 'simplifies' the fractions, eventually making the equation easier to solve. Let’s dive into the steps involved in solving such equations.\n\n### Understanding the Basics\n\nBefore we get into solving, it's important to understand that our goal is to remove the fractions to make the equation easier to work with. To remove fractions, we can multiply every term in the equation by the least common denominator (LCD) of all the fractions present. The LCD is the smallest number that all the denominators can divide into evenly.\n\n### Steps to Solve Equations with Fractions\n\n1. **Identify the Least Common Denominator (LCD):** Look at all the denominators in the equation and find the LCD.\n2. **Multiply Each Term by the LCD:** This step helps to eliminate the fractions from the equation.\n3. **Simplify and Solve:** After eliminating fractions, you will have a simpler linear equation that you can solve using methods you’ve previously learned.\n\nLet’s solidify this method with some real-world examples.\n\n### Real-World Example: Baking Cookies\n\nImagine you are baking cookies. The recipe requires \\( \\frac{2}{3} \\) of a cup of sugar, which you need to convert to a whole number of spoonfuls for ease of measurement. Each spoonful holds \\( \\frac{1}{4} \\) of a cup. You need to find out how many spoonfuls of sugar you'll need.\n\nYour equation would be: \n\\[\n\\frac{2}{3} = \\text{spoonfuls} \\times \\frac{1}{4}\n\\]\n\nBy multiplying each side by the LCD, which is 12:\n\\[\n12 \\left( \\frac{2}{3} \\right) = 12 \\left( \\text{spoonfuls} \\times \\frac{1}{4} \\right)\n\\]\nThe resulting equation is:\n\\[\n8 = 3 \\times \\text{spoonfuls}\n\\]\nSolving for spoonfuls, you get about 2.67 spoonfuls—realistically, 3 spoonfuls of sugar.\n\n### More Examples\n\nWith a solid grasp on the process, let’s look at some common scenarios and solve them step-by-step.\n",
+            "examples": [
+              {
+                "problem": "Solve: \\( \\frac{1}{2}x + \\frac{3}{4} = \\frac{5}{6} \\)",
+                "solution": [
+                  "Step 1: Identify the LCD of 2, 4, and 6, which is 12.",
+                  "Step 2: Multiply every term by 12: \\( 12 \\times \\left( \\frac{1}{2}x + \\frac{3}{4} \\right) = 12 \\times \\frac{5}{6} \\)",
+                  "Simplified: \\( 6x + 9 = 10 \\)",
+                  "Step 3: Isolate the variable: \\( 6x = 10 - 9 \\)",
+                  "Simplified: \\( 6x = 1 \\)",
+                  "Step 4: Divide by 6 to solve for x: \\( x = \\frac{1}{6} \\)"
+                ]
+              },
+              {
+                "problem": "Solve: \\( \\frac{x}{3} - \\frac{5}{8} = \\frac{1}{4} \\)",
+                "solution": [
+                  "Step 1: Identify the LCD of 3, 8, and 4, which is 24.",
+                  "Step 2: Multiply every term by 24: \\( 24 \\left( \\frac{x}{3} \\right) - 24 \\left( \\frac{5}{8} \\right) = 24 \\left( \\frac{1}{4} \\right) \\)",
+                  "Simplified: \\( 8x - 15 = 6 \\)",
+                  "Step 3: Isolate the variable: \\( 8x = 6 + 15 \\)",
+                  "Simplified: \\( 8x = 21 \\)",
+                  "Step 4: Divide by 8 to solve for x: \\( x = \\frac{21}{8} \\)"
+                ]
+              },
+              {
+                "problem": "Solve: \\( \\frac{3}{5}x + \\frac{2}{7} = \\frac{5}{14} \\)",
+                "solution": [
+                  "Step 1: Identify the LCD of 5, 7, and 14, which is 70.",
+                  "Step 2: Multiply every term by 70: \\( 70 \\times \\left( \\frac{3}{5}x + \\frac{2}{7} \\right) = 70 \\times \\frac{5}{14} \\)",
+                  "Simplified: \\( 42x + 20 = 25 \\)",
+                  "Step 3: Isolate the variable: \\( 42x = 25 - 20 \\)",
+                  "Simplified: \\( 42x = 5 \\)",
+                  "Step 4: Divide by 42 to solve for x: \\( x = \\frac{5}{42} \\)"
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/a7633893-1d9e-4607-ac44-7c42b4356c53.png",
+            "quiz": [
+              {
+                "id": "Q008-1",
+                "text": "What is the first step in solving equations with fractions?",
+                "options": [
+                  "Add a denominator",
+                  "Subtract fractions",
+                  "Identify the LCD",
+                  "Divide by numerators"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q008-2",
+                "text": "Solve: \\( \\frac{2}{5}x + \\frac{3}{2} = \\frac{8}{20} \\)",
+                "options": [
+                  "x = 0.8",
+                  "x = -3.4",
+                  "x = 1.6",
+                  "x = 5.2"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q008-3",
+                "text": "If \\( \\frac{1}{3}x = \\frac{7}{9} \\), what is x?",
+                "options": [
+                  "21",
+                  "\\( \\frac{7}{3} \\)",
+                  "\\( \\frac{3}{7} \\)",
+                  "0"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q008-4",
+                "text": "Which operation helps eliminate fractions quickly?",
+                "options": [
+                  "Addition",
+                  "Multiplication",
+                  "Subtraction",
+                  "Division"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q008-5",
+                "text": "Solve: \\( x + \\frac{1}{2} = \\frac{3}{4} \\)",
+                "options": [
+                  "x = \\( \\frac{1}{4} \\)",
+                  "x = \\( \\frac{3}{4} \\)",
+                  "x = \\(- \\frac{1}{4} \\)",
+                  "x = \\( \\frac{1}{2} \\)"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q008-6",
+                "text": "To clear fractions: \\( \\frac{x}{4} + \\frac{1}{3} = \\frac{5}{6} \\), what is the LCD?",
+                "options": [
+                  "12",
+                  "24",
+                  "6",
+                  "18"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q008-7",
+                "text": "Solve the equation: \\( \\frac{5}{2}x = \\frac{10}{4} \\)",
+                "options": [
+                  "x = 2",
+                  "x = 4",
+                  "x = 1",
+                  "x = 5"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q008-8",
+                "text": "What should you do after eliminating fractions from an equation?",
+                "options": [
+                  "Check for errors",
+                  "Revert changes",
+                  "Solve the simplified equation",
+                  "Multiply the equation again"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q008-9",
+                "text": "Which is NOT a valid strategy in solving linear equations with fractions?",
+                "options": [
+                  "Ignoring fractions",
+                  "Finding the LCD",
+                  "Multiplying every term by the LCD",
+                  "Checking your solution"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q008-10",
+                "text": "Solve: \\( \\frac{2}{3}x - \\frac{1}{4} = \\frac{5}{12} \\)",
+                "options": [
+                  "x = 1",
+                  "x = \\( \\frac{1}{2} \\)",
+                  "x = \\( \\frac{3}{4} \\)",
+                  "x = 2"
+                ],
+                "correct": 1
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-009",
+            "lessonNumber": 9,
+            "lessonOrder": 4,
+            "locked": true,
+            "title": "Simultaneous equations introduction",
+            "content": "Welcome to our ninth lesson on linear equations, where we'll dive into the world of simultaneous equations. Simultaneous equations are a set of equations with multiple variables that are solved together to find a common solution. In simpler terms, they are like solving a puzzle where you have more than one piece of information to find the value of two or more unknowns at the same time.\\n\\nWhy do we need simultaneous equations? Imagine you went to a basketball game and bought 3 hot dogs and 2 sodas for $27.50. Your friend bought 2 hot dogs and 3 sodas for $24.50. How much is a single hot dog and how much is a single soda? You have two unknowns and two equations, perfect for solving simultaneously!\\n\\nTo solve simultaneous equations, we typically use two methods: \\u2022 **Substitution Method**: Here, you solve one equation for one variable and then substitute that expression into the other equation. \\u2022 **Elimination Method**: This involves adding or subtracting the equations to eliminate one variable, making it easier to solve for the other.\\n\\nLet's start with more details on each method before heading into some practical examples.",
+            "examples": [
+              {
+                "problem": "Suppose the sum of two numbers is 10, and their difference is 2. Find the numbers.",
+                "solution": [
+                  "Step 1: Let the numbers be x and y. Then, x + y = 10 and x - y = 2.",
+                  "Step 2: Add the two equations: x + y + x - y = 10 + 2 to get 2x = 12.",
+                  "Step 3: Solve for x: x = 6.",
+                  "Step 4: Substitute x = 6 in the equation x + y = 10 to get 6 + y = 10.",
+                  "Step 5: Solve for y: y = 4.",
+                  "Step 6: Thus, the numbers are 6 and 4."
+                ]
+              },
+              {
+                "problem": "You buy 5 pencils and 3 erasers for $9. You then buy 2 pencils and 1 eraser for $3. Find the cost of one pencil and one eraser.",
+                "solution": [
+                  "Step 1: Let the cost of one pencil be x and one eraser be y.",
+                  "Step 2: Form equations: 5x + 3y = 9 and 2x + y = 3.",
+                  "Step 3: Multiply the second equation by 3 to align y terms: 6x + 3y = 9.",
+                  "Step 4: Subtract the first equation from this new equation: (6x + 3y) - (5x + 3y) = 9 - 9, giving x = 0.",
+                  "Step 5: Substitute x = 0 in 2x + y = 3 to find y: 0 + y = 3, thus y = 3.",
+                  "Step 6: Therefore, each pencil costs $0 and each eraser costs $3. However, check for errors in context if needed."
+                ]
+              },
+              {
+                "problem": "A cinema sells 3 small popcorns and 4 large popcorns for $30.50. Another sale of 6 small popcorns and 2 large ones costs $33. Find the cost of each size of popcorn.",
+                "solution": [
+                  "Step 1: Let the cost of a small popcorn be s and a large popcorn be l. Create the equations: 3s + 4l = 30.50 and 6s + 2l = 33.",
+                  "Step 2: Multiply the first equation by 2: 6s + 8l = 61.",
+                  "Step 3: Subtract the second equation from this new equation: (6s + 8l) - (6s + 2l) = 61 - 33, giving 6l = 28.",
+                  "Step 4: Solve for l: l = 4.67 (approx).",
+                  "Step 5: Substitute l = 4.67 in 3s + 4l = 30.50: 3s + 18.68 = 30.50.",
+                  "Step 6: Solve for s: 3s = 11.82, hence s = 3.94 (approx).",
+                  "Step 7: Therefore, a small popcorn costs approximately $3.94 and a large one costs $4.67."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/55ba5ebd-211e-4abb-acbe-6951fdaa5302.png",
+            "quiz": [
+              {
+                "id": "Q009-1",
+                "text": "What is a simultaneous equation?",
+                "options": [
+                  "Two equations with different variables",
+                  "Two equations with the same variables",
+                  "One equation with two solutions",
+                  "Two equations solved separately"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q009-2",
+                "text": "Which method involves replacing one variable with an expression?",
+                "options": [
+                  "Elimination",
+                  "Substitution",
+                  "Graphing",
+                  "Trial and Error"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q009-3",
+                "text": "If x + y = 6 and x - y = 4, what is x?",
+                "options": [
+                  "1",
+                  "2",
+                  "5",
+                  "4"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q009-4",
+                "text": "Which method involves adding or subtracting equations to eliminate a variable?",
+                "options": [
+                  "Gradient",
+                  "Graphing",
+                  "Substitution",
+                  "Elimination"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q009-5",
+                "text": "If a system of equations has no solution, it is said to be:",
+                "options": [
+                  "Consistent",
+                  "Inconsistent",
+                  "Dependent",
+                  "Independent"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q009-6",
+                "text": "Which of these is an example of a system of simultaneous equations?",
+                "options": [
+                  "y = 2x",
+                  "y = x + 5",
+                  "x + y = 10, x - y = 6",
+                  "x^2 + y^2 = 4"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q009-7",
+                "text": "What is the solution to the system: 2x + 3y = 12 and x = 3?",
+                "options": [
+                  "x = 3, y = 2",
+                  "x = 0, y = 4",
+                  "x = 1, y = 3",
+                  "x = 3, y = 4"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q009-8",
+                "text": "If two equations are multiples of each other, the system is:",
+                "options": [
+                  "Independent",
+                  "Consistent and dependent",
+                  "Inconsistent",
+                  "None of the above"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q009-9",
+                "text": "Find the value of y if x - y = 1 and x + y = 7.",
+                "options": [
+                  "5",
+                  "3",
+                  "2",
+                  "4"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q009-10",
+                "text": "What happens if the lines representing equations in a system are parallel?",
+                "options": [
+                  "They intersect at one point",
+                  "There is no solution",
+                  "There are infinite solutions",
+                  "They are the same line"
+                ],
+                "correct": 1
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-010",
+            "lessonNumber": 10,
+            "lessonOrder": 5,
+            "locked": true,
+            "title": "Graphing linear equations",
+            "content": "Linear equations are fundamental in mathematics, functioning as a bridge to understanding more complex algebraic expressions. In this lesson, we will focus on graphing linear equations, which is an essential skill for visualizing and interpreting Algebra. A linear equation is an equation that makes a straight line when it is plotted on a graph. The most common form of a linear equation is y = mx + b, where 'm' represents the slope, and 'b' represents the y-intercept. The slope 'm' indicates how steep the line is, and the y-intercept 'b' is where the line crosses the y-axis.\n\nLet's start by understanding the components of a linear equation. The slope 'm' is a number that describes two important things: its direction (upwards for a positive slope and downwards for a negative slope) and its steepness. For example, a slope of 2 means that for every unit you move to the right, the line moves up 2 units. The y-intercept 'b' is simply the value of y at which the line crosses the y-axis.\n\nUnderstanding how these components work helps us plot linear equations easily:\n1. Identify the slope 'm' and y-intercept 'b' in the equation.\n2. Plot the y-intercept on the y-axis.\n3. Use the slope to determine another point on the line by applying \"rise over run\".\n4. Draw a straight line through the points.\n\nReal-life applications of linear equations can be seen around us. For instance, calculating the cost of goods, determining speed, or even predicting financial growth over time involves understanding linear equations.\n\nNow let's practice this concept with some examples.",
+            "examples": [
+              {
+                "problem": "Graph the linear equation y = 2x + 3.",
+                "solution": [
+                  "Step 1: Identify the slope (m = 2) and y-intercept (b = 3).",
+                  "Step 2: Plot the y-intercept (0, 3) on the y-axis.",
+                  "Step 3: Use the slope 2, which means 'rise 2, run 1', to find another point from (0, 3), moving to (1, 5).",
+                  "Step 4: Draw a line through the points (0, 3) and (1, 5)."
+                ]
+              },
+              {
+                "problem": "Graph the linear equation y = -1/2x + 4.",
+                "solution": [
+                  "Step 1: Identify the slope (m = -1/2) and y-intercept (b = 4).",
+                  "Step 2: Plot the y-intercept (0, 4) on the y-axis.",
+                  "Step 3: Use the slope -1/2, which means 'fall 1, run 2', to find another point from (0, 4), moving to (2, 3).",
+                  "Step 4: Draw a line through the points (0, 4) and (2, 3)."
+                ]
+              },
+              {
+                "problem": "Graph the linear equation y = x - 2.",
+                "solution": [
+                  "Step 1: Identify the slope (m = 1) and y-intercept (b = -2).",
+                  "Step 2: Plot the y-intercept (0, -2) on the y-axis.",
+                  "Step 3: Use the slope 1, which means 'rise 1, run 1', to find another point from (0, -2), moving to (1, -1).",
+                  "Step 4: Draw a line through the points (0, -2) and (1, -1)."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/5cc6b3cc-e32d-433e-a1c5-4f496d8e64a8.png",
+            "quiz": [
+              {
+                "id": "Q010-1",
+                "text": "What is the slope of the equation y = 3x + 5?",
+                "options": [
+                  "3",
+                  "5",
+                  "-3",
+                  "8"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q010-2",
+                "text": "Which equation has a y-intercept of -2?",
+                "options": [
+                  "y = -4x + 2",
+                  "y = 3x - 2",
+                  "y = x + 3",
+                  "y = -2x + 1"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q010-3",
+                "text": "What is the y-intercept of the equation y = 6x - 4?",
+                "options": [
+                  "-4",
+                  "6",
+                  "0",
+                  "4"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q010-4",
+                "text": "If y = -2x + 3, what is the value of y when x = 2?",
+                "options": [
+                  "1",
+                  "-1",
+                  "3",
+                  "-2"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q010-5",
+                "text": "What is the slope of a horizontal line?",
+                "options": [
+                  "0",
+                  "1",
+                  "-1",
+                  "Undefined"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q010-6",
+                "text": "What is the slope of the equation x = 4?",
+                "options": [
+                  "Undefined",
+                  "0",
+                  "1",
+                  "-1"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q010-7",
+                "text": "Which point is on the line y = 2x + 1?",
+                "options": [
+                  "(1, 3)",
+                  "(2, 1)",
+                  "(0, 2)",
+                  "(3, 2)"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q010-8",
+                "text": "Which line is represented by a slope of 0?",
+                "options": [
+                  "Horizontal",
+                  "Vertical",
+                  "Diagonal",
+                  "None"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q010-9",
+                "text": "For the line y = -3x + 7, what happens as x increases?",
+                "options": [
+                  "y increases",
+                  "y decreases",
+                  "y stays the same",
+                  "Cannot be determined"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q010-10",
+                "text": "Which of the following equations has a slope of -1?",
+                "options": [
+                  "y = x - 5",
+                  "y = -x + 4",
+                  "y = 2x + 3",
+                  "y = -x - 3"
+                ],
+                "correct": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M03",
+        "title": "Geometry and Measurement",
+        "lessons": [
+          {
+            "id": "MAT-8-011",
+            "lessonNumber": 11,
+            "lessonOrder": 1,
+            "locked": true,
+            "title": "Angles and parallel lines",
+            "content": "Welcome to Lesson 11 of your Grade 8 Mathematics class, focusing on Geometry and Measurement. Today, we will dive into the world of angles and parallel lines, a foundational topic that will deepen your understanding of geometric principles. \n\n**Parallel Lines**: Parallel lines are lines in a plane that do not intersect; that means they never meet, no matter how long you extend them. Imagine two straight train tracks - no matter how far you travel, the tracks remain the same distance apart. This is a real-world example of parallel lines.\n\n**Transversal Lines**: A transversal is a line that crosses two or more lines at different points. When a transversal intersects parallel lines, it forms several angles. Understanding these angles helps in solving many practical and theoretical problems in geometry.\n\n**Types of Angles Formed by a Transversal**:\n1. **Corresponding Angles**: These are in matching positions at each intersection. For instance, if two parallel lines are crossed by a transversal, the top left angle of the first intersection is equal to the top left angle of the second intersection.\n2. **Alternate Interior Angles**: These occur on opposite sides of the transversal but inside the parallel lines. They are equal in measure.\n3. **Alternate Exterior Angles**: These are located on opposite sides of the transversal and outside the parallel lines. Like alternate interior angles, they are equal.\n4. **Consecutive Interior Angles**: Also called co-interior angles, these lie on the same side of the transversal within the parallel lines and are supplementary (they add up to 180 degrees).\n\n**Real-World Examples**:\n1. **Railway Tracks**: The tracks are parallel, and when you see them crossed by beams or barriers, you have a transversal cutting through parallel lines creating all the types of angles described.\n2. **Highway Road Markings**: The lines that divide lanes often run parallel to each other with transversal markings for crosswalks or lane dividers.\n3. **Architectural Designs**: In floor plans, parallel walls can be intersected by beams and support structures acting as transversals.\n\nUnderstanding these concepts not only helps in mathematics but also enhances spatial awareness and problem-solving skills that are applicable in various professional fields such as engineering, art, and architecture.",
+            "examples": [
+              {
+                "problem": "Find the measure of the alternate interior angles when a transversal intersects two parallel lines, and one of the alternate interior angles measures 65°.",
+                "solution": [
+                  "Step 1: Identify the alternate interior angles in the diagram created by the transversal.",
+                  "Step 2: Use the property that alternate interior angles are equal when a transversal intersects two parallel lines.",
+                  "Step 3: Since one angle is 65°, the alternate interior angle is also 65°."
+                ]
+              },
+              {
+                "problem": "If two parallel lines are cut by a transversal and one of the corresponding angles is 120°, find the measure of all corresponding angles.",
+                "solution": [
+                  "Step 1: Identify the corresponding angles at both intersections of the transversal with the parallel lines.",
+                  "Step 2: Recall that corresponding angles are equal.",
+                  "Step 3: Since one corresponding angle is 120°, all corresponding angles are 120°."
+                ]
+              },
+              {
+                "problem": "A transversal intersects two parallel lines, forming consecutive interior angles, where one angle measures 110°. Find the measure of the other consecutive interior angle.",
+                "solution": [
+                  "Step 1: Identify the consecutive interior angles formed by the transversal with the parallel lines.",
+                  "Step 2: Use the property that consecutive interior angles are supplementary.",
+                  "Step 3: Solve for the unknown angle: 180° - 110° = 70°."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/658bae1d-c67d-464b-a514-904d1222e7dd.png",
+            "quiz": [
+              {
+                "id": "Q011-1",
+                "text": "Which of the following best describes parallel lines?",
+                "options": [
+                  "Lines that intersect at right angles",
+                  "Lines that never intersect",
+                  "Lines that intersect at one point",
+                  "Lines that curve"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q011-2",
+                "text": "What is formed when a transversal cuts across two parallel lines?",
+                "options": [
+                  "Only alternate interior angles",
+                  "Only corresponding angles",
+                  "All types of angles",
+                  "No angles"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q011-3",
+                "text": "If one of the alternate exterior angles is 135°, the measure of the other alternate exterior angle is:",
+                "options": [
+                  "135°",
+                  "45°",
+                  "90°",
+                  "180°"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q011-4",
+                "text": "The measure of two consecutive interior angles on the same side of a transversal cutting parallel lines is:",
+                "options": [
+                  "Complementary",
+                  "Supplementary",
+                  "Equal",
+                  "Right angles"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q011-5",
+                "text": "If two corresponding angles are equal, what can we say about the lines crossed by the transversal?",
+                "options": [
+                  "They are perpendicular",
+                  "They are parallel",
+                  "They are concurrent",
+                  "They are skew"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q011-6",
+                "text": "In architecture, parallel lines with transversals can often be seen in:",
+                "options": [
+                  "Chimneys",
+                  "Stairways",
+                  "Ceiling beams",
+                  "Windows"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q011-7",
+                "text": "A transversal creates two angles of 75° and x° as alternate interior angles. What is x°?",
+                "options": [
+                  "60°",
+                  "75°",
+                  "105°",
+                  "90°"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q011-8",
+                "text": "In a pair of parallel lines, the transversal creates consecutive interior angles measuring 110° and x°. What is x°?",
+                "options": [
+                  "110°",
+                  "70°",
+                  "90°",
+                  "180°"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q011-9",
+                "text": "If a transversal line intersects two parallel lines, how many pairs of corresponding angles does it create?",
+                "options": [
+                  "Four",
+                  "Two",
+                  "Six",
+                  "Eight"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q011-10",
+                "text": "An exterior angle is 125° when two lines are cut by a transversal. What is the measure of the corresponding interior angle?",
+                "options": [
+                  "65°",
+                  "125°",
+                  "35°",
+                  "155°"
+                ],
+                "correct": 1
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-011",
+            "lessonNumber": 11,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Properties of triangles",
+            "content": "Welcome to another exciting lesson in your journey through mathematics! Today we are going to explore the fascinating world of triangles, specifically focusing on their properties. Triangles are one of the most fundamental shapes in geometry, and understanding them will pave the way for more complex concepts. Let's dive in! \n\nTriangles are polygons with three sides, three angles, and three vertices. The sum of the internal angles of any triangle is always 180 degrees—a fundamental property you'll often rely on. \n\n**Types of Triangles**:\n- **Equilateral Triangle**: All three sides are equal in length, and all three internal angles are 60 degrees.\n- **Isosceles Triangle**: Two sides are equal in length, and the angles opposite these sides are equal as well.\n- **Scalene Triangle**: All sides and angles are different.\n\n**Properties of Triangles**:\n1. **Angle Sum Property**: The sum of the interior angles in a triangle is always 180 degrees.\n2. **Exterior Angle Property**: An exterior angle of a triangle is equal to the sum of its opposite interior angles.\n3. **Triangle Inequality Theorem**: The sum of the lengths of any two sides of a triangle is always greater than the length of the third side.\n\n**Real-world Examples**:\nThink of a triangular sail on a boat or the triangular support structures used by engineers in bridges. The properties of triangles are not only theoretical—they are applied in various fields like architecture and engineering for designing structures that need to be strong and stable.\n\nNow, let's look into some practical examples to gain a better understanding of these properties of triangles.",
+            "examples": [
+              {
+                "problem": "An isosceles triangle has two angles measuring 50 degrees each. What is the measure of the third angle?",
+                "solution": [
+                  "Step 1: Use the angle sum property of triangles. The sum of all interior angles should be 180 degrees.",
+                  "Step 2: Since two angles are 50 degrees each, add these angles: 50 + 50 = 100.",
+                  "Step 3: Subtract this sum from 180 to find the third angle: 180 - 100 = 80.",
+                  "Conclusion: The third angle measures 80 degrees."
+                ]
+              },
+              {
+                "problem": "One side of a scalene triangle is 8 cm, another side is 15 cm. If the angle between these two sides is 60 degrees, what is the length of the third side?",
+                "solution": [
+                  "Step 1: Use the Law of Cosines: c² = a² + b² - 2ab*cos(C).",
+                  "Step 2: In this case, a = 8 cm, b = 15 cm, and angle C = 60 degrees. Substituting these: c² = 8² + 15² - 2*8*15*cos(60).",
+                  "Step 3: Calculate: c² = 64 + 225 - 240*(0.5).",
+                  "Step 4: Solve c² = 289 - 120 = 169.",
+                  "Step 5: Find c: c = √169 = 13.",
+                  "Conclusion: The length of the third side is 13 cm."
+                ]
+              },
+              {
+                "problem": "Determine if a triangle with sides 5 cm, 12 cm, and 13 cm is a right triangle.",
+                "solution": [
+                  "Step 1: Use the Pythagorean theorem for right triangles: a² + b² = c², where c is the hypotenuse.",
+                  "Step 2: Identify the longest side: 13 cm. Assume this is the hypotenuse.",
+                  "Step 3: Check: 5² + 12² should equal 13².",
+                  "Step 4: Calculate: 25 + 144 = 169, and 13² = 169.",
+                  "Conclusion: Since both are equal, the triangle is indeed a right triangle."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/73955e6b-fa08-4af8-9a27-8ad490b0ef37.png",
+            "quiz": [
+              {
+                "id": "Q011-1",
+                "text": "What is the sum of the angles in a triangle?",
+                "options": [
+                  "90 degrees",
+                  "180 degrees",
+                  "270 degrees",
+                  "360 degrees"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q011-2",
+                "text": "In an equilateral triangle, what is the measure of each interior angle?",
+                "options": [
+                  "45 degrees",
+                  "60 degrees",
+                  "90 degrees",
+                  "120 degrees"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q011-3",
+                "text": "In a triangle, if one exterior angle is 110 degrees, what is the sum of the opposite interior angles?",
+                "options": [
+                  "70 degrees",
+                  "90 degrees",
+                  "110 degrees",
+                  "180 degrees"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q011-4",
+                "text": "Which of the following is true for an isosceles triangle?",
+                "options": [
+                  "All sides are equal",
+                  "All angles are equal",
+                  "Two sides are equal",
+                  "Two angles are 90 degrees"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q011-5",
+                "text": "A triangle has sides measuring 3 cm, 4 cm, and 5 cm. What type of triangle is it?",
+                "options": [
+                  "Equilateral",
+                  "Isosceles",
+                  "Right triangle",
+                  "Scalene"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q011-6",
+                "text": "What is the triangle inequality theorem?",
+                "options": [
+                  "The sum of the angles in a triangle is 180 degrees",
+                  "An exterior angle is equal to the sum of the opposite interior angles",
+                  "The sum of the lengths of any two sides is greater than the third side",
+                  "There are three types of triangles based on angles"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q011-7",
+                "text": "In a congruent triangle, which property is NOT necessarily the same between two triangles?",
+                "options": [
+                  "Side lengths",
+                  "Angle measurements",
+                  "Perimeter",
+                  "Position"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q011-8",
+                "text": "Which ratio is not typically associated with a property of triangles?",
+                "options": [
+                  "Circumference to width",
+                  "Sine of an angle",
+                  "Cosine of an angle",
+                  "Tangent of an angle"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q011-9",
+                "text": "Which side is opposite to the right angle in a right-angled triangle?",
+                "options": [
+                  "Adjacent side",
+                  "Opposite side",
+                  "Hypotenuse",
+                  "Median"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q011-10",
+                "text": "In a triangle, two interior angles are 35 degrees and 75 degrees. What is the measure of the third angle?",
+                "options": [
+                  "65 degrees",
+                  "70 degrees",
+                  "85 degrees",
+                  "90 degrees"
+                ],
+                "correct": 0
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-012",
+            "lessonNumber": 12,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Properties of quadrilaterals",
+            "content": "Welcome to Lesson 12, where we will explore the properties of quadrilaterals. Quadrilaterals are polygons with four sides and four angles. They appear frequently in both natural and manmade structures, from the frames of windows to the shape of soccer fields. Understanding quadrilaterals is key for developing spatial awareness, problem-solving skills, and a foundation for more advanced geometry. \n\nLet's begin by looking at some of the common types of quadrilaterals: parallelograms, rectangles, rhombuses, squares, and trapezoids. Each type has unique properties that distinguish it from the others. \n\n1. **Parallelogram**: A quadrilateral with opposite sides that are parallel and equal in length. The opposite angles are also equal. Parallelograms include shapes like rectangles, rhombuses, and squares as special cases.\n\n2. **Rectangle**: A parallelogram with four right angles. All rectangles have opposite sides that are equal, and all angles are 90 degrees. An example is the shape of most books.\n\n3. **Rhombus**: A parallelogram with four sides of equal length. The opposite angles are equal, but the angles are not necessarily 90 degrees, unless it's a square. A diamond shape on playing cards is an example of a rhombus.\n\n4. **Square**: A rectangle with all sides equal. Thus, it also has the properties of a rhombus. Squares are highly symmetrical, making them a favorite in design and architecture.\n\n5. **Trapezoid** (or trapezium, in some countries): A quadrilateral with at least one pair of parallel sides. Sidewalk ramps are often shaped like trapezoids.\n\nUnderstanding the properties of these shapes helps us in calculating area and perimeter and recognizing them in everyday life. For example, the formula for the area of a rectangle (length x width) is derived from understanding that opposite sides are equal and angles are right angles.\n\nNow, let's look at some examples where we'll solve real-world problems involving quadrilaterals.",
+            "examples": [
+              {
+                "problem": "Calculate the area of a rectangle with a length of 8 meters and a width of 5 meters.",
+                "solution": [
+                  "Step 1: Recall that the area of a rectangle is calculated by multiplying its length by its width.",
+                  "Step 2: Multiply 8 meters by 5 meters.",
+                  "Step 3: The area is 40 square meters."
+                ]
+              },
+              {
+                "problem": "If a square has a perimeter of 24 cm, find the length of one side of the square.",
+                "solution": [
+                  "Step 1: Remember that the perimeter of a square is four times the length of one side.",
+                  "Step 2: Since the perimeter is 24 cm, set up the equation 4 * side = 24.",
+                  "Step 3: Solve for the side by dividing: side = 24 cm / 4 = 6 cm."
+                ]
+              },
+              {
+                "problem": "A trapezoid has bases of 10 cm and 6 cm and the height is 4 cm. Find the area.",
+                "solution": [
+                  "Step 1: Recall the formula for the area of a trapezoid, which is 0.5 * (base1 + base2) * height.",
+                  "Step 2: Substitute the known values into the formula: 0.5 * (10 + 6) * 4.",
+                  "Step 3: Calculate the area: 0.5 * 16 *4 = 32 square cm."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/3ab6530e-578c-4e94-8d58-95ce959491c1.png",
+            "quiz": [
+              {
+                "id": "Q012-1",
+                "text": "What is the sum of the interior angles of any quadrilateral?",
+                "options": [
+                  "180 degrees",
+                  "360 degrees",
+                  "270 degrees",
+                  "540 degrees"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q012-2",
+                "text": "Which quadrilateral has only one pair of parallel sides?",
+                "options": [
+                  "Parallelogram",
+                  "Rectangle",
+                  "Trapezoid",
+                  "Rhombus"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q012-3",
+                "text": "What is a property unique to rectangles among parallelograms?",
+                "options": [
+                  "Equal diagonals",
+                  "Equal sides",
+                  "Perpendicular diagonals",
+                  "All right angles"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q012-4",
+                "text": "If all sides of a quadrilateral are equal in length and its diagonals are perpendicular, what is it?",
+                "options": [
+                  "Rectangle",
+                  "Rhombus",
+                  "Trapezoid",
+                  "Square"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q012-5",
+                "text": "What is the perimeter of a square with side length 5 cm?",
+                "options": [
+                  "10 cm",
+                  "15 cm",
+                  "20 cm",
+                  "25 cm"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q012-6",
+                "text": "Which of the following is NOT a property of a parallelogram?",
+                "options": [
+                  "Opposite sides are equal",
+                  "Diagonals bisect each other",
+                  "All angles are right angles",
+                  "Opposite angles are equal"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q012-7",
+                "text": "If one angle of a rectangle is 90 degrees, what are the measures of the other three angles?",
+                "options": [
+                  "All 90 degrees",
+                  "80, 100, 100",
+                  "60, 120, 60",
+                  "Different angles"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q012-8",
+                "text": "How many sides does a quadrilateral have?",
+                "options": [
+                  "Three",
+                  "Four",
+                  "Five",
+                  "Six"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q012-9",
+                "text": "Which shape is both a rhombus and a rectangle?",
+                "options": [
+                  "Rectangle",
+                  "Square",
+                  "Trapezoid",
+                  "Parallelogram"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q012-10",
+                "text": "What are the properties of a square?",
+                "options": [
+                  "All sides are equal, opposite sides are parallel",
+                  "Only opposite sides are equal",
+                  "Only adjacent angles are equal",
+                  "No sides are equal"
+                ],
+                "correct": 0
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-013",
+            "lessonNumber": 13,
+            "lessonOrder": 4,
+            "locked": true,
+            "title": "Circles and their properties",
+            "content": "Welcome to today's lesson on circles and their properties! In this lesson, we will explore the fundamental aspects of circles, including their parts, properties, and how to calculate quantities related to them like the circumference and area. By the end of this lesson, you will be able to identify different parts of a circle and solve problems involving circles with ease.\n\n**What is a Circle?**\nA circle is a simple closed shape where all points are the same distance from a central point. This central point is called the center of the circle, and the distance from the center to any point on the circle is known as the radius. A line segment from one point on the circle to another, passing through the center, is called the diameter. The diameter is always twice the length of the radius.\n\n**Parts of a Circle:**\n- **Center:** The middle point of the circle.\n- **Radius:** The distance from the center to the perimeter.\n- **Diameter:** A line that passes through the center and touches two points on the circle's boundary; Diameter = 2 * Radius.\n- **Circumference:** The distance around the circle.\n- **Chord:** A line segment within the circle that connects two points on the circle.\n- **Arc:** A part of the circumference of the circle.\n\n**Circle Properties:**\n- All radii in a circle are equal.\n- The diameter is the longest chord in a circle.\n- The circumference of a circle can be calculated using the formula: C = π * d or C = 2 * π * r, where C is the circumference, d is the diameter, and r is the radius.\n- The area of a circle can be calculated using the formula: A = π * r², where A is the area and r is the radius.\n\n**Examples of Circle in Real-Life**\nCircles are prevalent in daily life. The wheels on a car, the face of a clock, and a compact disc (CD) are all examples of circles. Understanding the properties of circles helps us measure and design various objects accurately in real life.\n\n**Understanding Circumference and Area**\nTo comprehend circles better, it's essential to learn how to find their circumference and area. These measurement problems help in real-world applications like determining the boundary length of circular parks or the area available inside a circular space.\n",
+            "examples": [
+              {
+                "problem": "Find the circumference of a circle with a radius of 5 cm.",
+                "solution": [
+                  "Step 1: Use the formula for circumference: C = 2 * π * r.",
+                  "Step 2: Substitute the radius (5 cm) into the formula: C = 2 * π * 5.",
+                  "Step 3: Calculate: C = 10π. Therefore, the circumference is approximately 31.42 cm."
+                ]
+              },
+              {
+                "problem": "Calculate the area of a circle with a radius of 7 meters.",
+                "solution": [
+                  "Step 1: Use the area formula: A = π * r².",
+                  "Step 2: Substitute the radius (7 m) into the formula: A = π * 7².",
+                  "Step 3: Calculate: A = π * 49. Therefore, the area is approximately 153.94 square meters."
+                ]
+              },
+              {
+                "problem": "A circle has a diameter of 10 cm. Find its radius.",
+                "solution": [
+                  "Step 1: Understand the relationship: Diameter = 2 * Radius.",
+                  "Step 2: Rearrange to find the radius: Radius = Diameter / 2.",
+                  "Step 3: Substitute into the formula: Radius = 10 / 2 = 5 cm."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/e84552c6-d060-4782-8602-1ac058b23cb8.png",
+            "quiz": [
+              {
+                "id": "Q013-1",
+                "text": "What is the term for the line segment that connects two points on a circle and goes through the center?",
+                "options": [
+                  "Radius",
+                  "Chord",
+                  "Diameter",
+                  "Arc"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q013-2",
+                "text": "Which formula is used to calculate the area of a circle?",
+                "options": [
+                  "A = πr²",
+                  "A = 2πr",
+                  "A = πd",
+                  "A = (2/3)πr²"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q013-3",
+                "text": "If the diameter of a circle is 14 cm, what is the radius?",
+                "options": [
+                  "7 cm",
+                  "14 cm",
+                  "28 cm",
+                  "21 cm"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q013-4",
+                "text": "The distance around the circle is called the?",
+                "options": [
+                  "Diameter",
+                  "Radius",
+                  "Circumference",
+                  "Area"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q013-5",
+                "text": "A chord of a circle is defined as:",
+                "options": [
+                  "A line that touches the circle at one point",
+                  "The longest distance within a circle",
+                  "A line segment connecting two points on the circle",
+                  "The perimeter of the circle"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q013-6",
+                "text": "If a circle's radius is 3 cm, what is its diameter?",
+                "options": [
+                  "6 cm",
+                  "9 cm",
+                  "3 cm",
+                  "4.5 cm"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q013-7",
+                "text": "Which part of the circle is used to calculate its area?",
+                "options": [
+                  "Chord",
+                  "Radius",
+                  "Diameter",
+                  "Circumference"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q013-8",
+                "text": "Calculate the circumference of a circle with a radius of 4 cm.",
+                "options": [
+                  "8π cm",
+                  "16 cm",
+                  "8 cm",
+                  "16π cm"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q013-9",
+                "text": "In a circle, how many times does the radius fit along the circumference?",
+                "options": [
+                  "2 times",
+                  "π times",
+                  "3 times",
+                  "1 time"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q013-10",
+                "text": "What do we call a part of the boundary of a circle?",
+                "options": [
+                  "Center",
+                  "Arc",
+                  "Chord",
+                  "Diameter"
+                ],
+                "correct": 1
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-014",
+            "lessonNumber": 14,
+            "lessonOrder": 5,
+            "locked": true,
+            "title": "Area and perimeter formulas",
+            "content": "Welcome to Lesson 14 of our Grade 8 Mathematics curriculum focusing on Geometry and Measurement. In this lesson, we will explore the fundamental concepts of area and perimeter, which are essential for understanding space and measurement in various practical situations. Geometry is all around us, whether in the structure of buildings, the layout of a garden, or the design of your favorite board game. Grasping the basics of area and perimeter will help you solve a multitude of real-world problems with ease. \n\n**Understanding Perimeter:** \nThe perimeter is the distance around the boundary of a two-dimensional shape. Think of it as the length of the fence needed to enclose a garden. To calculate the perimeter, you simply add up the lengths of all the sides of a shape. The formula varies depending on the shape: \n- For a rectangle, \\( P = 2(l + w) \\) where \\(l\\) is the length and \\(w\\) is the width.\n- For a square, since all sides are equal, \\( P = 4s \\) where \\(s\\) is the side length. \n- For a triangle, \\( P = a + b + c \\), where \\(a, b,\\) and \\(c\\) are the lengths of the sides. \n\n**Understanding Area:** \nThe area is the amount of space within a two-dimensional shape. You might think of it as the space needed to cover a surface, such as the amount of paint required to cover a wall. Here again, formulas differ based on shape: \n- For a rectangle, \\( A = l \\times w \\).\n- For a square, \\( A = s^2 \\).\n- For a triangle, \\( A = \\frac{1}{2} \\times base \\times height \\).\n\nReal-life Context: Here's a practical example: you want to lay down some turf in your backyard, and you need to figure out how much turf you'll need. You measure your rectangular garden and find it's 10 meters long and 5 meters wide. Using the area formula for a rectangle, you can calculate that you'll need 50 square meters of turf (\\(10 \\times 5\\)). \n\nThese concepts are vital in various fields, from architecture to engineering, landscaping, and even fashion design, where precise measurements are crucial for success.\n\nLet's proceed to some worked examples to better understand the application of these formulas.",
+            "examples": [
+              {
+                "problem": "Calculate the perimeter and area of a rectangle with length 8 cm and width 3 cm.",
+                "solution": [
+                  "Step 1: Use the formula for the perimeter of a rectangle, P = 2(l + w).",
+                  "Step 2: Substitute the values: P = 2(8 cm + 3 cm) = 2(11 cm) = 22 cm.",
+                  "Step 3: Use the formula for the area of a rectangle, A = l × w.",
+                  "Step 4: Substitute the values: A = 8 cm × 3 cm = 24 cm²."
+                ]
+              },
+              {
+                "problem": "Find the perimeter and area of a square with side length 5 m.",
+                "solution": [
+                  "Step 1: Use the formula for the perimeter of a square, P = 4s.",
+                  "Step 2: Substitute the value: P = 4 × 5 m = 20 m.",
+                  "Step 3: Use the formula for the area of a square, A = s².",
+                  "Step 4: Substitute the value: A = 5 m × 5 m = 25 m²."
+                ]
+              },
+              {
+                "problem": "Determine the area of a triangle with base 6 m and height 4 m.",
+                "solution": [
+                  "Step 1: Use the formula for the area of a triangle, A = 1/2 × base × height.",
+                  "Step 2: Substitute the values: A = 1/2 × 6 m × 4 m.",
+                  "Step 3: Calculate the area: A = 1/2 × 24 m² = 12 m²."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/1274c838-4455-413b-bed2-e89fca94ab8a.png",
+            "quiz": [
+              {
+                "id": "Q014-1",
+                "text": "What is the perimeter of a rectangle with a length of 7 cm and a width of 3 cm?",
+                "options": [
+                  "20 cm",
+                  "21 cm",
+                  "18 cm",
+                  "24 cm"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q014-2",
+                "text": "How do you calculate the area of a rectangle?",
+                "options": [
+                  "length + width",
+                  "length × width",
+                  "length × height",
+                  "2 × (length + width)"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q014-3",
+                "text": "What is the area of a square with a side length of 4 m?",
+                "options": [
+                  "8 m²",
+                  "12 m²",
+                  "16 m²",
+                  "20 m²"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q014-4",
+                "text": "Find the perimeter of a square with side length 9 cm.",
+                "options": [
+                  "18 cm",
+                  "36 cm",
+                  "27 cm",
+                  "45 cm"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q014-5",
+                "text": "What is the area of a triangle with a base of 10 cm and a height of 5 cm?",
+                "options": [
+                  "20 cm²",
+                  "25 cm²",
+                  "30 cm²",
+                  "50 cm²"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q014-6",
+                "text": "What formula do you use to find the area of a triangle?",
+                "options": [
+                  "base × height",
+                  "1/2 × base + height",
+                  "1/2 × base × height",
+                  "base + height"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q014-7",
+                "text": "If the perimeter of a square is 16 m, what is the side length?",
+                "options": [
+                  "2 m",
+                  "4 m",
+                  "6 m",
+                  "8 m"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q014-8",
+                "text": "Which of the following shapes does NOT use the formula A = l × w for area?",
+                "options": [
+                  "Rectangle",
+                  "Square",
+                  "Triangle",
+                  "Parallelogram"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q014-9",
+                "text": "The sides of a triangle are 3 cm, 4 cm, and 5 cm. What is its perimeter?",
+                "options": [
+                  "12 cm",
+                  "14 cm",
+                  "10 cm",
+                  "15 cm"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q014-10",
+                "text": "What is the area of a rectangle with length 10 m and width 2 m?",
+                "options": [
+                  "12 m²",
+                  "15 m²",
+                  "18 m²",
+                  "20 m²"
+                ],
+                "correct": 3
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M04",
+        "title": "Data Handling and Statistics",
+        "lessons": [
+          {
+            "id": "MAT-8-015",
+            "lessonNumber": 15,
+            "lessonOrder": 1,
+            "locked": true,
+            "title": "Collecting and organizing data",
+            "content": "Welcome to today's lesson on collecting and organizing data! In this lesson, we will explore how to gather information, the importance of organizing data, and how these steps form the foundation of understanding statistics. Statistics is all around us in our daily lives, from the weather reports we see on television to the data that helps companies make important decisions. Let's go through it step-by-step. \n\n**What is Data?**\nData is a collection of facts or information. It can be numerical, like your age or the number of students in a class, or categorical, like the colors in a pack of crayons or the brands of shoes in a store. \n\n**Why Collect Data?**\nCollecting data is crucial because it helps us make informed decisions. Imagine a teacher wanting to know the favorite sports of students to organize a sports day. Simply guessing wouldn't be as effective as asking the students or observing their choices. \n\n**Steps to Collect Data:**\n1. **Define the Objective:** Determine why you need the data. Are you trying to understand popular trends or solve a specific problem?\n2. **Decide What Data to Collect:** Know what information you need. If you're looking for favorite sports, focus on collecting information only related to sports choices.\n3. **Choose a Method:** Decide how to collect your data. Surveys, interviews, or observations are great methods.\n4. **Collect the Data:** Implement your chosen method and gather information.\n5. **Review and Organize Data:** Go through the data collected to ensure it is complete and organized.\n\n**Organizing Data:**\nOnce you have your data, it needs to be organized so it can be easily analyzed. Think about walking into a library and imagining books scattered everywhere; it would be difficult to find the book you need. Similarly, data needs to be sorted and classified. Common ways to organize data include:\n\n- **Tables:** Data arranged in rows and columns.\n- **Charts:** Visual representations like bar graphs or pie charts.\n- **Lists:** For simpler data sets.\n\n**Real-life Significance:** Organizing data efficiently helps businesses determine shopping trends, schools to improve education strategies, and it even helps governments in policy-making by understanding social issues effectively.\n\nBy practicing data collection and organization, you sharpen your analytical skills and become more observant about everything around you.\n",
+            "examples": [
+              {
+                "problem": "A class of 30 students is asked what their favorite fruit is. The options are 'Apple', 'Banana', 'Orange', and 'Grapes'. Collect the data, then organize it in a table.",
+                "solution": [
+                  "Step 1: Ask each student what their favorite fruit is.",
+                  "Step 2: Tally the responses. Let's say 10 students choose 'Apple', 8 choose 'Banana', 7 choose 'Orange', and 5 choose 'Grapes'.",
+                  "Step 3: Organize the data into a table:\n| Fruit   | Number of Students |\n|---------|-------------------|\n| Apple   | 10                |\n| Banana  | 8                 |\n| Orange  | 7                 |\n| Grapes  | 5                 |"
+                ]
+              },
+              {
+                "problem": "A survey is conducted to find out how many cars pass through a street over an hour. The results are collected as follows for every 10-minute interval: 15, 12, 25, 18, 20, 9. Organize the data in a clear way.",
+                "solution": [
+                  "Step 1: Review the data collected.",
+                  "Step 2: Organize it in a table with intervals:\n| Time Interval | Number of Cars |\n|---------------|---------------|\n| 0-10 min      | 15            |\n| 10-20 min     | 12            |\n| 20-30 min     | 25            |\n| 30-40 min     | 18            |\n| 40-50 min     | 20            |\n| 50-60 min     | 9             |"
+                ]
+              },
+              {
+                "problem": "A school wants to identify the most common pet among students. Survey data shows: Dog - 15, Cat - 10, Bird - 6, Fish - 4. Present this in a bar chart.",
+                "solution": [
+                  "Step 1: Review the survey data.",
+                  "Step 2: Choose a visual method; a bar chart is suitable.",
+                  "Step 3: Create a bar chart with pets on the X-axis and the number of students on the Y-axis. Each bar represents one category: Dog, Cat, Bird, Fish."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/93ea8b50-42ae-4037-9e97-642ee783bbbf.png",
+            "quiz": [
+              {
+                "id": "Q015-1",
+                "text": "Which of the following is an example of numerical data?",
+                "options": [
+                  "The color of a car",
+                  "The number of books on a shelf",
+                  "The type of music",
+                  "The brand of a laptop"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q015-2",
+                "text": "What is the first step in data collection?",
+                "options": [
+                  "Collecting the data",
+                  "Organizing the data",
+                  "Defining the objective",
+                  "Choosing a method"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q015-3",
+                "text": "If a factory produces 300 units of a product daily, which representation is most suitable for daily production data?",
+                "options": [
+                  "Pie Chart",
+                  "Line Graph",
+                  "Table",
+                  "Bar Chart"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q015-4",
+                "text": "In organizing data, which of the following is NOT commonly used?",
+                "options": [
+                  "Tables",
+                  "Graphs",
+                  "Lists",
+                  "Paragraphs"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q015-5",
+                "text": "What's the main reason to organize data?",
+                "options": [
+                  "To make it look neat",
+                  "To enable better analysis",
+                  "To keep it secret",
+                  "To space it out evenly"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q015-6",
+                "text": "What type of data is collected when asking for a person's favorite color?",
+                "options": [
+                  "Quantitative",
+                  "Numerical",
+                  "Categorical",
+                  "Experimental"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q015-7",
+                "text": "Which of these would be considered as a method of collecting data?",
+                "options": [
+                  "Listening to the radio",
+                  "Conducting a survey",
+                  "Sleeping",
+                  "Guessing answers"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q015-8",
+                "text": "If data is sorted based on sizes, it is organized by:",
+                "options": [
+                  "Temporal Order",
+                  "Alphabetical Order",
+                  "Numerical Order",
+                  "Magnitude"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q015-9",
+                "text": "A teacher creating a bar chart to show test scores is using data to:",
+                "options": [
+                  "Exclusively inform students",
+                  "Display scoring trends",
+                  "Only help teachers",
+                  "Decide on grading scale"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q015-10",
+                "text": "Organizing survey responses in a table helps with:",
+                "options": [
+                  "Making the survey shorter",
+                  "Reducing the need for computers",
+                  "Easier data analysis",
+                  "Preventing data loss"
+                ],
+                "correct": 2
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-016",
+            "lessonNumber": 16,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Mean, median, and mode",
+            "content": "Welcome to Lesson 16 on Data Handling and Statistics. Today, we will explore how to measure central tendency using mean, median, and mode. These are important concepts that help us summarize and interpret data effectively. \n\n**Mean (Average)**: The mean is the average of a set of numbers. To find the mean, add up all the numbers you've got, then divide this sum by the number of items. For example, if you're finding the mean number of hours spent on homework in a week, you'd add up all the hours and then divide by the number of days. \n\n**Median**: The median is the middle number in a set of numbers. If you list the numbers in ascending or descending order, the median is the number right in the center. If there's an even number of items, the median is the average of the two middle numbers. For example, to find the median number of apples eaten in a week, you would line up the apples eaten each day in order and find the middle number. \n\n**Mode**: The mode is the number that appears most frequently in a data set. Sometimes a data set can have more than one mode if several numbers are tied for most frequent. For example, if we look at the number of times students choose chocolate, vanilla, or strawberry ice cream, the mode is the flavor chosen most often. \n\nWhy are these measures important? The mean gives us an overall idea of the data. The median is useful when the data is skewed or has outliers, as it provides a measure not influenced by extreme values. The mode helps identify the most common item in the data set, which can be useful in categories like fashion or preferences.\n\nUsing these measures together gives us a comprehensive view of the data, smoothing out individual peculiarities and allowing us to make informed decisions. Let's dive into some examples to see how these concepts are applied in real-life scenarios.",
+            "examples": [
+              {
+                "problem": "Find the mean of the following scores: 78, 82, 85, 90, and 95.",
+                "solution": [
+                  "Step 1: Add all the scores together: 78 + 82 + 85 + 90 + 95 = 430.",
+                  "Step 2: Divide the sum by the number of scores: 430 / 5 = 86.",
+                  "The mean score is 86."
+                ]
+              },
+              {
+                "problem": "Determine the median of these numbers: 3, 7, 8, 5, 2.",
+                "solution": [
+                  "Step 1: Arrange the numbers in ascending order: 2, 3, 5, 7, 8.",
+                  "Step 2: Identify the middle number. Since there are five numbers, the median is the third number.",
+                  "The median is 5."
+                ]
+              },
+              {
+                "problem": "What is the mode of the following data set: 4, 1, 2, 4, 5, 6, 4, 3?",
+                "solution": [
+                  "Step 1: Count the frequency of each number: 1(1), 2(1), 3(1), 4(3), 5(1), 6(1).",
+                  "Step 2: The number 4 appears most frequently.",
+                  "The mode is 4."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/463dfa14-33c3-4a32-8f1d-a520f6202244.png",
+            "quiz": [
+              {
+                "id": "Q016-1",
+                "text": "What is the mean of the numbers 10, 15, 20?",
+                "options": [
+                  "15",
+                  "10",
+                  "20",
+                  "17"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q016-2",
+                "text": "If a data set contains the numbers 3, 10, 3, 8, 2, what is the mode?",
+                "options": [
+                  "3",
+                  "8",
+                  "10",
+                  "2"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q016-3",
+                "text": "What is the median of the numbers 9, 5, 3, 8, 6?",
+                "options": [
+                  "5",
+                  "6",
+                  "8",
+                  "7"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q016-4",
+                "text": "Find the mode of the following numbers: 22, 25, 22, 19, 19, 22.",
+                "options": [
+                  "22",
+                  "25",
+                  "19",
+                  "No mode"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q016-5",
+                "text": "What's the mean of 7, 14, 21, and 35?",
+                "options": [
+                  "14.25",
+                  "19.25",
+                  "16.75",
+                  "19"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q016-6",
+                "text": "Which measure of central tendency is best when data has outliers?",
+                "options": [
+                  "Mean",
+                  "Median",
+                  "Mode",
+                  "Range"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q016-7",
+                "text": "In a set of numbers where all values are unique, what is the mode?",
+                "options": [
+                  "One of the numbers",
+                  "Average of numbers",
+                  "No mode",
+                  "Middle number"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q016-8",
+                "text": "What is the median of the numbers 2, 4, 6, 8?",
+                "options": [
+                  "5",
+                  "6",
+                  "7",
+                  "5.5"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q016-9",
+                "text": "Out of the following, which set of numbers has a median of 10? 8, 9, 10, 11, 12",
+                "options": [
+                  "11, 11, 10, 10, 10",
+                  "9, 10, 11, 12, 13",
+                  "7, 8, 10, 12, 13",
+                  "10, 10, 10, 11, 12"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q016-10",
+                "text": "Which measure is most affected by extremely high or low numbers?",
+                "options": [
+                  "Median",
+                  "Mode",
+                  "Mean",
+                  "Range"
+                ],
+                "correct": 2
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-017",
+            "lessonNumber": 17,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Range and data spread",
+            "content": "## Lesson: Understanding Range and Data Spread\n\nIn this lesson, we will explore how to handle data by understanding 'range' and 'data spread'. This is part of a broader look into statistics. By the end of this lesson, you'll be able to find the range of a set of data and understand what it tells us about the data's spread.\n\n### What is Range?\nThe range is a simple measure of data variation. To find the range, you subtract the smallest number in the data set from the largest number. It gives you a quick sense of how spread out the data values are.\n\n**Formula**: Range = Largest value - Smallest value\n\n### Why is Range Important?\n- **Overview of Spread**: Range shows the extent of variability in your data.\n- **Initial Assessment**: It helps in the initial assessment of how data points are distributed.\n- **Comparison**: Range can be used to compare variation between different data sets.\n\n### Data Spread\nWhile range provides a simple measure, it does not consider how data points are distributed between the smallest and largest values. That’s why it is one aspect of understanding data spread.\n\n### Real Life Example: Sports Team Scores\nConsider the scores of six games played by your school's basketball team: 20, 25, 30, 22, 28, 18.\n- **Smallest score**: 18\n- **Largest score**: 30\n- **Range**: 30 - 18 = 12\nThis range tells us the spread of scores is 12 points.\n\n### Real Life Example: Daily Temperatures\nConsider the recorded temperatures over a week: 32°C, 34°C, 31°C, 33°C, 29°C, 35°C, 30°C.\n- **Smallest temperature**: 29°C\n- **Largest temperature**: 35°C\n- **Range**: 35 - 29 = 6\nThe range of temperatures is 6°C, showing the temperature varied over the week but didn’t have extreme fluctuations.\n\nUnderstanding the range and spread of data helps us in many real-world scenarios, whether it is sports, weather predictions, or business analytics.\n\n### Misinterpretations\nWhile range tells us something about the data, it isn't foolproof. Two sets of data can have the same range but different distributions.\n\n![Think of it like rubber bands stretched differently, each with different factors affecting the stretch (distribution).]\n\n## Let’s Practice!\nTime to go over some worked examples to help solidify your understanding of the range and data spread.",
+            "examples": [
+              {
+                "problem": "A class scored the following marks in a quiz: 45, 58, 62, 70, 49. Compute the range.",
+                "solution": [
+                  "Step 1: Identify the smallest score, which is 45.",
+                  "Step 2: Identify the largest score, which is 70.",
+                  "Step 3: Compute the range: 70 - 45 = 25."
+                ]
+              },
+              {
+                "problem": "Temperatures recorded over a weekend were 18°C, 22°C, 20°C, 19°C. Find the range of temperatures.",
+                "solution": [
+                  "Step 1: Identify the smallest temperature, which is 18°C.",
+                  "Step 2: Identify the largest temperature, which is 22°C.",
+                  "Step 3: Compute the range: 22°C - 18°C = 4°C."
+                ]
+              },
+              {
+                "problem": "Pete collects stamps. He records the number of new stamps each month for 3 months: 180, 175, 190. What is the range of his stamp collection growth?",
+                "solution": [
+                  "Step 1: Identify the smallest number of stamps, which is 175.",
+                  "Step 2: Identify the largest number of stamps, which is 190.",
+                  "Step 3: Compute the range: 190 - 175 = 15."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/05f8f7b0-03be-4524-9bd4-e343b52641d8.png",
+            "quiz": [
+              {
+                "id": "Q017-1",
+                "text": "What is the range of the data set: 34, 24, 56, 44?",
+                "options": [
+                  "32",
+                  "22",
+                  "34",
+                  "24"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q017-2",
+                "text": "If the range of a data set is zero, what does this imply about the data?",
+                "options": [
+                  "All data points are the same",
+                  "Data has high variation",
+                  "Data points are consecutive",
+                  "Data is linear"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q017-3",
+                "text": "Which data set has the largest range? Set A: 1, 3, 5; Set B: 10, 12, 15; Set C: 20, 22, 28",
+                "options": [
+                  "Set A",
+                  "Set B",
+                  "Set C",
+                  "All have same range"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q017-4",
+                "text": "Consider the data set: 4, 4, 4, 4, 4. What is the range?",
+                "options": [
+                  "0",
+                  "4",
+                  "8",
+                  "20"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q017-5",
+                "text": "The data set has a range of 15. What could be the largest and smallest value?",
+                "options": [
+                  "10 and 50",
+                  "5 and 20",
+                  "0 and 15",
+                  "15 and 30"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q017-6",
+                "text": "Which statement is true about range?",
+                "options": [
+                  "Range is never zero",
+                  "Range is affected by extreme values",
+                  "Range considers mean",
+                  "Range is a percentage"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q017-7",
+                "text": "Data set: 90, 87, 85, 77. What is the range?",
+                "options": [
+                  "90",
+                  "13",
+                  "18",
+                  "23"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q017-8",
+                "text": "Can two different data sets have the same range?",
+                "options": [
+                  "Yes",
+                  "No",
+                  "Maybe",
+                  "Depends on the data set"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q017-9",
+                "text": "What happens to the range if we double every number in the data set?",
+                "options": [
+                  "Range doubles",
+                  "Range halves",
+                  "Range stays the same",
+                  "Range increases by 1"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q017-10",
+                "text": "If a data set's range is 50, what does this tell you?",
+                "options": [
+                  "The data has no trend",
+                  "Data is tightly packed",
+                  "Largest and smallest values differ by 50",
+                  "Data is perfectly normal"
+                ],
+                "correct": 2
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-018",
+            "lessonNumber": 18,
+            "lessonOrder": 4,
+            "locked": true,
+            "title": "Bar graphs and histograms",
+            "content": "In this lesson, we will delve into the fascinating world of bar graphs and histograms, which are essential tools in data handling and statistics. Understanding these graphical representations is crucial for analyzing and interpreting data in everyday life. Let's start by defining each one. \n\nA bar graph is a visual representation of data using rectangular bars where the length of each bar is proportional to the value it represents. Bar graphs are used to compare different categories or groups. For instance, you might use a bar graph to display the number of students who prefer different types of snacks: chips, cookies, fruit, and candy.\n\nOn the other hand, a histogram is a type of bar graph specifically used for representing the distribution of numerical data. It displays data by grouping numbers into ranges. Unlike bar graphs, which are used for categorical data, histograms are useful when you want to understand how frequently different ranges of values occur in a data set, such as the distribution of students' test scores in a math class.\n\n### Characteristics of Bar Graphs\n1. **Axis**: Bar graphs have two axes. The x-axis (horizontal axis) typically shows the categories being compared, while the y-axis (vertical axis) represents the measured values.\n2. **Bars**: Each bar represents a category. The height or length of the bar is proportional to the data it represents.\n3. **Spacing**: Bars are spaced equally apart to emphasize the comparative aspect of the data.\n4. **Orientation**: Bars can be vertical or horizontal; the choice depends on what makes the data easier to read.\n\n### Characteristics of Histograms\n1. **Bins**: Instead of individual bars for each data point, histograms use bins to group ranges of numbers together. Bins are adjacent, showing continuity in the data set.\n2. **Continuous Data**: Histograms are ideal for data that naturally breaks into ranges, like age groups or time intervals.\n3. **No Gaps**: Unlike bar graphs, histogram bars touch each other unless a bin contains no data.\n\nLet’s dive into some real-world examples to see these graphs in action.\n\n### Importance of Bar Graphs and Histograms\nBar graphs can help you quickly identify trends, make comparisons, and summarize large amounts of data. Similarly, histograms offer insights into the distribution and variability of data sets, allowing one to identify patterns and deviations.\n\nBoth tools are extensively used in various fields including business, science, and education, helping stakeholders make informed decisions based on the visualized data.\n\n### Real Examples and Uses:\nBar graphs are useful when comparing sales figures across different months. Histograms can show you how many people fall into different age brackets for survey data, which is helpful in targeted marketing strategies.",
+            "examples": [
+              {
+                "problem": "Create a bar graph to represent the number of books read by four students: John (3 books), Lisa (7 books), Ahmed (5 books), Maria (10 books).",
+                "solution": [
+                  "Step 1: Draw two axes on the graph paper. Label the x-axis with the names of the students and the y-axis with the number of books.",
+                  "Step 2: Mark a scale on the y-axis, going up to the largest number of books read (10 in this case).",
+                  "Step 3: Draw a bar for each student with a height corresponding to the number of books they read: John - 3, Lisa - 7, Ahmed - 5, and Maria - 10."
+                ]
+              },
+              {
+                "problem": "Create a histogram for the following data which represents the test scores of a class: [55, 60, 60, 70, 75, 75, 75, 80, 90].",
+                "solution": [
+                  "Step 1: Determine the range of the data (55-90) and choose an appropriate bin width, for example, 10.",
+                  "Step 2: Create bins: 50-59, 60-69, 70-79, 80-89, and 90-99.",
+                  "Step 3: Count the number of scores in each bin: 50-59 (1 score), 60-69 (2 scores), 70-79 (3 scores), 80-89 (2 scores), 90-99 (1 score).",
+                  "Step 4: Draw the histogram with each bin represented by a bar, making sure the bars touch each other to show continuity."
+                ]
+              },
+              {
+                "problem": "Compare the use of bar graphs and histograms with an example of pet ownership data (dogs, cats, birds) among a sample group, and the age distribution of owners.",
+                "solution": [
+                  "Step 1: Use a bar graph to represent pet ownership among a sample: Dogs (15 owners), Cats (10 owners), Birds (5 owners).",
+                  "Step 2: Illustrate each category with a bar, ensuring equal spacing between the bars.",
+                  "Step 3: For age distribution, collect age data of owners and divide into bins (e.g., 20-29, 30-39).",
+                  "Step 4: Construct a histogram with these bins, noting how many people fall into each age range, and draw bars touching each other."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/098183af-392d-4973-ac4b-2ed84a254af1.png",
+            "quiz": [
+              {
+                "id": "Q018-1",
+                "text": "What does a bar graph typically use to represent data?",
+                "options": [
+                  "Circular slices",
+                  "Rectangular bars",
+                  "Lines",
+                  "Points"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q018-2",
+                "text": "In a histogram, what do the touching bars represent?",
+                "options": [
+                  "Gaps in data",
+                  "Ongoing categories",
+                  "Distinct categories",
+                  "None of the above"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q018-3",
+                "text": "Bar graphs are best used for what type of data?",
+                "options": [
+                  "Qualitative",
+                  "Quantitative",
+                  "Both A and B",
+                  "None"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q018-4",
+                "text": "How should the bars in a bar graph be spaced?",
+                "options": [
+                  "Touching each other",
+                  "Close together",
+                  "Equally apart",
+                  "Randomly"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q018-5",
+                "text": "Which of these is not a feature of histograms?",
+                "options": [
+                  "Bins",
+                  "Gaps between bars",
+                  "Continuous data",
+                  "Frequency"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q018-6",
+                "text": "A histogram is effective for which type of data?",
+                "options": [
+                  "Categorical",
+                  "Numerical",
+                  "Both A and B",
+                  "None"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q018-7",
+                "text": "The length of a bar in a bar graph is proportional to what?",
+                "options": [
+                  "The number of categories",
+                  "The value it represents",
+                  "The scale used",
+                  "None"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q018-8",
+                "text": "Which statement is true about bar graphs?",
+                "options": [
+                  "They cannot show negative values",
+                  "They only show positive value",
+                  "They compare different categories",
+                  "They show data over time"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q018-9",
+                "text": "Histograms are most similar to which type of graph?",
+                "options": [
+                  "Line graph",
+                  "Pie chart",
+                  "Bar graph",
+                  "Scatter plot"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q018-10",
+                "text": "To find how often a particular range occurs in a dataset, you would use a:",
+                "options": [
+                  "Bar graph",
+                  "Pie chart",
+                  "Histogram",
+                  "Line graph"
+                ],
+                "correct": 2
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-019",
+            "lessonNumber": 19,
+            "lessonOrder": 5,
+            "locked": true,
+            "title": "Pie charts and interpretation",
+            "content": "In this lesson, we'll explore 'Pie Charts and Interpretation,' a topic that helps us understand how to represent data visually using pie charts. Pie charts are circular charts divided into sectors, where each sector represents a part of the whole. They are useful for showing the proportions of a total that different categories represent. For example, if you surveyed your classmates on their favorite fruit and want to show visually how many prefer apples, bananas, or oranges, a pie chart would be a suitable choice. A pie chart is particularly effective for comparing parts to a whole when you have categorical data. The size of each slice or sector is proportional to the number of data points in that category.\n\nLet's start by understanding the basics of a pie chart. Imagine a simple example: a class of 30 students is surveyed about their favorite type of pet. The options are dogs, cats, birds, and fish. The results might be:\n- Dogs: 15 students\n- Cats: 9 students\n- Birds: 3 students\n- Fish: 3 students\n\nThe first step in creating a pie chart is converting these numbers into proportions of the whole. You want to see how large each slice will be compared to the others. The entire pie chart represents 100% or 360 degrees, so we need to find out what fraction of this whole each category represents. To do this, calculate the percentage of the total for each category and then translate those percentages into angles for your pie chart.\n\nGiven that all sectors must add up to 360 degrees, the angle for each sector = (Number in category / Total number of data points) * 360. Here is how you break it down:\n- Dogs: (15/30) * 360 = 180 degrees\n- Cats: (9/30) * 360 = 108 degrees\n- Birds: (3/30) * 360 = 36 degrees\n- Fish: (3/30) * 360 = 36 degrees\n\nThis pie chart will clearly show that half of the class prefers dogs, with the remainder choosing cats, birds, or fish. Such charts provide a visual interpretation of data that can be quickly understood and easily communicated.\n\nPie charts are most effective when used with a limited number of categories. Too many categories can make the chart cluttered and difficult to read. Another important aspect is the use of color or shading to differentiate sectors, enhancing clarity and understanding.",
+            "examples": [
+              {
+                "problem": "A school has 100 students participating in different sports: 40 in basketball, 30 in soccer, 20 in swimming, and 10 in tennis. Create a pie chart to represent this data.",
+                "solution": [
+                  "Step 1: Calculate the total: 40 + 30 + 20 + 10 = 100.",
+                  "Step 2: Determine the percentage for each sport: Basketball = (40/100) * 100 = 40%, Soccer = (30/100) * 100 = 30%, Swimming = (20/100) * 100 = 20%, Tennis = (10/100) * 100 = 10%.",
+                  "Step 3: Convert these percentages to angles for the pie chart: Basketball = 0.40 * 360 = 144 degrees, Soccer = 0.30 * 360 = 108 degrees, Swimming = 0.20 * 360 = 72 degrees, Tennis = 0.10 * 360 = 36 degrees."
+                ]
+              },
+              {
+                "problem": "Mrs. Lee wants to show how much time she spends on various activities daily. She spends 8 hours sleeping, 3 hours on meals, 4 hours exercising, and 9 hours working. Draw a pie chart.",
+                "solution": [
+                  "Step 1: Calculate the total hours: 8 + 3 + 4 + 9 = 24.",
+                  "Step 2: Calculate the percentage of total time for each activity: Sleeping = (8/24) * 100 = 33.33%, Meals = (3/24) * 100 = 12.5%, Exercising = (4/24) * 100 = 16.67%, Working = (9/24) * 100 = 37.5%.",
+                  "Step 3: Translate these to angles: Sleeping = 0.3333 * 360 = 120 degrees, Meals = 0.125 * 360 = 45 degrees, Exercising = 0.1667 * 360 = 60 degrees, Working = 0.375 * 360 = 135 degrees."
+                ]
+              },
+              {
+                "problem": "During Earth Day, a group of students clean up a beach and sort the trash into plastics, metals, and glass. They collect 50 pieces of plastic, 20 pieces of metal, and 30 pieces of glass. How would you represent this using a pie chart?",
+                "solution": [
+                  "Step 1: Find the total number of trash pieces: 50 + 20 + 30 = 100.",
+                  "Step 2: Calculate the percentage for each trash type: Plastics = (50/100) * 100 = 50%, Metals = (20/100) * 100 = 20%, Glass = (30/100) * 100 = 30%.",
+                  "Step 3: Determine the angles: Plastics = 0.50 * 360 = 180 degrees, Metals = 0.20 * 360 = 72 degrees, Glass = 0.30 * 360 = 108 degrees."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/41048017-447f-450f-937b-c55ca5153c67.png",
+            "quiz": [
+              {
+                "id": "Q019-1",
+                "text": "What type of data is most suitable for a pie chart?",
+                "options": [
+                  "Quantitative",
+                  "Categorical",
+                  "Grouped",
+                  "Individual"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q019-2",
+                "text": "What does each sector of a pie chart represent?",
+                "options": [
+                  "The whole data set",
+                  "A portion of the data set",
+                  "Exact numbers",
+                  "Non-existent values"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q019-3",
+                "text": "If a sector of a pie chart is 90 degrees, what percentage of the pie chart does it represent?",
+                "options": [
+                  "25%",
+                  "75%",
+                  "90%",
+                  "10%"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q019-4",
+                "text": "What should all the angles of the sectors in a pie chart add up to?",
+                "options": [
+                  "180 degrees",
+                  "90 degrees",
+                  "360 degrees",
+                  "720 degrees"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q019-5",
+                "text": "Why is it important to use distinct colors or shades in a pie chart?",
+                "options": [
+                  "For attractive visual appeal",
+                  "For easy differentiation between sectors",
+                  "To make bigger sectors darker",
+                  "No particular reason"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q019-6",
+                "text": "Which of the following is NOT an advantage of pie charts?",
+                "options": [
+                  "Easy to understand at a glance",
+                  "Effective for limited categories",
+                  "Can show trends over time",
+                  "Visually appealing"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q019-7",
+                "text": "If a pie chart shows survey responses and one option is 45%, what is the degree of its sector?",
+                "options": [
+                  "120 degrees",
+                  "90 degrees",
+                  "162 degrees",
+                  "45 degrees"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q019-8",
+                "text": "In a pie chart, which is represented by a larger angle?",
+                "options": [
+                  "The smallest category",
+                  "The category with fewest data points",
+                  "The largest category",
+                  "The first category"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q019-9",
+                "text": "When should you avoid using a pie chart?",
+                "options": [
+                  "For more than five categories",
+                  "With time series data",
+                  "For percentages",
+                  "To show parts of a whole"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q019-10",
+                "text": "What does a 180-degree sector in a pie chart signify?",
+                "options": [
+                  "Half the data",
+                  "A third of the data",
+                  "One-quarter of the data",
+                  "The entire data"
+                ],
+                "correct": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "M05",
+        "title": "Ratios, Proportions and Percentages",
+        "lessons": [
+          {
+            "id": "MAT-8-020",
+            "lessonNumber": 20,
+            "lessonOrder": 1,
+            "locked": true,
+            "title": "Ratios and simplification",
+            "content": "Welcome to our lesson on ratios and simplification, which is an important part of understanding how to compare quantities mathematically. When you encounter situations in everyday life where you need to compare quantities, ratios become a powerful tool. For instance, if you want to understand how two different ingredients relate to each other in a recipe or how the distance between two locations compares when different modes of transportation are used, you use ratios. \n\nA ratio is simply a way to show the relative sizes of two or more values. It's often used to compare how much of one thing there is compared to another. Ratios can be written in several ways: using a colon (e.g., 3:4), as a fraction (e.g., 3/4), or in words (\"3 to 4\"). All of these notations mean the same thing.\n\nLet's say you are baking cookies and the recipe calls for 2 cups of flour and 1 cup of sugar. The ratio of flour to sugar is 2:1. This tells you there are 2 parts of flour for every 1 part of sugar, helping you understand how these two ingredients are used in relation to each other.\n\n**Simplifying Ratios:**\nSometimes, when working with ratios, it becomes necessary to simplify them. A simplified ratio is one in which the numbers have no common factors other than 1. This makes it easier to understand the ratio at a glance and use in calculations.\n\nTo simplify a ratio, find the greatest common divisor (GCD) of the two numbers and divide both sides of the ratio by that number. For instance, if the ratio is 9:12, the GCD of 9 and 12 is 3. So, dividing both by 3 gives the simplified ratio 3:4.\n\nLet's look at some practical examples.\n\n1. **Example 1: Comparing Team Members**\nSuppose you have a group of people comprising 12 boys and 18 girls. You want to express the ratio of boys to girls.\n   * **Step 1:** Determine the ratio: 12 boys to 18 girls. This can be written as 12:18.\n   * **Step 2:** Find the GCD of 12 and 18, which is 6.\n   * **Step 3:** Divide both terms by 6 to simplify: 12 ÷ 6 : 18 ÷ 6 = 2:3.\n   So, the simplified ratio of boys to girls is 2:3.\n\n2. **Example 2: Recipe Ingredients**\nImagine you need to make a fruit punch that requires 500 ml of orange juice and 800 ml of apple juice.\n   * **Step 1:** Write down the ratio of orange juice to apple juice: 500 ml to 800 ml, or 500:800.\n   * **Step 2:** Find the GCD of 500 and 800, which is 100.\n   * **Step 3:** Divide both sides by 100 to simplify: 500 ÷ 100 : 800 ÷ 100 = 5:8.\n   The simplified ratio is 5:8, meaning for every 5 parts of orange juice, you need 8 parts of apple juice.\n\n3. **Example 3: Class Attendance**\nYour class of 40 students has 24 students present. You want to express the ratio of present students to the class total.\n   * **Step 1:** The ratio of students present to total students is 24:40.\n   * **Step 2:** Find the GCD of 24 and 40, which is 8.\n   * **Step 3:** Simplify by dividing: 24 ÷ 8 : 40 ÷ 8 = 3:5.\n   The simplified ratio tells us that for every 3 students present, there are 5 students in the class.\n\nRatios are everywhere, from recipes and class assignments to business and sports statistics. Understanding how to work with and simplify ratios helps us make better comparisons and decisions.\n\n**What to remember:**\n- A ratio expresses how much there is of one thing compared to another.\n- Write ratios using colons, fractions, or words.\n- Simplify ratios by dividing by their greatest common divisor (GCD).\n- Simplification helps in easier understanding and application.",
+            "examples": [
+              {
+                "problem": "Find the simplified ratio of 45 dogs to 60 cats.",
+                "solution": [
+                  "Step 1: Write the ratio: 45:60.",
+                  "Step 2: Find the GCD of 45 and 60, which is 15.",
+                  "Step 3: Divide both numbers by 15: 45 ÷ 15 : 60 ÷ 15 = 3:4.",
+                  "The simplified ratio is 3:4."
+                ]
+              },
+              {
+                "problem": "Simplify the ratio 18 red apples to 24 green apples.",
+                "solution": [
+                  "Step 1: Write the ratio: 18:24.",
+                  "Step 2: Find the GCD of 18 and 24, which is 6.",
+                  "Step 3: Divide both numbers by 6: 18 ÷ 6 : 24 ÷ 6 = 3:4.",
+                  "The simplified ratio is 3:4."
+                ]
+              },
+              {
+                "problem": "Express the simplified ratio of a 72-page English book to a 96-page math book.",
+                "solution": [
+                  "Step 1: Write the ratio: 72:96.",
+                  "Step 2: Find the GCD of 72 and 96, which is 24.",
+                  "Step 3: Divide both numbers by 24: 72 ÷ 24 : 96 ÷ 24 = 3:4.",
+                  "The simplified ratio is 3:4."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/2a14b507-5968-430c-9c82-7af44f57f7dc.png",
+            "quiz": [
+              {
+                "id": "Q020-1",
+                "text": "Which of the following represents the simplified form of the ratio 14:42?",
+                "options": [
+                  "1:3",
+                  "2:5",
+                  "1:2",
+                  "3:1"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q020-2",
+                "text": "A bag contains 50 marbles, of which 30 are red and 20 are blue. What is the simplified ratio of red to blue marbles?",
+                "options": [
+                  "3:2",
+                  "2:3",
+                  "3:5",
+                  "5:3"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q020-3",
+                "text": "If a painting uses 36 ml of blue paint to 48 ml of green paint, what is the simplified ratio?",
+                "options": [
+                  "3:4",
+                  "4:3",
+                  "2:3",
+                  "3:2"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q020-4",
+                "text": "A recipe calls for 5 cups of flour to 15 cups of water. Simplify the ratio of flour to water.",
+                "options": [
+                  "1:3",
+                  "3:1",
+                  "1:5",
+                  "5:1"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q020-5",
+                "text": "The ratio of boys to girls in a class is 12:16. What is the simplified ratio?",
+                "options": [
+                  "3:4",
+                  "2:3",
+                  "4:3",
+                  "2:1"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q020-6",
+                "text": "Simplify the ratio 25:100.",
+                "options": [
+                  "1:2",
+                  "1:3",
+                  "1:4",
+                  "1:5"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q020-7",
+                "text": "A juice mix uses 90 ml of orange juice to 120 ml of apple juice. What is the simplified ratio of orange to apple juice?",
+                "options": [
+                  "3:4",
+                  "4:3",
+                  "2:3",
+                  "3:2"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q020-8",
+                "text": "If there are 10 dogs and 20 cats in a shelter, what is the simplified ratio of dogs to cats?",
+                "options": [
+                  "1:2",
+                  "2:1",
+                  "1:3",
+                  "2:3"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q020-9",
+                "text": "How do you simplify the ratio 8:10?",
+                "options": [
+                  "4:5",
+                  "3:5",
+                  "2:5",
+                  "2:4"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q020-10",
+                "text": "What is the simplified ratio of 100 apples to 150 oranges?",
+                "options": [
+                  "2:3",
+                  "3:2",
+                  "4:5",
+                  "5:6"
+                ],
+                "correct": 0
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-021",
+            "lessonNumber": 21,
+            "lessonOrder": 2,
+            "locked": true,
+            "title": "Direct and inverse proportion",
+            "content": "Direct and inverse proportion are key concepts in mathematics that help us understand how quantities change in relation to one another. Both concepts are widely applicable in real-world scenarios, such as in cooking, construction, and even budgeting. Let's explore these concepts in detail. \n\n**Direct Proportion:**\n\nIn direct proportion, as one quantity increases, the other quantity increases at the same rate. Similarly, if one quantity decreases, the other also decreases at the same rate. This relationship can be written as `y = kx`, where `k` is a constant of proportionality. \nExample: If 2 kg of apples cost $6, how much do 5 kg of apples cost? Here, price is directly proportional to weight.\n\nSteps to solve: \n1. Determine the cost per kg: $6 / 2 kg = $3/kg.\n2. Calculate the cost for 5 kg: 5 kg * $3/kg = $15.\nThus, 5 kg of apples cost $15.\n\n**Inverse Proportion:**\n\nIn inverse proportion, as one quantity increases, the other quantity decreases. The relationship is expressed as `y = k/x`, where `k` is again a constant. \nExample: If it takes 4 workers to complete a project in 10 days, how many workers are required to complete it in 5 days?\n\nSteps to solve:\n1. Set up the relation: 4 workers * 10 days = k.\n2. Calculate k: k = 40.\n3. For the project to be completed in 5 days: k = workers * 5 days.\n4. Solve for the number of workers: 40 = workers * 5, hence, workers = 40 / 5 = 8.\nTherefore, 8 workers are required.\n\nBoth concepts are easy to understand when connected to everyday activities, like sharing tasks or distributing items. Knowing these relationships helps solve various practical problems efficiently.",
+            "examples": [
+              {
+                "problem": "A recipe requires 200 grams of sugar for 4 servings. How much sugar is needed for 10 servings?",
+                "solution": [
+                  "Identify the relationship: Direct proportion between sugar and servings.",
+                  "Set up the proportion: 200g / 4 servings = x grams / 10 servings.",
+                  "Cross-multiply to solve for x: 200g * 10 = 4x.",
+                  "Divide to find x: x = 2000g / 4 = 500g.",
+                  "500 grams of sugar are needed for 10 servings."
+                ]
+              },
+              {
+                "problem": "A car travels 60 km in 2 hours. At the same speed, how long will it take to travel 150 km?",
+                "solution": [
+                  "Identify the relationship: Direct proportion between distance and time.",
+                  "Set up the proportion: 60 km / 2 hours = 150 km / x hours.",
+                  "Cross-multiply: 60x = 150 * 2.",
+                  "Solve for x: x = 300 / 60 = 5 hours.",
+                  "It will take 5 hours to travel 150 km."
+                ]
+              },
+              {
+                "problem": "10 workers can build a wall in 15 days. How many days will it take for 5 workers to build the same wall?",
+                "solution": [
+                  "Identify the relationship: Inverse proportion between workers and time taken.",
+                  "Set up the relation: 10 workers * 15 days = k.",
+                  "Calculate k: k = 150.",
+                  "Set up the equation for 5 workers: 5 workers * x days = k.",
+                  "Solve for x: x = 150 / 5 = 30 days.",
+                  "It will take 30 days for 5 workers to build the wall."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/357e199d-e90b-43a0-97fb-dcc6aad3b224.png",
+            "quiz": [
+              {
+                "id": "Q021-1",
+                "text": "If 5 pencils cost $10, what is the cost of 8 pencils?",
+                "options": [
+                  "$12",
+                  "$16",
+                  "$20",
+                  "$18"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-2",
+                "text": "How long will it take a car to travel 180 km if it covers 60 km in 1 hour?",
+                "options": [
+                  "2 hours",
+                  "3 hours",
+                  "6 hours",
+                  "4 hours"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-3",
+                "text": "30 workers can complete a task in 8 days. How many days will 20 workers take if the work is done at the same rate?",
+                "options": [
+                  "10 days",
+                  "12 days",
+                  "15 days",
+                  "18 days"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-4",
+                "text": "A car uses 8 liters of fuel to cover 100 km. How many liters will it use to cover 250 km?",
+                "options": [
+                  "20 liters",
+                  "15 liters",
+                  "25 liters",
+                  "30 liters"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q021-5",
+                "text": "If a light bulb lasts 1500 hours and you use it for 5 hours a day, for how many days will it last?",
+                "options": [
+                  "150 days",
+                  "300 days",
+                  "350 days",
+                  "400 days"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-6",
+                "text": "If the speed of a vehicle is increased, the time taken to reach the destination will:",
+                "options": [
+                  "increase",
+                  "decrease",
+                  "stay the same",
+                  "double"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-7",
+                "text": "What is the constant of proportionality if 4 bags cost $24?",
+                "options": [
+                  "$6/bag",
+                  "$8/bag",
+                  "$4/bag",
+                  "$3/bag"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q021-8",
+                "text": "If a train travels 20 km in 10 minutes, how far can it go in 1 hour?",
+                "options": [
+                  "100 km",
+                  "120 km",
+                  "140 km",
+                  "150 km"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-9",
+                "text": "If the price of 3 notebooks is $15, what would be the price of 7 notebooks?",
+                "options": [
+                  "$30",
+                  "$35",
+                  "$25",
+                  "$45"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q021-10",
+                "text": "If 12 books weigh 6 kg, how much would 16 books weigh?",
+                "options": [
+                  "7 kg",
+                  "8 kg",
+                  "9 kg",
+                  "10 kg"
+                ],
+                "correct": 1
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-022",
+            "lessonNumber": 22,
+            "lessonOrder": 3,
+            "locked": true,
+            "title": "Percentage calculations",
+            "content": "Welcome to Lesson 22 of Grade 8 Mathematics, where we will dive into the world of percentage calculations. Understanding percentages is essential as they are used in everyday life, whether you're shopping, eating at a restaurant, or analyzing test scores. By the end of this lesson, you'll feel confident in calculating percentages and applying these skills in real-world situations. \n\n**Introduction to Percentages**\n\nA percentage is a way of expressing a number as a fraction of 100, using the '%' symbol. For example, 50% is equivalent to 50 out of 100, or 0.5 in decimal form. Knowing how to work with percentages allows you to make comparisons between different quantities and understand proportions.\n\n**Converting Between Fractions, Decimals, and Percentages**\n\n1. **Fraction to Percentage**: To convert a fraction to a percentage, divide the top number by the bottom number, and then multiply by 100. For example, to convert 3/4 to a percentage, you do (3 ÷ 4) × 100 = 75%.\n\n2. **Decimal to Percentage**: To convert a decimal to a percentage, simply multiply by 100. For example, 0.85 as a percentage is 0.85 × 100 = 85%.\n\n3. **Percentage to Decimal or Fraction**: To convert a percentage to a decimal, divide by 100. For percentages to fractions, write the percentage over 100 and simplify if needed. For example, 75% as a fraction is 75/100, which simplifies to 3/4.\n\n**Finding a Percentage of a Quantity**\n\nTo find a percentage of a quantity, convert the percentage to a decimal and multiply by the quantity. For instance, finding 20% of 50 means calculating 0.2 × 50 = 10.\n\n**Practical Application of Percentages**\n\nPercentages can determine how much you save during sales, calculate tax, interest, and even in cooking while measuring ingredients.\n\nRemember, percentages are an efficient way to think about parts of a whole.\n\n**Worked Examples**",
+            "examples": [
+              {
+                "problem": "You have scored 18 out of 20 in a math test. What is your percentage score?",
+                "solution": [
+                  "Step 1: Divide the score by the total marks: 18 ÷ 20 = 0.9",
+                  "Step 2: Convert the decimal to a percentage by multiplying by 100: 0.9 × 100 = 90%",
+                  "So, your percentage score is 90%."
+                ]
+              },
+              {
+                "problem": "You received a 25% discount on a $60 jacket. How much money did you save?",
+                "solution": [
+                  "Step 1: Convert the percentage to a decimal: 25% = 0.25",
+                  "Step 2: Multiply the decimal by the original price: 0.25 × $60 = $15",
+                  "Thus, you saved $15 on the jacket."
+                ]
+              },
+              {
+                "problem": "A population of 5,000 people increased by 15% over the year. What is the new population?",
+                "solution": [
+                  "Step 1: Convert the percentage increase to a decimal: 15% = 0.15",
+                  "Step 2: Calculate the increase in population: 0.15 × 5,000 = 750",
+                  "Step 3: Add the increase to the original population: 5,000 + 750 = 5,750",
+                  "The new population is 5,750."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/abe8a6e4-5a3a-47a5-aeac-952ec4e3767c.png",
+            "quiz": [
+              {
+                "id": "Q022-1",
+                "text": "What is 10% of 200?",
+                "options": [
+                  "10",
+                  "20",
+                  "30",
+                  "40"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q022-2",
+                "text": "If a shirt originally costs $40 and is on sale for 25% off, what is the sale price?",
+                "options": [
+                  "$10",
+                  "$20",
+                  "$30",
+                  "$5"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q022-3",
+                "text": "Convert the fraction 1/5 to a percentage.",
+                "options": [
+                  "10%",
+                  "15%",
+                  "20%",
+                  "25%"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q022-4",
+                "text": "Your bill is $80, and you want to tip 15%. How much is the tip?",
+                "options": [
+                  "$8",
+                  "$10",
+                  "$12",
+                  "$15"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q022-5",
+                "text": "If an item is priced at $150 and it includes a 10% tax, what is the total cost?",
+                "options": [
+                  "$160",
+                  "$165",
+                  "$150",
+                  "$155"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q022-6",
+                "text": "What is 50% of 150?",
+                "options": [
+                  "75",
+                  "100",
+                  "50",
+                  "85"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q022-7",
+                "text": "Convert 0.25 to a percentage.",
+                "options": [
+                  "15%",
+                  "20%",
+                  "25%",
+                  "30%"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q022-8",
+                "text": "You got 16 out of 25 on a quiz. What is your percentage score?",
+                "options": [
+                  "56%",
+                  "64%",
+                  "72%",
+                  "80%"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q022-9",
+                "text": "A population of 1200 increased by 10%. What is the new population?",
+                "options": [
+                  "1250",
+                  "1300",
+                  "1320",
+                  "1400"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q022-10",
+                "text": "What is the percentage of 25 in 200?",
+                "options": [
+                  "10%",
+                  "12.5%",
+                  "15%",
+                  "20%"
+                ],
+                "correct": 1
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-021",
+            "lessonNumber": 21,
+            "lessonOrder": 4,
+            "locked": true,
+            "title": "Profit and loss",
+            "content": "Welcome to Lesson 21 of Grade 8 Mathematics: Ratios, Proportions, and Percentages. In today's lesson, we will dive into the key concepts of profit and loss. Understanding these concepts will help you to determine the financial viability of transactions, a useful skill in both business and everyday life. Let's begin by defining what profit and loss mean. \n\nProfit occurs when the selling price of an item is greater than its cost price. The cost price (CP) is the price at which an item is purchased, while the selling price (SP) is the price at which it is sold. The formula to calculate profit is: \n\nProfit = Selling Price - Cost Price \n\nOn the other hand, loss occurs when the selling price is less than the cost price. The formula to calculate loss is: \n\nLoss = Cost Price - Selling Price \n\nBesides identifying profit or loss, you might also be required to determine these values as percentages. Profit Percentage and Loss Percentage are usually calculated based on the cost price: \n\nProfit Percentage = (Profit / Cost Price) × 100% \nLoss Percentage = (Loss / Cost Price) × 100% \n\nNow, let's apply these concepts with practical examples to further clarify how they work. \n\nSuppose you bought a bicycle for $200 and sold it for $250. To find out how much profit you made, you subtract the cost price ($200) from the selling price ($250), resulting in a profit of $50. The profit percentage can be calculated by dividing the profit by the cost price and multiplying by 100, which gives a profit percentage of 25%. \n\nLet's contrast this with a scenario involving a loss. Imagine you bought a tablet for $300 and had to sell it for $250. The amount of loss is found by subtracting the selling price from the cost price ($300 - $250 = $50). The loss percentage can be calculated as (Loss / Cost Price) × 100, equaling approximately 16.67%. \n\nBy working through examples and questions, you'll gain further understanding of these calculations. Combining this understanding with real-life examples, you'll be able to make informed financial decisions in the future.",
+            "examples": [
+              {
+                "problem": "You purchase a book for $15 and sell it for $20. What is the profit and profit percentage?",
+                "solution": [
+                  "Step 1: Find the profit: $20 - $15 = $5.",
+                  "Step 2: Calculate the profit percentage: ($5 / $15) × 100 = 33.33%.",
+                  "Step 3: Therefore, the profit is $5, and the profit percentage is 33.33%."
+                ]
+              },
+              {
+                "problem": "A shopkeeper buys a toy for $40 and sells it for $35. Find the loss and loss percentage.",
+                "solution": [
+                  "Step 1: Calculate the loss: $40 - $35 = $5.",
+                  "Step 2: Find the loss percentage: ($5 / $40) × 100 = 12.5%.",
+                  "Step 3: The loss is $5, and the loss percentage is 12.5%."
+                ]
+              },
+              {
+                "problem": "You invest in a piece of art for $500 and later sell it for $600. What is the profit and profit percentage?",
+                "solution": [
+                  "Step 1: Determine the profit: $600 - $500 = $100.",
+                  "Step 2: Compute the profit percentage: ($100 / $500) × 100 = 20%.",
+                  "Step 3: The profit is $100, and the profit percentage is 20%."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/e6eaf292-5cb5-45d0-85ff-806695466138.png",
+            "quiz": [
+              {
+                "id": "Q021-1",
+                "text": "If you buy a pen for $8 and sell it for $10, what is the profit?",
+                "options": [
+                  "$2",
+                  "$3",
+                  "$4",
+                  "$5"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q021-2",
+                "text": "You purchase a notebook for $5 and sell it for $4.50. What is the loss?",
+                "options": [
+                  "$0.50",
+                  "$1.00",
+                  "$1.50",
+                  "$2.00"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q021-3",
+                "text": "If the cost price of a watch is $50 and the selling price is $60, what is the profit percentage?",
+                "options": [
+                  "10%",
+                  "15%",
+                  "20%",
+                  "25%"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q021-4",
+                "text": "The cost price of an item is $120, and it is sold for $150. Calculate the profit.",
+                "options": [
+                  "$20",
+                  "$30",
+                  "$40",
+                  "$50"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-5",
+                "text": "An item is bought for $90 and sold for $85. What is the loss percentage?",
+                "options": [
+                  "5.56%",
+                  "6.45%",
+                  "8.88%",
+                  "4.44%"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q021-6",
+                "text": "If a bike is purchased for $200 and sold for $250, what percentage profit is made?",
+                "options": [
+                  "20%",
+                  "25%",
+                  "30%",
+                  "35%"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-7",
+                "text": "What is the loss if a football is bought for $100 and sold for $95?",
+                "options": [
+                  "$5",
+                  "$10",
+                  "$15",
+                  "$20"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q021-8",
+                "text": "You buy a shirt for $30 and sell it for $36. What is the profit percentage?",
+                "options": [
+                  "15%",
+                  "20%",
+                  "18%",
+                  "16.67%"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q021-9",
+                "text": "A laptop costs $800 to make and is sold for $1,000. Calculate the profit.",
+                "options": [
+                  "$150",
+                  "$200",
+                  "$250",
+                  "$300"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q021-10",
+                "text": "An article is bought for $50 and sold for $60. What is the loss percentage?",
+                "options": [
+                  "No loss",
+                  "16%",
+                  "20%",
+                  "25%"
+                ],
+                "correct": 0
+              }
+            ]
+          },
+          {
+            "id": "MAT-8-022",
+            "lessonNumber": 22,
+            "lessonOrder": 5,
+            "locked": true,
+            "title": "Simple interest",
+            "content": "Welcome to Lesson 22 on Simple Interest, a key concept in understanding how lending and borrowing money accumulates over time. Simple interest is a calculation used to determine the amount of interest charged on a principal amount over a specific period at a fixed interest rate. This lesson will guide you through the basic understanding of simple interest with real-world examples. \\n\\nTo begin with, let's familiarize ourselves with the formula used to calculate simple interest:\\n\\n\\[ \\text{Simple Interest (SI)} = \\frac{\\text{Principal (P)} \\times \\text{Rate (R)} \\times \\text{Time (T)}}{100} \\]\\n\\nWhere:\\n- \\( \\text{Principal (P)} \\) is the initial amount of money deposited or loaned.\\n- \\( \\text{Rate (R)} \\) is the annual interest rate.\\n- \\( \\text{Time (T)} \\) is the time period the money is borrowed or invested, usually in years.\\n\\nBy understanding this formula, you can calculate how much interest you'll earn on savings or have to pay on a loan. This concept is especially useful in real life situations such as savings in a bank, borrowing money, or any kind of investment where you need to consider potential earnings or expenses over time.\\n\\n**Key Points to Remember:**\\n- Simple interest is straightforward when compared to compound interest, which involves interest on interest.\\n- It is calculated linearly, meaning the interest earned remains the same each period if the rate and time are constant.\\n\\nLet's work through the formula with a scenario you're likely to encounter in real life.------------- Imagine you borrowed $500 from a friend to buy a new bicycle. Your friend charges you an interest rate of 5% per year, and you agree to pay the money back after three years.\\n\\nUsing the Simple Interest formula, the calculated interest would be:\\n\\n\\[ \\text{SI} = \\frac{500 \\times 5 \\times 3}{100} = 75 \\]\\n\\nSo, you will pay $75 in interest, in addition to the $500 you initially borrowed. Your total repayment will be \\$500 + \\$75 = \\$575 after three years.\\n\\nNow that you've grasped the basic idea, let's delve deeper into some worked examples to solidify your understanding.",
+            "examples": [
+              {
+                "problem": "Jane deposits $1,000 in a savings account with an interest rate of 4% per year. How much interest will she earn in 2 years?",
+                "solution": [
+                  "Identify the variables: Principal (P) = $1,000, Rate (R) = 4%, Time (T) = 2 years.",
+                  "Substitute these values into the formula: \\[ \\text{SI} = \\frac{1000 \\times 4 \\times 2}{100} \\]",
+                  "Calculate the interest: \\[ \\text{SI} = \\$80 \\]. Jane will earn $80 in interest after 2 years."
+                ]
+              },
+              {
+                "problem": "A school takes a loan of $2,500 to buy new computers. The interest rate is 6% per year. How much interest will the school pay if the loan is for 5 years?",
+                "solution": [
+                  "Identify the variables: Principal (P) = $2,500, Rate (R) = 6%, Time (T) = 5 years.",
+                  "Substitute these values into the formula: \\[ \\text{SI} = \\frac{2500 \\times 6 \\times 5}{100} \\]",
+                  "Calculate the interest: \\[ \\text{SI} = \\$750 \\]. The school will pay $750 in interest over 5 years."
+                ]
+              },
+              {
+                "problem": "Tom invests $3,000 in a fixed deposit account that offers a 3.5% annual interest rate. How much interest will he earn in 4 years?",
+                "solution": [
+                  "Identify the variables: Principal (P) = $3,000, Rate (R) = 3.5%, Time (T) = 4 years.",
+                  "Substitute these values into the formula: \\[ \\text{SI} = \\frac{3000 \\times 3.5 \\times 4}{100} \\]",
+                  "Calculate the interest: \\[ \\text{SI} = \\$420 \\]. Tom will earn $420 in interest after 4 years."
+                ]
+              }
+            ],
+            "mediaUrl": "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/grade8/mathematics/images/c7cc1cb5-4aa4-4877-ab75-a3215ca8ce5a.png",
+            "quiz": [
+              {
+                "id": "Q022-1",
+                "text": "If the principal is $5,000, the rate is 10%, and the time is 2 years, what is the simple interest?",
+                "options": [
+                  "$1,000",
+                  "$500",
+                  "$2,000",
+                  "$3,000"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q022-2",
+                "text": "Sarah takes a loan of $1,200 with an interest rate of 5% per year for 3 years. How much interest does she pay?",
+                "options": [
+                  "$150",
+                  "$180",
+                  "$175",
+                  "$165"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q022-3",
+                "text": "A bank offers a fixed deposit rate of 6% per year. If Jane invests $8,000, how much will she earn in interest after one year?",
+                "options": [
+                  "$600",
+                  "$480",
+                  "$540",
+                  "$510"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q022-4",
+                "text": "How many years must a sum of $200 be invested at 5% per annum to earn $50 in interest?",
+                "options": [
+                  "4 years",
+                  "5 years",
+                  "6 years",
+                  "2.5 years"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q022-5",
+                "text": "Interest is said to be simple when:",
+                "options": [
+                  "It’s calculated annually",
+                  "It doesn’t change",
+                  "It increases every year",
+                  "None of these"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q022-6",
+                "text": "What is the interest on $5,000 at 8% over 4 years?",
+                "options": [
+                  "$1,600",
+                  "$2,000",
+                  "$1,200",
+                  "$1,800"
+                ],
+                "correct": 0
+              },
+              {
+                "id": "Q022-7",
+                "text": "If an investment of $10,000 earns $2,000 in 5 years, what is the rate of interest?",
+                "options": [
+                  "4%",
+                  "5%",
+                  "6%",
+                  "8%"
+                ],
+                "correct": 1
+              },
+              {
+                "id": "Q022-8",
+                "text": "Mark loaned $500 to Tasha for 3 years at 3%. What total amount will Tasha pay back Mark?",
+                "options": [
+                  "$545",
+                  "$535",
+                  "$515",
+                  "$555"
+                ],
+                "correct": 3
+              },
+              {
+                "id": "Q022-9",
+                "text": "Calculate the interest on $750 at 5% per annum for 4 years.",
+                "options": [
+                  "$115",
+                  "$150",
+                  "$135",
+                  "$160"
+                ],
+                "correct": 2
+              },
+              {
+                "id": "Q022-10",
+                "text": "What do you multiply by time to find simple interest?",
+                "options": [
+                  "Principal",
+                  "Rate",
+                  "Both Principal and Rate",
+                  "None"
+                ],
+                "correct": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
