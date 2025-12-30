@@ -20,7 +20,8 @@ RUN npm install
 COPY . .
 
 # Build frontend and backend
-RUN npm run build
+# We use CI=true to prevent interactive prompts and ensure clean build
+RUN CI=true npm run build
 
 # Final stage
 FROM node:20-slim
