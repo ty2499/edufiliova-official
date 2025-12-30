@@ -29,6 +29,7 @@ COPY components.json ./
 COPY shared ./shared
 COPY client ./client
 COPY server ./server
+COPY attached_assets ./attached_assets
 
 # Build application with timeout and progress
 RUN echo "🔨 Starting build process..." && \
