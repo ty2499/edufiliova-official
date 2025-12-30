@@ -1,5 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { MegaMenu, MegaMenuCategory, MegaMenuGrid } from "./MegaMenu";
 import { 
   UserPlus, IdCard, Upload, Users2, Briefcase, ShoppingBag, 
@@ -17,6 +18,14 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
   const { user, profile } = useAuth();
   const [, navigate] = useLocation();
   const isCreator = user && (profile?.role === 'creator' || profile?.role === 'freelancer');
+
+  const { data: applicationData } = useQuery({
+    queryKey: ['/api/freelancer/application-status'],
+    enabled: !!user && !isCreator,
+  });
+  
+  const hasPendingApplication = applicationData?.application?.status === 'pending' || 
+                                 applicationData?.application?.status === 'under_review';
 
   const handleNavigate = (page: string) => {
     onNavigate(page);
@@ -47,6 +56,7 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
       description: "Check your freelancer application status",
       page: "freelancer-application-status",
       requiresAuth: true,
+      requiresPendingApplication: true,
     },
   ];
 
@@ -119,7 +129,11 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
     },
   ];
 
-  const filteredGetStarted = getStartedItems.filter(item => !item.requiresAuth || user);
+  const filteredGetStarted = getStartedItems.filter(item => {
+    if (item.requiresPendingApplication && !hasPendingApplication) return false;
+    if (item.requiresAuth && !user) return false;
+    return true;
+  });
   const filteredPortfolio = portfolioItems.filter(item => !item.requiresCreator || isCreator);
   const filteredDashboard = dashboardItems.filter(item => !item.requiresCreator || isCreator);
 

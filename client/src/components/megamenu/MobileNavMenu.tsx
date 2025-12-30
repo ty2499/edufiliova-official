@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
 import { 
   Search, Library, Award, BookOpen, Video, ClipboardCheck, Users, GraduationCap,
@@ -15,6 +16,7 @@ interface MobileNavLink {
   title: string;
   page?: string;
   route?: string;
+  requiresPendingApplication?: boolean;
 }
 
 interface MobileNavSection {
@@ -34,6 +36,16 @@ export const MobileNavMenu = ({ onNavigate, onClose, isAuthenticated = false, us
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [openSubSection, setOpenSubSection] = useState<string | null>(null);
   const [, navigate] = useLocation();
+  
+  const isCreator = userRole === 'creator' || userRole === 'freelancer';
+  
+  const { data: applicationData } = useQuery({
+    queryKey: ['/api/freelancer/application-status'],
+    enabled: isAuthenticated && !isCreator,
+  });
+  
+  const hasPendingFreelancerApplication = applicationData?.application?.status === 'pending' || 
+                                           applicationData?.application?.status === 'under_review';
 
   const handleNavigate = (page: string) => {
     onNavigate(page);
@@ -125,7 +137,7 @@ export const MobileNavMenu = ({ onNavigate, onClose, isAuthenticated = false, us
       links: [
         { icon: <UserPlus className="h-4 w-4" />, title: "Become a Freelancer", page: "freelancer-signup-basic" },
         { icon: <CreditCard className="h-4 w-4" />, title: "Freelancer Pricing", page: "creator-pricing" },
-        { icon: <FileText className="h-4 w-4" />, title: "Application Status", page: "freelancer-application-status" },
+        { icon: <FileText className="h-4 w-4" />, title: "Application Status", page: "freelancer-application-status", requiresPendingApplication: true },
       ]
     },
     {
@@ -224,25 +236,34 @@ export const MobileNavMenu = ({ onNavigate, onClose, isAuthenticated = false, us
     },
   ];
 
-  const renderSection = (section: MobileNavSection) => (
-    <div key={section.title} className="mb-4">
-      <div className="flex items-center gap-2 px-4 py-2">
-        <span className="text-[#0C332C]">{section.icon}</span>
-        <span className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide">{section.title}</span>
+  const renderSection = (section: MobileNavSection) => {
+    const filteredLinks = section.links.filter(link => {
+      if (link.requiresPendingApplication && !hasPendingFreelancerApplication) return false;
+      return true;
+    });
+    
+    if (filteredLinks.length === 0) return null;
+    
+    return (
+      <div key={section.title} className="mb-4">
+        <div className="flex items-center gap-2 px-4 py-2">
+          <span className="text-[#0C332C]">{section.icon}</span>
+          <span className="text-xs font-semibold text-[#0C332C]/60 uppercase tracking-wide">{section.title}</span>
+        </div>
+        <div className="space-y-0">
+          {filteredLinks.map((link, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleLinkClick(link)}
+              className="w-full text-left px-6 py-2.5 text-sm text-[#0C332C] hover:bg-gray-50 flex items-center gap-3"
+            >
+              {link.title}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="space-y-0">
-        {section.links.map((link, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleLinkClick(link)}
-            className="w-full text-left px-6 py-2.5 text-sm text-[#0C332C] hover:bg-gray-50 flex items-center gap-3"
-          >
-            {link.title}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
+    );
+  };
 
   const renderNavItem = (title: string, sections: MobileNavSection[], ctaText?: string, ctaPage?: string) => {
     const isOpen = openSection === title;
