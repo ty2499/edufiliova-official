@@ -35,10 +35,10 @@ COPY --from=builder /app/public ./public
 
 # Environment variables
 ENV NODE_ENV=production
-ENV PORT=5000
+ENV PORT=8080
 
 # Expose port
-EXPOSE 5000
+EXPOSE 8080
 
 # Start command
 CMD ["npm", "start"]
