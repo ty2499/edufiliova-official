@@ -1926,7 +1926,7 @@ router.post("/:orderId/start-work", requireAuth, requireRole(['freelancer']), as
 // ADMIN ORDER MANAGEMENT ENDPOINTS
 // ============================================
 
-router.get("/admin/orders", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+router.get("/admin/orders", requireAuth, requireRole(['admin', 'accountant', 'customer_service']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { status, page = '1', limit = '20' } = req.query;
     const pageNum = parseInt(page as string) || 1;
@@ -1990,7 +1990,7 @@ router.get("/admin/orders", requireAuth, requireRole(['admin']), async (req: Aut
   }
 });
 
-router.post("/admin/orders/:orderId/release", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+router.post("/admin/orders/:orderId/release", requireAuth, requireRole(['admin', 'accountant', 'customer_service']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const adminId = req.user?.id;
     const { orderId } = req.params;
@@ -2043,7 +2043,7 @@ router.post("/admin/orders/:orderId/release", requireAuth, requireRole(['admin']
   }
 });
 
-router.post("/admin/orders/:orderId/refund", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+router.post("/admin/orders/:orderId/refund", requireAuth, requireRole(['admin', 'accountant', 'customer_service']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const adminId = req.user?.id;
     const { orderId } = req.params;
@@ -2136,7 +2136,7 @@ router.post("/admin/orders/:orderId/refund", requireAuth, requireRole(['admin'])
   }
 });
 
-router.post("/admin/orders/:orderId/cancel", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+router.post("/admin/orders/:orderId/cancel", requireAuth, requireRole(['admin', 'accountant', 'customer_service']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const adminId = req.user?.id;
     const { orderId } = req.params;
@@ -2191,7 +2191,7 @@ router.post("/admin/orders/:orderId/cancel", requireAuth, requireRole(['admin'])
   }
 });
 
-router.post("/admin/orders/:orderId/dispute", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+router.post("/admin/orders/:orderId/dispute", requireAuth, requireRole(['admin', 'accountant', 'customer_service']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const adminId = req.user?.id;
     const { orderId } = req.params;
@@ -2246,7 +2246,7 @@ router.post("/admin/orders/:orderId/dispute", requireAuth, requireRole(['admin']
   }
 });
 
-router.post("/admin/orders/:orderId/override-status", requireAuth, requireRole(['admin']), async (req: AuthenticatedRequest, res: Response) => {
+router.post("/admin/orders/:orderId/override-status", requireAuth, requireRole(['admin', 'accountant', 'customer_service']), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const adminId = req.user?.id;
     const { orderId } = req.params;
