@@ -211,9 +211,13 @@ Text: "${text.substring(0, 500)}"`,
         }
       }
       
+      // Check for dating/romantic content using OpenAI
+    // Skip OpenAI check for product descriptions to avoid over-moderation and secondary rate limits
+    if (options.contentType !== 'product') {
       if (await this.detectDatingContent(options.text)) {
         violations.push('Dating/romantic content detected');
       }
+    }
     }
 
     // Check image for nudity

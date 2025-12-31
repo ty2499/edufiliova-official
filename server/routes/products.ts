@@ -582,6 +582,17 @@ router.post("/", requireAuth, requireRole(['freelancer', 'teacher', 'admin']), i
         contentType: 'product',
       });
       if (!modResult.passed) {
+        // Handle violation (invalidate sessions, notify admin)
+        await moderationService.handleViolation({
+          userId: req.user!.id,
+          violations: modResult.violations,
+          userName: (req.user as any)?.name || 'Unknown',
+          userEmail: (req.user as any)?.email || 'Unknown',
+          contentType: 'product',
+          action: 'notify',
+          contentPreview: validation.data.description
+        });
+
         return res.status(403).json({
           success: false,
           error: 'Product rejected',
@@ -601,6 +612,17 @@ router.post("/", requireAuth, requireRole(['freelancer', 'teacher', 'admin']), i
         contentType: 'product',
       });
       if (!modResult.passed) {
+        // Handle violation
+        await moderationService.handleViolation({
+          userId: req.user!.id,
+          violations: modResult.violations,
+          userName: (req.user as any)?.name || 'Unknown',
+          userEmail: (req.user as any)?.email || 'Unknown',
+          contentType: 'product',
+          action: 'notify',
+          contentPreview: validation.data.imageUrl
+        });
+
         return res.status(403).json({
           success: false,
           error: 'Product image rejected',

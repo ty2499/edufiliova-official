@@ -39,8 +39,12 @@ const VERIFICATION_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Tran
 
 async function getTemplate(dirName, userType) {
   const possiblePaths = [
+    path.join(process.cwd(), 'server', 'templates', dirName, 'email.html'),
+    path.join(process.cwd(), 'dist', 'server', 'templates', dirName, 'email.html'),
     path.join(process.cwd(), 'public', 'templates', dirName, 'email.html'),
     path.join(process.cwd(), 'dist', 'public', 'templates', dirName, 'email.html'),
+    path.join('/app', 'server', 'templates', dirName, 'email.html'),
+    path.join('/app', 'dist', 'server', 'templates', dirName, 'email.html'),
     path.join('/app', 'public', 'templates', dirName, 'email.html'),
     path.join('/app', 'dist', 'public', 'templates', dirName, 'email.html')
   ];
