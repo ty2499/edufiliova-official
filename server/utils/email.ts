@@ -414,14 +414,14 @@ export class EmailService {
       // Attachments with CID references for embedded images
       const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
       const attachments = [
-        { filename: 'bbe5722d1ffd3c84888e18335965d5e5.png', path: path.join(imagesPath, 'bbe5722d1ffd3c84888e18335965d5e5.png'), cid: 'spiral1', contentType: 'image/png' },
-        { filename: 'c9513ccbbd620ff1cc148b9f159cd39d.png', path: path.join(imagesPath, 'c9513ccbbd620ff1cc148b9f159cd39d.png'), cid: 'logo', contentType: 'image/png' },
-        { filename: 'd320764f7298e63f6b035289d4219bd8.png', path: path.join(imagesPath, 'd320764f7298e63f6b035289d4219bd8.png'), cid: 'spiral2', contentType: 'image/png' },
-        { filename: 'e4d45170731072cbb168266fca3fd470.png', path: path.join(imagesPath, 'e4d45170731072cbb168266fca3fd470.png'), cid: 'teacherapp', contentType: 'image/png' },
-        { filename: '7a8fa36020f4d01ec559e33b05f596eb.png', path: path.join(imagesPath, '7a8fa36020f4d01ec559e33b05f596eb.png'), cid: 'arrow', contentType: 'image/png' },
-        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
-        { filename: '9eefdace1f726880f93c5a973a54c2f6.png', path: path.join(imagesPath, '9eefdace1f726880f93c5a973a54c2f6.png'), cid: 'teacherbanner', contentType: 'image/png' },
-        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+        { filename: 'spiral1.png', path: path.join(imagesPath, 'spiral1.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: 'logo.png', path: path.join(imagesPath, 'logo.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'spiral2.png', path: path.join(imagesPath, 'spiral2.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: 'teacherapp.png', path: path.join(imagesPath, 'teacherapp.png'), cid: 'teacherapp', contentType: 'image/png' },
+        { filename: 'arrow.png', path: path.join(imagesPath, 'arrow.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: 'logofull.png', path: path.join(imagesPath, 'logofull.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: 'teacherbanner.png', path: path.join(imagesPath, 'teacherbanner.png'), cid: 'teacherbanner', contentType: 'image/png' },
+        { filename: 'logofull2.png', path: path.join(imagesPath, 'logofull2.png'), cid: 'logofull2', contentType: 'image/png' }
       ];
 
       return this.sendEmail({
@@ -458,15 +458,15 @@ export class EmailService {
       // Attachments with CID references for embedded images
       const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
       const attachments = [
-        { filename: 'bbe5722d1ffd3c84888e18335965d5e5.png', path: path.join(imagesPath, 'bbe5722d1ffd3c84888e18335965d5e5.png'), cid: 'spiral1', contentType: 'image/png' },
-        { filename: '0ac9744033a7e26f12e08d761c703308.png', path: path.join(imagesPath, '0ac9744033a7e26f12e08d761c703308.png'), cid: 'logo', contentType: 'image/png' },
-        { filename: 'd320764f7298e63f6b035289d4219bd8.png', path: path.join(imagesPath, 'd320764f7298e63f6b035289d4219bd8.png'), cid: 'spiral2', contentType: 'image/png' },
-        { filename: '917a6e905cf83da447efc0f5c2780aca.png', path: path.join(imagesPath, '917a6e905cf83da447efc0f5c2780aca.png'), cid: 'teacherapp', contentType: 'image/png' },
-        { filename: 'de497c5361453604d8a15c4fd9bde086.png', path: path.join(imagesPath, 'de497c5361453604d8a15c4fd9bde086.png'), cid: 'declinedicon', contentType: 'image/png' },
-        { filename: '7976503d64a3eef4169fe235111cdc57.png', path: path.join(imagesPath, '7976503d64a3eef4169fe235111cdc57.png'), cid: 'arrow', contentType: 'image/png' },
-        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
-        { filename: 'e06e238bd6d74a3e48f94e5b0b81388d.png', path: path.join(imagesPath, 'e06e238bd6d74a3e48f94e5b0b81388d.png'), cid: 'teacherbanner', contentType: 'image/png' },
-        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+        { filename: 'spiral1.png', path: path.join(imagesPath, 'spiral1.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: 'declined_logo.png', path: path.join(imagesPath, 'declined_logo.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'spiral2.png', path: path.join(imagesPath, 'spiral2.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: 'teacherapp_declined.png', path: path.join(imagesPath, 'teacherapp_declined.png'), cid: 'teacherapp', contentType: 'image/png' },
+        { filename: 'declined_icon.png', path: path.join(imagesPath, 'declined_icon.png'), cid: 'declinedicon', contentType: 'image/png' },
+        { filename: 'declined_arrow.png', path: path.join(imagesPath, 'declined_arrow.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: 'logofull.png', path: path.join(imagesPath, 'logofull.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: 'teacherbanner_declined.png', path: path.join(imagesPath, 'teacherbanner_declined.png'), cid: 'teacherbanner', contentType: 'image/png' },
+        { filename: 'logofull2.png', path: path.join(imagesPath, 'logofull2.png'), cid: 'logofull2', contentType: 'image/png' }
       ];
 
       return this.sendEmail({
@@ -495,10 +495,10 @@ export class EmailService {
       // Attachments with CID references
       const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
       const attachments = [
-        { filename: '98fc7367ed0e72d7900d5717bd41ec08.png', path: path.join(imagesPath, '98fc7367ed0e72d7900d5717bd41ec08.png'), cid: 'teacherapp', contentType: 'image/png' },
-        { filename: '3d94f798ad2bd582f8c3afe175798088.png', path: path.join(imagesPath, '3d94f798ad2bd582f8c3afe175798088.png'), cid: 'arrow', contentType: 'image/png' },
-        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
-        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+        { filename: 'teacherapp_review.png', path: path.join(imagesPath, 'teacherapp_review.png'), cid: 'teacherapp', contentType: 'image/png' },
+        { filename: 'review_arrow.png', path: path.join(imagesPath, 'review_arrow.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: 'logofull.png', path: path.join(imagesPath, 'logofull.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: 'logofull2.png', path: path.join(imagesPath, 'logofull2.png'), cid: 'logofull2', contentType: 'image/png' }
       ];
 
       // Send to applicant
@@ -2018,15 +2018,15 @@ export class EmailService {
       // Attachments with CID references for embedded images
       const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
       const attachments = [
-        { filename: 'bbe5722d1ffd3c84888e18335965d5e5.png', path: path.join(imagesPath, 'bbe5722d1ffd3c84888e18335965d5e5.png'), cid: 'spiral1', contentType: 'image/png' },
-        { filename: '0ac9744033a7e26f12e08d761c703308.png', path: path.join(imagesPath, '0ac9744033a7e26f12e08d761c703308.png'), cid: 'logo', contentType: 'image/png' },
-        { filename: 'd320764f7298e63f6b035289d4219bd8.png', path: path.join(imagesPath, 'd320764f7298e63f6b035289d4219bd8.png'), cid: 'spiral2', contentType: 'image/png' },
-        { filename: '917a6e905cf83da447efc0f5c2780aca.png', path: path.join(imagesPath, '917a6e905cf83da447efc0f5c2780aca.png'), cid: 'teacherapp', contentType: 'image/png' },
-        { filename: 'de497c5361453604d8a15c4fd9bde086.png', path: path.join(imagesPath, 'de497c5361453604d8a15c4fd9bde086.png'), cid: 'declinedicon', contentType: 'image/png' },
-        { filename: '7976503d64a3eef4169fe235111cdc57.png', path: path.join(imagesPath, '7976503d64a3eef4169fe235111cdc57.png'), cid: 'arrow', contentType: 'image/png' },
-        { filename: '4a834058470b14425c9b32ace711ef17.png', path: path.join(imagesPath, '4a834058470b14425c9b32ace711ef17.png'), cid: 'logofull', contentType: 'image/png' },
-        { filename: 'e06e238bd6d74a3e48f94e5b0b81388d.png', path: path.join(imagesPath, 'e06e238bd6d74a3e48f94e5b0b81388d.png'), cid: 'teacherbanner', contentType: 'image/png' },
-        { filename: '9f7291948d8486bdd26690d0c32796e0.png', path: path.join(imagesPath, '9f7291948d8486bdd26690d0c32796e0.png'), cid: 'logofull2', contentType: 'image/png' }
+        { filename: 'spiral1.png', path: path.join(imagesPath, 'spiral1.png'), cid: 'spiral1', contentType: 'image/png' },
+        { filename: 'declined_logo.png', path: path.join(imagesPath, 'declined_logo.png'), cid: 'logo', contentType: 'image/png' },
+        { filename: 'spiral2.png', path: path.join(imagesPath, 'spiral2.png'), cid: 'spiral2', contentType: 'image/png' },
+        { filename: 'teacherapp_declined.png', path: path.join(imagesPath, 'teacherapp_declined.png'), cid: 'teacherapp', contentType: 'image/png' },
+        { filename: 'declined_icon.png', path: path.join(imagesPath, 'declined_icon.png'), cid: 'declinedicon', contentType: 'image/png' },
+        { filename: 'declined_arrow.png', path: path.join(imagesPath, 'declined_arrow.png'), cid: 'arrow', contentType: 'image/png' },
+        { filename: 'logofull.png', path: path.join(imagesPath, 'logofull.png'), cid: 'logofull', contentType: 'image/png' },
+        { filename: 'teacherbanner_declined.png', path: path.join(imagesPath, 'teacherbanner_declined.png'), cid: 'teacherbanner', contentType: 'image/png' },
+        { filename: 'logofull2.png', path: path.join(imagesPath, 'logofull2.png'), cid: 'logofull2', contentType: 'image/png' }
       ];
 
       return this.sendEmail({
