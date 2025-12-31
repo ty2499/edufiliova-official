@@ -67,6 +67,7 @@ export class EmailService {
       path.resolve(process.cwd(), 'server/email-local-assets'),
       path.resolve(process.cwd(), 'dist/server/email-local-assets'),
       path.resolve(process.cwd(), '../server/email-local-assets'),
+      path.join(process.cwd(), 'server/email-local-assets'),
       '/app/server/email-local-assets',
       '/app/dist/server/email-local-assets'
     ];
@@ -404,12 +405,30 @@ export class EmailService {
 </html>`;
   }
 
+  private getTemplatePath(templateDir: string, filename: string): string {
+    const possiblePaths = [
+      path.resolve(process.cwd(), 'server/templates', templateDir, filename),
+      path.resolve(process.cwd(), 'dist/server/templates', templateDir, filename),
+      path.join(process.cwd(), 'server/templates', templateDir, filename),
+      path.join('/app/server/templates', templateDir, filename),
+      path.join('/app/dist/server/templates', templateDir, filename),
+      path.resolve(__dirname, '../templates', templateDir, filename)
+    ];
+
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        return p;
+      }
+    }
+    
+    // Fallback to the most likely path if none exist (to let readFileSync throw a descriptive error)
+    return possiblePaths[0];
+  }
+
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/teacher_application_approved_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('teacher_application_approved_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       // Use the bulletproof name replacement to handle span/styling issues in the template
       html = this.forceReplaceName(html, data.fullName);
@@ -442,10 +461,8 @@ export class EmailService {
 
   async sendTeacherApplicationDeclinedEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/teacher_application_declined_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('teacher_application_declined_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       // Use the bulletproof name replacement to handle span/styling issues in the template
       html = this.forceReplaceName(html, data.fullName);
@@ -487,10 +504,8 @@ export class EmailService {
 
   async sendTeacherUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/teacher_application_under_review_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('teacher_application_under_review_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       // Use bulletproof name replacement
       html = this.forceReplaceName(html, data.fullName || 'Teacher');
@@ -1349,10 +1364,8 @@ export class EmailService {
 
   async sendStudentVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/student_verification_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('student_verification_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       const fullName = data.fullName || 'User';
       const code = data.code || '000000';
@@ -1394,10 +1407,8 @@ export class EmailService {
     purchaseDate: string;
   }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/shop_purchase_receipt_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('shop_purchase_receipt_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       const { fullName, orderId, totalPrice, purchaseDate } = data;
 
@@ -1436,10 +1447,8 @@ export class EmailService {
     expiresIn: string;
   }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/request_password_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('request_password_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       const fullName = data.fullName || 'User';
       const code = data.code || '000000';
@@ -1696,10 +1705,8 @@ export class EmailService {
 
   async sendTeacherVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/teacher_verification_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('teacher_verification_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       const fullName = data.fullName || 'User';
       const code = data.code || '000000';
@@ -1736,10 +1743,8 @@ export class EmailService {
 
   async sendFreelancerVerificationEmail(email: string, data: { fullName: string; verificationCode: string; expiresIn?: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/freelancer_verification_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('freelancer_verification_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       const fullName = data.fullName || 'User';
       const code = data.verificationCode || '000000';
