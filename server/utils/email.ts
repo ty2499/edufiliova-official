@@ -407,13 +407,24 @@ export class EmailService {
 
   private getTemplatePath(templateDir: string, filename: string): string {
     const cwd = process.cwd();
+    
+    // Log environment for debugging
+    console.log(`DEBUG: process.cwd() = ${cwd}`);
+    
     const possiblePaths = [
+      // 1. Check relative to current working directory (most reliable in many Node environments)
       path.join(cwd, 'server/templates', templateDir, filename),
       path.join(cwd, 'dist/server/templates', templateDir, filename),
+      
+      // 2. Check source directory specifically
+      path.resolve(cwd, 'server/templates', templateDir, filename),
+      
+      // 3. Check dist directory specifically
+      path.resolve(cwd, 'dist/server/templates', templateDir, filename),
+      
+      // 4. Check absolute paths often used in containerized environments (like Replit deployments)
       path.join('/app/server/templates', templateDir, filename),
       path.join('/app/dist/server/templates', templateDir, filename),
-      path.resolve(cwd, 'server/templates', templateDir, filename),
-      path.resolve(cwd, 'dist/server/templates', templateDir, filename),
     ];
 
     console.log(`🔍 Searching for template: ${templateDir}/${filename}`);
@@ -424,13 +435,20 @@ export class EmailService {
           return p;
         }
       } catch (e) {
-        // Ignore existsSync errors
+        // Ignore errors
       }
     }
     
-    // Final emergency fallback: try to find it anywhere in server/templates
-    console.error(`❌ Template not found in standard paths for ${templateDir}/${filename}. Trying emergency search...`);
-    return path.join(cwd, 'server/templates', templateDir, filename);
+    // 5. LAST RESORT: Try to find it by traversing up or using __dirname (though __dirname is tricky in ESM)
+    // In ESM, we can try to construct a path relative to the current file's location if it's in dist
+    try {
+      const emergencyPath = path.join(cwd, 'server/templates', templateDir, filename);
+      console.log(`⚠️ Standard paths failed. Attempting emergency fallback: ${emergencyPath}`);
+      return emergencyPath;
+    } catch (err) {
+      console.error(`❌ All template path resolution failed for ${templateDir}/${filename}`);
+      return path.join(cwd, 'server/templates', templateDir, filename);
+    }
   }
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
