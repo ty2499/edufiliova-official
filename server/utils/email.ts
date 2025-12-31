@@ -406,17 +406,20 @@ export class EmailService {
   }
 
   private getTemplatePath(templateDir: string, filename: string): string {
+    const cwd = process.cwd();
     const possiblePaths = [
-      path.resolve(process.cwd(), 'server/templates', templateDir, filename),
-      path.resolve(process.cwd(), 'dist/server/templates', templateDir, filename),
-      path.join(process.cwd(), 'server/templates', templateDir, filename),
-      path.join(process.cwd(), 'dist/server/templates', templateDir, filename),
+      path.resolve(cwd, 'server/templates', templateDir, filename),
+      path.resolve(cwd, 'dist/server/templates', templateDir, filename),
+      path.join(cwd, 'server/templates', templateDir, filename),
+      path.join(cwd, 'dist/server/templates', templateDir, filename),
+      path.resolve(__dirname, '../../server/templates', templateDir, filename),
+      path.resolve(__dirname, '../templates', templateDir, filename),
+      path.resolve(__dirname, '../../dist/server/templates', templateDir, filename),
       path.join('/app/server/templates', templateDir, filename),
       path.join('/app/dist/server/templates', templateDir, filename),
-      path.resolve(__dirname, '../../server/templates', templateDir, filename),
-      path.resolve(__dirname, '../templates', templateDir, filename)
     ];
 
+    console.log(`🔍 Searching for template: ${templateDir}/${filename}`);
     for (const p of possiblePaths) {
       if (fs.existsSync(p)) {
         console.log(`✅ Found template at: ${p}`);
@@ -425,7 +428,14 @@ export class EmailService {
     }
     
     console.error(`❌ Template not found in any possible paths for ${templateDir}/${filename}`);
-    // Fallback to the most likely path if none exist (to let readFileSync throw a descriptive error)
+    // Check if parent directory exists to debug
+    const templateParent = path.resolve(cwd, 'server/templates', templateDir);
+    if (fs.existsSync(templateParent)) {
+      console.log(`ℹ️ Template directory exists: ${templateParent}. Files:`, fs.readdirSync(templateParent));
+    } else {
+      console.log(`❌ Template directory DOES NOT exist: ${templateParent}`);
+    }
+
     return possiblePaths[0];
   }
 
