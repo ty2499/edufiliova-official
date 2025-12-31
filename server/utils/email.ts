@@ -801,10 +801,8 @@ export class EmailService {
 
   async sendFreelancerApprovalEmail(email: string, data: { fullName: string; displayName?: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/freelancer_application_approved_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('freelancer_application_approved_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       // Use the bulletproof name replacement
       html = this.forceReplaceName(html, data.fullName || 'Freelancer');
@@ -848,10 +846,8 @@ export class EmailService {
 
   async sendFreelancerRejectionEmail(email: string, data: { fullName: string; reason?: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/freelancer_application_declined_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('freelancer_application_declined_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       const fullName = data.fullName || 'Freelancer';
       const reasonText = data.reason && data.reason.trim() ? data.reason : 'Your application did not meet our current freelancer requirements. Please review the feedback and strengthen your profile before reapplying.';
@@ -1535,10 +1531,8 @@ export class EmailService {
       };
 
       const templateName = templateMap[data.accountType];
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), `server/templates/${templateName}/email.html`),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath(templateName, 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       // Use bulletproof name replacement
       html = this.forceReplaceName(html, data.fullName || 'User');
@@ -2055,10 +2049,8 @@ export class EmailService {
 
   async sendFreelancerUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/freelancer_application_under_review_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('freelancer_application_under_review_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       // Use bulletproof name replacement
       html = this.forceReplaceName(html, data.fullName || 'Freelancer');
