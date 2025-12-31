@@ -35,7 +35,21 @@ export async function sendStudentWelcomeEmail(recipientEmail, recipientName) {
 export async function sendStudentVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
   console.log(`📧 Sending student verification email to ${recipientEmail}...`);
   try {
-    const templatePath = path.join(process.cwd(), 'public', 'templates', 'student_verification_template', 'email.html');
+    const possiblePaths = [
+      path.join(process.cwd(), 'public', 'templates', 'student_verification_template', 'email.html'),
+      path.join(process.cwd(), 'dist', 'public', 'templates', 'student_verification_template', 'email.html'),
+      path.join('/app', 'public', 'templates', 'student_verification_template', 'email.html'),
+      path.join('/app', 'dist', 'public', 'templates', 'student_verification_template', 'email.html')
+    ];
+    
+    let templatePath = possiblePaths[0];
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        templatePath = p;
+        break;
+      }
+    }
+    
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     
     const fullName = recipientName || 'Student';
