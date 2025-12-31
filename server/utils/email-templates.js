@@ -2,60 +2,7 @@ import { emailService } from './email.ts';
 import * as fs from 'fs';
 import * as path from 'path';
 
-export async function sendStudentWelcomeEmail(recipientEmail, recipientName) {
-  console.log(`📧 Sending student welcome email to ${recipientEmail}...`);
-  console.log(`   - Recipient: ${recipientName}`);
-  
-  try {
-    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'student-welcome', 'template.html');
-    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const fullName = recipientName || 'Student';
-    
-    emailHtml = emailHtml.replace(/Hi \{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\},/gi, `Hi ${fullName},`);
-    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, fullName);
-    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
-    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
-    emailHtml = emailHtml.replace(/\{\{ fullName \}\}/gi, fullName);
-    
-    const result = await emailService.sendEmail({
-      to: recipientEmail,
-      subject: 'Welcome to EduFiliova - Your Learning Journey Begins!',
-      html: emailHtml,
-      from: `"EduFiliova" <noreply@edufiliova.com>`
-    });
-    
-    return result;
-  } catch (error) {
-    console.error(`❌ Error sending student welcome email:`, error);
-    throw error;
-  }
-}
-
-export async function sendStudentVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
-  console.log(`📧 Sending student verification email to ${recipientEmail}...`);
-  try {
-    const possiblePaths = [
-      path.join(process.cwd(), 'public', 'templates', 'student_verification_template', 'email.html'),
-      path.join(process.cwd(), 'dist', 'public', 'templates', 'student_verification_template', 'email.html'),
-      path.join('/app', 'public', 'templates', 'student_verification_template', 'email.html'),
-      path.join('/app', 'dist', 'public', 'templates', 'student_verification_template', 'email.html')
-    ];
-    
-// Fallback to embedded template if file is missing
-    let emailHtml;
-    try {
-      let templatePath = possiblePaths[0];
-      for (const p of possiblePaths) {
-        if (fs.existsSync(p)) {
-          templatePath = p;
-          break;
-        }
-      }
-      emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    } catch (e) {
-      console.warn('⚠️ Template file not found, using embedded fallback for verification email');
-      emailHtml = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+const VERIFICATION_TEMPLATE = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,7 +23,7 @@ export async function sendStudentVerificationEmail(recipientEmail, recipientName
             <h1>EduFiliova</h1>
         </div>
         <div class="content">
-            <h2>Verify Your Email</h2>
+            <h2>Verify Your {{userType}} Account</h2>
             <p>Hi {{fullName}},</p>
             <p>Thank you for joining EduFiliova! Please use the verification code below to complete your registration:</p>
             <div class="code-box">{{code}}</div>
@@ -89,33 +36,125 @@ export async function sendStudentVerificationEmail(recipientEmail, recipientName
     </div>
 </body>
 </html>`;
+
+async function getTemplate(dirName, userType) {
+  const possiblePaths = [
+    path.join(process.cwd(), 'public', 'templates', dirName, 'email.html'),
+    path.join(process.cwd(), 'dist', 'public', 'templates', dirName, 'email.html'),
+    path.join('/app', 'public', 'templates', dirName, 'email.html'),
+    path.join('/app', 'dist', 'public', 'templates', dirName, 'email.html')
+  ];
+  
+  try {
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) return fs.readFileSync(p, 'utf-8');
     }
-    
+  } catch (e) {
+    console.warn(`⚠️ Template file not found for ${userType}, using fallback`);
+  }
+  
+  return VERIFICATION_TEMPLATE.replace('{{userType}}', userType);
+}
+
+export async function sendStudentWelcomeEmail(recipientEmail, recipientName) {
+  console.log(`📧 Sending student welcome email to ${recipientEmail}...`);
+  try {
+    const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'student-welcome', 'template.html');
+    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     const fullName = recipientName || 'Student';
-    const replacements = {
-      'fullName': fullName,
-      'code': verificationCode,
-      'expiresIn': expiresInMinutes.toString()
-    };
-    
+    emailHtml = emailHtml.replace(/Hi \{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\},/gi, `Hi ${fullName},`);
+    emailHtml = emailHtml.replace(/\{\{<\/span><span[^>]*>fullName<\/span><span[^>]*>\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{FullName\}\}/gi, fullName);
+    emailHtml = emailHtml.replace(/\{\{ fullName \}\}/gi, fullName);
+    return await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Welcome to EduFiliova - Your Learning Journey Begins!',
+      html: emailHtml,
+      from: `"EduFiliova" <noreply@edufiliova.com>`
+    });
+  } catch (error) {
+    console.error(`❌ Error sending student welcome email:`, error);
+    throw error;
+  }
+}
+
+export async function sendStudentVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
+  console.log(`📧 Sending student verification email to ${recipientEmail}...`);
+  try {
+    let emailHtml = await getTemplate('student_verification_template', 'Student');
+    const replacements = { 'fullName': recipientName || 'Student', 'code': verificationCode, 'expiresIn': expiresInMinutes.toString() };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
-    const result = await emailService.sendEmail({
+    return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Verify Your Student Account - EduFiliova',
       html: emailHtml,
       from: `"EduFiliova Verification" <verify@edufiliova.com>`
     });
-    
-    if (!result) {
-      console.error(`❌ Email service failed to send verification email to ${recipientEmail}`);
-      throw new Error('Email service failed to send verification email');
-    }
-    return result;
   } catch (error) {
     console.error(`❌ Error sending student verification email:`, error);
+    throw error;
+  }
+}
+
+export async function sendTeacherVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
+  console.log(`📧 Sending teacher verification email to ${recipientEmail}...`);
+  try {
+    let emailHtml = await getTemplate('teacher_verification_template', 'Teacher');
+    const replacements = { 'fullName': recipientName || 'Teacher', 'code': verificationCode, 'expiresIn': expiresInMinutes.toString() };
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+    }
+    return await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Verify Your Teacher Account - EduFiliova',
+      html: emailHtml,
+      from: `"EduFiliova Verification" <verify@edufiliova.com>`
+    });
+  } catch (error) {
+    console.error(`❌ Error sending teacher verification email:`, error);
+    throw error;
+  }
+}
+
+export async function sendFreelancerVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
+  console.log(`📧 Sending freelancer verification email to ${recipientEmail}...`);
+  try {
+    let emailHtml = await getTemplate('freelancer_verification_template', 'Freelancer');
+    const replacements = { 'fullName': recipientName || 'Freelancer', 'code': verificationCode, 'expiresIn': expiresInMinutes.toString() };
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+    }
+    return await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Verify Your Freelancer Account - EduFiliova',
+      html: emailHtml,
+      from: `"EduFiliova Verification" <verify@edufiliova.com>`
+    });
+  } catch (error) {
+    console.error(`❌ Error sending freelancer verification email:`, error);
+    throw error;
+  }
+}
+
+export async function sendCustomerVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
+  console.log(`📧 Sending customer verification email to ${recipientEmail}...`);
+  try {
+    let emailHtml = await getTemplate('customer_verification_template', 'Customer');
+    const replacements = { 'fullName': recipientName || 'Customer', 'code': verificationCode, 'expiresIn': expiresInMinutes.toString() };
+    for (const [key, value] of Object.entries(replacements)) {
+      emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
+    }
+    return await emailService.sendEmail({
+      to: recipientEmail,
+      subject: 'Verify Your Customer Account - EduFiliova',
+      html: emailHtml,
+      from: `"EduFiliova Verification" <verify@edufiliova.com>`
+    });
+  } catch (error) {
+    console.error(`❌ Error sending customer verification email:`, error);
     throw error;
   }
 }
@@ -125,30 +164,19 @@ export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerN
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'voucher', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
     const formatDate = (date) => {
       if (!date) return 'No expiration';
       const d = new Date(date);
       return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     };
-    
     const voucherAmount = typeof amount === 'number' ? amount.toFixed(2) : amount;
-    const replacements = {
-      'fullName': recipientName || 'Friend',
-      'senderName': buyerName || 'Someone special',
-      'amount': voucherAmount,
-      'voucherCode': voucherCode,
-      'expiresAt': formatDate(expiresAt),
-      'personalMessage': personalMessage || ''
-    };
-    
+    const replacements = { 'fullName': recipientName || 'Friend', 'senderName': buyerName || 'Someone special', 'amount': voucherAmount, 'voucherCode': voucherCode, 'expiresAt': formatDate(expiresAt), 'personalMessage': personalMessage || '' };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: `You've received a $${voucherAmount} Gift Voucher from ${replacements.senderName}!`,
+      subject: \`You've received a $\${voucherAmount} Gift Voucher from \${replacements.senderName}!\`,
       html: emailHtml,
       from: `"EduFiliova" <orders@edufiliova.com>`
     });
@@ -163,33 +191,16 @@ export async function sendCoursePurchaseEmail(recipientEmail, recipientName, cou
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'course-purchase', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'Student',
-      'courseName': courseData.courseName || 'Your Course',
-      'teacherName': courseData.teacherName || 'EduFiliova Instructor',
-      'orderId': courseData.orderId || 'N/A',
-      'price': courseData.price || '0.00',
-      'accessType': courseData.accessType || 'Lifetime Access',
-      'purchaseDate': courseData.purchaseDate || new Date().toLocaleDateString()
-    };
-    
+    const replacements = { 'fullName': recipientName || 'Student', 'courseName': courseData.courseName || 'Your Course', 'teacherName': courseData.teacherName || 'EduFiliova Instructor', 'orderId': courseData.orderId || 'N/A', 'price': courseData.price || '0.00', 'accessType': courseData.accessType || 'Lifetime Access', 'purchaseDate': courseData.purchaseDate || new Date().toLocaleDateString() };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
-    const result = await emailService.sendEmail({
+    return await emailService.sendEmail({
       to: recipientEmail,
-      subject: `Course Purchase Confirmed - ${replacements.courseName}`,
+      subject: \`Course Purchase Confirmed - \${replacements.courseName}\`,
       html: emailHtml,
       from: `"EduFiliova Orders" <orders@edufiliova.com>`
     });
-
-    if (!result) {
-      console.error(`❌ Email service failed to send course purchase email to ${recipientEmail}`);
-      throw new Error('Email service failed to send course purchase email');
-    }
-    return result;
   } catch (error) {
     console.error(`❌ Error sending course purchase email:`, error);
     throw error;
@@ -200,21 +211,13 @@ export async function sendNewCourseAnnouncementEmail(recipientEmail, recipientNa
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'new-course-announcement', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'Student',
-      'courseTitle': courseData.courseTitle || 'New Course',
-      'teacherName': courseData.teacherName || 'EduFiliova Instructor',
-      'category': courseData.category || 'General'
-    };
-    
+    const replacements = { 'fullName': recipientName || 'Student', 'courseTitle': courseData.courseTitle || 'New Course', 'teacherName': courseData.teacherName || 'EduFiliova Instructor', 'category': courseData.category || 'General' };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: `New Course Available: ${replacements.courseTitle}`,
+      subject: \`New Course Available: \${replacements.courseTitle}\`,
       html: emailHtml,
       from: `"EduFiliova" <noreply@edufiliova.com>`
     });
@@ -229,52 +232,18 @@ export async function sendCourseAnnouncementToEligibleStudents(courseData) {
     const { db } = await import('../db.js');
     const { profiles, users } = await import('../../shared/schema.js');
     const { eq, and, or, ilike } = await import('drizzle-orm');
-    
-    const eligibleStudents = await db
-      .select({
-        email: profiles.email,
-        name: profiles.name
-      })
-      .from(profiles)
-      .innerJoin(users, eq(users.id, profiles.userId))
-      .where(
-        and(
-          eq(users.role, 'student'),
-          or(
-            ilike(profiles.grade, '%11%'),
-            ilike(profiles.grade, '%12%'),
-            ilike(profiles.grade, '%Form 5%'),
-            ilike(profiles.grade, '%Form 6%'),
-            ilike(profiles.grade, '%College%'),
-            ilike(profiles.grade, '%University%'),
-            ilike(profiles.grade, '%A-Level%'),
-            ilike(profiles.grade, '%AS-Level%'),
-            ilike(profiles.grade, '%A2-Level%')
-          )
-        )
-      );
-    
-    console.log(`📧 Found ${eligibleStudents.length} eligible students for course announcement`);
-    
+    const eligibleStudents = await db.select({ email: profiles.email, name: profiles.name }).from(profiles).innerJoin(users, eq(users.id, profiles.userId)).where(and(eq(users.role, 'student'), or(ilike(profiles.grade, '%11%'), ilike(profiles.grade, '%12%'), ilike(profiles.grade, '%Form 5%'), ilike(profiles.grade, '%Form 6%'), ilike(profiles.grade, '%College%'), ilike(profiles.grade, '%University%'), ilike(profiles.grade, '%A-Level%'), ilike(profiles.grade, '%AS-Level%'), ilike(profiles.grade, '%A2-Level%'))));
     let successCount = 0;
-    let failCount = 0;
-    
     for (const student of eligibleStudents) {
       if (student.email) {
-        try {
-          await sendNewCourseAnnouncementEmail(student.email, student.name, courseData);
-          successCount++;
-        } catch (err) {
-          failCount++;
-        }
+        try { await sendNewCourseAnnouncementEmail(student.email, student.name, courseData); successCount++; } catch (err) {}
         await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
-    
-    return { sent: successCount, failed: failCount, total: eligibleStudents.length };
+    return { sent: successCount, total: eligibleStudents.length };
   } catch (error) {
     console.error('Error sending course announcements:', error);
-    return { sent: 0, failed: 0, total: 0, error: error.message };
+    return { sent: 0, total: 0, error: error.message };
   }
 }
 
@@ -282,24 +251,13 @@ export async function sendPlanUpgradeEmail(recipientEmail, recipientName, upgrad
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'plan-upgrade', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'Student',
-      'planName': upgradeData.planName || 'Premium',
-      'previousPlan': upgradeData.previousPlan || 'Free',
-      'price': upgradeData.price || '0.00',
-      'billingCycle': upgradeData.billingCycle || 'Monthly',
-      'expiryDate': upgradeData.expiryDate || new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString(),
-      'upgradeDate': upgradeData.upgradeDate || new Date().toLocaleDateString()
-    };
-    
+    const replacements = { 'fullName': recipientName || 'Student', 'planName': upgradeData.planName || 'Premium', 'previousPlan': upgradeData.previousPlan || 'Free', 'price': upgradeData.price || '0.00', 'billingCycle': upgradeData.billingCycle || 'Monthly', 'expiryDate': upgradeData.expiryDate || new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString(), 'upgradeDate': upgradeData.upgradeDate || new Date().toLocaleDateString() };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: `Welcome to ${replacements.planName} - Your Subscription is Active!`,
+      subject: \`Welcome to \${replacements.planName} - Your Subscription is Active!\`,
       html: emailHtml,
       from: `"EduFiliova" <noreply@edufiliova.com>`
     });
@@ -314,17 +272,10 @@ export async function sendSuspensionEmail(recipientEmail, recipientName, suspens
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'suspension', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
     emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, recipientName || 'User');
-    
     if (suspensionReason && suspensionReason.trim()) {
-      emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', 
-        `<p class="info-text" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;"><strong>Additional Details:</strong> ${suspensionReason}</p>`
-      );
-    } else {
-      emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', '');
-    }
-    
+      emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', \`<p class="info-text" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;"><strong>Additional Details:</strong> \${suspensionReason}</p>\`);
+    } else { emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', ''); }
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Important: Your EduFiliova Account Status',
@@ -342,21 +293,10 @@ export async function sendAccountRestrictionEmail(recipientEmail, recipientName,
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'restriction', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'User',
-      'restrictionDate': restrictionData.restrictionDate || new Date().toLocaleDateString(),
-      'restrictionType': restrictionData.restrictionType || 'Account Restriction',
-      'duration': restrictionData.duration || 'Temporary',
-      'referenceId': restrictionData.referenceId || 'N/A',
-      'restrictionReason': restrictionData.restrictionReason || 'Violation of terms.',
-      'appealLink': restrictionData.appealLink || 'https://edufiliova.com/appeal'
-    };
-    
+    const replacements = { 'fullName': recipientName || 'User', 'restrictionDate': restrictionData.restrictionDate || new Date().toLocaleDateString(), 'restrictionType': restrictionData.restrictionType || 'Account Restriction', 'duration': restrictionData.duration || 'Temporary', 'referenceId': restrictionData.referenceId || 'N/A', 'restrictionReason': restrictionData.restrictionReason || 'Violation of terms.', 'appealLink': restrictionData.appealLink || 'https://edufiliova.com/appeal' };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Important: Your Account Has Been Restricted',
@@ -374,19 +314,10 @@ export async function sendNewDeviceLoginEmail(recipientEmail, recipientName, log
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'new-device-login', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'User',
-      'device': loginData.device || 'Unknown Device',
-      'location': loginData.location || 'Unknown Location',
-      'ip': loginData.ip || 'Unknown IP',
-      'time': loginData.time || new Date().toLocaleString()
-    };
-    
+    const replacements = { 'fullName': recipientName || 'User', 'device': loginData.device || 'Unknown Device', 'location': loginData.location || 'Unknown Location', 'ip': loginData.ip || 'Unknown IP', 'time': loginData.time || new Date().toLocaleString() };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'New Device Login Alert',
@@ -404,21 +335,13 @@ export async function sendMeetingReminderEmail(recipientEmail, recipientName, me
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'meeting-reminder', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'User',
-      'meetingTitle': meetingData.title || 'Meeting',
-      'meetingTime': meetingData.time || 'Scheduled Time',
-      'meetingLink': meetingData.link || '#'
-    };
-    
+    const replacements = { 'fullName': recipientName || 'User', 'meetingTitle': meetingData.title || 'Meeting', 'meetingTime': meetingData.time || 'Scheduled Time', 'meetingLink': meetingData.link || '#' };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: `Reminder: ${replacements.meetingTitle}`,
+      subject: \`Reminder: \${replacements.meetingTitle}\`,
       html: emailHtml,
       from: `"EduFiliova" <noreply@edufiliova.com>`
     });
@@ -433,21 +356,13 @@ export async function sendCourseCompletionEmail(recipientEmail, recipientName, c
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'course-completion', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'Student',
-      'courseName': completionData.courseName || 'Course',
-      'completionDate': completionData.date || new Date().toLocaleDateString(),
-      'certificateUrl': completionData.certificateUrl || '#'
-    };
-    
+    const replacements = { 'fullName': recipientName || 'Student', 'courseName': completionData.courseName || 'Course', 'completionDate': completionData.date || new Date().toLocaleDateString(), 'certificateUrl': completionData.certificateUrl || '#' };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: `Congratulations on completing ${replacements.courseName}!`,
+      subject: \`Congratulations on completing \${replacements.courseName}!\`,
       html: emailHtml,
       from: `"EduFiliova" <noreply@edufiliova.com>`
     });
@@ -462,18 +377,10 @@ export async function sendPaymentFailedEmail(recipientEmail, recipientName, paym
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'payment-failed', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'Customer',
-      'amount': paymentData.amount || '0.00',
-      'reason': paymentData.reason || 'Payment declined',
-      'retryLink': paymentData.retryLink || '#'
-    };
-    
+    const replacements = { 'fullName': recipientName || 'Customer', 'amount': paymentData.amount || '0.00', 'reason': paymentData.reason || 'Payment declined', 'retryLink': paymentData.retryLink || '#' };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Payment Failed',
@@ -492,7 +399,6 @@ export async function sendFreelancerUnderReviewEmail(recipientEmail, recipientNa
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'freelancer-application-under-review', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, recipientName || 'Freelancer');
-    
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Application Received - EduFiliova Freelancer Network',
@@ -511,7 +417,6 @@ export async function sendTeacherApplicationSubmittedEmail(recipientEmail, recip
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, recipientName || 'Teacher');
-    
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Application Received - EduFiliova Teacher Network',
@@ -531,15 +436,9 @@ export async function sendTeacherDeclineEmail(recipientEmail, recipientName, rea
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     const fullName = recipientName || 'Applicant';
     emailHtml = emailHtml.replace(/\{\{\s*fullName\s*\}\}/gi, fullName);
-
     if (reason) {
-      emailHtml = emailHtml.replace(/\{\{#if reason\}\}([\s\S]*?)\{\{\/if\}\}/gi, (match, p1) => {
-        return p1.replace(/\{\{\s*reason\s*\}\}/gi, reason);
-      });
-    } else {
-      emailHtml = emailHtml.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, '');
-    }
-
+      emailHtml = emailHtml.replace(/\{\{#if reason\}\}([\s\S]*?)\{\{\/if\}\}/gi, (match, p1) => p1.replace(/\{\{\s*reason\s*\}\}/gi, reason));
+    } else { emailHtml = emailHtml.replace(/\{\{#if reason\}\}[\s\S]*?\{\{\/if\}\}/gi, ''); }
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Update Regarding Your Teacher Application - EduFiliova',
@@ -558,7 +457,6 @@ export async function sendTeacherUnderReviewEmail(recipientEmail, recipientName)
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'teacher-application-under-review', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, recipientName || 'Teacher');
-    
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Application Update - EduFiliova Teacher Network',
@@ -576,21 +474,13 @@ export async function sendShopPurchaseEmail(recipientEmail, recipientName, purch
   try {
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'shop-purchase', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
-    
-    const replacements = {
-      'fullName': recipientName || 'Customer',
-      'productName': purchaseData.productName || 'Product',
-      'amount': purchaseData.amount || '0.00',
-      'orderId': purchaseData.orderId || 'N/A'
-    };
-    
+    const replacements = { 'fullName': recipientName || 'Customer', 'productName': purchaseData.productName || 'Product', 'amount': purchaseData.amount || '0.00', 'orderId': purchaseData.orderId || 'N/A' };
     for (const [key, value] of Object.entries(replacements)) {
       emailHtml = emailHtml.replace(new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'gi'), value);
     }
-    
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: `Order Confirmation - ${replacements.productName}`,
+      subject: \`Order Confirmation - \${replacements.productName}\`,
       html: emailHtml,
       from: `"EduFiliova Shop" <orders@edufiliova.com>`
     });
@@ -606,7 +496,6 @@ export async function sendFreelancerApplicationSubmittedEmail(recipientEmail, re
     const templatePath = path.join(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'template.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, recipientName || 'Freelancer');
-    
     return await emailService.sendEmail({
       to: recipientEmail,
       subject: 'Application Received - EduFiliova Freelancer Network',
