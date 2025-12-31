@@ -42,15 +42,54 @@ export async function sendStudentVerificationEmail(recipientEmail, recipientName
       path.join('/app', 'dist', 'public', 'templates', 'student_verification_template', 'email.html')
     ];
     
-    let templatePath = possiblePaths[0];
-    for (const p of possiblePaths) {
-      if (fs.existsSync(p)) {
-        templatePath = p;
-        break;
+// Fallback to embedded template if file is missing
+    let emailHtml;
+    try {
+      let templatePath = possiblePaths[0];
+      for (const p of possiblePaths) {
+        if (fs.existsSync(p)) {
+          templatePath = p;
+          break;
+        }
       }
+      emailHtml = fs.readFileSync(templatePath, 'utf-8');
+    } catch (e) {
+      console.warn('⚠️ Template file not found, using embedded fallback for verification email');
+      emailHtml = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Verify Your Account</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .container { max-width: 600px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .header { background: #0d3931; color: #fff; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+        .content { padding: 30px; text-align: center; }
+        .code-box { background: #f0f1f5; border: 2px dashed #0d3931; padding: 20px; font-size: 32px; font-weight: bold; letter-spacing: 5px; margin: 20px 0; color: #0d3931; }
+        .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>EduFiliova</h1>
+        </div>
+        <div class="content">
+            <h2>Verify Your Email</h2>
+            <p>Hi {{fullName}},</p>
+            <p>Thank you for joining EduFiliova! Please use the verification code below to complete your registration:</p>
+            <div class="code-box">{{code}}</div>
+            <p>This code will expire in {{expiresIn}} minutes.</p>
+            <p>If you didn't request this, you can safely ignore this email.</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2025 EduFiliova. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>`;
     }
-    
-    let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     
     const fullName = recipientName || 'Student';
     const replacements = {
