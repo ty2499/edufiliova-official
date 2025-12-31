@@ -411,20 +411,22 @@ export class EmailService {
     // Log environment for debugging
     console.log(`DEBUG: process.cwd() = ${cwd}`);
     
+    // In production, the app runs from /app (root) or the repo root.
+    // The compiled code is in dist/server/index.js
+    // Templates are at server/templates/... relative to the project root.
+    
     const possiblePaths = [
-      // 1. Check relative to current working directory (most reliable in many Node environments)
+      // Check absolute paths directly since that's what the error reports
+      path.join('/app/server/templates', templateDir, filename),
+      path.join('/app/dist/server/templates', templateDir, filename),
+      
+      // Check relative to cwd
       path.join(cwd, 'server/templates', templateDir, filename),
       path.join(cwd, 'dist/server/templates', templateDir, filename),
       
-      // 2. Check source directory specifically
+      // Standard resolves
       path.resolve(cwd, 'server/templates', templateDir, filename),
-      
-      // 3. Check dist directory specifically
       path.resolve(cwd, 'dist/server/templates', templateDir, filename),
-      
-      // 4. Check absolute paths often used in containerized environments (like Replit deployments)
-      path.join('/app/server/templates', templateDir, filename),
-      path.join('/app/dist/server/templates', templateDir, filename),
     ];
 
     console.log(`🔍 Searching for template: ${templateDir}/${filename}`);
@@ -439,14 +441,20 @@ export class EmailService {
       }
     }
     
-    // 5. LAST RESORT: Try to find it by traversing up or using __dirname (though __dirname is tricky in ESM)
-    // In ESM, we can try to construct a path relative to the current file's location if it's in dist
+    // If we're here, all standard checks failed. 
+    // Let's try to see if we can find it relative to this file's directory if in dist
     try {
+      // In ESM, __dirname isn't available, but we've established paths above.
+      // If we are getting ENOENT on /app/server/templates, it means the directory structure
+      // in the production container is different than expected or templates weren't bundled.
+      
+      console.error(`❌ Template not found in standard paths for ${templateDir}/${filename}.`);
+      
+      // Final emergency fallback using relative path from CWD
       const emergencyPath = path.join(cwd, 'server/templates', templateDir, filename);
-      console.log(`⚠️ Standard paths failed. Attempting emergency fallback: ${emergencyPath}`);
+      console.log(`⚠️ Attempting final emergency fallback: ${emergencyPath}`);
       return emergencyPath;
     } catch (err) {
-      console.error(`❌ All template path resolution failed for ${templateDir}/${filename}`);
       return path.join(cwd, 'server/templates', templateDir, filename);
     }
   }
