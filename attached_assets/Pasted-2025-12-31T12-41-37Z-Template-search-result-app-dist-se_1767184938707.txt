@@ -1,0 +1,36 @@
+2025-12-31T12:41:37Z 🔍 Template search result: /app/dist/server/templates/teacher_verification_template/email.html
+2025-12-31T12:41:37Z 📧 Email send attempt:
+2025-12-31T12:41:37Z - From: "EduFiliova Security" <verify@edufiliova.com>
+2025-12-31T12:41:37Z - To: hallpt7@gmail.com
+2025-12-31T12:41:37Z - Subject: Verify Your Teacher Account - EduFiliova
+2025-12-31T12:41:37Z - Sender email extracted: verify@edufiliova.com
+2025-12-31T12:41:37Z - Transporter found for sender: true
+2025-12-31T12:41:37Z - Using fallback transporter: false
+2025-12-31T12:41:37Z - Available transporters: support@edufiliova.com, noreply@edufiliova.com, design@edufiliova.com, verify@edufiliova.com, orders@edufiliova.com, info@tylerwilliams.ink
+2025-12-31T12:41:37Z ✅ Transporter verified for verify@edufiliova.com
+2025-12-31T12:41:37Z ✉️ Sending email to: hallpt7@gmail.com | Subject: Verify Your Teacher Account - EduFiliova
+2025-12-31T12:41:37Z 🖼️ Processing images in HTML (length: 43296)
+2025-12-31T12:41:37Z ✅ Found assets in: /app/dist/server/email-local-assets (34 files)
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: spiral1 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: logo in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: spiral2 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: arrow in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: teacherbanner in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: logofull2 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: spiral1 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: logo in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: spiral2 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: spiral1 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: logo in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: spiral2 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: arrow in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: teacherbanner in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: arrow in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: teacherbanner in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: logofull2 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z ⚠️ Could not find file for CID: logofull2 in /app/dist/server/email-local-assets
+2025-12-31T12:41:37Z 12:41:37 PM [express] POST /api/hero-sections/impression 200 in 114ms :: {"success":true,"message":"I…
+2025-12-31T12:41:37Z ✅ Email sent successfully to hallpt7@gmail.com via verify@edufiliova.com
+2025-12-31T12:41:37Z 📧 Attempted to resend verification code to hallpt7@gmail.com. Result: true
+2025-12-31T12:41:37Z ✅ Verification code resent to hallpt7@gmail.com
+2025-12-31T12:41:37Z 12:41:37 PM [express] POST /api/teacher-applications/resend-code 200 in 1775ms :: {"success":true,"me…

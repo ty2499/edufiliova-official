@@ -95,7 +95,9 @@ export class EmailService {
       // 1. Resolve target file
       if (pathVal.toLowerCase().startsWith('cid:')) {
         const cid = pathVal.slice(4).toLowerCase();
-        targetFile = files.find(f => f.toLowerCase().startsWith(cid)) || '';
+        // Check for direct filename matches (with extensions) first, then prefix matches
+        targetFile = files.find(f => f.toLowerCase() === cid || f.toLowerCase() === `${cid}.png` || f.toLowerCase() === `${cid}.jpg`) || 
+                     files.find(f => f.toLowerCase().startsWith(cid)) || '';
       } else if (dataUriMap.has(fileName)) {
         targetFile = fileName;
       }
