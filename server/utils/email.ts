@@ -1801,7 +1801,7 @@ export class EmailService {
   }
 
   async sendCustomerVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
-    const htmlPath = path.resolve(process.cwd(), 'server/templates/customer_verification_template/email.html');
+    const htmlPath = this.getTemplatePath('customer_verification_template', 'email.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     const fullName = data.fullName || 'User';
@@ -1824,7 +1824,7 @@ export class EmailService {
   }
 
   async sendShopVerificationEmail(email: string, data: { fullName: string; verificationCode: string; expiresIn?: string }): Promise<boolean> {
-    const htmlPath = path.resolve(process.cwd(), 'server/templates/customer_verification_template/email.html');
+    const htmlPath = this.getTemplatePath('customer_verification_template', 'email.html');
     let html = fs.readFileSync(htmlPath, 'utf-8');
 
     const fullName = data.fullName || 'User';
@@ -1848,7 +1848,7 @@ export class EmailService {
 
   async sendApplicationSubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
     try {
-      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'teacher-application-submitted', 'template.html');
+      const templatePath = this.getTemplatePath('teacher_application_under_review_template', 'email.html');
       let html = fs.readFileSync(templatePath, 'utf-8');
 
       const fullName = data.fullName || 'Teacher';
