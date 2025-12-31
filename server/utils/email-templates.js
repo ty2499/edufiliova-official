@@ -176,7 +176,7 @@ export async function sendGiftVoucherEmail(recipientEmail, recipientName, buyerN
     }
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: \`You've received a $\${voucherAmount} Gift Voucher from \${replacements.senderName}!\`,
+      subject: `You've received a $${voucherAmount} Gift Voucher from ${replacements.senderName}!`,
       html: emailHtml,
       from: `"EduFiliova" <orders@edufiliova.com>`
     });
@@ -197,7 +197,7 @@ export async function sendCoursePurchaseEmail(recipientEmail, recipientName, cou
     }
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: \`Course Purchase Confirmed - \${replacements.courseName}\`,
+      subject: `Course Purchase Confirmed - ${replacements.courseName}`,
       html: emailHtml,
       from: `"EduFiliova Orders" <orders@edufiliova.com>`
     });
@@ -217,7 +217,7 @@ export async function sendNewCourseAnnouncementEmail(recipientEmail, recipientNa
     }
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: \`New Course Available: \${replacements.courseTitle}\`,
+      subject: `New Course Available: ${replacements.courseTitle}`,
       html: emailHtml,
       from: `"EduFiliova" <noreply@edufiliova.com>`
     });
@@ -257,7 +257,7 @@ export async function sendPlanUpgradeEmail(recipientEmail, recipientName, upgrad
     }
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: \`Welcome to \${replacements.planName} - Your Subscription is Active!\`,
+      subject: `Welcome to ${replacements.planName} - Your Subscription is Active!`,
       html: emailHtml,
       from: `"EduFiliova" <noreply@edufiliova.com>`
     });
@@ -274,7 +274,7 @@ export async function sendSuspensionEmail(recipientEmail, recipientName, suspens
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     emailHtml = emailHtml.replace(/\{\{fullName\}\}/gi, recipientName || 'User');
     if (suspensionReason && suspensionReason.trim()) {
-      emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', \`<p class="info-text" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;"><strong>Additional Details:</strong> \${suspensionReason}</p>\`);
+      emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', `<p class="info-text" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;"><strong>Additional Details:</strong> ${suspensionReason}</p>`);
     } else { emailHtml = emailHtml.replace('{{SUSPENSION_REASON_BLOCK}}', ''); }
     return await emailService.sendEmail({
       to: recipientEmail,
@@ -341,7 +341,7 @@ export async function sendMeetingReminderEmail(recipientEmail, recipientName, me
     }
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: \`Reminder: \${replacements.meetingTitle}\`,
+      subject: `Reminder: ${replacements.meetingTitle}`,
       html: emailHtml,
       from: `"EduFiliova" <noreply@edufiliova.com>`
     });
@@ -362,7 +362,7 @@ export async function sendCourseCompletionEmail(recipientEmail, recipientName, c
     }
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: \`Congratulations on completing \${replacements.courseName}!\`,
+      subject: `Congratulations on completing ${replacements.courseName}!`,
       html: emailHtml,
       from: `"EduFiliova" <noreply@edufiliova.com>`
     });
@@ -480,7 +480,7 @@ export async function sendShopPurchaseEmail(recipientEmail, recipientName, purch
     }
     return await emailService.sendEmail({
       to: recipientEmail,
-      subject: \`Order Confirmation - \${replacements.productName}\`,
+      subject: `Order Confirmation - ${replacements.productName}`,
       html: emailHtml,
       from: `"EduFiliova Shop" <orders@edufiliova.com>`
     });
