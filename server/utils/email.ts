@@ -411,20 +411,24 @@ export class EmailService {
     // Log environment for debugging
     console.log(`DEBUG: process.cwd() = ${cwd}`);
     
-    // The error reports failing to open '/app/server/templates/...'
-    // We must ensure we check the exact paths the environment expects
+    // ════════════════════════════════════════════════════════════════════════
+    // HYPERLIFT STARLIGHT / PRODUCTION PATH RESOLUTION
+    // ════════════════════════════════════════════════════════════════════════
+    // Hyperlift runs from /app. The compiled code is in /app/dist.
+    // ════════════════════════════════════════════════════════════════════════
+    
     const possiblePaths = [
-      // 1. Production specific paths (based on the error log)
-      path.join('/app/server/templates', templateDir, filename),
+      // 1. Direct absolute paths (Matches Hyperlift error logs perfectly)
       path.join('/app/dist/server/templates', templateDir, filename),
+      path.join('/app/server/templates', templateDir, filename),
       
-      // 2. Relative to current working directory
-      path.join(cwd, 'server/templates', templateDir, filename),
+      // 2. CWD-based paths (Standard for Replit and local dev)
       path.join(cwd, 'dist/server/templates', templateDir, filename),
+      path.join(cwd, 'server/templates', templateDir, filename),
       
-      // 3. Absolute resolve
-      path.resolve(cwd, 'server/templates', templateDir, filename),
+      // 3. Absolute resolves (Fallback)
       path.resolve(cwd, 'dist/server/templates', templateDir, filename),
+      path.resolve(cwd, 'server/templates', templateDir, filename),
     ];
 
     console.log(`🔍 Searching for template: ${templateDir}/${filename}`);
@@ -435,13 +439,15 @@ export class EmailService {
           return p;
         }
       } catch (e) {
-        // Ignore errors
+        // Silently skip if path is inaccessible
       }
     }
     
-    // Final emergency fallback: try relative to source root
+    // ════════════════════════════════════════════════════════════════════════
+    // EMERGENCY FALLBACK
+    // ════════════════════════════════════════════════════════════════════════
     const emergencyPath = path.join(cwd, 'server/templates', templateDir, filename);
-    console.error(`❌ Template not found in standard paths for ${templateDir}/${filename}. Falling back to: ${emergencyPath}`);
+    console.error(`❌ Template NOT found in standard paths. Using emergency: ${emergencyPath}`);
     return emergencyPath;
   }
 
