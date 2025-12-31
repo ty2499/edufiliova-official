@@ -410,17 +410,21 @@ export class EmailService {
       path.resolve(process.cwd(), 'server/templates', templateDir, filename),
       path.resolve(process.cwd(), 'dist/server/templates', templateDir, filename),
       path.join(process.cwd(), 'server/templates', templateDir, filename),
+      path.join(process.cwd(), 'dist/server/templates', templateDir, filename),
       path.join('/app/server/templates', templateDir, filename),
       path.join('/app/dist/server/templates', templateDir, filename),
+      path.resolve(__dirname, '../../server/templates', templateDir, filename),
       path.resolve(__dirname, '../templates', templateDir, filename)
     ];
 
     for (const p of possiblePaths) {
       if (fs.existsSync(p)) {
+        console.log(`✅ Found template at: ${p}`);
         return p;
       }
     }
     
+    console.error(`❌ Template not found in any possible paths for ${templateDir}/${filename}`);
     // Fallback to the most likely path if none exist (to let readFileSync throw a descriptive error)
     return possiblePaths[0];
   }
@@ -1483,10 +1487,8 @@ export class EmailService {
 
   async sendPasswordChangedEmail(email: string, data: { fullName: string }): Promise<boolean> {
     try {
-      let html = fs.readFileSync(
-        path.resolve(process.cwd(), 'server/templates/password_changed_template/email.html'),
-        'utf-8'
-      );
+      const templatePath = this.getTemplatePath('password_changed_template', 'email.html');
+      let html = fs.readFileSync(templatePath, 'utf-8');
 
       // Use bulletproof name replacement
       html = this.forceReplaceName(html, data.fullName || 'User');
