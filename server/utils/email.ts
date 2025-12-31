@@ -408,32 +408,29 @@ export class EmailService {
   private getTemplatePath(templateDir: string, filename: string): string {
     const cwd = process.cwd();
     const possiblePaths = [
-      path.resolve(cwd, 'server/templates', templateDir, filename),
-      path.resolve(cwd, 'dist/server/templates', templateDir, filename),
       path.join(cwd, 'server/templates', templateDir, filename),
       path.join(cwd, 'dist/server/templates', templateDir, filename),
       path.join('/app/server/templates', templateDir, filename),
       path.join('/app/dist/server/templates', templateDir, filename),
+      path.resolve(cwd, 'server/templates', templateDir, filename),
+      path.resolve(cwd, 'dist/server/templates', templateDir, filename),
     ];
 
     console.log(`🔍 Searching for template: ${templateDir}/${filename}`);
     for (const p of possiblePaths) {
-      if (fs.existsSync(p)) {
-        console.log(`✅ Found template at: ${p}`);
-        return p;
+      try {
+        if (fs.existsSync(p)) {
+          console.log(`✅ Found template at: ${p}`);
+          return p;
+        }
+      } catch (e) {
+        // Ignore existsSync errors
       }
     }
     
-    console.error(`❌ Template not found in any possible paths for ${templateDir}/${filename}`);
-    // Check if parent directory exists to debug
-    const templateParent = path.resolve(cwd, 'server/templates', templateDir);
-    if (fs.existsSync(templateParent)) {
-      console.log(`ℹ️ Template directory exists: ${templateParent}. Files:`, fs.readdirSync(templateParent));
-    } else {
-      console.log(`❌ Template directory DOES NOT exist: ${templateParent}`);
-    }
-
-    return possiblePaths[0];
+    // Final emergency fallback: try to find it anywhere in server/templates
+    console.error(`❌ Template not found in standard paths for ${templateDir}/${filename}. Trying emergency search...`);
+    return path.join(cwd, 'server/templates', templateDir, filename);
   }
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
