@@ -82,6 +82,14 @@ export class EmailService {
 
     const files = fs.existsSync(localAssetDir) ? fs.readdirSync(localAssetDir) : [];
     console.log(`📁 Asset directory: ${localAssetDir} (${files.length} files)`);
+    
+    // Create a normalized map for easier matching
+    const fileMap = new Map<string, string>();
+    files.forEach(f => {
+      const base = f.split('.')[0].toLowerCase();
+      fileMap.set(base, f);
+    });
+
     const attachments: EmailAttachment[] = [];
     const usedCids = new Set<string>();
 
@@ -95,9 +103,15 @@ export class EmailService {
       // 1. Resolve target file
       if (pathVal.toLowerCase().startsWith('cid:')) {
         const cid = pathVal.slice(4).toLowerCase();
-        // Check for direct filename matches (with extensions) first, then prefix matches
-        targetFile = files.find(f => f.toLowerCase() === cid || f.toLowerCase() === `${cid}.png` || f.toLowerCase() === `${cid}.jpg`) || 
-                     files.find(f => f.toLowerCase().startsWith(cid)) || '';
+        
+        // Strategy 1: Direct base name match
+        if (fileMap.has(cid)) {
+          targetFile = fileMap.get(cid)!;
+        } 
+        // Strategy 2: Prefix match (if CID is a shortened version)
+        else {
+          targetFile = files.find(f => f.toLowerCase().startsWith(cid)) || '';
+        }
       } else if (dataUriMap.has(fileName)) {
         targetFile = fileName;
       }
