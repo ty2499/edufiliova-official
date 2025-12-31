@@ -418,15 +418,18 @@ export class EmailService {
     // ════════════════════════════════════════════════════════════════════════
     
     const possiblePaths = [
-      // 1. Direct absolute paths (Matches Hyperlift error logs perfectly)
+      // 1. Public templates (Best for production/deployment)
+      path.join(cwd, 'public/templates', templateDir, filename),
+      
+      // 2. Direct absolute paths (Matches Hyperlift error logs perfectly)
       path.join('/app/dist/server/templates', templateDir, filename),
       path.join('/app/server/templates', templateDir, filename),
       
-      // 2. CWD-based paths (Standard for Replit and local dev)
+      // 3. CWD-based paths (Standard for Replit and local dev)
       path.join(cwd, 'dist/server/templates', templateDir, filename),
       path.join(cwd, 'server/templates', templateDir, filename),
       
-      // 3. Absolute resolves (Fallback)
+      // 4. Absolute resolves (Fallback)
       path.resolve(cwd, 'dist/server/templates', templateDir, filename),
       path.resolve(cwd, 'server/templates', templateDir, filename),
     ];

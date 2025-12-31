@@ -35,7 +35,7 @@ export async function sendStudentWelcomeEmail(recipientEmail, recipientName) {
 export async function sendStudentVerificationEmail(recipientEmail, recipientName, verificationCode, expiresInMinutes = 15) {
   console.log(`📧 Sending student verification email to ${recipientEmail}...`);
   try {
-    const templatePath = path.join(process.cwd(), 'server', 'templates', 'student_verification_template', 'email.html');
+    const templatePath = path.join(process.cwd(), 'public', 'templates', 'student_verification_template', 'email.html');
     let emailHtml = fs.readFileSync(templatePath, 'utf-8');
     
     const fullName = recipientName || 'Student';
