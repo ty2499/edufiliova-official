@@ -411,20 +411,18 @@ export class EmailService {
     // Log environment for debugging
     console.log(`DEBUG: process.cwd() = ${cwd}`);
     
-    // In production, the app runs from /app (root) or the repo root.
-    // The compiled code is in dist/server/index.js
-    // Templates are at server/templates/... relative to the project root.
-    
+    // The error reports failing to open '/app/server/templates/...'
+    // We must ensure we check the exact paths the environment expects
     const possiblePaths = [
-      // Check absolute paths directly since that's what the error reports
+      // 1. Production specific paths (based on the error log)
       path.join('/app/server/templates', templateDir, filename),
       path.join('/app/dist/server/templates', templateDir, filename),
       
-      // Check relative to cwd
+      // 2. Relative to current working directory
       path.join(cwd, 'server/templates', templateDir, filename),
       path.join(cwd, 'dist/server/templates', templateDir, filename),
       
-      // Standard resolves
+      // 3. Absolute resolve
       path.resolve(cwd, 'server/templates', templateDir, filename),
       path.resolve(cwd, 'dist/server/templates', templateDir, filename),
     ];
@@ -441,22 +439,10 @@ export class EmailService {
       }
     }
     
-    // If we're here, all standard checks failed. 
-    // Let's try to see if we can find it relative to this file's directory if in dist
-    try {
-      // In ESM, __dirname isn't available, but we've established paths above.
-      // If we are getting ENOENT on /app/server/templates, it means the directory structure
-      // in the production container is different than expected or templates weren't bundled.
-      
-      console.error(`❌ Template not found in standard paths for ${templateDir}/${filename}.`);
-      
-      // Final emergency fallback using relative path from CWD
-      const emergencyPath = path.join(cwd, 'server/templates', templateDir, filename);
-      console.log(`⚠️ Attempting final emergency fallback: ${emergencyPath}`);
-      return emergencyPath;
-    } catch (err) {
-      return path.join(cwd, 'server/templates', templateDir, filename);
-    }
+    // Final emergency fallback: try relative to source root
+    const emergencyPath = path.join(cwd, 'server/templates', templateDir, filename);
+    console.error(`❌ Template not found in standard paths for ${templateDir}/${filename}. Falling back to: ${emergencyPath}`);
+    return emergencyPath;
   }
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
