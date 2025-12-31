@@ -114,7 +114,7 @@ async function pushToGitHub() {
   console.log(`✅ Authenticated as: ${user.login}\n`);
   
   const owner = 'ty2499';
-  const repoName = 'edufiliova';
+  const repoName = 'edufiliova-official';
   let repo;
   
   try {
