@@ -1,8 +1,8 @@
-// R2 hosted images
-const creativeImg = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/assets/d8bf0987-d31b-4560-a59c-bac663de39d2.png";
-const profile1 = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/assets/58e5799c-4af0-4da9-bdfd-073a0cadb312.png";
-const profile2 = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/assets/4383777c-926b-4915-9515-b976820747e1.png";
-const profile3 = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/assets/7dcd3ecd-b748-451d-93c5-08a1bd40ad22.png";
+// R2 and Uploaded images
+const creativeImg = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/creator_in_design_studio.png";
+const profile1 = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/young_woman_professional_headshot.png";
+const profile2 = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/man_professional_headshot_portrait.png";
+const profile3 = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/young_woman_professional_headshot-2.png";
 const profile4 = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/assets/64dbcad6-05ef-4f05-a5aa-635a792bcad2.png";
 const profile5 = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/assets/99a93a2e-c8df-4163-b5c0-6e1e25f314ed.png";
 const profile6 = "https://pub-ef49f2e140c14d1e8242964b30306699.r2.dev/assets/b5d27229-704c-4429-9c91-73f3a5ce64c2.png";

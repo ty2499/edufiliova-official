@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Star, Users, BookOpen, Briefcase, Palette, GraduationCap, Award, TrendingUp } from 'lucide-react';
-import studentsHeroImage from '@/assets/generated_images/students_studying_in_library.png';
-import teachersHeroImage from '@/assets/generated_images/teacher_presenting_in_classroom.png';
-import freelancersHeroImage from '@/assets/generated_images/freelancer_working_at_home.png';
-import creatorsHeroImage from '@/assets/generated_images/creator_in_design_studio.png';
-import headshot1 from '@/assets/generated_images/young_woman_professional_headshot.png';
-import headshot2 from '@/assets/generated_images/man_professional_headshot_portrait.png';
-import headshot3 from '@/assets/generated_images/asian_woman_headshot_portrait.png';
+const studentsHeroImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/students_studying_in_library.png";
+const teachersHeroImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/teacher_presenting_in_classroom.png";
+const freelancersHeroImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/freelancer_working_at_home.png";
+const creatorsHeroImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/creator_in_design_studio.png";
+const headshot1 = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/young_woman_professional_headshot.png";
+const headshot2 = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/man_professional_headshot_portrait.png";
+const headshot3 = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/young_woman_professional_headshot-2.png";
 
 interface BentoHeroProps {
   onNavigate: (page: string) => void;
