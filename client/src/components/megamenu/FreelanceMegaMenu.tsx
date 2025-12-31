@@ -6,7 +6,7 @@ import {
   UserPlus, IdCard, Upload, Users2, Briefcase, ShoppingBag, 
   Star, Wallet, Settings, BarChart3, FileText, CreditCard
 } from "lucide-react";
-import promoImage from "@assets/generated_images/freelancer_in_home_office.png";
+const promoImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/freelancer_working_at_home.png";
 
 interface FreelanceMegaMenuProps {
   isOpen: boolean;
@@ -24,8 +24,9 @@ export const FreelanceMegaMenu = ({ isOpen, onNavigate, onClose }: FreelanceMega
     enabled: !!user && !isCreator,
   });
   
-  const hasPendingApplication = applicationData?.application?.status === 'pending' || 
-                                 applicationData?.application?.status === 'under_review';
+  const application = applicationData as { status: string } | undefined;
+  const hasPendingApplication = application?.status === 'pending' || 
+                                 application?.status === 'under_review';
 
   const handleNavigate = (page: string) => {
     onNavigate(page);

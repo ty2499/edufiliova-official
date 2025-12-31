@@ -5,7 +5,7 @@ import {
   Wallet, ShoppingCart, Receipt, Building2, MessageSquare, Cookie,
   RefreshCcw, Phone, Scale, AlertCircle, BookMarked, LayoutGrid
 } from "lucide-react";
-import promoImage from "@assets/generated_images/professional_woman_at_laptop.png";
+const promoImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/young_woman_professional_headshot.png";
 
 interface PagesMegaMenuProps {
   isOpen: boolean;

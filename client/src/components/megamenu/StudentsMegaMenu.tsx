@@ -3,7 +3,7 @@ import {
   Gauge, Video, Users, Settings, BookOpen, ClipboardCheck, 
   Award, Calendar, MessageSquare, GraduationCap
 } from "lucide-react";
-import promoImage from "@assets/generated_images/students_studying_together.png";
+const promoImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/students_studying_in_library.png";
 
 interface StudentsMegaMenuProps {
   isOpen: boolean;

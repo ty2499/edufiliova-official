@@ -4,7 +4,7 @@ import {
   Store, Tag, FolderOpen, PlusCircle, ShoppingBag, Gift, 
   ShoppingCart, Palette, Image, FileText, Wallet, CreditCard
 } from "lucide-react";
-import promoImage from "@assets/generated_images/creative_designer_with_tablet.png";
+const promoImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/creator_in_design_studio.png";
 
 interface ShopMegaMenuProps {
   isOpen: boolean;

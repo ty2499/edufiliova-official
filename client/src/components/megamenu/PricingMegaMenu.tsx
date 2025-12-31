@@ -1,6 +1,6 @@
 import { MegaMenu, MegaMenuCategory, MegaMenuGrid } from "./MegaMenu";
 import { Coins, GraduationCap, ShoppingCart, Briefcase, Building2 } from "lucide-react";
-import promoImage from "@assets/generated_images/modern_ui_dashboard_design.png";
+const promoImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/creator_in_design_studio.png";
 
 interface PricingMegaMenuProps {
   isOpen: boolean;

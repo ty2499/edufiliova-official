@@ -2,7 +2,7 @@ import { MegaMenu, MegaMenuCategory, MegaMenuGrid } from "./MegaMenu";
 import { Search, Library, Award, FileCheck, GraduationCap, UserPlus, BookOpen, Video, ClipboardCheck, Users } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
-import promoImage from "@assets/generated_images/students_studying_together.png";
+const promoImage = "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/students_studying_in_library.png";
 
 interface LearnMegaMenuProps {
   isOpen: boolean;

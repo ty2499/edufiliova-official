@@ -15,14 +15,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import mathLessonImage from "@/assets/math-lesson.jpg";
-import scienceLessonImage from "@/assets/science-lesson.jpg";
-import codingLessonImage from "@/assets/coding-lesson.jpg";
-import geographyLessonImage from "@/assets/geography-lesson.jpg";
-import literatureLessonImage from "@/assets/literature-lesson.jpg";
-import artLessonImage from "@/assets/art-lesson.jpg";
-import musicLessonImage from "@/assets/music-lesson.jpg";
-import webdevLessonImage from "@/assets/webdev-lesson.jpg";
 import { 
   BookOpen, 
   Users, 
@@ -183,7 +175,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       lessons: 300, 
       color: "bg-blue-500", 
       free: true, 
-      image: mathLessonImage,
+      image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/teacher_presenting_in_classroom.png",
       description: "Master algebra, calculus, geometry with interactive lessons"
     },
     { 
@@ -192,7 +184,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       lessons: 280, 
       color: "bg-purple-500", 
       free: true, 
-      image: scienceLessonImage,
+      image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/students_studying_in_library.png",
       description: "Explore physics, chemistry, biology through experiments"
     },
     { 
@@ -201,7 +193,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       lessons: 220, 
       color: "bg-purple-500", 
       free: true, 
-      image: geographyLessonImage,
+      image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/students_studying_in_library.png",
       description: "Discover world cultures, climates, and continents"
     },
     { 
@@ -210,7 +202,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       lessons: 250, 
       color: "bg-primary", 
       free: true, 
-      image: literatureLessonImage,
+      image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/students_studying_in_library.png",
       description: "Analyze classic and modern texts, improve writing"
     },
     { 
@@ -219,7 +211,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       lessons: 180, 
       color: "bg-pink-500", 
       free: true, 
-      image: artLessonImage,
+      image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/creator_in_design_studio.png",
       description: "Create digital art and learn design principles"
     },
     { 
@@ -228,7 +220,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       lessons: 160, 
       color: "bg-indigo-500", 
       free: true, 
-      image: musicLessonImage,
+      image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/creator_in_design_studio.png",
       description: "Learn theory, composition, and instruments"
     },
     { 
@@ -237,7 +229,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       lessons: 350, 
       color: "bg-yellow-500", 
       free: false, 
-      image: codingLessonImage,
+      image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/freelancer_working_at_home.png",
       description: "Master Python, JavaScript, and modern coding"
     },
     { 
@@ -246,7 +238,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       lessons: 320, 
       color: "bg-primary", 
       free: false, 
-      image: webdevLessonImage,
+      image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/freelancer_working_at_home.png",
       description: "Build websites with HTML, CSS, React, and more"
     }
   ];
