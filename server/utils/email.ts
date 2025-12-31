@@ -82,6 +82,9 @@ export class EmailService {
 
     const files = fs.existsSync(localAssetDir) ? fs.readdirSync(localAssetDir) : [];
     console.log(`📁 Asset directory: ${localAssetDir} (${files.length} files)`);
+    if (files.length > 0) {
+      console.log(`📄 First few files: ${files.slice(0, 5).join(', ')}`);
+    }
     
     // Create a normalized map for easier matching
     const fileMap = new Map<string, string>();
