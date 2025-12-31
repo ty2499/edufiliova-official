@@ -412,9 +412,6 @@ export class EmailService {
       path.resolve(cwd, 'dist/server/templates', templateDir, filename),
       path.join(cwd, 'server/templates', templateDir, filename),
       path.join(cwd, 'dist/server/templates', templateDir, filename),
-      path.resolve(__dirname, '../../server/templates', templateDir, filename),
-      path.resolve(__dirname, '../templates', templateDir, filename),
-      path.resolve(__dirname, '../../dist/server/templates', templateDir, filename),
       path.join('/app/server/templates', templateDir, filename),
       path.join('/app/dist/server/templates', templateDir, filename),
     ];
