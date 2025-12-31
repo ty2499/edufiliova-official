@@ -63,8 +63,25 @@ export class EmailService {
   private async processEmailImages(html: string): Promise<{ html: string; attachments: EmailAttachment[] }> {
     console.log(`🖼️ Processing images in HTML (length: ${html.length})`);
 
-    const localAssetDir = path.resolve(process.cwd(), 'server/email-local-assets');
+    const possiblePaths = [
+      path.resolve(process.cwd(), 'server/email-local-assets'),
+      path.resolve(process.cwd(), 'dist/server/email-local-assets'),
+      path.resolve(process.cwd(), '../server/email-local-assets'),
+      '/app/server/email-local-assets',
+      '/app/dist/server/email-local-assets'
+    ];
+
+    let localAssetDir = possiblePaths[0];
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        localAssetDir = p;
+        console.log(`✅ Found email assets directory at: ${p}`);
+        break;
+      }
+    }
+
     const files = fs.existsSync(localAssetDir) ? fs.readdirSync(localAssetDir) : [];
+    console.log(`📁 Asset directory: ${localAssetDir} (${files.length} files)`);
     const attachments: EmailAttachment[] = [];
     const usedCids = new Set<string>();
 
