@@ -401,51 +401,40 @@ export class EmailService {
 
   private getTemplatePath(templateDir: string, filename: string): string {
     const cwd = process.cwd();
-    
-    // Log environment for debugging
-    console.log(`DEBUG: process.cwd() = ${cwd}`);
-    
-    // ════════════════════════════════════════════════════════════════════════
-    // HYPERLIFT STARLIGHT / PRODUCTION PATH RESOLUTION
-    // ════════════════════════════════════════════════════════════════════════
-    // Hyperlift runs from /app. The compiled code is in /app/dist.
-    // ════════════════════════════════════════════════════════════════════════
+    const dirname = typeof import.meta !== 'undefined' && (import.meta as any).dirname 
+      ? (import.meta as any).dirname 
+      : cwd;
     
     const possiblePaths = [
-      // 1. Public templates (Best for production/deployment)
-      path.join(cwd, 'public/templates', templateDir, filename),
+      // Production paths relative to compiled code location
+      path.join(dirname, 'server/templates', templateDir, filename),
+      path.join(dirname, '../server/templates', templateDir, filename),
+      path.join(dirname, 'templates', templateDir, filename),
       
-      // 2. Direct absolute paths (Matches Hyperlift error logs perfectly)
+      // Hyperlift absolute paths
       path.join('/app/dist/server/templates', templateDir, filename),
-      path.join('/app/server/templates', templateDir, filename),
+      path.join('/app/dist/public/templates', templateDir, filename),
+      path.join('/app/public/templates', templateDir, filename),
       
-      // 3. CWD-based paths (Standard for Replit and local dev)
+      // CWD-based paths for local dev
       path.join(cwd, 'dist/server/templates', templateDir, filename),
+      path.join(cwd, 'dist/public/templates', templateDir, filename),
+      path.join(cwd, 'public/templates', templateDir, filename),
       path.join(cwd, 'server/templates', templateDir, filename),
-      
-      // 4. Absolute resolves (Fallback)
-      path.resolve(cwd, 'dist/server/templates', templateDir, filename),
-      path.resolve(cwd, 'server/templates', templateDir, filename),
     ];
 
-    console.log(`🔍 Searching for template: ${templateDir}/${filename}`);
     for (const p of possiblePaths) {
       try {
         if (fs.existsSync(p)) {
-          console.log(`✅ Found template at: ${p}`);
+          console.log(`✅ Template found: ${p}`);
           return p;
         }
-      } catch (e) {
-        // Silently skip if path is inaccessible
-      }
+      } catch (e) {}
     }
     
-    // ════════════════════════════════════════════════════════════════════════
-    // EMERGENCY FALLBACK
-    // ════════════════════════════════════════════════════════════════════════
-    const emergencyPath = path.join(cwd, 'server/templates', templateDir, filename);
-    console.error(`❌ Template NOT found in standard paths. Using emergency: ${emergencyPath}`);
-    return emergencyPath;
+    console.error(`❌ Template NOT found: ${templateDir}/${filename}`);
+    console.error(`Searched paths: ${possiblePaths.slice(0, 4).join(', ')}`);
+    return path.join(cwd, 'server/templates', templateDir, filename);
   }
 
   async sendTeacherApprovalEmail(email: string, data: { fullName: string; displayName: string }): Promise<boolean> {
