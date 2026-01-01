@@ -173,7 +173,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       icon: Calculator, 
       name: "Mathematics", 
       lessons: 300, 
-      color: "bg-blue-500", 
+      color: "bg-white0", 
       free: true, 
       image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/teacher_presenting_in_classroom.png",
       description: "Master algebra, calculus, geometry with interactive lessons"
@@ -182,7 +182,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       icon: Beaker, 
       name: "Science", 
       lessons: 280, 
-      color: "bg-purple-500", 
+      color: "bg-white0", 
       free: true, 
       image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/students_studying_in_library.png",
       description: "Explore physics, chemistry, biology through experiments"
@@ -191,7 +191,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       icon: Globe, 
       name: "Geography", 
       lessons: 220, 
-      color: "bg-purple-500", 
+      color: "bg-white0", 
       free: true, 
       image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/students_studying_in_library.png",
       description: "Discover world cultures, climates, and continents"
@@ -209,7 +209,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       icon: Palette, 
       name: "Art", 
       lessons: 180, 
-      color: "bg-pink-500", 
+      color: "bg-white0", 
       free: true, 
       image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/creator_in_design_studio.png",
       description: "Create digital art and learn design principles"
@@ -218,7 +218,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       icon: Music, 
       name: "Music", 
       lessons: 160, 
-      color: "bg-indigo-500", 
+      color: "bg-white0", 
       free: true, 
       image: "https://wnr.1d5.myftpupload.com/wp-content/uploads/2025/12/creator_in_design_studio.png",
       description: "Learn theory, composition, and instruments"
@@ -294,9 +294,9 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       gradeRange: "Grades 1-7",
       monthlyPrice: "5.99",
       yearlyPrice: "54.99",
-      bgColor: "bg-[#0C332C]",
-      borderColor: "border-[#0C332C]",
-      textColor: "text-white",
+      bgColor: "#ffffff",
+      borderColor: "border-gray-200",
+      textColor: "text-gray-900",
       features: [
         "Ideal for young learners and foundational education",
         "All elementary courses (Grades 1-7)",
@@ -309,9 +309,9 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       gradeRange: "Grades 8-12",
       monthlyPrice: "9.99",
       yearlyPrice: "99.90",
-      bgColor: "bg-[#0C332C]",
-      borderColor: "border-[#0C332C]",
-      textColor: "text-white",
+      bgColor: "#ffffff",
+      borderColor: "border-gray-200",
+      textColor: "text-gray-900",
       popular: true,
       features: [
         "All in Elementary plan",
@@ -325,9 +325,9 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
       gradeRange: "Higher Education",
       monthlyPrice: "99.00",
       yearlyPrice: "799.00",
-      bgColor: "bg-[#151314]",
+      bgColor: "#ffffff",
       borderColor: "border-[#151314]",
-      textColor: "text-white",
+      textColor: "text-gray-900",
       features: [
         "Tailored solutions for higher education",
         "Advanced features for career development",
@@ -337,62 +337,77 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
     }
   ];
 
-  const freelancerFeatures = [
+  const freelancerFeatures: { 
+    icon: any; 
+    title: string; 
+    description: string; 
+    color: string; 
+    iconColor: string; 
+    bgColor?: string; 
+  }[] = [
     {
       icon: BookOpen,
       title: "Create & Sell Courses",
       description: "Build comprehensive courses with video lessons, quizzes, and assignments. Set your own pricing.",
-      color: "bg-blue-50 dark:bg-blue-950",
-      iconColor: "text-gray-900"
+      color: "bg-white dark:bg-blue-950",
+      iconColor: "text-gray-900",
+      bgColor: "#ffffff"
     },
     {
       icon: Video,
       title: "Offer Live Tutoring",
       description: "Conduct one-on-one or group tutoring sessions. Set your hourly rates and availability.",
-      color: "bg-purple-50 dark:bg-purple-950",
-      iconColor: "text-gray-900"
+      color: "bg-white dark:bg-purple-950",
+      iconColor: "text-gray-900",
+      bgColor: "#ffffff"
     },
     {
       icon: ShoppingBag,
       title: "Digital Products",
       description: "Sell templates, worksheets, study guides, and educational resources in our marketplace.",
-      color: "bg-emerald-50 dark:bg-emerald-950",
-      iconColor: "text-gray-900"
+      color: "bg-white dark:bg-emerald-950",
+      iconColor: "text-gray-900",
+      bgColor: "#ffffff"
     },
     {
       icon: Briefcase,
       title: "Build Portfolio",
       description: "Showcase your work, skills, and achievements. Get featured and attract more clients.",
       color: "bg-primary/10 dark:bg-primary/80",
-      iconColor: "text-gray-900"
+      iconColor: "text-gray-900",
+      bgColor: "#ffffff"
     },
     {
       icon: UserCheck,
       title: "Client Reviews",
       description: "Build credibility with client ratings and reviews. Get verification badges for quality work.",
-      color: "bg-pink-50 dark:bg-pink-950",
-      iconColor: "text-gray-900"
+      color: "bg-white dark:bg-pink-950",
+      iconColor: "text-gray-900",
+      bgColor: "#ffffff"
     },
     {
       icon: BarChart,
       title: "Track Earnings",
       description: "Real-time analytics dashboard to monitor sales, views, and revenue. Transaction history included.",
-      color: "bg-indigo-50 dark:bg-indigo-950",
-      iconColor: "text-gray-900"
+      color: "bg-white dark:bg-indigo-950",
+      iconColor: "text-gray-900",
+      bgColor: "#ffffff"
     },
     {
       icon: MessageCircle,
       title: "Direct Messaging",
       description: "Chat directly with clients and students. Real-time communication for better collaboration.",
-      color: "bg-cyan-50 dark:bg-cyan-950",
-      iconColor: "text-gray-900"
+      color: "bg-white dark:bg-cyan-950",
+      iconColor: "text-gray-900",
+      bgColor: "#ffffff"
     },
     {
       icon: Wallet,
       title: "Flexible Payouts",
       description: "Get paid via bank transfer or secure payment methods. Weekly payouts with transparent commission rates.",
-      color: "bg-amber-50 dark:bg-amber-950",
-      iconColor: "text-gray-900"
+      color: "bg-white dark:bg-amber-950",
+      iconColor: "text-gray-900",
+      bgColor: "#ffffff"
     }
   ];
 
@@ -433,18 +448,18 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col pt-16">
+    <div className="min-h-screen flex flex-col pt-16 bg-white">
       <Header onNavigate={onNavigate} currentPage="home" />
-      <main className="flex-1">
+      <main className="flex-1 bg-white">
         {/* Bento Hero Section */}
         <BentoHero onNavigate={onNavigate} />
 
         {/* Trending Courses Section */}
-        <section className="py-6 md:py-8 bg-gradient-to-br from-purple-50 to-pink-50">
+        <section className="py-6 md:py-8 bg-white">
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                Trending <span className="relative inline-block px-4 py-1 rounded-lg transform -rotate-1 bg-[#2f5a4e] text-[#ffffff]">Courses</span>
+                Trending <span className="relative inline-block px-4 py-1 rounded-lg transform -rotate-1 bg-white text-[#ffffff]">Courses</span>
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Explore our most popular courses handpicked by our team of educators
@@ -513,7 +528,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                         container.scrollBy({ left: -320, behavior: 'smooth' });
                       }
                     }}
-                    className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200"
+                    className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-white transition-colors border border-gray-200"
                     data-testid="button-courses-prev"
                   >
                     <ChevronLeft className="h-5 w-5 text-gray-700" />
@@ -525,7 +540,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                         container.scrollBy({ left: 320, behavior: 'smooth' });
                       }
                     }}
-                    className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors border border-gray-200"
+                    className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-white transition-colors border border-gray-200"
                     data-testid="button-courses-next"
                   >
                     <ChevronRight className="h-5 w-5 text-gray-700" />
@@ -578,7 +593,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                     size="lg" 
                     onClick={() => onNavigate('course-browse')}
                     style={{ backgroundColor: '#0c332c', color: 'white' }}
-                    className="hover:bg-[#0c332c]"
+                    className="hover:bg-white"
                     data-testid="button-explore-courses"
                   >
                     Explore More Courses
@@ -617,7 +632,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                   data-testid={`card-feature-${index}`}
                 >
                   <CardHeader className="text-center pb-3 pt-4">
-                    <div className="w-12 h-12 bg-[#0C332C] rounded-2xl flex items-center justify-center mx-auto mb-3 scale-in">
+                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto mb-3 scale-in">
                       <feature.icon className="h-6 w-6" style={{ color: '#a0fab2' }} />
                     </div>
                     <CardTitle className="text-[14px] font-bold">{feature.title}</CardTitle>
@@ -637,11 +652,11 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
         </section>
 
         {/* Trending Products Section */}
-        <section className="py-6 md:py-8 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <section className="py-6 md:py-8 bg-white">
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
-                Trending <span className="relative inline-block px-4 py-1 text-white rounded-lg transform -rotate-1 bg-[#2f5a4e]">Products</span>
+                Trending <span className="relative inline-block px-4 py-1 text-gray-900 rounded-lg transform -rotate-1 bg-white">Products</span>
               </h2>
               <p className="text-lg md:text-xl text-[#545454]">
                 Discover what's hot right now from our community of talented creators
@@ -694,7 +709,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                     size="lg" 
                     onClick={() => onNavigate('products')}
                     style={{ backgroundColor: '#0c332c', color: 'white' }}
-                    className="hover:bg-[#0c332c]"
+                    className="hover:bg-white"
                     data-testid="button-explore-products"
                   >
                     Explore More
@@ -715,7 +730,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
         <PricingSlideshow onNavigate={onNavigate} />
 
         {/* Comprehensive Freelancer Section */}
-        <section className="py-6 md:py-8 bg-gradient-to-br from-primary/5 via-emerald-50 to-green-50">
+        <section className="py-6 md:py-8 bg-white">
           <div className="section-padding">
             <div className="text-center mb-12 scroll-animate">
               <h2 className="text-[22px] font-bold mb-4 text-foreground">
@@ -758,7 +773,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                 size="lg" 
                 onClick={() => navigate('/marketplace/services')}
                 style={{ backgroundColor: '#0c332c', color: 'white' }}
-                className="hover:bg-[#0c332c]/90"
+                className="hover:bg-white/90"
                 data-testid="button-browse-services"
               >
                 Browse Freelancer Services
@@ -790,8 +805,8 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
                 >
                   <div className="text-center">
                     <div className="relative inline-flex mb-6">
-                      <div className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg bg-[#2F5A4E]" style={{ backgroundColor: '#0C332C' }}>
-                        <item.icon className="h-10 w-10 text-white" />
+                      <div className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg bg-white" style={{ backgroundColor: '#0C332C' }}>
+                        <item.icon className="h-10 w-10 text-gray-900" />
                       </div>
                       <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm" style={{ backgroundColor: '#A0FAB2', color: '#1a1a1a' }}>
                         {item.step}
@@ -809,7 +824,7 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
         </section>
 
         {/* Our Vision Section */}
-        <section className="py-6 md:py-8 bg-gray-50">
+        <section className="py-6 md:py-8 bg-white">
           <div className="w-full px-6 md:px-10 lg:px-14">
             <div className="w-full">
               <div className="text-center mb-12">
@@ -824,80 +839,80 @@ const LandingPage = ({ onNavigate }: LandingPageProps) => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-001">
                   <div className="mb-4">
-                    <span className="text-sm font-medium text-white/80">001</span>
+                    <span className="text-sm font-medium text-gray-900/80">001</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Students</h3>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-gray-900/90">
                     Empowering learners from grades 1-12 and university level with quality education, personalized support, and flexible learning options
                   </p>
                 </div>
 
                 <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-002">
                   <div className="mb-4">
-                    <span className="text-sm font-medium text-white/80">002</span>
+                    <span className="text-sm font-medium text-gray-900/80">002</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Teachers</h3>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-gray-900/90">
                     Supporting professional educators with comprehensive teaching tools, curriculum resources, and opportunities to reach students globally
                   </p>
                 </div>
 
                 <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-003">
                   <div className="mb-4">
-                    <span className="text-sm font-medium text-white/80">003</span>
+                    <span className="text-sm font-medium text-gray-900/80">003</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Freelancers</h3>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-gray-900/90">
                     Enabling independent tutors and educators to build their business, create courses, and earn sustainable income on our platform
                   </p>
                 </div>
 
                 <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-004">
                   <div className="mb-4">
-                    <span className="text-sm font-medium text-white/80">004</span>
+                    <span className="text-sm font-medium text-gray-900/80">004</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Customers</h3>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-gray-900/90">
                     Providing access to premium educational content, study materials, and digital resources from verified creators worldwide
                   </p>
                 </div>
 
                 <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-005">
                   <div className="mb-4">
-                    <span className="text-sm font-medium text-white/80">005</span>
+                    <span className="text-sm font-medium text-gray-900/80">005</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Parents</h3>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-gray-900/90">
                     Helping families support their children's education with trusted tutors, progress tracking, and safe learning environments
                   </p>
                 </div>
 
                 <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-006">
                   <div className="mb-4">
-                    <span className="text-sm font-medium text-white/80">006</span>
+                    <span className="text-sm font-medium text-gray-900/80">006</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Institutions</h3>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-gray-900/90">
                     Partnering with schools and educational organizations to deliver scalable, quality learning solutions for their communities
                   </p>
                 </div>
 
                 <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-007">
                   <div className="mb-4">
-                    <span className="text-sm font-medium text-white/80">007</span>
+                    <span className="text-sm font-medium text-gray-900/80">007</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>For Creators</h3>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-gray-900/90">
                     Supporting content creators in developing, publishing, and monetizing educational materials that benefit learners everywhere
                   </p>
                 </div>
 
                 <div className="rounded-xl p-6 transition-all duration-300" style={{ backgroundColor: '#0C332C' }} data-testid="card-vision-008">
                   <div className="mb-4">
-                    <span className="text-sm font-medium text-white/80">008</span>
+                    <span className="text-sm font-medium text-gray-900/80">008</span>
                   </div>
                   <h3 className="text-lg font-semibold mb-2" style={{ color: '#a0fab2' }}>Global Community</h3>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-gray-900/90">
                     Connecting learners, educators, and families across borders to create a worldwide network of educational excellence and opportunity
                   </p>
                 </div>
@@ -1029,7 +1044,7 @@ const PricingSlideshow = ({ onNavigate }: { onNavigate: (page: string) => void }
   const slide = pricingSlides[currentSlide];
 
   return (
-    <section className="py-6 md:py-8 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-6 md:py-8 bg-white">
       <div className="w-full px-6 md:px-10">
         <div className="w-full">
           <div className="w-full">
@@ -1062,13 +1077,13 @@ const PricingSlideshow = ({ onNavigate }: { onNavigate: (page: string) => void }
                   
                   <div className="relative h-full flex flex-col justify-between p-5 md:p-10 pb-16 md:pb-24">
                     <div className="space-y-3 md:space-y-4">
-                      <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-md text-[10px] md:text-xs">
+                      <Badge className="bg-white/20 text-gray-900 border-white/30 backdrop-blur-md text-[10px] md:text-xs">
                         {slideData.badge}
                       </Badge>
-                      <h2 className="text-[22px] font-bold text-white leading-tight">
+                      <h2 className="text-[22px] font-bold text-gray-900 leading-tight">
                         {slideData.title}
                       </h2>
-                      <p className="text-xs md:text-lg text-white/90 leading-relaxed">
+                      <p className="text-xs md:text-lg text-gray-900/90 leading-relaxed">
                         {slideData.description}
                       </p>
                       
@@ -1078,21 +1093,21 @@ const PricingSlideshow = ({ onNavigate }: { onNavigate: (page: string) => void }
                             key={idx}
                             className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-2 md:p-2.5 hover:bg-white/15 transition-all"
                           >
-                            <div className="text-[9px] md:text-[10px] text-white/80 mb-0.5">{price.label}</div>
-                            <div className="text-base md:text-lg lg:text-xl font-bold text-white mb-0.5">
+                            <div className="text-[9px] md:text-[10px] text-gray-900/80 mb-0.5">{price.label}</div>
+                            <div className="text-base md:text-lg lg:text-xl font-bold text-gray-900 mb-0.5">
                               {price.price}
                               <span className="text-[9px] md:text-[10px] font-normal">{price.period}</span>
                             </div>
-                            <div className="text-[8px] md:text-[9px] text-white/70">{price.subtitle}</div>
+                            <div className="text-[8px] md:text-[9px] text-gray-900/70">{price.subtitle}</div>
                           </div>
                         ))}
                       </div>
 
                       <div className="grid grid-cols-1 gap-4 md:gap-5">
                         {slideData.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center gap-3 md:gap-4 text-white">
+                          <div key={idx} className="flex items-center gap-3 md:gap-4 text-gray-900">
                             <div className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center flex-shrink-0">
-                              <CheckmarkIcon size="sm" className="text-white" />
+                              <CheckmarkIcon size="sm" className="text-gray-900" />
                             </div>
                             <span className="text-base md:text-lg font-medium">{feature}</span>
                           </div>
@@ -1107,7 +1122,7 @@ const PricingSlideshow = ({ onNavigate }: { onNavigate: (page: string) => void }
                           e.stopPropagation();
                           onNavigate(slideData.ctaPage);
                         }}
-                        className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 px-5 py-3 md:px-6 md:py-5 text-sm md:text-base font-semibold rounded-full group-hover:scale-105 transition-all duration-300 w-fit"
+                        className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-gray-900 hover:bg-white/20 px-5 py-3 md:px-6 md:py-5 text-sm md:text-base font-semibold rounded-full group-hover:scale-105 transition-all duration-300 w-fit"
                         data-testid={`button-view-${slideData.id}-pricing`}
                       >
                         {slideData.ctaText}

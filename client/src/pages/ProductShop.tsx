@@ -71,7 +71,7 @@ interface Product {
   rating: number;
   reviewCount: number;
   createdAt: string;
-  freelancer: {
+  freelancer?: {
     id: string;
     name: string;
     displayName: string;
@@ -204,25 +204,18 @@ export function ProductShop({ onNavigate, searchQuery = '', onSearchChange, navi
     queryKey: ['/api/shop-categories'],
     queryFn: async () => {
       try {
-        // Try authenticated request first (for freelancers/teachers/admins who may have custom categories)
-        if (user) {
-          const authResponse = await apiRequest('/api/shop-categories');
-          return authResponse.data || [];
-        } else {
-          // Use public endpoint for unauthenticated users
-          const publicResponse = await fetch('/api/shop-categories/public');
-          if (!publicResponse.ok) throw new Error('Failed to fetch public categories');
-          const data = await publicResponse.json();
-          return data.data || [];
-        }
+        const response = await fetch('/api/shop-categories');
+        if (!response.ok) throw new Error('Failed to fetch categories');
+        const data = await response.json();
+        return data.data || [];
       } catch (error) {
         console.error('Failed to fetch categories:', error);
         return [];
       }
     },
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes - categories rarely change
-    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
-    placeholderData: keepPreviousData, // Show previous data instantly while loading
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    placeholderData: keepPreviousData,
   });
 
   // Add "All Categories" option and filter active categories only

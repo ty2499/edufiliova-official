@@ -189,7 +189,7 @@ export default function FreelancerServiceFormPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center gap-4 mb-6">
-          <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard/freelancer/services')}>
+          <Button variant="ghost" size="icon" onClick={() => navigate('/?page=freelancer-dashboard')}>
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
@@ -415,7 +415,7 @@ export default function FreelancerServiceFormPage() {
               </Button>
               <Button
                 type="button"
-                className="bg-[#0c332c] hover:bg-[#0c332c]/90"
+                className="bg-[#0c332c] hover:bg-[#0c332c] text-white"
                 onClick={form.handleSubmit((data) => publishMutation.mutate(data))}
                 disabled={publishMutation.isPending}
               >

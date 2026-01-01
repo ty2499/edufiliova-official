@@ -165,7 +165,7 @@ export default function BentoHero({ onNavigate }: BentoHeroProps) {
   const currentContent = heroContent[activeIndex];
 
   return (
-    <section className="relative bg-[#f5f5f0] min-h-screen overflow-hidden" data-testid="hero-bento">
+    <section className="relative bg-white min-h-screen overflow-hidden" data-testid="hero-bento">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <div className="flex flex-wrap gap-2 mb-8">
           {heroContent.map((content, index) => (
@@ -192,17 +192,11 @@ export default function BentoHero({ onNavigate }: BentoHeroProps) {
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-10">
           <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a1a] leading-[1.1] mb-2">
-              {currentContent.headline}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif tracking-tight text-[#1a1a1a] leading-[1.1] mb-2">
+              Learn, Grow and <span className="text-[#2f5a4e] italic">Earn</span>
             </h1>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a1a]/60 leading-[1.1]">
-              {currentContent.headlineLine2}
-            </h1>
-          </div>
-
-          <div className={`flex flex-col justify-center transition-all duration-300 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
             <p className="text-lg text-gray-600 mb-6 max-w-lg">
-              {currentContent.description}
+              The all-in-one ecosystem for students to excel, teachers to inspire, and creators to build thriving digital businesses.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button 
@@ -249,7 +243,7 @@ export default function BentoHero({ onNavigate }: BentoHeroProps) {
             <div className="absolute -top-4 -right-4 w-20 h-20 bg-white/5 rounded-full" />
           </div>
 
-          <div className="bg-[#f8f6f0] rounded-2xl p-6 border border-gray-200">
+          <div className="bg-white rounded-2xl p-6 border border-gray-200">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-[#0C332C]/10 flex items-center justify-center">
                 <TrendingUp className="h-4 w-4 text-[#0C332C]" />

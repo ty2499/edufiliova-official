@@ -552,7 +552,7 @@ const Header = ({ onNavigate, currentPage, searchQuery = '', onSearchChange }: H
               onNavigate={onNavigate} 
               onClose={() => setIsMobileMenuOpen(false)} 
               isAuthenticated={isAuthenticated}
-              userRole={profile?.role}
+              userRole={profile?.role || undefined}
             />
           </div>
         )}

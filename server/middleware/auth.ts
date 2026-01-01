@@ -30,18 +30,10 @@ export const requireAuth = async (req: AuthenticatedRequest, res: Response, next
                      req.cookies?.session ||
                      req.cookies?.auth_session;
 
-    console.log('🔐 Auth middleware - sessionId:', sessionId);
+    console.log('🔐 Auth middleware - sessionId:', sessionId ? '***' + sessionId.slice(-4) : 'none');
     console.log('🔐 Auth middleware - path:', req.path, 'method:', req.method);
     console.log('🔐 Auth middleware - cookies:', Object.keys(req.cookies || {}));
     
-    // DEBUG: For upload endpoints, log all headers
-    if (req.path.includes('/upload/')) {
-      console.log('🔐 DEBUG Upload headers - Authorization:', req.headers.authorization);
-      console.log('🔐 DEBUG Upload headers - x-session-id:', req.headers['x-session-id']);
-      console.log('🔐 DEBUG Upload headers - content-type:', req.headers['content-type']);
-      console.log('🔐 DEBUG Upload headers - all headers keys:', Object.keys(req.headers));
-    }
-
     if (!sessionId) {
       console.log('🔐 No session ID provided for path:', req.path);
       return res.status(401).json({ 

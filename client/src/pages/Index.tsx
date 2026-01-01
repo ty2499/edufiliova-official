@@ -126,6 +126,7 @@ type AppState = "home" | "not-found" | "access-denied" | "auth" | "student-signu
 // Clean URL path mappings for shareable public pages
 const PATH_TO_STATE: Record<string, AppState> = {
   '/': 'home',
+  '/dashboard': 'home',
   '/app': 'home',
   '/blog': 'blog',
   '/about': 'about',
@@ -375,6 +376,15 @@ const getInitialState = (): AppState => {
     }
     
     // Check static path mappings
+    if (path === '/dashboard') {
+      const sessionId = localStorage.getItem('sessionId');
+      if (sessionId) {
+        // We'll let the role-based routing handle it in useEffect or determine it here
+        // For now, return a placeholder that will trigger the role-based redirect
+        return "home"; 
+      }
+    }
+
     if (PATH_TO_STATE[path]) {
       return PATH_TO_STATE[path];
     }
@@ -1091,13 +1101,28 @@ const Index = () => {
       const isManualNav = searchParams.get('nav') === 'user';
       
       // ABSOLUTE PROTECTION FOR SHOP AND COURSES
-      // Fix dashboard params on public paths
-      if ((path === '/shop' || path.startsWith('/shop/') || 
-           path === '/courses' || path.startsWith('/courses/') || 
-           path.startsWith('/course/')) && searchParams.has('page')) {
-        const targetState = path.startsWith('/shop') ? 'product-shop' : 'course-browse';
-        setCurrentState(targetState);
-        window.history.replaceState({}, '', path);
+      // Force clean URLs for public routes and stop loops
+      if (path === '/shop' || path === '/courses') {
+        const hasBadParams = searchParams.has('page') || searchParams.has('nav');
+        const targetState = path === '/shop' ? 'product-shop' : 'course-browse';
+        const isNotTargetState = currentState !== targetState;
+        
+        if (hasBadParams || isNotTargetState) {
+          console.log('🛡️ Protection: State/Param mismatch. Force resetting to:', targetState);
+          
+          // Clear any stored app state to prevent the loop from re-triggering
+          localStorage.removeItem('edufiliova_last_app_page');
+          localStorage.removeItem('intentional_logout');
+          
+          // Set state immediately to prevent re-renders from trying to route away
+          setCurrentState(targetState);
+          
+          if (hasBadParams) {
+            // Hard redirect to clear any bad internal state
+            window.location.replace(path);
+            return;
+          }
+        }
       }
 
       // Define public pages that customers can access while logged in
@@ -1357,16 +1382,20 @@ const Index = () => {
     let finalPage = page;
     
     // Handle 'back' navigation - route to appropriate dashboard based on role and current page
-    if (page === 'back') {
+    if (page === 'back' || page === 'dashboard') {
       // Navigate to appropriate dashboard based on user role
       if (profile?.role === 'admin' || profile?.role === 'accountant' || profile?.role === 'customer_service' || profile?.role === 'moderator') {
         finalPage = 'admin-dashboard';
       } else if (profile?.role === 'teacher') {
         finalPage = 'teacher-dashboard';
+      } else if (profile?.role === 'freelancer') {
+        finalPage = 'freelancer-dashboard';
+      } else if (profile?.role === 'general') {
+        finalPage = 'customer-dashboard';
       } else {
         finalPage = 'student-dashboard';
       }
-      transition = 'slide-right';
+      transition = page === 'back' ? 'slide-right' : 'fade';
     }
     // Handle meeting room routes
     else if (page.startsWith('meeting-room/')) {

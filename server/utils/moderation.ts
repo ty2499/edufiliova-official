@@ -18,7 +18,7 @@ class ModerationService {
   // Phone number regex patterns
   private phonePatterns = [
     /\+?1?\s*\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})/g, // US/Canada
-    /\+?[1-9]\d{1,14}/g, // International E.164 format
+    /\+?[1-9]\d{7,14}/g, // International E.164 format (min 8 digits to avoid short numbers like 300 DPI)
     /(\+44|0)[0-9]{10}/g, // UK
     /(\+61|0)[0-9]{9}/g, // Australia
     /(\+86)[0-9]{10}/g, // China
@@ -27,7 +27,7 @@ class ModerationService {
   
   // Social media handles and personal info patterns
   private socialMediaPatterns = [
-    /@[a-zA-Z0-9_]{1,15}(?:\s|$)/g, // @mentions (Twitter, Instagram style)
+    /(?:^|\s)@[a-zA-Z0-9_]{1,15}(?:\s|$)/g, // @mentions (Twitter, Instagram style) - require leading space or start of line
     /(?:instagram|twitter|facebook|whatsapp|telegram|telegram\.me|t\.me|fb\.com|insta|tiktok)[\w\s:\/\.@]*[@\w\s\.\/\-]{5,}/gi, // Social profiles
   ];
 
@@ -98,7 +98,7 @@ class ModerationService {
     }
     
     // Check for social media
-    if (/@[a-zA-Z0-9_]{1,15}/.test(text)) {
+    if (/(?:^|\s)@[a-zA-Z0-9_]{1,15}(?:\s|$)/.test(text)) {
       detected.push('Social media handle detected');
     }
     
@@ -259,8 +259,10 @@ Text: "${text.substring(0, 500)}"`,
     contentPreview?: string;
   }): Promise<boolean> {
     try {
-      // Always invalidate user sessions on violation
-      await this.invalidateUserSessions(options.userId);
+      // Only invalidate user sessions on 'ban' action
+      if (options.action === 'ban') {
+        await this.invalidateUserSessions(options.userId);
+      }
 
       // Send admin notification
       await emailService.sendEmail({

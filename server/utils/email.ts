@@ -302,29 +302,23 @@ export class EmailService {
         }
       }
 
-    // Log final HTML before sending as requested
-    console.log(`✉️ Sending email to: ${options.to} | Subject: ${options.subject}`);
-    
-    // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
-    const { html: processedHtml, attachments: imageAttachments } = await this.processEmailImages(options.html);
-
-    // Final CID pass using dedicated cleaner (if needed, but processEmailImages handles it)
-    // processedHtml = this.finalCidClean(processedHtml);
-
-    // Log final HTML after processing
-    // console.log(`✉️ Final HTML content:\n${processedHtml}`);
-
-    const mailOptions = {
-      from,
-      to: options.to,
-      subject: options.subject,
-      html: processedHtml,
-      attachments: [...(options.attachments || []), ...imageAttachments], 
-    };
+      // Log final HTML before sending as requested
+      console.log(`✉️ Sending email to: ${options.to} | Subject: ${options.subject}`);
       
-    const result = await transporter.sendMail(mailOptions);
-    return true;
-  } catch (error) {
+      // Process images in HTML: replace local refs and CID placeholders with Cloudinary URLs
+      const { html: processedHtml, attachments: imageAttachments } = await this.processEmailImages(options.html);
+
+      const mailOptions = {
+        from,
+        to: options.to,
+        subject: options.subject,
+        html: processedHtml,
+        attachments: [...(options.attachments || []), ...imageAttachments], 
+      };
+        
+      await transporter.sendMail(mailOptions);
+      return true;
+    } catch (error) {
     if (error instanceof Error && (error as any).code === 'ESTREAM') {
       console.warn('⚠️ ESTREAM error in sendEmail - likely missing attachment. Retrying without attachments...');
       try {
@@ -531,89 +525,9 @@ export class EmailService {
     }
   }
 
-  async sendTeacherUnderReviewEmail(email: string, data: { fullName: string }): Promise<boolean> {
+  async sendTeacherVerificationEmail(email: string, data: { fullName: string; code: string; expiresIn: string }): Promise<boolean> {
     try {
-      const templatePath = this.getTemplatePath('teacher_application_under_review_template', 'email.html');
-      let html = fs.readFileSync(templatePath, 'utf-8');
-
-      // Use bulletproof name replacement
-      html = this.forceReplaceName(html, data.fullName || 'Teacher');
-
-      // Attachments with CID references
-      const imagesPath = path.resolve(process.cwd(), 'server/email-local-assets');
-      const attachments = [
-        { filename: 'teacherapp_review.png', path: path.join(imagesPath, 'teacherapp_review.png'), cid: 'teacherapp', contentType: 'image/png' },
-        { filename: 'review_arrow.png', path: path.join(imagesPath, 'review_arrow.png'), cid: 'arrow', contentType: 'image/png' },
-        { filename: 'logofull.png', path: path.join(imagesPath, 'logofull.png'), cid: 'logofull', contentType: 'image/png' },
-        { filename: 'logofull2.png', path: path.join(imagesPath, 'logofull2.png'), cid: 'logofull2', contentType: 'image/png' }
-      ];
-
-      // Send to applicant
-      const sentToApplicant = await this.sendEmail({
-        to: email,
-        subject: 'Your Teacher Application is Under Review - EduFiliova',
-        html,
-        from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
-        attachments
-      });
-
-      // Forward notification to support team
-      const supportNotification = `
-        <h2>New Teacher Application Submitted</h2>
-        <p><strong>Applicant Details:</strong></p>
-        <ul>
-          <li><strong>Name:</strong> ${data.fullName}</li>
-          <li><strong>Email:</strong> ${email}</li>
-          <li><strong>Submitted:</strong> ${new Date().toLocaleString()}</li>
-        </ul>
-        <p>Please review the application documents in the admin dashboard.</p>
-      `;
-      this.sendEmail({
-        to: 'support@edufiliova.com',
-        subject: `New Teacher Application: ${data.fullName}`,
-        html: this.getGlobalTemplate('New Teacher Application', supportNotification),
-        from: `"EduFiliova Applications" <noreply@edufiliova.com>`
-      }).catch(err => console.error('Failed to notify support of teacher application:', err));
-
-      return sentToApplicant;
-    } catch (error) {
-      console.error('Error sending teacher under review email:', error);
-      return false;
-    }
-  }
-
-  async sendApplicationSubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
-    const content = `
-      <h1>Application Received</h1>
-      <p>Hello ${data.fullName},</p>
-      <p>Your application has been successfully submitted and is waiting for review.</p>
-      <p>We'll get back to you within 3-5 business days.</p>
-    `;
-    return this.sendEmail({
-      to: email,
-      subject: 'Application Received - EduFiliova',
-      html: this.getGlobalTemplate('Application Received', content),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
-  }
-
-  async sendApplicationResubmittedEmail(email: string, data: { fullName: string; applicationType: 'teacher' | 'freelancer' }): Promise<boolean> {
-    const appType = data.applicationType === 'teacher' ? 'Teacher' : 'Freelancer';
-    const content = `
-      <h1>Application Resubmitted</h1>
-      <p>Hello ${data.fullName},</p>
-      <p>Your ${appType} application resubmission has been received. Our team will review the updated information and get back to you soon.</p>
-    `;
-    return this.sendEmail({
-      to: email,
-      subject: `Your ${appType} Application Resubmission Received - EduFiliova`,
-      html: this.getGlobalTemplate('Application Resubmitted', content),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
-  }
-
-  async sendAccountBannedEmail(email: string, data: { fullName: string; violations?: string[] }): Promise<boolean> {
-    const baseUrl = this.getBaseUrl();
+      const templatePath = this.getTemplatePath('teacher_verification_template', 'email.html');
     const violationsList = (data.violations || []).map(v => `<li style="margin: 8px 0; color: #333;">- ${v}</li>`).join('');
     
     const html = `<!DOCTYPE html>
@@ -722,19 +636,18 @@ export class EmailService {
 
     // Use bulletproof name replacement
     let finalHtml = this.forceReplaceName(html, data.fullName);
-    
+
     // Also try to replace generic name placeholders if found
     finalHtml = finalHtml.replace(/Dear\s+Customer/gi, `Dear ${data.fullName}`);
     finalHtml = finalHtml.replace(/Hi\s+there/gi, `Hi ${data.fullName}`);
 
     return this.sendEmail({
       to: email,
-      subject: 'Account Suspended: Policy Violation',
+      subject: "Account Suspended: Policy Violation",
       html: finalHtml,
-      from: '"EduFiliova Support" <support@edufiliova.com>'
+      from: "\"EduFiliova Support\" <support@edufiliova.com>"
     });
   }
-
   async sendAccountUnsuspendedEmail(email: string, data: { fullName: string }): Promise<boolean> {
     const baseUrl = this.getBaseUrl();
     const html = `<!DOCTYPE html>
@@ -743,7 +656,7 @@ export class EmailService {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #f5f7fa; }
+    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #f5f7fa; }
     .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
     .header { background-color: #0c332c; padding: 40px; text-align: center; }
     .logo { max-width: 180px; height: auto; }
@@ -751,27 +664,6 @@ export class EmailService {
     .title { color: #1a1a1a; font-size: 24px; font-weight: 700; margin: 0 0 20px 0; }
     .message { color: #4a5568; font-size: 16px; line-height: 1.7; margin: 0 0 20px 0; }
     .important { border-left: 4px solid #d32f2f; background-color: #fef5f5; padding: 20px; margin: 25px 0; }
-    .important h3 { margin: 0 0 12px 0; color: #d32f2f; font-size: 16px; }
-    .important p { margin: 0; color: #4a5568; font-size: 14px; line-height: 1.6; }
-    .policies-section { border: 2px solid #0c332c; border-radius: 8px; padding: 25px; margin: 25px 0; background-color: #f9fafb; }
-    .policies-section h3 { margin: 0 0 18px 0; color: #0c332c; font-size: 18px; font-weight: 700; text-align: center; }
-    .policy-link { display: block; margin: 12px 0; padding: 12px; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; text-decoration: none; color: #0c332c; font-weight: 600; text-align: center; transition: all 0.2s; }
-    .policy-link:hover { background-color: #0c332c; color: #ffffff; border-color: #0c332c; }
-    .button { display: inline-block; background-color: #0c332c; color: #ffffff !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 20px 0; }
-    .footer { background-color: #0c332c; padding: 30px; text-align: center; color: #ffffff; }
-    .footer a { color: #ffffff; text-decoration: none; margin: 0 10px; }
-    .warning { border-left: 4px solid #ff9800; background-color: #fff8e1; padding: 16px; margin: 20px 0; border-radius: 4px; }
-    .warning p { margin: 0; color: #e65100; font-size: 14px; font-weight: 600; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png
-    </div>
-    <div class="content">
-      <h1 class="title">Account Reactivated, {{fullName}}</h1>
-      <p class="message">
         We are pleased to inform you that your account has been reviewed and reactivated. Your access to EduFiliova has been restored, and you can now use all platform features once again.
       </p>
       
@@ -1923,56 +1815,6 @@ export class EmailService {
     <table class="main-table" cellpadding="0" cellspacing="0" width="100%">
       <tr>
         <td class="header">
-          <img src="https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png" alt="EduFiliova" width="180" style="display: block; margin: 0 auto;" />
-        </td>
-      </tr>
-      <tr>
-        <td class="content">
-          <h1>Application Received</h1>
-          <p>Hello {{fullName}},</p>
-          <p>We've successfully received your freelancer application. Our team will review your profile and portfolio samples shortly.</p>
-          <p>The review process typically takes 3-5 business days. We will notify you via email as soon as an update is available.</p>
-          <p>Thank you for your patience and interest in EduFiliova.</p>
-          <p>Best regards,<br />The EduFiliova Team</p>
-        </td>
-      </tr>
-      <tr>
-        <td class="footer">
-          <p><strong>EduFiliova</strong></p>
-          <p>Empowering global talent through education and opportunity.</p>
-          <div class="divider"></div>
-          <p>This is an automated message. Please do not reply directly to this email. For assistance, contact our support team at <a href="mailto:support@edufiliova.com">support@edufiliova.com</a>.</p>
-          <p>&copy; 2025 EduFiliova. All rights reserved.</p>
-        </td>
-      </tr>
-    </table>
-  </div>
-</body>
-</html>`;
-
-    return this.sendEmail({
-      to: email,
-      subject: 'Your Freelancer Application has been Received - EduFiliova',
-      html: this.forceReplaceName(html, data.fullName),
-      from: '"EduFiliova Support" <support@edufiliova.com>'
-    });
-  }
-
-  async sendFreelancerApplicationResubmittedEmail(email: string, data: { fullName: string }): Promise<boolean> {
-    try {
-      const templatePath = path.resolve(process.cwd(), 'public', 'email-assets', 'freelancer-application-submitted', 'template.html');
-      let html = fs.readFileSync(templatePath, 'utf-8');
-
-      const fullName = data.fullName || 'Freelancer';
-
-      // ✅ USE BULLETPROOF NAME REPLACEMENT
-      html = this.forceReplaceName(html, fullName);
-
-      const logoUrl = 'https://res.cloudinary.com/dl2lomrhp/image/upload/v1763935567/edufiliova/edufiliova-white-logo.png';
-
-      return this.sendEmail({
-        to: email,
-        subject: 'Application Resubmitted - Your Freelancer Application is Under Review',
         html,
         from: `"EduFiliova Applications" <noreply@edufiliova.com>`,
         attachments: []
@@ -2110,44 +1952,6 @@ export class EmailService {
         </ul>
         <p>Please review the application documents in the admin dashboard.</p>
       `;
-      this.sendEmail({
-        to: 'support@edufiliova.com',
-        subject: `New Freelancer Application: ${data.fullName}`,
-        html: this.getGlobalTemplate('New Freelancer Application', supportNotification),
-        from: `"EduFiliova Applications" <noreply@edufiliova.com>`
-      }).catch(err => console.error('Failed to notify support of freelancer application:', err));
-
-      return sentToApplicant;
-    } catch (error) {
-      console.error('Error sending freelancer under review email:', error);
-      return false;
-    }
-  }
-
-  wrapWithBrandedTemplate(title: string, content: string, unsubscribeLink?: string): string {
-    const baseHtml = this.getGlobalTemplate(title, content);
-    
-    if (unsubscribeLink) {
-      return baseHtml.replace(
-        '<p>&copy; 2025 EduFiliova. All rights reserved.</p>',
-        `<p><a href="${unsubscribeLink}" style="color: #64748b; text-decoration: underline;">Unsubscribe</a> from marketing emails</p>
-        <p>&copy; 2025 EduFiliova. All rights reserved.</p>`
-      );
-    }
-    
-    return baseHtml;
-  }
-
-  async sendBulkEmailWithAttachment(options: {
-    to: string;
-    recipientName: string;
-    subject: string;
-    bodyContent: string;
-    pdfBuffer?: Buffer;
-    pdfFilename?: string;
-    unsubscribeLink?: string;
-    from?: string;
-  }): Promise<boolean> {
     try {
       const personalizedContent = this.forceReplaceName(options.bodyContent, options.recipientName);
       const html = this.wrapWithBrandedTemplate(options.subject, personalizedContent, options.unsubscribeLink);
